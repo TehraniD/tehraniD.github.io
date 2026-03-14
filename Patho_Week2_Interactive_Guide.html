@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patho Week 2 – Module 2 Study Guide | Prof. Tehrani</title>
+<title>Patho Week 2 Interactive Study Guide | Prof. Tehrani</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -37,20 +37,23 @@ body{font-family:'Inter',sans-serif;background:var(--gray-100);color:var(--gray-
 .search-wrap input:focus{background:rgba(255,255,255,0.2)}
 .search-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.5);pointer-events:none;font-size:0.875rem}
 
-/* ── NAV TABS ── */
-#tab-nav{background:var(--navy-dark);border-bottom:3px solid var(--navy-light);overflow-x:auto;scrollbar-width:none}
-#tab-nav::-webkit-scrollbar{display:none}
-.tab-list{max-width:1200px;margin:0 auto;padding:0 12px;display:flex;gap:4px;white-space:nowrap}
-.tab-btn{background:none;border:none;color:rgba(255,255,255,0.65);font-family:inherit;font-size:0.82rem;font-weight:500;padding:12px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;transition:all 0.2s;letter-spacing:0.2px}
-.tab-btn:hover{color:#fff;background:rgba(255,255,255,0.05)}
-.tab-btn.active{color:#60a5fa;border-bottom-color:#60a5fa;font-weight:600}
+/* ── NAV TABS (vertical sidebar) ── */
+#tab-nav{position:fixed;left:0;top:60px;width:186px;height:calc(100vh - 60px);background:var(--navy-dark);border-right:2px solid rgba(255,255,255,0.08);overflow-y:auto;overflow-x:hidden;z-index:99}
+#tab-nav::-webkit-scrollbar{width:4px}
+#tab-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px}
+.tab-list{display:flex;flex-direction:column;gap:2px;padding:14px 8px;white-space:normal}
+.tab-btn{background:none;border:none;border-left:3px solid transparent;color:rgba(255,255,255,0.65);font-family:inherit;font-size:0.8rem;font-weight:500;padding:10px 12px;cursor:pointer;transition:all 0.2s;letter-spacing:0.2px;text-align:left;width:100%;border-radius:0 8px 8px 0;line-height:1.35}
+.tab-btn:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.tab-btn.active{color:#60a5fa;border-left-color:#60a5fa;background:rgba(96,165,250,0.1);font-weight:600}
+/* shift all content right to make room for sidebar */
+#progress-bar-wrap,#hero,main{margin-left:186px}
 
 /* ── PROGRESS BAR ── */
 #progress-bar-wrap{background:var(--gray-200);height:4px}
 #progress-bar{height:4px;background:linear-gradient(90deg,var(--blue),var(--purple));width:0%;transition:width 0.4s}
 
 /* ── HERO ── */
-#hero{background:linear-gradient(135deg,#0f2444 0%,#1e3a5f 40%,#1a3a6b 70%,#0d3461 100%);padding:80px 20px 70px;text-align:center;position:relative;overflow:hidden}
+#hero{background:linear-gradient(135deg,#0f2444 0%,#1e3a5f 40%,#1a3a6b 70%,#0d3461 100%);padding:36px 20px 28px;text-align:center;position:relative;overflow:hidden}
 #hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(59,130,246,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(139,92,246,0.1) 0%,transparent 50%)}
 .hero-badge{display:inline-block;background:rgba(96,165,250,0.2);border:1px solid rgba(96,165,250,0.4);color:#93c5fd;font-size:0.78rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:20px}
 #hero h1{color:#fff;font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.15;letter-spacing:-1px;margin-bottom:12px}
@@ -73,7 +76,7 @@ main{max-width:1200px;margin:0 auto;padding:32px 20px 80px}
 .section-header{margin-bottom:28px}
 .section-header h2{font-size:1.75rem;font-weight:800;color:var(--navy);letter-spacing:-0.5px;margin-bottom:6px}
 .section-header p{color:var(--gray-600);font-size:0.95rem}
-.section-header .blueprint-badge{display:inline-flex;align-items:center;gap:6px;background:var(--amber-light);color:var(--amber-dark);border:1px solid #fcd34d;font-size:0.78rem;font-weight:600;padding:4px 12px;border-radius:20px;margin-top:8px}
+.section-header .study guide-badge{display:inline-flex;align-items:center;gap:6px;background:var(--amber-light);color:var(--amber-dark);border:1px solid #fcd34d;font-size:0.78rem;font-weight:600;padding:4px 12px;border-radius:20px;margin-top:8px}
 
 /* ── GRID LAYOUTS ── */
 .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
@@ -205,13 +208,19 @@ ul.content-list li strong{color:var(--gray-800)}
 .compare-label div:first-child{border-right:1px solid var(--gray-200)}
 
 /* Responsive */
+@media(max-width:768px){
+  #tab-nav{position:static;width:100%;height:auto;border-right:none;border-bottom:2px solid rgba(255,255,255,0.08);overflow-x:auto;overflow-y:hidden}
+  .tab-list{flex-direction:row;padding:6px 10px;white-space:nowrap;gap:4px}
+  .tab-btn{border-left:none;border-bottom:3px solid transparent;border-radius:6px 6px 0 0;white-space:nowrap;padding:9px 12px}
+  .tab-btn.active{border-left-color:transparent;border-bottom-color:#60a5fa;background:rgba(96,165,250,0.1)}
+  #progress-bar-wrap,#hero,main{margin-left:0}
+}
 @media(max-width:640px){
   .header-inner{flex-wrap:wrap;height:auto;padding:10px 16px;gap:8px}
   .search-wrap{flex:1 1 100%}
-  #hero{padding:50px 16px 44px}
+  #hero{padding:24px 16px 20px}
   main{padding:20px 12px 60px}
   .grid-2{grid-template-columns:1fr}
-  .hero-stats{gap:20px}
 }
 </style>
 </head>
@@ -244,16 +253,9 @@ ul.content-list li strong{color:var(--gray-800)}
 
 <!-- HERO -->
 <div id="hero">
-  <div class="hero-badge">Module 2 Exam Blueprint</div>
-  <h1>Patho Week 2:<br><span>Module 2 Study Guide</span></h1>
+  <h1>Patho Week 2<br><span>Interactive Study Guide</span></h1>
   <p class="subtitle">Disorders of the Immune System, Blood &amp; Circulatory System</p>
-  <p class="hero-meta">Prof. Tehrani &nbsp;·&nbsp; Pre-Nursing Pathophysiology</p>
-  <div class="hero-stats">
-    <div class="hero-stat"><div class="num">6</div><div class="lbl">Major Topics</div></div>
-    <div class="hero-stat"><div class="num">29</div><div class="lbl">Exam Questions</div></div>
-    <div class="hero-stat"><div class="num">7</div><div class="lbl">Anemia Questions</div></div>
-    <div class="hero-stat"><div class="num">10</div><div class="lbl">Practice Quiz Qs</div></div>
-  </div>
+  <p class="hero-meta">Prof. Tehrani &nbsp;·&nbsp; Pathophysiology</p>
   <button class="btn-start" onclick="document.getElementById('main-content').scrollIntoView({behavior:'smooth'})">Start Studying ↓</button>
 </div>
 
@@ -265,8 +267,7 @@ ul.content-list li strong{color:var(--gray-800)}
 <div class="section-wrap active" id="sec-genetics">
   <div class="section-header">
     <h2>🧬 Genetic Disorders</h2>
-    <p>Inherited conditions from gene or chromosome abnormalities — tested on 4 exam questions</p>
-    <span class="blueprint-badge">📋 Blueprint: Q6, Q7, Q8, Q9 — 4 Questions</span>
+    <p>Inherited conditions from gene or chromosome abnormalities</p>
   </div>
 
   <div class="box box-key" style="margin-bottom:20px">
@@ -293,7 +294,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fdf4ff"><span>🧠</span></div>
-        <div><div class="card-title">Tay-Sachs Disease <span class="topic-tag tag-purple">Q6</span></div><div class="card-subtitle">Autosomal recessive · Fatal neurological · Hex-A enzyme deficiency</div></div>
+        <div><div class="card-title">Tay-Sachs Disease</div><div class="card-subtitle">Autosomal recessive · Fatal neurological · Hex-A enzyme deficiency</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -307,10 +308,9 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Prognosis:</strong> Fatal by early childhood (ages 2–5), no cure</li>
         <li><strong>Population:</strong> Higher prevalence in Ashkenazi Jewish population</li>
       </ul>
-      <div class="box box-danger"><div class="box-title">🚨 Critical Exam Point</div><p>Q6 tests recognition: <em>progressive neurological decline starting at 6 months, progressive blindness and paralysis, fatal</em> = Tay-Sachs. The child appears normal at birth then deteriorates.</p></div>
+      <div class="box box-danger"><div class="box-title">🚨 Critical Exam Point</div><p>tests recognition: <em>progressive neurological decline starting at 6 months, progressive blindness and paralysis, fatal</em> = Tay-Sachs. The child appears normal at birth then deteriorates.</p></div>
       <div class="box box-pearl"><div class="box-title">💊 Clinical Pearl</div><p>"Cherry-red spot" = lipid accumulation around the macula. The fovea (which lacks ganglion cells) appears red against the pale surrounding retina.</p></div>
       <div class="pq">
-        <div class="pq-num">Q6 — Exam Practice</div>
         <div class="pq-text">A 10-month-old is brought in with progressive neurological decline starting at 6 months. The infant was normal at birth but now shows vision loss and increasing weakness. What condition matches this?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Down Syndrome</button>
@@ -328,22 +328,21 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#eff6ff"><span>🧬</span></div>
-        <div><div class="card-title">Down Syndrome (Trisomy 21) <span class="topic-tag tag-blue">Q8</span></div><div class="card-subtitle">Extra chromosome 21 · Diagnosis by karyotyping · Most common chromosomal disorder</div></div>
+        <div><div class="card-title">Down Syndrome (Trisomy 21)</div><div class="card-subtitle">Extra chromosome 21 · Diagnosis by karyotyping · Most common chromosomal disorder</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
     <div class="card-body"><div class="card-content">
       <ul class="content-list">
         <li><strong>Mechanism:</strong> Nondisjunction during meiosis → extra copy of chromosome 21 (trisomy 21)</li>
-        <li><strong>Diagnosis:</strong> <strong>KARYOTYPING</strong> — exam answer for Q8</li>
+        <li><strong>Diagnosis:</strong> <strong>KARYOTYPING</strong> — exam answer for</li>
         <li><strong>Features:</strong> Intellectual disability, hypotonia (low muscle tone), epicanthal folds, flat nasal bridge, single palmar crease (simian crease)</li>
         <li><strong>Associated conditions:</strong> Congenital heart defects (AV canal/septal defects), increased Alzheimer's risk, leukemia risk, thyroid issues</li>
         <li><strong>Risk factor:</strong> Advanced maternal age increases risk significantly</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Exam Tip — Q8</div><p>Q8 asks HOW Down Syndrome is confirmed. Answer = <strong>KARYOTYPING</strong>. Karyotyping analyzes chromosome number and structure, revealing the extra chromosome 21.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ Exam Tip —</div><p>asks HOW Down Syndrome is confirmed. Answer = <strong>KARYOTYPING</strong>. Karyotyping analyzes chromosome number and structure, revealing the extra chromosome 21.</p></div>
       <div class="box box-mnemonic"><div class="box-title">🧠 Mnemonic</div><p>"<strong>21 is DOWN</strong> the list (after 18 and 13)" — Trisomy 21 = Down, Trisomy 18 = Edwards, Trisomy 13 = Patau</p></div>
       <div class="pq">
-        <div class="pq-num">Q8 — Exam Practice</div>
         <div class="pq-text">A newborn presents with hypotonia, epicanthal folds, and a single palmar crease. What test CONFIRMS the diagnosis?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. MRI brain</button>
@@ -361,7 +360,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#ecfdf5"><span>🫁</span></div>
-        <div><div class="card-title">Cystic Fibrosis <span class="topic-tag tag-green">Q7</span></div><div class="card-subtitle">Autosomal recessive · CFTR gene mutation · Thick sticky mucus</div></div>
+        <div><div class="card-title">Cystic Fibrosis</div><div class="card-subtitle">Autosomal recessive · CFTR gene mutation · Thick sticky mucus</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -374,12 +373,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Lung complications:</strong> Recurrent infections (Pseudomonas!), bronchiectasis</li>
         <li><strong>Pancreatic complications:</strong> Enzyme insufficiency → malabsorption</li>
       </ul>
-      <div class="box box-danger"><div class="box-title">🚨 Exam Trap — Q7: Diet!</div><p>CF patients need a <strong>HIGH-CALORIE, HIGH-FAT diet</strong> (due to malabsorption from pancreatic insufficiency). The WRONG answer is "low-fat diet." They need MORE calories/fat, not less!</p></div>
-      <div class="box box-exam"><div class="box-title">⚠️ Q7 Treatments — What's CORRECT</div>
+      <div class="box box-danger"><div class="box-title">🚨 Exam Trap —  Diet!</div><p>CF patients need a <strong>HIGH-CALORIE, HIGH-FAT diet</strong> (due to malabsorption from pancreatic insufficiency). The WRONG answer is "low-fat diet." They need MORE calories/fat, not less!</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ Treatments — What's CORRECT</div>
         <ul><li>✅ Chest physiotherapy (airway clearance)</li><li>✅ Bronchodilators (open airways)</li><li>✅ Corticosteroid inhalers (reduce inflammation)</li><li>✅ Pancreatic enzyme replacement</li><li>❌ Low-fat diet — WRONG! They need high-fat/high-calorie</li></ul>
       </div>
       <div class="pq">
-        <div class="pq-num">Q7 — Exam Practice</div>
         <div class="pq-text">Which treatment would NOT be appropriate for a child with cystic fibrosis?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Chest physiotherapy</button>
@@ -397,7 +395,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fffbeb"><span>🧬</span></div>
-        <div><div class="card-title">Huntington's Disease <span class="topic-tag tag-amber">Q9</span></div><div class="card-subtitle">Autosomal dominant · CAG repeat · Chorea → behavioral changes → dementia</div></div>
+        <div><div class="card-title">Huntington's Disease</div><div class="card-subtitle">Autosomal dominant · CAG repeat · Chorea → behavioral changes → dementia</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -418,9 +416,8 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Testing:</strong> Genetic testing available — ethical dilemma (presymptomatic testing)</li>
       </ul>
       <div class="box box-mnemonic"><div class="box-title">🧠 Mnemonic: "HD = 1 parent, starts with CHOREA"</div><p>Huntington's = <strong>H</strong>alf your kids get it (dominant) · <strong>D</strong>ance before you decline (chorea first)</p></div>
-      <div class="box box-exam"><div class="box-title">⚠️ Exam Tip — Q9</div><p>The exam asks for "typical symptoms." Answer = <strong>Chorea and involuntary movements FIRST</strong>, followed by behavioral changes. This order matters!</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ Exam Tip —</div><p>The exam asks for "typical symptoms." Answer = <strong>Chorea and involuntary movements FIRST</strong>, followed by behavioral changes. This order matters!</p></div>
       <div class="pq">
-        <div class="pq-num">Q9 — Exam Practice</div>
         <div class="pq-text">A 42-year-old patient with Huntington's disease is being assessed. Which symptom presentation is MOST typical for early-stage Huntington's?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Memory loss and dementia first</button>
@@ -442,7 +439,6 @@ ul.content-list li strong{color:var(--gray-800)}
   <div class="section-header">
     <h2>🛡️ Immune System</h2>
     <p>Hypersensitivity reactions, SLE, Immunoglobulins, and the inflammatory response</p>
-    <span class="blueprint-badge">📋 Blueprint: Q19, Q32, Q33, Q34, Q36, Q69, Q73 — 7 Questions</span>
   </div>
 
   <!-- HYPERSENSITIVITY OVERVIEW -->
@@ -481,7 +477,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fdf4ff"><span>🔬</span></div>
-        <div><div class="card-title">Hypersensitivity Types I–IV <span class="topic-tag tag-purple">Q33 Q34 Q73</span></div><div class="card-subtitle">All 4 types with mechanisms, examples, and exam distinctions</div></div>
+        <div><div class="card-title">Hypersensitivity Types I–IV <span class="topic-tag tag-purple"></span></div><div class="card-subtitle">All 4 types with mechanisms, examples, and exam distinctions</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -495,11 +491,11 @@ ul.content-list li strong{color:var(--gray-800)}
           <tr><td><strong>Type IV</strong></td><td>Delayed / DTH</td><td>T-cells (no antibody)</td><td>24–72 hrs</td><td>Contact dermatitis, PPD/TB test, poison ivy, SJS</td></tr>
         </table>
       </div>
-      <div class="box box-exam"><div class="box-title">⚠️ Exam Traps — Q33, Q34, Q73</div>
+      <div class="box box-exam"><div class="box-title">⚠️ Exam Traps —</div>
         <ul>
-          <li><strong>Q33:</strong> SLE + butterfly rash + ANA antibodies = <strong>Type III (Immune Complex)</strong> — not Type I or II</li>
-          <li><strong>Q34:</strong> Blood transfusion reaction destroying RBCs = <strong>Type II (Cytotoxic)</strong> — antibodies target RBC antigens</li>
-          <li><strong>Q73:</strong> Central cells in hay fever/allergic reactions = <strong>MAST CELLS</strong> — they release histamine in Type I</li>
+          <li><strong></strong> SLE + butterfly rash + ANA antibodies = <strong>Type III (Immune Complex)</strong> — not Type I or II</li>
+          <li><strong></strong> Blood transfusion reaction destroying RBCs = <strong>Type II (Cytotoxic)</strong> — antibodies target RBC antigens</li>
+          <li><strong></strong> Central cells in hay fever/allergic reactions = <strong>MAST CELLS</strong> — they release histamine in Type I</li>
         </ul>
       </div>
       <div class="box box-pearl"><div class="box-title">💊 Memory Aid</div>
@@ -511,7 +507,6 @@ ul.content-list li strong{color:var(--gray-800)}
         </ul>
       </div>
       <div class="pq">
-        <div class="pq-num">Q33 — Exam Practice</div>
         <div class="pq-text">A 28-year-old woman has a butterfly rash across her cheeks, joint pain, and positive ANA antibodies. This presentation is consistent with which type of hypersensitivity?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Type I — IgE-mediated</button>
@@ -522,7 +517,6 @@ ul.content-list li strong{color:var(--gray-800)}
         <div class="pq-explanation">SLE is a classic Type III hypersensitivity — immune complexes (ANA antibodies + nuclear antigens) deposit in tissues like skin, joints, and kidneys, triggering inflammation. The butterfly rash + ANA = Type III.</div>
       </div>
       <div class="pq">
-        <div class="pq-num">Q34 — Exam Practice</div>
         <div class="pq-text">A patient receives a blood transfusion and develops a reaction that destroys red blood cells. What type of hypersensitivity is this?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Type I</button>
@@ -540,7 +534,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fdf2f8"><span>🦋</span></div>
-        <div><div class="card-title">Systemic Lupus Erythematosus (SLE) <span class="topic-tag tag-purple">Q36</span></div><div class="card-subtitle">Type III hypersensitivity · Butterfly rash · Great imitator</div></div>
+        <div><div class="card-title">Systemic Lupus Erythematosus (SLE)</div><div class="card-subtitle">Type III hypersensitivity · Butterfly rash · Great imitator</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -556,9 +550,8 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Triggers:</strong> Sunlight, stress, infections, certain drugs</li>
         <li><strong>Treatment:</strong> NSAIDs (mild), corticosteroids, hydroxychloroquine (Plaquenil), immunosuppressants</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q36 Clinical Picture</div><p>Q36 scenario: butterfly rash + joint pain + hypertension = <strong>SLE</strong>. The hypertension comes from kidney involvement (lupus nephritis). Know the triad: butterfly rash + joints + kidneys.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ Clinical Picture</div><p>scenario: butterfly rash + joint pain + hypertension = <strong>SLE</strong>. The hypertension comes from kidney involvement (lupus nephritis). Know the triad: butterfly rash + joints + kidneys.</p></div>
       <div class="pq">
-        <div class="pq-num">Q36 — Exam Practice</div>
         <div class="pq-text">A 26-year-old woman presents with a butterfly-shaped rash across her cheeks, bilateral joint pain, and newly elevated blood pressure. Labs show positive ANA. What is the most likely diagnosis?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Rheumatoid Arthritis</button>
@@ -576,7 +569,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#ecfdf5"><span>🔬</span></div>
-        <div><div class="card-title">Immunoglobulins (Antibody Classes) <span class="topic-tag tag-green">Q32</span></div><div class="card-subtitle">IgE = immediate allergy · GAMED mnemonic · IgG most abundant</div></div>
+        <div><div class="card-title">Immunoglobulins (Antibody Classes)</div><div class="card-subtitle">IgE = immediate allergy · GAMED mnemonic · IgG most abundant</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -592,9 +585,8 @@ ul.content-list li strong{color:var(--gray-800)}
           <tr><td><strong>IgD</strong></td><td>B-cell surface receptor</td><td>Least understood; signals B-cell activation</td></tr>
         </table>
       </div>
-      <div class="box box-exam"><div class="box-title">⚠️ Q32 — IgE is the Answer</div><p>Q32 asks which immunoglobulin is responsible for immediate hypersensitivity and allergic reactions. Answer = <strong>IgE</strong>. IgE binds to mast cells and basophils — when allergen cross-links IgE → mast cells degranulate → histamine release → allergy symptoms.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ IgE is the Answer</div><p>asks which immunoglobulin is responsible for immediate hypersensitivity and allergic reactions. Answer = <strong>IgE</strong>. IgE binds to mast cells and basophils — when allergen cross-links IgE → mast cells degranulate → histamine release → allergy symptoms.</p></div>
       <div class="pq">
-        <div class="pq-num">Q32 — Exam Practice</div>
         <div class="pq-text">Which immunoglobulin class is primarily responsible for immediate hypersensitivity reactions and allergic responses including anaphylaxis?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. IgG</button>
@@ -612,7 +604,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fffbeb"><span>🔥</span></div>
-        <div><div class="card-title">Immune Response: Mast Cells &amp; Pyrogens <span class="topic-tag tag-amber">Q19 Q69 Q73</span></div><div class="card-subtitle">Histamine sources · Fever mechanism · Chemotaxis</div></div>
+        <div><div class="card-title">Immune Response: Mast Cells &amp; Pyrogens <span class="topic-tag tag-amber"></span></div><div class="card-subtitle">Histamine sources · Fever mechanism · Chemotaxis</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -625,11 +617,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Exogenous pyrogens:</strong> Bacterial endotoxins (LPS), viral products</li>
         <li><strong>Chemotaxis:</strong> Movement of leukocytes (WBCs) toward the site of injury/infection following chemical signals</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q19, Q69, Q73 — Exam Answers</div>
+      <div class="box box-exam"><div class="box-title">⚠️, Exam Answers</div>
         <ul>
-          <li><strong>Q19:</strong> "Where is histamine released from in inflammation?" → <strong>MAST CELLS</strong></li>
-          <li><strong>Q69:</strong> "What substance induces fever?" → <strong>PYROGENS</strong></li>
-          <li><strong>Q73:</strong> "Central cells in hay fever/allergies?" → <strong>MAST CELLS</strong></li>
+          <li><strong></strong> "Where is histamine released from in inflammation?" → <strong>MAST CELLS</strong></li>
+          <li><strong></strong> "What substance induces fever?" → <strong>PYROGENS</strong></li>
+          <li><strong></strong> "Central cells in hay fever/allergies?" → <strong>MAST CELLS</strong></li>
         </ul>
       </div>
       <div class="box box-pearl"><div class="box-title">💊 Clinical Pearl: Mast Cells are EVERYWHERE</div><p>Mast cells are found in connective tissue throughout the body, especially near blood vessels and in the respiratory/GI/skin mucosa — that's why allergic reactions affect these systems first.</p></div>
@@ -644,14 +636,13 @@ ul.content-list li strong{color:var(--gray-800)}
   <div class="section-header">
     <h2>🏥 Immunodeficiency</h2>
     <p>Primary and secondary immune deficiencies — when the immune system fails to protect</p>
-    <span class="blueprint-badge">📋 Blueprint: Q35 — 1 Question (but foundational knowledge)</span>
   </div>
 
   <div class="card searchable" data-topics="selective IgA deficiency immunodeficiency recurrent respiratory infections mucosal" style="margin-bottom:16px">
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#ecfdf5"><span>🛡️</span></div>
-        <div><div class="card-title">Selective IgA Deficiency <span class="topic-tag tag-green">Q35</span></div><div class="card-subtitle">Most common primary immunodeficiency · Recurrent mucosal infections</div></div>
+        <div><div class="card-title">Selective IgA Deficiency</div><div class="card-subtitle">Most common primary immunodeficiency · Recurrent mucosal infections</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -665,9 +656,8 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Risk:</strong> Anaphylaxis to blood products (contain IgA → patient's body reacts to foreign IgA)</li>
         <li><strong>Treatment:</strong> Treat infections as they occur; IgA cannot be replaced (unlike IgG)</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q35 — Exam Answer</div><p>Q35 scenario: 2-year-old with recurrent respiratory infections = <strong>Selective IgA Deficiency</strong>. Think: child can't protect mucosal surfaces → keeps getting respiratory infections. IgA is the guard at every body opening.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ Exam Answer</div><p>scenario: 2-year-old with recurrent respiratory infections = <strong>Selective IgA Deficiency</strong>. Think: child can't protect mucosal surfaces → keeps getting respiratory infections. IgA is the guard at every body opening.</p></div>
       <div class="pq">
-        <div class="pq-num">Q35 — Exam Practice</div>
         <div class="pq-text">A 2-year-old child has had multiple episodes of pneumonia and sinusitis. Lab work shows low IgA but normal IgG and IgM levels. What is the most likely diagnosis?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. SCID</button>
@@ -718,7 +708,6 @@ ul.content-list li strong{color:var(--gray-800)}
   <div class="section-header">
     <h2>🩸 Blood Cell Disorders</h2>
     <p>Leukemias and lymphomas — cancers of the blood and lymphatic system</p>
-    <span class="blueprint-badge">📋 Blueprint: Q39, Q40, Q41, Q42 — 4 Questions</span>
   </div>
 
   <div class="box box-key" style="margin-bottom:16px">
@@ -731,7 +720,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fef2f2"><span>🩸</span></div>
-        <div><div class="card-title">Leukemia: ALL vs CLL <span class="topic-tag tag-red">Q39 Q42</span></div><div class="card-subtitle">Childhood vs adult · Comparison table · CLL hallmark = B cell failure to mature</div></div>
+        <div><div class="card-title">Leukemia: ALL vs CLL <span class="topic-tag tag-red"></span></div><div class="card-subtitle">Childhood vs adult · Comparison table · CLL hallmark = B cell failure to mature</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -748,9 +737,8 @@ ul.content-list li strong{color:var(--gray-800)}
           <tr><td><strong>Treatment</strong></td><td>Chemo ± bone marrow transplant</td><td>Watch &amp; wait, then chemo</td></tr>
         </table>
       </div>
-      <div class="box box-exam"><div class="box-title">⚠️ Q42 — CLL Key Answer</div><p>Q42 asks the CHARACTERISTIC feature of CLL. Answer = <strong>"B cells that failed to differentiate from precursor B cells into mature B cells."</strong> These immature B cells accumulate and crowd out normal blood cells. Smudge cells on smear = CLL signature.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ CLL Key Answer</div><p>asks the CHARACTERISTIC feature of CLL. Answer = <strong>"B cells that failed to differentiate from precursor B cells into mature B cells."</strong> These immature B cells accumulate and crowd out normal blood cells. Smudge cells on smear = CLL signature.</p></div>
       <div class="pq">
-        <div class="pq-num">Q42 — Exam Practice</div>
         <div class="pq-text">Which statement BEST characterizes Chronic Lymphocytic Leukemia (CLL)?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Malignancy of T cells with Reed-Sternberg cells</button>
@@ -768,7 +756,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#f5f3ff"><span>🔬</span></div>
-        <div><div class="card-title">Hodgkin's Lymphoma <span class="topic-tag tag-purple">Q40 Q41</span></div><div class="card-subtitle">B-cell malignancy · Reed-Sternberg "Owl Eye" cells · Excellent prognosis</div></div>
+        <div><div class="card-title">Hodgkin's Lymphoma <span class="topic-tag tag-purple"></span></div><div class="card-subtitle">B-cell malignancy · Reed-Sternberg "Owl Eye" cells · Excellent prognosis</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -783,10 +771,10 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Prognosis:</strong> Excellent — ~86% 5-year survival (one of the most curable cancers)</li>
         <li><strong>Treatment:</strong> Chemotherapy (ABVD) + radiation</li>
       </ul>
-      <div class="box box-danger"><div class="box-title">🚨 Q40 &amp; Q41 — Critical Distinctions</div>
+      <div class="box box-danger"><div class="box-title">🚨 &amp; Critical Distinctions</div>
         <ul>
-          <li><strong>Q40:</strong> Reed-Sternberg cells arise from → <strong>B LYMPHOCYTES</strong></li>
-          <li><strong>Q41:</strong> TRUE statements about Hodgkin's:
+          <li><strong></strong> Reed-Sternberg cells arise from → <strong>B LYMPHOCYTES</strong></li>
+          <li><strong></strong> TRUE statements about Hodgkin's:
             <ul style="margin-top:6px">
               <li>✅ Characterized by Reed-Sternberg cells</li>
               <li>✅ More common in males than females</li>
@@ -798,7 +786,6 @@ ul.content-list li strong{color:var(--gray-800)}
       </div>
       <div class="box box-mnemonic"><div class="box-title">🧠 Remember: "Hodgkin = B cells with Owl Eyes"</div><p><strong>H</strong>odgkin = <strong>B</strong> cells (not T) · <strong>R</strong>eed-<strong>S</strong>ternberg = <strong>O</strong>wl eyes · <strong>EBV</strong> link · <strong>Males</strong> more common</p></div>
       <div class="pq">
-        <div class="pq-num">Q40 — Exam Practice</div>
         <div class="pq-text">Reed-Sternberg cells, the diagnostic hallmark of Hodgkin's Lymphoma, arise from which cell type?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. T lymphocytes</button>
@@ -809,7 +796,6 @@ ul.content-list li strong{color:var(--gray-800)}
         <div class="pq-explanation">Reed-Sternberg cells are malignant B lymphocytes that have undergone transformation. They have the characteristic "owl eye" appearance — large bilobed nuclei. This distinguishes Hodgkin's (B-cell only) from NHL (B or T cells).</div>
       </div>
       <div class="pq">
-        <div class="pq-num">Q41 — Exam Practice</div>
         <div class="pq-text">Which of the following is TRUE about Hodgkin's Lymphoma? (Select the CORRECT statement)</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Primarily affects both B and T cells equally</button>
@@ -860,11 +846,10 @@ ul.content-list li strong{color:var(--gray-800)}
   <div class="section-header">
     <h2>🔴 Anemia &amp; Blood Loss</h2>
     <p>BIGGEST exam topic — 7 questions. Master this section!</p>
-    <span class="blueprint-badge">📋 Blueprint: Q43, Q44, Q60, Q61, Q62, Q68, Q70, Q75 — 7+ Questions</span>
   </div>
 
   <div class="box box-key" style="margin-bottom:16px">
-    <div class="box-title">🔑 Anemia Definition (Q61)</div>
+    <div class="box-title">🔑 Anemia Definition </div>
     <p style="font-size:0.95rem"><strong>Anemia = Decreased hemoglobin concentration</strong> → reduced oxygen delivery to tissues. Not just "low RBC count" — it's specifically about hemoglobin.</p>
     <p style="font-size:0.875rem;margin-top:8px">General symptoms: fatigue, pallor, shortness of breath, dizziness, <strong>tachycardia</strong> (compensatory — heart speeds up to deliver more O₂), <strong>hypotension</strong> (from low blood volume)</p>
   </div>
@@ -874,13 +859,13 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fef2f2"><span>🔴</span></div>
-        <div><div class="card-title">Iron-Deficiency Anemia <span class="topic-tag tag-red">Q62 Q68 Q75</span></div><div class="card-subtitle">Most common worldwide · PICA · Ferrous sulfate treatment · NOT B12!</div></div>
+        <div><div class="card-title">Iron-Deficiency Anemia <span class="topic-tag tag-red"></span></div><div class="card-subtitle">Most common worldwide · PICA · Ferrous sulfate treatment · NOT B12!</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
     <div class="card-body"><div class="card-content">
       <ul class="content-list">
-        <li><strong>Prevalence:</strong> <strong>Most common cause of anemia worldwide</strong> (Q75 answer)</li>
+        <li><strong>Prevalence:</strong> <strong>Most common cause of anemia worldwide</strong> (answer)</li>
         <li><strong>Cause:</strong> Insufficient iron → can't synthesize hemoglobin</li>
         <li><strong>Classic symptoms:</strong> Fatigue, pale skin, <strong>PICA</strong> (cravings for non-food items)</li>
         <li><strong>PICA examples:</strong> Pagophagia (ice), geophagia (dirt), amylophagia (chalk/starch) — ice cravings are CLASSIC!</li>
@@ -888,8 +873,8 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Labs:</strong> ↓ MCV (microcytic, small RBCs), ↓ ferritin (iron stores), ↑ TIBC (body tries to grab more iron), ↓ serum iron</li>
         <li><strong>Causes:</strong> Poor diet, blood loss (heavy periods, GI bleeding), malabsorption, pregnancy</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q62 — Clinical Findings</div><p>Q62 asks for clinical findings of iron-deficiency anemia. Key answer: <strong>hair loss AND ice cravings (PICA/pagophagia)</strong>. This pairing is characteristic and distinguishes IDA from other anemias.</p></div>
-      <div class="box box-exam"><div class="box-title">⚠️ Q68 — Treatment (What's CORRECT vs WRONG)</div>
+      <div class="box box-exam"><div class="box-title">⚠️ Clinical Findings</div><p>asks for clinical findings of iron-deficiency anemia. Key answer: <strong>hair loss AND ice cravings (PICA/pagophagia)</strong>. This pairing is characteristic and distinguishes IDA from other anemias.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ Treatment (What's CORRECT vs WRONG)</div>
         <ul>
           <li>✅ <strong>Oral ferrous sulfate</strong> — first-line treatment</li>
           <li>✅ <strong>IV iron supplementation</strong> — when oral not tolerated</li>
@@ -899,7 +884,6 @@ ul.content-list li strong{color:var(--gray-800)}
       </div>
       <div class="box box-mnemonic"><div class="box-title">🧠 Mnemonic: "IRON" symptoms</div><p><strong>I</strong>ce cravings (pagophagia) · <strong>R</strong>ed blood cell decrease (microcytic) · <strong>O</strong>nychoschisis (spoon nails) · <strong>N</strong>o hair (alopecia)</p></div>
       <div class="pq">
-        <div class="pq-num">Q75 — Exam Practice</div>
         <div class="pq-text">What is the most common cause of anemia worldwide?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Pernicious anemia</button>
@@ -910,7 +894,6 @@ ul.content-list li strong{color:var(--gray-800)}
         <div class="pq-explanation">Iron-deficiency anemia is the most common cause of anemia worldwide, affecting approximately 2 billion people. It is especially prevalent in developing countries and in women of childbearing age.</div>
       </div>
       <div class="pq">
-        <div class="pq-num">Q62 — Exam Practice</div>
         <div class="pq-text">A nurse is assessing a patient with suspected iron-deficiency anemia. Which combination of findings is MOST characteristic?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Joint pain and butterfly rash</button>
@@ -928,25 +911,24 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fef2f2"><span>🩸</span></div>
-        <div><div class="card-title">Acute Blood Loss &amp; Hematocrit Trap <span class="topic-tag tag-red">Q43 Q44</span></div><div class="card-subtitle">Normal hematocrit RIGHT after bleeding = expected! Drops only after fluids</div></div>
+        <div><div class="card-title">Acute Blood Loss &amp; Hematocrit Trap <span class="topic-tag tag-red"></span></div><div class="card-subtitle">Normal hematocrit RIGHT after bleeding = expected! Drops only after fluids</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
     <div class="card-body"><div class="card-content">
       <ul class="content-list">
         <li><strong>Mechanism:</strong> Sudden hemorrhage → ↓ blood volume → ↓ O₂ delivery → compensatory tachycardia + hypotension</li>
-        <li><strong>Q43 — Primary concern:</strong> <strong>HYPOTENSION</strong> (due to low blood volume) — not just "low hemoglobin"</li>
+        <li><strong>Primary concern:</strong> <strong>HYPOTENSION</strong> (due to low blood volume) — not just "low hemoglobin"</li>
         <li><strong>Hematocrit after acute blood loss:</strong> Initially NORMAL (equal loss of plasma and cells)</li>
         <li><strong>Hematocrit drops ONLY AFTER</strong> fluid replacement dilutes the remaining RBCs</li>
         <li><strong>Treatment:</strong> Blood transfusion + IV fluids</li>
       </ul>
-      <div class="box box-danger"><div class="box-title">🚨 Q44 — BIGGEST EXAM TRAP</div>
+      <div class="box box-danger"><div class="box-title">🚨 BIGGEST EXAM TRAP</div>
         <p>Patient loses 30% of blood volume. Hematocrit is measured = <strong>48% (normal)</strong>.</p>
         <p style="margin-top:6px">This is the <strong>UNEXPECTED/abnormal</strong> finding BECAUSE: when you lose blood acutely, you lose plasma AND cells together — the ratio stays the same. Hematocrit only FALLS after fluid resuscitation dilutes remaining cells.</p>
         <p style="margin-top:6px"><strong>So: Normal hematocrit immediately after major blood loss is the TRICK — it will look normal when you expect it to be low!</strong></p>
       </div>
       <div class="pq">
-        <div class="pq-num">Q44 — Exam Practice</div>
         <div class="pq-text">A trauma patient lost approximately 30% of their blood volume. Lab work drawn immediately after the injury shows a hematocrit of 48% (normal). Which statement BEST explains this finding?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. The patient did not actually lose significant blood</button>
@@ -988,7 +970,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fffbeb"><span>👶</span></div>
-        <div><div class="card-title">Hemolytic Anemia &amp; Erythroblastosis Fetalis <span class="topic-tag tag-amber">Q60</span></div><div class="card-subtitle">Rh incompatibility · RhoGAM prevention · Phototherapy treatment</div></div>
+        <div><div class="card-title">Hemolytic Anemia &amp; Erythroblastosis Fetalis</div><div class="card-subtitle">Rh incompatibility · RhoGAM prevention · Phototherapy treatment</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -1001,9 +983,8 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Treatment:</strong> <strong>Phototherapy</strong> (blue light breaks down bilirubin in skin), exchange transfusion for severe cases</li>
         <li><strong>Signs in newborn:</strong> Jaundice, pallor, hydrops fetalis (severe), high-pitched cry</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q60 — "All of the Above"</div><p>Q60 about erythroblastosis fetalis = <strong>All of the above</strong>. All statements are correct: antibody crosses placenta ✓, antigen-antibody response destroys RBCs ✓, phototherapy is treatment ✓.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ "All of the Above"</div><p>about erythroblastosis fetalis = <strong>All of the above</strong>. All statements are correct: antibody crosses placenta ✓, antigen-antibody response destroys RBCs ✓, phototherapy is treatment ✓.</p></div>
       <div class="pq">
-        <div class="pq-num">Q60 — Exam Practice</div>
         <div class="pq-text">Regarding erythroblastosis fetalis (hemolytic disease of the newborn), which statement is TRUE?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Maternal IgG antibodies cross the placenta and attack fetal RBCs</button>
@@ -1053,7 +1034,6 @@ ul.content-list li strong{color:var(--gray-800)}
   <div class="section-header">
     <h2>💉 Coagulation &amp; Vascular Disorders</h2>
     <p>ITP, Hemophilia, DVT, and Varicosity — clotting too little or too much</p>
-    <span class="blueprint-badge">📋 Blueprint: Q45, Q46, Q47, Q63, Q64, Q65 — 7 Questions</span>
   </div>
 
   <div class="box box-key" style="margin-bottom:16px">
@@ -1075,7 +1055,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fdf4ff"><span>🟣</span></div>
-        <div><div class="card-title">ITP — Immune Thrombocytopenic Purpura <span class="topic-tag tag-purple">Q47</span></div><div class="card-subtitle">Post-viral · Antibodies destroy platelets · Petechiae + bruising in child</div></div>
+        <div><div class="card-title">ITP — Immune Thrombocytopenic Purpura</div><div class="card-subtitle">Post-viral · Antibodies destroy platelets · Petechiae + bruising in child</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -1089,9 +1069,8 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Treatment:</strong> Corticosteroids (prednisone), IVIG (intravenous immunoglobulin), splenectomy (last resort)</li>
         <li><strong>Analogy:</strong> "Your immune system becomes a bully to your own platelets"</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q47 — Classic Clinical Picture</div><p>Q47 scenario: Child had chickenpox 1 week ago → now presents with bruising, petechiae, and gum bleeding. Answer = <strong>ITP (Immune Thrombocytopenic Purpura)</strong>. Viral infection → immune system attacks platelets → bleeding symptoms.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ Classic Clinical Picture</div><p>scenario: Child had chickenpox 1 week ago → now presents with bruising, petechiae, and gum bleeding. Answer = <strong>ITP (Immune Thrombocytopenic Purpura)</strong>. Viral infection → immune system attacks platelets → bleeding symptoms.</p></div>
       <div class="pq">
-        <div class="pq-num">Q47 — Exam Practice</div>
         <div class="pq-text">A 5-year-old child had chickenpox one week ago. The parents bring the child in because of multiple bruises, small purple spots all over the skin, and gum bleeding. What is the MOST likely diagnosis?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. Hemophilia A</button>
@@ -1109,7 +1088,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fef2f2"><span>🩸</span></div>
-        <div><div class="card-title">Hemophilia A &amp; B <span class="topic-tag tag-red">Q63 Q64</span></div><div class="card-subtitle">Factor VIII or IX deficiency · X-linked · Prolonged bleeding time</div></div>
+        <div><div class="card-title">Hemophilia A &amp; B <span class="topic-tag tag-red"></span></div><div class="card-subtitle">Factor VIII or IX deficiency · X-linked · Prolonged bleeding time</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -1124,10 +1103,10 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Treatment:</strong> Recombinant clotting factors (VIII or IX), desmopressin (DDAVP for mild Hemophilia A)</li>
         <li><strong>Lifestyle:</strong> Avoid contact sports, avoid aspirin/NSAIDs</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q63 &amp; Q64 — Exam Answers</div>
+      <div class="box box-exam"><div class="box-title">⚠️ &amp; Exam Answers</div>
         <ul>
-          <li><strong>Q63:</strong> Prolonged PT = <strong>coagulation factor dysfunction</strong> (extrinsic pathway — factors VII, X, II, I)</li>
-          <li><strong>Q64:</strong> Hemophilia = prolonged bleeding time due to <strong>ABSENCE of clotting factor</strong> (factor VIII or IX)</li>
+          <li><strong></strong> Prolonged PT = <strong>coagulation factor dysfunction</strong> (extrinsic pathway — factors VII, X, II, I)</li>
+          <li><strong></strong> Hemophilia = prolonged bleeding time due to <strong>ABSENCE of clotting factor</strong> (factor VIII or IX)</li>
         </ul>
       </div>
       <div class="box box-pearl"><div class="box-title">💊 PT vs PTT — Which is Prolonged?</div>
@@ -1145,7 +1124,7 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#fef2f2"><span>🦵</span></div>
-        <div><div class="card-title">Deep Vein Thrombosis (DVT) <span class="topic-tag tag-red">Q45 Q46</span></div><div class="card-subtitle">Virchow's Triad · Immobility = #1 risk · 60yo obese post-hip replacement</div></div>
+        <div><div class="card-title">Deep Vein Thrombosis (DVT) <span class="topic-tag tag-red"></span></div><div class="card-subtitle">Virchow's Triad · Immobility = #1 risk · 60yo obese post-hip replacement</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
@@ -1176,14 +1155,13 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Treatment:</strong> Heparin (acute) → warfarin or DOAC (long-term anticoagulation)</li>
         <li><strong>Prevention:</strong> Early ambulation, sequential compression devices (SCDs), anticoagulation</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q45 &amp; Q46 — Exam Answers</div>
+      <div class="box box-exam"><div class="box-title">⚠️ &amp; Exam Answers</div>
         <ul>
-          <li><strong>Q45:</strong> Primary risk factor in Virchow's Triad for DVT = <strong>IMMOBILITY (venous stasis)</strong></li>
-          <li><strong>Q46:</strong> Most at risk for DVT = <strong>60-year-old morbidly obese patient after hip replacement</strong> — combines ALL risks: age + obesity (hypercoagulability) + post-surgical immobility + endothelial injury from surgery</li>
+          <li><strong></strong> Primary risk factor in Virchow's Triad for DVT = <strong>IMMOBILITY (venous stasis)</strong></li>
+          <li><strong></strong> Most at risk for DVT = <strong>60-year-old morbidly obese patient after hip replacement</strong> — combines ALL risks: age + obesity (hypercoagulability) + post-surgical immobility + endothelial injury from surgery</li>
         </ul>
       </div>
       <div class="pq">
-        <div class="pq-num">Q45 — Exam Practice</div>
         <div class="pq-text">According to Virchow's Triad, which factor is considered the PRIMARY risk factor for developing DVT in a hospitalized patient?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,true)">A. Immobility (venous stasis)</button>
@@ -1194,7 +1172,6 @@ ul.content-list li strong{color:var(--gray-800)}
         <div class="pq-explanation">Of Virchow's Triad components (stasis, hypercoagulability, endothelial injury), IMMOBILITY causing venous stasis is the primary and most modifiable risk factor in hospitalized patients. This is why nurses encourage early ambulation and use SCDs for bedridden patients.</div>
       </div>
       <div class="pq">
-        <div class="pq-num">Q46 — Exam Practice</div>
         <div class="pq-text">Which patient is MOST at risk for developing a DVT?</div>
         <div class="pq-choices">
           <button class="pq-choice" onclick="answerPQ(this,false)">A. 25-year-old healthy runner</button>
@@ -1212,13 +1189,13 @@ ul.content-list li strong{color:var(--gray-800)}
     <div class="card-header" onclick="toggleCard(this)">
       <div class="card-header-left">
         <div class="card-icon" style="background:#ecfdf5"><span>🦿</span></div>
-        <div><div class="card-title">Varicosity (Varicose Veins) <span class="topic-tag tag-green">Q65</span></div><div class="card-subtitle">Abnormally dilated superficial vein · Incompetent valves · Blood pools</div></div>
+        <div><div class="card-title">Varicosity (Varicose Veins)</div><div class="card-subtitle">Abnormally dilated superficial vein · Incompetent valves · Blood pools</div></div>
       </div>
       <span class="card-chevron">▼</span>
     </div>
     <div class="card-body"><div class="card-content">
       <ul class="content-list">
-        <li><strong>Definition:</strong> Abnormally <strong>DILATED superficial veins</strong> (Q65 answer)</li>
+        <li><strong>Definition:</strong> Abnormally <strong>DILATED superficial veins</strong> (answer)</li>
         <li><strong>Mechanism:</strong> Impaired/incompetent venous valves → blood pools → increased pressure → veins enlarge and become tortuous</li>
         <li><strong>Locations:</strong> Legs most common; also esophageal varices (liver disease), hemorrhoids</li>
         <li><strong>Risk factors:</strong> Prolonged standing (nurses!), pregnancy, obesity, family history</li>
@@ -1226,7 +1203,7 @@ ul.content-list li strong{color:var(--gray-800)}
         <li><strong>Complications:</strong> Venous insufficiency, skin ulcers, superficial thrombophlebitis</li>
         <li><strong>Treatment:</strong> Compression stockings, elevation, sclerotherapy, surgery</li>
       </ul>
-      <div class="box box-exam"><div class="box-title">⚠️ Q65 Definition</div><p>Q65 defines varicosity as: <strong>"Abnormally dilated superficial vein"</strong> — the key words are DILATED and SUPERFICIAL. Varicose veins are in superficial (not deep) veins.</p></div>
+      <div class="box box-exam"><div class="box-title">⚠️ Definition</div><p>defines varicosity as: <strong>"Abnormally dilated superficial vein"</strong> — the key words are DILATED and SUPERFICIAL. Varicose veins are in superficial (not deep) veins.</p></div>
     </div></div>
   </div>
 </div><!-- end sec-coag -->
@@ -1238,14 +1215,14 @@ ul.content-list li strong{color:var(--gray-800)}
 <div class="section-wrap" id="sec-quiz-tab">
   <div class="section-header">
     <h2>📝 Exam Practice Quiz</h2>
-    <p>10 questions pulled directly from the exam blueprint — instant feedback &amp; explanations</p>
+    <p>10 practice questions — instant feedback &amp; explanations</p>
   </div>
   <div id="quiz-section">
     <h2>Module 2 Exam Quiz</h2>
-    <p class="quiz-meta">10 questions · Based on actual exam blueprint · Explanations provided after each answer</p>
+    <p class="quiz-meta">10 questions · Explanations provided after each answer</p>
     <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="qpb" style="width:0%"></div></div>
 
-    <!-- Q1 -->
+    <!-- ->
     <div class="quiz-q active" id="qq1">
       <div class="quiz-q-num">Question 1 of 10</div>
       <div class="quiz-q-text">A patient with sickle cell anemia inherited the HbS gene from BOTH parents. How does this affect disease severity compared to a patient who inherited it from only ONE parent?</div>
@@ -1259,7 +1236,7 @@ ul.content-list li strong{color:var(--gray-800)}
       <div class="quiz-nav"><span style="color:var(--gray-600);font-size:0.875rem">Select an answer to continue</span><button class="btn btn-primary" onclick="nextQuiz('qq1','qq2')" id="next1" disabled>Next →</button></div>
     </div>
 
-    <!-- Q2 -->
+    <!-- ->
     <div class="quiz-q" id="qq2">
       <div class="quiz-q-num">Question 2 of 10</div>
       <div class="quiz-q-text">A 2-year-old has had multiple bouts of pneumonia and sinusitis. Lab results show low IgA but normal IgG and IgM. What is the most likely diagnosis?</div>
@@ -1269,11 +1246,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq2',true)">C. Selective IgA Deficiency</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq2',false)">D. Chronic Granulomatous Disease</button>
       </div>
-      <div class="quiz-feedback" id="qf2">Q35 — Selective IgA deficiency is the MOST COMMON primary immunodeficiency. IgA deficiency = low/absent IgA with normal IgG and IgM. Results in recurrent MUCOSAL infections (sinopulmonary). Many patients are actually asymptomatic.</div>
+      <div class="quiz-feedback" id="qf2">Selective IgA deficiency is the MOST COMMON primary immunodeficiency. IgA deficiency = low/absent IgA with normal IgG and IgM. Results in recurrent MUCOSAL infections (sinopulmonary). Many patients are actually asymptomatic.</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq2','qq1')">← Back</button><button class="btn btn-primary" onclick="nextQuiz('qq2','qq3')" id="next2" disabled>Next →</button></div>
     </div>
 
-    <!-- Q3 -->
+    <!-- ->
     <div class="quiz-q" id="qq3">
       <div class="quiz-q-num">Question 3 of 10</div>
       <div class="quiz-q-text">Reed-Sternberg cells — the diagnostic hallmark of Hodgkin's Lymphoma — originate from which cell type?</div>
@@ -1283,11 +1260,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq3',false)">C. Mast cells</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq3',false)">D. Natural killer cells</button>
       </div>
-      <div class="quiz-feedback" id="qf3">Q40 — Reed-Sternberg cells arise from B LYMPHOCYTES that have undergone malignant transformation. They have the characteristic "owl eye" bilobed nucleus with prominent nucleoli. This is key: Hodgkin's = B cells ONLY. NHL = B or T cells.</div>
+      <div class="quiz-feedback" id="qf3">Reed-Sternberg cells arise from B LYMPHOCYTES that have undergone malignant transformation. They have the characteristic "owl eye" bilobed nucleus with prominent nucleoli. This is key: Hodgkin's = B cells ONLY. NHL = B or T cells.</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq3','qq2')">← Back</button><button class="btn btn-primary" onclick="nextQuiz('qq3','qq4')" id="next3" disabled>Next →</button></div>
     </div>
 
-    <!-- Q4 -->
+    <!-- ->
     <div class="quiz-q" id="qq4">
       <div class="quiz-q-num">Question 4 of 10</div>
       <div class="quiz-q-text">A nurse assessing a patient with anemia should be most concerned about which cardiovascular complication?</div>
@@ -1297,11 +1274,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq4',false)">C. Bradycardia</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq4',false)">D. Atrial fibrillation</button>
       </div>
-      <div class="quiz-feedback" id="qf4">Q43 — The primary cardiovascular concern in anemia is HYPOTENSION from low blood volume. Additionally, the body compensates with TACHYCARDIA (not bradycardia) to maintain oxygen delivery. Hypotension from anemia can lead to inadequate tissue perfusion and organ damage.</div>
+      <div class="quiz-feedback" id="qf4">The primary cardiovascular concern in anemia is HYPOTENSION from low blood volume. Additionally, the body compensates with TACHYCARDIA (not bradycardia) to maintain oxygen delivery. Hypotension from anemia can lead to inadequate tissue perfusion and organ damage.</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq4','qq3')">← Back</button><button class="btn btn-primary" onclick="nextQuiz('qq4','qq5')" id="next4" disabled>Next →</button></div>
     </div>
 
-    <!-- Q5 -->
+    <!-- ->
     <div class="quiz-q" id="qq5">
       <div class="quiz-q-num">Question 5 of 10</div>
       <div class="quiz-q-text">A patient lost 30% of blood volume in a trauma. Blood work drawn immediately at the ER shows hematocrit of 48% (within normal range). Which statement BEST explains this?</div>
@@ -1311,11 +1288,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq5',true)">C. Hematocrit drops only AFTER fluid replacement because plasma and cells are lost proportionally</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq5',false)">D. Normal hematocrit confirms no significant blood loss occurred</button>
       </div>
-      <div class="quiz-feedback" id="qf5">Q44 — CRITICAL CONCEPT: In acute hemorrhage, whole blood is lost (plasma + cells together), so the hematocrit RATIO stays the same initially. After IV fluids are given, plasma is diluted but RBCs are not replaced → hematocrit FALLS. Normal hematocrit right after blood loss does NOT mean the patient is fine!</div>
+      <div class="quiz-feedback" id="qf5">CRITICAL CONCEPT: In acute hemorrhage, whole blood is lost (plasma + cells together), so the hematocrit RATIO stays the same initially. After IV fluids are given, plasma is diluted but RBCs are not replaced → hematocrit FALLS. Normal hematocrit right after blood loss does NOT mean the patient is fine!</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq5','qq4')">← Back</button><button class="btn btn-primary" onclick="nextQuiz('qq5','qq6')" id="next5" disabled>Next →</button></div>
     </div>
 
-    <!-- Q6 -->
+    <!-- ->
     <div class="quiz-q" id="qq6">
       <div class="quiz-q-num">Question 6 of 10</div>
       <div class="quiz-q-text">A 5-year-old had chickenpox 1 week ago. Now the parents notice multiple bruises, tiny purple pinpoint spots on the skin, and gum bleeding. What is the MOST likely diagnosis?</div>
@@ -1325,11 +1302,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq6',false)">C. ALL (Acute Lymphoblastic Leukemia)</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq6',false)">D. DVT</button>
       </div>
-      <div class="quiz-feedback" id="qf6">Q47 — Classic ITP presentation: RECENT VIRAL INFECTION (chickenpox) + petechiae (purple spots) + bruising + mucosal bleeding (gums) = ITP. The viral infection triggers autoantibodies that destroy platelets. ITP in children often resolves on its own within months.</div>
+      <div class="quiz-feedback" id="qf6">Classic ITP presentation: RECENT VIRAL INFECTION (chickenpox) + petechiae (purple spots) + bruising + mucosal bleeding (gums) = ITP. The viral infection triggers autoantibodies that destroy platelets. ITP in children often resolves on its own within months.</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq6','qq5')">← Back</button><button class="btn btn-primary" onclick="nextQuiz('qq6','qq7')" id="next6" disabled>Next →</button></div>
     </div>
 
-    <!-- Q7 -->
+    <!-- ->
     <div class="quiz-q" id="qq7">
       <div class="quiz-q-num">Question 7 of 10</div>
       <div class="quiz-q-text">Which patient is at HIGHEST risk for developing DVT?</div>
@@ -1339,11 +1316,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq7',false)">C. 30-year-old nurse who stands all day</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq7',false)">D. 45-year-old dehydrated marathon runner</button>
       </div>
-      <div class="quiz-feedback" id="qf7">Q46 — The 60-year-old morbidly obese post-hip-replacement patient satisfies ALL THREE components of Virchow's Triad: (1) Venous stasis from post-surgical immobility, (2) Hypercoagulability from obesity + age + surgery, (3) Endothelial injury from hip surgery. Multiple converging factors = highest risk.</div>
+      <div class="quiz-feedback" id="qf7">The 60-year-old morbidly obese post-hip-replacement patient satisfies ALL THREE components of Virchow's Triad: (1) Venous stasis from post-surgical immobility, (2) Hypercoagulability from obesity + age + surgery, (3) Endothelial injury from hip surgery. Multiple converging factors = highest risk.</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq7','qq6')">← Back</button><button class="btn btn-primary" onclick="nextQuiz('qq7','qq8')" id="next7" disabled>Next →</button></div>
     </div>
 
-    <!-- Q8 -->
+    <!-- ->
     <div class="quiz-q" id="qq8">
       <div class="quiz-q-num">Question 8 of 10</div>
       <div class="quiz-q-text">A patient is diagnosed with iron-deficiency anemia. The provider orders treatment. Which treatment is INAPPROPRIATE for iron-deficiency anemia?</div>
@@ -1353,11 +1330,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq8',false)">C. Vitamin C supplementation</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq8',true)">D. High-dose B12 injections</button>
       </div>
-      <div class="quiz-feedback" id="qf8">Q68 — B12 injections treat PERNICIOUS anemia (lack of intrinsic factor → can't absorb B12), NOT iron-deficiency anemia. For IDA: oral ferrous sulfate (first-line) ✓, IV iron (when oral not tolerated) ✓, Vitamin C (enhances iron absorption) ✓. Don't mix up B12 with iron treatments!</div>
+      <div class="quiz-feedback" id="qf8">B12 injections treat PERNICIOUS anemia (lack of intrinsic factor → can't absorb B12), NOT iron-deficiency anemia. For IDA: oral ferrous sulfate (first-line) ✓, IV iron (when oral not tolerated) ✓, Vitamin C (enhances iron absorption) ✓. Don't mix up B12 with iron treatments!</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq8','qq7')">← Back</button><button class="btn btn-primary" onclick="nextQuiz('qq8','qq9')" id="next8" disabled>Next →</button></div>
     </div>
 
-    <!-- Q9 -->
+    <!-- ->
     <div class="quiz-q" id="qq9">
       <div class="quiz-q-num">Question 9 of 10</div>
       <div class="quiz-q-text">A 42-year-old whose parent had Huntington's Disease begins experiencing involuntary, dance-like movements of the limbs. What is the pattern of inheritance for Huntington's Disease?</div>
@@ -1367,11 +1344,11 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq9',false)">C. X-linked recessive — only affects males</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq9',false)">D. Chromosomal nondisjunction</button>
       </div>
-      <div class="quiz-feedback" id="qf9">Q9 — Huntington's Disease is AUTOSOMAL DOMINANT — only ONE copy of the mutated HTT gene (on chromosome 4) is needed to cause disease. Each child of an affected parent has a 50% chance of inheriting it. The involuntary movements (chorea) are typically the FIRST symptom, appearing at age 30–50.</div>
+      <div class="quiz-feedback" id="qf9">Huntington's Disease is AUTOSOMAL DOMINANT — only ONE copy of the mutated HTT gene (on chromosome 4) is needed to cause disease. Each child of an affected parent has a 50% chance of inheriting it. The involuntary movements (chorea) are typically the FIRST symptom, appearing at age 30–50.</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq9','qq8')">← Back</button><button class="btn btn-primary" onclick="nextQuiz('qq9','qq10')" id="next9" disabled>Next →</button></div>
     </div>
 
-    <!-- Q10 -->
+    <!-- ->
     <div class="quiz-q" id="qq10">
       <div class="quiz-q-num">Question 10 of 10</div>
       <div class="quiz-q-text">A child with cystic fibrosis requires dietary guidance. Which dietary recommendation is CORRECT for this patient?</div>
@@ -1381,7 +1358,7 @@ ul.content-list li strong{color:var(--gray-800)}
         <button class="quiz-choice" onclick="answerQuiz(this,'qq10',false)">C. Low-sodium diet to reduce mucus production</button>
         <button class="quiz-choice" onclick="answerQuiz(this,'qq10',false)">D. High-fiber diet to prevent constipation</button>
       </div>
-      <div class="quiz-feedback" id="qf10">Q7 — CF patients need HIGH-CALORIE, HIGH-FAT diet because pancreatic enzyme insufficiency impairs fat/nutrient absorption. They burn more calories fighting infections and breathing. Low-fat diet would cause malnutrition. Also need pancreatic enzyme replacement with meals.</div>
+      <div class="quiz-feedback" id="qf10">CF patients need HIGH-CALORIE, HIGH-FAT diet because pancreatic enzyme insufficiency impairs fat/nutrient absorption. They burn more calories fighting infections and breathing. Low-fat diet would cause malnutrition. Also need pancreatic enzyme replacement with meals.</div>
       <div class="quiz-nav"><button class="btn btn-secondary" onclick="prevQuiz('qq10','qq9')">← Back</button><button class="btn btn-success" onclick="finishQuiz()">See Results 🎉</button></div>
     </div>
 
