@@ -316,6 +316,38 @@ tr:nth-child(even) td{background:var(--gray-50)}
     <p style="font-size:0.78rem;margin-top:6px;opacity:0.8">Click each card to flip and reveal details</p>
   </div>
 
+<div style="background:#fff;border-radius:14px;padding:20px;margin:18px 0;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
+  <div style="font-weight:700;color:#1e3a5f;font-size:0.88rem;margin-bottom:12px;text-align:center">⏱️ Hypersensitivity Reaction Timeline</div>
+  <svg viewBox="0 0 700 120" style="width:100%;height:auto;font-family:Inter,sans-serif">
+    <!-- Timeline bar -->
+    <rect x="50" y="55" width="600" height="6" rx="3" fill="#e2e8f0"/>
+    <!-- Type I -->
+    <circle cx="80" cy="58" r="14" fill="#1e3a5f"/>
+    <text x="80" y="63" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">I</text>
+    <text x="80" y="38" text-anchor="middle" fill="#1e3a5f" font-size="9" font-weight="600">2-30 min</text>
+    <text x="80" y="90" text-anchor="middle" fill="#64748b" font-size="8">IgE</text>
+    <text x="80" y="102" text-anchor="middle" fill="#64748b" font-size="7.5">Anaphylaxis</text>
+    <!-- Type II -->
+    <circle cx="250" cy="58" r="14" fill="#8b1a1a"/>
+    <text x="250" y="63" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">II</text>
+    <text x="250" y="38" text-anchor="middle" fill="#8b1a1a" font-size="9" font-weight="600">5-8 hrs</text>
+    <text x="250" y="90" text-anchor="middle" fill="#64748b" font-size="8">IgG/IgM</text>
+    <text x="250" y="102" text-anchor="middle" fill="#64748b" font-size="7.5">Transfusion Rxn</text>
+    <!-- Type III -->
+    <circle cx="420" cy="58" r="14" fill="#0d5f63"/>
+    <text x="420" y="63" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">III</text>
+    <text x="420" y="38" text-anchor="middle" fill="#0d5f63" font-size="9" font-weight="600">2-8 hrs</text>
+    <text x="420" y="90" text-anchor="middle" fill="#64748b" font-size="8">Immune Complex</text>
+    <text x="420" y="102" text-anchor="middle" fill="#64748b" font-size="7.5">SLE, Serum Sickness</text>
+    <!-- Type IV -->
+    <circle cx="620" cy="58" r="14" fill="#5b2d8e"/>
+    <text x="620" y="63" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">IV</text>
+    <text x="620" y="38" text-anchor="middle" fill="#5b2d8e" font-size="9" font-weight="600">24-72 hrs</text>
+    <text x="620" y="90" text-anchor="middle" fill="#64748b" font-size="8">T Cells (No Ab)</text>
+    <text x="620" y="102" text-anchor="middle" fill="#64748b" font-size="7.5">Contact Dermatitis</text>
+  </svg>
+</div>
+
   <div class="flip-grid">
     <div>
       <div class="flip-card" onclick="this.classList.toggle('flipped')">
@@ -445,6 +477,25 @@ tr:nth-child(even) td{background:var(--gray-50)}
     </ul>
   </div>
 
+<div class="clinical-scenario">
+  <div class="scenario-title">📋 At the Bedside — Anaphylaxis</div>
+  <p>You're a nurse in the outpatient infusion center. A 45-year-old patient is 10 minutes into their first dose of IV ceftriaxone when they suddenly say "my throat feels tight." You look up and notice their lips are swelling, they're developing hives on their chest, and their voice sounds hoarse. Their BP was 128/76 five minutes ago.</p>
+  <div class="scenario-answer" onclick="this.classList.toggle('reveal')">
+    <span class="tap-text">What do you do? Tap to reveal →</span>
+    <p class="answer-text"><strong>This is anaphylaxis — a life-threatening Type I hypersensitivity reaction.</strong><br><br>
+    <strong>Immediate actions (in order):</strong><br>
+    1. <strong>STOP the infusion immediately</strong> — disconnect the ceftriaxone, keep the IV patent with NS<br>
+    2. <strong>Call for help</strong> — activate rapid response / code team<br>
+    3. <strong>Epinephrine IM 0.3mg</strong> (1:1000) in the lateral thigh — THIS IS THE ONLY DRUG THAT SAVES LIVES in anaphylaxis<br>
+    4. Place patient flat with legs elevated (if not vomiting/dyspneic); high-flow O₂<br>
+    5. IV NS wide open for hypotension<br>
+    6. Prepare: diphenhydramine 50mg IV, methylprednisolone 125mg IV, albuterol nebulizer<br>
+    7. Continuous monitoring: BP, HR, O₂ sat, airway patency<br>
+    8. Document the allergen, notify pharmacy, update allergy list in the chart<br><br>
+    <strong>Why you asked about penicillin allergy:</strong> Cephalosporins have ~1-2% cross-reactivity with penicillin. This is why we always ask about antibiotic allergies before the first dose. This patient's chart should now list ceftriaxone as an allergy with "anaphylaxis" as the reaction type.</p>
+  </div>
+</div>
+
   <!-- TYPE II -->
   <div class="clinical-card">
     <div class="cc-header" style="background:#8b1a1a">
@@ -512,6 +563,11 @@ tr:nth-child(even) td{background:var(--gray-50)}
       <li>Dark urine = hemoglobinuria = hemolysis = emergency</li>
     </ul>
   </div>
+
+<div style="background:#eff6ff;border:2px solid #3b82f6;border-radius:10px;padding:16px 18px;margin:14px 0">
+  <div style="font-weight:700;color:#1d4ed8;font-size:0.79rem;text-transform:uppercase;letter-spacing:0.9px;margin-bottom:7px">🏥 Why Does This Matter in Practice?</div>
+  <p style="font-size:0.862rem;color:#1e3a5f;margin:0;line-height:1.65">Transfusion reactions are one of the most common nursing-preventable adverse events. <strong>Verification is your firewall.</strong> Two nurses independently verify: patient identity (name + DOB + wristband), blood type, unit number, and expiration date — at the bedside, not at the nurses' station. The first 15 minutes are the highest risk period — stay with the patient and take vitals at 5 minutes, 15 minutes, then every 30 minutes. A single mismatch can kill.</p>
+</div>
 
   <!-- TYPE III -->
   <div class="clinical-card">
@@ -804,6 +860,11 @@ tr:nth-child(even) td{background:var(--gray-50)}
     </div>
   </div>
 
+<div style="background:#eff6ff;border:2px solid #3b82f6;border-radius:10px;padding:16px 18px;margin:14px 0">
+  <div style="font-weight:700;color:#1d4ed8;font-size:0.79rem;text-transform:uppercase;letter-spacing:0.9px;margin-bottom:7px">🏥 Why Does This Matter in Practice?</div>
+  <p style="font-size:0.862rem;color:#1e3a5f;margin:0;line-height:1.65">SLE disproportionately affects <strong>young Black women</strong> — with more severe disease, earlier onset, and higher rates of lupus nephritis. Health disparities in SLE outcomes are driven by delayed diagnosis, socioeconomic barriers, and racial bias in pain assessment. As a nurse, you play a critical role: take complaints seriously regardless of demographics, advocate for timely rheumatology referral, and educate patients about medication adherence (especially hydroxychloroquine — the most important drug in SLE management). A 25-year-old woman with joint pain and a rash deserves the same diagnostic workup as anyone else.</p>
+</div>
+
   <div class="nursing-pearl">
     <div class="pearl-title">🩺 Nursing Pearls — SLE</div>
     <ul>
@@ -876,6 +937,29 @@ tr:nth-child(even) td{background:var(--gray-50)}
     <span class="analogy-icon">💡</span>
     <p>"Imagine tiny construction workers in your joints that are supposed to maintain the building — but they've gone haywire and are demolishing it from the inside. The pannus tissue is the wrecking crew eating away at cartilage and bone. Morning stiffness is like the wrecking crew starting fresh each night and you having to restart the joint machinery every morning."</p>
   </div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0">
+  <div style="background:#ecfdf5;border:2px solid #10b981;border-radius:10px;padding:14px">
+    <div style="font-weight:700;color:#047857;font-size:0.82rem;margin-bottom:6px">✅ Normal Joint</div>
+    <p style="font-size:0.84rem;color:#134e4a;margin:0;line-height:1.6">
+      • Thin synovial membrane — produces lubricating fluid<br>
+      • Smooth articular cartilage — cushions bone ends<br>
+      • Narrow, uniform joint space<br>
+      • Full range of motion, no swelling<br>
+      • Morning stiffness: none or &lt;15 minutes
+    </p>
+  </div>
+  <div style="background:#fef2f2;border:2px solid #ef4444;border-radius:10px;padding:14px">
+    <div style="font-weight:700;color:#b91c1c;font-size:0.82rem;margin-bottom:6px">❌ RA Joint</div>
+    <p style="font-size:0.84rem;color:#7f1d1d;margin:0;line-height:1.6">
+      • Inflamed, thickened synovium — produces pannus tissue<br>
+      • Pannus invades and erodes cartilage and bone<br>
+      • Narrowed, irregular joint space with erosions<br>
+      • Warm, swollen, tender; ulnar deviation, deformities<br>
+      • Morning stiffness: &gt;1 hour (improves with movement)
+    </p>
+  </div>
+</div>
 
   <div class="nursing-pearl">
     <div class="pearl-title">🩺 Nursing Pearls — Rheumatoid Arthritis</div>
@@ -1065,6 +1149,11 @@ tr:nth-child(even) td{background:var(--gray-50)}
     <p>"The thymus is the T-cell training camp. Without it, immature T cells never graduate — they can't learn to recognize self vs. non-self, can't coordinate immune attacks on viruses or fungi. DiGeorge is like closing down the military academy while still expecting a functioning army."</p>
   </div>
 
+<div style="background:#eff6ff;border:2px solid #3b82f6;border-radius:10px;padding:16px 18px;margin:14px 0">
+  <div style="font-weight:700;color:#1d4ed8;font-size:0.79rem;text-transform:uppercase;letter-spacing:0.9px;margin-bottom:7px">🏥 Why Does This Matter in Practice?</div>
+  <p style="font-size:0.862rem;color:#1e3a5f;margin:0;line-height:1.65">A newborn with DiGeorge presents as a medical puzzle: the NICU team sees a baby with a heart murmur, low calcium causing seizures, and unusual facial features. Your job as a nurse is to <strong>connect the dots</strong>. If you see a neonate with hypocalcemia + cardiac defect — think DiGeorge, think T-cell deficiency, and think: <strong>NO live vaccines, infection precautions, and calcium monitoring.</strong> One diagnosis explains everything. Document the 22q11.2 deletion prominently — every provider for life needs to know.</p>
+</div>
+
   <!-- SCID -->
   <div class="clinical-card">
     <div class="cc-header" style="background:#b91c1c">
@@ -1196,6 +1285,23 @@ tr:nth-child(even) td{background:var(--gray-50)}
     </ul>
   </div>
 
+<div class="clinical-scenario">
+  <div class="scenario-title">📋 At the Bedside — New HIV Diagnosis</div>
+  <p>You're working in the ED when a 28-year-old man is admitted with severe oral thrush, a dry cough, and progressive shortness of breath over 2 weeks. His CXR shows diffuse bilateral ground-glass opacities. His rapid HIV test comes back positive, and labs reveal a CD4 count of 87 cells/µL and a viral load of 450,000 copies/mL. He looks terrified and whispers, "Am I going to die?"</p>
+  <div class="scenario-answer" onclick="this.classList.toggle('reveal')">
+    <span class="tap-text">How do you respond clinically and emotionally? Tap to reveal →</span>
+    <p class="answer-text"><strong>Clinical picture:</strong> This is AIDS (CD4 &lt;200) with PCP pneumonia (Pneumocystis jirovecii — bilateral ground-glass opacities on CXR + immunocompromised). This is the most common AIDS-defining illness.<br><br>
+    <strong>Immediate clinical priorities:</strong><br>
+    1. Start TMP-SMX (first-line PCP treatment) — dose based on severity; may need IV if hypoxic<br>
+    2. Adjunctive corticosteroids if PaO₂ &lt;70 mmHg (improves survival in moderate-severe PCP)<br>
+    3. O₂ supplementation, respiratory monitoring<br>
+    4. Initiate cART within 2 weeks of OI treatment (not immediately — IRIS risk)<br>
+    5. Baseline labs: CD4, viral load, genotype resistance testing, CMP, CBC, hepatitis B/C, toxoplasma IgG, RPR<br><br>
+    <strong>Emotional response:</strong><br>
+    "No — with treatment, people with HIV live long, healthy lives. We have excellent medications that control this virus. Right now, we're going to treat your pneumonia, and then we'll start you on medications that will bring your viral load down to undetectable. Undetectable means you can't transmit it to anyone else." Sit down when you say this. Make eye contact. Let him process. Connect with social work, ID specialist, and case management. Address stigma directly — it's the biggest barrier to adherence.</p>
+  </div>
+</div>
+
   <!-- Primary vs Secondary ID Comparison -->
   <div class="acc-card">
     <div class="acc-header" onclick="toggleAcc(this)">
@@ -1325,6 +1431,22 @@ tr:nth-child(even) td{background:var(--gray-50)}
     </ul>
   </div>
 
+<div class="clinical-scenario">
+  <div class="scenario-title">📋 At the Bedside — Childhood Leukemia</div>
+  <p>You're a pediatric nurse. A 4-year-old boy is brought in by his mother who says, "He won't stop crying about his legs hurting at night, and he's been bruising so easily — I barely touch him." On exam, you notice pallor, scattered petechiae on his trunk, and palpable cervical lymph nodes. He has a low-grade fever of 100.4°F. His mom asks, "Is this just a virus?"</p>
+  <div class="scenario-answer" onclick="this.classList.toggle('reveal')">
+    <span class="tap-text">What are you thinking? Tap to reveal →</span>
+    <p class="answer-text"><strong>This constellation is classic for ALL:</strong> bone pain (marrow expansion from blasts) + easy bruising/petechiae (thrombocytopenia) + pallor (anemia) + lymphadenopathy + low-grade fever (neutropenia or disease-related). Peak age 2-5 years.<br><br>
+    <strong>Your nursing actions:</strong><br>
+    1. Draw a STAT CBC with differential — you're looking for blasts on the differential, anemia, thrombocytopenia, and abnormal WBC<br>
+    2. Document the timeline of symptoms for the oncology team<br>
+    3. If CBC is suspicious (blasts present, pancytopenia), prepare the family for: bone marrow biopsy, likely admission, potential oncology transfer<br>
+    4. Be honest with mom: "These symptoms together concern me. The blood work will give us important answers quickly."<br>
+    5. Emotional support: Don't say "I'm sure it's nothing" — but also don't diagnose cancer. Let the labs guide the conversation.<br><br>
+    <strong>Clinical pearl:</strong> Night-time bone pain in a child that wakes them from sleep is NOT growing pains — growing pains are bilateral, in the muscles (not bones), and don't cause petechiae or pallor. This child needs a CBC today.</p>
+  </div>
+</div>
+
   <!-- CLL -->
   <div class="clinical-card">
     <div class="cc-header" style="background:#8b1a1a">
@@ -1380,6 +1502,11 @@ tr:nth-child(even) td{background:var(--gray-50)}
     <div class="danger-title">⚠️ Key Trap — CLL and Infection</div>
     <p>CLL patients look like they have an adequate WBC count, but their lymphocytes are non-functional — they can't produce normal immunoglobulins. A CLL patient with a "minor" infection can deteriorate rapidly. Never dismiss infections in CLL patients as trivial. Any fever or signs of infection in a CLL patient warrants prompt evaluation and a low threshold for antibiotic treatment.</p>
   </div>
+
+<div style="background:#eff6ff;border:2px solid #3b82f6;border-radius:10px;padding:16px 18px;margin:14px 0">
+  <div style="font-weight:700;color:#1d4ed8;font-size:0.79rem;text-transform:uppercase;letter-spacing:0.9px;margin-bottom:7px">🏥 Why Does This Matter in Practice?</div>
+  <p style="font-size:0.862rem;color:#1e3a5f;margin:0;line-height:1.65">CLL teaches a critical nursing concept: <strong>the WBC count can lie.</strong> A patient with CLL may have a WBC of 80,000 — sounds like their immune system is working overtime, right? Wrong. Those 80,000 lymphocytes are non-functional. They can't make antibodies. The patient is effectively immunocompromised despite an impressive-looking number. Always look at the differential and the immunoglobulin levels, not just the total WBC. This same principle applies to any hematologic malignancy — quantity ≠ quality.</p>
+</div>
 
   <!-- HODGKIN'S LYMPHOMA -->
   <div class="clinical-card">
@@ -1619,6 +1746,22 @@ tr:nth-child(even) td{background:var(--gray-50)}
     </ul>
   </div>
 
+<div class="clinical-scenario">
+  <div class="scenario-title">📋 At the Bedside — The Iron Puzzle</div>
+  <p>You're doing intake on a 68-year-old retired teacher, Mr. Davis, who was referred by his PCP for "anemia workup." His Hgb is 8.2 (low), MCV 72 (microcytic), ferritin 6 (very low). He says he feels "run down" and has been craving ice chips constantly. He tells you, "My doctor just wants to put me on iron pills, but I eat red meat every week. How can I be low on iron?"</p>
+  <div class="scenario-answer" onclick="this.classList.toggle('reveal')">
+    <span class="tap-text">What's really going on here? Tap to reveal →</span>
+    <p class="answer-text"><strong>Red flag alarm:</strong> Iron deficiency anemia in a 68-year-old male who eats meat is NOT a dietary problem — it's a <strong>GI blood loss</strong> problem until proven otherwise. This could be colon cancer, gastric ulcer, or another GI malignancy causing chronic, occult blood loss.<br><br>
+    <strong>Your nursing response:</strong><br>
+    1. This patient needs a <strong>colonoscopy and upper endoscopy</strong> BEFORE just taking iron pills — iron pills will treat the symptom but miss a potential cancer diagnosis<br>
+    2. Order a stool guaiac (FOBT/FIT) — check for occult blood<br>
+    3. Ask about: dark/tarry stools (melena), blood in stool, unintentional weight loss, change in bowel habits, abdominal pain<br>
+    4. Ice craving (pagophagia) is a classic sign of IDA — document it<br>
+    5. Explain to Mr. Davis: "Even though you eat well, your body may be losing iron faster than you can replace it. We need to find out where it's going."<br><br>
+    <strong>The lesson:</strong> Never just hand an older adult an iron prescription and send them home. Find the source. IDA in older men and postmenopausal women = GI malignancy screening is mandatory.</p>
+  </div>
+</div>
+
   <!-- PERNICIOUS ANEMIA -->
   <div class="clinical-card">
     <div class="cc-header" style="background:#0d7377">
@@ -1753,6 +1896,67 @@ tr:nth-child(even) td{background:var(--gray-50)}
       <li>Monitor for parvovirus B19 exposure — causes aplastic crisis. Fever + rapidly dropping Hgb + low reticulocyte count = aplastic crisis (rare but life-threatening).</li>
     </ul>
   </div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0">
+  <div style="background:#ecfdf5;border:2px solid #10b981;border-radius:10px;padding:14px">
+    <div style="font-weight:700;color:#047857;font-size:0.82rem;margin-bottom:6px">✅ Normal Red Blood Cell</div>
+    <p style="font-size:0.84rem;color:#134e4a;margin:0;line-height:1.6">
+      • Biconcave disc shape — flexible, squeezes through tiny capillaries<br>
+      • HbA (normal hemoglobin) — carries O₂ efficiently<br>
+      • Lifespan: ~120 days<br>
+      • Smooth flow through vessels — no occlusion<br>
+      • Spleen filters normally
+    </p>
+  </div>
+  <div style="background:#fef2f2;border:2px solid #ef4444;border-radius:10px;padding:14px">
+    <div style="font-weight:700;color:#b91c1c;font-size:0.82rem;margin-bottom:6px">❌ Sickled Red Blood Cell</div>
+    <p style="font-size:0.84rem;color:#7f1d1d;margin:0;line-height:1.6">
+      • Rigid crescent/sickle shape — gets stuck in capillaries<br>
+      • HbS polymerizes when deoxygenated — distorts cell<br>
+      • Lifespan: 10–20 days (hemolysis)<br>
+      • Vaso-occlusion → ischemia → organ damage + severe pain<br>
+      • Spleen infarcts repeatedly → autosplenectomy by age 5
+    </p>
+  </div>
+</div>
+
+<div style="background:#fff;border-radius:14px;padding:20px;margin:18px 0;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
+  <div style="font-weight:700;color:#1e3a5f;font-size:0.88rem;margin-bottom:12px;text-align:center">🔬 Sickle Cell Vaso-Occlusion — What Happens in the Capillary</div>
+  <svg viewBox="0 0 700 160" style="width:100%;height:auto;font-family:Inter,sans-serif">
+    <!-- Normal vessel -->
+    <text x="170" y="18" text-anchor="middle" fill="#047857" font-size="11" font-weight="700">Normal Blood Flow</text>
+    <rect x="20" y="30" width="300" height="50" rx="25" fill="none" stroke="#10b981" stroke-width="2.5"/>
+    <!-- Normal RBCs -->
+    <ellipse cx="70" cy="55" rx="16" ry="10" fill="#ef4444" opacity="0.7"/>
+    <ellipse cx="120" cy="55" rx="16" ry="10" fill="#ef4444" opacity="0.7"/>
+    <ellipse cx="170" cy="55" rx="16" ry="10" fill="#ef4444" opacity="0.7"/>
+    <ellipse cx="220" cy="55" rx="16" ry="10" fill="#ef4444" opacity="0.7"/>
+    <ellipse cx="270" cy="55" rx="16" ry="10" fill="#ef4444" opacity="0.7"/>
+    <!-- Flow arrow -->
+    <path d="M320 55 L340 55" stroke="#10b981" stroke-width="2" marker-end="url(#arrowG)"/>
+    <text x="170" y="100" text-anchor="middle" fill="#047857" font-size="9">Flexible discs flow smoothly → O₂ delivered</text>
+
+    <!-- Sickled vessel -->
+    <text x="530" y="18" text-anchor="middle" fill="#b91c1c" font-size="11" font-weight="700">Sickle Cell Occlusion</text>
+    <rect x="380" y="30" width="300" height="50" rx="25" fill="none" stroke="#ef4444" stroke-width="2.5"/>
+    <!-- Sickled cells jamming -->
+    <polygon points="420,45 445,50 435,60 410,55" fill="#7f1d1d" opacity="0.8"/>
+    <polygon points="450,48 475,42 470,58 445,55" fill="#7f1d1d" opacity="0.8"/>
+    <polygon points="485,50 510,45 505,62 480,58" fill="#7f1d1d" opacity="0.85"/>
+    <polygon points="520,46 545,50 538,63 515,55" fill="#7f1d1d" opacity="0.8"/>
+    <polygon points="555,48 580,44 575,60 550,56" fill="#7f1d1d" opacity="0.75"/>
+    <!-- X block -->
+    <text x="680" y="60" fill="#b91c1c" font-size="20" font-weight="900">✕</text>
+    <text x="530" y="100" text-anchor="middle" fill="#b91c1c" font-size="9">Rigid sickled cells jam → ischemia → PAIN CRISIS</text>
+
+    <!-- Arrow defs -->
+    <defs>
+      <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6" fill="#10b981"/>
+      </marker>
+    </defs>
+  </svg>
+</div>
 
   <!-- HEMOLYTIC DISEASE OF NEWBORN / Rh INCOMPATIBILITY -->
   <div class="clinical-card">
@@ -2105,10 +2309,41 @@ tr:nth-child(even) td{background:var(--gray-50)}
     </div>
   </div>
 
+<div style="background:#fff;border-radius:14px;padding:20px;margin:18px 0;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
+  <div style="font-weight:700;color:#1e3a5f;font-size:0.88rem;margin-bottom:14px;text-align:center">🔺 Virchow's Triad — The Three Ingredients for DVT</div>
+  <svg viewBox="0 0 500 280" style="width:100%;max-width:500px;height:auto;font-family:Inter,sans-serif;display:block;margin:0 auto">
+    <!-- Triangle -->
+    <polygon points="250,30 60,250 440,250" fill="none" stroke="#1e3a5f" stroke-width="2.5"/>
+    <!-- Center label -->
+    <text x="250" y="175" text-anchor="middle" fill="#b91c1c" font-size="13" font-weight="800">DVT</text>
+    <text x="250" y="192" text-anchor="middle" fill="#b91c1c" font-size="10">CLOT</text>
+    <!-- Top vertex -->
+    <circle cx="250" cy="30" r="22" fill="#5b2d8e"/>
+    <text x="250" y="35" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">STASIS</text>
+    <text x="250" y="8" text-anchor="middle" fill="#5b2d8e" font-size="8.5">Immobility, bed rest,</text>
+    <text x="250" y="-2" text-anchor="middle" fill="#5b2d8e" font-size="8.5">long flights, CHF</text>
+    <!-- Bottom left -->
+    <circle cx="60" cy="250" r="22" fill="#0d5f63"/>
+    <text x="60" y="247" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">ENDOTHELIAL</text>
+    <text x="60" y="258" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="700">INJURY</text>
+    <text x="60" y="278" text-anchor="middle" fill="#0d5f63" font-size="8.5">Surgery, trauma, IV lines</text>
+    <!-- Bottom right -->
+    <circle cx="440" cy="250" r="22" fill="#8b1a1a"/>
+    <text x="440" y="247" text-anchor="middle" fill="#fff" font-size="7" font-weight="700">HYPER-</text>
+    <text x="440" y="258" text-anchor="middle" fill="#fff" font-size="7" font-weight="700">COAGULABLE</text>
+    <text x="440" y="278" text-anchor="middle" fill="#8b1a1a" font-size="8.5">Cancer, OCP, pregnancy</text>
+  </svg>
+</div>
+
   <div class="danger-box">
     <div class="danger-title">⚠️ DVT → Pulmonary Embolism (PE)</div>
     <p>DVT clot can break off → travel through right heart → lodge in pulmonary arteries → PE. Classic PE triad: <strong>sudden dyspnea + pleuritic chest pain + tachycardia</strong>. Also: hemoptysis, hypoxia, anxiety, syncope. Massive PE → obstructive shock → cardiac arrest. If PE suspected: immediate CT pulmonary angiography (gold standard). Large PE → systemic thrombolytics (tPA) if hemodynamically unstable. PE is the most preventable cause of hospital death.</p>
   </div>
+
+<div style="background:#eff6ff;border:2px solid #3b82f6;border-radius:10px;padding:16px 18px;margin:14px 0">
+  <div style="font-weight:700;color:#1d4ed8;font-size:0.79rem;text-transform:uppercase;letter-spacing:0.9px;margin-bottom:7px">🏥 Why Does This Matter in Practice?</div>
+  <p style="font-size:0.862rem;color:#1e3a5f;margin:0;line-height:1.65"><strong>Pulmonary embolism is the #1 preventable cause of hospital death.</strong> Most fatal PEs originate from DVTs that nobody caught. As a nurse, your DVT prevention actions — getting patients up to walk, ensuring SCDs are actually on and working, administering prophylactic heparin on time — are literally the difference between life and death. Every time you ambulate a post-surgical patient, you are preventing a PE. That's not a chore — that's saving a life.</p>
+</div>
 
   <div class="nursing-pearl">
     <div class="pearl-title">🩺 Nursing Pearls — DVT Prevention &amp; Management</div>
@@ -2120,6 +2355,24 @@ tr:nth-child(even) td{background:var(--gray-50)}
       <li>DOACs: no routine monitoring needed but ensure patient isn't on interacting drugs (many are cytochrome P450 substrates). Cannot be reversed by protamine (use specific reversal agents: idarucizumab for dabigatran; andexanet alfa for Xa inhibitors).</li>
     </ul>
   </div>
+
+<div class="clinical-scenario">
+  <div class="scenario-title">📋 At the Bedside — Post-Op DVT</div>
+  <p>You're the night nurse on a surgical floor. Mrs. Rodriguez, 2 days post total hip replacement, presses the call light at 2 AM. She says her right calf "feels tight and achy." When you assess, you notice her right calf is noticeably larger than the left, warm to touch, and she winces when you palpate it. Her vitals: HR 96, BP 132/78, O₂ 96%, temp 99.2°F. She asks, "Is this just from the surgery?"</p>
+  <div class="scenario-answer" onclick="this.classList.toggle('reveal')">
+    <span class="tap-text">What's your assessment and plan? Tap to reveal →</span>
+    <p class="answer-text"><strong>High suspicion for DVT.</strong> Mrs. Rodriguez has multiple Virchow's triad risk factors: recent major surgery (endothelial injury + hypercoagulability) + 2 days of limited mobility (venous stasis) + hip replacement (one of the highest-risk surgeries for DVT).<br><br>
+    <strong>Your nursing actions:</strong><br>
+    1. <strong>DO NOT massage the leg</strong> — could dislodge the clot → pulmonary embolism<br>
+    2. Measure both calves — document the circumference difference (>3cm difference is significant)<br>
+    3. Elevate the affected leg<br>
+    4. Notify the provider NOW — even at 2 AM. This is urgent.<br>
+    5. Anticipate orders: stat compression duplex ultrasound, D-dimer (though D-dimer will be elevated post-surgery anyway, so it's less helpful here), and likely initiation of therapeutic anticoagulation<br>
+    6. Assess for PE symptoms: any chest pain, SOB, tachycardia, hemoptysis?<br>
+    7. Ask: "Are her SCDs plugged in and on?" Check DVT prophylaxis compliance<br><br>
+    <strong>The deeper lesson:</strong> This is why we emphasize early ambulation, SCDs, and pharmacologic DVT prophylaxis post-surgery. Prevention is everything. Once a DVT forms, you're managing a potentially lethal complication. And always — <strong>never massage a suspected DVT.</strong></p>
+  </div>
+</div>
 
   <!-- VARICOSE VEINS -->
   <div class="clinical-card">
