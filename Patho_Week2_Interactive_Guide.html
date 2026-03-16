@@ -166,6 +166,42 @@ tr:nth-child(even) td{background:var(--gray-50)}
 
 .divider{border:none;border-top:1px solid var(--gray-200);margin:16px 0}
 
+/* CLINICAL PEARL */
+.pearl{background:#f0fdfa;border-left:4px solid #14b8a6;border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.pearl-label{font-weight:700;color:#0f766e;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px}
+.pearl p{font-size:0.85rem;color:#134e4a;margin:0;line-height:1.55}
+
+/* NCLEX FOCUS */
+.nclex-focus{background:#eff6ff;border-left:4px solid #3b82f6;border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.nclex-label{font-weight:700;color:#1d4ed8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px}
+.nclex-focus p,.nclex-focus li{font-size:0.85rem;color:#1e3a5f;line-height:1.55}
+.nclex-focus ul{padding-left:16px;margin:4px 0}
+
+/* FLOW CHART */
+.flow-chart{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow-sm);margin:16px 0}
+.flow-title{font-weight:700;color:var(--navy);font-size:0.85rem;margin-bottom:10px;text-align:center}
+
+/* GUIDELINE LINK */
+.guideline-link{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:10px 14px;margin:12px 0;display:flex;align-items:center;gap:10px}
+.gl-label{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--gray-600);margin-bottom:2px}
+.guideline-link a{font-size:0.82rem;color:var(--blue);text-decoration:none;font-weight:500}
+.guideline-link a:hover{text-decoration:underline}
+
+/* QUICK CHECK */
+.quick-check{background:var(--green-light);border:1px solid #a7f3d0;border-radius:var(--radius);padding:14px 16px;margin:14px 0}
+.qc-label{font-weight:700;color:#047857;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px}
+.qc-question{margin-bottom:12px}
+.qc-question:last-child{margin-bottom:0}
+.qc-text{font-size:0.87rem;font-weight:600;color:var(--gray-800);margin-bottom:8px}
+.qc-choices{display:flex;flex-direction:column;gap:5px;margin-bottom:6px}
+.qc-choice{background:#fff;border:1.5px solid #d1fae5;border-radius:6px;padding:7px 12px;font-size:0.82rem;cursor:pointer;font-family:inherit;font-weight:500;color:var(--gray-700);text-align:left;transition:all 0.15s}
+.qc-choice:hover:not(:disabled){border-color:#10b981;background:#ecfdf5}
+.qc-choice.qc-correct{background:#dcfce7;border-color:#10b981;color:#047857;font-weight:600}
+.qc-choice.qc-wrong{background:#fee2e2;border-color:#ef4444;color:#b91c1c}
+.qc-choice:disabled{cursor:default;opacity:0.7}
+.qc-feedback{display:none;font-size:0.82rem;color:#047857;background:#dcfce7;border-radius:6px;padding:8px 12px;margin-top:6px;line-height:1.5}
+.qc-feedback.show{display:block}
+
 @media(max-width:768px){
   .tab-list{justify-content:flex-start;padding:0 4px}
   .tab-btn{font-size:0.72rem;padding:10px 10px}
@@ -248,6 +284,10 @@ tr:nth-child(even) td{background:var(--gray-50)}
       <li>Can be <strong>primary</strong> (genetic/born with it) or <strong>secondary</strong> (acquired -- e.g., HIV, medications).</li>
       <li><strong>Selective IgA deficiency:</strong> Most common primary immunodeficiency. Presents as recurrent respiratory and GI infections, especially in young children.</li>
     </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>Selective IgA deficiency is the most common primary immunodeficiency. Most patients are asymptomatic, but those who do have symptoms present with recurrent respiratory and GI infections -- because IgA protects mucosal surfaces (mouth, nose, gut, lungs).</p>
+    </div>
   </div>
 
   <!-- Hypersensitivity -->
@@ -283,6 +323,83 @@ tr:nth-child(even) td{background:var(--gray-50)}
 
   <div class="key-point">
     <p><strong>Key Concept:</strong> Mast cells are central to allergic (Type I) reactions. They are the primary source of histamine. When IgE on a mast cell surface encounters its allergen, the mast cell degranulates -- releasing histamine, which causes itching, bronchoconstriction, and vasodilation.</p>
+  </div>
+
+  <!-- Type I Hypersensitivity Flow Chart -->
+  <div class="flow-chart">
+    <div class="flow-title">Type I Hypersensitivity Pathway</div>
+    <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <!-- Row 1: First Exposure -->
+      <rect x="5" y="15" width="120" height="42" rx="10" fill="#1e3a5f"/>
+      <text x="65" y="40" text-anchor="middle" fill="#fff" font-size="11" font-weight="600" font-family="Inter,sans-serif">First Exposure</text>
+      <line x1="125" y1="36" x2="145" y2="36" stroke="#1e3a5f" stroke-width="2" marker-end="url(#arrow1)"/>
+      <rect x="150" y="15" width="120" height="42" rx="10" fill="#3b82f6"/>
+      <text x="210" y="33" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">B Cells</text>
+      <text x="210" y="46" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Produce IgE</text>
+      <line x1="270" y1="36" x2="290" y2="36" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow1)"/>
+      <rect x="295" y="15" width="130" height="42" rx="10" fill="#8b5cf6"/>
+      <text x="360" y="33" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">IgE Binds to</text>
+      <text x="360" y="46" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Mast Cell Surfaces</text>
+      <line x1="425" y1="36" x2="445" y2="36" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrow1)"/>
+      <rect x="450" y="15" width="110" height="42" rx="10" fill="#14b8a6"/>
+      <text x="505" y="40" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="Inter,sans-serif">SENSITIZED</text>
+      <!-- Row 2: Re-exposure -->
+      <rect x="5" y="100" width="120" height="42" rx="10" fill="#ef4444"/>
+      <text x="65" y="125" text-anchor="middle" fill="#fff" font-size="11" font-weight="600" font-family="Inter,sans-serif">Re-exposure</text>
+      <line x1="125" y1="121" x2="145" y2="121" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow1)"/>
+      <rect x="150" y="100" width="130" height="42" rx="10" fill="#f59e0b"/>
+      <text x="215" y="118" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Allergen Crosslinks</text>
+      <text x="215" y="131" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">IgE on Mast Cells</text>
+      <line x1="280" y1="121" x2="300" y2="121" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow1)"/>
+      <rect x="305" y="100" width="130" height="42" rx="10" fill="#ef4444"/>
+      <text x="370" y="118" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Mast Cell</text>
+      <text x="370" y="131" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Degranulation</text>
+      <line x1="435" y1="121" x2="455" y2="121" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow1)"/>
+      <rect x="460" y="100" width="130" height="42" rx="10" fill="#1e3a5f"/>
+      <text x="525" y="118" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Histamine Released</text>
+      <text x="525" y="131" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Allergic Symptoms</text>
+      <!-- Connecting arrow from row 1 to row 2 -->
+      <path d="M505 57 L505 75 L65 75 L65 100" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow1)"/>
+      <defs><marker id="arrow1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
+  </div>
+
+  <div class="pearl">
+    <div class="pearl-label">Clinical Pearl</div>
+    <p>Mast cells are the central player in all allergic reactions. When IgE antibodies on mast cell surfaces encounter an allergen, the mast cell releases histamine -- causing vasodilation, bronchoconstriction, and the itching, swelling, and redness you see in allergic reactions. This is why antihistamines help allergies but only epinephrine saves lives in anaphylaxis.</p>
+  </div>
+
+  <div class="nclex-focus">
+    <div class="nclex-label">NCLEX Focus</div>
+    <p>Know the 4 types of hypersensitivity by their mechanism, timing, and one classic example each. The key distinction: Types I-III involve antibodies; Type IV involves T cells only (no antibodies). Type I is the only one mediated by IgE.</p>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">A patient develops hives and bronchoconstriction 15 minutes after taking a new medication. Which immune cells are most directly responsible for these symptoms?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) T cells</button>
+        <button class="qc-choice" data-val="B">B) Mast cells</button>
+        <button class="qc-choice" data-val="C">C) B cells</button>
+        <button class="qc-choice" data-val="D">D) Neutrophils</button>
+      </div>
+      <div class="qc-feedback">Mast cells degranulate in Type I (immediate) hypersensitivity, releasing histamine that causes hives (urticaria) and bronchoconstriction.</div>
+    </div>
+    <div class="qc-question" data-answer="D">
+      <div class="qc-text">Which immunoglobulin class is responsible for immediate allergic reactions?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) IgG</button>
+        <button class="qc-choice" data-val="B">B) IgA</button>
+        <button class="qc-choice" data-val="C">C) IgM</button>
+        <button class="qc-choice" data-val="D">D) IgE</button>
+      </div>
+      <div class="qc-feedback">IgE binds to mast cells and triggers degranulation upon re-exposure to an allergen. It's the only Ig class involved in Type I hypersensitivity.</div>
+    </div>
+  </div>
+
+  <div class="guideline-link">
+    <div><div class="gl-label">Clinical Guideline</div><a href="https://www.cdc.gov/vaccines/schedules/" target="_blank" rel="noopener">CDC Immunization Schedule</a></div>
   </div>
 
   <!-- Scenario -->
@@ -335,6 +452,13 @@ tr:nth-child(even) td{background:var(--gray-50)}
     <div class="key-point">
       <p><strong>Remember:</strong> SLE = Type III hypersensitivity. Think: immune complexes depositing everywhere, causing inflammation in multiple organs. Butterfly rash + joint pain + positive ANA/anti-dsDNA = think SLE.</p>
     </div>
+    <div class="nclex-focus">
+      <div class="nclex-label">NCLEX Focus</div>
+      <p>SLE is a Type III hypersensitivity. The hallmark triad: butterfly rash + joint pain + positive ANA/anti-dsDNA. Remember that SLE is a "great imitator" -- it mimics many diseases, which is why the ANA and anti-dsDNA labs are essential for diagnosis.</p>
+    </div>
+    <div class="guideline-link">
+      <div><div class="gl-label">Clinical Guideline</div><a href="https://www.rheumatology.org/practice-quality/clinical-support/clinical-practice-guidelines/lupus" target="_blank" rel="noopener">ACR SLE Guidelines</a></div>
+    </div>
   </div>
 
   <!-- ITP -->
@@ -347,6 +471,34 @@ tr:nth-child(even) td{background:var(--gray-50)}
       <li><strong>Why it happens:</strong> Antibodies mistakenly target and destroy platelets after viral illness.</li>
       <li>Most childhood cases are self-limiting (resolve on their own).</li>
     </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>ITP is a common sequela of viral infections in children. A child who had chickenpox 1-2 weeks ago and now has bruising, petechiae (tiny purple spots), and gum bleeding = think ITP. The immune system, revved up from fighting the virus, starts mistakenly destroying platelets.</p>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">A patient presents with butterfly rash, joint pain, and labs showing elevated ANA and anti-dsDNA. This presentation is most consistent with which type of hypersensitivity?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Type I</button>
+        <button class="qc-choice" data-val="B">B) Type II</button>
+        <button class="qc-choice" data-val="C">C) Type III</button>
+        <button class="qc-choice" data-val="D">D) Type IV</button>
+      </div>
+      <div class="qc-feedback">SLE is a Type III immune complex hypersensitivity. Immune complexes deposit in tissues (joints, kidneys, skin) causing inflammation.</div>
+    </div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">A 6-year-old who recently had chickenpox presents with bruising and small purple spots on the skin. What condition should you suspect?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Hemophilia</button>
+        <button class="qc-choice" data-val="B">B) Leukemia</button>
+        <button class="qc-choice" data-val="C">C) ITP</button>
+        <button class="qc-choice" data-val="D">D) DIC</button>
+      </div>
+      <div class="qc-feedback">ITP (Immune Thrombocytopenic Purpura) commonly follows viral infections in children. The immune response triggered by the virus also destroys platelets.</div>
+    </div>
   </div>
 
   <div class="scenario">
@@ -418,6 +570,38 @@ tr:nth-child(even) td{background:var(--gray-50)}
     <div class="key-point">
       <p><strong>Key Fact:</strong> Reed-Sternberg cells = B lymphocyte origin. Hodgkin lymphoma is associated with EBV and is more common in males. Do not confuse it with a T-cell cancer.</p>
     </div>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>Reed-Sternberg cells (the diagnostic hallmark of Hodgkin lymphoma) arise from B lymphocytes -- not T cells. Hodgkin lymphoma is more common in males and is associated with prior Epstein-Barr virus (EBV) infection. These are key distinctions from Non-Hodgkin lymphoma.</p>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">A biopsy reveals Reed-Sternberg cells. These cells originate from which cell type?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) T lymphocytes</button>
+        <button class="qc-choice" data-val="B">B) B lymphocytes</button>
+        <button class="qc-choice" data-val="C">C) Plasma cells</button>
+        <button class="qc-choice" data-val="D">D) Macrophages</button>
+      </div>
+      <div class="qc-feedback">Reed-Sternberg cells are malignant B lymphocytes. Their presence is pathognomonic for Hodgkin lymphoma.</div>
+    </div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">Which leukemia is characterized by B cells that fail to mature properly and is most common in elderly adults?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) ALL</button>
+        <button class="qc-choice" data-val="B">B) AML</button>
+        <button class="qc-choice" data-val="C">C) CLL</button>
+        <button class="qc-choice" data-val="D">D) CML</button>
+      </div>
+      <div class="qc-feedback">CLL involves accumulation of immature B cells that fail to differentiate properly. It's the most common leukemia in adults, especially the elderly.</div>
+    </div>
+  </div>
+
+  <div class="guideline-link">
+    <div><div class="gl-label">Clinical Guideline</div><a href="https://www.lls.org/" target="_blank" rel="noopener">Leukemia &amp; Lymphoma Society</a></div>
   </div>
 
   <div class="acc-card">
@@ -491,6 +675,43 @@ tr:nth-child(even) td{background:var(--gray-50)}
     <div class="key-point">
       <p><strong>Exam Tip:</strong> If a question describes fatigue + ice cravings + hair loss, think IDA. Treatment = ferrous sulfate + vitamin C. NOT B12.</p>
     </div>
+  </div>
+
+  <!-- IDA Flow Chart -->
+  <div class="flow-chart">
+    <div class="flow-title">Iron Deficiency Anemia Pathway</div>
+    <svg viewBox="0 0 760 70" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <rect x="0" y="14" width="130" height="42" rx="10" fill="#ef4444"/>
+      <text x="65" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Blood Loss / Poor</text>
+      <text x="65" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Intake / Malabsorption</text>
+      <line x1="130" y1="35" x2="148" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrow2)"/>
+      <rect x="153" y="14" width="115" height="42" rx="10" fill="#f59e0b"/>
+      <text x="210" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Iron Stores Depleted</text>
+      <text x="210" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">(&#8595;Ferritin)</text>
+      <line x1="268" y1="35" x2="286" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrow2)"/>
+      <rect x="291" y="14" width="115" height="42" rx="10" fill="#8b5cf6"/>
+      <text x="348" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">&#8595;Hemoglobin</text>
+      <text x="348" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Synthesis</text>
+      <line x1="406" y1="35" x2="424" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrow2)"/>
+      <rect x="429" y="14" width="130" height="42" rx="10" fill="#3b82f6"/>
+      <text x="494" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Small Pale RBCs</text>
+      <text x="494" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">(Microcytic, Hypochromic)</text>
+      <line x1="559" y1="35" x2="577" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrow2)"/>
+      <rect x="582" y="14" width="140" height="42" rx="10" fill="#1e3a5f"/>
+      <text x="652" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Fatigue, Pallor,</text>
+      <text x="652" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Pica (Ice Cravings)</text>
+      <defs><marker id="arrow2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
+  </div>
+
+  <div class="pearl">
+    <div class="pearl-label">Clinical Pearl</div>
+    <p>The classic IDA triad to remember: fatigue + ice cravings (pagophagia) + hair loss. Treatment is oral ferrous sulfate + vitamin C (enhances absorption). IV iron is used when oral isn't tolerated. High-dose B12 injections are NOT used for IDA -- that's for pernicious anemia.</p>
+  </div>
+
+  <div class="nclex-focus">
+    <div class="nclex-label">NCLEX Focus</div>
+    <p>Anemia is defined as decreased hemoglobin concentration -- not low RBC count or low hematocrit alone. Iron deficiency is the #1 cause of anemia worldwide. For acute blood loss, remember the "hematocrit trap": hematocrit looks NORMAL immediately after hemorrhage because whole blood (cells + plasma) is lost proportionally. It only drops after fluid replacement dilutes the remaining cells.</p>
   </div>
 
   <!-- Sickle Cell -->
@@ -573,6 +794,35 @@ tr:nth-child(even) td{background:var(--gray-50)}
       <li>X-linked recessive -- primarily affects males.</li>
       <li>Signs: easy bruising, prolonged bleeding after injury, hemarthrosis (bleeding into joints).</li>
     </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>Hemophilia = prolonged bleeding due to absence of a clotting factor (VIII or IX). Key lab finding: prolonged PTT with normal PT and normal platelet count. The platelet plug forms normally -- the problem is the fibrin reinforcement step fails.</p>
+    </div>
+  </div>
+
+  <!-- Hemostasis Flow Chart -->
+  <div class="flow-chart">
+    <div class="flow-title">Hemostasis Steps</div>
+    <svg viewBox="0 0 700 60" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <rect x="0" y="9" width="110" height="42" rx="10" fill="#ef4444"/>
+      <text x="55" y="34" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="600" font-family="Inter,sans-serif">Vessel Injury</text>
+      <line x1="110" y1="30" x2="130" y2="30" stroke="#475569" stroke-width="2" marker-end="url(#arrow3)"/>
+      <rect x="135" y="9" width="125" height="42" rx="10" fill="#f59e0b"/>
+      <text x="197" y="27" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Step 1:</text>
+      <text x="197" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Vasoconstriction</text>
+      <line x1="260" y1="30" x2="280" y2="30" stroke="#475569" stroke-width="2" marker-end="url(#arrow3)"/>
+      <rect x="285" y="9" width="125" height="42" rx="10" fill="#3b82f6"/>
+      <text x="347" y="27" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Step 2: Platelet</text>
+      <text x="347" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Plug (Primary)</text>
+      <line x1="410" y1="30" x2="430" y2="30" stroke="#475569" stroke-width="2" marker-end="url(#arrow3)"/>
+      <rect x="435" y="9" width="125" height="42" rx="10" fill="#8b5cf6"/>
+      <text x="497" y="27" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Step 3: Coagulation</text>
+      <text x="497" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Cascade (Fibrin)</text>
+      <line x1="560" y1="30" x2="580" y2="30" stroke="#475569" stroke-width="2" marker-end="url(#arrow3)"/>
+      <rect x="585" y="9" width="110" height="42" rx="10" fill="#14b8a6"/>
+      <text x="640" y="34" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="700" font-family="Inter,sans-serif">Stable Clot</text>
+      <defs><marker id="arrow3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
   </div>
 
   <!-- DVT -->
@@ -603,6 +853,47 @@ tr:nth-child(even) td{background:var(--gray-50)}
         <li><strong>E</strong>ndothelial injury (vessel damage)</li>
       </ul>
     </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">A patient with acute blood loss from a motor vehicle accident has a hematocrit of 45%. Is this expected?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) No -- hematocrit should be low</button>
+        <button class="qc-choice" data-val="B">B) Yes -- hematocrit is normal immediately after acute blood loss</button>
+        <button class="qc-choice" data-val="C">C) No -- hematocrit should be elevated</button>
+        <button class="qc-choice" data-val="D">D) Yes -- blood loss doesn't affect hematocrit</button>
+      </div>
+      <div class="qc-feedback">In acute hemorrhage, whole blood is lost (cells AND plasma), so the ratio stays normal initially. Hematocrit drops only AFTER fluid resuscitation dilutes the remaining cells.</div>
+    </div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">A patient has prolonged PT. This suggests dysfunction in which aspect of hemostasis?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Platelet plug formation</button>
+        <button class="qc-choice" data-val="B">B) Vasoconstriction</button>
+        <button class="qc-choice" data-val="C">C) Coagulation factors</button>
+        <button class="qc-choice" data-val="D">D) Fibrinolysis</button>
+      </div>
+      <div class="qc-feedback">PT (prothrombin time) measures the extrinsic + common coagulation pathway. A prolonged PT indicates dysfunction in coagulation factors (especially VII, X, V, II, or fibrinogen).</div>
+    </div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">Which of the following is the primary risk factor for DVT based on Virchow's triad?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Hyperlipidemia</button>
+        <button class="qc-choice" data-val="B">B) Bradycardia</button>
+        <button class="qc-choice" data-val="C">C) Immobility</button>
+        <button class="qc-choice" data-val="D">D) Thrombocytopenia</button>
+      </div>
+      <div class="qc-feedback">Virchow's triad consists of venous stasis (immobility), endothelial injury, and hypercoagulability. Immobility/reduced mobility is the most common and modifiable risk factor for DVT.</div>
+    </div>
+  </div>
+
+  <div class="guideline-link">
+    <div><div class="gl-label">Clinical Guideline</div><a href="https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/sickle-cell-disease-guidelines" target="_blank" rel="noopener">ASH Sickle Cell Guidelines</a></div>
+  </div>
+  <div class="guideline-link">
+    <div><div class="gl-label">Clinical Guideline</div><a href="https://www.cdc.gov/blood-clots/prevention/" target="_blank" rel="noopener">DVT/VTE Prevention (CDC)</a></div>
   </div>
 
   <!-- Varicosity -->
@@ -999,6 +1290,28 @@ function resetQuiz() {
   document.getElementById('quiz-nav').style.display = 'flex';
   showQuestion(0);
 }
+
+/* ── QUICK CHECK INLINE QUESTIONS ── */
+document.querySelectorAll('.qc-question').forEach(q=>{
+  const correct=q.dataset.answer;
+  const choices=q.querySelectorAll('.qc-choice');
+  const fb=q.querySelector('.qc-feedback');
+  let answered=false;
+  choices.forEach(ch=>{
+    ch.addEventListener('click',()=>{
+      if(answered) return;
+      answered=true;
+      choices.forEach(c=>c.disabled=true);
+      if(ch.dataset.val===correct){
+        ch.classList.add('qc-correct');
+      } else {
+        ch.classList.add('qc-wrong');
+        choices.forEach(c=>{if(c.dataset.val===correct) c.classList.add('qc-correct');});
+      }
+      if(fb) fb.classList.add('show');
+    });
+  });
+});
 </script>
 </body>
 </html>
