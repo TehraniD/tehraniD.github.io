@@ -1,0 +1,2382 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      CHM 152L Lab 6 — Standardization of NaOH &amp; Titration of a Weak Acid
+    </title>
+    <style>
+      /* ========== CSS RESET & VARIABLES ========== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --navy: #1a1a2e;
+        --teal-dark: #16213e;
+        --teal: #0ea5e9;
+        --teal-light: #38bdf8;
+        --gold: #f59e0b;
+        --gold-light: #fbbf24;
+        --green: #22c55e;
+        --red: #ef4444;
+        --bg: #ffffff;
+        --bg-alt: #f8fafc;
+        --bg-card: #ffffff;
+        --text: #1e293b;
+        --text-muted: #64748b;
+        --text-light: #94a3b8;
+        --border: #e2e8f0;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+        --shadow-md:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-lg:
+          0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        --radius: 12px;
+        --radius-sm: 8px;
+        --transition: 0.3s ease;
+      }
+
+      .dark {
+        --bg: #0f172a;
+        --bg-alt: #1e293b;
+        --bg-card: #1e293b;
+        --text: #e2e8f0;
+        --text-muted: #94a3b8;
+        --text-light: #64748b;
+        --border: #334155;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      /* ========== BASE ========== */
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        transition:
+          background var(--transition),
+          color var(--transition);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        line-height: 1.3;
+      }
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--navy);
+      }
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+      }
+      .dark h2 {
+        color: var(--teal-light);
+      }
+      .dark h3 {
+        color: var(--teal-light);
+      }
+      p {
+        margin-bottom: 0.75rem;
+      }
+      a {
+        color: var(--teal);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* ========== HEADER ========== */
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--navy) 0%,
+          var(--teal-dark) 100%
+        );
+        color: #fff;
+        padding: 1.5rem 2rem;
+        text-align: center;
+        position: relative;
+      }
+      header h1 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      header .subtitle {
+        font-size: 0.95rem;
+        opacity: 0.85;
+        font-weight: 400;
+      }
+      .header-controls {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      /* Dark mode toggle */
+      .toggle-dark {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #fff;
+        padding: 0.4rem 0.75rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: background var(--transition);
+      }
+      .toggle-dark:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      /* Formula reference button */
+      .btn-formula {
+        background: var(--gold);
+        color: var(--navy);
+        border: none;
+        padding: 0.4rem 0.85rem;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition:
+          background var(--transition),
+          transform 0.15s;
+      }
+      .btn-formula:hover {
+        background: var(--gold-light);
+        transform: scale(1.03);
+      }
+
+      /* ========== TABS ========== */
+      .tab-bar {
+        display: flex;
+        gap: 0.5rem;
+        padding: 1rem 2rem 0;
+        background: var(--bg-alt);
+        border-bottom: 1px solid var(--border);
+        overflow-x: auto;
+        flex-wrap: wrap;
+        transition: background var(--transition);
+      }
+      .tab-btn {
+        padding: 0.6rem 1.2rem;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 999px;
+        white-space: nowrap;
+        transition: all var(--transition);
+      }
+      .tab-btn:hover {
+        background: var(--border);
+        color: var(--text);
+      }
+      .tab-btn.active {
+        background: var(--teal);
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+      }
+
+      /* ========== MAIN CONTENT ========== */
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1.5rem;
+      }
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.35s ease;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ========== CARDS ========== */
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1.25rem;
+        box-shadow: var(--shadow);
+        transition:
+          background var(--transition),
+          border var(--transition);
+      }
+      .card-highlight {
+        border-left: 4px solid var(--teal);
+      }
+      .card-gold {
+        border-left: 4px solid var(--gold);
+      }
+
+      /* ========== TABLES ========== */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.92rem;
+      }
+      th,
+      td {
+        padding: 0.65rem 0.85rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+      th {
+        background: var(--bg-alt);
+        font-weight: 600;
+        color: var(--navy);
+      }
+      .dark th {
+        color: var(--teal-light);
+      }
+      tr:hover {
+        background: var(--bg-alt);
+      }
+
+      /* ========== REACTION ========== */
+      .reaction {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1rem 1.25rem;
+        font-size: 1.05rem;
+        margin: 0.75rem 0;
+        text-align: center;
+        font-weight: 500;
+        overflow-x: auto;
+      }
+
+      /* ========== FLOWCHART ========== */
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        align-items: center;
+        margin: 0.75rem 0;
+      }
+      .flow-step {
+        background: var(--teal);
+        color: #fff;
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .flow-arrow {
+        color: var(--text-muted);
+        font-size: 1.2rem;
+      }
+
+      /* ========== ACCORDION ========== */
+      .accordion {
+        margin-bottom: 0.75rem;
+      }
+      .accordion-header {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1rem 1.25rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all var(--transition);
+        user-select: none;
+      }
+      .accordion-header:hover {
+        background: var(--border);
+      }
+      .accordion-header .arrow {
+        transition: transform var(--transition);
+        font-size: 0.85rem;
+      }
+      .accordion.open .accordion-header .arrow {
+        transform: rotate(180deg);
+      }
+      .accordion-body {
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.4s ease,
+          padding 0.3s ease;
+        border: 1px solid transparent;
+        border-top: none;
+        border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      }
+      .accordion.open .accordion-body {
+        max-height: 2000px;
+        padding: 1.25rem;
+        border-color: var(--border);
+        background: var(--bg-card);
+      }
+
+      /* ========== SIMULATOR ========== */
+      .sim-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      .sim-controls label {
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .sim-controls select,
+      .sim-controls input[type="range"] {
+        padding: 0.4rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg-card);
+        color: var(--text);
+        font-size: 0.9rem;
+      }
+      .sim-controls select {
+        min-width: 240px;
+      }
+      .sim-controls input[type="range"] {
+        width: 300px;
+        accent-color: var(--teal);
+      }
+      .ph-display {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--teal);
+        text-align: center;
+        padding: 0.5rem 0;
+      }
+      .ph-display small {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 400;
+        display: block;
+      }
+      #sim-canvas {
+        width: 100%;
+        max-width: 750px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        display: block;
+        margin: 0 auto;
+        background: var(--bg-card);
+      }
+      .info-panel {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1rem 1.25rem;
+        margin-top: 1rem;
+        min-height: 80px;
+        font-size: 0.95rem;
+      }
+      .info-panel strong {
+        color: var(--teal);
+      }
+
+      /* ========== CALCULATORS ========== */
+      .calc-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 1.25rem;
+        box-shadow: var(--shadow);
+      }
+      .calc-section h3 {
+        margin-bottom: 1rem;
+      }
+      .calc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      .calc-grid label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+      .calc-grid input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-size: 0.95rem;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .btn-calc {
+        background: var(--teal);
+        color: #fff;
+        border: none;
+        padding: 0.55rem 1.5rem;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition:
+          background var(--transition),
+          transform 0.15s;
+      }
+      .btn-calc:hover {
+        background: var(--teal-light);
+        transform: scale(1.02);
+      }
+      .calc-result {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1rem;
+        margin-top: 0.75rem;
+        font-size: 0.92rem;
+        white-space: pre-wrap;
+        line-height: 1.8;
+        min-height: 40px;
+      }
+      .calc-result .step {
+        color: var(--text-muted);
+      }
+      .calc-result .answer {
+        color: var(--teal);
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+
+      /* ========== QUIZ ========== */
+      .quiz-q {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow);
+      }
+      .quiz-q .q-num {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--teal);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.4rem;
+      }
+      .quiz-q .q-text {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+      }
+      .quiz-q .options {
+        list-style: none;
+      }
+      .quiz-q .options li {
+        padding: 0.55rem 0.85rem;
+        margin-bottom: 0.4rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all var(--transition);
+        font-size: 0.92rem;
+      }
+      .quiz-q .options li:hover {
+        background: var(--bg-alt);
+        border-color: var(--teal);
+      }
+      .quiz-q .options li.selected {
+        border-color: var(--teal);
+        background: rgba(14, 165, 233, 0.08);
+      }
+      .quiz-q .options li.correct {
+        border-color: var(--green);
+        background: rgba(34, 197, 94, 0.1);
+      }
+      .quiz-q .options li.wrong {
+        border-color: var(--red);
+        background: rgba(239, 68, 68, 0.08);
+      }
+      .quiz-q .options li.disabled {
+        pointer-events: none;
+      }
+      .quiz-q .explanation {
+        display: none;
+        background: var(--bg-alt);
+        border-radius: var(--radius-sm);
+        padding: 0.85rem 1rem;
+        margin-top: 0.75rem;
+        font-size: 0.9rem;
+        border-left: 3px solid var(--teal);
+      }
+      .quiz-q .explanation.show {
+        display: block;
+      }
+      .btn-submit-q {
+        background: var(--teal);
+        color: #fff;
+        border: none;
+        padding: 0.45rem 1.2rem;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+        transition: background var(--transition);
+      }
+      .btn-submit-q:hover {
+        background: var(--teal-light);
+      }
+      .btn-submit-q:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .score-box {
+        text-align: center;
+        padding: 2rem;
+        background: var(--bg-card);
+        border: 2px solid var(--teal);
+        border-radius: var(--radius);
+        margin-top: 1.5rem;
+        display: none;
+      }
+      .score-box .score-num {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--teal);
+      }
+      .score-box .score-msg {
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+      }
+      .btn-reset-quiz {
+        background: var(--gold);
+        color: var(--navy);
+        border: none;
+        padding: 0.55rem 1.5rem;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+      }
+
+      /* ========== MODAL ========== */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--bg-card);
+        border-radius: var(--radius);
+        max-width: 650px;
+        width: 100%;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+      }
+      .modal h2 {
+        margin-bottom: 1.25rem;
+      }
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-muted);
+        line-height: 1;
+      }
+      .modal-close:hover {
+        color: var(--text);
+      }
+      .formula-block {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.6rem;
+        font-size: 0.95rem;
+      }
+      .formula-block .label {
+        font-weight: 700;
+        color: var(--teal);
+        margin-bottom: 0.2rem;
+      }
+
+      /* ========== MINI pH CALCULATOR (Key Concepts) ========== */
+      .mini-calc {
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1rem;
+        margin-top: 0.75rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: flex-end;
+      }
+      .mini-calc label {
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      .mini-calc input {
+        width: 130px;
+        padding: 0.4rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.9rem;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .mini-calc .result-line {
+        font-weight: 600;
+        font-size: 0.95rem;
+        width: 100%;
+      }
+
+      /* ========== FOOTER ========== */
+      footer {
+        background: var(--navy);
+        color: rgba(255, 255, 255, 0.6);
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.8rem;
+        margin-top: 2rem;
+      }
+
+      /* ========== RESPONSIVE ========== */
+      @media (max-width: 700px) {
+        header h1 {
+          font-size: 1.2rem;
+        }
+        .header-controls {
+          position: static;
+          justify-content: center;
+          margin-top: 0.75rem;
+        }
+        main {
+          padding: 1rem;
+        }
+        .tab-bar {
+          padding: 0.75rem 1rem 0;
+        }
+        .tab-btn {
+          font-size: 0.8rem;
+          padding: 0.5rem 0.9rem;
+        }
+        .sim-controls input[type="range"] {
+          width: 100%;
+        }
+        .sim-controls select {
+          min-width: 100%;
+        }
+        .calc-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ========== PRINT ========== */
+      @media print {
+        header,
+        .tab-bar,
+        .header-controls,
+        .toggle-dark,
+        .btn-formula,
+        footer,
+        .btn-calc,
+        .btn-submit-q,
+        .btn-reset-quiz,
+        .sim-controls,
+        #sim-canvas,
+        .info-panel,
+        .modal-overlay {
+          display: none !important;
+        }
+        .tab-content {
+          display: block !important;
+          page-break-inside: avoid;
+        }
+        body {
+          background: #fff;
+          color: #000;
+          font-size: 11pt;
+        }
+        .card,
+        .calc-section,
+        .quiz-q {
+          box-shadow: none;
+          border: 1px solid #ccc;
+        }
+      }
+
+      /* Utility */
+      .mt-1 {
+        margin-top: 0.5rem;
+      }
+      .mt-2 {
+        margin-top: 1rem;
+      }
+      .mb-1 {
+        margin-bottom: 0.5rem;
+      }
+      .text-center {
+        text-align: center;
+      }
+      .bold {
+        font-weight: 700;
+      }
+      .text-teal {
+        color: var(--teal);
+      }
+      .text-gold {
+        color: var(--gold);
+      }
+      .text-muted {
+        color: var(--text-muted);
+      }
+      .list-styled {
+        padding-left: 1.25rem;
+      }
+      .list-styled li {
+        margin-bottom: 0.4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===================== HEADER ===================== -->
+    <header>
+      <h1>CHM 152L &mdash; Lab 6</h1>
+      <div class="subtitle">
+        Standardization of NaOH &amp; Titration of a Weak Acid
+      </div>
+      <div class="header-controls">
+        <button class="btn-formula" onclick="toggleModal()">
+          Formula Reference
+        </button>
+        <button class="toggle-dark" onclick="toggleDark()">Dark Mode</button>
+      </div>
+    </header>
+
+    <!-- ===================== TAB BAR ===================== -->
+    <nav class="tab-bar" role="tablist">
+      <button
+        class="tab-btn active"
+        onclick="switchTab('overview', this)"
+        role="tab"
+      >
+        Overview
+      </button>
+      <button class="tab-btn" onclick="switchTab('concepts', this)" role="tab">
+        Key Concepts
+      </button>
+      <button class="tab-btn" onclick="switchTab('simulator', this)" role="tab">
+        Titration Simulator
+      </button>
+      <button class="tab-btn" onclick="switchTab('calcs', this)" role="tab">
+        Calculation Practice
+      </button>
+      <button class="tab-btn" onclick="switchTab('quiz', this)" role="tab">
+        Post-Lab Quiz
+      </button>
+    </nav>
+
+    <!-- ===================== MAIN ===================== -->
+    <main>
+      <!-- ============ TAB 1: OVERVIEW ============ -->
+      <section id="tab-overview" class="tab-content active">
+        <h2>Lab Summary</h2>
+        <div class="card card-highlight">
+          <p><strong>In this lab, you will:</strong></p>
+          <p>
+            <strong>Part 1:</strong> Standardize a NaOH solution by titrating it
+            against <strong>KHP</strong> (potassium hydrogen phthalate), a
+            primary standard.
+          </p>
+          <p>
+            <strong>Part 2:</strong> Use the standardized NaOH to titrate an
+            unknown weak acid, generating a titration curve to determine the
+            acid's <strong>molar mass</strong> and <strong>K<sub>a</sub></strong
+            >.
+          </p>
+        </div>
+
+        <h2>Materials Reference</h2>
+        <div class="card">
+          <table>
+            <thead>
+              <tr>
+                <th>Reagent / Equipment</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>~0.1 M NaOH</strong></td>
+                <td>Sodium hydroxide solution (to be standardized)</td>
+              </tr>
+              <tr>
+                <td><strong>KHP</strong></td>
+                <td>
+                  Potassium hydrogen phthalate (MW = 204.22 g/mol) &mdash;
+                  primary standard
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Phenolphthalein</strong></td>
+                <td>
+                  Color indicator: colorless &rarr; pink at pH 8.2&ndash;10
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Benzoic acid</strong></td>
+                <td>
+                  Weak acid (MW = 122.12 g/mol, K<sub>a</sub> = 6.3 &times;
+                  10<sup>&minus;5</sup>)
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Burette</strong></td>
+                <td>
+                  For precise volume delivery of NaOH (read to &plusmn;0.02 mL)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Key Reactions</h2>
+        <div class="card">
+          <p class="mb-1">
+            <strong>Part 1 &mdash; KHP Standardization:</strong>
+          </p>
+          <div class="reaction">
+            KHC<sub>8</sub>H<sub>4</sub>O<sub>4</sub>(aq) + NaOH(aq) &rarr;
+            KNaC<sub>8</sub>H<sub>4</sub>O<sub>4</sub>(aq) + H<sub>2</sub>O(l)
+          </div>
+          <p class="mb-1 mt-2">
+            <strong>Part 2 &mdash; Unknown Weak Acid:</strong>
+          </p>
+          <div class="reaction">
+            HA(aq) + NaOH(aq) &rarr; NaA(aq) + H<sub>2</sub>O(l)
+          </div>
+        </div>
+
+        <h2>Procedure Flowchart</h2>
+        <div class="card card-gold">
+          <h3>Part 1: Standardization of NaOH</h3>
+          <div class="flow">
+            <span class="flow-step">Weigh NaOH</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Make ~0.1 M solution</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Weigh KHP</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Dissolve in water</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Titrate with NaOH</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Record pH</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Find inflection point</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Calculate [NaOH]</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Repeat</span>
+          </div>
+          <h3 class="mt-2">Part 2: Titration of Unknown Acid</h3>
+          <div class="flow">
+            <span class="flow-step">Weigh acid</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Dissolve</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Titrate with std NaOH</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Record pH</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Plot curve</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Find equiv + half-equiv</span
+            ><span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Calculate molar mass + K<sub>a</sub></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TAB 2: KEY CONCEPTS ============ -->
+      <section id="tab-concepts" class="tab-content">
+        <h2>Key Concepts</h2>
+
+        <!-- Accordion 1 -->
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>1. What is Standardization?</span
+            ><span class="arrow">&#9660;</span>
+          </div>
+          <div class="accordion-body">
+            <p>
+              NaOH absorbs moisture and CO<sub>2</sub> from air, so its true
+              concentration is uncertain after preparation.
+              <strong>Standardization</strong> means determining the
+              <em>exact</em> concentration by titrating against a
+              <strong>primary standard</strong> &mdash; a substance pure enough
+              to weigh directly and use as a reference.
+            </p>
+            <p><strong>KHP is ideal because:</strong></p>
+            <ul class="list-styled">
+              <li>
+                <strong>Stable solid at room temperature</strong> &mdash; does
+                not absorb water or decompose, so you can trust the mass you
+                weigh.
+              </li>
+              <li>
+                <strong>High molecular weight (204.22 g/mol)</strong> &mdash;
+                you use more grams per mole, which reduces the percentage error
+                from the balance.
+              </li>
+              <li>
+                <strong>Reacts 1:1 with NaOH</strong> &mdash; makes the
+                stoichiometry straightforward: moles KHP = moles NaOH at
+                equivalence.
+              </li>
+              <li>
+                <strong>Available in very high purity</strong> &mdash; you can
+                buy it at 99.95%+ purity as a certified reference material.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Accordion 2 -->
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>2. pH and pOH</span><span class="arrow">&#9660;</span>
+          </div>
+          <div class="accordion-body">
+            <div class="formula-block">
+              <div class="label">Core Relationships</div>
+              pH = &minus;log[H<sup>+</sup>]<br />
+              pOH = &minus;log[OH<sup>&minus;</sup>]<br />
+              pH + pOH = 14.00<br />
+              K<sub>w</sub> = [H<sup>+</sup>][OH<sup>&minus;</sup>] = 1.0
+              &times; 10<sup>&minus;14</sup>
+            </div>
+            <p class="mt-1">
+              <strong>Quick reference:</strong> A low pH (&lt; 7) means acidic
+              (high [H<sup>+</sup>]). A high pH (&gt; 7) means basic (high
+              [OH<sup>&minus;</sup>]). Every 1-unit change in pH represents a
+              <strong>10-fold</strong> change in [H<sup>+</sup>].
+            </p>
+
+            <div class="mini-calc" id="phCalcConcept">
+              <div>
+                <label>Enter [H<sup>+</sup>] (M):</label><br />
+                <input
+                  type="text"
+                  id="mc-h"
+                  placeholder="e.g., 0.001"
+                  oninput="miniCalcFromH()"
+                />
+              </div>
+              <div>
+                <label>OR [OH<sup>&minus;</sup>] (M):</label><br />
+                <input
+                  type="text"
+                  id="mc-oh"
+                  placeholder="e.g., 1e-11"
+                  oninput="miniCalcFromOH()"
+                />
+              </div>
+              <div
+                class="result-line"
+                id="mc-result"
+                style="color: var(--teal)"
+              >
+                Enter a value above to calculate pH, pOH, and more.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion 3 -->
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>3. Strong vs. Weak Acid Titration Curves</span
+            ><span class="arrow">&#9660;</span>
+          </div>
+          <div class="accordion-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Strong Acid + Strong Base</th>
+                  <th>Weak Acid + Strong Base</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Initial pH</td>
+                  <td>Low (depends on [HA])</td>
+                  <td>
+                    Higher than strong acid at same concentration (partial
+                    ionization)
+                  </td>
+                </tr>
+                <tr>
+                  <td>Buffer region</td>
+                  <td>None</td>
+                  <td>Yes &mdash; flat region where pH changes slowly</td>
+                </tr>
+                <tr>
+                  <td>Equivalence pH</td>
+                  <td>Exactly 7.00</td>
+                  <td>Greater than 7 (conjugate base hydrolyzes)</td>
+                </tr>
+                <tr>
+                  <td>Half-equivalence</td>
+                  <td>Not meaningful</td>
+                  <td>pH = pK<sub>a</sub></td>
+                </tr>
+                <tr>
+                  <td>Curve shape near equiv</td>
+                  <td>Very steep, symmetric</td>
+                  <td>Steep but asymmetric (shifted right/up)</td>
+                </tr>
+                <tr>
+                  <td>Best indicator</td>
+                  <td>Bromothymol blue (pH 6&ndash;8)</td>
+                  <td>Phenolphthalein (pH 8.2&ndash;10)</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              The key difference: the conjugate base of a strong acid (e.g.,
+              Cl<sup>&minus;</sup>) does not hydrolyze, so the equivalence point
+              sits at pH 7. The conjugate base of a weak acid (e.g., benzoate,
+              C<sub>6</sub>H<sub>5</sub>COO<sup>&minus;</sup>)
+              <em>does</em> hydrolyze, pulling the equivalence point above 7.
+            </p>
+          </div>
+        </div>
+
+        <!-- Accordion 4 -->
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>4. The Half-Equivalence Point</span
+            ><span class="arrow">&#9660;</span>
+          </div>
+          <div class="accordion-body">
+            <p>
+              At this point, exactly
+              <strong>half the acid has been neutralized</strong>, so the moles
+              of HA remaining equal the moles of A<sup>&minus;</sup> formed:
+              [HA] = [A<sup>&minus;</sup>].
+            </p>
+            <div class="formula-block">
+              <div class="label">Henderson-Hasselbalch Equation</div>
+              pH = pK<sub>a</sub> + log([A<sup>&minus;</sup>] / [HA])<br />
+              At half-equivalence: pH = pK<sub>a</sub> + log(1) = pK<sub>a</sub>
+              + 0 = <strong>pK<sub>a</sub></strong>
+            </div>
+            <p class="mt-1">
+              This is the simplest way to find K<sub>a</sub> experimentally:
+              read the pH at the half-equivalence volume, and that pH
+              <em>is</em> the pK<sub>a</sub>. Then K<sub>a</sub> = 10<sup
+                >&minus;pK<sub>a</sub></sup
+              >.
+            </p>
+            <p>
+              <strong>How to find the half-equivalence volume:</strong>
+              Determine the equivalence volume (where the curve is steepest),
+              then divide by 2. Read the pH at that volume on your titration
+              curve.
+            </p>
+          </div>
+        </div>
+
+        <!-- Accordion 5 -->
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>5. K<sub>a</sub> and K<sub>b</sub> Relationship</span
+            ><span class="arrow">&#9660;</span>
+          </div>
+          <div class="accordion-body">
+            <div class="formula-block">
+              <div class="label">Conjugate Acid-Base Relationship</div>
+              K<sub>a</sub> &times; K<sub>b</sub> = K<sub>w</sub> = 1.0 &times;
+              10<sup>&minus;14</sup>
+            </div>
+            <p class="mt-1">
+              <strong>Example:</strong> If K<sub>a</sub> for acetic acid = 1.8
+              &times; 10<sup>&minus;5</sup>, then the K<sub>b</sub> for the
+              acetate ion:
+            </p>
+            <p>
+              K<sub>b</sub> = K<sub>w</sub> / K<sub>a</sub> = (1.0 &times;
+              10<sup>&minus;14</sup>) / (1.8 &times; 10<sup>&minus;5</sup>) =
+              <strong>5.6 &times; 10<sup>&minus;10</sup></strong>
+            </p>
+            <p>
+              A stronger acid (larger K<sub>a</sub>) produces a
+              <em>weaker</em> conjugate base (smaller K<sub>b</sub>), and vice
+              versa. This relationship controls the pH at the equivalence point
+              during a weak acid/strong base titration.
+            </p>
+          </div>
+        </div>
+
+        <!-- Accordion 6 -->
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>6. Common Mistakes</span><span class="arrow">&#9660;</span>
+          </div>
+          <div class="accordion-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mistake</th>
+                  <th>Correction</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>"The equivalence point is always pH 7."</td>
+                  <td>
+                    Only true for strong acid + strong base. For weak acid +
+                    strong base, the equivalence point is
+                    <strong>above pH 7</strong> because the conjugate base
+                    hydrolyzes.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    "Using total solution volume instead of NaOH volume to
+                    calculate moles."
+                  </td>
+                  <td>
+                    moles NaOH = [NaOH] &times; V<sub>NaOH only</sub>. The total
+                    volume is irrelevant for moles &mdash; only the volume
+                    <em>delivered from the burette</em> matters.
+                  </td>
+                </tr>
+                <tr>
+                  <td>"Phenolphthalein endpoint = equivalence point."</td>
+                  <td>
+                    They are close but not identical. The indicator changes
+                    color over a pH <em>range</em> (8.2&ndash;10), while the
+                    equivalence point is one specific pH. For weak acid + strong
+                    base, phenolphthalein works well because the equivalence pH
+                    falls in this range.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    "Forgetting to rinse the burette with NaOH before filling."
+                  </td>
+                  <td>
+                    Residual water in the burette dilutes the NaOH, lowering its
+                    effective concentration. You will deliver more volume to
+                    reach equivalence, making your calculated [NaOH]
+                    <em>appear lower</em> than it actually is.
+                  </td>
+                </tr>
+                <tr>
+                  <td>"Reading the burette at the top of the meniscus."</td>
+                  <td>
+                    Always read at the
+                    <strong>bottom of the meniscus</strong> for aqueous
+                    solutions. Reading from the top introduces a systematic
+                    error that makes your volumes too low.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TAB 3: TITRATION SIMULATOR ============ -->
+      <section id="tab-simulator" class="tab-content">
+        <h2>Interactive Titration Simulator</h2>
+        <div class="card">
+          <div class="sim-controls">
+            <div>
+              <label for="acid-select">Select Acid:</label><br />
+              <select id="acid-select" onchange="updateSim()">
+                <option value="strong">Strong acid (HCl, 0.1 M, 25 mL)</option>
+                <option value="benzoic" selected>
+                  Weak acid (Benzoic acid, K&#8345; =
+                  6.3&times;10&#8315;&#8309;)
+                </option>
+                <option value="acetic">
+                  Weak acid (Acetic acid, K&#8345; = 1.8&times;10&#8315;&#8309;)
+                </option>
+              </select>
+            </div>
+            <div style="flex: 1; min-width: 250px">
+              <label for="vol-slider"
+                >Volume NaOH added:
+                <strong id="vol-display">0.0</strong> mL</label
+              ><br />
+              <input
+                type="range"
+                id="vol-slider"
+                min="0"
+                max="35"
+                step="0.1"
+                value="0"
+                oninput="updateSim()"
+                style="width: 100%"
+              />
+            </div>
+          </div>
+          <div class="ph-display">
+            pH = <span id="ph-val">—</span>
+            <small id="vol-label">Move the slider to begin</small>
+          </div>
+          <canvas id="sim-canvas" width="750" height="420"></canvas>
+          <div class="info-panel" id="info-panel">
+            Select an acid and move the slider to explore the titration curve.
+            Key points will be highlighted and explained as you go.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TAB 4: CALCULATION PRACTICE ============ -->
+      <section id="tab-calcs" class="tab-content">
+        <h2>Calculation Practice</h2>
+
+        <!-- Calc 1 -->
+        <div class="calc-section">
+          <h3>Calculator 1: NaOH Preparation</h3>
+          <p class="text-muted">How much solid NaOH do you need to weigh?</p>
+          <div class="calc-grid">
+            <div>
+              <label>Target molarity (M)</label
+              ><input type="number" id="c1-mol" value="0.100" step="0.001" />
+            </div>
+            <div>
+              <label>Volume (mL)</label
+              ><input type="number" id="c1-vol" value="200" step="1" />
+            </div>
+            <div>
+              <label>MW NaOH (g/mol)</label
+              ><input
+                type="number"
+                id="c1-mw"
+                value="40.00"
+                readonly
+                style="background: var(--bg-alt)"
+              />
+            </div>
+          </div>
+          <button class="btn-calc" onclick="calc1()">Calculate Mass</button>
+          <div class="calc-result" id="c1-result"></div>
+        </div>
+
+        <!-- Calc 2 -->
+        <div class="calc-section">
+          <h3>Calculator 2: KHP Standardization</h3>
+          <p class="text-muted">
+            Determine the exact [NaOH] using your KHP titration data.
+          </p>
+          <div class="calc-grid">
+            <div>
+              <label>Mass of KHP (g)</label
+              ><input type="number" id="c2-mass" value="0.5000" step="0.0001" />
+            </div>
+            <div>
+              <label>Volume NaOH at equiv (mL)</label
+              ><input type="number" id="c2-vol" value="24.50" step="0.01" />
+            </div>
+          </div>
+          <button class="btn-calc" onclick="calc2()">Calculate [NaOH]</button>
+          <div class="calc-result" id="c2-result"></div>
+        </div>
+
+        <!-- Calc 3 -->
+        <div class="calc-section">
+          <h3>Calculator 3: Molar Mass Determination</h3>
+          <p class="text-muted">
+            Find the molar mass of the unknown acid from titration data.
+          </p>
+          <div class="calc-grid">
+            <div>
+              <label>Mass of acid (g)</label
+              ><input type="number" id="c3-mass" value="0.2500" step="0.0001" />
+            </div>
+            <div>
+              <label>[NaOH] (M)</label
+              ><input type="number" id="c3-conc" value="0.1000" step="0.0001" />
+            </div>
+            <div>
+              <label>Volume NaOH at equiv (mL)</label
+              ><input type="number" id="c3-vol" value="20.50" step="0.01" />
+            </div>
+          </div>
+          <button class="btn-calc" onclick="calc3()">
+            Calculate Molar Mass
+          </button>
+          <div class="calc-result" id="c3-result"></div>
+        </div>
+
+        <!-- Calc 4 -->
+        <div class="calc-section">
+          <h3>Calculator 4: K<sub>a</sub> Determination</h3>
+          <p class="text-muted">
+            Find K<sub>a</sub> from the pH at the half-equivalence point.
+          </p>
+          <div class="calc-grid">
+            <div>
+              <label>pH at half-equivalence</label
+              ><input type="number" id="c4-ph" value="4.20" step="0.01" />
+            </div>
+          </div>
+          <button class="btn-calc" onclick="calc4()">
+            Calculate K<sub>a</sub>
+          </button>
+          <div class="calc-result" id="c4-result"></div>
+        </div>
+
+        <!-- Calc 5 -->
+        <div class="calc-section">
+          <h3>Calculator 5: pH / pOH Converter</h3>
+          <p class="text-muted">
+            Enter any ONE value &mdash; the rest will be calculated.
+          </p>
+          <div class="calc-grid">
+            <div>
+              <label>[H<sup>+</sup>] (M)</label
+              ><input type="text" id="c5-h" placeholder="e.g., 0.001" />
+            </div>
+            <div>
+              <label>[OH<sup>&minus;</sup>] (M)</label
+              ><input type="text" id="c5-oh" placeholder="e.g., 1e-11" />
+            </div>
+            <div>
+              <label>pH</label
+              ><input type="text" id="c5-ph" placeholder="e.g., 3.00" />
+            </div>
+            <div>
+              <label>pOH</label
+              ><input type="text" id="c5-poh" placeholder="e.g., 11.00" />
+            </div>
+          </div>
+          <button class="btn-calc" onclick="calc5()">Calculate All</button>
+          <div class="calc-result" id="c5-result"></div>
+        </div>
+      </section>
+
+      <!-- ============ TAB 5: POST-LAB QUIZ ============ -->
+      <section id="tab-quiz" class="tab-content">
+        <h2>Post-Lab Quiz</h2>
+        <p class="text-muted mb-1">
+          Test your understanding. Select an answer for each question, then
+          click "Check" to see if you're correct.
+        </p>
+        <div id="quiz-container"></div>
+        <div class="score-box" id="score-box">
+          <div class="score-num" id="score-num"></div>
+          <div class="score-msg" id="score-msg"></div>
+          <button class="btn-reset-quiz" onclick="resetQuiz()">
+            Retake Quiz
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== FORMULA MODAL ===================== -->
+    <div class="modal-overlay" id="formula-modal">
+      <div class="modal">
+        <button class="modal-close" onclick="toggleModal()">&times;</button>
+        <h2>Formula Reference</h2>
+
+        <div class="formula-block">
+          <div class="label">pH / pOH</div>
+          pH = &minus;log[H<sup>+</sup>] &nbsp;&nbsp;|&nbsp;&nbsp; pOH =
+          &minus;log[OH<sup>&minus;</sup>] &nbsp;&nbsp;|&nbsp;&nbsp; pH + pOH =
+          14.00
+        </div>
+        <div class="formula-block">
+          <div class="label">Ion Product of Water</div>
+          K<sub>w</sub> = [H<sup>+</sup>][OH<sup>&minus;</sup>] = 1.0 &times;
+          10<sup>&minus;14</sup> at 25 &deg;C
+        </div>
+        <div class="formula-block">
+          <div class="label">Henderson-Hasselbalch</div>
+          pH = pK<sub>a</sub> + log([A<sup>&minus;</sup>] / [HA])
+        </div>
+        <div class="formula-block">
+          <div class="label">At Half-Equivalence</div>
+          [HA] = [A<sup>&minus;</sup>] &nbsp;&rarr;&nbsp; pH = pK<sub>a</sub>
+        </div>
+        <div class="formula-block">
+          <div class="label">Conjugate Relationship</div>
+          K<sub>a</sub> &times; K<sub>b</sub> = K<sub>w</sub> = 1.0 &times;
+          10<sup>&minus;14</sup>
+        </div>
+        <div class="formula-block">
+          <div class="label">Moles from Molarity</div>
+          n = M &times; V (in liters) &nbsp;&nbsp;|&nbsp;&nbsp; n = M &times;
+          V<sub>mL</sub> / 1000
+        </div>
+        <div class="formula-block">
+          <div class="label">Moles from Mass</div>
+          n = mass (g) / MW (g/mol)
+        </div>
+        <div class="formula-block">
+          <div class="label">Molarity from Titration</div>
+          M<sub>NaOH</sub> = moles KHP / V<sub>NaOH</sub> (L)
+        </div>
+        <div class="formula-block">
+          <div class="label">Molar Mass from Titration</div>
+          MW = mass<sub>acid</sub> / moles<sub>acid</sub> &nbsp;&nbsp;where
+          moles<sub>acid</sub> = moles NaOH at equiv
+        </div>
+        <div class="formula-block">
+          <div class="label">Weak Acid Equilibrium</div>
+          K<sub>a</sub> = [H<sup>+</sup>][A<sup>&minus;</sup>] / [HA]
+        </div>
+        <div class="formula-block">
+          <div class="label">Hydrolysis at Equivalence</div>
+          K<sub>b</sub> = K<sub>w</sub> / K<sub>a</sub>
+          &nbsp;&nbsp;|&nbsp;&nbsp; [OH<sup>&minus;</sup>] = &radic;(K<sub
+            >b</sub
+          >
+          &times; C<sub>b</sub>)
+        </div>
+        <div class="formula-block">
+          <div class="label">MW of KHP</div>
+          204.22 g/mol
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer>
+      CHM 152L &mdash; Lab 6 Interactive Study Guide &nbsp;|&nbsp; For
+      educational use
+    </footer>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+      /* ========== TAB SWITCHING ========== */
+      function switchTab(id, btn) {
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("tab-" + id).classList.add("active");
+        btn.classList.add("active");
+        if (id === "simulator") {
+          setTimeout(drawCurve, 50);
+        }
+      }
+
+      /* ========== DARK MODE ========== */
+      function toggleDark() {
+        document.body.classList.toggle("dark");
+        const btn = document.querySelector(".toggle-dark");
+        btn.textContent = document.body.classList.contains("dark")
+          ? "Light Mode"
+          : "Dark Mode";
+        if (
+          document.getElementById("tab-simulator").classList.contains("active")
+        )
+          drawCurve();
+      }
+
+      /* ========== ACCORDION ========== */
+      function toggleAccordion(header) {
+        const acc = header.parentElement;
+        acc.classList.toggle("open");
+      }
+
+      /* ========== FORMULA MODAL ========== */
+      function toggleModal() {
+        document.getElementById("formula-modal").classList.toggle("open");
+      }
+      document
+        .getElementById("formula-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) toggleModal();
+        });
+
+      /* ========== MINI pH CALCULATOR (Key Concepts) ========== */
+      function miniCalcFromH() {
+        const val = parseFloat(document.getElementById("mc-h").value);
+        document.getElementById("mc-oh").value = "";
+        if (isNaN(val) || val <= 0) {
+          document.getElementById("mc-result").textContent =
+            "Enter a positive number.";
+          return;
+        }
+        const pH = -Math.log10(val);
+        const pOH = 14 - pH;
+        const oh = Math.pow(10, -pOH);
+        document.getElementById("mc-result").innerHTML =
+          "pH = " +
+          pH.toFixed(4) +
+          " &nbsp;|&nbsp; pOH = " +
+          pOH.toFixed(4) +
+          " &nbsp;|&nbsp; [OH\u207B] = " +
+          oh.toExponential(2);
+      }
+      function miniCalcFromOH() {
+        const val = parseFloat(document.getElementById("mc-oh").value);
+        document.getElementById("mc-h").value = "";
+        if (isNaN(val) || val <= 0) {
+          document.getElementById("mc-result").textContent =
+            "Enter a positive number.";
+          return;
+        }
+        const pOH = -Math.log10(val);
+        const pH = 14 - pOH;
+        const h = Math.pow(10, -pH);
+        document.getElementById("mc-result").innerHTML =
+          "pH = " +
+          pH.toFixed(4) +
+          " &nbsp;|&nbsp; pOH = " +
+          pOH.toFixed(4) +
+          " &nbsp;|&nbsp; [H\u207A] = " +
+          h.toExponential(2);
+      }
+
+      /* ========================================================================
+   TITRATION SIMULATOR
+   ======================================================================== */
+
+      /* Acid configurations */
+      const acids = {
+        strong: {
+          name: "HCl (strong)",
+          Ka: null,
+          molesAcid: 0.0025,
+          volAcidML: 25,
+          concNaOH: 0.1,
+          equivVol: 25,
+          color: "#ef4444",
+        },
+        benzoic: {
+          name: "Benzoic acid",
+          Ka: 6.3e-5,
+          molesAcid: 0.002,
+          volAcidML: 50,
+          concNaOH: 0.1,
+          equivVol: 20,
+          color: "#0ea5e9",
+        },
+        acetic: {
+          name: "Acetic acid",
+          Ka: 1.8e-5,
+          molesAcid: 0.002,
+          volAcidML: 50,
+          concNaOH: 0.1,
+          equivVol: 20,
+          color: "#8b5cf6",
+        },
+      };
+
+      function calcPH_strong(molesAcid, volAcidML, concNaOH, volNaOH) {
+        const molesNaOH = (concNaOH * volNaOH) / 1000;
+        const totalV = (volAcidML + volNaOH) / 1000;
+        if (totalV <= 0) return 1;
+        const diff = molesAcid - molesNaOH;
+        if (diff > 1e-10) {
+          const hConc = diff / totalV;
+          return -Math.log10(hConc);
+        } else if (Math.abs(diff) <= 1e-10) {
+          return 7.0;
+        } else {
+          const ohConc = -diff / totalV;
+          return 14 + Math.log10(ohConc);
+        }
+      }
+
+      function calcPH_weak(Ka, molesAcid, volAcidML, concNaOH, volNaOH) {
+        const molesNaOH = (concNaOH * volNaOH) / 1000;
+        const totalV = (volAcidML + volNaOH) / 1000;
+        if (totalV <= 0) return 2;
+        const equivVol = (molesAcid / concNaOH) * 1000;
+
+        if (molesNaOH < 1e-10) {
+          // Initial: pure weak acid
+          const Ca = molesAcid / totalV;
+          const H = (-Ka + Math.sqrt(Ka * Ka + 4 * Ka * Ca)) / 2;
+          return -Math.log10(H);
+        } else if (volNaOH < equivVol - 0.01) {
+          // Buffer region: Henderson-Hasselbalch
+          const molesHA = molesAcid - molesNaOH;
+          const molesA = molesNaOH;
+          if (molesHA <= 0) return 7;
+          return -Math.log10(Ka) + Math.log10(molesA / molesHA);
+        } else if (Math.abs(volNaOH - equivVol) < 0.05) {
+          // At equivalence: conjugate base hydrolysis
+          const Cb = molesAcid / totalV;
+          const Kb = 1e-14 / Ka;
+          const OH = Math.sqrt(Kb * Cb);
+          return 14 + Math.log10(OH);
+        } else {
+          // Excess NaOH
+          const excessOH = (molesNaOH - molesAcid) / totalV;
+          return 14 + Math.log10(excessOH);
+        }
+      }
+
+      function getPH(acid, vol) {
+        if (acid.Ka === null) {
+          return calcPH_strong(
+            acid.molesAcid,
+            acid.volAcidML,
+            acid.concNaOH,
+            vol,
+          );
+        }
+        return calcPH_weak(
+          acid.Ka,
+          acid.molesAcid,
+          acid.volAcidML,
+          acid.concNaOH,
+          vol,
+        );
+      }
+
+      function drawCurve() {
+        const canvas = document.getElementById("sim-canvas");
+        const ctx = canvas.getContext("2d");
+        const isDark = document.body.classList.contains("dark");
+
+        // Hi-DPI
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+        const W = rect.width;
+        const H = rect.height;
+
+        // Colors
+        const bgColor = isDark ? "#1e293b" : "#ffffff";
+        const gridColor = isDark ? "#334155" : "#e2e8f0";
+        const axisColor = isDark ? "#94a3b8" : "#475569";
+        const textColor = isDark ? "#cbd5e1" : "#334155";
+
+        // Margins
+        const ml = 60,
+          mr = 30,
+          mt = 30,
+          mb = 50;
+        const pw = W - ml - mr;
+        const ph = H - mt - mb;
+
+        // Ranges
+        const xMin = 0,
+          xMax = 35,
+          yMin = 0,
+          yMax = 14;
+        function tx(v) {
+          return ml + ((v - xMin) / (xMax - xMin)) * pw;
+        }
+        function ty(v) {
+          return mt + (1 - (v - yMin) / (yMax - yMin)) * ph;
+        }
+
+        // Clear
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, W, H);
+
+        // Grid
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 0.5;
+        for (let i = 0; i <= 14; i++) {
+          ctx.beginPath();
+          ctx.moveTo(ml, ty(i));
+          ctx.lineTo(W - mr, ty(i));
+          ctx.stroke();
+        }
+        for (let i = 0; i <= 35; i += 5) {
+          ctx.beginPath();
+          ctx.moveTo(tx(i), mt);
+          ctx.lineTo(tx(i), H - mb);
+          ctx.stroke();
+        }
+
+        // Axes
+        ctx.strokeStyle = axisColor;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(ml, mt);
+        ctx.lineTo(ml, H - mb);
+        ctx.lineTo(W - mr, H - mb);
+        ctx.stroke();
+
+        // Labels
+        ctx.fillStyle = textColor;
+        ctx.font = "12px -apple-system, sans-serif";
+        ctx.textAlign = "center";
+        for (let i = 0; i <= 35; i += 5) {
+          ctx.fillText(i, tx(i), H - mb + 20);
+        }
+        ctx.textAlign = "right";
+        for (let i = 0; i <= 14; i += 2) {
+          ctx.fillText(i, ml - 10, ty(i) + 4);
+        }
+        ctx.save();
+        ctx.translate(15, mt + ph / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.textAlign = "center";
+        ctx.font = "bold 13px -apple-system, sans-serif";
+        ctx.fillText("pH", 0, 0);
+        ctx.restore();
+        ctx.textAlign = "center";
+        ctx.font = "bold 13px -apple-system, sans-serif";
+        ctx.fillText("Volume NaOH (mL)", ml + pw / 2, H - 5);
+
+        // Get current acid
+        const sel = document.getElementById("acid-select").value;
+        const acid = acids[sel];
+        const isWeak = acid.Ka !== null;
+        const pKa = isWeak ? -Math.log10(acid.Ka) : null;
+
+        // Buffer region shading (weak acids only)
+        if (isWeak) {
+          const bufStart = 1;
+          const bufEnd = acid.equivVol - 0.5;
+          ctx.fillStyle = isDark
+            ? "rgba(14,165,233,0.08)"
+            : "rgba(14,165,233,0.06)";
+          ctx.fillRect(tx(bufStart), mt, tx(bufEnd) - tx(bufStart), ph);
+          ctx.fillStyle = isDark
+            ? "rgba(14,165,233,0.5)"
+            : "rgba(14,165,233,0.4)";
+          ctx.font = "11px -apple-system, sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText("Buffer Region", tx((bufStart + bufEnd) / 2), mt + 18);
+        }
+
+        // Half-equivalence dashed line (weak acids only)
+        if (isWeak) {
+          const halfVol = acid.equivVol / 2;
+          ctx.setLineDash([6, 4]);
+          ctx.strokeStyle = "#f59e0b";
+          ctx.lineWidth = 1.2;
+          // Horizontal line at pKa
+          ctx.beginPath();
+          ctx.moveTo(ml, ty(pKa));
+          ctx.lineTo(tx(halfVol), ty(pKa));
+          ctx.stroke();
+          // Vertical line at half-equiv vol
+          ctx.beginPath();
+          ctx.moveTo(tx(halfVol), ty(pKa));
+          ctx.lineTo(tx(halfVol), H - mb);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = "#f59e0b";
+          ctx.font = "bold 11px -apple-system, sans-serif";
+          ctx.textAlign = "left";
+          ctx.fillText("pKa = " + pKa.toFixed(2), tx(halfVol) + 5, ty(pKa) - 6);
+          ctx.fillText("Half-equiv", tx(halfVol) + 5, ty(pKa) + 10);
+        }
+
+        // Equivalence point dashed line
+        ctx.setLineDash([6, 4]);
+        ctx.strokeStyle = "#ef4444";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(tx(acid.equivVol), mt);
+        ctx.lineTo(tx(acid.equivVol), H - mb);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#ef4444";
+        ctx.font = "bold 11px -apple-system, sans-serif";
+        ctx.textAlign = "left";
+        const eqPH = getPH(acid, acid.equivVol);
+        ctx.fillText("Equiv pt", tx(acid.equivVol) + 4, mt + 18);
+        ctx.fillText(
+          "(" + acid.equivVol.toFixed(1) + " mL, pH " + eqPH.toFixed(2) + ")",
+          tx(acid.equivVol) + 4,
+          mt + 32,
+        );
+
+        // Draw titration curve
+        ctx.strokeStyle = acid.color;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        let first = true;
+        for (let v = 0; v <= 35; v += 0.1) {
+          let pH = getPH(acid, v);
+          pH = Math.max(0, Math.min(14, pH));
+          const x = tx(v),
+            y = ty(pH);
+          if (first) {
+            ctx.moveTo(x, y);
+            first = false;
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+        ctx.stroke();
+
+        // Current position dot
+        const vol = parseFloat(document.getElementById("vol-slider").value);
+        let curPH = getPH(acid, vol);
+        curPH = Math.max(0, Math.min(14, curPH));
+        ctx.beginPath();
+        ctx.arc(tx(vol), ty(curPH), 7, 0, Math.PI * 2);
+        ctx.fillStyle = acid.color;
+        ctx.fill();
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Dot label
+        ctx.fillStyle = textColor;
+        ctx.font = "bold 12px -apple-system, sans-serif";
+        ctx.textAlign = "left";
+        const labelX = tx(vol) + 12;
+        const labelY = ty(curPH) - 8;
+        ctx.fillText(
+          "(" + vol.toFixed(1) + " mL, pH " + curPH.toFixed(2) + ")",
+          labelX,
+          labelY,
+        );
+      }
+
+      function updateSim() {
+        const sel = document.getElementById("acid-select").value;
+        const acid = acids[sel];
+        const vol = parseFloat(document.getElementById("vol-slider").value);
+        let pH = getPH(acid, vol);
+        pH = Math.max(0, Math.min(14, pH));
+
+        document.getElementById("vol-display").textContent = vol.toFixed(1);
+        document.getElementById("ph-val").textContent = pH.toFixed(2);
+        document.getElementById("vol-label").textContent =
+          vol.toFixed(1) + " mL NaOH added";
+
+        // Info panel
+        const isWeak = acid.Ka !== null;
+        const halfVol = acid.equivVol / 2;
+        const pKa = isWeak ? -Math.log10(acid.Ka) : null;
+        let info = "";
+
+        if (vol < 0.1) {
+          info = isWeak
+            ? "<strong>Initial point:</strong> Only the weak acid is present. The pH is determined by the K<sub>a</sub> equilibrium: HA &#8652; H<sup>+</sup> + A<sup>&minus;</sup>."
+            : "<strong>Initial point:</strong> Only the strong acid is present. HCl fully dissociates, so [H<sup>+</sup>] = [HCl].";
+        } else if (vol < acid.equivVol - 0.5) {
+          if (isWeak) {
+            if (Math.abs(vol - halfVol) < 0.5) {
+              info =
+                "<strong>Half-equivalence point!</strong> Exactly half the acid has been neutralized.<br>[HA] = [A<sup>&minus;</sup>], so pH = pK<sub>a</sub> = " +
+                pKa.toFixed(2) +
+                ".<br>This is the easiest way to find K<sub>a</sub> experimentally.";
+            } else {
+              info =
+                "<strong>Buffer region:</strong> Both HA and A<sup>&minus;</sup> coexist in solution. The pH changes slowly here because the Henderson-Hasselbalch equation governs: pH = pK<sub>a</sub> + log([A<sup>&minus;</sup>]/[HA]).";
+            }
+          } else {
+            info =
+              "<strong>Before equivalence:</strong> Excess HCl remains. [H<sup>+</sup>] = (moles HCl remaining) / total volume.";
+          }
+        } else if (Math.abs(vol - acid.equivVol) < 0.5) {
+          if (isWeak) {
+            info =
+              "<strong>Equivalence point:</strong> All HA has been neutralized &rarr; converted to A<sup>&minus;</sup>.<br>The pH (" +
+              pH.toFixed(2) +
+              ") is &gt; 7 because the conjugate base A<sup>&minus;</sup> hydrolyzes: A<sup>&minus;</sup> + H<sub>2</sub>O &#8652; HA + OH<sup>&minus;</sup>.";
+          } else {
+            info =
+              "<strong>Equivalence point:</strong> All HCl has been neutralized. The solution contains only water and NaCl (neutral salt), so pH = 7.00.";
+          }
+        } else {
+          info =
+            "<strong>Past equivalence:</strong> All the acid has been neutralized. Excess NaOH determines the pH. [OH<sup>&minus;</sup>] = (excess moles NaOH) / total volume. As you add more NaOH, pH gradually approaches ~13.";
+        }
+        document.getElementById("info-panel").innerHTML = info;
+
+        drawCurve();
+      }
+
+      /* ========================================================================
+   CALCULATORS
+   ======================================================================== */
+
+      function calc1() {
+        const M = parseFloat(document.getElementById("c1-mol").value);
+        const V = parseFloat(document.getElementById("c1-vol").value);
+        const MW = 40.0;
+        if (isNaN(M) || isNaN(V) || M <= 0 || V <= 0) {
+          document.getElementById("c1-result").innerHTML =
+            "Please enter valid positive numbers.";
+          return;
+        }
+        const Vl = V / 1000;
+        const mol = M * Vl;
+        const mass = mol * MW;
+        document.getElementById("c1-result").innerHTML =
+          '<span class="step">Step 1: Convert volume to liters</span>\n' +
+          V +
+          " mL \u00D7 (1 L / 1000 mL) = " +
+          Vl.toFixed(4) +
+          " L\n\n" +
+          '<span class="step">Step 2: Calculate moles needed</span>\n' +
+          "n = M \u00D7 V = " +
+          M +
+          " mol/L \u00D7 " +
+          Vl.toFixed(4) +
+          " L = " +
+          mol.toFixed(6) +
+          " mol\n\n" +
+          '<span class="step">Step 3: Convert to mass</span>\n' +
+          "mass = n \u00D7 MW = " +
+          mol.toFixed(6) +
+          " mol \u00D7 " +
+          MW.toFixed(2) +
+          " g/mol\n\n" +
+          '<span class="answer">mass = ' +
+          mass.toFixed(4) +
+          " g NaOH</span>";
+      }
+
+      function calc2() {
+        const mass = parseFloat(document.getElementById("c2-mass").value);
+        const vol = parseFloat(document.getElementById("c2-vol").value);
+        if (isNaN(mass) || isNaN(vol) || mass <= 0 || vol <= 0) {
+          document.getElementById("c2-result").innerHTML =
+            "Please enter valid positive numbers.";
+          return;
+        }
+        const MW = 204.22;
+        const mol = mass / MW;
+        const Vl = vol / 1000;
+        const conc = mol / Vl;
+        document.getElementById("c2-result").innerHTML =
+          '<span class="step">Step 1: Moles of KHP</span>\n' +
+          "n = mass / MW = " +
+          mass.toFixed(4) +
+          " g / 204.22 g/mol = " +
+          mol.toFixed(6) +
+          " mol\n\n" +
+          '<span class="step">Step 2: Moles NaOH = moles KHP (1:1 ratio)</span>\n' +
+          "n(NaOH) = " +
+          mol.toFixed(6) +
+          " mol\n\n" +
+          '<span class="step">Step 3: Calculate [NaOH]</span>\n' +
+          "[NaOH] = n / V = " +
+          mol.toFixed(6) +
+          " mol / " +
+          Vl.toFixed(5) +
+          " L\n\n" +
+          '<span class="answer">[NaOH] = ' +
+          conc.toFixed(4) +
+          " M</span>";
+      }
+
+      function calc3() {
+        const mass = parseFloat(document.getElementById("c3-mass").value);
+        const conc = parseFloat(document.getElementById("c3-conc").value);
+        const vol = parseFloat(document.getElementById("c3-vol").value);
+        if (
+          isNaN(mass) ||
+          isNaN(conc) ||
+          isNaN(vol) ||
+          mass <= 0 ||
+          conc <= 0 ||
+          vol <= 0
+        ) {
+          document.getElementById("c3-result").innerHTML =
+            "Please enter valid positive numbers.";
+          return;
+        }
+        const Vl = vol / 1000;
+        const molNaOH = conc * Vl;
+        const MW = mass / molNaOH;
+        document.getElementById("c3-result").innerHTML =
+          '<span class="step">Step 1: Moles of NaOH at equivalence</span>\n' +
+          "n(NaOH) = M \u00D7 V = " +
+          conc.toFixed(4) +
+          " M \u00D7 " +
+          Vl.toFixed(5) +
+          " L = " +
+          molNaOH.toFixed(6) +
+          " mol\n\n" +
+          '<span class="step">Step 2: Moles of acid = moles NaOH (1:1)</span>\n' +
+          "n(acid) = " +
+          molNaOH.toFixed(6) +
+          " mol\n\n" +
+          '<span class="step">Step 3: Molar mass</span>\n' +
+          "MW = mass / n = " +
+          mass.toFixed(4) +
+          " g / " +
+          molNaOH.toFixed(6) +
+          " mol\n\n" +
+          '<span class="answer">Molar mass = ' +
+          MW.toFixed(2) +
+          " g/mol</span>";
+      }
+
+      function calc4() {
+        const pH = parseFloat(document.getElementById("c4-ph").value);
+        if (isNaN(pH) || pH <= 0 || pH >= 14) {
+          document.getElementById("c4-result").innerHTML =
+            "Enter a pH between 0 and 14.";
+          return;
+        }
+        const Ka = Math.pow(10, -pH);
+        document.getElementById("c4-result").innerHTML =
+          '<span class="step">At half-equivalence: pH = pK\u2090</span>\n' +
+          "pK\u2090 = " +
+          pH.toFixed(2) +
+          "\n\n" +
+          '<span class="step">K\u2090 = 10^(\u2212pK\u2090) = 10^(\u2212' +
+          pH.toFixed(2) +
+          ")</span>\n\n" +
+          '<span class="answer">K\u2090 = ' +
+          Ka.toExponential(2) +
+          "</span>";
+      }
+
+      function calc5() {
+        const fields = ["c5-h", "c5-oh", "c5-ph", "c5-poh"];
+        let found = null,
+          val = null;
+        for (const f of fields) {
+          const v = document.getElementById(f).value.trim();
+          if (v !== "") {
+            found = f;
+            val = parseFloat(v);
+            break;
+          }
+        }
+        if (found === null || isNaN(val)) {
+          document.getElementById("c5-result").innerHTML =
+            "Enter exactly ONE value.";
+          return;
+        }
+
+        let H, OH, pH, pOH;
+        if (found === "c5-h") {
+          H = val;
+          if (H <= 0) {
+            document.getElementById("c5-result").innerHTML =
+              "[H\u207A] must be positive.";
+            return;
+          }
+          pH = -Math.log10(H);
+          pOH = 14 - pH;
+          OH = Math.pow(10, -pOH);
+        } else if (found === "c5-oh") {
+          OH = val;
+          if (OH <= 0) {
+            document.getElementById("c5-result").innerHTML =
+              "[OH\u207B] must be positive.";
+            return;
+          }
+          pOH = -Math.log10(OH);
+          pH = 14 - pOH;
+          H = Math.pow(10, -pH);
+        } else if (found === "c5-ph") {
+          pH = val;
+          pOH = 14 - pH;
+          H = Math.pow(10, -pH);
+          OH = Math.pow(10, -pOH);
+        } else {
+          pOH = val;
+          pH = 14 - pOH;
+          H = Math.pow(10, -pH);
+          OH = Math.pow(10, -pOH);
+        }
+
+        document.getElementById("c5-result").innerHTML =
+          '<span class="answer">[H\u207A] = ' +
+          H.toExponential(3) +
+          " M</span>\n" +
+          '<span class="answer">[OH\u207B] = ' +
+          OH.toExponential(3) +
+          " M</span>\n" +
+          '<span class="answer">pH = ' +
+          pH.toFixed(4) +
+          "</span>\n" +
+          '<span class="answer">pOH = ' +
+          pOH.toFixed(4) +
+          "</span>";
+
+        // Clear the other fields
+        fields.forEach((f) => {
+          if (f !== found) document.getElementById(f).value = "";
+        });
+      }
+
+      /* ========================================================================
+   QUIZ
+   ======================================================================== */
+
+      const quizData = [
+        {
+          q: "What is the purpose of standardizing NaOH?",
+          opts: [
+            "To make the solution exactly 0.100 M",
+            "To determine the exact concentration of the NaOH solution",
+            "To remove impurities from the NaOH",
+            "To dilute the NaOH to the correct volume",
+          ],
+          ans: 1,
+          expl: "Standardization does not change the concentration \u2014 it <strong>measures</strong> it. NaOH absorbs water and CO\u2082, so the weighed mass does not accurately reflect the number of moles. Titrating against KHP (a primary standard) lets you calculate the true [NaOH].",
+        },
+        {
+          q: "KHP reacts with NaOH in what mole ratio?",
+          opts: ["1:2", "2:1", "1:1", "1:3"],
+          ans: 2,
+          expl: "Each KHP molecule (KHC\u2088H\u2084O\u2084) has one acidic hydrogen. The balanced equation is:<br>KHC\u2088H\u2084O\u2084 + NaOH \u2192 KNaC\u2088H\u2084O\u2084 + H\u2082O<br>One mole of KHP reacts with exactly one mole of NaOH (1:1).",
+        },
+        {
+          q: "At the equivalence point of a weak acid + strong base titration, the pH is:",
+          opts: [
+            "Equal to 7",
+            "Less than 7",
+            "Greater than 7",
+            "Equal to pK\u2090",
+          ],
+          ans: 2,
+          expl: "At equivalence, all HA has been converted to A\u207B. The conjugate base A\u207B hydrolyzes: A\u207B + H\u2082O \u21CC HA + OH\u207B, producing OH\u207B and making the solution basic (pH > 7). This is why phenolphthalein (pH 8.2\u201310) works well for these titrations.",
+        },
+        {
+          q: "At the half-equivalence point of a weak acid titration, pH equals:",
+          opts: ["7.00", "pK\u1D47", "pK\u2090", "14 \u2212 pK\u2090"],
+          ans: 2,
+          expl: "At half-equivalence, [HA] = [A\u207B]. The Henderson-Hasselbalch equation becomes:<br>pH = pK\u2090 + log([A\u207B]/[HA]) = pK\u2090 + log(1) = pK\u2090 + 0 = <strong>pK\u2090</strong>.",
+        },
+        {
+          q: "For 0.0100 M NaOH, the pH is:",
+          opts: ["2.00", "10.00", "12.00", "14.00"],
+          ans: 2,
+          expl: "NaOH is a strong base: [OH\u207B] = 0.0100 M.<br>pOH = \u2212log(0.0100) = 2.00<br>pH = 14.00 \u2212 2.00 = <strong>12.00</strong>.",
+        },
+        {
+          q: "Why should you rinse the burette with NaOH before filling it?",
+          opts: [
+            "To sterilize the burette",
+            "To coat the burette with NaOH for better flow",
+            "To prevent dilution of the NaOH by residual water",
+            "To remove air bubbles",
+          ],
+          ans: 2,
+          expl: "Residual distilled water in the burette would dilute the NaOH, lowering its effective concentration during the titration. Rinsing with the NaOH solution first ensures that any remaining liquid has the same concentration as your titrant.",
+        },
+        {
+          q: "Phenolphthalein turns pink at approximately what pH range?",
+          opts: [
+            "pH 3\u20135",
+            "pH 6\u20137",
+            "pH 8.2\u201310",
+            "pH 12\u201314",
+          ],
+          ans: 2,
+          expl: "Phenolphthalein is colorless in acidic solution and turns pink/magenta between pH 8.2 and 10. This makes it ideal for weak acid + strong base titrations, where the equivalence point pH falls in this range.",
+        },
+        {
+          q: "If K\u2090 for acetic acid is 1.8 \u00D7 10\u207B\u2075, what is K\u1D47 for the acetate ion?",
+          opts: [
+            "1.8 \u00D7 10\u207B\u2075",
+            "5.6 \u00D7 10\u207B\xB9\u2070",
+            "1.0 \u00D7 10\u207B\xB9\u2074",
+            "7.2 \u00D7 10\u207B\u2079",
+          ],
+          ans: 1,
+          expl: "K\u1D47 = K\u1D42 / K\u2090 = (1.0 \u00D7 10\u207B\xB9\u2074) / (1.8 \u00D7 10\u207B\u2075) = 5.56 \u00D7 10\u207B\xB9\u2070 \u2248 <strong>5.6 \u00D7 10\u207B\xB9\u2070</strong>.",
+        },
+        {
+          q: "The pOH of a 0.54 M HCl solution is:",
+          opts: ["0.27", "13.73", "0.54", "7.00"],
+          ans: 1,
+          expl: "HCl is a strong acid: [H\u207A] = 0.54 M.<br>pH = \u2212log(0.54) = 0.27<br>pOH = 14.00 \u2212 0.27 = <strong>13.73</strong>.",
+        },
+        {
+          q: "What happens if you overshoot the equivalence point by adding too much NaOH?",
+          opts: [
+            "The reaction reverses",
+            "The acid reforms",
+            "The pH rises sharply and approaches the pH of the NaOH solution",
+            "The solution becomes neutral",
+          ],
+          ans: 2,
+          expl: "Past the equivalence point, all the acid has been neutralized. Additional NaOH simply adds excess OH\u207B to the solution. The pH rises sharply at first (steep part of the curve), then gradually approaches the pH of the pure NaOH solution (~13 for 0.1 M NaOH).",
+        },
+      ];
+
+      let quizAnswered = 0;
+      let quizCorrect = 0;
+
+      function buildQuiz() {
+        const container = document.getElementById("quiz-container");
+        container.innerHTML = "";
+        quizAnswered = 0;
+        quizCorrect = 0;
+        document.getElementById("score-box").style.display = "none";
+
+        quizData.forEach((qd, qi) => {
+          const div = document.createElement("div");
+          div.className = "quiz-q";
+          div.id = "qq-" + qi;
+          let optHTML = "";
+          qd.opts.forEach((o, oi) => {
+            optHTML +=
+              '<li data-q="' +
+              qi +
+              '" data-o="' +
+              oi +
+              '" onclick="selectOpt(this)">' +
+              o +
+              "</li>";
+          });
+          div.innerHTML =
+            '<div class="q-num">Question ' +
+            (qi + 1) +
+            " of " +
+            quizData.length +
+            "</div>" +
+            '<div class="q-text">' +
+            qd.q +
+            "</div>" +
+            '<ul class="options">' +
+            optHTML +
+            "</ul>" +
+            '<button class="btn-submit-q" id="btn-q-' +
+            qi +
+            '" onclick="checkAnswer(' +
+            qi +
+            ')" disabled>Check Answer</button>' +
+            '<div class="explanation" id="expl-' +
+            qi +
+            '">' +
+            qd.expl +
+            "</div>";
+          container.appendChild(div);
+        });
+      }
+
+      function selectOpt(li) {
+        const qi = parseInt(li.dataset.q);
+        // Deselect siblings
+        const siblings = li.parentElement.children;
+        for (let s of siblings) {
+          s.classList.remove("selected");
+        }
+        li.classList.add("selected");
+        document.getElementById("btn-q-" + qi).disabled = false;
+      }
+
+      function checkAnswer(qi) {
+        const qDiv = document.getElementById("qq-" + qi);
+        const options = qDiv.querySelectorAll(".options li");
+        let selectedIdx = -1;
+        options.forEach((li, i) => {
+          if (li.classList.contains("selected")) selectedIdx = i;
+        });
+        if (selectedIdx === -1) return;
+
+        const correct = quizData[qi].ans;
+        options.forEach((li, i) => {
+          li.classList.add("disabled");
+          if (i === correct) li.classList.add("correct");
+          if (i === selectedIdx && i !== correct) li.classList.add("wrong");
+        });
+
+        document.getElementById("btn-q-" + qi).disabled = true;
+        document.getElementById("expl-" + qi).classList.add("show");
+
+        quizAnswered++;
+        if (selectedIdx === correct) quizCorrect++;
+
+        if (quizAnswered === quizData.length) showScore();
+      }
+
+      function showScore() {
+        const box = document.getElementById("score-box");
+        box.style.display = "block";
+        document.getElementById("score-num").textContent =
+          quizCorrect + " / " + quizData.length;
+        let msg = "";
+        if (quizCorrect >= 9)
+          msg = "Outstanding preparation! You are ready for this lab.";
+        else if (quizCorrect >= 7)
+          msg = "Good understanding. Review any missed questions before lab.";
+        else if (quizCorrect >= 5)
+          msg = "Review the Key Concepts tab to strengthen your understanding.";
+        else
+          msg =
+            "Go back to the Key Concepts tab and review before attempting the lab.";
+        document.getElementById("score-msg").textContent = msg;
+        box.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function resetQuiz() {
+        buildQuiz();
+        window.scrollTo({
+          top: document.getElementById("tab-quiz").offsetTop,
+          behavior: "smooth",
+        });
+      }
+
+      /* ========== INIT ========== */
+      window.addEventListener("DOMContentLoaded", () => {
+        buildQuiz();
+        updateSim();
+      });
+      window.addEventListener("resize", () => {
+        if (
+          document.getElementById("tab-simulator").classList.contains("active")
+        )
+          drawCurve();
+      });
+    </script>
+  </body>
+</html>
