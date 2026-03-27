@@ -1,0 +1,2408 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab Mystery: The Case of the Unknown Acid | CHM 152L Lab 6</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Georgia, "Times New Roman", serif;
+        background: #0a0a14;
+        color: #e8dcc8;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+
+      #hud {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 48px;
+        background: linear-gradient(135deg, #1a1018, #141020);
+        border-bottom: 2px solid #c9a84c;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 100;
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+      }
+      #hud .badge {
+        color: #c9a84c;
+        font-weight: 700;
+        letter-spacing: 2px;
+      }
+      #xpDisplay {
+        color: #48bb78;
+        font-weight: 700;
+      }
+      #streakDisplay {
+        color: #f6ad55;
+        font-weight: 700;
+        display: none;
+        margin-left: 12px;
+      }
+
+      #progWrap {
+        position: fixed;
+        top: 48px;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: #1a1a2e;
+        z-index: 100;
+      }
+      #progBar {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #c9a84c, #d4a574);
+        transition: width 0.4s;
+        font-size: 0;
+        border-radius: 0 3px 3px 0;
+      }
+
+      .slide {
+        position: fixed;
+        top: 54px;
+        left: 0;
+        right: 0;
+        bottom: 60px;
+        overflow-y: auto;
+        padding: 30px;
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+      .slide.active {
+        display: block;
+      }
+      .slide-inner {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        font-size: 1.8em;
+        color: #c9a84c;
+        text-align: center;
+        margin-bottom: 6px;
+        letter-spacing: 1px;
+      }
+      h2 {
+        font-size: 1.4em;
+        color: #c9a84c;
+        margin: 20px 0 12px;
+        border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+        padding-bottom: 6px;
+      }
+      h3 {
+        font-size: 1.1em;
+        color: #d4a574;
+        margin: 16px 0 8px;
+      }
+      p,
+      .desc {
+        line-height: 1.7;
+        margin-bottom: 12px;
+        font-size: 1.02em;
+      }
+      .subtitle {
+        text-align: center;
+        color: #8b8b9e;
+        font-size: 0.95em;
+        margin-bottom: 20px;
+        font-style: italic;
+      }
+      .stamp {
+        display: inline-block;
+        border: 3px solid #c9a84c;
+        color: #c9a84c;
+        padding: 4px 14px;
+        font-family: "Courier New", monospace;
+        font-weight: 700;
+        font-size: 0.85em;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        transform: rotate(-2deg);
+        margin: 10px 0;
+      }
+      .evidence-box {
+        background: rgba(201, 168, 76, 0.08);
+        border: 1px solid rgba(201, 168, 76, 0.25);
+        border-radius: 10px;
+        padding: 16px;
+        margin: 14px 0;
+      }
+      .teach-box {
+        background: rgba(72, 187, 120, 0.06);
+        border: 1px solid rgba(72, 187, 120, 0.2);
+        border-radius: 10px;
+        padding: 16px;
+        margin: 14px 0;
+      }
+      .warn {
+        color: #f6ad55;
+        font-weight: 700;
+      }
+      .key-term {
+        color: #c9a84c;
+        font-weight: 700;
+      }
+
+      .reaction {
+        text-align: center;
+        font-size: 1.15em;
+        background: rgba(201, 168, 76, 0.06);
+        padding: 14px;
+        border-radius: 8px;
+        margin: 14px 0;
+        border: 1px solid rgba(201, 168, 76, 0.2);
+        font-family: "Courier New", monospace;
+      }
+
+
+      input[type="text"],
+      input[type="date"],
+      input[type="number"] {
+        background: #1a1a2e;
+        border: 2px solid #3a3a5e;
+        color: #e8dcc8;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 1em;
+        font-family: Georgia, serif;
+        width: 100%;
+      }
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #c9a84c;
+      }
+      textarea {
+        background: #1a1a2e;
+        border: 2px solid #3a3a5e;
+        color: #e8dcc8;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 1em;
+        font-family: Georgia, serif;
+        width: 100%;
+        min-height: 90px;
+        resize: vertical;
+        line-height: 1.6;
+      }
+
+      .btn {
+        padding: 12px 28px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Courier New", monospace;
+        letter-spacing: 1px;
+        transition: all 0.2s;
+      }
+      .btn-gold {
+        background: linear-gradient(135deg, #c9a84c, #a8893e);
+        color: #0a0a14;
+      }
+      .btn-gold:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(201, 168, 76, 0.4);
+      }
+      .btn-sm {
+        padding: 8px 18px;
+        font-size: 0.9em;
+      }
+      .btn-save {
+        background: #3a3a5e;
+        color: #e8dcc8;
+        padding: 8px 18px;
+        border: none;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-save:hover {
+        background: #4a4a6e;
+      }
+
+      .fb {
+        display: none;
+        margin-top: 10px;
+        padding: 12px;
+        border-radius: 8px;
+        background: rgba(201, 168, 76, 0.06);
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        font-size: 0.95em;
+        line-height: 1.6;
+      }
+      .saved-notice {
+        color: #48bb78;
+        font-size: 0.85em;
+        display: none;
+        margin-top: 6px;
+      }
+
+      .suspects {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+        margin: 16px 0;
+      }
+      .suspect-card {
+        background: #1a1a2e;
+        border: 2px solid #3a3a5e;
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+        cursor: default;
+        transition: all 0.2s;
+      }
+      .suspect-card h4 {
+        color: #c9a84c;
+        font-size: 0.95em;
+        margin-bottom: 4px;
+      }
+      .suspect-card .formula {
+        font-family: "Courier New", monospace;
+        font-size: 0.85em;
+        color: #8b8b9e;
+        margin-bottom: 6px;
+      }
+      .suspect-card .ka-val {
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+        color: #d4a574;
+        font-weight: 700;
+      }
+      .suspect-card.clickable {
+        cursor: pointer;
+      }
+      .suspect-card.clickable:hover {
+        border-color: #c9a84c;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(201, 168, 76, 0.2);
+      }
+      .suspect-card.accused-right {
+        border-color: #48bb78;
+        background: rgba(72, 187, 120, 0.15);
+      }
+      .suspect-card.accused-wrong {
+        border-color: #e53e3e;
+        background: rgba(229, 62, 62, 0.1);
+      }
+
+      .tit-panel {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 14px 0;
+      }
+      .tit-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .tit-data {
+        font-family: "Courier New", monospace;
+      }
+      .tit-data td {
+        padding: 4px 8px;
+      }
+      .tit-data .label {
+        color: #8b8b9e;
+      }
+      .tit-data .val {
+        color: #e8dcc8;
+        font-weight: 700;
+      }
+      canvas {
+        background: #0d0d1a;
+        border: 1px solid #3a3a5e;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 500px;
+      }
+      .indicator {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid #3a3a5e;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7em;
+        font-family: "Courier New", monospace;
+        color: #8b8b9e;
+        margin: 8px auto;
+        transition: background 0.3s;
+      }
+      .btn-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .btn-add {
+        padding: 8px 14px;
+        border: 2px solid #3a3a5e;
+        background: #1a1a2e;
+        color: #e8dcc8;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .btn-add:hover:not(:disabled) {
+        border-color: #c9a84c;
+      }
+
+      .xp-pop {
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        background: rgba(72, 187, 120, 0.9);
+        color: #fff;
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-family: "Courier New", monospace;
+        z-index: 999;
+        animation: popUp 1.2s ease forwards;
+        pointer-events: none;
+      }
+      @keyframes popUp {
+        0% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-40px);
+        }
+      }
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      nav#nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(135deg, #1a1018, #141020);
+        border-top: 2px solid #c9a84c;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 100;
+      }
+      nav#nav button {
+        padding: 10px 22px;
+        border: 2px solid #c9a84c;
+        background: transparent;
+        color: #c9a84c;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      nav#nav button:hover:not(:disabled) {
+        background: rgba(201, 168, 76, 0.15);
+      }
+      nav#nav button:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+      #counter {
+        color: #8b8b9e;
+        font-family: "Courier New", monospace;
+      }
+
+      #reportBody {
+        display: none;
+      }
+      .report-tbl {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+      }
+      .report-tbl td {
+        padding: 6px 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      .report-tbl td:first-child {
+        font-weight: 700;
+        width: 45%;
+      }
+      .reveal-box {
+        background: rgba(72, 187, 120, 0.1);
+        border: 2px solid #48bb78;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 16px 0;
+        text-align: center;
+        display: none;
+      }
+      .reveal-box h3 {
+        color: #48bb78;
+        font-size: 1.3em;
+        margin-bottom: 8px;
+      }
+
+      @media (max-width: 700px) {
+        .slide {
+          padding: 16px;
+        }
+        h1 {
+          font-size: 1.4em;
+        }
+        .tit-panel {
+          grid-template-columns: 1fr;
+        }
+        .suspects {
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        }
+      }
+      @media print {
+        body {
+          background: #fff;
+          color: #000;
+          overflow: visible;
+        }
+        #hud,
+        #progWrap,
+        nav#nav,
+        .slide,
+        #confetti {
+          display: none !important;
+        }
+        #reportBody {
+          display: block !important;
+          padding: 20px;
+          font-family: Georgia, serif;
+          font-size: 11pt;
+        }
+        #reportBody h2 {
+          color: #000;
+          border-bottom: 2px solid #000;
+        }
+        #reportBody h3 {
+          color: #333;
+          margin-top: 16px;
+        }
+        .report-tbl td {
+          border-bottom: 1px solid #999;
+        }
+        .report-fr {
+          white-space: pre-wrap;
+          font-style: italic;
+          color: #333;
+          background: #f5f5f5;
+          padding: 8px;
+          border-radius: 4px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hud">
+      <span class="badge">🔍 DETECTIVE FILE</span>
+      <span
+        ><span id="xpDisplay">0 XP</span><span id="streakDisplay"></span
+      ></span>
+    </div>
+    <div id="progWrap"><div id="progBar"></div></div>
+
+    <!-- ============ SLIDE 0: CASE BRIEFING ============ -->
+    <div class="slide active" id="s0">
+      <div class="slide-inner" style="text-align: center; padding-top: 40px">
+        <div style="font-size: 3em; margin-bottom: 10px">🔍</div>
+        <h1>CLASSIFIED: Laboratory Mystery</h1>
+        <p class="subtitle">CHM 152L &bull; Lab 6</p>
+        <h2 style="border: none; text-align: center">
+          The Case of the Unknown Acid
+        </h2>
+        <p style="max-width: 500px; margin: 16px auto">
+          Detective, an unidentified weak acid has been discovered in the
+          chemistry lab. Your mission: perform titrations, gather evidence, and
+          determine its true identity.
+        </p>
+        <div class="stamp">TOP SECRET</div>
+        <div style="max-width: 400px; margin: 24px auto; text-align: left">
+          <label style="display: block; margin-bottom: 6px; color: #c9a84c"
+            >Detective Name</label
+          >
+          <input type="text" id="sName" placeholder="Your full name" />
+          <label style="display: block; margin: 14px 0 6px; color: #c9a84c"
+            >Badge Number (Section)</label
+          >
+          <input type="text" id="sSec" placeholder="e.g. 101" />
+          <label style="display: block; margin: 14px 0 6px; color: #c9a84c"
+            >Date of Investigation</label
+          >
+          <input type="date" id="sDate" />
+          <br /><br />
+          <button
+            class="btn btn-gold"
+            style="width: 100%; font-size: 1.1em"
+            onclick="startLab()"
+          >
+            🔍 Accept Case
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 1: BACKGROUND TEACHING ============ -->
+    <div class="slide" id="s1">
+      <div class="slide-inner">
+        <div class="stamp">TRAINING BRIEFING</div>
+        <h1>What is Titration?</h1>
+
+
+        <div class="teach-box">
+          <p>
+            Think of titration like slowly filling a cup to the brim. You have a
+            solution with an unknown concentration (the
+            <span class="key-term">analyte</span>) in a flask, and you slowly
+            add a solution of known concentration (the
+            <span class="key-term">titrant</span>) from a buret until the
+            reaction is exactly complete.
+          </p>
+          <p>
+            That exact moment when all the acid has reacted with all the base is
+            called the <span class="key-term">equivalence point</span>. At the
+            equivalence point, moles of acid = moles of base.
+          </p>
+          <p>
+            But how do you <em>see</em> the equivalence point? You use an
+            <span class="key-term">indicator</span>. In this lab, you will use
+            <strong>phenolphthalein</strong>, which is colorless in acidic
+            solutions and turns pink when the solution becomes basic. The moment
+            you see a persistent pink color that does not fade, you have reached
+            the <span class="key-term">endpoint</span>.
+          </p>
+        </div>
+
+
+        <h3>🧪 Q1: Your Understanding (5 points)</h3>
+        <div id="q1">
+          <p>
+            <strong
+              >In your own words, explain what happens at the equivalence point
+              of an acid base titration and how phenolphthalein helps you detect
+              it.</strong
+            >
+          </p>
+          <textarea
+            id="q1-text"
+            placeholder="Write your answer here..."
+          ></textarea>
+          <button class="btn-save" onclick="saveFR('q1')">Save Answer</button>
+          <div class="saved-notice" id="q1-saved">✓ Answer saved</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 2: KHP EVIDENCE FILE ============ -->
+    <div class="slide" id="s2">
+      <div class="slide-inner">
+        <div class="stamp">EVIDENCE FILE #1</div>
+        <h1>The Known Witness: KHP</h1>
+
+        <div class="teach-box">
+          <p>
+            <strong>Potassium Hydrogen Phthalate (KHP)</strong> is a primary
+            standard, meaning its purity and molar mass are precisely known.
+            That makes it a <em>reliable witness</em> for determining the
+            concentration of your NaOH solution.
+          </p>
+          <p>KHP reacts with NaOH in a simple <strong>1 : 1 ratio</strong>:</p>
+        </div>
+
+        <div class="reaction">
+          KHC<sub>8</sub>H<sub>4</sub>O<sub>4</sub> + NaOH &rarr;
+          KNaC<sub>8</sub>H<sub>4</sub>O<sub>4</sub> + H<sub>2</sub>O
+        </div>
+
+        <p>
+          Because the ratio is 1 : 1, moles of NaOH at the equivalence point
+          <strong>equals</strong> moles of KHP. To find moles of KHP, use:
+          <strong>moles = mass &divide; molar mass</strong>.
+        </p>
+
+        <div class="evidence-box">
+          <p>📋 <strong>Scene Evidence:</strong></p>
+          <p>Mass of KHP: <strong>0.511 g</strong></p>
+          <p>Molar Mass of KHP: <strong>204.22 g/mol</strong></p>
+        </div>
+
+        <h3>🧪 Q2: Calculate Moles of KHP (3 points)</h3>
+        <div id="q2">
+          <p><strong>moles = 0.511 g &divide; 204.22 g/mol = ?</strong></p>
+          <p style="color: #8b8b9e; font-size: 0.9em">
+            Express your answer in scientific notation.
+          </p>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="number"
+              id="q2-c"
+              step="0.01"
+              placeholder="Coefficient"
+              style="width: 120px"
+            />
+            <span>&times; 10^</span>
+            <input
+              type="number"
+              id="q2-e"
+              step="1"
+              placeholder="Exp"
+              style="width: 80px"
+            />
+            <span>mol</span>
+            <button
+              class="btn-sm btn-gold"
+              onclick="checkSci('q2', 2.5, -3, 'mol', 0.15)"
+            >
+              Check
+            </button>
+          </div>
+          <div class="fb" id="q2-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 3: TITRATION 1 ============ -->
+    <div class="slide" id="s3">
+      <div class="slide-inner">
+        <div class="stamp">FIELD INVESTIGATION</div>
+        <h1>Titration 1: Standardize NaOH</h1>
+        <p>
+          Add NaOH slowly to the KHP solution. Watch the pH rise and the
+          indicator change. When phenolphthalein turns pink and stays pink, you
+          have found the equivalence point.
+        </p>
+
+        <div class="tit-panel">
+          <div>
+            <canvas id="canvas1" width="500" height="350"></canvas>
+          </div>
+          <div class="tit-controls">
+            <table class="tit-data">
+              <tr>
+                <td class="label">Volume NaOH:</td>
+                <td class="val"><span id="t1vol">0.00</span> mL</td>
+              </tr>
+              <tr>
+                <td class="label">pH:</td>
+                <td class="val"><span id="t1ph">0.00</span></td>
+              </tr>
+              <tr>
+                <td class="label">Equiv. Point:</td>
+                <td class="val" id="t1eq">?</td>
+              </tr>
+              <tr>
+                <td class="label">[NaOH]:</td>
+                <td class="val" id="t1naoh">?</td>
+              </tr>
+            </table>
+            <div style="text-align: center">
+              <div class="indicator" id="t1ind">Clear</div>
+            </div>
+            <p style="font-size: 0.85em; color: #8b8b9e">
+              Tip: Use small increments (+0.5 mL) as you approach the steep part
+              of the curve for a precise equivalence point.
+            </p>
+            <div class="btn-row">
+              <button class="btn-add" onclick="addT1(0.5)">+0.5 mL</button>
+              <button class="btn-add" onclick="addT1(1)">+1 mL</button>
+              <button class="btn-add" onclick="addT1(2)">+2 mL</button>
+              <button class="btn-add" onclick="addT1(5)">+5 mL</button>
+            </div>
+            <button
+              class="btn-save"
+              style="margin-top: 8px"
+              onclick="resetT1()"
+            >
+              Reset Titration
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 4: ANALYZE T1 ============ -->
+    <div class="slide" id="s4">
+      <div class="slide-inner">
+        <div class="stamp">EVIDENCE SECURED</div>
+        <h1>Cracking the Code</h1>
+
+        <div class="teach-box">
+          <p>
+            Now that you found the equivalence point, you can determine the NaOH
+            concentration. At the equivalence point:
+          </p>
+          <p
+            style="
+              text-align: center;
+              font-family: &quot;Courier New&quot;, monospace;
+              font-size: 1.1em;
+              margin: 10px 0;
+            "
+          >
+            moles NaOH = moles KHP &nbsp;&nbsp;(1 : 1 ratio)
+          </p>
+          <p>
+            And concentration = moles &divide; volume (in liters). The volume is
+            the equivalence volume you recorded from Titration 1.
+          </p>
+        </div>
+
+        <div class="evidence-box">
+          <p>Moles of KHP = 2.502 &times; 10⁻&sup3; mol</p>
+          <p>
+            Equivalence Volume =
+            <span id="t1eqDisp" style="color: #c9a84c"
+              >complete Titration 1 first</span
+            >
+          </p>
+        </div>
+
+        <h3>🧪 Q3: NaOH Concentration (3 points)</h3>
+        <div id="q3">
+          <p>
+            <strong
+              >Calculate the molar concentration of your NaOH solution.</strong
+            >
+          </p>
+          <p style="color: #8b8b9e; font-size: 0.9em">
+            concentration (M) = moles &divide; volume in liters
+          </p>
+          <input
+            type="number"
+            id="q3-in"
+            step="0.0001"
+            placeholder="Enter concentration in M"
+          />
+          <button
+            class="btn-sm btn-gold"
+            style="margin-top: 8px"
+            onclick="checkNum('q3', 0.0991, 0.003, 'M')"
+          >
+            Check
+          </button>
+          <div class="fb" id="q3-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 5: HENDERSON HASSELBALCH TEACHING ============ -->
+    <div class="slide" id="s5">
+      <div class="slide-inner">
+        <div class="stamp">DECODER RING</div>
+        <h1>The Henderson Hasselbalch Equation</h1>
+
+        <div class="teach-box">
+          <p>
+            This equation is the key tool for solving this mystery. It connects
+            pH, pK<sub>a</sub>, and the ratio of conjugate base to weak acid:
+          </p>
+          <p
+            style="
+              text-align: center;
+              font-size: 1.3em;
+              font-family: &quot;Courier New&quot;, monospace;
+              margin: 14px 0;
+              color: #c9a84c;
+            "
+          >
+            pH = pK<sub>a</sub> + log([A⁻] / [HA])
+          </p>
+          <p>
+            Here is the critical insight: at the
+            <span class="key-term">half equivalence point</span>, exactly half
+            the weak acid has been neutralized. That means the amount of weak
+            acid remaining [HA] equals the amount of conjugate base formed [A⁻].
+          </p>
+          <p>
+            When [HA] = [A⁻], the ratio is 1, and log(1) = 0. So the equation
+            simplifies to:
+          </p>
+          <p
+            style="
+              text-align: center;
+              font-size: 1.3em;
+              font-family: &quot;Courier New&quot;, monospace;
+              margin: 14px 0;
+              color: #48bb78;
+            "
+          >
+            pH = pK<sub>a</sub>
+          </p>
+          <p>
+            This means you can
+            <strong
+              >read pK<sub>a</sub> directly from the titration curve</strong
+            >
+            at the half equivalence point. Then calculate K<sub>a</sub> = 10<sup
+              >&minus;pK<sub>a</sub></sup
+            >.
+          </p>
+        </div>
+
+
+        <h3>🕵️ The Suspect Lineup</h3>
+        <p>
+          One of these five acids was found at the crime scene. After Titration
+          2, you will match your experimental K<sub>a</sub> to identify the
+          culprit.
+        </p>
+        <div class="suspects">
+          <div class="suspect-card">
+            <h4>Acetic Acid</h4>
+            <div class="formula">CH<sub>3</sub>COOH</div>
+            <div class="ka-val">K<sub>a</sub> = 1.8 &times; 10⁻⁵</div>
+          </div>
+          <div
+            class="suspect-card"
+            style="border-color: rgba(201, 168, 76, 0.4)"
+          >
+            <h4>???</h4>
+            <div class="formula">Unknown</div>
+            <div class="ka-val">K<sub>a</sub> = ???</div>
+          </div>
+          <div class="suspect-card">
+            <h4>Formic Acid</h4>
+            <div class="formula">HCOOH</div>
+            <div class="ka-val">K<sub>a</sub> = 1.8 &times; 10⁻⁴</div>
+          </div>
+          <div class="suspect-card">
+            <h4>Lactic Acid</h4>
+            <div class="formula">C<sub>3</sub>H<sub>6</sub>O<sub>3</sub></div>
+            <div class="ka-val">K<sub>a</sub> = 1.4 &times; 10⁻⁴</div>
+          </div>
+          <div class="suspect-card">
+            <h4>Propanoic Acid</h4>
+            <div class="formula">C<sub>2</sub>H<sub>5</sub>COOH</div>
+            <div class="ka-val">K<sub>a</sub> = 1.3 &times; 10⁻⁵</div>
+          </div>
+        </div>
+
+        <h3>🧪 Q4: Explain the Key Concept (5 points)</h3>
+        <div id="q4">
+          <p>
+            <strong
+              >Using the Henderson Hasselbalch equation, explain step by step
+              why pH = pK<sub>a</sub> at the half equivalence point.</strong
+            >
+          </p>
+          <textarea
+            id="q4-text"
+            placeholder="Show your reasoning..."
+          ></textarea>
+          <button class="btn-save" onclick="saveFR('q4')">Save Answer</button>
+          <div class="saved-notice" id="q4-saved">✓ Answer saved</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 6: INVESTIGATION SETUP ============ -->
+    <div class="slide" id="s6">
+      <div class="slide-inner">
+        <div class="stamp">INVESTIGATION BRIEF</div>
+        <h1>🔬 Investigating the Unknown</h1>
+
+        <div class="evidence-box">
+          <p>📋 <strong>Evidence from the scene:</strong></p>
+          <p>
+            Mass of unknown acid: <strong>0.253 g</strong> (weighed on the
+            analytical balance)
+          </p>
+          <p>Dissolved in: <strong>50 mL</strong> distilled water</p>
+          <p>
+            Your standardized NaOH:
+            <strong><span id="naohConcDisp">0.0991</span> M</strong>
+          </p>
+          <p>Identity: <span class="warn">UNKNOWN</span></p>
+        </div>
+
+        <div class="teach-box">
+          <p><strong>Your investigation plan:</strong></p>
+          <p>1. Titrate the unknown acid with NaOH and build the pH curve.</p>
+          <p>
+            2. Identify the <strong>equivalence point</strong> (steep pH jump,
+            indicator turns pink).
+          </p>
+          <p>
+            3. Find the <strong>half equivalence volume</strong> (half the
+            equivalence volume).
+          </p>
+          <p>
+            4. Read the <strong>pH at the half equivalence point</strong> from
+            your curve. That pH equals the pK<sub>a</sub>.
+          </p>
+          <p>
+            5. Calculate K<sub>a</sub> from pK<sub>a</sub> and compare to the
+            suspect lineup.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 7: TITRATION 2 ============ -->
+    <div class="slide" id="s7">
+      <div class="slide-inner">
+        <div class="stamp">FIELD INVESTIGATION</div>
+        <h1>Titration 2: The Mystery Acid</h1>
+        <p>
+          Titrate the unknown acid with your standardized NaOH. Watch the curve
+          carefully. After you find the equivalence point, you will analyze the
+          data on the next slide.
+        </p>
+
+        <div class="tit-panel">
+          <div>
+            <canvas id="canvas2" width="500" height="350"></canvas>
+          </div>
+          <div class="tit-controls">
+            <table class="tit-data">
+              <tr>
+                <td class="label">Volume NaOH:</td>
+                <td class="val"><span id="t2vol">0.00</span> mL</td>
+              </tr>
+              <tr>
+                <td class="label">pH:</td>
+                <td class="val"><span id="t2ph">0.00</span></td>
+              </tr>
+              <tr>
+                <td class="label">Equiv. Point:</td>
+                <td class="val" id="t2eq">?</td>
+              </tr>
+              <tr>
+                <td class="label">Half Equiv.:</td>
+                <td class="val" id="t2hev">?</td>
+              </tr>
+            </table>
+            <div style="text-align: center">
+              <div class="indicator" id="t2ind">Clear</div>
+            </div>
+            <p style="font-size: 0.85em; color: #8b8b9e">
+              After the equivalence point is found, examine your curve at the
+              half equivalence point. What is the pH there?
+            </p>
+            <div class="btn-row">
+              <button class="btn-add" onclick="addT2(0.5)">+0.5 mL</button>
+              <button class="btn-add" onclick="addT2(1)">+1 mL</button>
+              <button class="btn-add" onclick="addT2(2)">+2 mL</button>
+              <button class="btn-add" onclick="addT2(5)">+5 mL</button>
+            </div>
+            <button
+              class="btn-save"
+              style="margin-top: 8px"
+              onclick="resetT2()"
+            >
+              Reset Titration
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 8: ANALYZE THE EVIDENCE ============ -->
+    <div class="slide" id="s8">
+      <div class="slide-inner">
+        <div class="stamp">EVIDENCE ANALYSIS</div>
+        <h1>⚗️ Analyzing the Evidence</h1>
+
+        <div class="evidence-box">
+          <p>Your Titration 2 results:</p>
+          <p>
+            Equivalence Point:
+            <strong
+              ><span id="t2eqDisp">complete Titration 2 first</span></strong
+            >
+          </p>
+          <p>
+            Half Equivalence Point:
+            <strong
+              ><span id="t2hevDisp">complete Titration 2 first</span></strong
+            >
+          </p>
+          <p style="color: #8b8b9e; font-size: 0.9em; margin-top: 8px">
+            Look at your titration curve. Find the pH where the half equivalence
+            line crosses your data. Remember: at the half equivalence point, pH
+            = pK<sub>a</sub>.
+          </p>
+        </div>
+
+        <h3>🧪 Q5: Determine pK<sub>a</sub> (3 points)</h3>
+        <div id="q5">
+          <p>
+            <strong
+              >What is the pH at the half equivalence point? (This equals the
+              pK<sub>a</sub> of the unknown acid.)</strong
+            >
+          </p>
+          <input type="number" id="q5-in" step="0.01" placeholder="Enter pKa" />
+          <button
+            class="btn-sm btn-gold"
+            style="margin-top: 8px"
+            onclick="checkNum('q5', 4.2, 0.25, '')"
+          >
+            Check
+          </button>
+          <div class="fb" id="q5-fb"></div>
+        </div>
+
+        <h3 style="margin-top: 24px">
+          🧪 Q6: Calculate K<sub>a</sub> (3 points)
+        </h3>
+        <div id="q6">
+          <p>
+            <strong
+              >Using your pK<sub>a</sub>, calculate K<sub>a</sub> = 10<sup
+                >&minus;pK<sub>a</sub></sup
+              ></strong
+            >
+          </p>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="number"
+              id="q6-c"
+              step="0.1"
+              placeholder="Coefficient"
+              style="width: 120px"
+            />
+            <span>&times; 10^</span>
+            <input
+              type="number"
+              id="q6-e"
+              step="1"
+              placeholder="Exp"
+              style="width: 80px"
+            />
+            <button class="btn-sm btn-gold" onclick="checkKa()">Check</button>
+          </div>
+          <div class="fb" id="q6-fb"></div>
+        </div>
+
+        <h3 style="margin-top: 24px">🧪 Q7: The Accusation (5 points)</h3>
+        <p>
+          Compare your experimental K<sub>a</sub> to the suspects. Click the
+          acid you believe is the culprit.
+        </p>
+        <p
+          style="
+            font-family: &quot;Courier New&quot;, monospace;
+            color: #c9a84c;
+            font-size: 1.1em;
+            text-align: center;
+            margin: 10px 0;
+          "
+          id="expKaDisplay"
+        ></p>
+
+        <div class="suspects" id="q7">
+          <div class="suspect-card clickable" onclick="accuse(0)" id="sus0">
+            <h4>Acetic Acid</h4>
+            <div class="formula">CH<sub>3</sub>COOH</div>
+            <div class="ka-val">K<sub>a</sub> = 1.8 &times; 10⁻⁵</div>
+          </div>
+          <div class="suspect-card clickable" onclick="accuse(1)" id="sus1">
+            <h4>Benzoic Acid</h4>
+            <div class="formula">C<sub>6</sub>H<sub>5</sub>COOH</div>
+            <div class="ka-val">K<sub>a</sub> = 6.3 &times; 10⁻⁵</div>
+          </div>
+          <div class="suspect-card clickable" onclick="accuse(2)" id="sus2">
+            <h4>Formic Acid</h4>
+            <div class="formula">HCOOH</div>
+            <div class="ka-val">K<sub>a</sub> = 1.8 &times; 10⁻⁴</div>
+          </div>
+          <div class="suspect-card clickable" onclick="accuse(3)" id="sus3">
+            <h4>Lactic Acid</h4>
+            <div class="formula">C<sub>3</sub>H<sub>6</sub>O<sub>3</sub></div>
+            <div class="ka-val">K<sub>a</sub> = 1.4 &times; 10⁻⁴</div>
+          </div>
+          <div class="suspect-card clickable" onclick="accuse(4)" id="sus4">
+            <h4>Propanoic Acid</h4>
+            <div class="formula">C<sub>2</sub>H<sub>5</sub>COOH</div>
+            <div class="ka-val">K<sub>a</sub> = 1.3 &times; 10⁻⁵</div>
+          </div>
+        </div>
+        <div id="accuseFb" style="margin-top: 10px"></div>
+
+        <div class="reveal-box" id="revealBox">
+          <div style="font-size: 2em">🎉</div>
+          <h3>CASE SOLVED!</h3>
+          <p>
+            The unknown acid is
+            <strong>Benzoic Acid</strong> (C<sub>6</sub>H<sub>5</sub>COOH)
+          </p>
+          <p>Molar Mass: <strong>122.12 g/mol</strong></p>
+        </div>
+
+        <div id="q8wrap" style="display: none">
+          <h3>🧪 Q8: Final Verification (3 points)</h3>
+          <div id="q8">
+            <p>
+              <strong
+                >Now that you identified the acid (MW = 122.12 g/mol), calculate
+                the moles in the 0.253 g sample.</strong
+              >
+            </p>
+            <p style="color: #8b8b9e; font-size: 0.9em">
+              moles = mass &divide; MW = 0.253 g &divide; 122.12 g/mol
+            </p>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+              "
+            >
+              <input
+                type="number"
+                id="q8-c"
+                step="0.01"
+                placeholder="Coefficient"
+                style="width: 120px"
+              />
+              <span>&times; 10^</span>
+              <input
+                type="number"
+                id="q8-e"
+                step="1"
+                placeholder="Exp"
+                style="width: 80px"
+              />
+              <span>mol</span>
+              <button
+                class="btn-sm btn-gold"
+                onclick="checkSci('q8', 2.07, -3, 'mol', 0.15)"
+              >
+                Check
+              </button>
+            </div>
+            <div class="fb" id="q8-fb"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 9: POST LAB ============ -->
+    <div class="slide" id="s9">
+      <div class="slide-inner">
+        <div class="stamp">EVIDENCE PROCESSING</div>
+        <h1>📊 Post Lab Calculations</h1>
+        <p>
+          Before closing the case, demonstrate your mastery of acid base
+          concepts.
+        </p>
+
+        <div class="teach-box">
+          <p>
+            <strong>Strong bases</strong> dissociate completely. For NaOH: [OH⁻]
+            = [NaOH]. Then pOH = &minus;log[OH⁻] and pH = 14 &minus; pOH.
+          </p>
+          <p>
+            <strong>Conjugate base K<sub>b</sub></strong
+            >: For any conjugate acid base pair, K<sub>w</sub> = K<sub>a</sub>
+            &times; K<sub>b</sub>. Since K<sub>w</sub> = 1.0 &times; 10⁻¹⁴, you
+            can find K<sub>b</sub> = K<sub>w</sub> &divide; K<sub>a</sub>.
+          </p>
+        </div>
+
+        <h3>🧪 Q9: pH of a Strong Base (3 points)</h3>
+        <div id="q9">
+          <p><strong>What is the pH of a 0.01 M NaOH solution?</strong></p>
+          <input type="number" id="q9-in" step="0.01" placeholder="Enter pH" />
+          <button
+            class="btn-sm btn-gold"
+            style="margin-top: 8px"
+            onclick="checkNum('q9', 12.0, 0.05, '')"
+          >
+            Check
+          </button>
+          <div class="fb" id="q9-fb"></div>
+        </div>
+
+        <h3 style="margin-top: 24px">
+          🧪 Q10: K<sub>b</sub> of Acetate Ion (3 points)
+        </h3>
+        <div id="q10">
+          <p>
+            <strong
+              >Given K<sub>a</sub> of acetic acid = 1.8 &times; 10⁻⁵, calculate
+              K<sub>b</sub> of the acetate ion (CH<sub>3</sub>COO⁻).</strong
+            >
+          </p>
+          <p style="color: #8b8b9e; font-size: 0.9em">
+            K<sub>b</sub> = K<sub>w</sub> &divide; K<sub>a</sub> = (1.0 &times;
+            10⁻¹⁴) &divide; (1.8 &times; 10⁻⁵)
+          </p>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="number"
+              id="q10-c"
+              step="0.01"
+              placeholder="Coefficient"
+              style="width: 120px"
+            />
+            <span>&times; 10^</span>
+            <input
+              type="number"
+              id="q10-e"
+              step="1"
+              placeholder="Exp"
+              style="width: 80px"
+            />
+            <button
+              class="btn-sm btn-gold"
+              onclick="checkSci('q10', 5.56, -10, '', 0.15)"
+            >
+              Check
+            </button>
+          </div>
+          <div class="fb" id="q10-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 10: CASE CLOSED ============ -->
+    <div class="slide" id="s10">
+      <div class="slide-inner" style="text-align: center">
+        <div style="font-size: 3em; margin-bottom: 10px">🏆</div>
+        <h1>Case Closed</h1>
+        <p class="subtitle">Your detective performance report</p>
+        <div id="summaryContent" style="text-align: left"></div>
+      </div>
+    </div>
+
+    <!-- ============ SLIDE 11: CASE FILE ============ -->
+    <div class="slide" id="s11">
+      <div class="slide-inner" style="text-align: center">
+        <h1>📁 Official Case File</h1>
+        <p>
+          Print this report to submit your findings. All your answers are
+          included.
+        </p>
+        <button
+          class="btn btn-gold"
+          onclick="printReport()"
+          style="margin: 16px 0"
+        >
+          🖨️ Print Case File
+        </button>
+      </div>
+    </div>
+
+    <div id="reportBody"></div>
+
+    <nav id="nav">
+      <button id="btnP" onclick="prev()" disabled>&larr; Back</button>
+      <span id="counter">1 / 12</span>
+      <button id="btnN" onclick="nxt()">Next &rarr;</button>
+    </nav>
+
+    <div
+      id="confetti"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 9998;
+      "
+    ></div>
+
+    <script>
+      var S = {
+        slide: 0,
+        total: 12,
+        name: "",
+        sec: "",
+        date: "",
+        answers: {},
+        correct: {},
+        xp: 0,
+        streak: 0,
+        bestStreak: 0,
+        t1v: 0,
+        t1pts: [],
+        t1done: false,
+        t1init: false,
+        t2v: 0,
+        t2pts: [],
+        t2done: false,
+        t2init: false,
+        naohConc: 0.0991,
+        t2evVal: 0,
+        t2hevVal: 0,
+        startTime: null,
+        badges: [],
+        accused: false,
+      };
+
+      function go(n) {
+        if (n < 0 || n >= S.total) return;
+        document.querySelectorAll(".slide").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        document.getElementById("s" + n).classList.add("active");
+        S.slide = n;
+        document.getElementById("counter").textContent =
+          n + 1 + " / " + S.total;
+        document.getElementById("btnP").disabled = n === 0;
+        document.getElementById("btnN").disabled = n === S.total - 1;
+        document.getElementById("progBar").style.width =
+          ((n + 1) / S.total) * 100 + "%";
+        if (n === 3 && !S.t1init) initT1();
+        if (n === 4 && S.t1done) {
+          document.getElementById("t1eqDisp").textContent =
+            S.t1pts[S.t1pts.length - 1].v.toFixed(2) + " mL";
+        }
+        if (n === 6)
+          document.getElementById("naohConcDisp").textContent =
+            S.naohConc.toFixed(4);
+        if (n === 7 && !S.t2init) initT2();
+        if (n === 8) {
+          if (S.t2evVal) {
+            document.getElementById("t2eqDisp").textContent =
+              S.t2evVal.toFixed(2) + " mL";
+            document.getElementById("t2hevDisp").textContent =
+              S.t2hevVal.toFixed(2) + " mL";
+          }
+          if (S.answers["q6"])
+            document.getElementById("expKaDisplay").textContent =
+              "Your K\u2090: " +
+              S.answers["q6"].c +
+              " \u00d7 10^" +
+              S.answers["q6"].e;
+        }
+        if (n === 10) showSummary();
+        if (n === 11) fillReport();
+      }
+      function nxt() {
+        go(S.slide + 1);
+      }
+      function prev() {
+        go(S.slide - 1);
+      }
+
+      function startLab() {
+        var n = document.getElementById("sName").value.trim();
+        var sc = document.getElementById("sSec").value.trim();
+        var d = document.getElementById("sDate").value;
+        if (!n || !sc || !d) {
+          alert("Please fill in all three fields to accept the case.");
+          return;
+        }
+        S.name = n;
+        S.sec = sc;
+        S.date = d;
+        S.startTime = Date.now();
+        go(1);
+      }
+
+      /* XP */
+      function awardXP(pts) {
+        S.xp += pts;
+        document.getElementById("xpDisplay").textContent = S.xp + " XP";
+        showXPpop("+" + pts + " XP");
+      }
+      function showXPpop(txt) {
+        var p = document.createElement("div");
+        p.className = "xp-pop";
+        p.textContent = txt;
+        document.body.appendChild(p);
+        setTimeout(function () {
+          p.remove();
+        }, 1200);
+      }
+      function addStreak() {
+        S.streak++;
+        if (S.streak > S.bestStreak) S.bestStreak = S.streak;
+        var el = document.getElementById("streakDisplay");
+        el.textContent = S.streak + " streak";
+        el.style.display = "inline";
+        if (S.streak >= 3) {
+          var b = S.streak * 2;
+          awardXP(b);
+          showXPpop("Streak +" + b);
+        }
+        checkBadges();
+      }
+      function resetStreak() {
+        S.streak = 0;
+        document.getElementById("streakDisplay").style.display = "none";
+      }
+      function checkBadges() {
+        if (S.streak >= 5 && S.badges.indexOf("hotstreak") === -1) {
+          S.badges.push("hotstreak");
+          showBadge("Hot Streak!", "5 correct in a row");
+        }
+        if (S.xp >= 100 && S.badges.indexOf("century") === -1) {
+          S.badges.push("century");
+          showBadge("Century Club", "100+ XP");
+        }
+        if (S.t1done && S.t2done && S.badges.indexOf("labmaster") === -1) {
+          S.badges.push("labmaster");
+          showBadge("Lab Master", "Both titrations complete");
+        }
+      }
+      function showBadge(t, d) {
+        var el = document.createElement("div");
+        el.style.cssText =
+          "position:fixed;top:20%;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#c9a84c,#a8893e);color:#0a0a14;padding:24px 36px;border-radius:16px;z-index:9999;text-align:center;font-size:1.2em;box-shadow:0 8px 32px rgba(0,0,0,0.4);animation:fadeIn 0.3s;font-family:Georgia,serif;";
+        el.innerHTML =
+          '<div style="font-size:2em;margin-bottom:8px;">🏆</div><div style="font-weight:700;">' +
+          t +
+          '</div><div style="font-size:0.85em;margin-top:4px;">' +
+          d +
+          "</div>";
+        document.body.appendChild(el);
+        setTimeout(function () {
+          el.remove();
+        }, 2500);
+      }
+
+      /* FREE RESPONSE */
+      function saveFR(id) {
+        var txt = document.getElementById(id + "-text").value.trim();
+        if (!txt) {
+          alert("Please write an answer before saving.");
+          return;
+        }
+        S.answers[id] = txt;
+        document.getElementById(id + "-saved").style.display = "block";
+        awardXP(5);
+      }
+
+      /* NUMERIC CHECK */
+      function checkNum(id, ans, tol, unit) {
+        if (S.correct[id] !== undefined) return;
+        var inp = document.getElementById(id + "-in");
+        var v = parseFloat(inp.value);
+        if (isNaN(v)) {
+          alert("Enter a number.");
+          return;
+        }
+        var correct = Math.abs(v - ans) <= tol;
+        S.answers[id] = v;
+        S.correct[id] = correct;
+        inp.disabled = true;
+        inp.parentElement.querySelectorAll("button").forEach(function (b) {
+          b.disabled = true;
+        });
+        var fb = document.getElementById(id + "-fb");
+        if (correct) {
+          inp.style.borderColor = "#48bb78";
+          fb.innerHTML =
+            '<span style="color:#48bb78;">✅ Correct! ' +
+            ans.toFixed(tol < 0.01 ? 4 : 2) +
+            " " +
+            unit +
+            "</span>";
+          awardXP(15);
+          addStreak();
+        } else {
+          inp.style.borderColor = "#e53e3e";
+          fb.innerHTML =
+            '<span style="color:#e53e3e;">The answer is ' +
+            ans.toFixed(tol < 0.01 ? 4 : 2) +
+            " " +
+            unit +
+            "</span>";
+          resetStreak();
+        }
+        fb.style.display = "block";
+      }
+
+      /* SCI NOTATION CHECK */
+      function checkSci(id, coeff, exp, unit, tolC) {
+        if (S.correct[id] !== undefined) return;
+        var cIn = document.getElementById(id + "-c"),
+          eIn = document.getElementById(id + "-e");
+        var cv = parseFloat(cIn.value),
+          ev = parseInt(eIn.value);
+        if (isNaN(cv) || isNaN(ev)) {
+          alert("Fill in both fields.");
+          return;
+        }
+        var tol = tolC || 0.15;
+        var correct = Math.abs(cv - coeff) < tol && ev === exp;
+        S.answers[id] = { c: cv, e: ev };
+        S.correct[id] = correct;
+        cIn.disabled = true;
+        eIn.disabled = true;
+        var btns = cIn.closest('[id^="q"]').querySelectorAll("button");
+        if (btns)
+          btns.forEach(function (b) {
+            b.disabled = true;
+          });
+        var fb = document.getElementById(id + "-fb");
+        var u = unit ? " " + unit : "";
+        if (correct) {
+          fb.innerHTML =
+            '<span style="color:#48bb78;">✅ Correct! ' +
+            coeff.toFixed(2) +
+            " &times; 10<sup>" +
+            exp +
+            "</sup>" +
+            u +
+            "</span>";
+          awardXP(15);
+          addStreak();
+        } else {
+          fb.innerHTML =
+            '<span style="color:#e53e3e;">The answer is ' +
+            coeff.toFixed(2) +
+            " &times; 10<sup>" +
+            exp +
+            "</sup>" +
+            u +
+            "</span>";
+          resetStreak();
+        }
+        fb.style.display = "block";
+      }
+
+      /* Ka CHECK (wide tolerance) */
+      function checkKa() {
+        if (S.correct["q6"] !== undefined) return;
+        var cIn = document.getElementById("q6-c"),
+          eIn = document.getElementById("q6-e");
+        var cv = parseFloat(cIn.value),
+          ev = parseInt(eIn.value);
+        if (isNaN(cv) || isNaN(ev)) {
+          alert("Fill in both fields.");
+          return;
+        }
+        var actual = cv * Math.pow(10, ev);
+        var correct = actual >= 3.5e-5 && actual <= 1.2e-4;
+        S.answers["q6"] = { c: cv, e: ev };
+        S.correct["q6"] = correct;
+        cIn.disabled = true;
+        eIn.disabled = true;
+        document.querySelectorAll("#q6 button").forEach(function (b) {
+          b.disabled = true;
+        });
+        var fb = document.getElementById("q6-fb");
+        if (correct) {
+          fb.innerHTML =
+            '<span style="color:#48bb78;">✅ Accepted! The literature value is 6.3 &times; 10<sup>&minus;5</sup>. Your experimental value is within range.</span>';
+          awardXP(15);
+          addStreak();
+        } else {
+          fb.innerHTML =
+            '<span style="color:#e53e3e;">Check your calculation. K<sub>a</sub> = 10<sup>&minus;pK<sub>a</sub></sup>. If pK<sub>a</sub> &asymp; 4.20, then K<sub>a</sub> &asymp; 6.3 &times; 10<sup>&minus;5</sup>.</span>';
+          resetStreak();
+        }
+        fb.style.display = "block";
+        if (S.answers["q6"])
+          document.getElementById("expKaDisplay").textContent =
+            "Your K\u2090: " + cv + " \u00d7 10^" + ev;
+      }
+
+      /* ACCUSATION */
+      function accuse(val) {
+        if (S.accused) return;
+        var cards = document.querySelectorAll("#q7 .suspect-card");
+        if (val === 1) {
+          S.accused = true;
+          S.answers["q7"] = val;
+          S.correct["q7"] = true;
+          cards.forEach(function (c, i) {
+            c.classList.remove("clickable");
+            c.style.cursor = "default";
+            if (i === 1) c.classList.add("accused-right");
+            else c.style.opacity = "0.4";
+          });
+          document.getElementById("revealBox").style.display = "block";
+          document.getElementById("q8wrap").style.display = "block";
+          document.getElementById("accuseFb").innerHTML =
+            '<span style="color:#48bb78;font-weight:700;">🎉 Brilliant detective work!</span>';
+          awardXP(25);
+          addStreak();
+          launchConfetti();
+        } else {
+          cards[val].classList.add("accused-wrong");
+          setTimeout(function () {
+            cards[val].classList.remove("accused-wrong");
+          }, 1500);
+          document.getElementById("accuseFb").innerHTML =
+            '<span style="color:#f6ad55;">Not quite. Compare the K<sub>a</sub> values more carefully to your experimental result.</span>';
+        }
+      }
+
+      /* TITRATION 1 */
+      function calcPH1(v) {
+        var Ka = 3.91e-6,
+          mA = 2.502e-3,
+          cB = 0.0991,
+          vA = 25;
+        var mB = (cB * v) / 1000,
+          Vt = (vA + v) / 1000;
+        if (v <= 0) {
+          var Ca = mA / (vA / 1000);
+          var H = (-Ka + Math.sqrt(Ka * Ka + 4 * Ka * Ca)) / 2;
+          return -Math.log10(H);
+        }
+        var ev = (mA / cB) * 1000;
+        if (mB < mA - 1e-8) return -Math.log10(Ka) + Math.log10(mB / (mA - mB));
+        else if (Math.abs(v - ev) < 0.08) {
+          var Cb = mA / Vt;
+          var Kb = 1e-14 / Ka;
+          return 14 + Math.log10(Math.sqrt(Kb * Cb));
+        } else return 14 + Math.log10((mB - mA) / Vt);
+      }
+      function initT1() {
+        S.t1init = true;
+        S.t1v = 0;
+        S.t1pts = [];
+        S.t1done = false;
+        updT1();
+        drawC1();
+      }
+      function resetT1() {
+        S.t1v = 0;
+        S.t1pts = [];
+        S.t1done = false;
+        document.getElementById("t1eq").textContent = "?";
+        document.getElementById("t1naoh").textContent = "?";
+        updT1();
+        drawC1();
+      }
+      function addT1(dv) {
+        if (S.t1done) return;
+        S.t1v = Math.round((S.t1v + dv) * 100) / 100;
+        if (S.t1v < 0) S.t1v = 0;
+        if (S.t1v > 40) S.t1v = 40;
+        S.t1pts.push({ v: S.t1v, ph: calcPH1(S.t1v) });
+        updT1();
+        drawC1();
+      }
+      function updT1() {
+        var ph = calcPH1(S.t1v);
+        document.getElementById("t1vol").textContent = S.t1v.toFixed(2);
+        document.getElementById("t1ph").textContent = ph.toFixed(2);
+        var ind = document.getElementById("t1ind");
+        if (ph < 8.2) {
+          ind.style.background = "transparent";
+          ind.textContent = "Clear";
+        } else if (ph < 10) {
+          ind.style.background = "rgba(255,105,180,0.5)";
+          ind.textContent = "Light Pink";
+        } else {
+          ind.style.background = "rgba(255,20,147,0.8)";
+          ind.textContent = "Deep Pink";
+        }
+        if (!S.t1done && S.t1v > 20) {
+          var prev = S.t1pts.length >= 2 ? S.t1pts[S.t1pts.length - 2] : null;
+          var cur = S.t1pts[S.t1pts.length - 1];
+          if (prev && cur.ph - prev.ph > 1.5 && cur.ph > 8) {
+            S.t1done = true;
+            var ev = S.t1v;
+            var naoh = 2.502e-3 / (ev / 1000);
+            S.naohConc = naoh;
+            document.getElementById("t1eq").textContent = ev.toFixed(2) + " mL";
+            document.getElementById("t1naoh").textContent =
+              naoh.toFixed(4) + " M";
+            awardXP(20);
+            showXPpop("Titration 1 Complete! +20 XP");
+          }
+        }
+      }
+      function drawC1() {
+        var c = document.getElementById("canvas1");
+        if (!c) return;
+        var ctx = c.getContext("2d"),
+          W = c.width,
+          H = c.height,
+          ml = 55,
+          mr = 20,
+          mt = 20,
+          mb = 45,
+          pw = W - ml - mr,
+          ph = H - mt - mb;
+        ctx.clearRect(0, 0, W, H);
+        ctx.strokeStyle = "rgba(201,168,76,0.06)";
+        ctx.lineWidth = 1;
+        for (var i = 0; i <= 14; i++) {
+          var y = mt + ph - (i / 14) * ph;
+          ctx.beginPath();
+          ctx.moveTo(ml, y);
+          ctx.lineTo(ml + pw, y);
+          ctx.stroke();
+        }
+        for (var v = 0; v <= 40; v += 5) {
+          var x = ml + (v / 40) * pw;
+          ctx.beginPath();
+          ctx.moveTo(x, mt);
+          ctx.lineTo(x, mt + ph);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = "rgba(201,168,76,0.4)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(ml, mt);
+        ctx.lineTo(ml, mt + ph);
+        ctx.lineTo(ml + pw, mt + ph);
+        ctx.stroke();
+        ctx.fillStyle = "#8b8b9e";
+        ctx.font = "12px Courier New";
+        ctx.textAlign = "center";
+        for (var v = 0; v <= 40; v += 5)
+          ctx.fillText(v, ml + (v / 40) * pw, mt + ph + 18);
+        ctx.fillText("Volume NaOH (mL)", ml + pw / 2, mt + ph + 38);
+        ctx.textAlign = "right";
+        for (var i = 0; i <= 14; i += 2)
+          ctx.fillText(i, ml - 8, mt + ph - (i / 14) * ph + 4);
+        ctx.save();
+        ctx.translate(14, mt + ph / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.textAlign = "center";
+        ctx.fillText("pH", 0, 0);
+        ctx.restore();
+        ctx.strokeStyle = "rgba(201,168,76,0.1)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        for (var v = 0; v <= 40; v += 0.2) {
+          var p = calcPH1(v);
+          var x = ml + (v / 40) * pw;
+          var y = mt + ph - (p / 14) * ph;
+          if (v === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+        if (S.t1pts.length > 1) {
+          ctx.strokeStyle = "#48bb78";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(
+            ml + (S.t1pts[0].v / 40) * pw,
+            mt + ph - (S.t1pts[0].ph / 14) * ph,
+          );
+          for (var i = 1; i < S.t1pts.length; i++)
+            ctx.lineTo(
+              ml + (S.t1pts[i].v / 40) * pw,
+              mt + ph - (S.t1pts[i].ph / 14) * ph,
+            );
+          ctx.stroke();
+        }
+        for (var i = 0; i < S.t1pts.length; i++) {
+          var x = ml + (S.t1pts[i].v / 40) * pw,
+            y = mt + ph - (S.t1pts[i].ph / 14) * ph;
+          ctx.fillStyle = "#48bb78";
+          ctx.beginPath();
+          ctx.arc(x, y, 3, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+        if (S.t1done) {
+          var ex = ml + (S.t1v / 40) * pw;
+          ctx.strokeStyle = "#c9a84c";
+          ctx.lineWidth = 1;
+          ctx.setLineDash([6, 3]);
+          ctx.beginPath();
+          ctx.moveTo(ex, mt);
+          ctx.lineTo(ex, mt + ph);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = "#c9a84c";
+          ctx.font = "11px Courier New";
+          ctx.textAlign = "center";
+          ctx.fillText("Eq: " + S.t1v.toFixed(1) + " mL", ex, mt - 4);
+        }
+      }
+
+      /* TITRATION 2 */
+      function calcPH2(v) {
+        var Ka = 6.3e-5,
+          mA = 2.072e-3,
+          cB = S.naohConc,
+          vA = 50;
+        var mB = (cB * v) / 1000,
+          Vt = (vA + v) / 1000;
+        if (v <= 0) {
+          var Ca = mA / (vA / 1000);
+          var H = (-Ka + Math.sqrt(Ka * Ka + 4 * Ka * Ca)) / 2;
+          return -Math.log10(H);
+        }
+        var ev = (mA / cB) * 1000;
+        if (mB < mA - 1e-8) return -Math.log10(Ka) + Math.log10(mB / (mA - mB));
+        else if (Math.abs(v - ev) < 0.08) {
+          var Cb = mA / Vt;
+          var Kb = 1e-14 / Ka;
+          return 14 + Math.log10(Math.sqrt(Kb * Cb));
+        } else return 14 + Math.log10((mB - mA) / Vt);
+      }
+      function initT2() {
+        S.t2init = true;
+        S.t2v = 0;
+        S.t2pts = [];
+        S.t2done = false;
+        S.t2evVal = 0;
+        S.t2hevVal = 0;
+        updT2();
+        drawC2();
+      }
+      function resetT2() {
+        S.t2v = 0;
+        S.t2pts = [];
+        S.t2done = false;
+        S.t2evVal = 0;
+        S.t2hevVal = 0;
+        document.getElementById("t2eq").textContent = "?";
+        document.getElementById("t2hev").textContent = "?";
+        updT2();
+        drawC2();
+      }
+      function addT2(dv) {
+        if (S.t2done) return;
+        S.t2v = Math.round((S.t2v + dv) * 100) / 100;
+        if (S.t2v < 0) S.t2v = 0;
+        if (S.t2v > 35) S.t2v = 35;
+        S.t2pts.push({ v: S.t2v, ph: calcPH2(S.t2v) });
+        updT2();
+        drawC2();
+      }
+      function updT2() {
+        var ph = calcPH2(S.t2v);
+        document.getElementById("t2vol").textContent = S.t2v.toFixed(2);
+        document.getElementById("t2ph").textContent = ph.toFixed(2);
+        var ind = document.getElementById("t2ind");
+        if (ph < 8.2) {
+          ind.style.background = "transparent";
+          ind.textContent = "Clear";
+        } else if (ph < 10) {
+          ind.style.background = "rgba(255,105,180,0.5)";
+          ind.textContent = "Light Pink";
+        } else {
+          ind.style.background = "rgba(255,20,147,0.8)";
+          ind.textContent = "Deep Pink";
+        }
+        if (!S.t2done && S.t2v > 15) {
+          var prev = S.t2pts.length >= 2 ? S.t2pts[S.t2pts.length - 2] : null;
+          var cur = S.t2pts[S.t2pts.length - 1];
+          if (prev && cur.ph - prev.ph > 1.5 && cur.ph > 8) {
+            S.t2done = true;
+            var ev = S.t2v;
+            var hev = ev / 2;
+            S.t2evVal = ev;
+            S.t2hevVal = hev;
+            document.getElementById("t2eq").textContent = ev.toFixed(2) + " mL";
+            document.getElementById("t2hev").textContent =
+              hev.toFixed(2) + " mL";
+            awardXP(25);
+            showXPpop("Titration 2 Complete! +25 XP");
+          }
+        }
+      }
+      function drawC2() {
+        var c = document.getElementById("canvas2");
+        if (!c) return;
+        var ctx = c.getContext("2d"),
+          W = c.width,
+          H = c.height,
+          ml = 55,
+          mr = 20,
+          mt = 20,
+          mb = 45,
+          pw = W - ml - mr,
+          ph = H - mt - mb;
+        ctx.clearRect(0, 0, W, H);
+        ctx.strokeStyle = "rgba(159,122,234,0.06)";
+        ctx.lineWidth = 1;
+        for (var i = 0; i <= 14; i++) {
+          var y = mt + ph - (i / 14) * ph;
+          ctx.beginPath();
+          ctx.moveTo(ml, y);
+          ctx.lineTo(ml + pw, y);
+          ctx.stroke();
+        }
+        for (var v = 0; v <= 35; v += 5) {
+          var x = ml + (v / 35) * pw;
+          ctx.beginPath();
+          ctx.moveTo(x, mt);
+          ctx.lineTo(x, mt + ph);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = "rgba(159,122,234,0.4)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(ml, mt);
+        ctx.lineTo(ml, mt + ph);
+        ctx.lineTo(ml + pw, mt + ph);
+        ctx.stroke();
+        ctx.fillStyle = "#8b8b9e";
+        ctx.font = "12px Courier New";
+        ctx.textAlign = "center";
+        for (var v = 0; v <= 35; v += 5)
+          ctx.fillText(v, ml + (v / 35) * pw, mt + ph + 18);
+        ctx.fillText("Volume NaOH (mL)", ml + pw / 2, mt + ph + 38);
+        ctx.textAlign = "right";
+        for (var i = 0; i <= 14; i += 2)
+          ctx.fillText(i, ml - 8, mt + ph - (i / 14) * ph + 4);
+        ctx.save();
+        ctx.translate(14, mt + ph / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.textAlign = "center";
+        ctx.fillText("pH", 0, 0);
+        ctx.restore();
+        ctx.strokeStyle = "rgba(159,122,234,0.1)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        for (var v = 0; v <= 35; v += 0.2) {
+          var p = calcPH2(v);
+          var x = ml + (v / 35) * pw;
+          var y = mt + ph - (p / 14) * ph;
+          if (v === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+        if (S.t2pts.length > 1) {
+          ctx.strokeStyle = "#9f7aea";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(
+            ml + (S.t2pts[0].v / 35) * pw,
+            mt + ph - (S.t2pts[0].ph / 14) * ph,
+          );
+          for (var i = 1; i < S.t2pts.length; i++)
+            ctx.lineTo(
+              ml + (S.t2pts[i].v / 35) * pw,
+              mt + ph - (S.t2pts[i].ph / 14) * ph,
+            );
+          ctx.stroke();
+        }
+        for (var i = 0; i < S.t2pts.length; i++) {
+          var x = ml + (S.t2pts[i].v / 35) * pw,
+            y = mt + ph - (S.t2pts[i].ph / 14) * ph;
+          ctx.fillStyle = "#9f7aea";
+          ctx.beginPath();
+          ctx.arc(x, y, 3, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+        if (S.t2done) {
+          var ex = ml + (S.t2evVal / 35) * pw;
+          ctx.strokeStyle = "#c9a84c";
+          ctx.lineWidth = 1;
+          ctx.setLineDash([6, 3]);
+          ctx.beginPath();
+          ctx.moveTo(ex, mt);
+          ctx.lineTo(ex, mt + ph);
+          ctx.stroke();
+          ctx.fillStyle = "#c9a84c";
+          ctx.font = "11px Courier New";
+          ctx.textAlign = "center";
+          ctx.fillText("Eq: " + S.t2evVal.toFixed(1), ex, mt - 4);
+          var hx = ml + (S.t2hevVal / 35) * pw;
+          ctx.strokeStyle = "#e53e3e";
+          ctx.beginPath();
+          ctx.moveTo(hx, mt);
+          ctx.lineTo(hx, mt + ph);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          /* Dot at half-equiv on curve */
+          var hph = calcPH2(S.t2hevVal);
+          var hy = mt + ph - (hph / 14) * ph;
+          ctx.fillStyle = "#e53e3e";
+          ctx.beginPath();
+          ctx.arc(hx, hy, 5, 0, 2 * Math.PI);
+          ctx.fill();
+          /* Horizontal dashed line from dot to y-axis */
+          ctx.strokeStyle = "rgba(229,62,62,0.4)";
+          ctx.setLineDash([3, 3]);
+          ctx.beginPath();
+          ctx.moveTo(hx, hy);
+          ctx.lineTo(ml, hy);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = "#e53e3e";
+          ctx.fillText("\u00bdEq", hx, mt + 12);
+        }
+      }
+
+      /* CONFETTI */
+      function launchConfetti() {
+        var box = document.getElementById("confetti");
+        box.innerHTML = "";
+        var colors = [
+          "#c9a84c",
+          "#48bb78",
+          "#9f7aea",
+          "#e53e3e",
+          "#63b3ed",
+          "#f6ad55",
+        ];
+        for (var i = 0; i < 80; i++) {
+          var p = document.createElement("div");
+          var sz = Math.random() * 8 + 4;
+          p.style.cssText =
+            "position:fixed;width:" +
+            sz +
+            "px;height:" +
+            sz +
+            "px;background:" +
+            colors[i % colors.length] +
+            ";top:-10px;left:" +
+            Math.random() * 100 +
+            "%;opacity:0.9;border-radius:" +
+            Math.random() * 50 +
+            "%;z-index:9998;pointer-events:none;";
+          p.style.animation =
+            "confettiFall " + (Math.random() * 2 + 1.5) + "s ease-out forwards";
+          p.style.animationDelay = Math.random() * 0.5 + "s";
+          box.appendChild(p);
+        }
+        setTimeout(function () {
+          box.innerHTML = "";
+        }, 4000);
+      }
+
+      /* SUMMARY */
+      function showSummary() {
+        var qids = [
+          "q1",
+          "q2",
+          "q3",
+          "q4",
+          "q5",
+          "q6",
+          "q7",
+          "q8",
+          "q9",
+          "q10",
+        ];
+        var labels = [
+          "Equivalence Point Explanation",
+          "Moles of KHP",
+          "NaOH Concentration",
+          "Henderson Hasselbalch Explanation",
+          "pKa from Curve",
+          "Ka Calculation",
+          "Identify the Acid",
+          "Moles of Unknown",
+          "pH of NaOH",
+          "Kb of Acetate",
+        ];
+        var pts = [5, 3, 3, 5, 3, 3, 5, 3, 3, 3];
+        var total = 0,
+          right = 0,
+          ptTotal = 0,
+          ptEarned = 0;
+        qids.forEach(function (id, i) {
+          if (S.answers[id] !== undefined) {
+            total++;
+            ptTotal += pts[i];
+            if (id === "q1" || id === "q4") {
+              right++;
+              ptEarned += pts[i];
+            } /* FR always counted, teacher adjusts */ else if (S.correct[id]) {
+              right++;
+              ptEarned += pts[i];
+            }
+          }
+        });
+        if (S.t1done) {
+          total++;
+          right++;
+          ptTotal += 5;
+          ptEarned += 5;
+        }
+        if (S.t2done) {
+          total++;
+          right++;
+          ptTotal += 5;
+          ptEarned += 5;
+        }
+        var elapsed = S.startTime
+          ? Math.round((Date.now() - S.startTime) / 60000)
+          : 0;
+        var rank = "";
+        if (ptEarned / ptTotal >= 0.9) rank = "Master Detective";
+        else if (ptEarned / ptTotal >= 0.8) rank = "Senior Investigator";
+        else if (ptEarned / ptTotal >= 0.7) rank = "Detective";
+        else if (ptEarned / ptTotal >= 0.6) rank = "Junior Officer";
+        else rank = "Cadet (Review Recommended)";
+        var h = '<div style="text-align:center;margin-bottom:20px;">';
+        h +=
+          '<div style="font-size:1.5em;font-weight:700;color:#c9a84c;">' +
+          ptEarned +
+          " / " +
+          ptTotal +
+          " points (auto scored)</div>";
+        h +=
+          '<div style="font-size:1em;color:#8b8b9e;margin-top:4px;">Free response questions (Q1, Q4) are scored by your instructor</div>';
+        h +=
+          '<div style="font-size:1.1em;color:#d4a574;margin-top:8px;">Rank: ' +
+          rank +
+          "</div>";
+        h +=
+          '<div style="margin-top:10px;">XP: ' +
+          S.xp +
+          " &bull; Best Streak: " +
+          S.bestStreak +
+          "</div>";
+        if (elapsed > 0)
+          h +=
+            '<div style="color:#8b8b9e;margin-top:6px;">Completed in ~' +
+            elapsed +
+            " minutes</div>";
+        h += "</div>";
+        if (S.badges.length > 0) {
+          h +=
+            '<div style="margin:16px 0;padding:12px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:10px;text-align:center;">';
+          h +=
+            '<div style="font-weight:700;margin-bottom:6px;color:#c9a84c;">Badges Earned</div>';
+          S.badges.forEach(function (b) {
+            if (b === "hotstreak")
+              h +=
+                '<span style="margin:4px;padding:4px 12px;background:rgba(246,173,85,0.15);border:1px solid rgba(246,173,85,0.3);border-radius:20px;font-size:0.9em;">Hot Streak</span>';
+            if (b === "century")
+              h +=
+                '<span style="margin:4px;padding:4px 12px;background:rgba(72,187,120,0.15);border:1px solid rgba(72,187,120,0.3);border-radius:20px;font-size:0.9em;">Century Club</span>';
+            if (b === "labmaster")
+              h +=
+                '<span style="margin:4px;padding:4px 12px;background:rgba(159,122,234,0.15);border:1px solid rgba(159,122,234,0.3);border-radius:20px;font-size:0.9em;">Lab Master</span>';
+          });
+          h += "</div>";
+        }
+        h +=
+          '<table style="width:100%;border-collapse:collapse;margin-top:16px;">';
+        h +=
+          '<tr style="border-bottom:1px solid rgba(201,168,76,0.2);"><th style="text-align:left;padding:6px;color:#c9a84c;">Question</th><th style="padding:6px;color:#c9a84c;">Pts</th><th style="text-align:center;padding:6px;color:#c9a84c;">Result</th></tr>';
+        qids.forEach(function (id, i) {
+          if (S.answers[id] !== undefined) {
+            var icon =
+              id === "q1" || id === "q4" ? "📝" : S.correct[id] ? "✅" : "❌";
+            h +=
+              '<tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:6px;">' +
+              labels[i] +
+              '</td><td style="text-align:center;padding:6px;">' +
+              pts[i] +
+              '</td><td style="text-align:center;padding:6px;">' +
+              icon +
+              "</td></tr>";
+          }
+        });
+        if (S.t1done)
+          h +=
+            '<tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:6px;">Titration 1: KHP</td><td style="text-align:center;">5</td><td style="text-align:center;padding:6px;">✅</td></tr>';
+        if (S.t2done)
+          h +=
+            '<tr><td style="padding:6px;">Titration 2: Unknown</td><td style="text-align:center;">5</td><td style="text-align:center;padding:6px;">✅</td></tr>';
+        h += "</table>";
+        document.getElementById("summaryContent").innerHTML = h;
+      }
+
+      /* PDF REPORT */
+      function fillReport() {
+        var r = document.getElementById("reportBody");
+        var h =
+          '<h2 style="text-align:center;border-bottom:2px solid #333;padding-bottom:8px;">CHM 152L Lab 6: Case File Report</h2>';
+        h +=
+          "<p><strong>Name:</strong> " +
+          S.name +
+          " &nbsp;&nbsp; <strong>Section:</strong> " +
+          S.sec +
+          " &nbsp;&nbsp; <strong>Date:</strong> " +
+          S.date +
+          "</p>";
+
+        h += "<h3>Q1: Equivalence Point Explanation (5 pts)</h3>";
+        h +=
+          '<div class="report-fr">' +
+          (S.answers["q1"] || "(no answer)") +
+          "</div>";
+
+        h += "<h3>Part A: Standardization of NaOH</h3>";
+        h += '<table class="report-tbl">';
+        h +=
+          "<tr><td>Reaction</td><td>KHC&#8328;H&#8324;O&#8324; + NaOH &rarr; KNaC&#8328;H&#8324;O&#8324; + H&#8322;O</td></tr>";
+        h += "<tr><td>Mass of KHP</td><td>0.511 g</td></tr>";
+        h +=
+          "<tr><td>Q2: Moles of KHP (3 pts)</td><td>" +
+          (S.answers["q2"]
+            ? S.answers["q2"].c + " &times; 10^" + S.answers["q2"].e + " mol"
+            : "(no answer)") +
+          " " +
+          (S.correct["q2"] ? "✅" : "❌") +
+          "</td></tr>";
+        h +=
+          "<tr><td>Equivalence Volume</td><td>" +
+          (S.t1done ? S.t1v.toFixed(2) + " mL" : "incomplete") +
+          "</td></tr>";
+        h +=
+          "<tr><td>Q3: NaOH Concentration (3 pts)</td><td>" +
+          (S.answers["q3"] ? S.answers["q3"] + " M" : "(no answer)") +
+          " " +
+          (S.correct["q3"] ? "✅" : "❌") +
+          "</td></tr>";
+        h += "</table>";
+
+        h += "<h3>Q4: Henderson Hasselbalch Explanation (5 pts)</h3>";
+        h +=
+          '<div class="report-fr">' +
+          (S.answers["q4"] || "(no answer)") +
+          "</div>";
+
+        h += "<h3>Part B: Titration of Unknown Acid</h3>";
+        h += '<table class="report-tbl">';
+        h += "<tr><td>Mass of unknown acid</td><td>0.253 g</td></tr>";
+        h +=
+          "<tr><td>Equivalence Volume</td><td>" +
+          (S.t2evVal ? S.t2evVal.toFixed(2) + " mL" : "incomplete") +
+          "</td></tr>";
+        h +=
+          "<tr><td>Half Equivalence Volume</td><td>" +
+          (S.t2hevVal ? S.t2hevVal.toFixed(2) + " mL" : "incomplete") +
+          "</td></tr>";
+        h +=
+          "<tr><td>Q5: pKa (3 pts)</td><td>" +
+          (S.answers["q5"] ? S.answers["q5"] : "(no answer)") +
+          " " +
+          (S.correct["q5"] ? "✅" : "❌") +
+          "</td></tr>";
+        h +=
+          "<tr><td>Q6: Ka (3 pts)</td><td>" +
+          (S.answers["q6"]
+            ? S.answers["q6"].c + " &times; 10^" + S.answers["q6"].e
+            : "(no answer)") +
+          " " +
+          (S.correct["q6"] ? "✅" : "❌") +
+          "</td></tr>";
+        h +=
+          "<tr><td>Q7: Identified Acid (5 pts)</td><td>" +
+          (S.accused ? "Benzoic Acid (C6H5COOH) ✅" : "(not identified)") +
+          "</td></tr>";
+        h +=
+          "<tr><td>Q8: Moles of Unknown (3 pts)</td><td>" +
+          (S.answers["q8"]
+            ? S.answers["q8"].c + " &times; 10^" + S.answers["q8"].e + " mol"
+            : "(no answer)") +
+          " " +
+          (S.correct["q8"] ? "✅" : "❌") +
+          "</td></tr>";
+        h += "</table>";
+
+        h += "<h3>Post Lab Questions</h3>";
+        h += '<table class="report-tbl">';
+        h +=
+          "<tr><td>Q9: pH of 0.01 M NaOH (3 pts)</td><td>" +
+          (S.answers["q9"] ? S.answers["q9"] : "(no answer)") +
+          " " +
+          (S.correct["q9"] ? "✅" : "❌") +
+          "</td></tr>";
+        h +=
+          "<tr><td>Q10: Kb of acetate (3 pts)</td><td>" +
+          (S.answers["q10"]
+            ? S.answers["q10"].c + " &times; 10^" + S.answers["q10"].e
+            : "(no answer)") +
+          " " +
+          (S.correct["q10"] ? "✅" : "❌") +
+          "</td></tr>";
+        h += "</table>";
+
+        var qids = [
+          "q1",
+          "q2",
+          "q3",
+          "q4",
+          "q5",
+          "q6",
+          "q7",
+          "q8",
+          "q9",
+          "q10",
+        ];
+        var pts = [5, 3, 3, 5, 3, 3, 5, 3, 3, 3];
+        var ptTotal = 0,
+          ptEarned = 0;
+        qids.forEach(function (id, i) {
+          if (S.answers[id] !== undefined) {
+            ptTotal += pts[i];
+            if (id === "q1" || id === "q4") ptEarned += pts[i];
+            else if (S.correct[id]) ptEarned += pts[i];
+          }
+        });
+        if (S.t1done) {
+          ptTotal += 5;
+          ptEarned += 5;
+        }
+        if (S.t2done) {
+          ptTotal += 5;
+          ptEarned += 5;
+        }
+        h += "<h3>Auto Score: " + ptEarned + " / " + ptTotal + " points</h3>";
+        h +=
+          '<p style="color:#666;font-size:0.9em;">Note: Q1 and Q4 (free response, 10 pts total) require instructor grading. Auto score counts them as full credit pending review.</p>';
+        r.innerHTML = h;
+      }
+      function printReport() {
+        window.print();
+      }
+
+      go(0);
+    </script>
+  </body>
+</html>
