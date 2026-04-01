@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM-130 Weeks 4 &amp; 5 Interactive Study Guide | Prof. Tehrani</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    line-height: 1.7;
+    padding: 20px;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  /* ─── Header ─── */
+  .header {
+    text-align: center;
+    padding: 40px 30px;
+    background: linear-gradient(135deg, #1e3a8a, #2563eb, #3b82f6);
+    border-radius: 20px;
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: 0 20px 40px rgba(37,99,235,0.3);
+  }
+  .header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
+  .header .subtitle { font-size: 1.1rem; opacity: 0.9; }
+  .header .prof { font-size: 0.9rem; opacity: 0.7; margin-top: 8px; }
+
+  /* ─── Sticky Nav ─── */
+  .nav {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    margin-bottom: 30px; padding: 20px; background: white;
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    position: sticky; top: 10px; z-index: 100;
+  }
+  .nav a {
+    padding: 6px 14px; background: var(--gray-100); border-radius: 20px;
+    text-decoration: none; color: var(--gray-700); font-size: 0.8rem;
+    font-weight: 500; transition: all 0.2s;
+  }
+  .nav a:hover { background: var(--primary); color: white; }
+
+  /* ─── Progress Bar ─── */
+  .progress-wrap {
+    background: white; border-radius: var(--radius); padding: 16px 20px;
+    margin-bottom: 30px; box-shadow: var(--shadow);
+  }
+  .progress-label { font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: var(--gray-600); }
+  .progress-bar { height: 10px; background: var(--gray-200); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--teal)); transition: width 0.5s ease; border-radius: 99px; }
+  .progress-score { font-size: 0.8rem; color: var(--gray-600); margin-top: 6px; text-align: right; }
+
+  /* ─── Topic Cards ─── */
+  .topic {
+    background: white; border-radius: var(--radius); padding: 30px;
+    margin-bottom: 24px; box-shadow: var(--shadow); border-left: 5px solid var(--primary);
+  }
+  .topic.green { border-left-color: var(--success); }
+  .topic.purple { border-left-color: var(--purple); }
+  .topic.teal { border-left-color: var(--teal); }
+  .topic.orange { border-left-color: var(--warning); }
+  .topic.red { border-left-color: var(--danger); }
+  .topic.dark { border-left-color: #111827; }
+
+  .topic h2 {
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 5px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .topic .topic-tag {
+    font-size: 0.7rem; padding: 3px 10px; border-radius: 20px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .tag-concept { background: var(--primary-light); color: var(--primary); }
+  .tag-naming { background: var(--purple-light); color: var(--purple); }
+  .tag-organic { background: var(--teal-light); color: var(--teal); }
+  .tag-reaction { background: var(--warning-light); color: var(--warning); }
+  .tag-exam { background: var(--danger-light); color: var(--danger); }
+
+  .topic h3 {
+    font-size: 1.05rem; font-weight: 600; margin: 20px 0 8px; color: var(--gray-700);
+  }
+
+  p, li { font-size: 0.95rem; color: var(--gray-700); }
+
+  /* ─── Info Boxes ─── */
+  .mnemonic {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 2px dashed #f59e0b; border-radius: var(--radius); padding: 16px 20px; margin: 15px 0;
+  }
+  .mnemonic .label { font-weight: 700; color: #92400e; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .mnemonic .content { font-size: 1.1rem; font-weight: 600; color: #78350f; }
+  .mnemonic .explain { font-size: 0.85rem; color: #92400e; margin-top: 4px; }
+
+  .trick {
+    background: var(--success-light); border-left: 4px solid var(--success);
+    border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 15px 0;
+  }
+  .trick .label { font-weight: 700; color: #166534; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+
+  .warning {
+    background: var(--danger-light); border-left: 4px solid var(--danger);
+    border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 15px 0;
+  }
+  .warning .label { font-weight: 700; color: #991b1b; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+
+  /* ─── Formula Box ─── */
+  .formula-box {
+    background: var(--gray-900); color: #e5e7eb; border-radius: var(--radius);
+    padding: 20px 24px; margin: 15px 0; font-family: 'JetBrains Mono', monospace;
+    font-size: 1.15rem; text-align: center; letter-spacing: 0.5px;
+  }
+  .formula-box .small { font-size: 0.8rem; color: #9ca3af; margin-top: 6px; }
+
+  /* ─── Steps ─── */
+  .steps {
+    background: var(--gray-50); border-radius: var(--radius); padding: 20px; margin: 15px 0;
+  }
+  .step { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+  .step:last-child { margin-bottom: 0; }
+  .step-num {
+    min-width: 30px; height: 30px; background: var(--primary); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+  }
+  .step-content { padding-top: 3px; }
+  .step-content code {
+    background: var(--primary-light); padding: 2px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary);
+  }
+
+  /* ─── Reference Table ─── */
+  .compare-table {
+    width: 100%; border-collapse: separate; border-spacing: 0; margin: 15px 0;
+    border-radius: var(--radius); overflow: hidden; border: 1px solid var(--gray-200);
+  }
+  .compare-table th {
+    padding: 12px 16px; font-size: 0.85rem; text-transform: uppercase;
+    letter-spacing: 0.5px; background: var(--gray-800); color: white; font-weight: 600;
+    text-align: left;
+  }
+  .compare-table td {
+    padding: 10px 16px; border-bottom: 1px solid var(--gray-200); font-size: 0.9rem;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) td { background: var(--gray-50); }
+  .compare-table code {
+    background: var(--primary-light); padding: 2px 6px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--primary);
+  }
+
+  /* ─── Interactive Cards (click-reveal) ─── */
+  .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 12px; margin: 15px 0; }
+  .flashcard {
+    background: white; border: 2px solid var(--gray-200); border-radius: var(--radius);
+    padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s;
+    min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    user-select: none; position: relative;
+  }
+  .flashcard:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .flashcard .front { font-weight: 700; font-size: 1rem; }
+  .flashcard .back { display: none; font-size: 0.85rem; color: var(--gray-600); margin-top: 6px; }
+  .flashcard.flipped { background: var(--primary-light); border-color: var(--primary); }
+  .flashcard.flipped .back { display: block; }
+  .flashcard .tap-hint { font-size: 0.7rem; color: var(--gray-300); position: absolute; bottom: 6px; }
+  .flashcard.flipped .tap-hint { display: none; }
+
+  /* ─── Molecule Preview Blocks ─── */
+  .molecule-box {
+    background: white; border: 2px solid var(--gray-200); border-radius: var(--radius);
+    padding: 20px; margin: 12px 0; text-align: center; font-family: 'JetBrains Mono', monospace;
+  }
+  .molecule-box .structure { font-size: 1.2rem; letter-spacing: 2px; line-height: 1.4; white-space: pre; }
+  .molecule-box .name { font-size: 0.9rem; color: var(--primary); font-weight: 600; margin-top: 10px; font-family: 'Inter', sans-serif; }
+  .molecule-box .highlight { color: var(--danger); font-weight: 700; }
+
+  /* ─── Question Card (Quiz) ─── */
+  .question-card {
+    background: white; border: 2px solid var(--gray-200); border-radius: var(--radius);
+    margin: 20px 0; overflow: hidden; transition: border-color 0.3s;
+  }
+  .question-card:hover { border-color: var(--primary); }
+  .question-header {
+    padding: 18px 20px; background: var(--gray-50); display: flex; align-items: center;
+    gap: 12px; cursor: default;
+  }
+  .q-number {
+    background: var(--primary); color: white; width: 36px; height: 36px;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem; flex-shrink: 0;
+  }
+  .q-number.exam-q { background: var(--danger); }
+  .q-text { font-weight: 600; font-size: 0.95rem; }
+
+  .answer-section { padding: 0 20px; }
+
+  /* ─── MC Quiz Options ─── */
+  .mc-options { list-style: none; padding: 15px 20px 5px; }
+  .mc-option {
+    padding: 10px 14px; margin-bottom: 8px; border: 2px solid var(--gray-200);
+    border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 0.9rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mc-option:hover { border-color: var(--primary); background: var(--primary-light); }
+  .mc-option.selected-correct { border-color: var(--success); background: var(--success-light); }
+  .mc-option.selected-wrong { border-color: var(--danger); background: var(--danger-light); }
+  .mc-option.show-correct { border-color: var(--success); background: var(--success-light); }
+  .mc-option .letter {
+    min-width: 26px; height: 26px; border-radius: 50%; background: var(--gray-200);
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem;
+  }
+  .mc-option.selected-correct .letter { background: var(--success); color: white; }
+  .mc-option.selected-wrong .letter { background: var(--danger); color: white; }
+  .mc-option.show-correct .letter { background: var(--success); color: white; }
+
+  .mc-feedback { padding: 0 20px 15px; font-size: 0.9rem; display: none; }
+  .mc-feedback.show { display: block; }
+  .mc-feedback .explanation {
+    padding: 12px 16px; border-radius: 8px; margin-top: 10px;
+    background: var(--gray-50); border-left: 4px solid var(--primary);
+  }
+
+  /* ─── Reveal Button ─── */
+  .reveal-btn {
+    width: 100%; padding: 12px; margin: 10px 0; background: var(--primary);
+    color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif;
+    font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+  }
+  .reveal-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+  .reveal-btn.revealed { background: var(--gray-300); color: var(--gray-600); }
+
+  .answer-content { display: none; padding: 15px 0 20px; animation: fadeIn 0.3s ease; }
+  .answer-content.show { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+  .final-answer {
+    background: linear-gradient(135deg, var(--success-light), #bbf7d0);
+    border-radius: 8px; padding: 12px 18px; font-weight: 700; color: #166534;
+    font-size: 1.05rem; margin-top: 10px; text-align: center;
+  }
+
+  /* ─── Shift Visualizer ─── */
+  .shift-demo {
+    background: var(--gray-900); border-radius: var(--radius); padding: 24px; margin: 15px 0;
+    text-align: center; color: #e5e7eb;
+  }
+  .shift-demo .equation { font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; margin-bottom: 15px; letter-spacing: 1px; }
+  .shift-demo .equation .reactant { color: #93c5fd; }
+  .shift-demo .equation .product { color: #86efac; }
+  .shift-demo .equation .heat { color: #fca5a5; }
+  .shift-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .shift-btn {
+    padding: 8px 16px; border-radius: 8px; border: 2px solid #374151; background: transparent;
+    color: #e5e7eb; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .shift-btn:hover { border-color: #60a5fa; color: #60a5fa; }
+  .shift-btn.active { border-color: #60a5fa; background: rgba(96,165,250,0.15); color: #93c5fd; }
+  .shift-result {
+    margin-top: 15px; padding: 14px; border-radius: 8px; font-size: 0.95rem;
+    font-weight: 600; min-height: 50px; transition: all 0.3s;
+  }
+  .shift-result.right { background: rgba(134,239,172,0.15); color: #86efac; }
+  .shift-result.left { background: rgba(252,165,165,0.15); color: #fca5a5; }
+  .shift-result .arrow { font-size: 1.8rem; }
+
+  /* ─── Drag & Drop Naming ─── */
+  .naming-exercise {
+    background: var(--gray-50); border-radius: var(--radius); padding: 20px; margin: 15px 0;
+  }
+  .naming-exercise .chain-display {
+    font-family: 'JetBrains Mono', monospace; font-size: 1rem; text-align: center;
+    padding: 16px; background: white; border-radius: 8px; margin-bottom: 15px;
+    border: 1px solid var(--gray-200); line-height: 2;
+  }
+  .naming-exercise input[type="text"] {
+    padding: 10px 14px; border: 2px solid var(--gray-200); border-radius: 8px;
+    font-family: 'Inter', sans-serif; font-size: 0.95rem; width: 100%;
+    transition: border-color 0.2s; outline: none;
+  }
+  .naming-exercise input[type="text"]:focus { border-color: var(--primary); }
+  .naming-exercise input.correct { border-color: var(--success); background: var(--success-light); }
+  .naming-exercise input.wrong { border-color: var(--danger); background: var(--danger-light); }
+  .check-btn {
+    padding: 10px 24px; background: var(--primary); color: white; border: none;
+    border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer;
+    font-family: 'Inter', sans-serif; margin-top: 10px; transition: all 0.2s;
+  }
+  .check-btn:hover { background: #1d4ed8; }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center; padding: 30px 20px; margin-top: 40px;
+    color: var(--gray-600); font-size: 0.85rem;
+  }
+  .footer a { color: var(--primary); text-decoration: none; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.5rem; }
+    .topic { padding: 20px; }
+    .flashcard-grid { grid-template-columns: 1fr 1fr; }
+    .shift-btns { flex-direction: column; align-items: center; }
+    .nav { position: static; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ═══════ HEADER ═══════ -->
+<div class="header">
+  <h1>CHM-130 &middot; Weeks 4 &amp; 5</h1>
+  <div class="subtitle">Equilibrium &amp; Introduction to Organic Chemistry</div>
+  <div class="prof">Prof. Tehrani &middot; Arizona College of Nursing</div>
+</div>
+
+<!-- ═══════ NAV ═══════ -->
+<div class="nav">
+  <a href="#equilibrium">⚖️ Equilibrium</a>
+  <a href="#lechatelier">🔄 Le Chatelier</a>
+  <a href="#alkanes">🔗 Alkanes</a>
+  <a href="#naming">📝 IUPAC Naming</a>
+  <a href="#cyclo">🔵 Cycloalkanes</a>
+  <a href="#alkyl">🌿 Alkyl Groups</a>
+  <a href="#alkenes">⚡ Alkenes &amp; Cis/Trans</a>
+  <a href="#functional">🧪 Functional Groups</a>
+  <a href="#practice">✏️ Practice</a>
+</div>
+
+<!-- ═══════ PROGRESS ═══════ -->
+<div class="progress-wrap">
+  <div class="progress-label">📊 Study Progress</div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-score" id="progressText">Answer questions below to track progress</div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 1: EQUILIBRIUM
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic" id="equilibrium">
+  <h2>⚖️ Chemical Equilibrium <span class="topic-tag tag-concept">Core Concept</span></h2>
+  <p>A reversible reaction reaches <strong>equilibrium</strong> when the rates of the forward and reverse reactions are equal. The concentrations stop changing, but the reaction hasn't stopped — molecules keep reacting in both directions.</p>
+
+  <h3>Three Factors That Determine Equilibrium</h3>
+  <div class="flashcard-grid">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front">🌡️ Temperature</div>
+      <div class="back">Raising temp favors the endothermic direction; lowering favors exothermic</div>
+      <div class="tap-hint">tap to flip</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front">🧪 Concentration</div>
+      <div class="back">Adding a substance shifts equilibrium to the opposite side to "use it up"</div>
+      <div class="tap-hint">tap to flip</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front">📦 Volume / Pressure</div>
+      <div class="back">Decreasing volume (↑ pressure) shifts toward the side with fewer gas moles</div>
+      <div class="tap-hint">tap to flip</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 2: LE CHATELIER INTERACTIVE
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic green" id="lechatelier">
+  <h2>🔄 Le Chatelier's Principle <span class="topic-tag tag-reaction">Interactive</span></h2>
+  <p>When a stress is applied to a system at equilibrium, the system shifts to <strong>partially counteract</strong> that stress.</p>
+
+  <div class="shift-demo">
+    <div class="equation">
+      <span class="reactant">CH₄</span> + <span class="reactant">H₂O</span> ⇌ <span class="product">CH₃OH</span> + <span class="product">H₂</span> + <span class="heat">heat</span>
+    </div>
+    <p style="font-size:0.8rem; color:#9ca3af; margin-bottom:12px;">Click a stress to see which way the equilibrium shifts:</p>
+    <div class="shift-btns">
+      <button class="shift-btn" onclick="showShift(this, 'right', 'Add more CH₄ → system shifts RIGHT to consume it → more CH₃OH &amp; H₂ produced')">+ Add CH₄</button>
+      <button class="shift-btn" onclick="showShift(this, 'left', 'Remove H₂O → system shifts LEFT to replace it → more CH₄ produced')">− Remove H₂O</button>
+      <button class="shift-btn" onclick="showShift(this, 'left', 'Add product → system shifts LEFT to consume it → more reactants produced')">+ Add CH₃OH</button>
+      <button class="shift-btn" onclick="showShift(this, 'left', 'Raise temp → reaction is exothermic (produces heat) → shifts LEFT to absorb heat')">🌡️ ↑ Temp</button>
+      <button class="shift-btn" onclick="showShift(this, 'right', 'Lower temp → system shifts RIGHT (exothermic direction) to produce heat')">🌡️ ↓ Temp</button>
+    </div>
+    <div class="shift-result" id="shiftResult"></div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="label">💡 Memory Trick</div>
+    <div class="content">"The system fights back"</div>
+    <div class="explain">Add something → equilibrium shifts AWAY from it. Remove something → shifts TOWARD it. Think of it like a seesaw rebalancing itself.</div>
+  </div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 3: ALKANES
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic purple" id="alkanes">
+  <h2>🔗 Alkanes <span class="topic-tag tag-organic">Organic Chemistry</span></h2>
+  <p><strong>Alkanes</strong> are the simplest hydrocarbons — compounds containing <strong>only C and H</strong> atoms. Every carbon forms <strong>4 single bonds</strong>, and they follow the general formula:</p>
+
+  <div class="formula-box">
+    C<sub>n</sub>H<sub>2n+2</sub>
+    <div class="small">where n = number of carbon atoms</div>
+  </div>
+
+  <h3>Key Characteristics</h3>
+  <ul style="margin-left: 20px; margin-top: 8px;">
+    <li>All bonds are <strong>single bonds</strong> (no double or triple bonds)</li>
+    <li>Also called <strong>saturated hydrocarbons</strong> — saturated with hydrogen</li>
+    <li>Ending: <strong>-ane</strong></li>
+    <li>Nonpolar → don't dissolve in water</li>
+  </ul>
+
+  <h3>The Prefix System (You Must Memorize These!)</h3>
+  <table class="compare-table">
+    <thead>
+      <tr><th>Prefix</th><th># Carbons</th><th>Name</th><th>Formula</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>meth-</strong></td><td>1</td><td>Methane</td><td><code>CH₄</code></td></tr>
+      <tr><td><strong>eth-</strong></td><td>2</td><td>Ethane</td><td><code>C₂H₆</code></td></tr>
+      <tr><td><strong>prop-</strong></td><td>3</td><td>Propane</td><td><code>C₃H₈</code></td></tr>
+      <tr><td><strong>but-</strong></td><td>4</td><td>Butane</td><td><code>C₄H₁₀</code></td></tr>
+      <tr><td><strong>pent-</strong></td><td>5</td><td>Pentane</td><td><code>C₅H₁₂</code></td></tr>
+      <tr><td><strong>hex-</strong></td><td>6</td><td>Hexane</td><td><code>C₆H₁₄</code></td></tr>
+      <tr><td><strong>hept-</strong></td><td>7</td><td>Heptane</td><td><code>C₇H₁₆</code></td></tr>
+      <tr><td><strong>oct-</strong></td><td>8</td><td>Octane</td><td><code>C₈H₁₈</code></td></tr>
+      <tr><td><strong>non-</strong></td><td>9</td><td>Nonane</td><td><code>C₉H₂₀</code></td></tr>
+      <tr><td><strong>dec-</strong></td><td>10</td><td>Decane</td><td><code>C₁₀H₂₂</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="mnemonic">
+    <div class="label">💡 Mnemonic for 5–10</div>
+    <div class="content">Pent · Hex · Hept · Oct · Non · Dec</div>
+    <div class="explain"><strong>P</strong>lease <strong>H</strong>elp <strong>H</strong>appy <strong>O</strong>ctopuses <strong>N</strong>ame <strong>D</strong>ogs — or just think: pentagon (5), hexagon (6), heptagon (7), octopus (8), November was month 9, December was month 10 in the old Roman calendar!</div>
+  </div>
+
+  <h3>Quick-Check: How Many Carbons?</h3>
+  <div class="flashcard-grid">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front" style="font-size:0.85rem;">Propane?</div>
+      <div class="back"><strong>3</strong> carbons</div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front" style="font-size:0.85rem;">Heptane?</div>
+      <div class="back"><strong>7</strong> carbons</div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front" style="font-size:0.85rem;">Octane?</div>
+      <div class="back"><strong>8</strong> carbons</div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front" style="font-size:0.85rem;">Hexane?</div>
+      <div class="back"><strong>6</strong> carbons</div>
+      <div class="tap-hint">tap</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 4: IUPAC NAMING RULES
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic" id="naming">
+  <h2>📝 IUPAC Naming Rules <span class="topic-tag tag-naming">Must Know</span></h2>
+  <p>The IUPAC system gives every organic compound a systematic name. Follow these 5 rules in order:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content"><strong>Find the longest carbon chain</strong> — this gives the parent name (e.g., 6 carbons = hexane)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content"><strong>Number the chain</strong> so substituents get the <strong>lowest possible numbers</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content"><strong>Identify &amp; locate substituents</strong> — name them as alkyl groups (methyl, ethyl, etc.) with their position number</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content"><strong>Alphabetical order</strong> — list different substituents alphabetically (ethyl before methyl, because e < m)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content"><strong>Use multiplier prefixes</strong> for repeated groups — <code>di-</code> (2), <code>tri-</code> (3), <code>tetra-</code> (4). These do NOT affect alphabetical order!</div>
+    </div>
+  </div>
+
+  <div class="warning">
+    <div class="label">⚠️ Common Mistake</div>
+    <p>The prefixes <strong>di-, tri-, tetra-</strong> are NOT counted for alphabetical ordering. So "dimethyl" still files under <strong>M</strong>, not D. "Ethyl" (E) comes before "dimethyl" (M).</p>
+  </div>
+
+  <h3>Worked Example: 4-ethyl-2,2-dimethylhexane</h3>
+  <div class="molecule-box">
+    <div class="structure">                CH₃
+                |
+                CH₂
+                |
+CH₃ — CH₂ — CH — CH₂ — C — CH₃
+ <span class="highlight">6</span>      <span class="highlight">5</span>      <span class="highlight">4</span>      <span class="highlight">3</span>     <span class="highlight">2</span>|    <span class="highlight">1</span>
+                          CH₃</div>
+    <div class="name">4-ethyl-2,2-dimethylhexane</div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">Longest chain = <strong>6 carbons → hexane</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">Number from right so substituents are at positions <strong>2 and 4</strong> (not 3 and 5)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">Position 4: <strong>ethyl</strong> group (–CH₂CH₃) &nbsp;|&nbsp; Position 2: two <strong>methyl</strong> groups (–CH₃)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content"><strong>E</strong>thyl before <strong>M</strong>ethyl alphabetically</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">Two methyls at same position → <strong>2,2-dimethyl</strong></div>
+    </div>
+  </div>
+
+  <div class="final-answer">4-ethyl-2,2-dimethylhexane</div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 5: CYCLOALKANES
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic teal" id="cyclo">
+  <h2>🔵 Cycloalkanes <span class="topic-tag tag-organic">Ring Structures</span></h2>
+  <p>When the two end carbons of an alkane chain bond together, you get a <strong>ring</strong>. Add the prefix <strong>cyclo-</strong> to the alkane name.</p>
+
+  <div class="formula-box">
+    C<sub>n</sub>H<sub>2n</sub>
+    <div class="small">Cycloalkane formula — 2 fewer H's than the open-chain alkane</div>
+  </div>
+
+  <div class="flashcard-grid">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front">△<br><span style="font-size:0.8rem;">3 C ring</span></div>
+      <div class="back"><strong>Cyclopropane</strong><br>C₃H₆</div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front">◇<br><span style="font-size:0.8rem;">4 C ring</span></div>
+      <div class="back"><strong>Cyclobutane</strong><br>C₄H₈</div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front">⬠<br><span style="font-size:0.8rem;">5 C ring</span></div>
+      <div class="back"><strong>Cyclopentane</strong><br>C₅H₁₀</div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front">⬡<br><span style="font-size:0.8rem;">6 C ring</span></div>
+      <div class="back"><strong>Cyclohexane</strong><br>C₆H₁₂</div>
+      <div class="tap-hint">tap</div>
+    </div>
+  </div>
+
+  <h3>Naming Substituted Cycloalkanes</h3>
+  <ul style="margin-left: 20px; margin-top: 8px;">
+    <li><strong>One substituent</strong>: no number needed → <em>methylcyclopentane</em></li>
+    <li><strong>Two+ substituents</strong>: number the ring starting with the group that comes first alphabetically → <em>1-ethyl-2-methylcyclopropane</em></li>
+  </ul>
+
+  <div class="trick">
+    <div class="label">✅ Quick Check</div>
+    <p>Study Guide Q④ asks: What is the name of a 5-membered ring with no substituents?</p>
+    <p style="font-weight:700; margin-top:6px;">→ Cyclopentane</p>
+  </div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 6: ALKYL GROUPS
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic orange" id="alkyl">
+  <h2>🌿 Alkyl Groups <span class="topic-tag tag-naming">Substituents</span></h2>
+  <p>Remove one H from an alkane → you get an <strong>alkyl group</strong> (a substituent). Change the ending from <strong>-ane</strong> to <strong>-yl</strong>.</p>
+
+  <table class="compare-table">
+    <thead><tr><th>Parent Alkane</th><th>Alkyl Group</th><th>Structure</th></tr></thead>
+    <tbody>
+      <tr><td>Meth<strong>ane</strong></td><td>Meth<strong>yl</strong></td><td><code>CH₃–</code></td></tr>
+      <tr><td>Eth<strong>ane</strong></td><td>Eth<strong>yl</strong></td><td><code>CH₃CH₂–</code></td></tr>
+      <tr><td>Prop<strong>ane</strong></td><td>Prop<strong>yl</strong></td><td><code>CH₃CH₂CH₂–</code></td></tr>
+      <tr><td>Prop<strong>ane</strong></td><td><strong>Iso</strong>propyl</td><td><code>(CH₃)₂CH–</code></td></tr>
+      <tr><td>But<strong>ane</strong></td><td>But<strong>yl</strong></td><td><code>CH₃CH₂CH₂CH₂–</code></td></tr>
+      <tr><td>But<strong>ane</strong></td><td><strong><em>tert</em></strong>-Butyl</td><td><code>(CH₃)₃C–</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="mnemonic">
+    <div class="label">💡 Key Insight</div>
+    <div class="content">-ane → -yl</div>
+    <div class="explain">Methane → Methyl, Ethane → Ethyl, Propane → Propyl. Just swap the ending! The "yl" means "it's a branch, not the main chain."</div>
+  </div>
+
+  <h3>Special Branched Alkyl Groups</h3>
+  <p style="margin-top:8px;">When H can be removed from different positions, you get structural isomers:</p>
+  <div class="flashcard-grid" style="grid-template-columns: repeat(auto-fill, minmax(160px,1fr));">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front" style="font-size:0.85rem;"><strong>Isopropyl</strong></div>
+      <div class="back" style="font-family:'JetBrains Mono',monospace;">CH₃–CH–<br>|<br>CH₃<br><span style="font-family:'Inter',sans-serif; font-size:0.75rem;">H removed from middle C</span></div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front" style="font-size:0.85rem;"><strong><em>tert</em>-Butyl</strong></div>
+      <div class="back" style="font-family:'JetBrains Mono',monospace;">(CH₃)₃C–<br><span style="font-family:'Inter',sans-serif; font-size:0.75rem;">3 methyls on one carbon</span></div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front" style="font-size:0.85rem;"><strong><em>sec</em>-Butyl</strong></div>
+      <div class="back" style="font-family:'JetBrains Mono',monospace;">CH₃CH₂–CH–<br>|<br>CH₃<br><span style="font-family:'Inter',sans-serif; font-size:0.75rem;">Branch at 2nd carbon</span></div>
+      <div class="tap-hint">tap</div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="front" style="font-size:0.85rem;"><strong>Isobutyl</strong></div>
+      <div class="back" style="font-family:'JetBrains Mono',monospace;">CH₃–CH–CH₂–<br>|<br>CH₃<br><span style="font-family:'Inter',sans-serif; font-size:0.75rem;">Branch at end</span></div>
+      <div class="tap-hint">tap</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 7: ALKENES & CIS/TRANS
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic red" id="alkenes">
+  <h2>⚡ Alkenes &amp; Cis/Trans Isomers <span class="topic-tag tag-organic">Double Bonds</span></h2>
+  <p><strong>Alkenes</strong> contain at least one <strong>C=C double bond</strong>. The ending changes from <strong>-ane</strong> to <strong>-ene</strong>. The position of the double bond is indicated by its lowest-numbered carbon.</p>
+
+  <div class="formula-box">
+    C<sub>n</sub>H<sub>2n</sub>
+    <div class="small">Same formula as cycloalkanes — both have one degree of unsaturation</div>
+  </div>
+
+  <h3>Cis vs. Trans Isomers</h3>
+  <p>A C=C double bond <strong>cannot rotate</strong> (unlike single bonds). When each double-bond carbon has two different groups attached, two arrangements are possible:</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 15px 0;">
+    <div style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 10px;">🤝</div>
+      <div style="font-weight: 800; font-size: 1.1rem; color: var(--primary); margin-bottom: 6px;">CIS</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size: 0.95rem; margin-bottom: 8px;">
+        H &nbsp;&nbsp; H<br>
+        &nbsp;\ &nbsp; /<br>
+        &nbsp; C=C<br>
+        &nbsp;/ &nbsp; \<br>
+        CH₃ CH₃
+      </div>
+      <p style="font-size: 0.8rem; color: var(--gray-600);">Same groups on the <strong>SAME side</strong></p>
+    </div>
+    <div style="background: var(--purple-light); border-radius: var(--radius); padding: 20px; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 10px;">↔️</div>
+      <div style="font-weight: 800; font-size: 1.1rem; color: var(--purple); margin-bottom: 6px;">TRANS</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size: 0.95rem; margin-bottom: 8px;">
+        H &nbsp;&nbsp; CH₃<br>
+        &nbsp;\ &nbsp; /<br>
+        &nbsp; C=C<br>
+        &nbsp;/ &nbsp; \<br>
+        CH₃ H
+      </div>
+      <p style="font-size: 0.8rem; color: var(--gray-600);">Same groups on <strong>OPPOSITE sides</strong></p>
+    </div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="label">💡 Memory Trick</div>
+    <div class="content">"Cis = Same Side" &nbsp; &middot; &nbsp; "Trans = acTross"</div>
+    <div class="explain">Think: <strong>cis</strong>ters (sisters) sit together on the same side. <strong>Trans</strong>atlantic = going across.</div>
+  </div>
+
+  <div class="trick">
+    <div class="label">✅ Study Guide Q⑤ Answer</div>
+    <p><strong>cis-2-butene</strong>: Both CH₃ groups on the SAME side of the double bond, both H's on the same side.</p>
+    <p style="margin-top:6px;">That's choice <strong>B</strong> in the study guide — H₃C and CH₃ both on top, H and H both on bottom.</p>
+  </div>
+
+  <h3>Naming Alkenes — Examples</h3>
+  <table class="compare-table">
+    <thead><tr><th>Formula</th><th>Name</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><code>CH₃CH=CHCH₂CH₃</code></td><td><strong>2-pentene</strong></td><td>5 C's, double bond starts at C2</td></tr>
+      <tr><td><code>CH₂=CHCH₂CH₂CH₂CH₃</code></td><td><strong>1-hexene</strong></td><td>6 C's, double bond starts at C1</td></tr>
+      <tr><td><code>CH₃CH=CHCH₃</code></td><td><strong>2-butene</strong></td><td>4 C's, double bond starts at C2</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 8: FUNCTIONAL GROUPS
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic dark" id="functional">
+  <h2>🧪 Key Functional Groups <span class="topic-tag tag-exam">Exam Focus</span></h2>
+  <p>A <strong>functional group</strong> is the reactive part of an organic molecule. Knowing the functional group tells you how the molecule behaves.</p>
+
+  <table class="compare-table">
+    <thead><tr><th>Functional Group</th><th>Structure</th><th>Ending</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Alcohol</strong></td>
+        <td><code>–OH</code></td>
+        <td><strong>-ol</strong></td>
+        <td>Ethanol (CH₃CH₂OH)</td>
+      </tr>
+      <tr>
+        <td><strong>Aldehyde</strong></td>
+        <td><code>–CHO</code> (C=O at end)</td>
+        <td><strong>-al</strong></td>
+        <td>Pentanal (CH₃CH₂CH₂CH₂CHO)</td>
+      </tr>
+      <tr>
+        <td><strong>Ketone</strong></td>
+        <td><code>C=O</code> (middle)</td>
+        <td><strong>-one</strong></td>
+        <td>Propanone / Acetone</td>
+      </tr>
+      <tr>
+        <td><strong>Carboxylic Acid</strong></td>
+        <td><code>–COOH</code></td>
+        <td><strong>-oic acid</strong></td>
+        <td>Ethanoic acid (Acetic acid)</td>
+      </tr>
+      <tr>
+        <td><strong>Ester</strong></td>
+        <td><code>–COO–</code></td>
+        <td><strong>-oate</strong></td>
+        <td>Methyl ethanoate</td>
+      </tr>
+      <tr>
+        <td><strong>Amine</strong></td>
+        <td><code>–NH₂</code></td>
+        <td><strong>-amine</strong></td>
+        <td>Ethylamine</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="trick">
+    <div class="label">✅ Study Guide Q⑩</div>
+    <p>The structure <strong>H–C–C–C–C–C(=O)–H</strong> (5 carbons + aldehyde at the end) is an <strong>aldehyde</strong>.</p>
+    <p style="margin-top:4px;">Name: <strong>Pentanal</strong> (5C = pent- + aldehyde = -al).</p>
+    <p style="margin-top:4px;">The <strong>carbonyl group</strong> (C=O) at the end of the chain makes it an aldehyde.</p>
+  </div>
+
+  <h3>Naming Alcohols (Study Guide Q⑧)</h3>
+  <p>An alcohol has an <strong>–OH group</strong>. Change the -e of the alkane name to <strong>-ol</strong> and number to give –OH the lowest position.</p>
+
+  <div class="molecule-box">
+    <div class="structure">CH₃ — CH₂ — CH — CH₂ — CH₃
+              |
+              OH</div>
+    <div class="name">3-pentanol (–OH on carbon 3 of a 5-carbon chain)</div>
+  </div>
+
+  <h3>Diols (Study Guide Q⑨c)</h3>
+  <p>The compound <code>HOCH₂CH₂CH₂CH₂OH</code> has –OH groups on <strong>both ends</strong> of a 4-carbon chain.</p>
+  <div class="final-answer">1,4-butanediol</div>
+</div>
+
+<!-- ═════════════════════════════════════════════════════════════
+     SECTION 9: PRACTICE QUESTIONS
+     ═════════════════════════════════════════════════════════════ -->
+<div class="topic" id="practice">
+  <h2>✏️ Practice Questions <span class="topic-tag tag-exam">Test Yourself</span></h2>
+  <p>Try each question, then check your answer. These match the study guide format.</p>
+
+  <!-- Q1 -->
+  <div class="question-card" data-q="1">
+    <div class="question-header">
+      <div class="q-number">1</div>
+      <div class="q-text">What 3 factors determine equilibrium conditions?</div>
+    </div>
+    <ul class="mc-options">
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">A</span> Heat, light, catalyst</li>
+      <li class="mc-option" onclick="selectMC(this, true)"><span class="letter">B</span> Temperature, concentration, volume</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">C</span> Pressure, density, moles</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">D</span> Mass, energy, time</li>
+    </ul>
+    <div class="mc-feedback">
+      <div class="explanation"><strong>Temperature, concentration, and volume (pressure)</strong> are the three stresses that shift equilibrium. A catalyst speeds up both directions equally and does NOT shift equilibrium.</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" data-q="2">
+    <div class="question-header">
+      <div class="q-number">2</div>
+      <div class="q-text">Adding more CH₄ to: CH₄ + H₂O ⇌ CH₃OH + H₂ + heat shifts the equilibrium…</div>
+    </div>
+    <ul class="mc-options">
+      <li class="mc-option" onclick="selectMC(this, true)"><span class="letter">A</span> To the RIGHT (forward)</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">B</span> To the LEFT (reverse)</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">C</span> No change</li>
+    </ul>
+    <div class="mc-feedback">
+      <div class="explanation">Adding more <strong>reactant</strong> (CH₄) causes the system to shift <strong>right</strong> (forward) to consume the added reactant and re-establish equilibrium.</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" data-q="3">
+    <div class="question-header">
+      <div class="q-number">3</div>
+      <div class="q-text">What is the main characteristic of alkanes?</div>
+    </div>
+    <ul class="mc-options">
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">A</span> They contain at least one double bond</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">B</span> They contain only oxygen and hydrogen</li>
+      <li class="mc-option" onclick="selectMC(this, true)"><span class="letter">C</span> Each carbon is bonded to 4 other atoms — all single bonds</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">D</span> They are always cyclic structures</li>
+    </ul>
+    <div class="mc-feedback">
+      <div class="explanation">Alkanes are <strong>saturated hydrocarbons</strong> — every carbon forms <strong>4 single bonds</strong>. No double bonds, no triple bonds. General formula: C<sub>n</sub>H<sub>2n+2</sub>.</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" data-q="4">
+    <div class="question-header">
+      <div class="q-number">4</div>
+      <div class="q-text">What is cis-2-butene?</div>
+    </div>
+    <ul class="mc-options">
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">A</span> CH₃ groups on opposite sides of the double bond</li>
+      <li class="mc-option" onclick="selectMC(this, true)"><span class="letter">B</span> CH₃ groups on the same side of the double bond</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">C</span> A cyclic 4-carbon compound</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">D</span> A 2-carbon compound with a triple bond</li>
+    </ul>
+    <div class="mc-feedback">
+      <div class="explanation"><strong>Cis</strong> = same side. In cis-2-butene, both CH₃ groups are on the <strong>same side</strong> of the C=C double bond. Trans-2-butene would have them on opposite sides.</div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" data-q="5">
+    <div class="question-header">
+      <div class="q-number">5</div>
+      <div class="q-text">An isopropyl group has the structure:</div>
+    </div>
+    <ul class="mc-options">
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">A</span> CH₃CH₂CH₂–</li>
+      <li class="mc-option" onclick="selectMC(this, true)"><span class="letter">B</span> (CH₃)₂CH–</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">C</span> (CH₃)₃C–</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">D</span> CH₃CH₂–</li>
+    </ul>
+    <div class="mc-feedback">
+      <div class="explanation"><strong>Isopropyl</strong> = (CH₃)₂CH– (two methyl groups attached to a central CH). Choice A is propyl (straight chain), C is <em>tert</em>-butyl, and D is ethyl.</div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="question-card" data-q="6">
+    <div class="question-header">
+      <div class="q-number">6</div>
+      <div class="q-text">The carbonyl group C=O at the END of a carbon chain indicates which functional group?</div>
+    </div>
+    <ul class="mc-options">
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">A</span> Ketone (-one)</li>
+      <li class="mc-option" onclick="selectMC(this, true)"><span class="letter">B</span> Aldehyde (-al)</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">C</span> Alcohol (-ol)</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">D</span> Carboxylic acid (-oic acid)</li>
+    </ul>
+    <div class="mc-feedback">
+      <div class="explanation">C=O at the <strong>end</strong> of a chain (bonded to an H) = <strong>aldehyde</strong> (ending: -al). If C=O is in the <strong>middle</strong>, it's a ketone. If C=O + OH → carboxylic acid.</div>
+    </div>
+  </div>
+
+  <!-- Q7: Type-in naming exercise -->
+  <div class="question-card" data-q="7">
+    <div class="question-header">
+      <div class="q-number exam-q">7</div>
+      <div class="q-text">Name this compound (type your answer):</div>
+    </div>
+    <div class="naming-exercise" style="margin: 0 20px 20px;">
+      <div class="chain-display">
+        CH₃ — CH₂ — CH₂ — CH₂ — C(=O) — H<br>
+        <span style="color: var(--gray-600); font-size: 0.8rem;">(5-carbon chain with C=O at the end)</span>
+      </div>
+      <input type="text" id="nameInput7" placeholder="Type the IUPAC name…" autocomplete="off">
+      <button class="check-btn" onclick="checkNaming('nameInput7', ['pentanal'], 'Pent- (5 carbons) + -al (aldehyde) = pentanal')">Check Answer</button>
+      <div id="nameInput7-feedback" style="margin-top:8px; font-size:0.9rem;"></div>
+    </div>
+  </div>
+
+  <!-- Q8: Type-in naming exercise -->
+  <div class="question-card" data-q="8">
+    <div class="question-header">
+      <div class="q-number exam-q">8</div>
+      <div class="q-text">Name this compound:</div>
+    </div>
+    <div class="naming-exercise" style="margin: 0 20px 20px;">
+      <div class="chain-display">
+        HOCH₂CH₂CH₂CH₂OH<br>
+        <span style="color: var(--gray-600); font-size: 0.8rem;">(–OH on both ends of a 4-carbon chain)</span>
+      </div>
+      <input type="text" id="nameInput8" placeholder="Type the IUPAC name…" autocomplete="off">
+      <button class="check-btn" onclick="checkNaming('nameInput8', ['1,4-butanediol','1,4 butanediol'], '4 C chain = butan- + two –OH groups = -diol → 1,4-butanediol')">Check Answer</button>
+      <div id="nameInput8-feedback" style="margin-top:8px; font-size:0.9rem;"></div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="question-card" data-q="9">
+    <div class="question-header">
+      <div class="q-number">9</div>
+      <div class="q-text">Which correctly names CH₂=CH–CH₂–CH₂–CH₂–CH₃?</div>
+    </div>
+    <ul class="mc-options">
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">A</span> 5-hexene</li>
+      <li class="mc-option" onclick="selectMC(this, true)"><span class="letter">B</span> 1-hexene</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">C</span> Hexane</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">D</span> 1-hexyne</li>
+    </ul>
+    <div class="mc-feedback">
+      <div class="explanation">6 carbons = hex-. Double bond at C1 = 1-. Alkene ending = -ene. → <strong>1-hexene</strong>. Always give the double bond the lowest possible number.</div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="question-card" data-q="10">
+    <div class="question-header">
+      <div class="q-number">10</div>
+      <div class="q-text">Raising the temperature of this exothermic reaction shifts equilibrium which way?<br><span style="font-family:'JetBrains Mono',monospace; font-weight:400;">CH₄ + H₂O ⇌ CH₃OH + H₂ + heat</span></div>
+    </div>
+    <ul class="mc-options">
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">A</span> RIGHT — more products</li>
+      <li class="mc-option" onclick="selectMC(this, true)"><span class="letter">B</span> LEFT — more reactants</li>
+      <li class="mc-option" onclick="selectMC(this, false)"><span class="letter">C</span> No change</li>
+    </ul>
+    <div class="mc-feedback">
+      <div class="explanation">Heat is a <strong>product</strong> in this reaction (exothermic). Raising temperature = adding more "product" → system shifts <strong>LEFT</strong> to consume the added heat.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ KEY SUMMARY ═══════ -->
+<div class="topic green">
+  <h2>📋 Quick Reference Summary</h2>
+  <table class="compare-table">
+    <thead><tr><th>Topic</th><th>Key Ending</th><th>Remember</th></tr></thead>
+    <tbody>
+      <tr><td>Alkanes</td><td><code>-ane</code></td><td>All single bonds, saturated</td></tr>
+      <tr><td>Alkenes</td><td><code>-ene</code></td><td>At least one C=C double bond</td></tr>
+      <tr><td>Alkynes</td><td><code>-yne</code></td><td>At least one C≡C triple bond</td></tr>
+      <tr><td>Cyclo- compounds</td><td><code>cyclo-</code> prefix</td><td>Ring structure</td></tr>
+      <tr><td>Alkyl substituents</td><td><code>-yl</code></td><td>Branch off main chain</td></tr>
+      <tr><td>Alcohols</td><td><code>-ol</code></td><td>Contains –OH group</td></tr>
+      <tr><td>Aldehydes</td><td><code>-al</code></td><td>C=O at end of chain</td></tr>
+      <tr><td>Ketones</td><td><code>-one</code></td><td>C=O in middle of chain</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<div class="footer">
+  © Tehrani Labs &middot; CHM-130 &middot; Arizona College of Nursing &middot; <a href="https://tehranilabs.org" target="_blank">tehranilabs.org</a>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ─── Progress Tracking ───
+let totalQ = 10;
+let answered = new Set();
+
+function updateProgress() {
+  let pct = Math.round((answered.size / totalQ) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = answered.size + ' / ' + totalQ + ' answered (' + pct + '%)';
+}
+
+// ─── MC Selection ───
+function selectMC(el, isCorrect) {
+  let card = el.closest('.question-card');
+  if (card.classList.contains('answered')) return;
+  card.classList.add('answered');
+
+  let qNum = card.getAttribute('data-q');
+  answered.add(qNum);
+
+  // Mark selected
+  let options = card.querySelectorAll('.mc-option');
+  options.forEach(opt => { opt.style.pointerEvents = 'none'; });
+
+  if (isCorrect) {
+    el.classList.add('selected-correct');
+  } else {
+    el.classList.add('selected-wrong');
+    // Show correct answer
+    options.forEach(opt => {
+      if (opt.onclick && opt.onclick.toString().includes('true')) {
+        opt.classList.add('show-correct');
+      }
+    });
+  }
+
+  // Show feedback
+  let feedback = card.querySelector('.mc-feedback');
+  if (feedback) { feedback.classList.add('show'); }
+
+  updateProgress();
+}
+
+// Re-bind correct detection (inline onclick loses context — use data attribute approach)
+document.querySelectorAll('.mc-option').forEach(opt => {
+  let origOnclick = opt.getAttribute('onclick');
+  if (origOnclick && origOnclick.includes('true')) {
+    opt.setAttribute('data-correct', 'true');
+  }
+});
+
+// Override to use data attribute
+document.querySelectorAll('.mc-option').forEach(opt => {
+  opt.onclick = function() {
+    selectMC(this, this.getAttribute('data-correct') === 'true');
+  };
+});
+
+// ─── Type-in Naming ───
+function checkNaming(inputId, acceptedAnswers, explanation) {
+  let input = document.getElementById(inputId);
+  let feedback = document.getElementById(inputId + '-feedback');
+  let val = input.value.trim().toLowerCase().replace(/\s+/g,'');
+  let card = input.closest('.question-card');
+
+  let correct = acceptedAnswers.some(a => val === a.toLowerCase().replace(/\s+/g,''));
+
+  if (correct) {
+    input.classList.add('correct');
+    input.classList.remove('wrong');
+    feedback.innerHTML = '<span style="color:#16a34a; font-weight:600;">✅ Correct!</span> ' + explanation;
+  } else if (val === '') {
+    feedback.innerHTML = '<span style="color:#d97706;">Type an answer first!</span>';
+    return;
+  } else {
+    input.classList.add('wrong');
+    input.classList.remove('correct');
+    feedback.innerHTML = '<span style="color:#dc2626; font-weight:600;">Not quite.</span> The answer is <strong>' + acceptedAnswers[0] + '</strong>. ' + explanation;
+  }
+
+  if (card) {
+    let qNum = card.getAttribute('data-q');
+    answered.add(qNum);
+    updateProgress();
+  }
+}
+
+// Allow Enter key to submit naming exercises
+document.querySelectorAll('.naming-exercise input').forEach(inp => {
+  inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      this.parentElement.querySelector('.check-btn').click();
+    }
+  });
+});
+
+// ─── Le Chatelier Shift Demo ───
+function showShift(btn, direction, explanation) {
+  document.querySelectorAll('.shift-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  let result = document.getElementById('shiftResult');
+  result.className = 'shift-result ' + direction;
+
+  let arrow = direction === 'right' ? '⟶' : '⟵';
+  result.innerHTML = '<div class="arrow">' + arrow + '</div>' +
+    '<div>Shifts <strong>' + direction.toUpperCase() + '</strong></div>' +
+    '<div style="font-size:0.85rem; font-weight:400; margin-top:6px;">' + explanation + '</div>';
+}
+
+// ─── Reveal buttons (not used in this version but kept for compatibility) ───
+function toggleReveal(btn) {
+  let content = btn.nextElementSibling;
+  if (content.classList.contains('show')) {
+    content.classList.remove('show');
+    btn.textContent = 'Show Answer';
+    btn.classList.remove('revealed');
+  } else {
+    content.classList.add('show');
+    btn.textContent = 'Hide Answer';
+    btn.classList.add('revealed');
+  }
+}
+</script>
+</body>
+</html>
