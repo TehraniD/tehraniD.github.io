@@ -1,0 +1,1646 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATI Comprehensive Predictor Study Guide 2026 — Part 2 of 4</title>
+    <style>
+      :root {
+        --primary: #0077b6;
+        --primary-dark: #005f8a;
+        --accent: #00b4d8;
+        --success: #2d6a4f;
+        --success-bg: #d8f3dc;
+        --danger: #d00000;
+        --danger-bg: #fde8e8;
+        --warning: #e85d04;
+        --warning-bg: #fff3cd;
+        --bg: #f0f4f8;
+        --card: #ffffff;
+        --text: #1d3557;
+        --text-light: #457b9d;
+        --border: #dee2e6;
+        --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      .top-bar {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: #fff;
+        padding: 18px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+      .top-bar h1 {
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+      .top-bar .subtitle {
+        font-size: 0.85rem;
+        opacity: 0.85;
+        margin-top: 2px;
+      }
+      .progress-wrap {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        height: 8px;
+        margin-top: 10px;
+        overflow: hidden;
+      }
+      .progress-bar {
+        height: 100%;
+        background: var(--accent);
+        border-radius: 10px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+      .stats-row {
+        display: flex;
+        gap: 16px;
+        margin-top: 8px;
+        font-size: 0.8rem;
+      }
+      .stats-row span {
+        opacity: 0.9;
+      }
+      .container {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 20px 16px 80px;
+      }
+      .mode-toggle {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+      .mode-btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 2px solid var(--border);
+        background: #fff;
+        transition: all 0.2s;
+      }
+      .mode-btn.active {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+      .topic-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .topic-chip {
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: #fff;
+        transition: all 0.2s;
+      }
+      .topic-chip.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+      .q-card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 16px;
+        box-shadow: var(--shadow);
+        border-left: 4px solid var(--primary);
+        transition: border-color 0.3s;
+      }
+      .q-card.answered-correct {
+        border-left-color: var(--success);
+      }
+      .q-card.answered-incorrect {
+        border-left-color: var(--danger);
+      }
+      .q-number {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+      }
+      .q-type {
+        display: inline-block;
+        background: var(--warning-bg);
+        color: var(--warning);
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        margin-left: 8px;
+      }
+      .q-stem {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin: 10px 0 16px;
+        line-height: 1.5;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .option {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 14px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.95rem;
+      }
+      .option:hover:not(.disabled) {
+        border-color: var(--primary);
+        background: #f0f7ff;
+      }
+      .option.selected {
+        border-color: var(--primary);
+        background: #e3f2fd;
+      }
+      .option.correct {
+        border-color: var(--success);
+        background: var(--success-bg);
+      }
+      .option.incorrect-selected {
+        border-color: var(--danger);
+        background: var(--danger-bg);
+      }
+      .option.disabled {
+        cursor: default;
+        opacity: 0.85;
+      }
+      .option .letter {
+        min-width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.8rem;
+        background: #e9ecef;
+        color: var(--text);
+        flex-shrink: 0;
+      }
+      .option.selected .letter {
+        background: var(--primary);
+        color: #fff;
+      }
+      .option.correct .letter {
+        background: var(--success);
+        color: #fff;
+      }
+      .option.incorrect-selected .letter {
+        background: var(--danger);
+        color: #fff;
+      }
+      .checkbox-indicator {
+        min-width: 20px;
+        height: 20px;
+        border: 2px solid #adb5bd;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        color: #fff;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .option.selected .checkbox-indicator {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+      .option.correct .checkbox-indicator {
+        background: var(--success);
+        border-color: var(--success);
+      }
+      .option.incorrect-selected .checkbox-indicator {
+        background: var(--danger);
+        border-color: var(--danger);
+      }
+      .btn {
+        padding: 10px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 12px;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--primary-dark);
+      }
+      .btn-primary:disabled {
+        background: #adb5bd;
+        cursor: default;
+      }
+      .btn-outline {
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+      }
+      .btn-outline:hover {
+        background: #e3f2fd;
+      }
+      .rationale {
+        margin-top: 14px;
+        padding: 14px 16px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        display: none;
+      }
+      .rationale.show {
+        display: block;
+      }
+      .rationale.correct-rationale {
+        background: var(--success-bg);
+        border: 1px solid #b7e4c7;
+      }
+      .rationale.incorrect-rationale {
+        background: var(--danger-bg);
+        border: 1px solid #f5c6cb;
+      }
+      .rationale strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+        font-size: 0.9rem;
+      }
+      .data-table th,
+      .data-table td {
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        text-align: left;
+      }
+      .data-table th {
+        background: #e9ecef;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+      }
+      .data-table tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+      .bowtie {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+        margin: 12px 0;
+      }
+      .bowtie-col {
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      .bowtie-col h4 {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 6px;
+        font-weight: 700;
+      }
+      .bowtie-col ul {
+        padding-left: 16px;
+        font-size: 0.88rem;
+      }
+      .bowtie-col li {
+        margin-bottom: 4px;
+      }
+      .matrix-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+      }
+      .matrix-table th,
+      .matrix-table td {
+        padding: 10px;
+        border: 1px solid var(--border);
+        text-align: center;
+      }
+      .matrix-table th {
+        background: var(--primary);
+        color: #fff;
+        font-size: 0.8rem;
+      }
+      .matrix-table td:first-child {
+        text-align: left;
+        font-weight: 600;
+      }
+      .matrix-table .check {
+        color: var(--success);
+        font-size: 1.2rem;
+      }
+      .trend-arrow {
+        color: var(--danger);
+        font-weight: 700;
+      }
+      .trend-arrow.up {
+        color: var(--danger);
+      }
+      .trend-arrow.down {
+        color: var(--success);
+      }
+      .results-panel {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        margin-top: 20px;
+      }
+      .score-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 16px auto;
+        font-size: 2rem;
+        font-weight: 800;
+        border: 6px solid;
+      }
+      .score-circle.pass {
+        border-color: var(--success);
+        color: var(--success);
+      }
+      .score-circle.fail {
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+      .score-circle small {
+        font-size: 0.7rem;
+        font-weight: 500;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .nav-links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 0;
+        margin-top: 20px;
+        border-top: 2px solid var(--border);
+      }
+      .nav-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.9rem;
+        background: var(--primary);
+        color: #fff;
+        transition: all 0.2s;
+      }
+      .nav-links a:hover {
+        background: var(--primary-dark);
+      }
+      .footer {
+        text-align: center;
+        padding: 30px 16px 20px;
+        color: var(--text-light);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border);
+        margin-top: 40px;
+      }
+      .footer .brand {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+      }
+      @media (max-width: 600px) {
+        .bowtie {
+          grid-template-columns: 1fr;
+        }
+        .container {
+          padding: 12px 10px 60px;
+        }
+        .q-card {
+          padding: 16px;
+        }
+        .top-bar h1 {
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-bar">
+      <h1>ATI Comprehensive Predictor Study Guide 2026</h1>
+      <div class="subtitle">
+        Interactive Study Guide — Part 2 of 4 (Questions 46–90)
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="stats-row">
+        <span>✅ Correct: <strong id="correctCount">0</strong></span>
+        <span>❌ Incorrect: <strong id="incorrectCount">0</strong></span>
+        <span>📊 Score: <strong id="scorePercent">0%</strong></span>
+        <span>📝 Answered: <strong id="answeredCount">0</strong>/45</span>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="mode-toggle">
+        <button class="mode-btn active" onclick="setMode('quiz')">
+          📝 Quiz Mode
+        </button>
+        <button class="mode-btn" onclick="setMode('review')">
+          📖 Review Mode
+        </button>
+        <button class="mode-btn" onclick="setMode('missed')">
+          🔴 Missed Only
+        </button>
+        <button class="mode-btn" onclick="resetAll()">🔄 Reset</button>
+      </div>
+
+      <div class="topic-filter" id="topicFilter"></div>
+      <div id="questionsContainer"></div>
+
+      <div class="results-panel hidden" id="resultsPanel">
+        <h2>Part 2 Complete!</h2>
+        <div class="score-circle" id="scoreCircle">
+          <span id="finalScore">0%</span>
+          <small>Score</small>
+        </div>
+        <p id="resultMessage"></p>
+        <button
+          class="btn btn-primary"
+          onclick="resetAll()"
+          style="margin-top: 16px"
+        >
+          Retake Quiz
+        </button>
+        <button
+          class="btn btn-outline"
+          onclick="setMode('missed')"
+          style="margin-top: 16px"
+        >
+          Review Missed
+        </button>
+      </div>
+
+      <div class="nav-links">
+        <a href="RN_Comprehensive_Predictor_Part1.html">← Part 1 (Q1–45)</a>
+        <span style="color: var(--text-light); font-weight: 600"
+          >Part 2 of 4</span
+        >
+        <a href="RN_Comprehensive_Predictor_Part3.html">Part 3 (Q91–135) →</a>
+      </div>
+
+      <div class="footer">
+        <div class="brand">TehraniLabs</div>
+        <div>ATI Comprehensive Predictor Study Guide 2026</div>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          id: 46,
+          topic: "Pediatrics",
+          type: "Single",
+          stem: "Which immunization is contraindicated in pregnancy?",
+          options: [
+            { letter: "A", text: "Tdap", correct: false },
+            { letter: "B", text: "Influenza (inactivated)", correct: false },
+            { letter: "C", text: "MMR", correct: true },
+            { letter: "D", text: "Hep B", correct: false },
+          ],
+          rationale:
+            "MMR is a LIVE vaccine — contraindicated in pregnancy due to risk to the fetus. Tdap is recommended during each pregnancy (27–36 weeks). Inactivated influenza and Hep B are safe in pregnancy.",
+        },
+        {
+          id: 47,
+          topic: "Respiratory",
+          type: "Single",
+          stem: "Which position improves oxygenation for a client in respiratory distress?",
+          options: [
+            { letter: "A", text: "Supine", correct: false },
+            { letter: "B", text: "Trendelenburg", correct: false },
+            { letter: "C", text: "High Fowler's", correct: true },
+            { letter: "D", text: "Prone", correct: false },
+          ],
+          rationale:
+            "High Fowler's (60–90°) allows maximum lung expansion by lowering the diaphragm. This is the go-to position for respiratory distress, pulmonary edema, and dyspnea. Prone is used for ARDS in ICU.",
+        },
+        {
+          id: 48,
+          topic: "Cardiac",
+          type: "Bow-Tie",
+          stem: "Bow-Tie: Heart Failure — Identify the correct management linkage.",
+          bowtie: {
+            causes: [
+              "Myocardial damage",
+              "Valve disease",
+              "Chronic hypertension",
+            ],
+            actions: [
+              "Administer diuretics",
+              "Monitor daily weight",
+              "Restrict sodium",
+            ],
+            outcomes: ["Reduced edema", "Improved breathing"],
+          },
+          options: [
+            {
+              letter: "A",
+              text: "Diuretics + Daily weight + Na⁺ restriction → Reduced edema = Correct",
+              correct: true,
+            },
+            {
+              letter: "B",
+              text: "Encourage high-sodium diet for energy",
+              correct: false,
+            },
+            {
+              letter: "C",
+              text: "Restrict fluids to 500 mL/day only",
+              correct: false,
+            },
+            {
+              letter: "D",
+              text: "Diuretics are contraindicated in HF",
+              correct: false,
+            },
+          ],
+          rationale:
+            "HF management: Diuretics (furosemide) to reduce fluid overload, daily weights (same time, same scale — 1 kg = 1 L fluid), sodium restriction (< 2g/day), fluid restriction per provider, and monitoring I&O.",
+        },
+        {
+          id: 49,
+          topic: "Ethics/Legal",
+          type: "Single",
+          stem: "Which situation requires mandatory reporting by the nurse?",
+          options: [
+            { letter: "A", text: "Elder abuse", correct: true },
+            { letter: "B", text: "Adult refusing care", correct: false },
+            { letter: "C", text: "Client leaving AMA", correct: false },
+            { letter: "D", text: "Medication refusal", correct: false },
+          ],
+          rationale:
+            "Mandatory reporting: Child/elder/vulnerable adult abuse, gunshot wounds, certain communicable diseases, and impaired healthcare workers. Competent adults CAN refuse care, leave AMA, and refuse meds.",
+        },
+        {
+          id: 50,
+          topic: "Electrolytes",
+          type: "SATA",
+          stem: "Which findings indicate hypocalcemia? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Trousseau sign", correct: true },
+            { letter: "B", text: "Chvostek sign", correct: true },
+            { letter: "C", text: "Muscle twitching", correct: true },
+            { letter: "D", text: "Decreased reflexes", correct: false },
+          ],
+          rationale:
+            "Hypocalcemia = neuromuscular EXCITABILITY. Trousseau sign (carpal spasm with BP cuff), Chvostek sign (facial twitch when tapping CN VII), muscle twitching/tetany, and hyperreflexia (not decreased). Normal Ca²⁺: 9.0–10.5 mg/dL.",
+        },
+        {
+          id: 51,
+          topic: "Med-Surg",
+          type: "Priority",
+          stem: "A postoperative client reports calf pain and warmth. What is the nurse's priority action?",
+          options: [
+            { letter: "A", text: "Massage the calf", correct: false },
+            { letter: "B", text: "Apply heat", correct: false },
+            { letter: "C", text: "Notify the provider", correct: true },
+            { letter: "D", text: "Encourage ambulation", correct: false },
+          ],
+          rationale:
+            "Suspected DVT — NEVER massage (risk of embolism). Notify provider immediately for diagnostic workup (D-dimer, ultrasound). Bed rest until ruled out. Heat and ambulation are contraindicated until evaluated.",
+        },
+        {
+          id: 52,
+          topic: "Cardiac",
+          type: "SATA",
+          stem: "Which findings indicate worsening heart failure? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Weight gain 2 kg in 2 days", correct: true },
+            { letter: "B", text: "Crackles in lungs", correct: true },
+            { letter: "C", text: "Decreased BNP", correct: false },
+            { letter: "D", text: "Dyspnea on exertion", correct: true },
+            { letter: "E", text: "Increased urine output", correct: false },
+          ],
+          rationale:
+            "Worsening HF: Weight gain (1 kg = 1 L fluid retention), crackles (pulmonary congestion), dyspnea. BNP INCREASES with worsening HF (not decreases). Increased urine output indicates improving status.",
+        },
+        {
+          id: 53,
+          topic: "Pharmacology",
+          type: "Priority",
+          stem: "Which medication should be held if the apical pulse is 52/min?",
+          options: [
+            { letter: "A", text: "Digoxin", correct: true },
+            { letter: "B", text: "Furosemide", correct: false },
+            { letter: "C", text: "Acetaminophen", correct: false },
+            { letter: "D", text: "Cefazolin", correct: false },
+          ],
+          rationale:
+            "Digoxin is held if HR < 60 bpm in adults (< 70 in children, < 90 in infants). Check apical pulse for full 60 seconds before administration. Also check potassium — hypokalemia increases digoxin toxicity.",
+        },
+        {
+          id: 54,
+          topic: "Med-Surg",
+          type: "Bow-Tie",
+          stem: "Bow-Tie: Hypovolemia — Identify the correct linkage.",
+          bowtie: {
+            causes: [
+              "Excessive bleeding",
+              "Dehydration",
+              "Burns",
+              "Vomiting/diarrhea",
+            ],
+            actions: [
+              "Administer IV isotonic fluids (0.9% NS or LR)",
+              "Monitor vital signs frequently",
+            ],
+            outcomes: ["Stabilized BP", "Improved urine output (≥ 30 mL/hr)"],
+          },
+          options: [
+            {
+              letter: "A",
+              text: "IV isotonic fluids + Monitor VS → Stabilized BP & UOP = Correct",
+              correct: true,
+            },
+            {
+              letter: "B",
+              text: "Administer D5W for volume replacement",
+              correct: false,
+            },
+            {
+              letter: "C",
+              text: "Restrict fluids to prevent overload",
+              correct: false,
+            },
+            {
+              letter: "D",
+              text: "Position in Trendelenburg permanently",
+              correct: false,
+            },
+          ],
+          rationale:
+            "Hypovolemia treatment: ISOTONIC crystalloids (0.9% NS or Lactated Ringer's). D5W is hypotonic once metabolized — not for volume resuscitation. Monitor MAP > 65, UOP ≥ 30 mL/hr, and mental status.",
+        },
+        {
+          id: 55,
+          topic: "Infection Control",
+          type: "Single",
+          stem: "Which client requires droplet precautions?",
+          options: [
+            { letter: "A", text: "Tuberculosis", correct: false },
+            { letter: "B", text: "Clostridioides difficile", correct: false },
+            { letter: "C", text: "Influenza", correct: true },
+            { letter: "D", text: "Varicella", correct: false },
+          ],
+          rationale:
+            "Droplet precautions (surgical mask within 3 feet): Influenza, pertussis, meningitis, mumps, rubella, strep pharyngitis. TB/varicella = Airborne (N95). C. diff = Contact (soap & water).",
+        },
+        {
+          id: 56,
+          topic: "Safety",
+          type: "SATA",
+          stem: "Which actions prevent medication errors? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Use two patient identifiers", correct: true },
+            { letter: "B", text: "Read labels three times", correct: true },
+            {
+              letter: "C",
+              text: "Crush extended-release tablets",
+              correct: false,
+            },
+            { letter: "D", text: "Clarify unclear orders", correct: true },
+            {
+              letter: "E",
+              text: "Document before administration",
+              correct: false,
+            },
+          ],
+          rationale:
+            "NEVER crush ER/enteric-coated meds (causes dose dumping). NEVER document before giving. The 'Three Checks': Read label when removing, when preparing, and when replacing. Use 2 identifiers (name + DOB).",
+        },
+        {
+          id: 57,
+          topic: "Neurological",
+          type: "Priority",
+          stem: "A client with a head injury becomes restless and confused. What is the priority action?",
+          options: [
+            { letter: "A", text: "Reorient the client", correct: false },
+            { letter: "B", text: "Assess oxygen saturation", correct: true },
+            { letter: "C", text: "Apply restraints", correct: false },
+            { letter: "D", text: "Administer sedative", correct: false },
+          ],
+          rationale:
+            "Restlessness and confusion in a head injury client may indicate hypoxia or increasing ICP — both life-threatening. ASSESS first (O₂ sat, neuro status). Sedatives can mask neuro changes and are contraindicated.",
+        },
+        {
+          id: 58,
+          topic: "Delegation",
+          type: "Matrix",
+          stem: "Match each task to the appropriate healthcare team member.",
+          matrix: {
+            headers: ["Task", "RN", "LPN", "AP"],
+            rows: [
+              ["Initial assessment", "✓", "", ""],
+              ["Oral medications", "✓", "✓", ""],
+              ["Vital signs (stable client)", "✓", "✓", "✓"],
+            ],
+          },
+          options: [
+            {
+              letter: "A",
+              text: "Initial assessment = RN only; Oral meds = RN/LPN; Vitals = All",
+              correct: true,
+            },
+            {
+              letter: "B",
+              text: "All tasks can be done by any team member",
+              correct: false,
+            },
+            {
+              letter: "C",
+              text: "AP can administer oral medications",
+              correct: false,
+            },
+            {
+              letter: "D",
+              text: "LPN can perform initial assessments",
+              correct: false,
+            },
+          ],
+          rationale:
+            "RN-only: Initial assessment, care plans, IV push meds, blood products, teaching. LPN: Oral/IM/SQ meds, Foley insertion, dressing changes, data collection. AP: Vitals (stable), ADLs, I&O, ambulation, feeding.",
+        },
+        {
+          id: 59,
+          topic: "GI",
+          type: "Priority",
+          stem: "Which finding indicates a possible GI bleed?",
+          options: [
+            { letter: "A", text: "Clay-colored stool", correct: false },
+            { letter: "B", text: "Coffee-ground emesis", correct: true },
+            { letter: "C", text: "Yellow sclera", correct: false },
+            { letter: "D", text: "Abdominal distention", correct: false },
+          ],
+          rationale:
+            "Coffee-ground emesis = blood digested by gastric acid (upper GI bleed). Melena (black tarry stool) is also upper GI. Clay stool = biliary obstruction. Yellow sclera = jaundice. Hematochezia (bright red) = lower GI.",
+        },
+        {
+          id: 60,
+          topic: "Respiratory",
+          type: "SATA",
+          stem: "Which findings indicate adequate oxygenation? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "O₂ sat 96%", correct: true },
+            { letter: "B", text: "Pink nail beds", correct: true },
+            { letter: "C", text: "RR 28", correct: false },
+            { letter: "D", text: "Alert mental status", correct: true },
+          ],
+          rationale:
+            "Adequate oxygenation: SpO₂ ≥ 95%, pink nail beds/mucous membranes, normal RR (12–20), alert and oriented. RR 28 = tachypnea, a sign of respiratory compromise, NOT adequate oxygenation.",
+        },
+        {
+          id: 61,
+          topic: "Endocrine",
+          type: "Single",
+          stem: "Which symptom is expected in hyperthyroidism?",
+          options: [
+            { letter: "A", text: "Weight gain", correct: false },
+            { letter: "B", text: "Cold intolerance", correct: false },
+            { letter: "C", text: "Heat intolerance", correct: true },
+            { letter: "D", text: "Bradycardia", correct: false },
+          ],
+          rationale:
+            "Hyperthyroidism = everything speeds UP: heat intolerance, weight loss, tachycardia, diarrhea, exophthalmos, tremor, anxiety. HYPOthyroidism = everything slows DOWN: cold intolerance, weight gain, bradycardia, constipation.",
+        },
+        {
+          id: 62,
+          topic: "Med-Surg",
+          type: "Trend",
+          stem: "Review the blood pressure trend. What is the priority?",
+          trendData: [
+            { time: "0800", value: "118/74" },
+            { time: "1200", value: "104/66" },
+            { time: "1600", value: "88/52" },
+          ],
+          options: [
+            { letter: "A", text: "Continue monitoring", correct: false },
+            { letter: "B", text: "Encourage oral fluids", correct: false },
+            { letter: "C", text: "Assess for shock", correct: true },
+            { letter: "D", text: "Document findings", correct: false },
+          ],
+          rationale:
+            "A progressive BP drop of 30 mmHg systolic over 8 hours (118 → 88) indicates possible shock. Assess for other signs: tachycardia, altered LOC, cool/clammy skin, decreased UOP. Systolic < 90 = hypotension.",
+        },
+        {
+          id: 63,
+          topic: "Maternal-Newborn",
+          type: "Priority",
+          stem: "Which finding indicates uterine atony postpartum?",
+          options: [
+            { letter: "A", text: "Firm fundus", correct: false },
+            { letter: "B", text: "Boggy uterus", correct: true },
+            { letter: "C", text: "Lochia serosa", correct: false },
+            { letter: "D", text: "BP 118/70", correct: false },
+          ],
+          rationale:
+            "Boggy uterus = uterine atony = #1 cause of postpartum hemorrhage. First intervention: Fundal massage. Then: oxytocin (Pitocin), methylergonovine (Methergine), or misoprostol (Cytotec). Expected: Firm fundus at umbilicus.",
+        },
+        {
+          id: 64,
+          topic: "Mental Health",
+          type: "Single",
+          stem: "Which response is therapeutic for an anxious client?",
+          options: [
+            { letter: "A", text: '"Calm down."', correct: false },
+            { letter: "B", text: '"Why are you anxious?"', correct: false },
+            {
+              letter: "C",
+              text: '"Tell me what worries you most."',
+              correct: true,
+            },
+            { letter: "D", text: '"Everything will be fine."', correct: false },
+          ],
+          rationale:
+            '"Tell me what worries you most" = focused open-ended question showing genuine interest. "Calm down" = dismissive. "Why" questions = defensive. "Everything will be fine" = false reassurance. All are communication blocks.',
+        },
+        {
+          id: 65,
+          topic: "Pediatrics",
+          type: "Priority",
+          stem: "Which finding requires immediate follow-up in an infant?",
+          options: [
+            { letter: "A", text: "Posterior fontanel closed", correct: false },
+            { letter: "B", text: "Bulging fontanel", correct: true },
+            { letter: "C", text: "HR 120/min", correct: false },
+            { letter: "D", text: "Wet diapers 6/day", correct: false },
+          ],
+          rationale:
+            "Bulging fontanel = increased ICP (infection, hydrocephalus) — EMERGENCY. Posterior fontanel normally closes by 2–3 months. HR 120 is normal for infants (100–160). 6+ wet diapers/day = adequate hydration.",
+        },
+        {
+          id: 66,
+          topic: "Electrolytes",
+          type: "SATA",
+          stem: "Which findings indicate hyperkalemia? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Peaked T waves", correct: true },
+            { letter: "B", text: "Muscle weakness", correct: true },
+            { letter: "C", text: "Hyporeflexia", correct: false },
+            { letter: "D", text: "Narrow QRS", correct: false },
+            { letter: "E", text: "Bradycardia", correct: true },
+          ],
+          rationale:
+            "Hyperkalemia (K⁺ > 5.0): Peaked T waves → Widened QRS (not narrow) → Bradycardia → V-fib → Asystole. Also: muscle weakness, paresthesias. Treatment: Calcium gluconate (cardiac protection), insulin + glucose, kayexalate.",
+        },
+        {
+          id: 67,
+          topic: "Respiratory",
+          type: "Single",
+          stem: "Which ABG reflects metabolic acidosis?",
+          options: [
+            { letter: "A", text: "pH 7.28, HCO₃⁻ 18", correct: true },
+            { letter: "B", text: "pH 7.48, PaCO₂ 30", correct: false },
+            { letter: "C", text: "pH 7.36, PaCO₂ 42", correct: false },
+            { letter: "D", text: "pH 7.52, HCO₃⁻ 30", correct: false },
+          ],
+          rationale:
+            "Metabolic acidosis: pH ↓ + HCO₃⁻ ↓ (ROME: Metabolic = Equal direction). Causes: DKA, renal failure, lactic acidosis, diarrhea. Compensation: Kussmaul respirations (↓ CO₂). Option B = resp alkalosis, C = normal, D = met alkalosis.",
+        },
+        {
+          id: 68,
+          topic: "Infection Control",
+          type: "Matrix",
+          stem: "Match each PPE situation with the correct equipment.",
+          matrix: {
+            headers: ["Situation", "Required PPE"],
+            rows: [
+              ["Blood exposure", "Gloves"],
+              ["Splash risk", "Gown + Face shield"],
+              ["Tuberculosis", "N95 respirator"],
+            ],
+          },
+          options: [
+            {
+              letter: "A",
+              text: "Blood = Gloves; Splash = Gown + Shield; TB = N95",
+              correct: true,
+            },
+            {
+              letter: "B",
+              text: "All situations require N95 only",
+              correct: false,
+            },
+            {
+              letter: "C",
+              text: "Surgical mask is sufficient for TB",
+              correct: false,
+            },
+            {
+              letter: "D",
+              text: "No PPE needed for blood exposure with intact skin",
+              correct: false,
+            },
+          ],
+          rationale:
+            "Standard precautions: Gloves for blood/body fluid contact. Add gown + face shield when splash risk exists. TB = Airborne = N95 fit-tested respirator. Surgical masks do NOT filter airborne particles (< 5 microns).",
+        },
+        {
+          id: 69,
+          topic: "Leadership",
+          type: "Single",
+          stem: "Which assignment is appropriate for an LPN?",
+          options: [
+            { letter: "A", text: "Titrate IV vasopressors", correct: false },
+            {
+              letter: "B",
+              text: "Initial admission assessment",
+              correct: false,
+            },
+            { letter: "C", text: "Administer IM injection", correct: true },
+            { letter: "D", text: "Develop care plan", correct: false },
+          ],
+          rationale:
+            "LPN scope: IM/SQ/oral meds, wound care, Foley insert, trach suctioning, data collection. RN only: IV titration, initial assessment, care planning, blood products, IV push meds, client teaching (initial).",
+        },
+        {
+          id: 70,
+          topic: "Renal",
+          type: "Single",
+          stem: "Which finding indicates fluid volume overload?",
+          options: [
+            { letter: "A", text: "Dry mucous membranes", correct: false },
+            { letter: "B", text: "Crackles", correct: true },
+            { letter: "C", text: "Tachycardia", correct: false },
+            { letter: "D", text: "Poor skin turgor", correct: false },
+          ],
+          rationale:
+            "Fluid OVERLOAD: Crackles, JVD, edema, weight gain, bounding pulse, HTN. Fluid DEFICIT: Dry mucous membranes, poor skin turgor, tachycardia, hypotension, weight loss, concentrated urine.",
+        },
+        {
+          id: 71,
+          topic: "Safety",
+          type: "SATA",
+          stem: "Which interventions prevent pressure injuries? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Turn every 2 hours", correct: true },
+            { letter: "B", text: "Moisturize dry skin", correct: true },
+            { letter: "C", text: "Massage bony prominences", correct: false },
+            {
+              letter: "D",
+              text: "Use pressure-relieving mattress",
+              correct: true,
+            },
+          ],
+          rationale:
+            "NEVER massage bony prominences — this damages fragile capillaries. Prevention: Reposition Q2H, moisture barrier cream, pressure-relief devices, adequate nutrition (protein for healing), Braden Scale assessment.",
+        },
+        {
+          id: 72,
+          topic: "Pharmacology",
+          type: "Single",
+          stem: "Which medication requires monitoring for nephrotoxicity?",
+          options: [
+            { letter: "A", text: "Vancomycin", correct: true },
+            { letter: "B", text: "Metformin", correct: false },
+            { letter: "C", text: "Albuterol", correct: false },
+            { letter: "D", text: "Acetaminophen", correct: false },
+          ],
+          rationale:
+            "Nephrotoxic medications: Vancomycin, aminoglycosides (gentamicin), NSAIDs, contrast dye, ACE inhibitors, amphotericin B. Monitor: BUN, creatinine, urine output, trough levels for vancomycin (15–20 mcg/mL).",
+        },
+        {
+          id: 73,
+          topic: "Neurological",
+          type: "Bow-Tie",
+          stem: "Bow-Tie: Acute Ischemic Stroke — Identify the correct management.",
+          bowtie: {
+            causes: ["Thrombus", "Embolus", "Atherosclerosis"],
+            actions: [
+              "Rapid CT scan (rule out hemorrhage)",
+              "Maintain airway",
+              "Prepare for thrombolytics (tPA)",
+            ],
+            outcomes: ["Reduced neurologic deficits"],
+          },
+          options: [
+            {
+              letter: "A",
+              text: "CT scan + Airway + tPA (if within window) → Correct",
+              correct: true,
+            },
+            {
+              letter: "B",
+              text: "Administer aspirin immediately without imaging",
+              correct: false,
+            },
+            {
+              letter: "C",
+              text: "Give tPA for all stroke types",
+              correct: false,
+            },
+            {
+              letter: "D",
+              text: "Lower BP to < 100 systolic immediately",
+              correct: false,
+            },
+          ],
+          rationale:
+            "Stroke protocol: CT FIRST (rule out hemorrhagic — tPA contraindicated in hemorrhagic stroke). tPA window: within 3–4.5 hours of symptom onset. Do NOT lower BP aggressively. Monitor neuro status Q15min.",
+        },
+        {
+          id: 74,
+          topic: "GI",
+          type: "Single",
+          stem: "Which diet is appropriate for acute pancreatitis?",
+          options: [
+            { letter: "A", text: "High-fat diet", correct: false },
+            { letter: "B", text: "Clear liquids initially", correct: true },
+            { letter: "C", text: "High-protein diet", correct: false },
+            { letter: "D", text: "Regular diet", correct: false },
+          ],
+          rationale:
+            "Acute pancreatitis: NPO initially to rest the pancreas, then advance to clear liquids, then low-fat diet. Avoid alcohol and fatty foods. Pain management: Positioning (fetal/side-lying), analgesics. Monitor amylase/lipase.",
+        },
+        {
+          id: 75,
+          topic: "Mental Health",
+          type: "SATA",
+          stem: "Which actions support culturally competent care? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Use interpreter services", correct: true },
+            {
+              letter: "B",
+              text: "Assume cultural preferences",
+              correct: false,
+            },
+            { letter: "C", text: "Ask about health beliefs", correct: true },
+            { letter: "D", text: "Respect cultural practices", correct: true },
+          ],
+          rationale:
+            "Cultural competence: ASK, don't assume. Use professional interpreters (never family/children). Respect beliefs even if different from yours. Accommodate cultural practices when medically safe. Avoid stereotyping.",
+        },
+        {
+          id: 76,
+          topic: "Cardiac",
+          type: "Single",
+          stem: "Which rhythm requires immediate intervention?",
+          options: [
+            { letter: "A", text: "Sinus bradycardia 58/min", correct: false },
+            {
+              letter: "B",
+              text: "Atrial fibrillation with RVR",
+              correct: true,
+            },
+            { letter: "C", text: "Sinus rhythm", correct: false },
+            { letter: "D", text: "PACs", correct: false },
+          ],
+          rationale:
+            "A-fib with Rapid Ventricular Response (HR > 100–150) compromises cardiac output and risks hemodynamic instability. Treatment: Rate control (diltiazem, beta-blockers), anticoagulation (stroke risk). Sinus brady 58 is borderline and may be normal in athletes.",
+        },
+        {
+          id: 77,
+          topic: "Renal",
+          type: "Trend",
+          stem: "Review the urine output trend. What is the priority action?",
+          trendData: [
+            { time: "0800", value: "40 mL/hr" },
+            { time: "1200", value: "25 mL/hr" },
+            { time: "1600", value: "15 mL/hr" },
+          ],
+          options: [
+            { letter: "A", text: "Encourage fluids", correct: false },
+            { letter: "B", text: "Notify provider", correct: true },
+            { letter: "C", text: "Document", correct: false },
+            { letter: "D", text: "Reassess later", correct: false },
+          ],
+          rationale:
+            "Declining UOP (40 → 25 → 15 mL/hr) with < 30 mL/hr indicates renal compromise or hypovolemia. Minimum adequate UOP: 0.5 mL/kg/hr (~30 mL/hr for 60 kg adult). Notify provider — this is a clinical deterioration.",
+        },
+        {
+          id: 78,
+          topic: "Ethics/Legal",
+          type: "Single",
+          stem: "Which client can legally give informed consent?",
+          options: [
+            { letter: "A", text: "Confused adult", correct: false },
+            { letter: "B", text: "Minor without guardian", correct: false },
+            { letter: "C", text: "Alert adult", correct: true },
+            { letter: "D", text: "Sedated client", correct: false },
+          ],
+          rationale:
+            "Informed consent requires: Competent (alert, oriented), legal age (18+ or emancipated minor), voluntary, and informed (risks, benefits, alternatives explained). The PROVIDER obtains consent; the nurse WITNESSES the signature.",
+        },
+        {
+          id: 79,
+          topic: "Respiratory",
+          type: "SATA",
+          stem: "Which findings indicate COPD exacerbation? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Increased sputum", correct: true },
+            { letter: "B", text: "Wheezing", correct: true },
+            { letter: "C", text: "Bradypnea", correct: false },
+            { letter: "D", text: "Use of accessory muscles", correct: true },
+          ],
+          rationale:
+            "COPD exacerbation: Increased/purulent sputum, wheezing, dyspnea, tachypnea (NOT bradypnea), accessory muscle use, tripod positioning. Treat: Bronchodilators, steroids, antibiotics if infection, LOW-FLOW O₂ (1–2 L/min).",
+        },
+        {
+          id: 80,
+          topic: "Maternal-Newborn",
+          type: "Single",
+          stem: "Which finding indicates placental abruption?",
+          options: [
+            { letter: "A", text: "Painless bleeding", correct: false },
+            { letter: "B", text: "Firm tender uterus", correct: true },
+            { letter: "C", text: "Fetal HR 140", correct: false },
+            { letter: "D", text: "No contractions", correct: false },
+          ],
+          rationale:
+            "Placental abruption: Painful, firm/rigid ('board-like') uterus + dark red bleeding. Placenta previa: PAINLESS, bright red bleeding. Abruption = Emergency C-section if severe. FHR 140 is normal (110–160).",
+        },
+        {
+          id: 81,
+          topic: "Endocrine",
+          type: "Matrix",
+          stem: "Match each insulin type with its onset category.",
+          matrix: {
+            headers: ["Insulin", "Onset"],
+            rows: [
+              ["Lispro (Humalog)", "Rapid (15 min)"],
+              ["Regular (Humulin R)", "Short (30–60 min)"],
+              ["NPH (Humulin N)", "Intermediate (2–4 hr)"],
+            ],
+          },
+          options: [
+            {
+              letter: "A",
+              text: "Lispro = Rapid, Regular = Short, NPH = Intermediate",
+              correct: true,
+            },
+            {
+              letter: "B",
+              text: "All insulins have the same onset",
+              correct: false,
+            },
+            { letter: "C", text: "NPH is rapid-acting", correct: false },
+            { letter: "D", text: "Regular is long-acting", correct: false },
+          ],
+          rationale:
+            "Rapid: Lispro/Aspart/Glulisine (15 min onset, give with meals). Short: Regular (30–60 min, only insulin for IV). Intermediate: NPH (2–4 hr, cloudy). Long: Glargine/Detemir (no peak, once daily). When mixing: draw Regular/clear FIRST, then NPH/cloudy.",
+        },
+        {
+          id: 82,
+          topic: "Infection Control",
+          type: "Single",
+          stem: "Which lab confirms infection?",
+          options: [
+            { letter: "A", text: "Hgb 12", correct: false },
+            { letter: "B", text: "WBC 16,000", correct: true },
+            { letter: "C", text: "Platelets 220,000", correct: false },
+            { letter: "D", text: "Sodium 138", correct: false },
+          ],
+          rationale:
+            "Elevated WBC (> 10,000/mm³) = leukocytosis, indicating infection/inflammation. Shift to the left = increased immature neutrophils (bands). Hgb 12, Platelets 220K, Na⁺ 138 are all normal values.",
+        },
+        {
+          id: 83,
+          topic: "Med-Surg",
+          type: "SATA",
+          stem: "Which actions are required during blood transfusion? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Verify with two nurses", correct: true },
+            { letter: "B", text: "Stay first 15 minutes", correct: true },
+            { letter: "C", text: "Use lactated Ringer's", correct: false },
+            { letter: "D", text: "Monitor for reaction", correct: true },
+          ],
+          rationale:
+            "Blood transfusion safety: Two-nurse verification (blood type, Rh, expiration, patient ID), stay with client first 15 minutes (reactions most likely), use ONLY 0.9% NS (NEVER LR — calcium causes clotting), complete within 4 hours.",
+        },
+        {
+          id: 84,
+          topic: "Respiratory",
+          type: "Single",
+          stem: "Which position helps reduce aspiration risk?",
+          options: [
+            { letter: "A", text: "Supine", correct: false },
+            { letter: "B", text: "Prone", correct: false },
+            { letter: "C", text: "Side-lying", correct: true },
+            { letter: "D", text: "Trendelenburg", correct: false },
+          ],
+          rationale:
+            "Side-lying (recovery position) allows secretions to drain via gravity and prevents aspiration. For tube feeding: elevate HOB 30–45° during and 30–60 minutes after feeding. Supine and Trendelenburg INCREASE aspiration risk.",
+        },
+        {
+          id: 85,
+          topic: "Med-Surg",
+          type: "Bow-Tie",
+          stem: "Bow-Tie: Sepsis — Identify the correct management bundle.",
+          bowtie: {
+            causes: ["Infection (UTI, pneumonia, wound)", "Immune compromise"],
+            actions: [
+              "Obtain blood cultures BEFORE antibiotics",
+              "Start IV antibiotics within 1 hour",
+              "Administer 30 mL/kg IV crystalloid",
+            ],
+            outcomes: ["Improved tissue perfusion", "Normalized lactate"],
+          },
+          options: [
+            {
+              letter: "A",
+              text: "Cultures → Antibiotics → Fluids → Improved perfusion = Correct",
+              correct: true,
+            },
+            {
+              letter: "B",
+              text: "Antibiotics first, then cultures",
+              correct: false,
+            },
+            { letter: "C", text: "Restrict fluids in sepsis", correct: false },
+            {
+              letter: "D",
+              text: "Wait for culture results before starting antibiotics",
+              correct: false,
+            },
+          ],
+          rationale:
+            "Sepsis 1-Hour Bundle: 1) Measure lactate, 2) Blood cultures BEFORE antibiotics, 3) Broad-spectrum antibiotics within 1 hour, 4) 30 mL/kg crystalloid for hypotension or lactate ≥ 4, 5) Vasopressors if hypotensive after fluids.",
+        },
+        {
+          id: 86,
+          topic: "Mental Health",
+          type: "Single",
+          stem: "Which finding indicates mania?",
+          options: [
+            { letter: "A", text: "Flat affect", correct: false },
+            { letter: "B", text: "Flight of ideas", correct: true },
+            { letter: "C", text: "Slow speech", correct: false },
+            { letter: "D", text: "Social withdrawal", correct: false },
+          ],
+          rationale:
+            "Mania: Flight of ideas, pressured speech, grandiosity, decreased sleep need, impulsivity, distractibility, psychomotor agitation. Depression: flat affect, slow speech, social withdrawal, anhedonia. Bipolar = cycles between both.",
+        },
+        {
+          id: 87,
+          topic: "Pediatrics",
+          type: "Single",
+          stem: "Which is the best pain scale for a 4-year-old?",
+          options: [
+            { letter: "A", text: "Numeric scale (0–10)", correct: false },
+            { letter: "B", text: "FLACC scale", correct: false },
+            { letter: "C", text: "Wong-Baker FACES scale", correct: true },
+            { letter: "D", text: "Visual analog scale", correct: false },
+          ],
+          rationale:
+            "Wong-Baker FACES: Ages 3–8 (child points to face). FLACC: Infants/preverbal (Face, Legs, Activity, Cry, Consolability — nurse-observed). Numeric (0–10): Ages 8+ who understand numbers. CRIES scale: Neonates.",
+        },
+        {
+          id: 88,
+          topic: "Med-Surg",
+          type: "SATA",
+          stem: "Which interventions are priority for a client with burns? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Maintain airway", correct: true },
+            { letter: "B", text: "Fluid resuscitation", correct: true },
+            { letter: "C", text: "Apply ice", correct: false },
+            { letter: "D", text: "Monitor urine output", correct: true },
+          ],
+          rationale:
+            "Burn priorities: ABC (Airway first — risk of inhalation injury/edema), aggressive fluid resuscitation (Parkland formula: 4 mL × kg × %TBSA in first 24 hr), monitor UOP (goal: 0.5–1 mL/kg/hr). NEVER apply ice (causes vasoconstriction and tissue damage).",
+        },
+        {
+          id: 89,
+          topic: "Leadership",
+          type: "Single",
+          stem: "Which behavior demonstrates effective delegation?",
+          options: [
+            {
+              letter: "A",
+              text: "Assigning tasks outside scope",
+              correct: false,
+            },
+            {
+              letter: "B",
+              text: "Providing clear instructions",
+              correct: true,
+            },
+            { letter: "C", text: "Avoiding follow-up", correct: false },
+            {
+              letter: "D",
+              text: "Delegating assessments to AP",
+              correct: false,
+            },
+          ],
+          rationale:
+            "Five Rights of Delegation: Right Task, Right Circumstance, Right Person, Right Direction/Communication, Right Supervision/Evaluation. Clear instructions and follow-up are essential. Never delegate outside scope of practice.",
+        },
+        {
+          id: 90,
+          topic: "Pharmacology",
+          type: "SATA",
+          stem: "Which findings indicate a blood transfusion reaction? (Select all that apply.)",
+          options: [
+            { letter: "A", text: "Fever and chills", correct: true },
+            { letter: "B", text: "Urticaria (hives)", correct: true },
+            { letter: "C", text: "Back/flank pain", correct: true },
+            { letter: "D", text: "Improved energy level", correct: false },
+          ],
+          rationale:
+            "Transfusion reaction signs: Fever, chills, urticaria, back/flank pain, hypotension, tachycardia, dyspnea, hemoglobinuria. Action: STOP transfusion, keep IV open with NS, notify provider and blood bank, send blood bag to lab.",
+        },
+      ];
+
+      // ─── State ───
+      let answered = {};
+      let mode = "quiz";
+      const topics = [...new Set(questions.map((q) => q.topic))];
+      const TOTAL = questions.length;
+
+      function init() {
+        buildTopicFilter();
+        renderQuestions();
+        updateStats();
+      }
+
+      function buildTopicFilter() {
+        const c = document.getElementById("topicFilter");
+        const all = document.createElement("span");
+        all.className = "topic-chip active";
+        all.textContent = "All Topics";
+        all.dataset.topic = "all";
+        all.onclick = () => filterByTopic("all");
+        c.appendChild(all);
+        topics.forEach((t) => {
+          const chip = document.createElement("span");
+          chip.className = "topic-chip";
+          chip.textContent = t;
+          chip.dataset.topic = t;
+          chip.onclick = () => filterByTopic(t);
+          c.appendChild(chip);
+        });
+      }
+
+      function filterByTopic(topic) {
+        document
+          .querySelectorAll(".topic-chip")
+          .forEach((c) => c.classList.remove("active"));
+        document
+          .querySelector(`.topic-chip[data-topic="${topic}"]`)
+          .classList.add("active");
+        document.querySelectorAll(".q-card").forEach((card) => {
+          card.classList.toggle(
+            "hidden",
+            topic !== "all" && card.dataset.topic !== topic,
+          );
+        });
+      }
+
+      function setMode(m) {
+        mode = m;
+        document
+          .querySelectorAll(".mode-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document
+          .querySelector(`.mode-btn[onclick="setMode('${m}')"]`)
+          ?.classList.add("active");
+        if (m === "missed") {
+          document.querySelectorAll(".q-card").forEach((card) => {
+            const a = answered[parseInt(card.dataset.qid)];
+            card.classList.toggle("hidden", !a || a.correct);
+          });
+        } else {
+          renderQuestions();
+        }
+      }
+
+      function renderQuestions() {
+        const container = document.getElementById("questionsContainer");
+        container.innerHTML = "";
+        questions.forEach((q) => {
+          const card = document.createElement("div");
+          card.className = "q-card";
+          card.dataset.qid = q.id;
+          card.dataset.topic = q.topic;
+          const a = answered[q.id];
+          if (a)
+            card.classList.add(
+              a.correct ? "answered-correct" : "answered-incorrect",
+            );
+
+          let html = `<div class="q-number">Question ${q.id} <span class="q-type">${q.type}</span></div>
+      <div class="q-stem">${q.stem}</div>`;
+
+          if (q.trendData) {
+            html += `<table class="data-table"><tr><th>Time</th><th>Value</th><th>Trend</th></tr>`;
+            q.trendData.forEach((d, i) => {
+              let arrow = "—",
+                cls = "";
+              if (i > 0) {
+                const cur = parseFloat(d.value),
+                  prev = parseFloat(q.trendData[i - 1].value);
+                arrow = cur > prev ? "↑" : "↓";
+                cls = cur > prev ? "trend-arrow up" : "trend-arrow down";
+              }
+              html += `<tr><td>${d.time}</td><td>${d.value}</td><td class="${cls}">${arrow}</td></tr>`;
+            });
+            html += `</table>`;
+          }
+          if (q.bowtie) {
+            html += `<div class="bowtie">
+        <div class="bowtie-col"><h4>🔍 Causes / Risk Factors</h4><ul>${q.bowtie.causes.map((c) => `<li>${c}</li>`).join("")}</ul></div>
+        <div class="bowtie-col"><h4>⚡ Actions</h4><ul>${q.bowtie.actions.map((a) => `<li>${a}</li>`).join("")}</ul></div>
+        <div class="bowtie-col"><h4>✅ Expected Outcomes</h4><ul>${q.bowtie.outcomes.map((o) => `<li>${o}</li>`).join("")}</ul></div>
+      </div>`;
+          }
+          if (q.matrix) {
+            html += `<table class="matrix-table"><tr>${q.matrix.headers.map((h) => `<th>${h}</th>`).join("")}</tr>`;
+            q.matrix.rows.forEach((row) => {
+              html += `<tr>${row.map((cell) => `<td>${cell === "✓" ? '<span class="check">✓</span>' : cell}</td>`).join("")}</tr>`;
+            });
+            html += `</table>`;
+          }
+
+          const isSATA = q.type === "SATA";
+          html += `<div class="options" data-qid="${q.id}" data-sata="${isSATA}">`;
+          q.options.forEach((opt) => {
+            let cls = "option";
+            if (a) {
+              cls += " disabled";
+              if (opt.correct) cls += " correct";
+              if (a.selected.includes(opt.letter) && !opt.correct)
+                cls += " incorrect-selected";
+            }
+            if (isSATA) {
+              html += `<div class="${cls}" data-letter="${opt.letter}" onclick="toggleSATA(this,${q.id})">
+          <span class="checkbox-indicator">${a && a.selected.includes(opt.letter) ? "✓" : ""}</span>
+          <span>${opt.letter}. ${opt.text}</span></div>`;
+            } else {
+              html += `<div class="${cls}" data-letter="${opt.letter}" onclick="selectOption(this,${q.id})">
+          <span class="letter">${opt.letter}</span><span>${opt.text}</span></div>`;
+            }
+          });
+          html += `</div>`;
+
+          if (!a)
+            html += `<button class="btn btn-primary" id="submit-${q.id}" onclick="submitAnswer(${q.id})" disabled>Submit Answer</button>`;
+
+          if (a || mode === "review") {
+            const rCls =
+              !a || a.correct ? "correct-rationale" : "incorrect-rationale";
+            html += `<div class="rationale ${rCls} ${a || mode === "review" ? "show" : ""}">
+        <strong>${a ? (a.correct ? "✅ Correct!" : "❌ Incorrect") : "📖 Rationale:"}</strong>
+        ${
+          a && !a.correct
+            ? `<em>Correct answer: ${q.options
+                .filter((o) => o.correct)
+                .map((o) => o.letter)
+                .join(", ")}</em><br>`
+            : ""
+        }
+        ${q.rationale}</div>`;
+          }
+          card.innerHTML = html;
+          container.appendChild(card);
+        });
+      }
+
+      function selectOption(el, qid) {
+        if (answered[qid]) return;
+        el.closest(".options")
+          .querySelectorAll(".option")
+          .forEach((o) => o.classList.remove("selected"));
+        el.classList.add("selected");
+        document.getElementById(`submit-${qid}`).disabled = false;
+      }
+
+      function toggleSATA(el, qid) {
+        if (answered[qid]) return;
+        el.classList.toggle("selected");
+        document.getElementById(`submit-${qid}`).disabled = !el
+          .closest(".options")
+          .querySelector(".option.selected");
+      }
+
+      function submitAnswer(qid) {
+        const q = questions.find((x) => x.id === qid);
+        const sel = [
+          ...document.querySelectorAll(
+            `.options[data-qid="${qid}"] .option.selected`,
+          ),
+        ].map((o) => o.dataset.letter);
+        const correct = q.options.filter((o) => o.correct).map((o) => o.letter);
+        const isCorrect =
+          sel.length === correct.length &&
+          sel.every((s) => correct.includes(s));
+        answered[qid] = { selected: sel, correct: isCorrect };
+        renderQuestions();
+        updateStats();
+        filterByTopic(
+          document.querySelector(".topic-chip.active").dataset.topic,
+        );
+        if (Object.keys(answered).length === TOTAL) showResults();
+      }
+
+      function updateStats() {
+        const total = Object.keys(answered).length;
+        const correct = Object.values(answered).filter((a) => a.correct).length;
+        const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+        document.getElementById("correctCount").textContent = correct;
+        document.getElementById("incorrectCount").textContent = total - correct;
+        document.getElementById("scorePercent").textContent = pct + "%";
+        document.getElementById("answeredCount").textContent = total;
+        document.getElementById("progressBar").style.width =
+          Math.round((total / TOTAL) * 100) + "%";
+      }
+
+      function showResults() {
+        const total = Object.keys(answered).length;
+        const correct = Object.values(answered).filter((a) => a.correct).length;
+        const pct = Math.round((correct / total) * 100);
+        document.getElementById("resultsPanel").classList.remove("hidden");
+        document.getElementById("scoreCircle").className =
+          "score-circle " + (pct >= 70 ? "pass" : "fail");
+        document.getElementById("finalScore").textContent = pct + "%";
+        document.getElementById("resultMessage").textContent =
+          pct >= 90
+            ? "🌟 Outstanding! You're mastering this content!"
+            : pct >= 70
+              ? "✅ Good work! Review missed items for reinforcement."
+              : pct >= 50
+                ? "⚠️ Keep studying — focus on rationales for missed questions."
+                : "📚 Significant review needed. Re-read rationales and retry.";
+      }
+
+      function resetAll() {
+        answered = {};
+        mode = "quiz";
+        document
+          .querySelectorAll(".mode-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document
+          .querySelector(".mode-btn[onclick=\"setMode('quiz')\"]")
+          .classList.add("active");
+        document.getElementById("resultsPanel").classList.add("hidden");
+        renderQuestions();
+        updateStats();
+        filterByTopic("all");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      init();
+    </script>
+  </body>
+</html>
