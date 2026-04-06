@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM125 Workshop 3 — Interactive Learning Guide</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a202c}
+header{background:linear-gradient(135deg,#0f172a,#1e3a5f);color:#fff;padding:2.5rem 2rem;text-align:center}
+header h1{font-size:2.2rem;margin-bottom:.4rem}
+header p{color:#94a3b8;font-size:1.05rem}
+.nav{background:#1e293b;padding:.8rem 1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.nav button{background:#334155;color:#94a3b8;border:none;padding:.45rem .9rem;border-radius:.5rem;cursor:pointer;font-size:.85rem;transition:all .2s}
+.nav button:hover,.nav button.active{background:#0ea5e9;color:#fff}
+.container{max-width:920px;margin:0 auto;padding:1.5rem}
+.part{display:none}.part.active{display:block}
+.part>h2{color:#0f172a;font-size:1.7rem;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:3px solid #0ea5e9}
+.lesson{background:#fff;border-radius:1rem;padding:1.4rem;margin-bottom:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.1);border-left:4px solid #0ea5e9}
+.lesson h3{color:#0ea5e9;margin-bottom:.6rem;font-size:1.15rem}
+.lesson p{line-height:1.7;margin-bottom:.5rem}
+.key{background:#fef3c7;border-left:4px solid #f59e0b;padding:1rem;border-radius:0 .5rem .5rem 0;margin:1rem 0;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:1rem 0}
+th{background:#1e293b;color:#fff;padding:.6rem;text-align:left;font-size:.95rem}
+td{padding:.6rem;border-bottom:1px solid #e2e8f0;font-size:.95rem}
+tr:nth-child(even){background:#f8fafc}
+.qcard{background:#fff;border-radius:1rem;padding:1.4rem;margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.qcard h4{color:#475569;margin-bottom:.3rem;font-size:.9rem}
+.qtext{font-size:1.05rem;font-weight:600;margin-bottom:.8rem}
+.showbtn{background:#0ea5e9;color:#fff;border:none;padding:.55rem 1.4rem;border-radius:.5rem;cursor:pointer;font-size:.9rem;transition:all .2s}
+.showbtn:hover{background:#0284c7;transform:translateY(-1px)}
+.showbtn.on{background:#64748b}
+.ans{max-height:0;overflow:hidden;transition:max-height .5s ease,padding .3s ease}
+.ans.show{max-height:3000px;padding-top:1rem}
+.abox{background:#f0fdf4;border:2px solid #86efac;border-radius:.75rem;padding:1.2rem}
+.abox .formula{font-size:1.35rem;font-weight:700;color:#059669;margin:.5rem 0}
+.abox .expl{color:#374151;line-height:1.6;margin-top:.5rem;font-size:.95rem}
+.step{display:flex;gap:.5rem;align-items:flex-start;margin:.35rem 0}
+.sn{background:#0ea5e9;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
+.sbox{background:#fff;border:1px solid #d1d5db;border-radius:.5rem;padding:.4rem;display:inline-block;margin:.4rem .2rem}
+.rxn{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.8rem 0}
+.plus{font-size:1.2rem;color:#6b7280;font-weight:700}
+.lbl{font-size:.85rem;color:#059669;font-weight:600;text-align:center;margin-top:.2rem}
+canvas{display:block}
+@media(max-width:640px){header h1{font-size:1.4rem}.container{padding:.8rem}.nav button{font-size:.75rem;padding:.35rem .5rem}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>CHM125 Workshop 3</h1>
+<p>Interactive Learning Guide &mdash; Ionic Compounds, Balancing, Functional Groups &amp; Organic Reactions</p>
+</header>
+
+<nav class="nav" id="nav">
+<button onclick="go(0)" class="active">1: Ionic</button>
+<button onclick="go(1)">2: Compound Ions</button>
+<button onclick="go(2)">3: Balancing</button>
+<button onclick="go(3)">4: Func. Groups</button>
+<button onclick="go(4)">5a: Hydrogenation</button>
+<button onclick="go(5)">5b: Hydration</button>
+<button onclick="go(6)">6: Esters/Amides</button>
+<button onclick="go(7)">7: Hydrolysis</button>
+</nav>
+
+<div class="container">
+
+<!-- PART 1 -->
+<section class="part active" id="p0">
+<h2>Part 1 &mdash; Ionic Compound Formulas (Q1&ndash;4)</h2>
+<div class="lesson">
+<h3>The Big Idea</h3>
+<p>Ions combine until their charges cancel to <strong>zero</strong> (electrical neutrality). Think of it like balancing a scale.</p>
+<div class="key">
+<strong>The Cross Method:</strong> Take each ion's charge number and make it the subscript of the OTHER ion.<br>
+If both charges have the <strong>same magnitude</strong>, reduce to 1:1 &mdash; don't write subscripts.
+</div>
+<table>
+<tr><th>Group</th><th>Charge</th><th>Examples</th></tr>
+<tr><td>Group 1</td><td>+1</td><td>Na⁺, K⁺, Li⁺</td></tr>
+<tr><td>Group 2</td><td>+2</td><td>Ca²⁺, Mg²⁺, Ba²⁺</td></tr>
+<tr><td>Group 13</td><td>+3</td><td>Al³⁺</td></tr>
+<tr><td>Group 16</td><td>&minus;2</td><td>O²⁻, S²⁻</td></tr>
+<tr><td>Group 17</td><td>&minus;1</td><td>F⁻, Cl⁻, Br⁻, I⁻</td></tr>
+</table>
+</div>
+
+<div class="qcard">
+<h4>Question 1</h4>
+<p class="qtext">a. Ca and Cl</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Ca is Group 2 &rarr; <strong>Ca²⁺</strong></span></div>
+<div class="step"><span class="sn">2</span><span>Cl is Group 17 &rarr; <strong>Cl⁻</strong></span></div>
+<div class="step"><span class="sn">3</span><span>Cross: Ca's charge (2) becomes Cl's subscript; Cl's charge (1) becomes Ca's subscript</span></div>
+<p class="formula">CaCl₂</p>
+<p class="expl">(+2) + 2(&minus;1) = 0 &#10003;</p>
+</div></div>
+</div>
+
+<div class="qcard">
+<h4>Question 2</h4>
+<p class="qtext">b. Mg and O</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Mg &rarr; <strong>Mg²⁺</strong> &nbsp;|&nbsp; O &rarr; <strong>O²⁻</strong></span></div>
+<div class="step"><span class="sn">2</span><span>Same magnitude (both 2) &rarr; 1:1 ratio</span></div>
+<p class="formula">MgO</p>
+<p class="expl">(+2) + (&minus;2) = 0 &#10003; &mdash; Equal charges always simplify to 1:1.</p>
+</div></div>
+</div>
+
+<div class="qcard">
+<h4>Question 3</h4>
+<p class="qtext">c. K and O</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>K &rarr; <strong>K⁺</strong> &nbsp;|&nbsp; O &rarr; <strong>O²⁻</strong></span></div>
+<div class="step"><span class="sn">2</span><span>Cross: O's charge (2) &rarr; K's subscript. K's charge (1) &rarr; O's subscript.</span></div>
+<p class="formula">K₂O</p>
+<p class="expl">2(+1) + (&minus;2) = 0 &#10003;</p>
+</div></div>
+</div>
+
+<div class="qcard">
+<h4>Question 4</h4>
+<p class="qtext">d. Pb⁴⁺ and F</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Pb given as <strong>Pb⁴⁺</strong> &nbsp;|&nbsp; F &rarr; <strong>F⁻</strong></span></div>
+<div class="step"><span class="sn">2</span><span>Cross: Pb's charge (4) &rarr; F's subscript</span></div>
+<p class="formula">PbF₄</p>
+<p class="expl">(+4) + 4(&minus;1) = 0 &#10003;</p>
+</div></div>
+</div>
+</section>
+
+<!-- PART 2 -->
+<section class="part" id="p1">
+<h2>Part 2 &mdash; Compound (Polyatomic) Ions (Q5&ndash;8)</h2>
+<div class="lesson">
+<h3>The Big Idea</h3>
+<p><strong>Polyatomic ions</strong> are groups of atoms that travel together as one charged unit &mdash; like a team that stays together.</p>
+<div class="key">
+<strong>Parenthesis Rule:</strong> If you need MORE THAN ONE polyatomic ion, wrap it in parentheses first, then add the subscript.<br>
+&cross; CaOH₂ (wrong) &nbsp;&nbsp; &#10003; Ca(OH)₂ (correct)
+</div>
+<table>
+<tr><th>Name</th><th>Formula</th><th>Charge</th></tr>
+<tr><td>Hydroxide</td><td>OH⁻</td><td>&minus;1</td></tr>
+<tr><td>Ammonium</td><td>NH₄⁺</td><td>+1</td></tr>
+<tr><td>Carbonate</td><td>CO₃²⁻</td><td>&minus;2</td></tr>
+<tr><td>Nitrate</td><td>NO₃⁻</td><td>&minus;1</td></tr>
+<tr><td>Sulfate</td><td>SO₄²⁻</td><td>&minus;2</td></tr>
+<tr><td>Sulfite</td><td>SO₃²⁻</td><td>&minus;2</td></tr>
+<tr><td>Phosphate</td><td>PO₄³⁻</td><td>&minus;3</td></tr>
+</table>
+</div>
+
+<div class="qcard"><h4>Question 5</h4><p class="qtext">a. Ca and hydroxide</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Ca²⁺ and OH⁻ &mdash; need 2 hydroxides to cancel +2</span></div>
+<div class="step"><span class="sn">2</span><span>More than one polyatomic ion &rarr; use parentheses</span></div>
+<p class="formula">Ca(OH)₂</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 6</h4><p class="qtext">b. Ammonium and Cl</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>NH₄⁺ and Cl⁻ &mdash; same magnitude &rarr; 1:1</span></div>
+<p class="formula">NH₄Cl</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 7</h4><p class="qtext">c. Cu²⁺ and sulfate</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Cu²⁺ and SO₄²⁻ &mdash; equal magnitude &rarr; 1:1</span></div>
+<p class="formula">CuSO₄</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 8</h4><p class="qtext">d. K and sulfite</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>K⁺ and SO₃²⁻ &mdash; need 2 K⁺ to balance &minus;2</span></div>
+<p class="formula">K₂SO₃</p>
+<p class="expl">No parentheses because K is a simple ion, not polyatomic.</p>
+</div></div></div>
+</section>
+
+<!-- PART 3 -->
+<section class="part" id="p2">
+<h2>Part 3 &mdash; Balancing Equations (Q9&ndash;12)</h2>
+<div class="lesson">
+<h3>The Big Idea</h3>
+<p>Atoms don't appear or disappear &mdash; they just rearrange. Every atom on the left must appear on the right. You only change <strong>coefficients</strong> (big numbers in front), never subscripts.</p>
+<div class="key">
+<strong>Balancing Order:</strong> 1) Metals &rarr; 2) Non-metals (skip O &amp; H) &rarr; 3) Hydrogen &rarr; 4) Oxygen last<br>
+If you get fractions, multiply ALL coefficients to clear them.
+</div>
+</div>
+
+<div class="qcard"><h4>Question 9</h4>
+<p class="qtext">a. NaCl(aq) + Pb(NO₃)₂(aq) &rarr; NaNO₃(aq) + PbCl₂(s)</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Pb: 1 = 1 &#10003;</span></div>
+<div class="step"><span class="sn">2</span><span>Cl: 1 on left, 2 on right &rarr; put <strong>2</strong> in front of NaCl</span></div>
+<div class="step"><span class="sn">3</span><span>Na: now 2 on left &rarr; put <strong>2</strong> in front of NaNO₃</span></div>
+<div class="step"><span class="sn">4</span><span>Check: N 2=2 &#10003; O 6=6 &#10003;</span></div>
+<p class="formula">2NaCl(aq) + Pb(NO₃)₂(aq) &rarr; 2NaNO₃(aq) + PbCl₂(s)</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 10</h4>
+<p class="qtext">b. CaBr₂(aq) + Na₂CO₃(aq) &rarr; NaBr(aq) + CaCO₃(s)</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Ca: 1=1 &#10003; | CO₃: 1=1 &#10003;</span></div>
+<div class="step"><span class="sn">2</span><span>Na: 2 on left, 1 on right &rarr; put <strong>2</strong> in front of NaBr</span></div>
+<div class="step"><span class="sn">3</span><span>Br: 2=2 &#10003;</span></div>
+<p class="formula">CaBr₂(aq) + Na₂CO₃(aq) &rarr; 2NaBr(aq) + CaCO₃(s)</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 11</h4>
+<p class="qtext">c. HCl(aq) + Ba(OH)₂(aq) &rarr; H₂O(l) + BaCl₂(aq)</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Ba: 1=1 &#10003;</span></div>
+<div class="step"><span class="sn">2</span><span>Cl: 1 left, 2 right &rarr; put <strong>2</strong> in front of HCl</span></div>
+<div class="step"><span class="sn">3</span><span>H: 4 left (2 from HCl + 2 from Ba(OH)₂) &rarr; put <strong>2</strong> in front of H₂O</span></div>
+<div class="step"><span class="sn">4</span><span>O: 2=2 &#10003;</span></div>
+<p class="formula">2HCl(aq) + Ba(OH)₂(aq) &rarr; 2H₂O(l) + BaCl₂(aq)</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 12</h4>
+<p class="qtext">d. C₃H₈(g) + O₂(g) &rarr; CO₂(g) + H₂O(l)</p>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<div class="step"><span class="sn">1</span><span>Balance C: 3 on left &rarr; <strong>3</strong>CO₂</span></div>
+<div class="step"><span class="sn">2</span><span>Balance H: 8 on left &rarr; <strong>4</strong>H₂O (4&times;2=8)</span></div>
+<div class="step"><span class="sn">3</span><span>Balance O: right has 3(2)+4(1) = 10 O &rarr; <strong>5</strong>O₂</span></div>
+<p class="formula">C₃H₈(g) + 5O₂(g) &rarr; 3CO₂(g) + 4H₂O(l)</p>
+</div></div></div>
+</section>
+
+<!-- PART 4 -->
+<section class="part" id="p3">
+<h2>Part 4 &mdash; Identifying Functional Groups (Q13&ndash;20)</h2>
+<div class="lesson">
+<h3>The Big Idea</h3>
+<p>The <strong>functional group</strong> is the specific atom arrangement that controls how a molecule behaves. The carbon chain is just a handle &mdash; the functional group is where the chemistry happens.</p>
+<div class="key"><strong>Identification shortcut:</strong> Find the "special" atoms (O, N, double bonds) and check how they're connected.</div>
+<table>
+<tr><th>What You See</th><th>Functional Group</th></tr>
+<tr><td>C&equals;C in the chain</td><td><strong>Alkene</strong></td></tr>
+<tr><td>&minus;OH on a carbon (no C&equals;O next to it)</td><td><strong>Alcohol</strong></td></tr>
+<tr><td>C&equals;O between two carbons</td><td><strong>Ketone</strong></td></tr>
+<tr><td>C&equals;O with &minus;OH at end of chain (&minus;COOH)</td><td><strong>Carboxylic Acid</strong></td></tr>
+<tr><td>C&equals;O &minus; O &minus; C (ester linkage)</td><td><strong>Ester</strong></td></tr>
+<tr><td>C&equals;O bonded to N</td><td><strong>Amide</strong></td></tr>
+<tr><td>&minus;NH₂ with no C&equals;O nearby</td><td><strong>Amine</strong></td></tr>
+</table>
+</div>
+
+<div class="qcard"><h4>Question 13</h4><p class="qtext">a) Chain with internal C&equals;C double bond</p>
+<div class="sbox"><canvas id="fg_a" width="200" height="65"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox"><p class="formula">Alkene</p>
+<p class="expl">The C&equals;C double bond is the defining feature. No oxygen, no nitrogen &mdash; just a carbon-carbon double bond.</p></div></div></div>
+
+<div class="qcard"><h4>Question 14</h4><p class="qtext">b) Chain with &minus;OH group</p>
+<div class="sbox"><canvas id="fg_b" width="180" height="75"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox"><p class="formula">Alcohol</p>
+<p class="expl">An &minus;OH bonded to a carbon chain. No carbonyl (C&equals;O) nearby, so it's an alcohol, not a carboxylic acid.</p></div></div></div>
+
+<div class="qcard"><h4>Question 15</h4><p class="qtext">c) Chain with C&equals;C near the end</p>
+<div class="sbox"><canvas id="fg_c" width="200" height="65"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox"><p class="formula">Alkene</p>
+<p class="expl">Same rule &mdash; a C&equals;C double bond makes it an alkene regardless of position in the chain.</p></div></div></div>
+
+<div class="qcard"><h4>Question 16</h4><p class="qtext">d) Chain with C&equals;O flanked by two carbon chains</p>
+<div class="sbox"><canvas id="fg_d" width="200" height="80"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox"><p class="formula">Ketone</p>
+<p class="expl">C&equals;O flanked by carbons on BOTH sides. No &minus;OH on the carbonyl carbon, no N &rarr; ketone.</p></div></div></div>
+
+<div class="qcard"><h4>Question 17</h4><p class="qtext">e) Chain ending in &minus;C(&equals;O)OH</p>
+<div class="sbox"><canvas id="fg_e" width="220" height="85"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox"><p class="formula">Carboxylic Acid</p>
+<p class="expl">C&equals;O PLUS an &minus;OH on the same carbon = &minus;COOH = carboxylic acid. The most oxidized single-carbon functional group.</p></div></div></div>
+
+<div class="qcard"><h4>Question 18</h4><p class="qtext">f) Chain with C&equals;O bonded to &minus;NH₂</p>
+<div class="sbox"><canvas id="fg_f" width="220" height="85"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox"><p class="formula">Amide</p>
+<p class="expl">C&equals;O bonded to nitrogen = amide. Key distinction: amides have C&equals;O next to N. Amines do NOT have a C&equals;O.</p></div></div></div>
+
+<div class="qcard"><h4>Question 19</h4><p class="qtext">g) Cyclopentane ring with &minus;OH</p>
+<div class="sbox"><canvas id="fg_g" width="140" height="105"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox"><p class="formula">Alcohol</p>
+<p class="expl">&minus;OH on a ring carbon = cyclic alcohol (cyclopentanol). Ring or chain doesn't matter &mdash; &minus;OH on carbon = alcohol.</p></div></div></div>
+
+<div class="qcard"><h4>Question 20</h4><p class="qtext">h) Cyclohexane ring with &minus;NH₂</p>
+<div class="sbox"><canvas id="fg_h" width="150" height="110"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox"><p class="formula">Amine</p>
+<p class="expl">&minus;NH₂ on a carbon with NO carbonyl nearby = amine. If there were a C&equals;O next to the N, it would be an amide.</p></div></div></div>
+</section>
+
+<!-- PART 5A: HYDROGENATION -->
+<section class="part" id="p4">
+<h2>Part 5 &mdash; Hydrogenation of Alkenes (Q21&ndash;23)</h2>
+<div class="lesson">
+<h3>The Big Idea</h3>
+<p><strong>Hydrogenation</strong> adds H₂ across a C&equals;C double bond using a Pt catalyst. The double bond breaks and each carbon grabs one H.</p>
+<div class="key">
+<strong>Alkene + H₂ &xrarr;Pt Alkane</strong><br>
+The carbon skeleton stays EXACTLY the same. The only change: the double bond becomes a single bond. Always produces a fully saturated alkane.
+</div>
+</div>
+
+<div class="qcard"><h4>Question 21</h4>
+<p class="qtext">a) Hex-2-ene + H₂ / Pt &rarr;</p>
+<div class="sbox"><canvas id="h5a_q" width="200" height="65"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Product: Hexane</strong></p>
+<div class="sbox"><canvas id="h5a_a" width="200" height="70"></canvas></div>
+<p class="expl">The double bond disappears. The 6-carbon chain stays intact, now fully saturated.</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 22</h4>
+<p class="qtext">b) Cyclohexene + H₂ / Pt &rarr;</p>
+<div class="sbox"><canvas id="h5b_q" width="140" height="100"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Product: Cyclohexane</strong></p>
+<div class="sbox"><canvas id="h5b_a" width="140" height="105"></canvas></div>
+<p class="expl">The double bond in the ring disappears. Cyclohexene &rarr; cyclohexane.</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 23</h4>
+<p class="qtext">c) 3-Methyl-2-pentene + H₂ / Pt &rarr;</p>
+<div class="sbox"><canvas id="h5c_q" width="200" height="90"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Product: 3-Methylpentane</strong></p>
+<div class="sbox"><canvas id="h5c_a" width="200" height="95"></canvas></div>
+<p class="expl">The double bond saturates. The methyl branch stays put. Skeleton unchanged &mdash; just no more double bond.</p>
+</div></div></div>
+</section>
+
+<!-- PART 5B: HYDRATION -->
+<section class="part" id="p5">
+<h2>Part 5 continued &mdash; Hydration of Alkenes (Q24&ndash;26)</h2>
+<div class="lesson">
+<h3>The Big Idea</h3>
+<p><strong>Hydration</strong> adds water (H₂O) across a C&equals;C double bond using an acid catalyst (H⁺). The &minus;OH attaches to one carbon, H to the other.</p>
+<div class="key">
+<strong>Markovnikov's Rule:</strong> OH goes to the carbon with MORE carbon substituents (the more substituted carbon). "The rich get richer."<br>
+<strong>Result:</strong> Always an <strong>alcohol</strong>.
+</div>
+</div>
+
+<div class="qcard"><h4>Question 24</h4>
+<p class="qtext">d) Hex-2-ene + H₂O / H⁺ &rarr;</p>
+<div class="sbox"><canvas id="hy5d_q" width="200" height="65"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Products: 2-Hexanol or 3-Hexanol</strong></p>
+<div class="rxn">
+<div><div class="sbox"><canvas id="hy5d_a1" width="200" height="80"></canvas></div><div class="lbl">2-Hexanol</div></div>
+<span style="font-size:1.1rem;color:#6b7280">or</span>
+<div><div class="sbox"><canvas id="hy5d_a2" width="200" height="80"></canvas></div><div class="lbl">3-Hexanol</div></div>
+</div>
+<p class="expl">C2 and C3 are similarly substituted, so OH can attach to either, giving a mixture.</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 25</h4>
+<p class="qtext">e) Cyclohexene + H₂O / H⁺ &rarr;</p>
+<div class="sbox"><canvas id="hy5e_q" width="140" height="100"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Product: Cyclohexanol</strong></p>
+<div class="sbox"><canvas id="hy5e_a" width="150" height="115"></canvas></div>
+<p class="expl">Water adds across the ring's double bond. Both carbons equivalent by symmetry.</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 26</h4>
+<p class="qtext">f) 3-Methyl-1-pentene + H₂O / H⁺ &rarr;</p>
+<div class="sbox"><canvas id="hy5f_q" width="200" height="90"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Product: 3-Methyl-2-pentanol</strong></p>
+<div class="sbox"><canvas id="hy5f_a" width="210" height="100"></canvas></div>
+<p class="expl">Markovnikov: OH goes to C2 (the more substituted carbon of the C1&equals;C2 double bond).</p>
+</div></div></div>
+</section>
+
+<!-- PART 6 -->
+<section class="part" id="p6">
+<h2>Part 6 &mdash; Carboxylic Acids + Alcohols &amp; Amines (Q27&ndash;30)</h2>
+<div class="lesson">
+<h3>The Big Idea</h3>
+<p>Carboxylic acids react with alcohols to form <strong>esters</strong>, and with amines to form <strong>amides</strong>. Both release water &mdash; <strong>condensation reactions</strong>.</p>
+<div class="key">
+<strong>Ester:</strong> Acid (&minus;COOH) + Alcohol (HO&minus;R) &rarr; Ester (&minus;COO&minus;R) + H₂O<br>
+<strong>Amide:</strong> Acid (&minus;COOH) + Amine (H₂N&minus;R) &rarr; Amide (&minus;CONH&minus;R) + H₂O<br><br>
+<strong>Where does the water come from?</strong> The &minus;OH leaves the acid, the H leaves the alcohol/amine. Together &rarr; H₂O.
+</div>
+<div class="key">
+<strong>Naming Esters:</strong> [alcohol]-yl + [acid]-ate &nbsp;(propanol + butanoic acid &rarr; propyl butanoate)<br>
+<strong>Naming Amides:</strong> N-[amine] + [acid]-amide &nbsp;(propylamine + butanoic acid &rarr; N-propylbutanamide)
+</div>
+</div>
+
+<div class="qcard"><h4>Question 27</h4>
+<p class="qtext">a) Butanoic acid + Propanol &rarr;</p>
+<div class="rxn">
+<div class="sbox"><canvas id="p6a_acid" width="180" height="85"></canvas></div>
+<span class="plus">+</span>
+<div class="sbox"><canvas id="p6a_alc" width="130" height="65"></canvas></div>
+</div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Propyl Butanoate + H₂O</strong></p>
+<div class="rxn">
+<div class="sbox"><canvas id="p6a_prod" width="280" height="85"></canvas></div>
+<span class="plus">+</span><span style="font-size:1.2rem;font-weight:600">H₂O</span>
+</div>
+<p class="expl">The &minus;OH from the acid and H from the alcohol leave as water. The fragments join through a new C&minus;O ester bond.</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 28</h4>
+<p class="qtext">b) Acetic acid + 1-Butanol &rarr;</p>
+<div class="rxn">
+<div class="sbox"><canvas id="p6b_acid" width="120" height="85"></canvas></div>
+<span class="plus">+</span>
+<div class="sbox"><canvas id="p6b_alc" width="150" height="65"></canvas></div>
+</div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Butyl Acetate + H₂O</strong></p>
+<div class="rxn">
+<div class="sbox"><canvas id="p6b_prod" width="250" height="85"></canvas></div>
+<span class="plus">+</span><span style="font-size:1.2rem;font-weight:600">H₂O</span>
+</div>
+<p class="expl">Acetic acid (2C) + butanol (4C) &rarr; butyl acetate. The alcohol-derived part (butyl) goes first in the name.</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 29</h4>
+<p class="qtext">c) 3-Methylbutanoic acid + Cyclopentanol &rarr;</p>
+<div class="rxn">
+<div class="sbox"><canvas id="p6c_acid" width="190" height="95"></canvas></div>
+<span class="plus">+</span>
+<div class="sbox"><canvas id="p6c_alc" width="120" height="95"></canvas></div>
+</div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Cyclopentyl 3-Methylbutanoate + H₂O</strong></p>
+<div class="rxn">
+<div class="sbox"><canvas id="p6c_prod" width="310" height="100"></canvas></div>
+<span class="plus">+</span><span style="font-size:1.2rem;font-weight:600">H₂O</span>
+</div>
+<p class="expl">Cyclopentyl (from the alcohol) + 3-methylbutanoate (from the acid).</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 30</h4>
+<p class="qtext">d) Butanoic acid + Propylamine &rarr;</p>
+<div class="rxn">
+<div class="sbox"><canvas id="p6d_acid" width="180" height="85"></canvas></div>
+<span class="plus">+</span>
+<div class="sbox"><canvas id="p6d_amine" width="140" height="65"></canvas></div>
+</div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>N-Propylbutanamide + H₂O</strong></p>
+<div class="rxn">
+<div class="sbox"><canvas id="p6d_prod" width="290" height="85"></canvas></div>
+<span class="plus">+</span><span style="font-size:1.2rem;font-weight:600">H₂O</span>
+</div>
+<p class="expl">Acid + <strong>amine</strong> (not alcohol) &rarr; <strong>amide</strong> (&minus;CONH&minus;). The N- prefix in the name indicates the propyl group is on nitrogen.</p>
+</div></div></div>
+</section>
+
+<!-- PART 7 -->
+<section class="part" id="p7">
+<h2>Part 7 &mdash; Hydrolysis of Esters &amp; Amides (Q31&ndash;34)</h2>
+<div class="lesson">
+<h3>The Big Idea</h3>
+<p><strong>Hydrolysis</strong> is the REVERSE of ester/amide formation. Water BREAKS the bond apart, regenerating the original acid and alcohol (or amine).</p>
+<div class="key">
+<strong>Ester + H₂O &rarr; Carboxylic Acid + Alcohol</strong><br>
+<strong>Amide + H₂O &rarr; Carboxylic Acid + Amine</strong><br><br>
+<strong>Where to break:</strong> Find the C&minus;O (ester) or C&minus;N (amide) bond next to the C&equals;O. Break there. Carbonyl side gets &minus;OH (acid). Other fragment gets H (alcohol/amine).
+</div>
+</div>
+
+<div class="qcard"><h4>Question 31</h4>
+<p class="qtext">a) Ethyl butanoate + H₂O &rarr;</p>
+<div class="sbox"><canvas id="p7a_q" width="250" height="85"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Butanoic Acid + Ethanol</strong></p>
+<div class="rxn">
+<div><div class="sbox"><canvas id="p7a_acid" width="180" height="85"></canvas></div><div class="lbl">Butanoic acid</div></div>
+<span class="plus">+</span>
+<div><div class="sbox"><canvas id="p7a_alc" width="120" height="70"></canvas></div><div class="lbl">Ethanol</div></div>
+</div>
+<p class="expl">Break the ester C&minus;O. The 4C side gets &minus;OH &rarr; butanoic acid. The 2C side gets H &rarr; ethanol.</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 32</h4>
+<p class="qtext">b) Isobutyl acetate + H₂O &rarr;</p>
+<div class="sbox"><canvas id="p7b_q" width="250" height="95"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Acetic Acid + 2-Methyl-1-propanol (Isobutanol)</strong></p>
+<div class="rxn">
+<div><div class="sbox"><canvas id="p7b_acid" width="120" height="85"></canvas></div><div class="lbl">Acetic acid</div></div>
+<span class="plus">+</span>
+<div><div class="sbox"><canvas id="p7b_alc" width="170" height="90"></canvas></div><div class="lbl">Isobutanol</div></div>
+</div>
+<p class="expl">2C acid side &rarr; acetic acid. Branched 4C alcohol side &rarr; isobutanol (2-methyl-1-propanol).</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 33</h4>
+<p class="qtext">c) N-Ethylbutanamide + H₂O &rarr;</p>
+<div class="sbox"><canvas id="p7c_q" width="260" height="85"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Butanoic Acid + Ethylamine</strong></p>
+<div class="rxn">
+<div><div class="sbox"><canvas id="p7c_acid" width="180" height="85"></canvas></div><div class="lbl">Butanoic acid</div></div>
+<span class="plus">+</span>
+<div><div class="sbox"><canvas id="p7c_amine" width="130" height="65"></canvas></div><div class="lbl">Ethylamine</div></div>
+</div>
+<p class="expl">Break the amide C&minus;N. Carbonyl side gets &minus;OH &rarr; butanoic acid. N side gets H &rarr; ethylamine.</p>
+</div></div></div>
+
+<div class="qcard"><h4>Question 34</h4>
+<p class="qtext">d) N-(2-Methylpropyl)acetamide + H₂O &rarr;</p>
+<div class="sbox"><canvas id="p7d_q" width="260" height="95"></canvas></div>
+<button class="showbtn" onclick="tog(this)">Show Answer</button>
+<div class="ans"><div class="abox">
+<p><strong>Acetic Acid + Isobutylamine (2-Methylpropanamine)</strong></p>
+<div class="rxn">
+<div><div class="sbox"><canvas id="p7d_acid" width="120" height="85"></canvas></div><div class="lbl">Acetic acid</div></div>
+<span class="plus">+</span>
+<div><div class="sbox"><canvas id="p7d_amine" width="170" height="90"></canvas></div><div class="lbl">Isobutylamine</div></div>
+</div>
+<p class="expl">2C acid &rarr; acetic acid. Branched amine &rarr; isobutylamine (2-methylpropanamine).</p>
+</div></div></div>
+</section>
+
+</div>
+
+<script>
+function go(i){
+ document.querySelectorAll('.part').forEach(p=>p.classList.remove('active'));
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+ document.getElementById('p'+i).classList.add('active');
+ document.querySelectorAll('.nav button')[i].classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function tog(btn){
+ var a=btn.nextElementSibling;
+ a.classList.toggle('show');
+ btn.textContent=a.classList.contains('show')?'Hide Answer':'Show Answer';
+ btn.classList.toggle('on');
+}
+
+// Drawing
+var BL=28,c30=Math.cos(Math.PI/6),s30=Math.sin(Math.PI/6),DX=BL*c30,DY=BL*s30;
+
+function G(id){
+ var c=document.getElementById(id);if(!c)return null;
+ var x=c.getContext('2d');
+ x.strokeStyle='#1a202c';x.lineWidth=2;x.lineCap='round';x.lineJoin='round';
+ x.font='bold 12px Segoe UI,sans-serif';return x;
+}
+function chain(x,sx,sy,n,d){
+ var pts=[{x:sx,y:sy}],dn=d!==undefined?d:true;
+ for(var i=1;i<n;i++){sx+=DX;sy+=dn?DY:-DY;pts.push({x:sx,y:sy});dn=!dn;}
+ x.beginPath();x.moveTo(pts[0].x,pts[0].y);
+ for(var i=1;i<pts.length;i++)x.lineTo(pts[i].x,pts[i].y);
+ x.stroke();return pts;
+}
+function dbl(x,x1,y1,x2,y2){
+ var dx=x2-x1,dy=y2-y1,l=Math.sqrt(dx*dx+dy*dy),nx=-dy/l*3,ny=dx/l*3;
+ x.beginPath();x.moveTo(x1,y1);x.lineTo(x2,y2);x.moveTo(x1+nx,y1+ny);x.lineTo(x2+nx,y2+ny);x.stroke();
+}
+function bond(x,x1,y1,x2,y2){x.beginPath();x.moveTo(x1,y1);x.lineTo(x2,y2);x.stroke();}
+function txt(x,t,px,py,c){x.fillStyle=c||'#1a202c';x.textAlign='center';x.textBaseline='middle';x.fillText(t,px,py);}
+function hex(x,cx,cy,r){
+ var p=[];for(var i=0;i<6;i++){var a=Math.PI/3*i-Math.PI/2;p.push({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)});}
+ x.beginPath();x.moveTo(p[0].x,p[0].y);for(var i=1;i<6;i++)x.lineTo(p[i].x,p[i].y);x.closePath();x.stroke();return p;
+}
+function pent(x,cx,cy,r){
+ var p=[];for(var i=0;i<5;i++){var a=2*Math.PI/5*i-Math.PI/2;p.push({x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)});}
+ x.beginPath();x.moveTo(p[0].x,p[0].y);for(var i=1;i<5;i++)x.lineTo(p[i].x,p[i].y);x.closePath();x.stroke();return p;
+}
+function carbonyl(x,px,py){dbl(x,px,py,px,py-BL);txt(x,'O',px,py-BL-9,'#e74c3c');}
+function acidEnd(x,px,py){carbonyl(x,px,py);bond(x,px,py,px+DX,py+DY);txt(x,'OH',px+DX+12,py+DY,'#e74c3c');}
+function esterO(x,px,py){carbonyl(x,px,py);bond(x,px,py,px+DX,py+DY);txt(x,'O',px+DX+2,py+DY+1,'#e74c3c');}
+function amideNH(x,px,py){carbonyl(x,px,py);bond(x,px,py,px+DX,py+DY);txt(x,'NH',px+DX+8,py+DY+1,'#2980b9');}
+
+function setAnswer(x){x.strokeStyle='#0891b2';x.lineWidth=2.5;}
+
+window.addEventListener('load',function(){
+ // Part 4
+ var x;
+ // a) alkene
+ x=G('fg_a');if(x){var p=chain(x,15,22,3,true);var nx=p[2].x+DX,ny=p[2].y-DY;dbl(x,p[2].x,p[2].y,nx,ny);bond(x,nx,ny,nx+DX,ny+DY);bond(x,nx+DX,ny+DY,nx+2*DX,ny);}
+ // b) alcohol
+ x=G('fg_b');if(x){var p=chain(x,15,22,4,true);bond(x,p[1].x,p[1].y,p[1].x,p[1].y-BL);txt(x,'OH',p[1].x,p[1].y-BL-9,'#e74c3c');}
+ // c) alkene near end
+ x=G('fg_c');if(x){var p=chain(x,15,30,4,true);var nx=p[3].x+DX,ny=p[3].y+DY;dbl(x,p[3].x,p[3].y,nx,ny);}
+ // d) ketone
+ x=G('fg_d');if(x){var p=chain(x,15,32,5,true);dbl(x,p[2].x,p[2].y,p[2].x,p[2].y-BL);txt(x,'O',p[2].x,p[2].y-BL-9,'#e74c3c');}
+ // e) carboxylic acid
+ x=G('fg_e');if(x){var p=chain(x,15,38,4,true);acidEnd(x,p[3].x,p[3].y);}
+ // f) amide
+ x=G('fg_f');if(x){var p=chain(x,15,38,3,true);carbonyl(x,p[2].x,p[2].y);bond(x,p[2].x,p[2].y,p[2].x+DX,p[2].y+DY);txt(x,'H₂N',p[2].x+DX+16,p[2].y+DY,'#2980b9');}
+ // g) cyclopentanol
+ x=G('fg_g');if(x){var p=pent(x,58,55,28);bond(x,p[0].x,p[0].y,p[0].x+15,p[0].y-18);txt(x,'OH',p[0].x+28,p[0].y-22,'#e74c3c');}
+ // h) cyclohexylamine
+ x=G('fg_h');if(x){var p=hex(x,60,58,28);bond(x,p[0].x,p[0].y,p[0].x,p[0].y-20);txt(x,'NH₂',p[0].x,p[0].y-30,'#2980b9');}
+
+ // Part 5A: Hydrogenation
+ // Q21 question
+ x=G('h5a_q');if(x){var p=chain(x,15,22,2,true);var nx=p[1].x+DX,ny=p[1].y-DY;dbl(x,p[1].x,p[1].y,nx,ny);bond(x,nx,ny,nx+DX,ny+DY);bond(x,nx+DX,ny+DY,nx+2*DX,ny);}
+ // Q21 answer
+ x=G('h5a_a');if(x){setAnswer(x);chain(x,15,22,6,true);txt(x,'Hexane',100,58,'#059669');}
+ // Q22 question
+ x=G('h5b_q');if(x){var p=hex(x,55,50,28);var dx2=p[5].x-p[0].x,dy2=p[5].y-p[0].y,l=Math.sqrt(dx2*dx2+dy2*dy2),nx2=-dy2/l*4,ny2=dx2/l*4;x.beginPath();x.moveTo(p[0].x+nx2,p[0].y+ny2);x.lineTo(p[5].x+nx2,p[5].y+ny2);x.stroke();}
+ // Q22 answer
+ x=G('h5b_a');if(x){setAnswer(x);hex(x,55,48,28);txt(x,'Cyclohexane',70,88,'#059669');}
+ // Q23 question
+ x=G('h5c_q');if(x){var p=chain(x,15,32,2,true);var nx=p[1].x+DX,ny=p[1].y-DY;dbl(x,p[1].x,p[1].y,nx,ny);bond(x,nx,ny,nx+DX,ny+DY);bond(x,nx+DX,ny+DY,nx+2*DX,ny);bond(x,nx,ny,nx,ny-BL+5);}
+ // Q23 answer
+ x=G('h5c_a');if(x){setAnswer(x);var p=chain(x,15,32,5,true);bond(x,p[2].x,p[2].y,p[2].x,p[2].y+BL-5);txt(x,'3-Methylpentane',100,82,'#059669');}
+
+ // Part 5B: Hydration
+ // Q24 question
+ x=G('hy5d_q');if(x){var p=chain(x,15,22,2,true);var nx=p[1].x+DX,ny=p[1].y-DY;dbl(x,p[1].x,p[1].y,nx,ny);bond(x,nx,ny,nx+DX,ny+DY);bond(x,nx+DX,ny+DY,nx+2*DX,ny);}
+ // 2-hexanol
+ x=G('hy5d_a1');if(x){setAnswer(x);var p=chain(x,15,42,6,true);bond(x,p[1].x,p[1].y,p[1].x,p[1].y-22);txt(x,'OH',p[1].x,p[1].y-32,'#e74c3c');}
+ // 3-hexanol
+ x=G('hy5d_a2');if(x){setAnswer(x);var p=chain(x,15,42,6,true);bond(x,p[2].x,p[2].y,p[2].x,p[2].y+22);txt(x,'OH',p[2].x,p[2].y+32,'#e74c3c');}
+ // Q25 question
+ x=G('hy5e_q');if(x){var p=hex(x,55,50,28);var dx2=p[5].x-p[0].x,dy2=p[5].y-p[0].y,l=Math.sqrt(dx2*dx2+dy2*dy2),nx2=-dy2/l*4,ny2=dx2/l*4;x.beginPath();x.moveTo(p[0].x+nx2,p[0].y+ny2);x.lineTo(p[5].x+nx2,p[5].y+ny2);x.stroke();}
+ // cyclohexanol answer
+ x=G('hy5e_a');if(x){setAnswer(x);var p=hex(x,60,55,28);bond(x,p[0].x,p[0].y,p[0].x,p[0].y-20);txt(x,'OH',p[0].x,p[0].y-30,'#e74c3c');txt(x,'Cyclohexanol',75,100,'#059669');}
+ // Q26 question
+ x=G('hy5f_q');if(x){var p=chain(x,15,35,3,true);var nx=p[2].x+DX,ny=p[2].y-DY;dbl(x,p[2].x,p[2].y,nx,ny);bond(x,nx,ny,nx+DX,ny+DY);bond(x,p[2].x,p[2].y,p[2].x,p[2].y+BL-5);}
+ // 3-methyl-2-pentanol answer
+ x=G('hy5f_a');if(x){setAnswer(x);var p=chain(x,15,48,5,true);bond(x,p[1].x,p[1].y,p[1].x,p[1].y-24);txt(x,'OH',p[1].x,p[1].y-34,'#e74c3c');bond(x,p[2].x,p[2].y,p[2].x,p[2].y+BL-5);txt(x,'3-Methyl-2-pentanol',105,90,'#059669');}
+
+ // Part 6
+ // Q27 a) butanoic acid
+ x=G('p6a_acid');if(x){var p=chain(x,15,38,4,true);acidEnd(x,p[3].x,p[3].y);}
+ // propanol
+ x=G('p6a_alc');if(x){txt(x,'HO',16,28,'#e74c3c');bond(x,28,28,28+DX,28+DY);chain(x,28+DX,28+DY,3,false);}
+ // propyl butanoate product
+ x=G('p6a_prod');if(x){setAnswer(x);var p=chain(x,15,38,4,true);esterO(x,p[3].x,p[3].y);var sx=p[3].x+DX*2+6,sy=p[3].y;chain(x,sx,sy,3,true);txt(x,'Propyl butanoate',140,78,'#059669');}
+ // Q28 b) acetic acid
+ x=G('p6b_acid');if(x){var p=chain(x,15,38,2,true);acidEnd(x,p[1].x,p[1].y);}
+ // butanol
+ x=G('p6b_alc');if(x){txt(x,'HO',16,28,'#e74c3c');bond(x,28,28,28+DX,28+DY);chain(x,28+DX,28+DY,4,false);}
+ // butyl acetate product
+ x=G('p6b_prod');if(x){setAnswer(x);var p=chain(x,15,38,2,true);esterO(x,p[1].x,p[1].y);var sx=p[1].x+DX*2+6,sy=p[1].y;chain(x,sx,sy,4,true);txt(x,'Butyl acetate',125,78,'#059669');}
+ // Q29 c) 3-methylbutanoic acid
+ x=G('p6c_acid');if(x){var p=chain(x,15,42,4,true);acidEnd(x,p[3].x,p[3].y);bond(x,p[2].x,p[2].y,p[2].x,p[2].y-BL+5);}
+ // cyclopentanol
+ x=G('p6c_alc');if(x){var p=pent(x,55,48,25);bond(x,p[0].x,p[0].y,p[0].x+12,p[0].y-16);txt(x,'HO',p[0].x+24,p[0].y-20,'#e74c3c');}
+ // cyclopentyl 3-methylbutanoate product
+ x=G('p6c_prod');if(x){setAnswer(x);var p=chain(x,15,45,4,true);esterO(x,p[3].x,p[3].y);bond(x,p[2].x,p[2].y,p[2].x,p[2].y-BL+5);var sx=p[3].x+DX*2+25;bond(x,p[3].x+DX+10,p[3].y+DY,sx-18,p[3].y);pent(x,sx,p[3].y,20);txt(x,'Cyclopentyl 3-methylbutanoate',155,92,'#059669');}
+ // Q30 d) butanoic acid
+ x=G('p6d_acid');if(x){var p=chain(x,15,38,4,true);acidEnd(x,p[3].x,p[3].y);}
+ // propylamine
+ x=G('p6d_amine');if(x){txt(x,'H₂N',20,28,'#2980b9');bond(x,36,28,36+DX,28+DY);chain(x,36+DX,28+DY,3,false);}
+ // N-propylbutanamide product
+ x=G('p6d_prod');if(x){setAnswer(x);var p=chain(x,15,38,4,true);amideNH(x,p[3].x,p[3].y);var sx=p[3].x+DX*2+10,sy=p[3].y;chain(x,sx,sy,3,true);txt(x,'N-Propylbutanamide',145,78,'#059669');}
+
+ // Part 7
+ // Q31 a) ethyl butanoate question
+ x=G('p7a_q');if(x){var p=chain(x,15,38,4,true);esterO(x,p[3].x,p[3].y);var sx=p[3].x+DX*2+6,sy=p[3].y;chain(x,sx,sy,2,true);}
+ // butanoic acid answer
+ x=G('p7a_acid');if(x){setAnswer(x);var p=chain(x,15,38,4,true);acidEnd(x,p[3].x,p[3].y);}
+ // ethanol answer
+ x=G('p7a_alc');if(x){setAnswer(x);txt(x,'HO',16,28,'#e74c3c');bond(x,28,28,28+DX,28+DY);chain(x,28+DX,28+DY,2,false);}
+ // Q32 b) isobutyl acetate question
+ x=G('p7b_q');if(x){var p=chain(x,15,38,2,true);esterO(x,p[1].x,p[1].y);var sx=p[1].x+DX*2+6,sy=p[1].y;var p2=chain(x,sx,sy,3,true);bond(x,p2[1].x,p2[1].y,p2[1].x,p2[1].y-BL+5);}
+ // acetic acid answer
+ x=G('p7b_acid');if(x){setAnswer(x);var p=chain(x,15,38,2,true);acidEnd(x,p[1].x,p[1].y);}
+ // isobutanol answer
+ x=G('p7b_alc');if(x){setAnswer(x);txt(x,'HO',16,40,'#e74c3c');bond(x,28,40,28+DX,40+DY);var p=chain(x,28+DX,40+DY,3,false);bond(x,p[1].x,p[1].y,p[1].x,p[1].y+BL-5);txt(x,'Isobutanol',90,18,'#059669');}
+ // Q33 c) N-ethylbutanamide question
+ x=G('p7c_q');if(x){var p=chain(x,15,38,4,true);amideNH(x,p[3].x,p[3].y);var sx=p[3].x+DX*2+10,sy=p[3].y;chain(x,sx,sy,2,true);}
+ // butanoic acid answer
+ x=G('p7c_acid');if(x){setAnswer(x);var p=chain(x,15,38,4,true);acidEnd(x,p[3].x,p[3].y);}
+ // ethylamine answer
+ x=G('p7c_amine');if(x){setAnswer(x);txt(x,'H₂N',22,28,'#2980b9');bond(x,38,28,38+DX,28+DY);chain(x,38+DX,28+DY,2,false);txt(x,'Ethylamine',70,55,'#059669');}
+ // Q34 d) N-isobutylacetamide question
+ x=G('p7d_q');if(x){var p=chain(x,15,38,2,true);amideNH(x,p[1].x,p[1].y);var sx=p[1].x+DX*2+10,sy=p[1].y;var p2=chain(x,sx,sy,3,true);bond(x,p2[1].x,p2[1].y,p2[1].x,p2[1].y-BL+5);}
+ // acetic acid answer
+ x=G('p7d_acid');if(x){setAnswer(x);var p=chain(x,15,38,2,true);acidEnd(x,p[1].x,p[1].y);}
+ // isobutylamine answer
+ x=G('p7d_amine');if(x){setAnswer(x);txt(x,'H₂N',22,40,'#2980b9');bond(x,38,40,38+DX,40+DY);var p=chain(x,38+DX,40+DY,3,false);bond(x,p[1].x,p[1].y,p[1].x,p[1].y+BL-5);txt(x,'Isobutylamine',95,18,'#059669');}
+});
+</script>
+</body>
+</html>
