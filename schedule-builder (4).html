@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arizona College of Nursing · Campus Schedule Builder</title>
+<style>
+  :root {
+    --navy: #0c2340;
+    --navy-2: #1a3a5c;
+    --navy-3: #2e5984;
+    --gold: #e2b714;
+    --bg: #f4f6fa;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --border: #e4e9f0;
+    --border-strong: #cbd5e0;
+    --text: #1a202c;
+    --text-muted: #64748b;
+    --text-soft: #94a3b8;
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.05);
+    --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-sm);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand-logo {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+  .brand-text { line-height: 1.15; padding-left: 14px; border-left: 2px solid var(--border); }
+  .brand-text .name { font-weight: 700; font-size: 0.95em; color: var(--navy); }
+  .brand-text .sub { font-size: 0.74em; color: var(--text-muted); margin-top: 2px; }
+
+  .toolbar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+  }
+  .btn:hover { background: var(--surface-2); border-color: var(--navy-3); transform: translateY(-1px); }
+  .btn.primary { background: var(--navy); color: white; border-color: var(--navy); }
+  .btn.primary:hover { background: var(--navy-2); }
+  .btn.gold { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .btn.gold:hover { background: #c99e0e; }
+  .btn.ghost { background: transparent; border-color: transparent; }
+  .btn.ghost:hover { background: var(--surface-2); }
+  .btn .icon { font-size: 1em; line-height: 1; }
+
+  /* ============ HEADER CARD ============ */
+  .header-card {
+    background: linear-gradient(135deg, rgba(12,35,64,0.92) 0%, rgba(26,58,92,0.85) 55%, rgba(46,89,132,0.78) 100%),
+                url('azcn-banner.jpg') center/cover no-repeat;
+    color: white;
+    padding: 44px 36px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 22px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .header-shield {
+    height: 110px;
+    width: auto;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  }
+  .header-content {
+    flex: 1;
+    min-width: 280px;
+    position: relative;
+  }
+  .header-card h1 {
+    font-size: 2em;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .header-card .campus {
+    font-size: 1.05em;
+    opacity: 0.92;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .header-card .dates {
+    font-size: 0.92em;
+    opacity: 0.78;
+  }
+  .header-card .accent {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 0.78em;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ============ INFO BOX ============ */
+  .info-box {
+    background: linear-gradient(135deg, #fffdf5 0%, #fefce8 100%);
+    border: 1px solid #f0e0a0;
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow-sm);
+  }
+  .info-box h3 {
+    color: #92650a;
+    font-size: 0.95em;
+    margin-bottom: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .info-box ul {
+    margin-left: 18px;
+    font-size: 0.83em;
+    line-height: 1.85;
+    color: #5a4a20;
+  }
+
+  /* ============ WEEK CARD ============ */
+  .week-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    margin-bottom: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .week-header {
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 0.95em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .week-header.normal { background: linear-gradient(to right, #edf2f7, #f7fafc); color: var(--navy); border-bottom: 1px solid var(--border); }
+  .week-header.midterm { background: linear-gradient(to right, #fefcbf, #fef5cb); color: #744210; border-bottom: 1px solid #ecc94b; }
+  .week-header.finals { background: linear-gradient(to right, #fed7d7, #feb2b2); color: #742a2a; border-bottom: 1px solid #fc8181; }
+  .badge {
+    font-size: 0.7em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .badge.info { background: var(--navy); color: white; }
+  .badge.success { background: #2f855a; color: white; }
+  .badge.warning { background: #b7791f; color: white; }
+  .badge.midterm { background: #ecc94b; color: #333; }
+  .badge.finals { background: #e53e3e; color: white; }
+
+  /* ============ SCHEDULE GRID ============ */
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(5, 1fr);
+  }
+  .grid-header {
+    background: var(--surface-2);
+    font-weight: 700;
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 2px solid var(--border);
+  }
+  .grid-cell {
+    padding: 10px 8px;
+    min-height: 90px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .grid-cell:last-child { border-right: none; }
+  .grid-cell.time-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.74em;
+    color: var(--text-muted);
+    background: var(--surface-2);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ============ CLASS BLOCKS ============ */
+  .class-block {
+    padding: 9px 11px;
+    border-radius: var(--radius-sm);
+    font-size: 0.78em;
+    border-left: 3px solid;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .class-block:hover { transform: translateX(2px); box-shadow: var(--shadow-sm); }
+  .class-block .course-name {
+    font-weight: 700;
+    font-size: 1em;
+    margin-bottom: 2px;
+  }
+  .class-block .course-detail {
+    font-size: 0.85em;
+    opacity: 0.85;
+    line-height: 1.4;
+  }
+  .class-block .room-tag {
+    display: inline-block;
+    font-size: 0.72em;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.08);
+    margin-top: 4px;
+  }
+  .class-block .lab-tag {
+    display: inline-block;
+    font-size: 0.66em;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.6);
+    color: var(--text);
+    margin-top: 3px;
+    margin-left: 4px;
+    border: 1px dashed rgba(0,0,0,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  /* ============ ONLINE SECTION (PROMINENT) ============ */
+  .online-section {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 2px dashed var(--border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .online-label {
+    font-size: 0.66em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2px;
+  }
+  .online-label::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #38a169;
+    box-shadow: 0 0 0 2px rgba(56,161,105,0.2);
+  }
+  .online-block {
+    padding: 9px 11px;
+    border-radius: var(--radius-sm);
+    background: #f0f7ff;
+    border: 1px solid #c5e0ff;
+    border-left: 3px solid #4299e1;
+    font-size: 0.78em;
+  }
+  .online-block .name {
+    font-weight: 700;
+    color: #2c5282;
+    font-size: 1em;
+    line-height: 1.3;
+  }
+  .online-block .instr {
+    font-size: 0.88em;
+    color: #4a6da6;
+    margin-top: 2px;
+  }
+  .online-block .time {
+    font-size: 0.85em;
+    color: #4a6da6;
+    margin-top: 2px;
+    font-weight: 600;
+  }
+  .online-block .platform {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: #6264a7;
+    color: white;
+    font-size: 0.7em;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  /* ============ COURSE COLOR THEMES ============ */
+  .chm130 { background: #ebf4ff; border-color: #3182ce; color: #1a365d; }
+  .chm130-lab { background: #bee3f8; border-color: #2b6cb0; color: #1a365d; }
+  .hcr240 { background: #fff5f7; border-color: #d53f8c; color: #702459; }
+  .bio201 { background: #f0fff4; border-color: #38a169; color: #22543d; }
+  .bio201-lab { background: #c6f6d5; border-color: #2f855a; color: #22543d; }
+  .bio202 { background: #fffff0; border-color: #d69e2e; color: #744210; }
+  .bio202-lab { background: #fefcbf; border-color: #b7791f; color: #744210; }
+  .bio205 { background: #faf5ff; border-color: #805ad5; color: #44337a; }
+  .bio205-lab { background: #e9d8fd; border-color: #6b46c1; color: #44337a; }
+  .bio189 { background: #fffaf0; border-color: #dd6b20; color: #7b341e; }
+  .mat151 { background: #e6fffa; border-color: #319795; color: #234e52; }
+  .psy230 { background: #fff5f5; border-color: #e53e3e; color: #742a2a; }
+  .afs100 { background: #fefcbf; border-color: #b7791f; color: #744210; }
+  .holiday { background: #fed7d7; border-color: #e53e3e; color: #742a2a; text-align: center; font-style: italic; padding: 14px 10px; }
+  .no-class { background: var(--surface-2); border-color: var(--border-strong); color: var(--text-soft); text-align: center; font-style: italic; padding: 12px 10px; font-size: 0.78em; }
+  .alert { background: #fffbea; border-color: #d69e2e; }
+  .alert .course-detail em { color: #92650a; font-weight: 600; }
+
+  /* ============ SUMMARY TABLES ============ */
+  .summary-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 18px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+  }
+  .summary-card h3 {
+    color: var(--navy);
+    font-size: 1.05em;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .summary-card table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85em;
+  }
+  .summary-card th {
+    background: var(--surface-2);
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    font-weight: 700;
+    color: var(--text-muted);
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .summary-card td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .summary-card tr:hover td { background: var(--surface-2); }
+  .summary-note {
+    margin-top: 12px;
+    font-size: 0.82em;
+    color: var(--text-muted);
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding: 18px;
+    font-size: 0.82em;
+    color: var(--text-muted);
+  }
+  .footer a { color: var(--navy); text-decoration: none; font-weight: 600; }
+
+  /* ============ EDIT MODE ============ */
+  .edit-panel {
+    display: none;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 18px;
+  }
+  .edit-panel.active { display: block; }
+  .edit-panel h2 {
+    font-size: 1.4em;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .edit-panel .lede {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    margin-bottom: 24px;
+  }
+  .edit-section {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .edit-section:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .edit-section h3 {
+    color: var(--navy);
+    font-size: 1.05em;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .field label {
+    font-size: 0.75em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+  }
+  .field input, .field select {
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 0.9em;
+    font-family: inherit;
+    color: var(--text);
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--navy-3);
+    box-shadow: 0 0 0 3px rgba(46,89,132,0.15);
+  }
+  .editor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85em;
+  }
+  .editor-table th {
+    background: var(--surface-2);
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    font-weight: 700;
+    color: var(--text-muted);
+    font-size: 0.78em;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .editor-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .editor-table input, .editor-table select {
+    width: 100%;
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95em;
+    color: var(--text);
+  }
+  .editor-table input:hover, .editor-table select:hover { background: var(--surface-2); }
+  .editor-table input:focus, .editor-table select:focus {
+    outline: none;
+    background: white;
+    border-color: var(--navy-3);
+    box-shadow: 0 0 0 2px rgba(46,89,132,0.15);
+  }
+  .row-action {
+    background: transparent;
+    border: none;
+    color: #e53e3e;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 1.1em;
+  }
+  .row-action:hover { background: #fed7d7; }
+
+  .add-btn {
+    background: var(--surface-2);
+    border: 1px dashed var(--border-strong);
+    color: var(--text-muted);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .add-btn:hover { background: white; border-color: var(--navy-3); color: var(--navy); }
+
+  .save-bar {
+    position: sticky;
+    bottom: 0;
+    background: var(--surface);
+    padding: 16px 0 4px;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--navy);
+    color: white;
+    padding: 12px 22px;
+    border-radius: var(--radius);
+    font-size: 0.9em;
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ============ HELP MODAL ============ */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.active { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 32px 36px;
+    max-width: 640px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+  }
+  .modal h2 { color: var(--navy); margin-bottom: 8px; }
+  .modal h3 { color: var(--navy); margin: 18px 0 8px; font-size: 1em; }
+  .modal p, .modal li { font-size: 0.9em; line-height: 1.65; color: var(--text); }
+  .modal ul, .modal ol { margin: 6px 0 12px 22px; }
+  .modal .close { float: right; }
+
+  /* ============ PRINT ============ */
+  @media print {
+    body { background: white; }
+    .app { padding: 8px; max-width: 100%; }
+    .topbar, .toolbar, .edit-panel { display: none !important; }
+    .week-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .summary-card { box-shadow: none; border: 1px solid #ccc; }
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 900px) {
+    .schedule-grid { font-size: 0.7em; grid-template-columns: 56px repeat(5, 1fr); }
+    .grid-cell { padding: 6px 4px; }
+    .class-block { padding: 6px 7px; }
+    .header-card { padding: 24px 20px; }
+    .header-card h1 { font-size: 1.4em; }
+    .app { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ TOP BAR ============ -->
+  <div class="topbar">
+    <div class="brand">
+      <img src="azcn-logo-horizontal.png" alt="Arizona College of Nursing" class="brand-logo">
+      <div class="brand-text">
+        <div class="name">Schedule Builder</div>
+        <div class="sub">Falls Church Campus</div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button class="btn" id="btnView">View Schedule</button>
+      <button class="btn" id="btnEdit">Edit Mode</button>
+      <button class="btn" id="btnImport">Import</button>
+      <button class="btn" id="btnExport">Export JSON</button>
+      <button class="btn primary" id="btnPrint">Print / PDF</button>
+      <button class="btn ghost" id="btnHelp" title="How to use">?</button>
+      <input type="file" id="fileInput" accept=".json" style="display:none;">
+    </div>
+  </div>
+
+  <!-- ============ EDIT PANEL ============ -->
+  <div class="edit-panel" id="editPanel">
+    <h2>Schedule Editor</h2>
+    <p class="lede">Edit term info, courses, labs, holidays, and online classes. Click <strong>Save & Render</strong> when done. Use <strong>Export JSON</strong> to save a template you can reuse for future terms.</p>
+
+    <div class="edit-section">
+      <h3>Term Information</h3>
+      <div class="field-grid" id="termFields"></div>
+    </div>
+
+    <div class="edit-section">
+      <h3>In-Person Recurring Classes <span class="badge info">Weekly</span></h3>
+      <p style="font-size:0.83em;color:var(--text-muted);margin-bottom:10px;">Classes that meet the same day every week. Day options: Mon, Tue, Wed, Thu, Fri.</p>
+      <table class="editor-table" id="coursesTable">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Instructor</th>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Room</th>
+            <th>Color</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="add-btn" data-add="course">+ Add Course</button>
+    </div>
+
+    <div class="edit-section">
+      <h3>Online / Virtual Classes <span class="badge success">Microsoft Teams</span></h3>
+      <p style="font-size:0.83em;color:var(--text-muted);margin-bottom:10px;">Online classes meet via Microsoft Teams and display in a separate section under each day.</p>
+      <table class="editor-table" id="onlineTable">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Instructor</th>
+            <th>Day</th>
+            <th>Time</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="add-btn" data-add="online">+ Add Online Class</button>
+    </div>
+
+    <div class="edit-section">
+      <h3>In-Person Labs <span class="badge warning">Per Session</span></h3>
+      <p style="font-size:0.83em;color:var(--text-muted);margin-bottom:10px;">Labs typically run 3 times per session. Enter dates as YYYY-MM-DD, separated by commas.</p>
+      <table class="editor-table" id="labsTable">
+        <thead>
+          <tr>
+            <th>Course/Group</th>
+            <th>Instructor</th>
+            <th>Dates (comma-separated)</th>
+            <th>Default Room</th>
+            <th>Color</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="add-btn" data-add="lab">+ Add Lab Group</button>
+    </div>
+
+    <div class="edit-section">
+      <h3>Holidays & Closures</h3>
+      <table class="editor-table" id="holidayTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="add-btn" data-add="holiday">+ Add Holiday</button>
+    </div>
+
+    <div class="edit-section">
+      <h3>Special Weeks</h3>
+      <div class="field-grid" id="specialFields"></div>
+    </div>
+
+    <div class="save-bar">
+      <button class="btn" id="btnCancelEdit">Cancel</button>
+      <button class="btn primary" id="btnSaveEdit">Save & Render</button>
+    </div>
+  </div>
+
+  <!-- ============ SCHEDULE VIEW ============ -->
+  <div id="scheduleView">
+    <!-- Generated by JS -->
+  </div>
+
+  <div class="footer">
+    &copy; Arizona College of Nursing · Falls Church Campus
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ HELP MODAL ============ -->
+<div class="modal-backdrop" id="helpModal">
+  <div class="modal">
+    <button class="btn ghost close" onclick="document.getElementById('helpModal').classList.remove('active')">Close</button>
+    <h2>How to Use This Tool</h2>
+    <p style="color:var(--text-muted);">A quick guide for staff. Open this any time by clicking the <strong>?</strong> button.</p>
+
+    <h3>Viewing the schedule</h3>
+    <p>The schedule loads automatically. Each week shows in-person classes prominently and online classes in a clearly separated section below.</p>
+
+    <h3>Editing for a new term</h3>
+    <ol>
+      <li>Click <strong>Edit Mode</strong> in the top bar.</li>
+      <li>Update <strong>Term Information</strong> (name, dates, weeks).</li>
+      <li>Add, edit, or remove rows in the course tables.</li>
+      <li>Click <strong>Save & Render</strong>.</li>
+    </ol>
+
+    <h3>Saving and reusing templates</h3>
+    <ol>
+      <li>Click <strong>Export JSON</strong> to download a template file.</li>
+      <li>Next term, click <strong>Import</strong> and choose that JSON to restore everything.</li>
+      <li>Then make small edits (dates, instructors, etc.) and re-export.</li>
+    </ol>
+
+    <h3>Sharing with your department</h3>
+    <ul>
+      <li>Upload this HTML file to a SharePoint document library.</li>
+      <li>Or attach it to a Teams channel as a tab (Website tab).</li>
+      <li>Or share via OneDrive — anyone with the link can view and download.</li>
+    </ul>
+
+    <h3>Printing / saving as PDF</h3>
+    <p>Click <strong>Print / PDF</strong>. The edit panel and toolbar are hidden in print, giving you a clean printable schedule.</p>
+  </div>
+</div>
+
+<!-- ============ DATA + LOGIC ============ -->
+<script>
+// =================================================================
+// DEFAULT SCHEDULE DATA — Edit through the UI or import a JSON file
+// =================================================================
+const DEFAULT_DATA = {
+  term: {
+    name: "Summer A 2026: Session A",
+    campus: "Falls Church Campus",
+    subtitle: "General Education",
+    startDate: "2026-05-04",
+    endDate: "2026-06-28",
+    weeks: 8
+  },
+  special: {
+    midtermWeek: 4,
+    finalsWeek: 8
+  },
+  holidays: [
+    { date: "2026-05-25", name: "Memorial Day" },
+    { date: "2026-06-19", name: "Juneteenth" }
+  ],
+  courses: [
+    { code: "BIO 189 Sec A", instructor: "Caitlin Gillett", day: "Mon", time: "6:00-8:00 PM", room: "818", color: "bio189" },
+    { code: "CHM 130",       instructor: "Mazdak Tehrani", day: "Tue", time: "6:00-8:00 PM", room: "816", color: "chm130" },
+    { code: "BIO 189 Sec B", instructor: "Caitlin Gillett", day: "Tue", time: "6:00-8:00 PM", room: "818", color: "bio189" },
+    { code: "HCR 240",       instructor: "Mazdak Tehrani", day: "Wed", time: "6:00-9:00 PM", room: "816", color: "hcr240" },
+    { code: "BIO 202",       instructor: "Francis Nuwah",  day: "Wed", time: "6:00-8:00 PM", room: "808", color: "bio202" },
+    { code: "BIO 205",       instructor: "Asho Ali",       day: "Wed", time: "6:00-8:00 PM", room: "818", color: "bio205" },
+    { code: "MAT 151",       instructor: "Tsuru Jones",    day: "Wed", time: "6:00-8:00 PM", room: "824", color: "mat151" },
+    { code: "BIO 201",       instructor: "Muna Abd-Alla",  day: "Thu", time: "6:00-8:00 PM", room: "808", color: "bio201" },
+    { code: "PSY 230",       instructor: "Carl Seward",    day: "Thu", time: "6:00-8:00 PM", room: "824", color: "psy230" }
+  ],
+  online: [
+    { code: "HCR 230", instructor: "Senn",       day: "Tue", time: "6:00-8:00 PM" },
+    { code: "PSC 101", instructor: "Rodriguez",  day: "Tue", time: "6:00-8:00 PM" },
+    { code: "NTR 241", instructor: "Hendry",     day: "Tue", time: "6:00-8:00 PM" },
+    { code: "PSY 101", instructor: "Villalobos", day: "Wed", time: "6:00-8:00 PM" },
+    { code: "ENG 102", instructor: "Howard",     day: "Wed", time: "6:00-8:00 PM" },
+    { code: "PSY 240", instructor: "Washington", day: "Thu", time: "6:00-8:00 PM" },
+    { code: "ENG 101", instructor: "Cheeks",     day: "Fri", time: "6:00-8:00 PM" }
+  ],
+  labs: [
+    { course: "CHM 130 TU/M",  instructor: "Mazdak Tehrani", dates: ["2026-05-18","2026-06-01","2026-06-15"], room: "814", color: "chm130-lab" },
+    { course: "CHM 130 TU/TH", instructor: "Mazdak Tehrani", dates: ["2026-05-21","2026-06-04","2026-06-18"], room: "814", color: "chm130-lab" },
+    { course: "BIO 202 W/M",   instructor: "Francis Nuwah",  dates: ["2026-05-11","2026-06-01","2026-06-08"], room: "814", color: "bio202-lab" },
+    { course: "BIO 202 W/TH",  instructor: "Francis Nuwah",  dates: ["2026-05-14","2026-06-04","2026-06-11"], room: "814", color: "bio202-lab" },
+    { course: "BIO 201 TH/TU", instructor: "Muna Abd-Alla",  dates: ["2026-05-12","2026-05-26","2026-06-09"], room: "814", color: "bio201-lab" },
+    { course: "BIO 201 TH/F",  instructor: "Muna Abd-Alla",  dates: ["2026-05-15","2026-05-29","2026-06-12"], room: "814", color: "bio201-lab" },
+    { course: "BIO 205 W/F",   instructor: "Asho Ali",       dates: ["2026-05-22","2026-06-05","2026-06-12"], room: "814", color: "bio205-lab" }
+  ],
+  notes: [
+    "All classes 6:00-8:00 PM except HCR 240 (Pathophysiology) which runs 6:00-9:00 PM",
+    "All in-person labs run 6:00-9:00 PM, held 3 times per session",
+    "CHM 130 always uses Room 814 for labs; when two labs fall on the same night, the other lab uses Room 808",
+    "Holidays: Memorial Day (Mon 05/25) and Juneteenth (Fri 06/19) — campus closed",
+    "Week 4 (05/25-05/31): Midterm Week | Week 8 (06/22-06/28): Finals Week (no labs)",
+    "Thu 06/04 room swap: BIO 201 lecture moves to Room 816; CHM 130 lab in 814, BIO 202 lab in 808"
+  ]
+};
+
+const COLOR_CHOICES = [
+  ["chm130","CHM Blue"], ["chm130-lab","CHM Blue (Lab)"],
+  ["hcr240","HCR Pink"], ["bio201","BIO 201 Green"], ["bio201-lab","BIO 201 Green (Lab)"],
+  ["bio202","BIO 202 Yellow"], ["bio202-lab","BIO 202 Yellow (Lab)"],
+  ["bio205","BIO 205 Purple"], ["bio205-lab","BIO 205 Purple (Lab)"],
+  ["bio189","BIO 189 Orange"], ["mat151","MAT 151 Teal"],
+  ["psy230","PSY 230 Red"], ["afs100","AFS 100 Gold"]
+];
+
+const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+const STORAGE_KEY = "schedule-builder-data";
+
+let DATA = loadData();
+
+// =================================================================
+// LOAD / SAVE
+// =================================================================
+function loadData() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch (e) { console.warn("Could not load saved data:", e); }
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+
+function persistData() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
+  catch (e) { console.warn("Could not save:", e); }
+}
+
+// =================================================================
+// DATE UTILITIES
+// =================================================================
+function parseDate(s) { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); }
+function formatDate(d) { return `${(d.getMonth()+1).toString().padStart(2,"0")}/${d.getDate().toString().padStart(2,"0")}`; }
+function fmtMonth(d) { return d.toLocaleDateString("en-US",{month:"short",day:"numeric"}); }
+function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
+function isoDate(d) { return `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,"0")}-${d.getDate().toString().padStart(2,"0")}`; }
+function dayName(d) { return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()]; }
+
+function getWeekStart() {
+  const start = parseDate(DATA.term.startDate);
+  // Anchor to Monday of the start week
+  const dow = start.getDay();
+  const offset = dow === 0 ? -6 : 1 - dow;
+  return addDays(start, offset);
+}
+
+function buildWeeks() {
+  const weeks = [];
+  const firstMonday = getWeekStart();
+  for (let w = 0; w < DATA.term.weeks; w++) {
+    const monday = addDays(firstMonday, w*7);
+    const days = [];
+    for (let i = 0; i < 5; i++) days.push(addDays(monday, i));
+    weeks.push({ index: w+1, monday, days });
+  }
+  return weeks;
+}
+
+// =================================================================
+// RENDER SCHEDULE VIEW
+// =================================================================
+function render() {
+  const view = document.getElementById("scheduleView");
+  view.innerHTML = "";
+
+  // Header card
+  const start = parseDate(DATA.term.startDate);
+  const end = parseDate(DATA.term.endDate);
+  const header = document.createElement("div");
+  header.className = "header-card";
+  header.innerHTML = `
+    <img src="azcn-logo-vertical.png" alt="Arizona College of Nursing" class="header-shield">
+    <div class="header-content">
+      <h1>${escapeHtml(DATA.term.name)}</h1>
+      <div class="campus">${escapeHtml(DATA.term.campus)}</div>
+      <div class="dates">${fmtMonth(start)} — ${fmtMonth(end)}, ${start.getFullYear()} (${DATA.term.weeks} Weeks)</div>
+      <div class="accent">${escapeHtml(DATA.term.subtitle || "")}</div>
+    </div>
+  `;
+  view.appendChild(header);
+
+  // Notes box
+  if (DATA.notes && DATA.notes.length) {
+    const notes = document.createElement("div");
+    notes.className = "info-box";
+    notes.innerHTML = `<h3>📌 Key Information</h3><ul>${DATA.notes.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`;
+    view.appendChild(notes);
+  }
+
+  // Weeks
+  const weeks = buildWeeks();
+  weeks.forEach(week => view.appendChild(buildWeek(week)));
+
+  // Summary tables
+  view.appendChild(buildRoomSummary());
+  view.appendChild(buildLabSummary());
+}
+
+function buildWeek(week) {
+  const card = document.createElement("div");
+  card.className = "week-card";
+
+  const isMidterm = week.index === DATA.special.midtermWeek;
+  const isFinals  = week.index === DATA.special.finalsWeek;
+  let headerClass = "normal";
+  let badge = `<span class="badge info">Module ${week.index}</span>`;
+  let label = `Week ${week.index} — Module ${week.index}`;
+  if (isMidterm) { headerClass = "midterm"; badge = `<span class="badge midterm">Midterms</span>`; label += " / Midterm Week"; }
+  if (isFinals)  { headerClass = "finals";  badge = `<span class="badge finals">Final Exams · No Labs</span>`; label += " / Finals Week"; }
+
+  const startDay = week.days[0];
+  const endDay = week.days[4];
+  const dateRange = `(${fmtMonth(startDay)} – ${fmtMonth(endDay)})`;
+
+  card.innerHTML = `
+    <div class="week-header ${headerClass}">
+      <span>${label} ${dateRange}</span>
+      ${badge}
+    </div>
+    <div class="schedule-grid">
+      <div class="grid-header">Time</div>
+      ${week.days.map(d => `<div class="grid-header">${dayName(d)} ${formatDate(d)}</div>`).join("")}
+      <div class="grid-cell time-label">Evening<br><span style="font-weight:400;font-size:0.88em;">6–9 PM</span></div>
+      ${week.days.map(d => buildDayCell(d, week, isMidterm, isFinals)).join("")}
+    </div>
+  `;
+  return card;
+}
+
+function buildDayCell(date, week, isMidterm, isFinals) {
+  const day = dayName(date);
+  const iso = isoDate(date);
+
+  // Check holiday
+  const holiday = DATA.holidays.find(h => h.date === iso);
+  if (holiday) {
+    return `<div class="grid-cell">
+      <div class="class-block holiday">
+        <div class="course-name">${escapeHtml(holiday.name.toUpperCase())}</div>
+        <div class="course-detail">Campus Closed</div>
+      </div>
+    </div>`;
+  }
+
+  // Recurring in-person classes for this day
+  const recurring = DATA.courses.filter(c => c.day === day);
+
+  // Labs scheduled for this exact date
+  const labsToday = DATA.labs.filter(l => l.dates.includes(iso));
+
+  // Conflict resolution: if 2+ labs same day, non-CHM goes to 808
+  const labsAdjusted = resolveLabRooms(labsToday, date);
+
+  // Online classes for this day
+  const onlineToday = DATA.online.filter(o => o.day === day);
+
+  let blocks = [];
+
+  // In-person classes
+  recurring.forEach(c => {
+    const label = (isMidterm && !c.code.includes("Sec")) ? "MIDTERM" :
+                  (isFinals ? "FINAL EXAM" : escapeHtml(c.instructor));
+    blocks.push(`
+      <div class="class-block ${c.color}">
+        <div class="course-name">${escapeHtml(c.code)}</div>
+        <div class="course-detail">${label}<br>${escapeHtml(c.time)}</div>
+        <span class="room-tag">Room ${escapeHtml(c.room)}</span>
+      </div>
+    `);
+  });
+
+  // Labs (skip if finals week)
+  if (!isFinals) {
+    labsAdjusted.forEach(l => {
+      blocks.push(`
+        <div class="class-block ${l.color}">
+          <div class="course-name">${escapeHtml(l.course)} — LAB</div>
+          <div class="course-detail">${escapeHtml(l.instructor)}<br>6:00-9:00 PM</div>
+          <span class="room-tag">Room ${escapeHtml(l.room)}</span>
+          <span class="lab-tag">In-Person Lab</span>
+        </div>
+      `);
+    });
+  }
+
+  // Online section (visually separated, prominent)
+  let onlineHtml = "";
+  if (onlineToday.length) {
+    onlineHtml = `
+      <div class="online-section">
+        <div class="online-label">Online Classes · Microsoft Teams</div>
+        ${onlineToday.map(o => `
+          <div class="online-block">
+            <div class="name">${escapeHtml(o.code)}</div>
+            <div class="instr">${escapeHtml(o.instructor)}${isFinals ? " · Final" : ""}</div>
+            <div class="time">${escapeHtml(o.time || "6:00-8:00 PM")}</div>
+            <div class="platform">Microsoft Teams Meeting</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  if (blocks.length === 0 && !onlineHtml) {
+    return `<div class="grid-cell"><div class="class-block no-class">No on-campus classes</div></div>`;
+  }
+  if (blocks.length === 0 && onlineHtml) {
+    return `<div class="grid-cell">${onlineHtml}</div>`;
+  }
+
+  return `<div class="grid-cell">${blocks.join("")}${onlineHtml}</div>`;
+}
+
+function resolveLabRooms(labs, date) {
+  if (labs.length <= 1) return labs.map(l => ({...l}));
+  // CHM keeps 814, others bump to 808
+  return labs.map(l => {
+    if (l.course.startsWith("CHM")) return {...l, room: "814"};
+    const hasChm = labs.some(x => x.course.startsWith("CHM"));
+    return {...l, room: hasChm ? "808" : (l.room === "814" ? "814" : "808")};
+  });
+}
+
+function buildRoomSummary() {
+  const div = document.createElement("div");
+  div.className = "summary-card";
+  const rooms = [...new Set(DATA.courses.map(c => c.room))].sort();
+  div.innerHTML = `
+    <h3>Room Assignments — Recurring Weekly Pattern</h3>
+    <table>
+      <thead>
+        <tr><th>Room</th>${DAYS.map(d => `<th>${d}</th>`).join("")}</tr>
+      </thead>
+      <tbody>
+        ${rooms.map(r => `
+          <tr>
+            <td><strong>${r}</strong></td>
+            ${DAYS.map(d => {
+              const c = DATA.courses.find(x => x.room === r && x.day === d);
+              return `<td>${c ? `${escapeHtml(c.code)}<br><span style="color:var(--text-soft);font-size:0.9em">${escapeHtml(c.time)}</span>` : "—"}</td>`;
+            }).join("")}
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+  return div;
+}
+
+function buildLabSummary() {
+  const div = document.createElement("div");
+  div.className = "summary-card";
+  div.innerHTML = `
+    <h3>In-Person Lab Schedule (6:00-9:00 PM)</h3>
+    <table>
+      <thead>
+        <tr><th>Lab Group</th><th>Instructor</th><th>Lab 1</th><th>Lab 2</th><th>Lab 3</th></tr>
+      </thead>
+      <tbody>
+        ${DATA.labs.map(l => `
+          <tr>
+            <td><strong>${escapeHtml(l.course)}</strong></td>
+            <td>${escapeHtml(l.instructor)}</td>
+            ${l.dates.map(d => `<td>${fmtMonth(parseDate(d))}<br><span style="color:var(--text-soft);font-size:0.85em">Room ${l.room}</span></td>`).join("")}
+            ${Array(Math.max(0, 3 - l.dates.length)).fill('<td>—</td>').join("")}
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+    <p class="summary-note">CHM 130 always uses Room 814. When two labs fall on the same evening, the non-CHM lab moves to Room 808.</p>
+  `;
+  return div;
+}
+
+// =================================================================
+// EDIT MODE
+// =================================================================
+function renderEditPanel() {
+  // Term fields
+  const tf = document.getElementById("termFields");
+  tf.innerHTML = `
+    <div class="field"><label>Term Name</label><input type="text" data-term="name" value="${escapeAttr(DATA.term.name)}"></div>
+    <div class="field"><label>Campus</label><input type="text" data-term="campus" value="${escapeAttr(DATA.term.campus)}"></div>
+    <div class="field"><label>Subtitle</label><input type="text" data-term="subtitle" value="${escapeAttr(DATA.term.subtitle || '')}"></div>
+    <div class="field"><label>Start Date</label><input type="date" data-term="startDate" value="${DATA.term.startDate}"></div>
+    <div class="field"><label>End Date</label><input type="date" data-term="endDate" value="${DATA.term.endDate}"></div>
+    <div class="field"><label>Number of Weeks</label><input type="number" data-term="weeks" value="${DATA.term.weeks}" min="1" max="20"></div>
+  `;
+
+  // Special weeks
+  const sf = document.getElementById("specialFields");
+  sf.innerHTML = `
+    <div class="field"><label>Midterm Week #</label><input type="number" data-special="midtermWeek" value="${DATA.special.midtermWeek}" min="1"></div>
+    <div class="field"><label>Finals Week #</label><input type="number" data-special="finalsWeek" value="${DATA.special.finalsWeek}" min="1"></div>
+  `;
+
+  // Courses table
+  const ct = document.querySelector("#coursesTable tbody");
+  ct.innerHTML = DATA.courses.map((c, i) => courseRow(c, i)).join("");
+
+  // Online table
+  const ot = document.querySelector("#onlineTable tbody");
+  ot.innerHTML = DATA.online.map((o, i) => onlineRow(o, i)).join("");
+
+  // Labs table
+  const lt = document.querySelector("#labsTable tbody");
+  lt.innerHTML = DATA.labs.map((l, i) => labRow(l, i)).join("");
+
+  // Holidays table
+  const ht = document.querySelector("#holidayTable tbody");
+  ht.innerHTML = DATA.holidays.map((h, i) => holidayRow(h, i)).join("");
+}
+
+function courseRow(c, i) {
+  return `<tr data-course="${i}">
+    <td><input type="text" data-field="code" value="${escapeAttr(c.code)}"></td>
+    <td><input type="text" data-field="instructor" value="${escapeAttr(c.instructor)}"></td>
+    <td><select data-field="day">${DAYS.map(d => `<option ${d===c.day?'selected':''}>${d}</option>`).join("")}</select></td>
+    <td><input type="text" data-field="time" value="${escapeAttr(c.time)}"></td>
+    <td><input type="text" data-field="room" value="${escapeAttr(c.room)}"></td>
+    <td><select data-field="color">${COLOR_CHOICES.map(([v,l]) => `<option value="${v}" ${v===c.color?'selected':''}>${l}</option>`).join("")}</select></td>
+    <td><button class="row-action" data-delete="course" data-i="${i}">×</button></td>
+  </tr>`;
+}
+
+function onlineRow(o, i) {
+  return `<tr data-online="${i}">
+    <td><input type="text" data-field="code" value="${escapeAttr(o.code)}"></td>
+    <td><input type="text" data-field="instructor" value="${escapeAttr(o.instructor)}"></td>
+    <td><select data-field="day">${DAYS.map(d => `<option ${d===o.day?'selected':''}>${d}</option>`).join("")}</select></td>
+    <td><input type="text" data-field="time" value="${escapeAttr(o.time || '6:00-8:00 PM')}"></td>
+    <td><button class="row-action" data-delete="online" data-i="${i}">×</button></td>
+  </tr>`;
+}
+
+function labRow(l, i) {
+  return `<tr data-lab="${i}">
+    <td><input type="text" data-field="course" value="${escapeAttr(l.course)}"></td>
+    <td><input type="text" data-field="instructor" value="${escapeAttr(l.instructor)}"></td>
+    <td><input type="text" data-field="dates" value="${l.dates.join(', ')}"></td>
+    <td><input type="text" data-field="room" value="${escapeAttr(l.room)}"></td>
+    <td><select data-field="color">${COLOR_CHOICES.map(([v,la]) => `<option value="${v}" ${v===l.color?'selected':''}>${la}</option>`).join("")}</select></td>
+    <td><button class="row-action" data-delete="lab" data-i="${i}">×</button></td>
+  </tr>`;
+}
+
+function holidayRow(h, i) {
+  return `<tr data-holiday="${i}">
+    <td><input type="date" data-field="date" value="${h.date}"></td>
+    <td><input type="text" data-field="name" value="${escapeAttr(h.name)}"></td>
+    <td><button class="row-action" data-delete="holiday" data-i="${i}">×</button></td>
+  </tr>`;
+}
+
+function collectEditData() {
+  document.querySelectorAll("[data-term]").forEach(el => {
+    const k = el.dataset.term;
+    DATA.term[k] = el.type === "number" ? parseInt(el.value) : el.value;
+  });
+  document.querySelectorAll("[data-special]").forEach(el => {
+    DATA.special[el.dataset.special] = parseInt(el.value);
+  });
+
+  // Courses
+  DATA.courses = [...document.querySelectorAll("#coursesTable tbody tr")].map(tr => {
+    const obj = {};
+    tr.querySelectorAll("[data-field]").forEach(el => obj[el.dataset.field] = el.value.trim());
+    return obj;
+  });
+
+  // Online
+  DATA.online = [...document.querySelectorAll("#onlineTable tbody tr")].map(tr => {
+    const obj = {};
+    tr.querySelectorAll("[data-field]").forEach(el => obj[el.dataset.field] = el.value.trim());
+    return obj;
+  });
+
+  // Labs
+  DATA.labs = [...document.querySelectorAll("#labsTable tbody tr")].map(tr => {
+    const obj = {};
+    tr.querySelectorAll("[data-field]").forEach(el => {
+      if (el.dataset.field === "dates") {
+        obj.dates = el.value.split(",").map(s => s.trim()).filter(Boolean);
+      } else {
+        obj[el.dataset.field] = el.value.trim();
+      }
+    });
+    return obj;
+  });
+
+  // Holidays
+  DATA.holidays = [...document.querySelectorAll("#holidayTable tbody tr")].map(tr => {
+    const obj = {};
+    tr.querySelectorAll("[data-field]").forEach(el => obj[el.dataset.field] = el.value.trim());
+    return obj;
+  });
+
+  persistData();
+}
+
+// =================================================================
+// EVENTS
+// =================================================================
+document.getElementById("btnView").addEventListener("click", () => {
+  document.getElementById("editPanel").classList.remove("active");
+  document.getElementById("scheduleView").style.display = "block";
+  toast("Viewing schedule");
+});
+
+document.getElementById("btnEdit").addEventListener("click", () => {
+  renderEditPanel();
+  document.getElementById("editPanel").classList.add("active");
+  document.getElementById("scheduleView").style.display = "none";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+document.getElementById("btnSaveEdit").addEventListener("click", () => {
+  collectEditData();
+  document.getElementById("editPanel").classList.remove("active");
+  document.getElementById("scheduleView").style.display = "block";
+  render();
+  toast("Schedule updated");
+});
+
+document.getElementById("btnCancelEdit").addEventListener("click", () => {
+  DATA = loadData();
+  document.getElementById("editPanel").classList.remove("active");
+  document.getElementById("scheduleView").style.display = "block";
+});
+
+document.getElementById("btnExport").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(DATA, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  const safeName = (DATA.term.name || "schedule").toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  a.download = `${safeName}.json`;
+  a.click();
+  toast("Template downloaded");
+});
+
+document.getElementById("btnImport").addEventListener("click", () => {
+  document.getElementById("fileInput").click();
+});
+
+document.getElementById("fileInput").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      DATA = imported;
+      persistData();
+      render();
+      toast("Template imported");
+    } catch (err) {
+      toast("Could not read that file");
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
+});
+
+document.getElementById("btnPrint").addEventListener("click", () => window.print());
+document.getElementById("btnHelp").addEventListener("click", () => document.getElementById("helpModal").classList.add("active"));
+
+document.getElementById("helpModal").addEventListener("click", (e) => {
+  if (e.target.id === "helpModal") e.currentTarget.classList.remove("active");
+});
+
+// Add row buttons + delete buttons (delegated)
+document.getElementById("editPanel").addEventListener("click", (e) => {
+  if (e.target.dataset.add) {
+    const type = e.target.dataset.add;
+    if (type === "course") DATA.courses.push({code:"NEW 100",instructor:"TBD",day:"Mon",time:"6:00-8:00 PM",room:"000",color:"chm130"});
+    if (type === "online") DATA.online.push({code:"NEW 100",instructor:"TBD",day:"Mon",time:"6:00-8:00 PM"});
+    if (type === "lab")    DATA.labs.push({course:"NEW LAB",instructor:"TBD",dates:[],room:"814",color:"chm130-lab"});
+    if (type === "holiday")DATA.holidays.push({date:DATA.term.startDate,name:"New Holiday"});
+    renderEditPanel();
+  }
+  if (e.target.dataset.delete) {
+    collectEditData();
+    const t = e.target.dataset.delete;
+    const i = parseInt(e.target.dataset.i);
+    if (t === "course") DATA.courses.splice(i, 1);
+    if (t === "online") DATA.online.splice(i, 1);
+    if (t === "lab")    DATA.labs.splice(i, 1);
+    if (t === "holiday")DATA.holidays.splice(i, 1);
+    renderEditPanel();
+  }
+});
+
+// =================================================================
+// HELPERS
+// =================================================================
+function escapeHtml(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function escapeAttr(s) { return escapeHtml(s); }
+
+let toastTimer;
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+// =================================================================
+// INIT
+// =================================================================
+render();
+</script>
+
+</body>
+</html>
