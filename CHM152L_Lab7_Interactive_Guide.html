@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHM 152L Lab 7 — Buffer Solutions | Tehrani Labs</title>
+    <style>
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      :root{
+        --navy:#1a1a2e;--teal-dark:#16213e;--teal:#0ea5e9;--teal-light:#38bdf8;
+        --gold:#f59e0b;--gold-light:#fbbf24;--green:#22c55e;--red:#ef4444;
+        --bg:#ffffff;--bg-alt:#f8fafc;--bg-card:#ffffff;
+        --text:#1e293b;--text-muted:#64748b;--text-light:#94a3b8;--border:#e2e8f0;
+        --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+        --shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
+        --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+        --radius:12px;--radius-sm:8px;--transition:.3s ease;
+      }
+      .dark{
+        --bg:#0f172a;--bg-alt:#1e293b;--bg-card:#1e293b;
+        --text:#e2e8f0;--text-muted:#94a3b8;--text-light:#64748b;--border:#334155;
+        --shadow:0 1px 3px rgba(0,0,0,.3);--shadow-md:0 4px 6px rgba(0,0,0,.4);
+        --shadow-lg:0 10px 15px rgba(0,0,0,.5);
+      }
+      body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:background var(--transition),color var(--transition)}
+      h1,h2,h3,h4{line-height:1.3}
+      h2{font-size:1.5rem;margin-bottom:1rem;color:var(--navy)}
+      .dark h2{color:var(--teal-light)}
+      h3{font-size:1.15rem;margin:1.2rem 0 .5rem;color:var(--teal-dark)}
+      .dark h3{color:var(--teal)}
+
+      /* HEADER */
+      header{background:linear-gradient(135deg,var(--navy),var(--teal-dark));color:#fff;padding:1.5rem 1rem;text-align:center}
+      header h1{font-size:1.6rem;margin-bottom:.3rem}
+      header p{opacity:.85;font-size:.95rem}
+      .theme-toggle{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.85rem}
+      .theme-toggle:hover{background:rgba(255,255,255,.25)}
+
+      /* TABS */
+      .tabs{display:flex;gap:4px;padding:.5rem 1rem;background:var(--bg-alt);border-bottom:1px solid var(--border);overflow-x:auto;position:sticky;top:0;z-index:50}
+      .tab-btn{background:none;border:none;padding:10px 16px;font-size:.85rem;color:var(--text-muted);cursor:pointer;border-radius:var(--radius-sm) var(--radius-sm) 0 0;white-space:nowrap;font-weight:600;transition:all .2s}
+      .tab-btn:hover{color:var(--text);background:var(--bg)}
+      .tab-btn.active{color:var(--teal);background:var(--bg);border-bottom:3px solid var(--teal)}
+
+      /* CONTENT */
+      .container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 3rem}
+      section{display:none;animation:fadeIn .3s ease}
+      section.active{display:block}
+      @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+      /* CARDS */
+      .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow);transition:box-shadow .2s}
+      .card:hover{box-shadow:var(--shadow-md)}
+      .card-highlight{border-left:4px solid var(--teal)}
+      .card-gold{border-left:4px solid var(--gold)}
+      .card-green{border-left:4px solid var(--green)}
+      .card-red{border-left:4px solid var(--red)}
+
+      /* EQUATIONS */
+      .equation{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;text-align:center;font-size:1.15rem;font-weight:700;margin:1rem 0;font-family:"Times New Roman",Georgia,serif}
+
+      /* TABLES */
+      table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+      th{background:var(--navy);color:#fff;padding:10px 8px;text-align:center;font-size:.82rem}
+      .dark th{background:var(--teal-dark)}
+      td{padding:8px;text-align:center;border-bottom:1px solid var(--border)}
+      tr:nth-child(even){background:var(--bg-alt)}
+      input[type="number"],input[type="text"]{width:70px;padding:4px 6px;border:1px solid var(--border);border-radius:4px;text-align:center;font-size:.9rem;background:var(--bg);color:var(--text)}
+      input:focus{outline:2px solid var(--teal);border-color:var(--teal)}
+
+      /* BUTTONS */
+      .btn{display:inline-block;padding:8px 20px;border:none;border-radius:var(--radius-sm);cursor:pointer;font-weight:600;font-size:.9rem;transition:all .2s}
+      .btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{background:var(--teal-light)}
+      .btn-gold{background:var(--gold);color:#fff}.btn-gold:hover{background:var(--gold-light)}
+      .btn-green{background:var(--green);color:#fff}.btn-green:hover{opacity:.9}
+      .btn-sm{padding:5px 12px;font-size:.8rem}
+
+      /* FEEDBACK */
+      .fb{display:none;padding:8px 12px;border-radius:var(--radius-sm);margin-top:8px;font-size:.9rem}
+      .fb-correct{background:rgba(34,197,94,.12);border:1px solid var(--green);color:var(--green)}
+      .fb-wrong{background:rgba(239,68,68,.1);border:1px solid var(--red);color:var(--red)}
+      .fb-info{background:rgba(14,165,233,.1);border:1px solid var(--teal);color:var(--teal)}
+
+      /* SIMULATOR */
+      .sim-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+      .beaker-visual{width:80px;height:100px;border:3px solid var(--border);border-top:none;border-radius:0 0 12px 12px;position:relative;overflow:hidden;display:inline-block;margin:0 6px;transition:all .3s}
+      .beaker-fill{position:absolute;bottom:0;left:0;right:0;transition:all .5s;border-radius:0 0 9px 9px}
+      .beaker-label{text-align:center;font-size:.75rem;font-weight:700;margin-top:4px}
+      .beaker-ph{text-align:center;font-size:.7rem;color:var(--text-muted)}
+
+      /* PROGRESS */
+      .progress-bar{width:100%;height:6px;background:var(--border);border-radius:3px;margin:10px 0;overflow:hidden}
+      .progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--green));border-radius:3px;transition:width .5s}
+
+      /* QUIZ */
+      .quiz-option{display:block;width:100%;text-align:left;padding:12px 16px;margin:6px 0;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);cursor:pointer;font-size:.95rem;transition:all .2s;color:var(--text)}
+      .quiz-option:hover{border-color:var(--teal);background:rgba(14,165,233,.05)}
+      .quiz-option.correct{border-color:var(--green);background:rgba(34,197,94,.1)}
+      .quiz-option.wrong{border-color:var(--red);background:rgba(239,68,68,.08)}
+      .quiz-option:disabled{cursor:default;opacity:.8}
+
+      /* CLINICAL PEARL */
+      .pearl{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(251,191,36,.05));border:1px solid rgba(245,158,11,.3);border-radius:var(--radius);padding:1rem;margin:1rem 0}
+      .pearl::before{content:"Clinical Pearl";display:block;font-weight:700;color:var(--gold);margin-bottom:4px;font-size:.85rem}
+
+      /* FOOTER */
+      footer{text-align:center;padding:1.5rem;background:var(--bg-alt);border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
+      footer a{color:var(--teal);text-decoration:none}
+
+      /* RESPONSIVE */
+      @media(max-width:600px){
+        header h1{font-size:1.2rem}
+        .tab-btn{padding:8px 10px;font-size:.78rem}
+        .container{padding:1rem .5rem}
+        .beaker-visual{width:55px;height:70px}
+        input[type="number"]{width:55px}
+        .equation{font-size:1rem;padding:.75rem}
+      }
+
+      /* PRINT */
+      @media print{
+        .tabs,.theme-toggle,nav,footer,.btn,.sim-controls{display:none!important}
+        section{display:block!important}
+        body{background:#fff;color:#000}
+        .card{border:1px solid #ccc;box-shadow:none;break-inside:avoid}
+      }
+    </style>
+  </head>
+  <body>
+    <header style="position:relative">
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">&#9790; Dark</button>
+      <h1>&#129514; Lab 7: Buffer Solutions</h1>
+      <p>CHM 152L &mdash; Interactive Learning Guide</p>
+      <div class="progress-bar" style="margin-top:12px"><div class="progress-fill" id="progBar" style="width:0%"></div></div>
+    </header>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="switchTab('overview',this)">&#128218; Overview</button>
+      <button class="tab-btn" onclick="switchTab('concepts',this)">&#129504; Concepts</button>
+      <button class="tab-btn" onclick="switchTab('procedure',this)">&#129514; Procedure</button>
+      <button class="tab-btn" onclick="switchTab('simulator',this)">&#128300; Simulator</button>
+      <button class="tab-btn" onclick="switchTab('calcs',this)">&#128290; Calculations</button>
+      <button class="tab-btn" onclick="switchTab('quiz',this)">&#9989; Quiz</button>
+    </nav>
+
+    <div class="container">
+
+      <!-- ============ OVERVIEW ============ -->
+      <section id="overview" class="active">
+        <h2>Lab Overview</h2>
+
+        <div class="card card-highlight">
+          <h3>&#127919; Objectives</h3>
+          <ol style="padding-left:1.2em;line-height:2">
+            <li>Measure the pH of several acid-base solutions</li>
+            <li>Prepare a series of buffer solutions with varying acid/base ratios</li>
+            <li>Test buffer capacity by adding strong acid (HCl) and strong base (NaOH)</li>
+            <li>Determine K<sub>a</sub> of acetic acid using the Henderson-Hasselbalch equation</li>
+          </ol>
+        </div>
+
+        <div class="card card-gold">
+          <h3>&#128221; Materials</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.9rem">
+            <div>
+              <ul style="padding-left:1.2em">
+                <li>pH meter (calibrated)</li>
+                <li>Six 50 mL beakers</li>
+                <li>10 mL graduated cylinder</li>
+                <li>Disposable pipettes</li>
+                <li>Stirring rod</li>
+              </ul>
+            </div>
+            <div>
+              <ul style="padding-left:1.2em">
+                <li>0.5 M acetic acid (CH<sub>3</sub>COOH)</li>
+                <li>0.5 M sodium acetate (NaCH<sub>3</sub>COO)</li>
+                <li>3 M hydrochloric acid (HCl)</li>
+                <li>3 M sodium hydroxide (NaOH)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>&#128301; The Buffer System</h3>
+          <p>Today you'll work with the <strong>acetic acid / acetate</strong> buffer system:</p>
+          <div class="equation">CH<sub>3</sub>COOH (weak acid) + CH<sub>3</sub>COO<sup>&minus;</sup> (conjugate base)</div>
+          <p>You'll mix six different ratios and discover how changing the ratio affects pH and buffer capacity.</p>
+        </div>
+
+        <div class="card">
+          <h3>&#128202; Key Data</h3>
+          <table>
+            <tr><th>Property</th><th>Value</th></tr>
+            <tr><td>K<sub>a</sub> of acetic acid</td><td><strong>1.8 &times; 10<sup>&minus;5</sup></strong></td></tr>
+            <tr><td>pK<sub>a</sub></td><td><strong>4.74</strong></td></tr>
+            <tr><td>K<sub>b</sub> of acetate ion</td><td><strong>5.56 &times; 10<sup>&minus;10</sup></strong></td></tr>
+            <tr><td>Stock concentrations</td><td>Both <strong>0.5 M</strong></td></tr>
+            <tr><td>Total volume per beaker</td><td><strong>10 mL</strong></td></tr>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ CONCEPTS ============ -->
+      <section id="concepts">
+        <h2>Key Concepts</h2>
+
+        <div class="card card-highlight">
+          <h3>What Is a Buffer?</h3>
+          <p>A <strong>buffer</strong> is a solution that resists pH changes when small amounts of acid or base are added. It contains:</p>
+          <ul style="padding-left:1.3em;margin:8px 0">
+            <li><strong>A weak acid (HA)</strong> &mdash; neutralizes added base (OH<sup>&minus;</sup>)</li>
+            <li><strong>Its conjugate base (A<sup>&minus;</sup>)</strong> &mdash; neutralizes added acid (H<sup>+</sup>)</li>
+          </ul>
+          <p>Both components must be present for a buffer to work!</p>
+        </div>
+
+        <div class="card card-gold">
+          <h3>How Buffers Work</h3>
+          <p><strong>When acid (H<sup>+</sup>) is added:</strong></p>
+          <div class="equation">CH<sub>3</sub>COO<sup>&minus;</sup> + H<sup>+</sup> &rarr; CH<sub>3</sub>COOH</div>
+          <p>The conjugate base "absorbs" the added H<sup>+</sup>, converting to weak acid. pH barely changes.</p>
+
+          <p style="margin-top:12px"><strong>When base (OH<sup>&minus;</sup>) is added:</strong></p>
+          <div class="equation">CH<sub>3</sub>COOH + OH<sup>&minus;</sup> &rarr; CH<sub>3</sub>COO<sup>&minus;</sup> + H<sub>2</sub>O</div>
+          <p>The weak acid "absorbs" the added OH<sup>&minus;</sup>, converting to conjugate base. pH barely changes.</p>
+        </div>
+
+        <div class="card card-green">
+          <h3>Henderson-Hasselbalch Equation</h3>
+          <div class="equation" style="font-size:1.3rem">pH = pK<sub>a</sub> + log ([A<sup>&minus;</sup>] / [HA])</div>
+          <p>This equation only works when <strong>both HA and A<sup>&minus;</sup> are present</strong> (Beakers 2&ndash;5). Key insights:</p>
+          <ul style="padding-left:1.3em;margin-top:8px">
+            <li>When [A<sup>&minus;</sup>] = [HA]: pH = pK<sub>a</sub> (the ratio is 1, log(1) = 0)</li>
+            <li>When [A<sup>&minus;</sup>] &gt; [HA]: pH &gt; pK<sub>a</sub> (more basic)</li>
+            <li>When [A<sup>&minus;</sup>] &lt; [HA]: pH &lt; pK<sub>a</sub> (more acidic)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Buffer Capacity</h3>
+          <p><strong>Buffer capacity</strong> is how much acid or base can be added before the pH changes significantly (&gt; 0.5 units).</p>
+          <ul style="padding-left:1.3em;margin-top:8px">
+            <li><strong>Against acid:</strong> depends on how much A<sup>&minus;</sup> is available. More A<sup>&minus;</sup> = more capacity against acid.</li>
+            <li><strong>Against base:</strong> depends on how much HA is available. More HA = more capacity against base.</li>
+            <li>Maximum buffer capacity occurs when [HA] = [A<sup>&minus;</sup>] (pH = pK<sub>a</sub>)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>ICE Tables (for Beakers 1 &amp; 6)</h3>
+          <p>Beaker 1 (pure acid) and Beaker 6 (pure base) are <strong>NOT buffers</strong> &mdash; they lack one component. Use an ICE table instead.</p>
+          <p style="margin-top:8px"><strong>Beaker 1 (weak acid):</strong> CH<sub>3</sub>COOH &#8652; H<sup>+</sup> + CH<sub>3</sub>COO<sup>&minus;</sup></p>
+          <p>Use K<sub>a</sub> = 1.8 &times; 10<sup>&minus;5</sup></p>
+          <p style="margin-top:8px"><strong>Beaker 6 (weak base):</strong> CH<sub>3</sub>COO<sup>&minus;</sup> + H<sub>2</sub>O &#8652; CH<sub>3</sub>COOH + OH<sup>&minus;</sup></p>
+          <p>Use K<sub>b</sub> = K<sub>w</sub> / K<sub>a</sub> = 5.56 &times; 10<sup>&minus;10</sup></p>
+        </div>
+
+        <div class="pearl">
+          Buffers are critical in the human body! Blood is buffered at pH 7.35&ndash;7.45 by the carbonic acid/bicarbonate system (H<sub>2</sub>CO<sub>3</sub>/HCO<sub>3</sub><sup>&minus;</sup>). A pH drop below 7.35 (acidosis) or rise above 7.45 (alkalosis) can be life-threatening. IV fluids given to patients are buffered to prevent dangerous pH shifts.
+        </div>
+      </section>
+
+      <!-- ============ PROCEDURE ============ -->
+      <section id="procedure">
+        <h2>Step-by-Step Procedure</h2>
+
+        <div class="card card-highlight">
+          <h3>Part I: Buffer Preparation</h3>
+          <ol style="padding-left:1.3em;line-height:2.2">
+            <li>Label six clean, dry 50 mL beakers <strong>1&ndash;6</strong>.</li>
+            <li>Using a graduated cylinder, prepare each solution:
+              <table style="margin:8px 0">
+                <tr><th>Beaker</th><th>0.5 M CH<sub>3</sub>COOH (mL)</th><th>0.5 M NaCH<sub>3</sub>COO (mL)</th><th>Total (mL)</th><th>Type</th></tr>
+                <tr><td>1</td><td>10</td><td>0</td><td>10</td><td>Pure acid</td></tr>
+                <tr><td>2</td><td>8</td><td>2</td><td>10</td><td>Buffer (4:1)</td></tr>
+                <tr><td>3</td><td>6</td><td>4</td><td>10</td><td>Buffer (3:2)</td></tr>
+                <tr><td>4</td><td>4</td><td>6</td><td>10</td><td>Buffer (2:3)</td></tr>
+                <tr><td>5</td><td>2</td><td>8</td><td>10</td><td>Buffer (1:4)</td></tr>
+                <tr><td>6</td><td>0</td><td>10</td><td>10</td><td>Pure base</td></tr>
+              </table>
+            </li>
+            <li>Measure and record the pH of each beaker using a calibrated pH meter.</li>
+            <li>Rinse the probe with distilled water between each measurement.</li>
+          </ol>
+        </div>
+
+        <div class="card card-gold">
+          <h3>Part II: Addition of Strong Acid (HCl)</h3>
+          <ol style="padding-left:1.3em;line-height:2.2">
+            <li>Add <strong>5 drops</strong> of 3 M HCl to each beaker.</li>
+            <li>Stir gently and record the new pH.</li>
+            <li>Continue adding 5-drop portions, recording pH each time.</li>
+            <li>Stop when the pH changes by more than <strong>0.5 unit</strong> from the previous reading.</li>
+          </ol>
+          <div class="fb fb-info" style="display:block">&#128161; The point where &Delta;pH &gt; 0.5 means the buffer capacity has been exceeded.</div>
+        </div>
+
+        <div class="card card-gold">
+          <h3>Part III: Addition of Strong Base (NaOH)</h3>
+          <ol style="padding-left:1.3em;line-height:2.2">
+            <li>Prepare a <strong>fresh set</strong> of the six solutions (same as Part I).</li>
+            <li>Add <strong>5 drops</strong> of 3 M NaOH to each beaker.</li>
+            <li>Continue adding 5-drop portions until &Delta;pH &gt; 0.5.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3>&#128161; Tips for Success</h3>
+          <ul style="padding-left:1.3em;line-height:2">
+            <li>Rinse the graduated cylinder with distilled water when switching between acid and base.</li>
+            <li>Wait for the pH meter reading to stabilize before recording (5&ndash;10 seconds).</li>
+            <li>Count drops carefully &mdash; consistency matters!</li>
+            <li>Don't forget to make <strong>fresh</strong> solutions for Part III.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ SIMULATOR ============ -->
+      <section id="simulator">
+        <h2>&#128300; Buffer Simulator</h2>
+        <p style="margin-bottom:1rem">Mix different ratios and see the pH change in real time. Then test buffer capacity by adding acid or base.</p>
+
+        <div class="card card-highlight">
+          <h3>Step 1: Choose a Beaker</h3>
+          <div class="sim-controls">
+            <button class="btn btn-teal btn-sm" onclick="simSelect(1)">Beaker 1</button>
+            <button class="btn btn-teal btn-sm" onclick="simSelect(2)">Beaker 2</button>
+            <button class="btn btn-teal btn-sm" onclick="simSelect(3)">Beaker 3</button>
+            <button class="btn btn-teal btn-sm" onclick="simSelect(4)">Beaker 4</button>
+            <button class="btn btn-teal btn-sm" onclick="simSelect(5)">Beaker 5</button>
+            <button class="btn btn-teal btn-sm" onclick="simSelect(6)">Beaker 6</button>
+          </div>
+          <div id="simInfo" style="margin-top:10px;font-size:.9rem;color:var(--text-muted)">Select a beaker to begin.</div>
+        </div>
+
+        <div class="card" id="simPanel" style="display:none">
+          <h3>Beaker <span id="simBkr">?</span></h3>
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:10px 0">
+            <div>
+              <div class="beaker-visual" id="simBeakerVis">
+                <div class="beaker-fill" id="simFill" style="height:70%;background:#a8d8ea"></div>
+              </div>
+              <div class="beaker-label" id="simBkrLabel">pH: ?</div>
+            </div>
+            <div style="flex:1;min-width:200px">
+              <p><strong>Composition:</strong></p>
+              <p id="simComp">—</p>
+              <p style="margin-top:6px"><strong>Current pH: <span id="simPH" style="color:var(--teal);font-size:1.2em">—</span></strong></p>
+              <p id="simConc" style="font-size:.85rem;color:var(--text-muted)"></p>
+            </div>
+          </div>
+
+          <h3 style="margin-top:16px">Step 2: Test Buffer Capacity</h3>
+          <div class="sim-controls">
+            <button class="btn btn-gold btn-sm" onclick="simAdd('hcl',5)">+5 drops HCl</button>
+            <button class="btn btn-gold btn-sm" onclick="simAdd('naoh',5)">+5 drops NaOH</button>
+            <button class="btn btn-sm" style="background:var(--border);color:var(--text)" onclick="simReset()">Reset</button>
+          </div>
+          <div id="simLog" style="margin-top:10px;font-size:.85rem;max-height:150px;overflow-y:auto;padding:6px;background:var(--bg-alt);border-radius:var(--radius-sm)"></div>
+          <div id="simAlert" class="fb" style="margin-top:8px"></div>
+        </div>
+
+        <div class="card card-gold" style="margin-top:16px">
+          <h3>&#128202; All Beakers at a Glance</h3>
+          <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0" id="allBeakers"></div>
+        </div>
+      </section>
+
+      <!-- ============ CALCULATIONS ============ -->
+      <section id="calcs">
+        <h2>&#128290; Calculations Practice</h2>
+
+        <div class="card card-highlight">
+          <h3>Step 1: Calculate Concentrations</h3>
+          <p>Use the dilution formula to find [HA] and [A<sup>&minus;</sup>] for each beaker:</p>
+          <div class="equation">[HA] = (Vol. acid &times; 0.5 M) / 10 mL &nbsp;&nbsp;&nbsp; [A<sup>&minus;</sup>] = (Vol. base &times; 0.5 M) / 10 mL</div>
+
+          <h4 style="margin-top:12px">Practice: Fill in the concentrations</h4>
+          <table>
+            <tr><th>Beaker</th><th>Vol. Acid</th><th>Vol. Base</th><th>[HA] (M)</th><th>[A<sup>&minus;</sup>] (M)</th></tr>
+            <tr><td>1</td><td>10 mL</td><td>0 mL</td><td><input type="number" id="c1ha" step="0.01" placeholder="?"></td><td><input type="number" id="c1ab" step="0.01" placeholder="?"></td></tr>
+            <tr><td>2</td><td>8 mL</td><td>2 mL</td><td><input type="number" id="c2ha" step="0.01" placeholder="?"></td><td><input type="number" id="c2ab" step="0.01" placeholder="?"></td></tr>
+            <tr><td>3</td><td>6 mL</td><td>4 mL</td><td><input type="number" id="c3ha" step="0.01" placeholder="?"></td><td><input type="number" id="c3ab" step="0.01" placeholder="?"></td></tr>
+            <tr><td>4</td><td>4 mL</td><td>6 mL</td><td><input type="number" id="c4ha" step="0.01" placeholder="?"></td><td><input type="number" id="c4ab" step="0.01" placeholder="?"></td></tr>
+            <tr><td>5</td><td>2 mL</td><td>8 mL</td><td><input type="number" id="c5ha" step="0.01" placeholder="?"></td><td><input type="number" id="c5ab" step="0.01" placeholder="?"></td></tr>
+            <tr><td>6</td><td>0 mL</td><td>10 mL</td><td><input type="number" id="c6ha" step="0.01" placeholder="?"></td><td><input type="number" id="c6ab" step="0.01" placeholder="?"></td></tr>
+          </table>
+          <button class="btn btn-teal" onclick="checkConc()">Check Answers</button>
+          <div id="concFb" class="fb"></div>
+        </div>
+
+        <div class="card card-green">
+          <h3>Step 2: Henderson-Hasselbalch (Beakers 2&ndash;5)</h3>
+          <div class="equation">pH = 4.74 + log ([A<sup>&minus;</sup>] / [HA])</div>
+
+          <h4>Practice: Calculate the pH</h4>
+          <table>
+            <tr><th>Beaker</th><th>[A<sup>&minus;</sup>]/[HA]</th><th>log(ratio)</th><th>Calculated pH</th></tr>
+            <tr><td>2</td><td>0.10/0.40 = 0.25</td><td>&minus;0.602</td><td><input type="number" id="ph2" step="0.01" placeholder="?"></td></tr>
+            <tr><td>3</td><td>0.20/0.30 = 0.667</td><td>&minus;0.176</td><td><input type="number" id="ph3" step="0.01" placeholder="?"></td></tr>
+            <tr><td>4</td><td>0.30/0.20 = 1.50</td><td>+0.176</td><td><input type="number" id="ph4" step="0.01" placeholder="?"></td></tr>
+            <tr><td>5</td><td>0.40/0.10 = 4.00</td><td>+0.602</td><td><input type="number" id="ph5" step="0.01" placeholder="?"></td></tr>
+          </table>
+          <button class="btn btn-green" onclick="checkHH()">Check pH Values</button>
+          <div id="hhFb" class="fb"></div>
+        </div>
+
+        <div class="card card-gold">
+          <h3>Step 3: ICE Table &mdash; Beaker 1 (Pure Acid)</h3>
+          <p>CH<sub>3</sub>COOH &#8652; H<sup>+</sup> + CH<sub>3</sub>COO<sup>&minus;</sup> &nbsp;&nbsp;&nbsp; K<sub>a</sub> = 1.8 &times; 10<sup>&minus;5</sup></p>
+          <table style="margin:10px 0">
+            <tr><th></th><th>CH<sub>3</sub>COOH</th><th>H<sup>+</sup></th><th>CH<sub>3</sub>COO<sup>&minus;</sup></th></tr>
+            <tr><td><strong>I</strong></td><td>0.50</td><td>0</td><td>0</td></tr>
+            <tr><td><strong>C</strong></td><td>&minus;x</td><td>+x</td><td>+x</td></tr>
+            <tr><td><strong>E</strong></td><td>0.50 &minus; x</td><td>x</td><td>x</td></tr>
+          </table>
+          <p>K<sub>a</sub> = x&sup2; / 0.50 &nbsp;&rarr;&nbsp; x = ?</p>
+          <p style="margin-top:8px">What is the pH of Beaker 1?
+            <input type="number" id="phB1" step="0.01" placeholder="?" style="margin-left:8px">
+            <button class="btn btn-gold btn-sm" onclick="checkICE1()">Check</button>
+          </p>
+          <div id="ice1Fb" class="fb"></div>
+        </div>
+
+        <div class="card card-gold">
+          <h3>Step 4: ICE Table &mdash; Beaker 6 (Pure Base)</h3>
+          <p>CH<sub>3</sub>COO<sup>&minus;</sup> + H<sub>2</sub>O &#8652; CH<sub>3</sub>COOH + OH<sup>&minus;</sup> &nbsp;&nbsp;&nbsp; K<sub>b</sub> = 5.56 &times; 10<sup>&minus;10</sup></p>
+          <table style="margin:10px 0">
+            <tr><th></th><th>CH<sub>3</sub>COO<sup>&minus;</sup></th><th>CH<sub>3</sub>COOH</th><th>OH<sup>&minus;</sup></th></tr>
+            <tr><td><strong>I</strong></td><td>0.50</td><td>0</td><td>0</td></tr>
+            <tr><td><strong>C</strong></td><td>&minus;x</td><td>+x</td><td>+x</td></tr>
+            <tr><td><strong>E</strong></td><td>0.50 &minus; x</td><td>x</td><td>x</td></tr>
+          </table>
+          <p>K<sub>b</sub> = x&sup2; / 0.50 &nbsp;&rarr;&nbsp; pOH = ? &nbsp;&rarr;&nbsp; pH = ?</p>
+          <p style="margin-top:8px">What is the pH of Beaker 6?
+            <input type="number" id="phB6" step="0.01" placeholder="?" style="margin-left:8px">
+            <button class="btn btn-gold btn-sm" onclick="checkICE6()">Check</button>
+          </p>
+          <div id="ice6Fb" class="fb"></div>
+        </div>
+      </section>
+
+      <!-- ============ QUIZ ============ -->
+      <section id="quiz">
+        <h2>&#9989; Knowledge Check</h2>
+        <p style="margin-bottom:1rem">Test your understanding. Score: <strong id="quizScore">0</strong> / <span id="quizTotal">8</span></p>
+
+        <div class="card" id="qq1">
+          <h3>Q1: What two components make up a buffer?</h3>
+          <button class="quiz-option" onclick="answer(1,'a',false)">A) A strong acid and a strong base</button>
+          <button class="quiz-option" onclick="answer(1,'b',true)">B) A weak acid and its conjugate base</button>
+          <button class="quiz-option" onclick="answer(1,'c',false)">C) Two different strong acids</button>
+          <button class="quiz-option" onclick="answer(1,'d',false)">D) A weak acid and a strong acid</button>
+          <div id="fb1" class="fb"></div>
+        </div>
+
+        <div class="card" id="qq2">
+          <h3>Q2: What is the pK<sub>a</sub> of acetic acid?</h3>
+          <button class="quiz-option" onclick="answer(2,'a',false)">A) 1.80</button>
+          <button class="quiz-option" onclick="answer(2,'b',false)">B) 7.00</button>
+          <button class="quiz-option" onclick="answer(2,'c',true)">C) 4.74</button>
+          <button class="quiz-option" onclick="answer(2,'d',false)">D) 9.26</button>
+          <div id="fb2" class="fb"></div>
+        </div>
+
+        <div class="card" id="qq3">
+          <h3>Q3: When [A<sup>&minus;</sup>] = [HA] in a buffer, the pH equals:</h3>
+          <button class="quiz-option" onclick="answer(3,'a',false)">A) 7.00</button>
+          <button class="quiz-option" onclick="answer(3,'b',true)">B) pK<sub>a</sub></button>
+          <button class="quiz-option" onclick="answer(3,'c',false)">C) 0</button>
+          <button class="quiz-option" onclick="answer(3,'d',false)">D) 14</button>
+          <div id="fb3" class="fb"></div>
+        </div>
+
+        <div class="card" id="qq4">
+          <h3>Q4: Which beaker has the most buffer capacity against added HCl?</h3>
+          <button class="quiz-option" onclick="answer(4,'a',false)">A) Beaker 1 (pure acid)</button>
+          <button class="quiz-option" onclick="answer(4,'b',false)">B) Beaker 2 (most HA)</button>
+          <button class="quiz-option" onclick="answer(4,'c',false)">C) Beaker 3 (6:4 ratio)</button>
+          <button class="quiz-option" onclick="answer(4,'d',true)">D) Beaker 5 (most A<sup>&minus;</sup>)</button>
+          <div id="fb4" class="fb"></div>
+        </div>
+
+        <div class="card" id="qq5">
+          <h3>Q5: What happens when NaOH is added to an acetate buffer?</h3>
+          <button class="quiz-option" onclick="answer(5,'a',true)">A) CH<sub>3</sub>COOH + OH<sup>&minus;</sup> &rarr; CH<sub>3</sub>COO<sup>&minus;</sup> + H<sub>2</sub>O</button>
+          <button class="quiz-option" onclick="answer(5,'b',false)">B) CH<sub>3</sub>COO<sup>&minus;</sup> + OH<sup>&minus;</sup> &rarr; CH<sub>3</sub>COOH + O<sup>2&minus;</sup></button>
+          <button class="quiz-option" onclick="answer(5,'c',false)">C) NaOH + HCl &rarr; NaCl + H<sub>2</sub>O</button>
+          <button class="quiz-option" onclick="answer(5,'d',false)">D) No reaction occurs</button>
+          <div id="fb5" class="fb"></div>
+        </div>
+
+        <div class="card" id="qq6">
+          <h3>Q6: Why can't you use Henderson-Hasselbalch for Beaker 1?</h3>
+          <button class="quiz-option" onclick="answer(6,'a',false)">A) The acid is too strong</button>
+          <button class="quiz-option" onclick="answer(6,'b',true)">B) There is no conjugate base present (A<sup>&minus;</sup> = 0)</button>
+          <button class="quiz-option" onclick="answer(6,'c',false)">C) The concentration is too high</button>
+          <button class="quiz-option" onclick="answer(6,'d',false)">D) The equation only works above pH 7</button>
+          <div id="fb6" class="fb"></div>
+        </div>
+
+        <div class="card" id="qq7">
+          <h3>Q7: Calculate pH for Beaker 4: pH = 4.74 + log(0.30/0.20) = ?</h3>
+          <button class="quiz-option" onclick="answer(7,'a',false)">A) 4.56</button>
+          <button class="quiz-option" onclick="answer(7,'b',true)">B) 4.92</button>
+          <button class="quiz-option" onclick="answer(7,'c',false)">C) 5.34</button>
+          <button class="quiz-option" onclick="answer(7,'d',false)">D) 4.14</button>
+          <div id="fb7" class="fb"></div>
+        </div>
+
+        <div class="card" id="qq8">
+          <h3>Q8: For Beaker 6 (pure conjugate base), you must calculate K<sub>b</sub> first. K<sub>b</sub> = ?</h3>
+          <button class="quiz-option" onclick="answer(8,'a',false)">A) 1.8 &times; 10<sup>&minus;5</sup></button>
+          <button class="quiz-option" onclick="answer(8,'b',false)">B) 1.0 &times; 10<sup>&minus;14</sup></button>
+          <button class="quiz-option" onclick="answer(8,'c',true)">C) 5.56 &times; 10<sup>&minus;10</sup></button>
+          <button class="quiz-option" onclick="answer(8,'d',false)">D) 4.74</button>
+          <div id="fb8" class="fb"></div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer>
+      &copy; Tehrani Labs &middot; CHM 152L &middot; Arizona College of Nursing &middot;
+      <a href="https://tehranilabs.org" target="_blank">tehranilabs.org</a>
+    </footer>
+
+    <script>
+    /* ====== THEME ====== */
+    function toggleTheme(){
+      document.body.classList.toggle("dark");
+      var btn=document.querySelector(".theme-toggle");
+      btn.innerHTML=document.body.classList.contains("dark")?"&#9788; Light":"&#9790; Dark";
+    }
+
+    /* ====== TABS ====== */
+    var tabOrder=["overview","concepts","procedure","simulator","calcs","quiz"];
+    function switchTab(id,btn){
+      document.querySelectorAll("section").forEach(function(s){s.classList.remove("active")});
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll(".tab-btn").forEach(function(b){b.classList.remove("active")});
+      if(btn)btn.classList.add("active");
+      updateProgress();
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    /* ====== PROGRESS ====== */
+    var visited=new Set(["overview"]);
+    function updateProgress(){
+      var active=document.querySelector("section.active");
+      if(active)visited.add(active.id);
+      var pct=Math.round((visited.size/tabOrder.length)*100);
+      document.getElementById("progBar").style.width=pct+"%";
+    }
+
+    /* ====== SIMULATOR ====== */
+    var Ka=1.8e-5, pKa=4.74;
+    var beakerData=[
+      {id:1,va:10,vb:0,ha:0.50,ab:0.00,type:"Pure acid"},
+      {id:2,va:8,vb:2,ha:0.40,ab:0.10,type:"Buffer (4:1)"},
+      {id:3,va:6,vb:4,ha:0.30,ab:0.20,type:"Buffer (3:2)"},
+      {id:4,va:4,vb:6,ha:0.20,ab:0.30,type:"Buffer (2:3)"},
+      {id:5,va:2,vb:8,ha:0.10,ab:0.40,type:"Buffer (1:4)"},
+      {id:6,va:0,vb:10,ha:0.00,ab:0.50,type:"Pure base"},
+    ];
+
+    var simState={bkr:null,ha:0,ab:0,vol:10,drops_hcl:0,drops_naoh:0,log:[]};
+
+    function calcpH(ha,ab,vol){
+      var cHA=ha/vol,cAB=ab/vol;
+      if(cHA>1e-10 && cAB>1e-10){
+        return pKa+Math.log10(cAB/cHA);
+      }else if(cHA>1e-10 && cAB<=1e-10){
+        var x=(-Ka+Math.sqrt(Ka*Ka+4*Ka*cHA))/2;
+        return -Math.log10(x);
+      }else if(cAB>1e-10 && cHA<=1e-10){
+        var Kb=1e-14/Ka;
+        var x2=(-Kb+Math.sqrt(Kb*Kb+4*Kb*cAB))/2;
+        return 14+Math.log10(x2);
+      }
+      return 7.0;
+    }
+
+    function phColor(ph){
+      if(ph<3)return"#e53e3e";if(ph<5)return"#ed8936";if(ph<6)return"#ecc94b";
+      if(ph<8)return"#48bb78";if(ph<10)return"#4299e1";return"#805ad5";
+    }
+
+    function simSelect(n){
+      var b=beakerData[n-1];
+      simState.bkr=n;
+      simState.ha=b.ha*0.01;// moles (conc * 0.01L)
+      simState.ab=b.ab*0.01;
+      simState.vol=0.01;// 10 mL in L
+      simState.drops_hcl=0;
+      simState.drops_naoh=0;
+      simState.log=[];
+      document.getElementById("simPanel").style.display="block";
+      document.getElementById("simBkr").textContent=n;
+      document.getElementById("simComp").innerHTML=b.va+" mL acid + "+b.vb+" mL base &mdash; <em>"+b.type+"</em>";
+      document.getElementById("simConc").textContent="[HA]="+b.ha.toFixed(2)+" M, [A\u207b]="+b.ab.toFixed(2)+" M";
+      document.getElementById("simLog").innerHTML="";
+      document.getElementById("simAlert").style.display="none";
+      simUpdate();
+    }
+
+    function simUpdate(){
+      var ph=calcpH(simState.ha,simState.ab,simState.vol);
+      document.getElementById("simPH").textContent=ph.toFixed(2);
+      document.getElementById("simBkrLabel").textContent="pH: "+ph.toFixed(2);
+      var fill=document.getElementById("simFill");
+      fill.style.background=phColor(ph);
+      fill.style.height=Math.min(85,60+simState.drops_hcl+simState.drops_naoh)+"%";
+    }
+
+    function simAdd(type,drops){
+      if(!simState.bkr)return;
+      var prevPH=calcpH(simState.ha,simState.ab,simState.vol);
+      // 5 drops ~ 0.25 mL = 0.00025 L of 3 M = 0.00075 mol
+      var mol=drops*0.00005*3;// 1 drop ~ 0.05 mL
+      var addVol=drops*0.00005;
+
+      if(type==="hcl"){
+        simState.drops_hcl+=drops;
+        // HCl adds H+, which reacts with A-
+        if(simState.ab>=mol){
+          simState.ab-=mol;
+          simState.ha+=mol;
+        }else{
+          var leftover=mol-simState.ab;
+          simState.ha+=simState.ab;
+          simState.ab=0;
+          // leftover H+ just increases [H+]
+          simState.ha+=leftover;// approximate
+        }
+        simState.vol+=addVol;
+      }else{
+        simState.drops_naoh+=drops;
+        // NaOH adds OH-, which reacts with HA
+        if(simState.ha>=mol){
+          simState.ha-=mol;
+          simState.ab+=mol;
+        }else{
+          var leftover2=mol-simState.ha;
+          simState.ab+=simState.ha;
+          simState.ha=0;
+          simState.ab+=leftover2;
+        }
+        simState.vol+=addVol;
+      }
+
+      var newPH=calcpH(simState.ha,simState.ab,simState.vol);
+      var delta=Math.abs(newPH-prevPH);
+      var totalDrops=type==="hcl"?simState.drops_hcl:simState.drops_naoh;
+      var label=type==="hcl"?"HCl":"NaOH";
+
+      simState.log.push("+" + drops + " drops " + label + " (total: " + totalDrops + ") → pH = " + newPH.toFixed(2) + " (ΔpH = " + delta.toFixed(2) + ")");
+
+      var logEl=document.getElementById("simLog");
+      logEl.innerHTML=simState.log.map(function(l){return"<div>"+l+"</div>"}).join("");
+      logEl.scrollTop=logEl.scrollHeight;
+
+      var alert=document.getElementById("simAlert");
+      if(delta>0.5){
+        alert.className="fb fb-wrong";
+        alert.innerHTML="&#9888;&#65039; Buffer capacity exceeded! &Delta;pH = "+delta.toFixed(2)+" (> 0.5). The buffer can no longer resist this "+label+".";
+        alert.style.display="block";
+      }else if(delta>0.3){
+        alert.className="fb fb-info";
+        alert.innerHTML="&#9888; Getting close to buffer limit... &Delta;pH = "+delta.toFixed(2);
+        alert.style.display="block";
+      }else{
+        alert.style.display="none";
+      }
+
+      simUpdate();
+    }
+
+    function simReset(){
+      if(simState.bkr)simSelect(simState.bkr);
+    }
+
+    // Draw all beakers overview
+    function drawAllBeakers(){
+      var container=document.getElementById("allBeakers");
+      container.innerHTML="";
+      beakerData.forEach(function(b){
+        var ph=calcpH(b.ha*0.01,b.ab*0.01,0.01);
+        var div=document.createElement("div");
+        div.style.textAlign="center";
+        div.innerHTML='<div class="beaker-visual"><div class="beaker-fill" style="height:70%;background:'+phColor(ph)+'"></div></div>'+
+          '<div class="beaker-label">Beaker '+b.id+'</div>'+
+          '<div class="beaker-ph">pH '+ph.toFixed(2)+'</div>';
+        container.appendChild(div);
+      });
+    }
+    drawAllBeakers();
+
+    /* ====== CALCULATION CHECKS ====== */
+    var concAnswers={c1ha:0.50,c1ab:0.00,c2ha:0.40,c2ab:0.10,c3ha:0.30,c3ab:0.20,c4ha:0.20,c4ab:0.30,c5ha:0.10,c5ab:0.40,c6ha:0.00,c6ab:0.50};
+    function checkConc(){
+      var correct=0,total=12;
+      Object.keys(concAnswers).forEach(function(id){
+        var inp=document.getElementById(id);
+        var val=parseFloat(inp.value);
+        if(Math.abs(val-concAnswers[id])<0.02){
+          correct++;
+          inp.style.borderColor="var(--green)";
+        }else{
+          inp.style.borderColor=isNaN(val)?"var(--border)":"var(--red)";
+        }
+      });
+      var fb=document.getElementById("concFb");
+      if(correct===total){
+        fb.className="fb fb-correct";fb.innerHTML="&#9989; All correct! Great job.";
+      }else{
+        fb.className="fb fb-wrong";fb.innerHTML=correct+"/"+total+" correct. Check the formula: [HA] = (Vol &times; 0.5) / 10";
+      }
+      fb.style.display="block";
+    }
+
+    var hhAnswers={ph2:4.14,ph3:4.56,ph4:4.92,ph5:5.34};
+    function checkHH(){
+      var correct=0,total=4;
+      Object.keys(hhAnswers).forEach(function(id){
+        var inp=document.getElementById(id);
+        var val=parseFloat(inp.value);
+        if(Math.abs(val-hhAnswers[id])<0.03){
+          correct++;
+          inp.style.borderColor="var(--green)";
+        }else{
+          inp.style.borderColor=isNaN(val)?"var(--border)":"var(--red)";
+        }
+      });
+      var fb=document.getElementById("hhFb");
+      if(correct===total){
+        fb.className="fb fb-correct";fb.innerHTML="&#9989; All pH values correct! You've mastered Henderson-Hasselbalch.";
+      }else{
+        fb.className="fb fb-wrong";fb.innerHTML=correct+"/"+total+" correct. Remember: pH = 4.74 + log([A<sup>&minus;</sup>]/[HA])";
+      }
+      fb.style.display="block";
+    }
+
+    function checkICE1(){
+      var val=parseFloat(document.getElementById("phB1").value);
+      var fb=document.getElementById("ice1Fb");
+      if(Math.abs(val-2.52)<0.03){
+        fb.className="fb fb-correct";
+        fb.innerHTML="&#9989; Correct! x = 3.0 &times; 10<sup>&minus;3</sup>, pH = &minus;log(3.0 &times; 10<sup>&minus;3</sup>) = 2.52";
+      }else{
+        fb.className="fb fb-wrong";
+        fb.innerHTML="Not quite. x&sup2; = 1.8&times;10<sup>&minus;5</sup> &times; 0.50 = 9.0&times;10<sup>&minus;6</sup>. x = 3.0&times;10<sup>&minus;3</sup>. pH = &minus;log(x) = 2.52";
+      }
+      fb.style.display="block";
+    }
+
+    function checkICE6(){
+      var val=parseFloat(document.getElementById("phB6").value);
+      var fb=document.getElementById("ice6Fb");
+      if(Math.abs(val-9.22)<0.03){
+        fb.className="fb fb-correct";
+        fb.innerHTML="&#9989; Correct! x = 1.67 &times; 10<sup>&minus;5</sup>, pOH = 4.78, pH = 14 &minus; 4.78 = 9.22";
+      }else{
+        fb.className="fb fb-wrong";
+        fb.innerHTML="Not quite. K<sub>b</sub> = 5.56&times;10<sup>&minus;10</sup>. x&sup2; = K<sub>b</sub>&times;0.50 = 2.78&times;10<sup>&minus;10</sup>. x = 1.67&times;10<sup>&minus;5</sup>. pOH = 4.78. pH = 9.22";
+      }
+      fb.style.display="block";
+    }
+
+    /* ====== QUIZ ====== */
+    var quizScore=0,quizAnswered={};
+    var explanations={
+      1:"Buffers consist of a weak acid and its conjugate base (or a weak base and its conjugate acid). Strong acids/bases fully dissociate and cannot buffer.",
+      2:"pK<sub>a</sub> = &minus;log(1.8 &times; 10<sup>&minus;5</sup>) = 4.74. This is a constant you should memorize for this lab.",
+      3:"When [A<sup>&minus;</sup>] = [HA], the log term is log(1) = 0, so pH = pK<sub>a</sub> exactly.",
+      4:"Against HCl (added H<sup>+</sup>), the conjugate base A<sup>&minus;</sup> neutralizes it. Beaker 5 has the most A<sup>&minus;</sup> (0.40 M), so it has the greatest capacity against acid.",
+      5:"The weak acid component (CH<sub>3</sub>COOH) neutralizes the added OH<sup>&minus;</sup> from NaOH, forming more conjugate base and water.",
+      6:"Henderson-Hasselbalch requires log([A<sup>&minus;</sup>]/[HA]). If [A<sup>&minus;</sup>] = 0, you'd have log(0) which is undefined. Must use ICE table instead.",
+      7:"pH = 4.74 + log(1.50) = 4.74 + 0.176 = 4.92",
+      8:"K<sub>b</sub> = K<sub>w</sub>/K<sub>a</sub> = (1.0 &times; 10<sup>&minus;14</sup>) / (1.8 &times; 10<sup>&minus;5</sup>) = 5.56 &times; 10<sup>&minus;10</sup>",
+    };
+
+    function answer(q,choice,correct){
+      if(quizAnswered[q])return;
+      quizAnswered[q]=true;
+      var btns=document.querySelectorAll("#qq"+q+" .quiz-option");
+      btns.forEach(function(b){
+        b.disabled=true;
+        if(b.textContent.charAt(0)===choice.toUpperCase() || b.innerHTML.indexOf(">" + choice.toUpperCase() + ")")>-1){
+          b.classList.add(correct?"correct":"wrong");
+        }
+        // highlight the correct one
+        var letter=b.innerHTML.match(/^([A-D])\)/);
+        // find correct answer by checking if it has correct=true in onclick
+        if(b.getAttribute("onclick") && b.getAttribute("onclick").indexOf(",true)")>-1){
+          b.classList.add("correct");
+        }
+      });
+      if(correct)quizScore++;
+      document.getElementById("quizScore").textContent=quizScore;
+      var fb=document.getElementById("fb"+q);
+      fb.className=correct?"fb fb-correct":"fb fb-wrong";
+      fb.innerHTML=(correct?"&#9989; Correct! ":"&#10060; Incorrect. ")+explanations[q];
+      fb.style.display="block";
+    }
+    </script>
+  </body>
+</html>
