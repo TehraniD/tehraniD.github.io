@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BIO 205 Interactive Study Guide</title>
+  <meta name="description" content="Interactive BIO 205 final exam study guide with chapter review, flashcards, and a readiness tracker.">
+  <style>
+    :root {
+      --panel: rgba(15, 23, 42, 0.84);
+      --panel2: rgba(15, 23, 42, 0.62);
+      --line: rgba(148, 163, 184, 0.18);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --white: #ffffff;
+      --shadow: 0 20px 45px rgba(2, 6, 23, 0.38);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(16,185,129,0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(59,130,246,0.10), transparent 30%),
+        linear-gradient(180deg, #020617 0%, #0f172a 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .page { max-width: 1380px; margin: 0 auto; padding: 32px 20px 54px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px;
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.06);
+      color: var(--muted); font-size: 0.95rem; backdrop-filter: blur(12px);
+    }
+    h1 {
+      margin: 18px 0 10px; font-size: clamp(2.3rem, 4vw, 4rem); line-height: 1.04;
+      letter-spacing: -0.04em; color: var(--white); max-width: 760px;
+    }
+    .hero p { margin: 0; max-width: 820px; color: var(--muted); font-size: 1.08rem; line-height: 1.7; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .chip {
+      padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06); font-size: 0.88rem; color: var(--text);
+    }
+    .layout { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 24px; align-items: start; margin-top: 26px; }
+    .stack, .main-stack { display: grid; gap: 16px; }
+    .main-stack { gap: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow); backdrop-filter: blur(14px);
+    }
+    .nav-card {
+      padding: 20px; cursor: pointer; transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+    .nav-card:hover { transform: translateY(-2px); border-color: rgba(226,232,240,0.24); background: rgba(15,23,42,0.96); }
+    .nav-card.active { border-color: rgba(255,255,255,0.28); background: rgba(30,41,59,0.92); }
+    .nav-icon, .section-head-icon {
+      width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center;
+      font-size: 1.5rem; margin-bottom: 14px;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 38%, transparent), rgba(255,255,255,0.08));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .nav-title { font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .nav-subtitle { color: var(--muted); line-height: 1.5; font-size: 0.95rem; }
+    .tracker, .section-panel, .flash-card, .tips-card { padding: 22px; }
+    .tracker-top, .flash-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+    .tracker h2, .section-head h2, .tips-card h2, .flash-head h2 { margin: 0; font-size: 1.1rem; color: var(--white); }
+    .sub { color: var(--muted); margin-top: 6px; line-height: 1.55; font-size: 0.96rem; }
+    .ghost-btn {
+      appearance: none; border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--text);
+      padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: 0.9rem;
+    }
+    .progress-bar {
+      width: 100%; height: 12px; border-radius: 999px; background: rgba(2,6,23,0.75);
+      overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
+    }
+    .progress-fill {
+      height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
+      transition: width 0.24s ease;
+    }
+    .progress-text { margin-top: 10px; color: var(--muted); font-size: 0.95rem; }
+    .checklist { display: grid; gap: 10px; margin-top: 14px; }
+    .check-item {
+      display: flex; align-items: start; gap: 12px; width: 100%; text-align: left; padding: 14px;
+      border-radius: 18px; background: var(--panel2); border: 1px solid var(--line); color: var(--text); cursor: pointer;
+    }
+    .check-item.done { background: rgba(16,185,129,0.14); border-color: rgba(52,211,153,0.32); }
+    .check-mark {
+      width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; flex: 0 0 22px;
+      border: 1px solid rgba(148,163,184,0.28); background: rgba(255,255,255,0.04); color: transparent; margin-top: 1px;
+    }
+    .check-item.done .check-mark { background: rgba(16,185,129,0.9); color: white; border-color: transparent; }
+    .section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .section-head-icon { margin-bottom: 0; }
+    .section-grid { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    details.info-block {
+      border-radius: 20px; border: 1px solid var(--line); background: rgba(255,255,255,0.04); overflow: hidden;
+    }
+    details.info-block summary {
+      list-style: none; cursor: pointer; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; color: var(--white); font-weight: 650;
+    }
+    details.info-block summary::-webkit-details-marker { display: none; }
+    .chev { color: var(--muted); transition: transform 0.2s ease; font-size: 1rem; }
+    details[open] .chev { transform: rotate(90deg); }
+    .block-body { padding: 0 16px 16px; display: grid; gap: 10px; }
+    .item-card {
+      border: 1px solid var(--line); background: rgba(2,6,23,0.42); border-radius: 16px; padding: 14px 15px;
+      color: var(--text); line-height: 1.6; font-size: 0.96rem;
+    }
+    .item-label { display: block; color: var(--white); font-weight: 700; margin-bottom: 6px; }
+    .flash-grid { display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .flash {
+      min-height: 195px; border-radius: 22px; border: 1px solid var(--line); background: rgba(255,255,255,0.045);
+      padding: 18px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .flash-label { font-size: 0.77rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .flash-text { font-size: 1rem; line-height: 1.65; color: var(--white); flex: 1 1 auto; }
+    .flash-hint { margin-top: 14px; font-size: 0.86rem; color: var(--muted); }
+    .tips-grid { margin-top: 16px; display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tip {
+      border-radius: 18px; border: 1px solid var(--line); background: rgba(2,6,23,0.42); padding: 15px;
+      line-height: 1.6; color: var(--text); font-size: 0.96rem;
+    }
+    .footer-note { margin-top: 18px; color: var(--muted); font-size: 0.92rem; text-align: center; }
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+      .flash-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 740px) {
+      .page { padding: 20px 14px 40px; }
+      .section-grid, .flash-grid, .tips-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: start; }
+      .tracker-top, .flash-head { flex-direction: column; align-items: start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="pill">📘 BIO 205 study guide built from exam concepts only</div>
+      <h1>Interactive final exam study guide</h1>
+      <p>This guide is designed to help you master the concepts, learning targets, and clinical reasoning patterns behind the exam without revealing the original questions.</p>
+      <div class="chips">
+        <span class="chip">Immunity</span>
+        <span class="chip">Antimicrobials</span>
+        <span class="chip">Transmission</span>
+        <span class="chip">Epidemiology</span>
+        <span class="chip">Clinical infections</span>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="stack">
+        <div id="sectionNav" class="stack"></div>
+        <section class="card tracker">
+          <div class="tracker-top">
+            <div>
+              <h2>Readiness tracker</h2>
+              <div class="sub">Mark concepts you can explain out loud.</div>
+            </div>
+            <button id="toggleChecklist" class="ghost-btn" type="button">Hide</button>
+          </div>
+          <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          <div id="progressText" class="progress-text">0% ready</div>
+          <div id="checklist" class="checklist"></div>
+        </section>
+      </aside>
+
+      <main class="main-stack">
+        <section class="card section-panel">
+          <div class="section-head">
+            <div id="sectionHeadIcon" class="section-head-icon"></div>
+            <div>
+              <h2 id="sectionTitle"></h2>
+              <div id="sectionSubtitle" class="sub"></div>
+            </div>
+          </div>
+          <div id="sectionGrid" class="section-grid"></div>
+        </section>
+
+        <section class="card flash-card">
+          <div class="flash-head">
+            <div>
+              <h2>Flip cards for active recall</h2>
+              <div class="sub">Use these to practice explanations instead of memorizing wording.</div>
+            </div>
+          </div>
+          <div id="flashGrid" class="flash-grid"></div>
+        </section>
+
+        <section class="card tips-card">
+          <h2>Best way to use this guide</h2>
+          <div id="tipsGrid" class="tips-grid"></div>
+          <div class="footer-note">Progress is saved on this device so you can pick up where you left off.</div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"sections":[{"id":"ch1","title":"Chapter 1","subtitle":"Innate and adaptive immunity","icon":"🛡️","accent":"#10b981","objectives":["Differentiate innate defenses from adaptive defenses","Identify first, second, and third lines of defense","Recognize the roles of phagocytes, B cells, and immunoglobulins","Explain active versus passive immunity and natural versus artificial immunity","Connect fever, inflammation, chemotaxis, and normal flora to host defense"],"mustKnow":[{"label":"Innate versus adaptive","text":"Innate defenses respond quickly and broadly. Adaptive defenses are specific, improve with exposure, and create memory."},{"label":"Lines of defense","text":"First line includes barriers and protective secretions. Second line includes inflammation, fever, and phagocytic responses. Third line includes lymphocytes, antibodies, and immune memory."},{"label":"Humoral immunity","text":"B cells support humoral immunity by producing antibodies. Memory B cells help create faster responses after later exposures."},{"label":"Key immunoglobulins","text":"IgG crosses the placenta. IgA is common in secretions such as tears, saliva, and breast milk. IgE is linked to allergic responses."},{"label":"Active versus passive immunity","text":"Active immunity develops when the body makes its own response. Passive immunity is received from another source and is immediate but temporary."}],"pitfalls":["Do not confuse a barrier defense with an inflammatory response","Do not mix up antigen with antibody","Do not reverse natural and artificial sources of immunity","Do not assign antibody production to innate cells"],"quickChecks":["Explain why a vaccine creates protection without counting as passive immunity.","Describe what makes inflammation a second line defense rather than a first line defense.","State why normal resident flora can protect the host.","Name the cell type most closely tied to antibody mediated immunity."]},{"id":"ch4","title":"Chapter 4","subtitle":"Control of microbial growth and antimicrobial drugs","icon":"💉","accent":"#38bdf8","objectives":["Compare sterilization, disinfection, antisepsis, and pasteurization","Relate physical methods such as moist heat, dry heat, filtration, radiation, and gas sterilization to real uses","Classify drugs as bacteriostatic, bactericidal, fungicidal, and broad or narrow spectrum","Match antimicrobial targets to microbial structures or processes","Explain how resistance develops and why stewardship matters"],"mustKnow":[{"label":"Levels of microbial control","text":"Sterilization destroys all microbial life including resistant forms. Disinfection reduces pathogens on nonliving surfaces. Antisepsis reduces microbes on living tissue. Pasteurization lowers microbial load in products without full sterilization."},{"label":"Heat methods","text":"Moist heat is generally more efficient than dry heat. Autoclaving combines heat, pressure, and steam to achieve sterilization."},{"label":"Chemical control","text":"Alcohols are common disinfectants and antiseptics. Glutaraldehydes are high level agents. Chlorine compounds are common oxidizing disinfectants. Some chemicals require longer exposure for higher effectiveness."},{"label":"Drug targets","text":"Major targets include cell wall synthesis, protein synthesis, nucleic acid synthesis, metabolic pathways, and cell membranes."},{"label":"Resistance logic","text":"Resistance can emerge through reduced uptake, drug inactivation, target changes, or increased removal of the drug. Inappropriate prescribing and broad use accelerate selection."}],"pitfalls":["Do not call pasteurization sterilization","Do not confuse static with cidal actions","Do not forget that drug spectrum refers to range of organisms affected","Do not treat viral illness with antibiotics in concept questions about stewardship"],"quickChecks":["Describe when an antiseptic is more appropriate than a disinfectant.","Explain why beta lactam drugs are especially useful against growing bacterial cells.","State the difference between narrow spectrum and broad spectrum choices.","Give two ways bacterial resistance can reduce drug effectiveness."]},{"id":"ch5","title":"Chapter 5","subtitle":"Transmission, portals of entry, signs and symptoms, and epidemiology","icon":"🦠","accent":"#f59e0b","objectives":["Identify common routes of transmission and portals of entry","Distinguish vehicles, vectors, direct contact, and fomites","Interpret sign, symptom, syndrome, etiology, remission, and related disease terms","Separate endemic, epidemic, and pandemic patterns","Connect transmission scenarios to prevention strategies"],"mustKnow":[{"label":"Transmission categories","text":"Direct contact involves person to person spread. Vehicles include contaminated food, water, or objects. Vectors are living transmitters such as arthropods. Fomites are contaminated inanimate objects."},{"label":"Mechanical versus biological vectors","text":"A mechanical vector carries a pathogen passively. A biological vector is part of the pathogen life cycle or supports pathogen development."},{"label":"Portals of entry","text":"Important portals include respiratory, gastrointestinal, genitourinary, and breaks in the skin or mucosa. Link the exposure to the body system entered."},{"label":"Clinical language","text":"A sign is objective and measurable. A symptom is subjective and reported by the patient. A syndrome is a recognizable group of signs and symptoms. Etiology means cause. Remission means reduced severity or fewer symptoms."},{"label":"Population patterns","text":"Endemic means a constant expected presence in a region. Epidemic means a rise above expected levels in a population. Pandemic means wide international spread."}],"pitfalls":["Do not label every contaminated object as a vector","Do not confuse portal of entry with reservoir or vehicle","Do not reverse sign and symptom","Do not use epidemic when the pattern is stable in a region"],"quickChecks":["Describe the difference between a fomite and a vehicle.","Explain why a mosquito can represent more than one transmission concept depending on the organism.","Classify a disease that stays at a steady regional level.","State whether fever is a sign or a symptom and explain why."]},{"id":"ch8","title":"Chapter 8","subtitle":"Body system infections and clinical associations","icon":"🩺","accent":"#ec4899","objectives":["Associate common pathogens with body system infections","Recognize hallmark clinical patterns of respiratory, digestive, eye, skin, nervous, circulatory, and immune related infections","Match likely specimens to the infection site","Identify common risk factors for invasive infections","Connect anatomical terms to disease names"],"mustKnow":[{"label":"Respiratory and ear related patterns","text":"Some organisms cause overlapping respiratory, middle ear, and eye infections. Focus on common clinical clusters rather than memorizing isolated facts."},{"label":"Digestive infection patterns","text":"Hospital associated colitis, biliary infections, and appendiceal or bowel related pain patterns are often tied to specific anatomical sites and microbial sources."},{"label":"Circulatory and bone spread","text":"Catheters, injection drug use, trauma, and bloodstream spread raise the risk of deeper infections such as endocardial, joint, or bone involvement."},{"label":"Eye and nervous system anatomy","text":"Conjunctiva, cornea, meninges, and brain tissue each map to different disease names. Matching structure to condition is often more important than memorizing one isolated organism."},{"label":"Best specimen logic","text":"The most useful diagnostic sample usually comes from the infected site or the fluid that directly reflects that site."}],"pitfalls":["Do not confuse tissue inflammation terms tied to similar sounding anatomy","Do not choose a sample based only on convenience when site specific material is better","Do not ignore healthcare associated risk factors such as catheters and recent procedures","Do not mix superficial skin infections with deeper tissue or bone infections"],"quickChecks":["A patient has a central line and new bloodstream symptoms. Explain the infection risk concept involved.","Describe why joint fluid can be more informative than sputum for a suspected joint infection.","Differentiate corneal disease from conjunctival disease by anatomy.","Explain why trauma and surgery can increase the risk of bone infection."]}],"flashcards":[{"front":"What should you compare first when a defense mechanism question appears?","back":"Decide whether the response is barrier based, inflammatory or innate, or antigen specific and adaptive. That first split usually narrows the concept fast."},{"front":"What is the safest way to think about vaccine related immunity?","back":"Vaccination presents antigenic material so the host builds its own adaptive response and memory."},{"front":"How do you separate sterilization from disinfection?","back":"Ask whether every form of microbial life must be destroyed. If yes, think sterilization. If the goal is reducing pathogens on nonliving surfaces, think disinfection."},{"front":"What is the quickest clue for bacteriostatic versus bactericidal?","back":"Static means growth is halted. Cidal means organisms are killed."},{"front":"How do you avoid mixing up vectors, vehicles, and fomites?","back":"Living carrier means vector. Contaminated material such as food or water means vehicle. Nonliving object touched in the environment means fomite."},{"front":"What should you ask when classifying a portal of entry?","back":"Ask which body system the organism entered through rather than where symptoms later appeared."},{"front":"What is the simplest sign versus symptom test?","back":"If it can be observed or measured by someone else, it is a sign. If it must be reported by the patient, it is a symptom."},{"front":"What helps with specimen selection questions?","back":"Choose the sample that most directly represents the infected tissue or fluid compartment."}],"readinessChecks":["I can separate innate from adaptive immunity without guessing","I can explain active and passive immunity clearly","I can classify microbial control methods by level and purpose","I can match drug targets to cell wall, ribosome, nucleic acid, membrane, or metabolism","I can explain common resistance mechanisms","I can classify transmission route, vector type, vehicle, and fomite","I can distinguish sign, symptom, syndrome, etiology, and remission","I can choose between endemic, epidemic, and pandemic","I can match infection names to anatomical sites","I can identify the best specimen for a suspected infection"],"tips":["Study one chapter at a time and say each objective in your own words.","Use the common mix ups section to catch reversals before the exam.","Answer the check yourself prompts aloud without looking at notes.","Mark the readiness tracker only when you can explain the concept clearly.","Revisit flashcards you miss and connect them to the larger chapter theme.","Focus on why a concept is correct rather than memorizing one isolated fact."]};
+
+    const state = {
+      active: localStorage.getItem("bio205-active-section") || DATA.sections[0].id,
+      checked: JSON.parse(localStorage.getItem("bio205-readiness") || "[]"),
+      showChecklist: JSON.parse(localStorage.getItem("bio205-show-checklist") || "true")
+    };
+
+    const sectionNav = document.getElementById("sectionNav");
+    const sectionTitle = document.getElementById("sectionTitle");
+    const sectionSubtitle = document.getElementById("sectionSubtitle");
+    const sectionHeadIcon = document.getElementById("sectionHeadIcon");
+    const sectionGrid = document.getElementById("sectionGrid");
+    const checklist = document.getElementById("checklist");
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+    const toggleChecklist = document.getElementById("toggleChecklist");
+    const flashGrid = document.getElementById("flashGrid");
+    const tipsGrid = document.getElementById("tipsGrid");
+
+    function saveState() {
+      localStorage.setItem("bio205-active-section", state.active);
+      localStorage.setItem("bio205-readiness", JSON.stringify(state.checked));
+      localStorage.setItem("bio205-show-checklist", JSON.stringify(state.showChecklist));
+    }
+
+    function escapeHtml(str) {
+      return str.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+    }
+
+    function renderNav() {
+      sectionNav.innerHTML = "";
+      DATA.sections.forEach(section => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "card nav-card" + (section.id === state.active ? " active" : "");
+        card.style.setProperty("--accent", section.accent);
+        card.innerHTML = `<div class="nav-icon">${section.icon}</div><div class="nav-title">${escapeHtml(section.title)}</div><div class="nav-subtitle">${escapeHtml(section.subtitle)}</div>`;
+        card.addEventListener("click", () => {
+          state.active = section.id;
+          saveState();
+          render();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+        sectionNav.appendChild(card);
+      });
+    }
+
+    function createInfoBlock(title, items) {
+      const detail = document.createElement("details");
+      detail.className = "info-block";
+      detail.open = true;
+      const bodyHtml = items.map(item => {
+        if (typeof item === "string") return `<div class="item-card">${escapeHtml(item)}</div>`;
+        return `<div class="item-card"><span class="item-label">${escapeHtml(item.label)}</span>${escapeHtml(item.text)}</div>`;
+      }).join("");
+      detail.innerHTML = `<summary><span>${escapeHtml(title)}</span><span class="chev">›</span></summary><div class="block-body">${bodyHtml}</div>`;
+      return detail;
+    }
+
+    function renderSection() {
+      const current = DATA.sections.find(section => section.id === state.active) || DATA.sections[0];
+      sectionTitle.textContent = current.title;
+      sectionSubtitle.textContent = current.subtitle;
+      sectionHeadIcon.textContent = current.icon;
+      sectionHeadIcon.style.setProperty("--accent", current.accent);
+      sectionGrid.innerHTML = "";
+      sectionGrid.appendChild(createInfoBlock("Learning objectives", current.objectives));
+      sectionGrid.appendChild(createInfoBlock("High yield concepts", current.mustKnow));
+      sectionGrid.appendChild(createInfoBlock("Common mix ups", current.pitfalls));
+      sectionGrid.appendChild(createInfoBlock("Check yourself prompts", current.quickChecks));
+    }
+
+    function renderChecklist() {
+      toggleChecklist.textContent = state.showChecklist ? "Hide" : "Show";
+      checklist.style.display = state.showChecklist ? "grid" : "none";
+      checklist.innerHTML = "";
+      DATA.readinessChecks.forEach(item => {
+        const done = state.checked.includes(item);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "check-item" + (done ? " done" : "");
+        btn.innerHTML = `<span class="check-mark">✓</span><span>${escapeHtml(item)}</span>`;
+        btn.addEventListener("click", () => {
+          state.checked = done ? state.checked.filter(x => x !== item) : [...state.checked, item];
+          saveState();
+          renderChecklist();
+        });
+        checklist.appendChild(btn);
+      });
+      const progress = Math.round((state.checked.length / DATA.readinessChecks.length) * 100);
+      progressFill.style.width = progress + "%";
+      progressText.textContent = progress + "% ready";
+    }
+
+    function renderFlashcards() {
+      flashGrid.innerHTML = "";
+      DATA.flashcards.forEach(card => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "flash";
+        button.dataset.side = "front";
+        const renderFace = () => {
+          const showingBack = button.dataset.side === "back";
+          button.innerHTML = `<div class="flash-label">Flashcard</div><div class="flash-text">${escapeHtml(showingBack ? card.back : card.front)}</div><div class="flash-hint">Tap to ${showingBack ? "hide explanation" : "reveal explanation"}</div>`;
+        };
+        button.addEventListener("click", () => {
+          button.dataset.side = button.dataset.side === "front" ? "back" : "front";
+          renderFace();
+        });
+        renderFace();
+        flashGrid.appendChild(button);
+      });
+    }
+
+    function renderTips() {
+      tipsGrid.innerHTML = "";
+      DATA.tips.forEach(tip => {
+        const div = document.createElement("div");
+        div.className = "tip";
+        div.textContent = tip;
+        tipsGrid.appendChild(div);
+      });
+    }
+
+    function render() {
+      renderNav();
+      renderSection();
+      renderChecklist();
+      renderFlashcards();
+      renderTips();
+    }
+
+    toggleChecklist.addEventListener("click", () => {
+      state.showChecklist = !state.showChecklist;
+      saveState();
+      renderChecklist();
+    });
+
+    render();
+  </script>
+</body>
+</html>
