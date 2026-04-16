@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course Evaluation Index Card | Tehrani Labs</title>
+  <style>
+    :root {
+      --ink: #4b2a1f;
+      --accent: #9e4d31;
+      --accent-deep: #7e331d;
+      --gold: #d9b35d;
+      --paper: #fffaf2;
+      --panel: rgba(255, 249, 239, 0.86);
+      --line: #dcc8b2;
+      --muted: #755f54;
+      --shadow: 0 30px 70px rgba(75, 42, 31, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(217, 179, 93, 0.26), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(158, 77, 49, 0.18), transparent 28%),
+        linear-gradient(160deg, #f7ece3 0%, #f2e1d3 42%, #efe7dd 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .app {
+      position: relative;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    .controls {
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+      border: 1px solid rgba(220, 200, 178, 0.85);
+      border-radius: 24px;
+      background: var(--panel);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .controls-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .controls h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.7rem, 2vw, 2.2rem);
+      line-height: 1;
+    }
+
+    .controls p {
+      margin: 6px 0 0;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 0.97rem;
+      line-height: 1.5;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field-wide {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 13px 14px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--ink);
+      font: inherit;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(158, 77, 49, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button,
+    .upload-button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    button:hover,
+    .upload-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: #fff8f2;
+      background: linear-gradient(135deg, var(--accent-deep), var(--accent));
+      box-shadow: 0 14px 28px rgba(126, 51, 29, 0.22);
+    }
+
+    .button-secondary {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+    }
+
+    .upload-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .upload-wrap input[type="file"] {
+      display: none;
+    }
+
+    .upload-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff8f2;
+      background: linear-gradient(135deg, #7a5a23, #bc8c2e);
+      box-shadow: 0 14px 28px rgba(122, 90, 35, 0.2);
+    }
+
+    .upload-note {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .preview {
+      padding: 28px 0 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card {
+      width: 5in;
+      min-height: 3in;
+      display: grid;
+      grid-template-columns: 1.2fr 0.86fr;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1.5px solid rgba(140, 82, 52, 0.18);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(217, 179, 93, 0.2), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 42%);
+      pointer-events: none;
+    }
+
+    .card-main,
+    .card-qr {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-main {
+      padding: 14px 16px 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(220, 200, 178, 0.7);
+    }
+
+    .brand-row img {
+      height: 26px;
+      width: auto;
+      object-fit: contain;
+      max-width: 66%;
+    }
+
+    .course-chip {
+      max-width: 44%;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(158, 77, 49, 0.1);
+      color: var(--accent-deep);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin-top: 2px;
+      color: var(--accent-deep);
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .headline {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.25rem;
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+    }
+
+    .message {
+      margin: 0;
+      font-size: 0.84rem;
+      line-height: 1.38;
+      color: var(--ink);
+    }
+
+    .timing {
+      display: inline-flex;
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(217, 179, 93, 0.18);
+      color: var(--accent-deep);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(220, 200, 178, 0.7);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .card-footer strong {
+      display: block;
+      color: var(--ink);
+      font-size: 0.74rem;
+    }
+
+    .thank-you {
+      text-align: right;
+      font-weight: 700;
+      color: var(--accent-deep);
+    }
+
+    .card-qr {
+      padding: 18px 16px 16px;
+      border-left: 1px solid rgba(220, 200, 178, 0.8);
+      background: linear-gradient(180deg, rgba(250, 241, 227, 0.9), rgba(243, 229, 207, 0.92));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .qr-frame {
+      width: 1.62in;
+      height: 1.62in;
+      border-radius: 18px;
+      padding: 11px;
+      background: #ffffff;
+      border: 1px solid rgba(140, 82, 52, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(217, 179, 93, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .qr-title {
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+    }
+
+    .qr-copy {
+      margin: 0;
+      font-size: 0.76rem;
+      line-height: 1.3;
+      color: var(--muted);
+    }
+
+    @media (max-width: 760px) {
+      .fields {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        width: min(100%, 5in);
+        grid-template-columns: 1fr;
+      }
+
+      .card-qr {
+        border-left: 0;
+        border-top: 1px solid rgba(220, 200, 178, 0.8);
+        padding-top: 14px;
+        padding-bottom: 18px;
+      }
+
+      .course-chip {
+        max-width: 52%;
+      }
+    }
+
+    @media print {
+      @page {
+        size: letter portrait;
+        margin: 0.5in;
+      }
+
+      body {
+        background: #ffffff;
+      }
+
+      body::before,
+      .controls {
+        display: none;
+      }
+
+      .app {
+        max-width: none;
+        padding: 0;
+      }
+
+      .preview {
+        min-height: calc(11in - 1in);
+        padding: 0;
+        align-items: center;
+      }
+
+      .card {
+        box-shadow: none;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="controls">
+      <div class="controls-header">
+        <div>
+          <h1>Course Evaluation Index Card</h1>
+          <p>Edit the card, upload a QR code, then print. The card is sized at 5 x 3 inches so it can be trimmed or printed on index-card stock.</p>
+        </div>
+      </div>
+
+      <div class="fields">
+        <div class="field">
+          <label for="courseInput">Course / Section</label>
+          <input id="courseInput" type="text" value="CHM 130-W/F">
+        </div>
+
+        <div class="field">
+          <label for="instructorInput">Instructor</label>
+          <input id="instructorInput" type="text" value="Dr. Tehrani">
+        </div>
+
+        <div class="field field-wide">
+          <label for="messageInput">Short Message</label>
+          <textarea id="messageInput">Complete the course evaluation.</textarea>
+        </div>
+
+        <div class="field field-wide">
+          <label for="timingInput">Timing</label>
+          <input id="timingInput" type="text" value="Please complete it this week.">
+        </div>
+      </div>
+
+      <div class="button-row">
+        <div class="upload-wrap">
+          <input id="qrUpload" type="file" accept="image/*">
+          <label class="upload-button" for="qrUpload">Replace QR Code</label>
+          <span class="upload-note">PNG or JPG works best.</span>
+        </div>
+
+        <div class="button-group">
+          <button id="resetButton" class="button-secondary" type="button">Reset</button>
+          <button id="printButton" class="button-primary" type="button">Print Card</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview" aria-label="Index card preview">
+      <article class="card">
+        <div class="card-main">
+          <div class="brand-row">
+            <img src="azcn-logo-horizontal.png" alt="Arizona College of Nursing logo">
+            <div class="course-chip" id="courseDisplay">CHM 130-W/F</div>
+          </div>
+
+          <div class="eyebrow">Course Evaluation</div>
+          <h2 class="headline">Please scan.</h2>
+          <p class="message" id="messageDisplay">Complete the course evaluation.</p>
+          <div class="timing" id="timingDisplay">Please complete it this week.</div>
+
+          <div class="card-footer">
+            <div>
+              <strong id="instructorDisplay">Dr. Tehrani</strong>
+              <span>Arizona College of Nursing</span>
+            </div>
+            <div class="thank-you">Thank you.</div>
+          </div>
+        </div>
+
+        <div class="card-qr">
+          <div class="qr-title">Scan Here</div>
+          <div class="qr-frame">
+            <img id="qrPreview" src="qrcode_arizonacollege.instructure.com.png" alt="Course evaluation QR code">
+          </div>
+          <p class="qr-copy">Scan to open the evaluation.</p>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <script>
+    const defaults = {
+      course: "CHM 130-W/F",
+      instructor: "Dr. Tehrani",
+      message: "Complete the course evaluation.",
+      timing: "Please complete it this week.",
+      qr: "qrcode_arizonacollege.instructure.com.png"
+    };
+
+    const courseInput = document.getElementById("courseInput");
+    const instructorInput = document.getElementById("instructorInput");
+    const messageInput = document.getElementById("messageInput");
+    const timingInput = document.getElementById("timingInput");
+    const qrUpload = document.getElementById("qrUpload");
+
+    const courseDisplay = document.getElementById("courseDisplay");
+    const instructorDisplay = document.getElementById("instructorDisplay");
+    const messageDisplay = document.getElementById("messageDisplay");
+    const timingDisplay = document.getElementById("timingDisplay");
+    const qrPreview = document.getElementById("qrPreview");
+
+    function syncCard() {
+      courseDisplay.textContent = courseInput.value.trim() || defaults.course;
+      instructorDisplay.textContent = instructorInput.value.trim() || defaults.instructor;
+      messageDisplay.textContent = messageInput.value.trim() || defaults.message;
+      timingDisplay.textContent = timingInput.value.trim() || defaults.timing;
+    }
+
+    [courseInput, instructorInput, messageInput, timingInput].forEach((field) => {
+      field.addEventListener("input", syncCard);
+    });
+
+    qrUpload.addEventListener("change", (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        qrPreview.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById("resetButton").addEventListener("click", () => {
+      courseInput.value = defaults.course;
+      instructorInput.value = defaults.instructor;
+      messageInput.value = defaults.message;
+      timingInput.value = defaults.timing;
+      qrUpload.value = "";
+      qrPreview.src = defaults.qr;
+      syncCard();
+    });
+
+    document.getElementById("printButton").addEventListener("click", () => {
+      window.print();
+    });
+
+    syncCard();
+  </script>
+</body>
+</html>
