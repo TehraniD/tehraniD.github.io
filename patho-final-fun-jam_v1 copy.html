@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PATHO FINAL FUN JAM | tehranilabs.org</title>
+<style>
+:root {
+  --bg: #0a0e1a;
+  --bg-2: #111827;
+  --cyan: #00ffff;
+  --yellow: #ffe600;
+  --magenta: #ff00ff;
+  --green: #39ff14;
+  --orange: #ff9500;
+  --text: #e8f0ff;
+  --muted: #7a8ba6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: radial-gradient(ellipse at top, #1a1e3a 0%, var(--bg) 60%);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+/* Scanline effect */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, transparent 2px, transparent 4px);
+  pointer-events: none; z-index: 1;
+}
+header {
+  background: linear-gradient(135deg, #1a0033 0%, #003366 100%);
+  padding: 40px 20px;
+  text-align: center;
+  border-bottom: 3px solid var(--cyan);
+  box-shadow: 0 0 40px rgba(0,255,255,0.3);
+  position: relative;
+  z-index: 2;
+}
+h1 {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  letter-spacing: 4px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--yellow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(0,255,255,0.4);
+  margin-bottom: 10px;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 1.1rem;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+.brand { color: var(--yellow); font-weight: bold; }
+.instructor { color: var(--cyan); margin-top: 8px; font-size: 0.95rem; }
+
+.stats-bar {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+  padding: 20px; background: var(--bg-2); border-bottom: 2px solid var(--cyan);
+  position: relative; z-index: 2;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Courier New', monospace;
+  font-size: 2rem; font-weight: bold;
+  color: var(--yellow);
+  text-shadow: 0 0 10px rgba(255,230,0,0.5);
+}
+.stat-label { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Search & nav */
+.controls {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(10,14,26,0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  border-bottom: 2px solid var(--magenta);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.search-box {
+  width: 100%; max-width: 600px; margin: 0 auto; display: block;
+  padding: 12px 18px;
+  background: var(--bg-2);
+  border: 2px solid var(--cyan);
+  color: var(--text);
+  font-size: 1rem;
+  border-radius: 25px;
+  font-family: 'Courier New', monospace;
+}
+.search-box:focus { outline: none; box-shadow: 0 0 20px rgba(0,255,255,0.5); }
+.system-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  margin-top: 15px;
+}
+.tab {
+  background: var(--bg-2);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.tab:hover, .tab.active {
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: 0 0 15px rgba(0,255,255,0.6);
+}
+
+/* Main content */
+main { max-width: 1200px; margin: 0 auto; padding: 30px 20px; position: relative; z-index: 2; }
+
+.system-section {
+  margin-bottom: 60px;
+  scroll-margin-top: 160px;
+}
+.system-header {
+  display: flex; align-items: center; gap: 15px;
+  padding: 20px;
+  background: linear-gradient(90deg, rgba(0,255,255,0.1), transparent);
+  border-left: 6px solid var(--cyan);
+  margin-bottom: 25px;
+}
+.system-header h2 {
+  font-family: 'Courier New', monospace;
+  font-size: 1.8rem;
+  color: var(--cyan);
+  letter-spacing: 2px;
+}
+.system-header .count {
+  background: var(--magenta); color: var(--bg);
+  padding: 4px 12px; border-radius: 15px;
+  font-size: 0.8rem; font-weight: bold;
+}
+.system-icon { font-size: 2.5rem; }
+
+/* Concept card */
+.concept {
+  background: linear-gradient(135deg, var(--bg-2) 0%, #161e2e 100%);
+  border: 1px solid rgba(0,255,255,0.2);
+  border-radius: 12px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.concept:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+  transform: translateY(-2px);
+}
+.concept-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+}
+.concept-title {
+  font-size: 1.15rem;
+  color: var(--yellow);
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+.concept-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+.badge-q { background: rgba(255,230,0,0.15); color: var(--yellow); border: 1px solid var(--yellow); }
+.badge-done { background: var(--green); color: var(--bg); }
+.toggle-icon {
+  color: var(--cyan);
+  font-size: 1.3rem;
+  transition: transform 0.3s;
+}
+.concept.open .toggle-icon { transform: rotate(45deg); }
+
+.concept-body {
+  display: none;
+  padding: 0 22px 22px 22px;
+  border-top: 1px dashed rgba(0,255,255,0.2);
+}
+.concept.open .concept-body { display: block; animation: slideDown 0.3s; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+.layer {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.3);
+  border-left: 3px solid;
+}
+.layer-plain { border-color: var(--green); }
+.layer-clinical { border-color: var(--cyan); }
+.layer-analogy { border-color: var(--orange); }
+.layer-tested { border-color: var(--magenta); }
+
+.layer-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+.layer-plain .layer-label { color: var(--green); }
+.layer-clinical .layer-label { color: var(--cyan); }
+.layer-analogy .layer-label { color: var(--orange); }
+.layer-tested .layer-label { color: var(--magenta); }
+
+.layer p, .layer li { font-size: 0.95rem; }
+.layer ol { padding-left: 20px; margin-top: 6px; }
+.layer ol li { margin-bottom: 4px; }
+strong { color: var(--yellow); font-weight: bold; }
+em { color: var(--cyan); font-style: italic; }
+
+.mark-btn {
+  margin-top: 15px;
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid var(--green);
+  color: var(--green);
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+.mark-btn:hover { background: var(--green); color: var(--bg); }
+.concept.done .mark-btn { background: var(--green); color: var(--bg); }
+
+/* Quick Review */
+.quick-review {
+  background: linear-gradient(135deg, #1a0033 0%, #003366 100%);
+  border: 2px solid var(--yellow);
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 40px;
+  box-shadow: 0 0 30px rgba(255,230,0,0.15);
+}
+.quick-review h2 {
+  color: var(--yellow);
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 3px;
+  font-size: 2rem;
+}
+.quick-review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px 25px;
+}
+.qr-item {
+  padding: 8px 0;
+  border-bottom: 1px dotted rgba(0,255,255,0.15);
+  font-size: 0.9rem;
+}
+.qr-term { color: var(--cyan); font-weight: bold; }
+
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--muted);
+  border-top: 2px solid var(--cyan);
+  margin-top: 60px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  position: relative; z-index: 2;
+}
+footer a { color: var(--yellow); text-decoration: none; }
+
+/* Scroll-to-top */
+.scroll-top {
+  position: fixed; bottom: 25px; right: 25px;
+  background: var(--magenta); color: var(--bg);
+  border: none; width: 50px; height: 50px; border-radius: 50%;
+  cursor: pointer; font-size: 1.5rem; font-weight: bold;
+  box-shadow: 0 0 20px rgba(255,0,255,0.6);
+  z-index: 100;
+}
+
+.hidden { display: none !important; }
+
+@media print {
+  body::before, .controls, .scroll-top, footer { display: none; }
+  .concept-body { display: block !important; }
+  body { background: white; color: black; }
+  .concept, .quick-review { border: 1px solid #000; page-break-inside: avoid; }
+  * { color: black !important; background: white !important; }
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: 2rem; }
+  .stats-bar { gap: 15px; }
+  .stat-num { font-size: 1.4rem; }
+  main { padding: 20px 12px; }
+  .concept-header { padding: 14px 16px; }
+  .concept-title { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ PATHO FINAL FUN JAM ⚡</h1>
+  <div class="subtitle">75 Questions → 60 Core Concepts → 1 Legendary Study Session</div>
+  <div class="instructor">Hosted by <span class="brand">tehranilabs.org</span> • Dr. Mazdak Tehrani, PhD</div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">75</div><div class="stat-label">Exam Questions</div></div>
+  <div class="stat"><div class="stat-num">60</div><div class="stat-label">Core Concepts</div></div>
+  <div class="stat"><div class="stat-num">7</div><div class="stat-label">Body Systems</div></div>
+  <div class="stat"><div class="stat-num" id="progress">0</div><div class="stat-label">You've Mastered</div></div>
+</div>
+
+<div class="controls">
+  <input type="text" class="search-box" id="search" placeholder="🔍 Search concepts, terms, diseases...">
+  <div class="system-tabs">
+    <button class="tab active" data-filter="all">⭐ All</button>
+    <button class="tab" data-filter="renal">🫘 Renal</button>
+    <button class="tab" data-filter="endocrine">🍯 Endocrine</button>
+    <button class="tab" data-filter="musculo">🦴 Musculoskeletal</button>
+    <button class="tab" data-filter="digestive">🍔 Digestive</button>
+    <button class="tab" data-filter="neuro">🧠 Neurological</button>
+    <button class="tab" data-filter="repro">⚧ Reproductive</button>
+    <button class="tab" data-filter="incon">💧 Incontinence</button>
+  </div>
+</div>
+
+<main id="content">
+<!-- CONTENT INJECTED BELOW -->
+</main>
+
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<footer>
+  <div>⚡ PATHO FINAL FUN JAM ⚡ • Spring 2026</div>
+  <div style="margin-top:8px;">Study materials by <a href="https://tehranilabs.org">tehranilabs.org</a></div>
+  <div style="margin-top:8px; color:var(--muted); font-size:0.75rem;">Press <strong style="color:var(--cyan)">Ctrl+P</strong> for print-ready version</div>
+</footer>
+
+<script>
+const DATA = window.__PATHO_DATA__ || [];
+const main = document.getElementById('content');
+
+function render() {
+  const systems = {};
+  DATA.forEach(c => { (systems[c.system] ||= []).push(c); });
+  const meta = {
+    renal: {icon:'🫘', name:'RENAL & URINARY SYSTEM'},
+    endocrine: {icon:'🍯', name:'ENDOCRINE SYSTEM'},
+    musculo: {icon:'🦴', name:'MUSCULOSKELETAL SYSTEM'},
+    digestive: {icon:'🍔', name:'DIGESTIVE SYSTEM'},
+    neuro: {icon:'🧠', name:'NEUROLOGICAL SYSTEM'},
+    repro: {icon:'⚧', name:'REPRODUCTIVE SYSTEM'},
+    incon: {icon:'💧', name:'INCONTINENCE'}
+  };
+  let html = '';
+  for (const key of ['renal','endocrine','musculo','digestive','neuro','repro','incon']) {
+    const items = systems[key] || [];
+    html += `<section class="system-section" data-system="${key}" id="sec-${key}">
+      <div class="system-header">
+        <span class="system-icon">${meta[key].icon}</span>
+        <h2>${meta[key].name}</h2>
+        <span class="count">${items.length} concepts</span>
+      </div>`;
+    items.forEach((c, i) => {
+      const id = `${key}-${i}`;
+      const qs = c.questions.map(q => `<span class="badge badge-q">Q${q}</span>`).join('');
+      html += `<div class="concept" data-id="${id}" data-system="${key}">
+        <div class="concept-header" onclick="toggle('${id}')">
+          <div><div class="concept-title">${c.title}</div></div>
+          <div class="concept-badges">${qs}<span class="toggle-icon">＋</span></div>
+        </div>
+        <div class="concept-body">
+          <div class="layer layer-plain"><div class="layer-label">🗣 Plain Language</div><p>${c.plain}</p></div>
+          <div class="layer layer-clinical"><div class="layer-label">🩺 Clinical Language</div><p>${c.clinical}</p></div>
+          <div class="layer layer-analogy"><div class="layer-label">💡 Real-World Analogy</div><p>${c.analogy}</p></div>
+          <div class="layer layer-tested"><div class="layer-label">🎯 Top 3 Tested Aspects</div>
+            <ol>${c.tested.map(t => `<li>${t}</li>`).join('')}</ol>
+          </div>
+          <button class="mark-btn" onclick="markDone('${id}', event)">✓ Mark as Mastered</button>
+        </div>
+      </div>`;
+    });
+    html += `</section>`;
+  }
+  html += buildQuickReview();
+  main.innerHTML = html;
+  restoreProgress();
+}
+
+function buildQuickReview() {
+  let html = '<section class="quick-review"><h2>⚡ QUICK REVIEW — ONE-LINERS ⚡</h2><div class="quick-review-grid">';
+  DATA.forEach(c => {
+    html += `<div class="qr-item"><span class="qr-term">${c.title}:</span> ${c.oneLiner}</div>`;
+  });
+  html += '</div></section>';
+  return html;
+}
+
+function toggle(id) {
+  const el = document.querySelector(`[data-id="${id}"]`);
+  el.classList.toggle('open');
+}
+
+function markDone(id, e) {
+  e.stopPropagation();
+  const el = document.querySelector(`[data-id="${id}"]`);
+  el.classList.toggle('done');
+  saveProgress();
+}
+
+function saveProgress() {
+  const done = [...document.querySelectorAll('.concept.done')].map(e => e.dataset.id);
+  localStorage.setItem('pathoProgress', JSON.stringify(done));
+  updateCount();
+}
+
+function restoreProgress() {
+  const done = JSON.parse(localStorage.getItem('pathoProgress') || '[]');
+  done.forEach(id => {
+    const el = document.querySelector(`[data-id="${id}"]`);
+    if (el) el.classList.add('done');
+  });
+  updateCount();
+}
+
+function updateCount() {
+  document.getElementById('progress').textContent = document.querySelectorAll('.concept.done').length;
+}
+
+document.getElementById('search').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll('.concept').forEach(c => {
+    const match = c.textContent.toLowerCase().includes(q);
+    c.style.display = match ? '' : 'none';
+    if (match && q.length > 2) c.classList.add('open');
+  });
+});
+
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.system-section').forEach(s => {
+      s.style.display = (f === 'all' || s.dataset.system === f) ? '' : 'none';
+    });
+    if (f !== 'all') document.getElementById('sec-' + f).scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+// Boot after data loads
+window.addEventListener('DOMContentLoaded', render);
+</script>
+
+<script>
+// ============================================================
+// PATHOPHYSIOLOGY CORE CONCEPTS DATABASE
+// 60 concepts covering 95% of the 75-question exam
+// ============================================================
+window.__PATHO_DATA__ = [
+
+// ═══════════════ RENAL & URINARY ═══════════════
+{
+  system:"renal", title:"1. Acute Glomerulonephritis (Post-Strep)",
+  questions:[1,26],
+  plain:"Your kidney's filters get damaged after your immune system fights off strep throat — <strong>the antibodies accidentally attack the kidneys too</strong>.",
+  clinical:"Type III hypersensitivity reaction where <em>anti-streptococcal antibodies</em> deposit in the glomerular basement membrane 1–2 weeks post-infection, causing inflammation and impaired filtration.",
+  analogy:"Like friendly fire in a military op — your immune system fires at strep, but some shots land on the kidney's filters by mistake. The filters get inflamed and start leaking.",
+  tested:[
+    "<strong>Classic history:</strong> Recent strep throat infection (NOT family hx, NOT calculi, NOT trauma)",
+    "<strong>Classic sign:</strong> Generalized edema — <em>especially periorbital (around the eyes) and facial</em>",
+    "<strong>Triad:</strong> Dark/tea-colored urine + flank pain + fever"
+  ],
+  oneLiner:"Post-strep immune-complex deposition → periorbital edema + tea-colored urine."
+},
+{
+  system:"renal", title:"2. UTI — Why Females Are More Susceptible",
+  questions:[18],
+  plain:"Female urethras are <strong>short and sit close to the anus</strong> — so bacteria from stool has a very short trip to reach the bladder.",
+  clinical:"The female urethra (~4 cm) and its close <em>proximity to the anus</em> enable ascending infection from GI/perineal flora, predominantly <em>E. coli</em>.",
+  analogy:"It's like living next door to a bakery — delicious but dangerous. The bacteria don't have to travel far to 'visit' the bladder.",
+  tested:[
+    "<strong>Main risk factor:</strong> Proximity of urethra to anus (NOT ureter length, bladder size, or kidney pelvis)",
+    "<strong>Most common pathogen:</strong> E. coli",
+    "<strong>Classic symptoms:</strong> Dysuria, frequency, urgency, cloudy urine"
+  ],
+  oneLiner:"Short urethra + close to anus = easy bacterial highway."
+},
+{
+  system:"renal", title:"3. Uropathy (Urinary Obstruction)",
+  questions:[19],
+  plain:"Something is <strong>blocking the flow of urine</strong>, causing it to back up and damage the kidneys upstream.",
+  clinical:"<em>Uropathy</em> is obstruction of urine flow at any level of the urinary tract, causing retrograde pressure and potential <em>hydronephrosis</em> and nephron damage.",
+  analogy:"Like a clogged drain in your sink — the water (urine) backs up, overflows, and damages everything upstream.",
+  tested:[
+    "<strong>Definition:</strong> Obstruction of urine flow causing backup and renal damage",
+    "<strong>Common causes:</strong> Stones, BPH, tumors, strictures",
+    "<strong>Key complication:</strong> Hydronephrosis → kidney damage if unrelieved"
+  ],
+  oneLiner:"Obstruction of urine flow → backup → kidney damage."
+},
+{
+  system:"renal", title:"4. Hydronephrosis",
+  questions:[20],
+  plain:"The <strong>urine-collecting area of the kidney swells up like a water balloon</strong> because something downstream is blocking flow.",
+  clinical:"<em>Hydronephrosis</em> is dilation of the renal pelvis and calyces due to obstruction, causing progressive parenchymal atrophy if untreated.",
+  analogy:"Imagine a funnel you're pouring water into — if the bottom is plugged, the funnel fills up and stretches. That's the renal pelvis ballooning.",
+  tested:[
+    "<strong>Definition:</strong> Dilation of the renal pelvis (NOT the ureter — that's hydroureter)",
+    "<strong>Cause:</strong> Downstream obstruction (stones, BPH, tumor)",
+    "<strong>Key distinction:</strong> Hydronephrosis = renal pelvis; Hydroureter = ureter"
+  ],
+  oneLiner:"Renal pelvis dilation from downstream blockage."
+},
+{
+  system:"renal", title:"5. Pyelonephritis",
+  questions:[27,39],
+  plain:"A <strong>bacterial infection of the kidney itself</strong> — not just the bladder. It's serious, and the kidney gets inflamed and tender.",
+  clinical:"Ascending bacterial infection of the upper urinary tract; leukocytes in urine (<em>pyuria</em>), flank pain, CVA tenderness, fever, and chills.",
+  analogy:"If a UTI is a house fire in the bladder, pyelonephritis is the fire spreading up to the attic (kidney) — much more dangerous.",
+  tested:[
+    "<strong>Classic symptom:</strong> Flank pain + chills (NOT RLQ pain, NOT jaundice)",
+    "<strong>Classic lab:</strong> Pyuria (WBCs in urine)",
+    "<strong>Key sign:</strong> CVA (costovertebral angle) tenderness on exam"
+  ],
+  oneLiner:"Kidney infection — flank pain, chills, pyuria."
+},
+{
+  system:"renal", title:"6. Nephrotic Syndrome — Recovery Marker",
+  questions:[32],
+  plain:"Nephrotic syndrome means <strong>protein is leaking from the kidneys into urine</strong>. Recovery means the protein stops leaking.",
+  clinical:"Recovery is marked by resolution of <em>proteinuria</em> — indicating restored glomerular filtration barrier integrity.",
+  analogy:"If your kidney's filter is like a screen door with holes big enough for protein to escape, recovery means the holes are patched — protein stays inside.",
+  tested:[
+    "<strong>Recovery marker:</strong> Disappearance of protein from urine",
+    "<strong>Classic tetrad:</strong> Proteinuria + hypoalbuminemia + edema + hyperlipidemia",
+    "<strong>NOT recovery markers:</strong> Weight gain, increased lipids, BP changes alone"
+  ],
+  oneLiner:"Proteinuria resolution = recovery."
+},
+{
+  system:"renal", title:"7. Renal Calculi (Kidney Stones)",
+  questions:[36,37],
+  plain:"<strong>Hard mineral deposits in the kidney.</strong> Paraplegics get them from calcium dumping out of bones. Diabetics with kidney failure need less protein.",
+  clinical:"Paraplegics develop calculi due to <em>immobilization hypercalcemia</em> (bone resorption releases calcium). In CRF, dietary <em>protein</em> restriction reduces nitrogenous waste load.",
+  analogy:"Bones are like calcium banks. When paraplegics can't bear weight, bones 'withdraw' calcium, and it ends up clumping in the kidneys like sugar crystals in syrup.",
+  tested:[
+    "<strong>Paraplegic risk:</strong> Increased calcium LOSS from bones (disuse osteoporosis)",
+    "<strong>CRF diet:</strong> Reduce PROTEIN (not fats, carbs, or vit C)",
+    "<strong>Classic pain:</strong> Excruciating flank pain radiating to groin"
+  ],
+  oneLiner:"Bones leach Ca → kidney stones; CRF → low-protein diet."
+},
+{
+  system:"renal", title:"8. Pre-Renal Acute Kidney Injury",
+  questions:[38],
+  plain:"The kidney itself is fine — the problem is <strong>not enough blood getting TO the kidney</strong>.",
+  clinical:"<em>Pre-renal AKI</em> results from decreased renal perfusion due to <em>hypovolemia, heart failure, shock, or renal artery stenosis</em>. Reversible if addressed quickly.",
+  analogy:"Imagine a water treatment plant that stops working because upstream river has dried up. The plant isn't broken — it just has nothing to work with.",
+  tested:[
+    "<strong>Causes:</strong> Hypovolemia + heart failure (anything reducing blood flow to kidney)",
+    "<strong>Three categories of AKI:</strong> Pre-renal (before), Intra-renal (inside), Post-renal (after)",
+    "<strong>Reversibility:</strong> Pre-renal is reversible if perfusion is restored promptly"
+  ],
+  oneLiner:"Low blood flow TO kidney = pre-renal AKI."
+},
+
+// ═══════════════ ENDOCRINE ═══════════════
+{
+  system:"endocrine", title:"9. Type 2 Diabetes Mellitus (T2DM)",
+  questions:[2],
+  plain:"Your body still makes insulin, but your cells <strong>stopped listening to it</strong>. Develops slowly with lifestyle and weight issues.",
+  clinical:"<em>Insulin resistance</em> at peripheral tissues with eventual β-cell exhaustion. Gradual onset. Comorbidities: retinopathy, neuropathy, nephropathy, CVD.",
+  analogy:"Insulin is knocking on the door of your cells with a 'let glucose in' message — but T2DM cells have noise-canceling headphones on. They stop responding.",
+  tested:[
+    "<strong>Classic profile:</strong> Overweight, sedentary, gradual onset, adult",
+    "<strong>Classic triad:</strong> Polyuria + polydipsia + polyphagia + fatigue",
+    "<strong>Comorbidities on exam:</strong> Retinopathy, neuropathy, CVD"
+  ],
+  oneLiner:"Insulin resistance — gradual, overweight, adult."
+},
+{
+  system:"endocrine", title:"10. Type 1 Diabetes Mellitus (T1DM)",
+  questions:[48],
+  plain:"The immune system <strong>destroys the insulin-making cells (beta cells)</strong> in the pancreas. No insulin can be made — ever again.",
+  clinical:"Autoimmune destruction of pancreatic <em>β-cells</em> in the islets of Langerhans → absolute insulin deficiency. Typically juvenile onset.",
+  analogy:"Imagine the factory workers (beta cells) who make insulin are all fired permanently. The factory (pancreas) is fine — just no workers left.",
+  tested:[
+    "<strong>Destroyed cells:</strong> BETA cells (not alpha, delta, or pancreatic polypeptide)",
+    "<strong>Mechanism:</strong> Autoimmune — absolute insulin deficiency",
+    "<strong>Treatment:</strong> Lifelong exogenous insulin"
+  ],
+  oneLiner:"Autoimmune destruction of beta cells → no insulin."
+},
+{
+  system:"endocrine", title:"11. Gestational DM — Fetal Consequences",
+  questions:[6],
+  plain:"A pregnant mom's high sugar crosses the placenta and makes the <strong>baby grow too big</strong> (macrosomia) — NOT too small.",
+  clinical:"Maternal hyperglycemia → fetal hyperinsulinemia → <em>macrosomia</em> (LGA, not SGA), preterm delivery, fetal defects, and <em>neonatal hypoglycemia</em> after delivery.",
+  analogy:"Baby gets all-you-can-eat sugar buffet in the womb → grows huge. After birth, the sugar stops but the insulin is still pumping → baby crashes into low sugar.",
+  tested:[
+    "<strong>NOT a consequence:</strong> Small-for-gestational-age (the opposite — LGA is classic)",
+    "<strong>Consequences ARE:</strong> Macrosomia, neonatal hypoglycemia, fetal defects, preterm delivery",
+    "<strong>Why neonatal hypoglycemia:</strong> Baby's pancreas was pumping insulin to match mom's sugar — sugar stops at birth, insulin doesn't"
+  ],
+  oneLiner:"GDM → macrosomia (NOT SGA) + neonatal hypoglycemia."
+},
+{
+  system:"endocrine", title:"12. Priority Assessment in T2DM — Fever",
+  questions:[4],
+  plain:"In a diabetic with multiple vital signs to evaluate, <strong>fever is the red flag</strong> because diabetics are prone to serious infections.",
+  clinical:"Diabetics are <em>immunocompromised</em> from chronic hyperglycemia. Fever (101°F) suggests infection — DKA risk, poor wound healing, sepsis. Other vitals (pulse 88, BP 122/84, RR 16) are normal.",
+  analogy:"Diabetics are like a city with weakened walls. Fever is like the alarm bell that invaders are inside — you drop everything else to investigate.",
+  tested:[
+    "<strong>Priority finding:</strong> Temperature 101°F (infection risk)",
+    "<strong>Why:</strong> Infections can trigger DKA and are harder to fight in DM",
+    "<strong>Normal values:</strong> FBG 60–100, HR 60–100, RR 12–20, BP ≤120/80, Temp 97–99°F"
+  ],
+  oneLiner:"Diabetic + fever = infection worry = priority."
+},
+{
+  system:"endocrine", title:"13. Cushing's Disease/Syndrome",
+  questions:[49],
+  plain:"<strong>Too much cortisol (stress hormone)</strong>. Causes a puffy 'moon face,' hairiness, easy bruising, and purple stretch marks on the belly.",
+  clinical:"Chronic <em>hypercortisolism</em>. Features: moon facies, buffalo hump, truncal obesity, <em>hirsutism</em>, <em>striae</em>, easy bruising, hyperglycemia, HTN.",
+  analogy:"Cortisol is the body's 'stress response' hormone. Cushing's is like leaving the stress alarm on 24/7 — everything gets remodeled: fat redistributes, skin thins, sugar rises.",
+  tested:[
+    "<strong>Classic appearance:</strong> Moon face + hirsutism + striae + bruising",
+    "<strong>Distinguish from Addison's:</strong> Addison's = LOW cortisol (hyperpigmentation, hypotension, weakness)",
+    "<strong>Labs:</strong> ↑ cortisol, ↑ glucose, ↓ potassium"
+  ],
+  oneLiner:"Too much cortisol → moon face, striae, hirsutism."
+},
+{
+  system:"endocrine", title:"14. Diabetes Insipidus (DI)",
+  questions:[50,51],
+  plain:"The body <strong>can't hold onto water</strong> because a hormone (ADH) is missing. You pee out huge amounts and get incredibly thirsty.",
+  clinical:"Deficiency of <em>antidiuretic hormone (ADH/vasopressin)</em> → inability to concentrate urine → polyuria (up to 20 L/day), polydipsia, extreme thirst. <em>No polyphagia</em> (that's DM).",
+  analogy:"ADH is like the kidney's 'hold the water' order. Without it, your kidney is a sieve — everything drains right through.",
+  tested:[
+    "<strong>Missing hormone:</strong> ADH (NOT TSH, FSH, or LH)",
+    "<strong>NOT expected:</strong> Polyphagia (increased hunger — that's DM, not DI)",
+    "<strong>Expected:</strong> Polyuria, polydipsia, extreme thirst, dilute urine"
+  ],
+  oneLiner:"No ADH → can't hold water → massive dilute urine."
+},
+{
+  system:"endocrine", title:"15. SIADH (Syndrome of Inappropriate ADH)",
+  questions:[52],
+  plain:"The opposite of DI. <strong>Too much ADH</strong> = body holds onto way too much water. Sodium gets dangerously diluted. Common with <em>small cell lung cancer</em>.",
+  clinical:"Excess ADH → water retention → <em>dilutional hyponatremia</em> (Na often <120), weight gain, HTN, altered mental status, seizures. Classic cause: <em>paraneoplastic SCLC</em>.",
+  analogy:"If DI is a leaky faucet, SIADH is a stuck-closed faucet. Water keeps filling the tub (body) until it overflows — and the salt gets diluted to nothing.",
+  tested:[
+    "<strong>Classic vignette:</strong> SCLC + water weight gain + Na 90 + HTN + altered mental status",
+    "<strong>Hallmark:</strong> Hyponatremia (dilutional)",
+    "<strong>Compare to DI:</strong> SIADH = too much ADH (retain water); DI = too little (lose water)"
+  ],
+  oneLiner:"Too much ADH → water retention → hyponatremia."
+},
+{
+  system:"endocrine", title:"16. Polydipsia (in Diabetes)",
+  questions:[73],
+  plain:"<strong>Extreme thirst.</strong> 'Poly' = many, 'dipsia' = drinking. Classic symptom of diabetes because the body is dehydrated from peeing out sugar.",
+  clinical:"<em>Polydipsia</em> = excessive thirst. In DM, osmotic diuresis from glucosuria causes dehydration → triggers thirst mechanism.",
+  analogy:"Sugar in urine pulls water with it (like a sponge pulling water out of a bowl). The body dehydrates → triggers 'DRINK NOW' alarm.",
+  tested:[
+    "<strong>Definition:</strong> Increased thirst (NOT urine output, NOT appetite)",
+    "<strong>Classic triad:</strong> Polyuria (pee) + Polydipsia (drink) + Polyphagia (eat)",
+    "<strong>Root cause in DM:</strong> Osmotic diuresis from hyperglycemia"
+  ],
+  oneLiner:"'Poly-dipsia' = excessive thirst."
+},
+
+// ═══════════════ MUSCULOSKELETAL ═══════════════
+{
+  system:"musculo", title:"17. Osteoporosis",
+  questions:[3,29,75],
+  plain:"Bones become <strong>porous, brittle, and hollow</strong> like a honeycomb. Kyphosis (hunched back) in elderly is a giveaway. Loss of bone, not thickening.",
+  clinical:"Decreased bone mineral density due to imbalance between <em>osteoclast resorption</em> and <em>osteoblast formation</em>. Vertebral compression → <em>kyphosis</em>. Risk factors: low estrogen, poor diet, inactivity.",
+  analogy:"Your bones are like a loaf of sourdough bread. Osteoporosis makes the holes bigger and walls thinner → the bread crumbles easily.",
+  tested:[
+    "<strong>Classic finding:</strong> Kyphosis (hunched back) in older adult → suspect osteoporosis",
+    "<strong>T/F trap:</strong> Osteoporosis = thinning (NOT thickening) of bone matrix — FALSE if question says thickening",
+    "<strong>Risk factors (all true):</strong> Low estrogen, poor diet, lack of weight-bearing exercise, hormonal"
+  ],
+  oneLiner:"Porous, brittle bones → fractures + kyphosis."
+},
+{
+  system:"musculo", title:"18. Rheumatology (Definition)",
+  questions:[5],
+  plain:"The medical field that studies <strong>inflammation of muscles, bones, and joints</strong>.",
+  clinical:"<em>Rheumatology</em>: the study of inflammatory and autoimmune diseases affecting the musculoskeletal system and connective tissues.",
+  analogy:"If cardiology = heart doctors, rheumatology = 'achy-joint-and-muscle' doctors.",
+  tested:[
+    "<strong>Definition:</strong> Study of inflammatory muscle, bone, and joint disease",
+    "<strong>NOT:</strong> Dermatology (skin), Ophthalmology (eyes), Oncology (cancer)",
+    "<strong>Examples of conditions:</strong> RA, lupus, gout, vasculitis"
+  ],
+  oneLiner:"Rheumatology = inflammation of muscles/bones/joints."
+},
+{
+  system:"musculo", title:"19. Myositis",
+  questions:[13],
+  plain:"<strong>Inflammation of muscle</strong> — just muscle, nothing else. 'Myo-' = muscle, '-itis' = inflammation.",
+  clinical:"<em>Myositis</em>: inflammation of skeletal muscle tissue, often autoimmune (e.g., polymyositis, dermatomyositis). Presents with proximal muscle weakness.",
+  analogy:"Break down the word: MYO (muscle) + ITIS (inflammation) = muscle inflammation. Like 'appendicitis' = appendix inflammation.",
+  tested:[
+    "<strong>Definition:</strong> Inflammation of MUSCLE ONLY (not bone, joint, or cartilage)",
+    "<strong>Word deconstruction:</strong> myo = muscle, itis = inflammation",
+    "<strong>Contrast:</strong> Osteomyelitis = bone; Arthritis = joint; Chondritis = cartilage"
+  ],
+  oneLiner:"Myo + itis = muscle inflammation."
+},
+{
+  system:"musculo", title:"20. Lyme Disease",
+  questions:[14,68],
+  plain:"A tick-borne bacterial infection. Classic sign: <strong>bull's-eye rash (erythema migrans)</strong>. Treatment: <em>antibiotics</em>.",
+  clinical:"Caused by <em>Borrelia burgdorferi</em> via <em>Ixodes</em> tick. Symptoms: <em>erythema migrans</em>, arthralgia, myalgia, fatigue, headache. Treatment: doxycycline.",
+  analogy:"A tiny tick is basically a biological needle injecting bacteria. The bull's-eye rash is the body saying 'something got in RIGHT HERE.'",
+  tested:[
+    "<strong>Signature finding:</strong> Erythema migrans (bull's-eye rash) + arthralgia + myalgia + fatigue",
+    "<strong>Treatment:</strong> Antibiotics (NOT physical therapy, surgery, or diet)",
+    "<strong>Vector:</strong> Deer tick (Ixodes); summer/fall exposure"
+  ],
+  oneLiner:"Tick → bull's-eye rash → antibiotics."
+},
+{
+  system:"musculo", title:"21. Osteophytes (Bone Spurs)",
+  questions:[15],
+  plain:"<strong>Extra bone growth at joint edges</strong> where the cartilage has worn away. The body tries to repair but creates bumpy edges instead.",
+  clinical:"<em>Osteophytes</em>: bony outgrowths at joint margins in response to cartilage degradation. Classic in <em>osteoarthritis</em>.",
+  analogy:"Like callouses forming on worn-out shoes — the body lays down extra bone where the cartilage padding is gone.",
+  tested:[
+    "<strong>Definition:</strong> Bone that forms at the MARGIN of cartilage loss",
+    "<strong>Associated with:</strong> Osteoarthritis",
+    "<strong>NOT:</strong> Trabecular thinning (that's osteopenia), disc compression, or aging alone"
+  ],
+  oneLiner:"Bone spurs at joint margins where cartilage is lost."
+},
+{
+  system:"musculo", title:"22. Bone Infection Stages — Sequestrum & Suppuration",
+  questions:[25,69],
+  plain:"<strong>Sequestrum</strong> = dead piece of bone from pressure/infection (7 days). <strong>Suppuration</strong> = pus has entered the bone's canal system (Haversian).",
+  clinical:"Stages of <em>osteomyelitis</em>: Inflammation → Suppuration (pus in Haversian canals, abscess) → <em>Sequestrum</em> (necrotic bone from vascular obstruction, ~7 days) → Involucrum (new bone around sequestrum).",
+  analogy:"Think of a tree branch with gangrene. Inflammation = red. Suppuration = pus pocket. Sequestrum = dead branch piece. Involucrum = new bark growing around it.",
+  tested:[
+    "<strong>Sequestrum:</strong> Pressure + vascular obstruction → bone necrosis in 7 days",
+    "<strong>Suppuration:</strong> Infectious material in Haversian system + abscess formation",
+    "<strong>Order:</strong> Inflammation → Suppuration → Sequestrum → Involucrum"
+  ],
+  oneLiner:"Sequestrum = dead bone; Suppuration = pus in bone."
+},
+{
+  system:"musculo", title:"23. Osteopenia",
+  questions:[63],
+  plain:"<strong>Early-stage bone thinning</strong> — not yet osteoporosis, but heading that way. The scaffolding inside the bone is thinning.",
+  clinical:"<em>Osteopenia</em>: <em>trabecular matrix thinning</em> with mildly decreased bone density. Precursor to osteoporosis.",
+  analogy:"If osteoporosis is a ruined building, osteopenia is a building that's starting to weaken but hasn't crumbled yet.",
+  tested:[
+    "<strong>Hallmark:</strong> Early trabecular matrix thinning",
+    "<strong>Spectrum:</strong> Normal → Osteopenia → Osteoporosis",
+    "<strong>T-score ranges:</strong> Normal > -1; Osteopenia -1 to -2.5; Osteoporosis < -2.5"
+  ],
+  oneLiner:"Early trabecular thinning — pre-osteoporosis."
+},
+{
+  system:"musculo", title:"24. Degenerative Disc Disease",
+  questions:[64,67],
+  plain:"The <strong>cushions between your spine bones (discs)</strong> wear down. Causes pain, weakness, and nerve problems because nerves get pinched.",
+  clinical:"Progressive degeneration of <em>intervertebral discs</em> → loss of disc height, nerve root compression → radiculopathy, motor weakness, neuropathy. Dx: <em>physical exam + X-ray</em>.",
+  analogy:"Your vertebrae are stacked like pancakes with jelly (discs) between them. If the jelly dries out, the pancakes squish the nerves poking out the sides.",
+  tested:[
+    "<strong>Symptoms:</strong> Pain, motor weakness, neuropathy from compromised spinal nerves",
+    "<strong>Diagnostics:</strong> Physical exam + X-ray (NOT blood labs, skin scraping, sputum)",
+    "<strong>Mechanism:</strong> Disc degeneration → nerve compression"
+  ],
+  oneLiner:"Worn spinal discs → pinched nerves."
+},
+{
+  system:"musculo", title:"25. Gout",
+  questions:[65],
+  plain:"Uric acid crystals build up in joints — especially the <strong>big toe base</strong> — causing red-hot, swollen, excruciating pain.",
+  clinical:"<em>Hyperuricemia</em> → monosodium urate crystal deposition in joints (classically <em>first MTP joint — podagra</em>). Symptoms: redness, warmth, swelling, severe pain.",
+  analogy:"Uric acid crystals are like tiny shards of glass dumped into the joint. Any movement = stabbing pain.",
+  tested:[
+    "<strong>Classic presentation:</strong> Hyperuricemia + red/hot/swollen metatarsophalangeal joint (big toe)",
+    "<strong>Distinguish from:</strong> Osteoarthritis (no redness/warmth), osteomyelitis (infection, not crystals)",
+    "<strong>Triggers:</strong> Purine-rich foods (red meat, alcohol, shellfish)"
+  ],
+  oneLiner:"Uric acid crystals in big toe → agony."
+},
+{
+  system:"musculo", title:"26. Osteoarthritis (OA)",
+  questions:[66,70,71],
+  plain:"<strong>Wear-and-tear arthritis.</strong> Slow cartilage breakdown from decades of use. Joints get stiff, painful, bumpy. <em>Weight-bearing exercise HELPS</em>, cold makes it worse.",
+  clinical:"Non-inflammatory joint disease from lifetime mechanical stress. Cartilage loss + osteophytes. <em>Bouchard's nodes</em> (PIP joints), <em>Heberden's nodes</em> (DIP). Weight-bearing exercise is beneficial.",
+  analogy:"Think of OA like an old car — years of use wear down the brake pads (cartilage). It's not rusted from the inside (RA) — it's just worn out.",
+  tested:[
+    "<strong>Bouchard's nodes:</strong> Proximal interphalangeal (PIP) joint swellings in OA",
+    "<strong>Classic profile:</strong> 40+, slow progression, trauma/wear over lifetime",
+    "<strong>EXCEPT trap:</strong> 'Weight-bearing exercise is beneficial' is TRUE for OA — don't pick it as the exception"
+  ],
+  oneLiner:"Wear-and-tear arthritis → Bouchard's nodes, exercise helps."
+},
+
+// ═══════════════ DIGESTIVE ═══════════════
+{
+  system:"digestive", title:"27. Murphy's Sign (Cholecystitis)",
+  questions:[7],
+  plain:"Patient <strong>gasps and stops breathing in</strong> when you push under their right ribs. Means their gallbladder is inflamed.",
+  clinical:"Positive <em>Murphy's sign</em>: examiner palpates RUQ (subcostal) during inspiration → patient abruptly <em>stops inhaling</em> due to pain as inflamed gallbladder touches the hand. Indicates <em>cholecystitis</em>.",
+  analogy:"Imagine pushing on a bruise right as someone's taking a deep breath. They'll freeze mid-breath. That's what an inflamed gallbladder does when it meets your fingers.",
+  tested:[
+    "<strong>Description:</strong> Stops breathing IN + RUQ tenderness on palpation under ribs",
+    "<strong>Location:</strong> Right upper quadrant (NOT left, NOT lower)",
+    "<strong>Indicates:</strong> Cholecystitis (gallbladder inflammation)"
+  ],
+  oneLiner:"Stops inhaling + RUQ pain on palpation = cholecystitis."
+},
+{
+  system:"digestive", title:"28. Peptic Ulcer Disease (PUD)",
+  questions:[8],
+  plain:"A <strong>raw sore in your stomach or duodenum lining</strong>. NSAIDs and alcohol strip the protective mucus. Pain between meals + vomiting blood.",
+  clinical:"Erosion of gastric/duodenal mucosa from imbalance between aggressive factors (<em>H. pylori, NSAIDs, alcohol</em>) and protective factors (mucus, bicarb). Classic: hematemesis, <em>pain between meals</em>, melena.",
+  analogy:"Your stomach has a mucous raincoat protecting it from acid. NSAIDs shred that raincoat — acid then burns through the tissue underneath.",
+  tested:[
+    "<strong>Classic vignette:</strong> NSAIDs + alcohol + hematemesis + pain between meals",
+    "<strong>Distinguish from:</strong> Hiatal hernia (dysphagia/burning), Crohn's (skip lesions)",
+    "<strong>Top causes:</strong> H. pylori + NSAIDs (the big two)"
+  ],
+  oneLiner:"NSAIDs/alcohol → stomach ulcer → hematemesis + pain."
+},
+{
+  system:"digestive", title:"29. Acute Cholecystitis — Signs & Symptoms",
+  questions:[9],
+  plain:"Inflamed gallbladder. <strong>Pain in the upper middle belly that shoots up to the right shoulder blade</strong>. Often after a fatty meal.",
+  clinical:"Gallbladder inflammation (usually from obstructed cystic duct by stone). <em>Epigastric pain radiating to right scapula</em>, RUQ tenderness, positive Murphy's sign, fever, leukocytosis.",
+  analogy:"The gallbladder's nerves wire to the same area as the right shoulder blade — so when the gallbladder screams, the brain thinks the shoulder is hurt too (referred pain).",
+  tested:[
+    "<strong>Classic symptom:</strong> Epigastric pain radiating to right scapula",
+    "<strong>Positive (not negative) Murphy's sign</strong>",
+    "<strong>Precipitant:</strong> Fatty meal (→ gallbladder contracts against stone)"
+  ],
+  oneLiner:"Epigastric pain → right scapula + positive Murphy's."
+},
+{
+  system:"digestive", title:"30. Hepatitis B (HBV)",
+  questions:[12],
+  plain:"A liver virus spread by <strong>blood, body fluids, and sex</strong>. Good news: there's a <em>vaccine</em>, and antibody tests exist.",
+  clinical:"<em>HBV</em>: DNA virus transmitted via <em>blood, body fluids, sexual, and perinatal routes</em>. Vaccine-preventable. Serology: HBsAg, anti-HBs, anti-HBc.",
+  analogy:"HBV is the 'HIV-like' hepatitis — shares the same transmission routes. HAV is the 'food poisoning' hepatitis (fecal-oral).",
+  tested:[
+    "<strong>Transmission:</strong> Blood, body fluids, sex (distinguishes from HAV's fecal-oral)",
+    "<strong>Vaccine available:</strong> Yes (HAV also has vaccine; HCV/HDV do NOT)",
+    "<strong>Antibody testing:</strong> Available for diagnosis"
+  ],
+  oneLiner:"HBV = blood/body fluids/sex + vaccine available."
+},
+{
+  system:"digestive", title:"31. Melena",
+  questions:[16],
+  plain:"<strong>Black, tarry stool</strong> — means blood from high up in the GI tract (stomach, small intestine). The blood got digested on the way down.",
+  clinical:"<em>Melena</em>: dark, tarry stool from <em>upper GI bleeding</em>. Blood is broken down by gastric acid and digestive enzymes → iron oxidizes → black color.",
+  analogy:"Blood from the upper GI is like a banana that's been sitting too long — it darkens as it ages. Lower GI blood (hematochezia) is fresh red.",
+  tested:[
+    "<strong>Definition:</strong> Black, tarry stool",
+    "<strong>Source:</strong> Upper GI bleed (not lower — that's hematochezia)",
+    "<strong>Differentiate:</strong> Hematochezia (bright red, lower GI); Hematuria (blood in urine); Fecal impaction (no blood)"
+  ],
+  oneLiner:"Black tarry stool = upper GI bleed."
+},
+{
+  system:"digestive", title:"32. Crohn's Disease",
+  questions:[17],
+  plain:"Patchy inflammation throughout the digestive tract with <strong>'skip lesions'</strong> — sick sections separated by healthy ones.",
+  clinical:"Chronic inflammatory bowel disease with <em>transmural inflammation</em> and <em>skip lesions</em> anywhere from mouth to anus. Classic 'cobblestone' mucosa.",
+  analogy:"Imagine a road with potholes — some sections are fine, some are destroyed. That's Crohn's. Ulcerative colitis is more like 'the whole road is one big pothole from end to end.'",
+  tested:[
+    "<strong>Signature:</strong> Skip lesions (areas of disease separated by healthy areas)",
+    "<strong>Location:</strong> Anywhere in GI tract (vs. UC = colon only, continuous)",
+    "<strong>Depth:</strong> Transmural (all layers) vs. UC = mucosal only"
+  ],
+  oneLiner:"Skip lesions + transmural inflammation = Crohn's."
+},
+{
+  system:"digestive", title:"33. Cullen's Sign & Acute Pancreatitis",
+  questions:[53,74],
+  plain:"<strong>Bruising around the belly button</strong> = retroperitoneal bleeding from a severely inflamed pancreas. Classic pancreatitis pain: mid-belly radiating to the back, worse when lying flat.",
+  clinical:"<em>Cullen's sign</em>: periumbilical ecchymosis from retroperitoneal hemorrhage in <em>acute pancreatitis</em>. Classic pain: <em>epigastric radiating to back</em>, worse supine; fever, hypotension, N/V.",
+  analogy:"The pancreas is 'digesting itself' behind the belly. Blood leaks forward and pools at the belly button because that's the weakest spot in the abdominal wall — a belly-button bruise.",
+  tested:[
+    "<strong>Cullen's sign:</strong> Umbilical discoloration from hemorrhage → acute pancreatitis",
+    "<strong>Classic pain:</strong> Epigastric pain radiating to back, worse lying supine",
+    "<strong>Associated findings:</strong> Fever, hypotension, N/V; elevated lipase/amylase"
+  ],
+  oneLiner:"Belly-button bruise + back pain = pancreatitis."
+},
+{
+  system:"digestive", title:"34. Cholecystitis — Diet After Recovery",
+  questions:[54],
+  plain:"<strong>Low-fat meals</strong>. Gallbladder can't handle fatty foods well, so stick to <em>baked chicken and veggies</em> — skip fried, greasy, or cheesy options.",
+  clinical:"Post-cholecystitis diet: <em>low-fat</em> to minimize gallbladder stimulation. Avoid fried, creamy, high-fat foods.",
+  analogy:"The gallbladder is a bile squirt-gun for digesting fat. If it's damaged, don't ask it to squirt a lot — give it small, easy jobs (low-fat meals).",
+  tested:[
+    "<strong>Best choice:</strong> Baked chicken + steamed veggies + rice (low fat)",
+    "<strong>Avoid:</strong> Fried chicken, cheeseburger, cheese casserole, gravy",
+    "<strong>Why:</strong> Fat triggers gallbladder contraction → pain"
+  ],
+  oneLiner:"Low-fat meals after cholecystitis."
+},
+{
+  system:"digestive", title:"35. Choledocholithiasis",
+  questions:[55],
+  plain:"<strong>Stones stuck in the common bile duct</strong> — the tube that drains bile from the liver/gallbladder to the small intestine.",
+  clinical:"<em>Choledocholithiasis</em>: presence of gallstones in the common bile duct. Risk of cholangitis, pancreatitis, obstructive jaundice.",
+  analogy:"Break the word down: CHOLEDOCHO (common bile duct) + LITHIASIS (stones) = stones in the bile duct.",
+  tested:[
+    "<strong>Location:</strong> Common bile duct (NOT gallbladder = cholelithiasis; NOT kidney = nephrolithiasis)",
+    "<strong>Word parts:</strong> chole = bile; docho = duct; lithiasis = stones",
+    "<strong>Complications:</strong> Obstructive jaundice, cholangitis, pancreatitis"
+  ],
+  oneLiner:"Stones in the common bile duct."
+},
+{
+  system:"digestive", title:"36. Diverticulitis",
+  questions:[56],
+  plain:"Little <strong>pouches in the colon wall get infected/inflamed</strong>, often because poop got stuck in them. Can cause blockage.",
+  clinical:"Inflammation of <em>diverticula</em> (outpouchings) of the colon wall, typically sigmoid. Can cause obstruction, perforation, abscess.",
+  analogy:"Your colon wall weakens in spots, and little 'pockets' bulge out. Food gets stuck in them → infection → inflammation.",
+  tested:[
+    "<strong>Definition:</strong> Inflammation from weakened bowel wall + trapped intestinal contents + obstruction",
+    "<strong>Location:</strong> Sigmoid colon most common",
+    "<strong>Distinguish from:</strong> Volvulus (twisted bowel), Hernia (protrusion through wall), UC (mucosal inflammation)"
+  ],
+  oneLiner:"Infected colon pouches → inflammation + obstruction."
+},
+{
+  system:"digestive", title:"37. Achalasia",
+  questions:[57],
+  plain:"A general term for <strong>trouble with esophageal movement</strong> — food doesn't move down properly because the muscle coordination is off.",
+  clinical:"<em>Achalasia</em>: esophageal motility disorder — failure of lower esophageal sphincter to relax + absent peristalsis. Broadly used for <em>esophageal motility problems</em>.",
+  analogy:"The esophagus is a muscular tube that should squeeze food downward like toothpaste. Achalasia = the tube forgets how to squeeze or the bottom won't open.",
+  tested:[
+    "<strong>Definition:</strong> General term for esophageal motility problems",
+    "<strong>Distinguish from:</strong> Dysphagia (difficulty swallowing — a symptom), Odynophagia (painful swallowing), Dyspepsia (indigestion)",
+    "<strong>Classic symptom:</strong> Progressive dysphagia to solids AND liquids"
+  ],
+  oneLiner:"Esophageal motility disorder."
+},
+{
+  system:"digestive", title:"38. Strangulation Hernia",
+  questions:[58],
+  plain:"A hernia (bulge of intestine) where the <strong>blood supply is cut off</strong> from pressure. EMERGENCY — tissue is dying.",
+  clinical:"<em>Strangulated hernia</em>: incarcerated hernia with <em>vascular compromise</em> → ischemia and necrosis. Surgical emergency.",
+  analogy:"Like a rubber band tied too tight around your finger. First the finger turns red (incarcerated), then blue, then dies (strangulated). Same with bowel.",
+  tested:[
+    "<strong>Definition:</strong> Compromised blood supply from increased pressure",
+    "<strong>Progression:</strong> Reducible → Incarcerated (stuck) → Strangulated (no blood flow)",
+    "<strong>Urgency:</strong> Surgical emergency"
+  ],
+  oneLiner:"Hernia + lost blood supply = emergency."
+},
+{
+  system:"digestive", title:"39. Gastroenteritis",
+  questions:[59],
+  plain:"<strong>Stomach flu.</strong> Infection irritates stomach and intestines from bacteria, viruses, or toxins in food/water.",
+  clinical:"<em>Gastroenteritis</em>: inflammation of stomach + small/large intestine from pathogen or toxin. Transmission: <em>person-to-person, waterborne, foodborne</em>. Presents: diarrhea, vomiting, cramping.",
+  analogy:"Break it down: GASTRO (stomach) + ENTERO (intestine) + ITIS (inflammation) = stomach + intestine infection.",
+  tested:[
+    "<strong>Definition:</strong> Infection of stomach + intestine lining",
+    "<strong>Transmission:</strong> Person to person, water, foodborne",
+    "<strong>Distinguish from:</strong> Gastritis (stomach only), Gastroparesis (slow emptying), GERD (reflux)"
+  ],
+  oneLiner:"Stomach + intestine infection → diarrhea, vomiting."
+},
+{
+  system:"digestive", title:"40. Steatorrhea & Celiac Disease",
+  questions:[60],
+  plain:"<strong>Fatty, greasy, foul-smelling stool</strong> that floats. Means fat isn't being absorbed — classic in celiac disease.",
+  clinical:"<em>Steatorrhea</em>: excess fat in stool due to malabsorption. In celiac, gluten damages intestinal villi → can't absorb fat.",
+  analogy:"Healthy intestines are like a carpet with shag fibers (villi) that grab nutrients. Celiac flattens the carpet — fat slides right through.",
+  tested:[
+    "<strong>Definition:</strong> Loss of fat in stool",
+    "<strong>Associated with:</strong> Celiac disease (gluten-induced villous atrophy)",
+    "<strong>Distinguish from:</strong> Melena (black tarry — blood), Hematochezia (bright red — blood), Borborygmi (bowel sounds)"
+  ],
+  oneLiner:"Fat in stool → malabsorption (e.g., celiac)."
+},
+{
+  system:"digestive", title:"41. H. pylori Diagnostic Tests",
+  questions:[61],
+  plain:"To find the ulcer-causing bacteria: <strong>breath test, stool test, or antibody blood test</strong>. A general CBC won't tell you if H. pylori is there.",
+  clinical:"<em>H. pylori</em> confirmatory tests: <em>urea breath test</em>, <em>stool antigen test</em>, <em>serology</em>, <em>endoscopic biopsy</em>. CBC is <em>non-specific</em>.",
+  analogy:"CBC is like asking 'is there something wrong?' — too vague. The specific tests ask 'is H. pylori specifically here?' Much more useful.",
+  tested:[
+    "<strong>LEAST helpful:</strong> Complete Blood Count (too non-specific)",
+    "<strong>Useful tests:</strong> Urea breath, stool antigen, serology",
+    "<strong>Key enzyme:</strong> H. pylori produces urease → basis of breath test"
+  ],
+  oneLiner:"CBC is non-specific; use breath/stool/antibody tests."
+},
+{
+  system:"digestive", title:"42. Hiatal Hernia",
+  questions:[62],
+  plain:"Part of the stomach <strong>slides up through the diaphragm</strong> into the chest. Causes difficulty swallowing + chest/heartburn-type pain.",
+  clinical:"Protrusion of the upper stomach through the esophageal hiatus of the diaphragm. Symptoms: <em>dysphagia, substernal burning, belching</em>. Tx: acid-reducing meds or surgery.",
+  analogy:"Imagine stuffing too many clothes in a suitcase — some burst up through the zipper. That's the stomach pushing up through the diaphragm.",
+  tested:[
+    "<strong>Classic symptoms:</strong> Dysphagia + substernal burning + belching",
+    "<strong>Mechanism:</strong> Part of stomach slides through diaphragm",
+    "<strong>Treatment:</strong> Acid-reducing medication or surgery (not just antibiotics)"
+  ],
+  oneLiner:"Stomach pokes through diaphragm → heartburn + dysphagia."
+},
+
+// ═══════════════ NEUROLOGICAL ═══════════════
+{
+  system:"neuro", title:"43. Hemorrhagic Stroke",
+  questions:[10,47],
+  plain:"A <strong>bleed in the brain</strong>. CT scan shows a hematoma. Often caused by uncontrolled high blood pressure and aneurysms.",
+  clinical:"<em>Hemorrhagic stroke</em>: rupture of cerebral vessel → intracranial hematoma. <em>CT shows hematoma</em>. Risk factors: <em>uncontrolled HTN + aneurysm history</em>.",
+  analogy:"If ischemic stroke = clogged pipe, hemorrhagic stroke = burst pipe. Both shut off the faucet, but the burst one floods the neighborhood too.",
+  tested:[
+    "<strong>CT finding:</strong> Hematoma (bleed) — NOT clot",
+    "<strong>Highest risk:</strong> Uncontrolled HTN + prior aneurysm repair",
+    "<strong>Distinguish from:</strong> Ischemic (clot, most common), TIA (reversible), lacunar infarct (small deep strokes)"
+  ],
+  oneLiner:"Brain bleed on CT + HTN/aneurysm history."
+},
+{
+  system:"neuro", title:"44. Ischemic Penumbra",
+  questions:[11],
+  plain:"The <strong>'savable zone' around a stroke</strong> — brain tissue that's struggling but not dead yet. Act fast (tPA within 4.5h) and you can save it.",
+  clinical:"<em>Ischemic penumbra</em>: perimeter of hypoperfused but viable tissue surrounding the infarct core. <em>Salvageable if reperfused quickly</em>.",
+  analogy:"Think of a forest fire. The center is charred (dead). The penumbra is the smoky edge — trees singed but alive. Firefighters (tPA) can save that edge if they hurry.",
+  tested:[
+    "<strong>Definition:</strong> Perimeter around the ischemic core; reversible if treated quickly",
+    "<strong>Clinical importance:</strong> Target of stroke treatment (tPA, thrombectomy)",
+    "<strong>Distinguish from:</strong> Core infarct (dead tissue), TIA (fully reversible, no infarct)"
+  ],
+  oneLiner:"Savable tissue around stroke core — act fast!"
+},
+{
+  system:"neuro", title:"45. Cushing's Triad (Increased ICP)",
+  questions:[44],
+  plain:"When pressure in the brain rises dangerously, the body responds with: <strong>HIGH blood pressure, SLOW heart rate, and SLOW/irregular breathing</strong>. Tachycardia is NOT part of it.",
+  clinical:"<em>Cushing's triad</em>: <em>hypertension (widened pulse pressure)</em> + <em>bradycardia</em> + <em>bradypnea/irregular respirations</em>. Sign of imminent brainstem herniation.",
+  analogy:"The brain says 'I'm being squeezed!' → jacks up BP to push blood in → heart slows down to handle the high pressure → breathing becomes erratic.",
+  tested:[
+    "<strong>NOT in triad:</strong> Tachycardia (brady-, not tachy-)",
+    "<strong>Three signs:</strong> HTN + bradycardia + bradypnea/irregular breathing",
+    "<strong>Means:</strong> Impending brain herniation — medical emergency"
+  ],
+  oneLiner:"HTN + bradycardia + bradypnea = ICP (NOT tachy)."
+},
+{
+  system:"neuro", title:"46. TIA (Transient Ischemic Attack)",
+  questions:[45],
+  plain:"A '<strong>mini-stroke</strong>' — stroke-like symptoms that <em>go away within 24 hours</em> because blood flow returned. Warning sign of bigger stroke coming.",
+  clinical:"<em>TIA</em>: transient neurological deficit from focal brain ischemia <em>without infarction</em>; resolves <24h. Caused by <em>temporary decrease in blood flow</em>.",
+  analogy:"Like a power flicker vs. a power outage. Both scare you, but the flicker tells you the grid is weak — fix it before the outage hits.",
+  tested:[
+    "<strong>Cause:</strong> Temporary decrease in blood flow to brain (NOT bleeding)",
+    "<strong>Key feature:</strong> Symptoms resolve; no permanent damage",
+    "<strong>Importance:</strong> Warning sign — requires medical treatment to prevent full stroke"
+  ],
+  oneLiner:"Brief, reversible ischemia — warning for bigger stroke."
+},
+{
+  system:"neuro", title:"47. Cerebellum — Function",
+  questions:[46],
+  plain:"The cerebellum controls <strong>balance and coordination</strong>. Damage → wobbly gait, trouble with fine movements.",
+  clinical:"<em>Cerebellum</em>: coordinates voluntary movements, maintains posture, balance, and equilibrium. Lesions → <em>ataxia</em>, intention tremor, dysmetria.",
+  analogy:"The cerebellum is the brain's 'gyroscope' — it keeps you upright and your movements smooth. Damage it and you walk like you've had 10 drinks.",
+  tested:[
+    "<strong>Main function:</strong> Balance + coordination",
+    "<strong>Damage sign:</strong> Balance impairments (ataxia)",
+    "<strong>NOT controlled by cerebellum:</strong> Vision (occipital), Language (Broca/Wernicke), Short-term memory (hippocampus)"
+  ],
+  oneLiner:"Cerebellum = balance; damage = ataxia."
+},
+{
+  system:"neuro", title:"48. Multiple Sclerosis (MS)",
+  questions:[40,41],
+  plain:"Your immune system <strong>attacks the insulation (myelin) around nerves</strong> in the brain and spinal cord — but NOT the peripheral nerves.",
+  clinical:"Autoimmune demyelinating disease: <em>T-cell-mediated attack on myelin</em> in the <em>CENTRAL nervous system</em> (brain + spinal cord) — <em>NOT peripheral</em>. Relapsing-remitting plaques.",
+  analogy:"Nerves are like wires with plastic insulation. MS immune cells strip the insulation → short-circuit. Symptoms vary because different wires get stripped at different times.",
+  tested:[
+    "<strong>Mechanism:</strong> T-cell mediated attack on myelin",
+    "<strong>T/F trap:</strong> MS affects PERIPHERAL nervous system — FALSE. It's CENTRAL.",
+    "<strong>Why variable symptoms:</strong> Different CNS areas affected at different times (not peripheral)"
+  ],
+  oneLiner:"T-cell demyelination of CNS (not PNS)."
+},
+{
+  system:"neuro", title:"49. Parkinson's Disease",
+  questions:[42],
+  plain:"<strong>Dopamine-making cells die</strong> in a specific brain region (substantia nigra). Less dopamine → tremor, stiffness, slow movement.",
+  clinical:"Progressive loss of <em>dopaminergic neurons in the substantia nigra</em> of the basal ganglia. Cardinal features: resting tremor, rigidity, bradykinesia, postural instability.",
+  analogy:"Dopamine is the 'smooth movement' lubricant. The factory that makes it (substantia nigra) slowly shuts down. Result: everything gets stiff and jerky.",
+  tested:[
+    "<strong>Location of loss:</strong> Substantia nigra (basal ganglia)",
+    "<strong>Missing neurotransmitter:</strong> Dopamine",
+    "<strong>Distinguish from:</strong> MS (demyelination), Guillain-Barré (peripheral), TIA (vascular)"
+  ],
+  oneLiner:"Substantia nigra dopamine loss → tremor, rigidity."
+},
+{
+  system:"neuro", title:"50. Trigeminal Autonomic Cephalgia (TAC / Cluster Headache)",
+  questions:[43],
+  plain:"An <strong>excruciating one-sided headache with watery eyes, runny nose, and red eye</strong>. Patient can't sit still from pain.",
+  clinical:"<em>TAC</em> (e.g., cluster headache): severe <em>unilateral</em> head pain + <em>ipsilateral autonomic features</em> (lacrimation, nasal discharge, conjunctival injection, ptosis, miosis). Patient is <em>agitated/restless</em>.",
+  analogy:"If a migraine is 'I want to lie in a dark room,' a cluster headache is 'I want to pace and scream.' The autonomic signs give it away.",
+  tested:[
+    "<strong>Classic vignette:</strong> Unilateral excruciating pain + bloodshot eyes + tearing + nasal discharge + restlessness",
+    "<strong>Distinguish from:</strong> Migraine (want to lie still), Sinus (bilateral, no autonomic), Brain tumor (progressive, other neuro signs)",
+    "<strong>Duration:</strong> 15 min–3 hours, clusters"
+  ],
+  oneLiner:"Unilateral pain + tearing/nasal + restlessness."
+},
+
+// ═══════════════ REPRODUCTIVE ═══════════════
+{
+  system:"repro", title:"51. Benign Prostatic Hyperplasia (BPH)",
+  questions:[21,22],
+  plain:"In older men, the <strong>prostate grows too big and squeezes the urethra</strong>, making it hard to pee. <em>Digital rectal exam</em> is the classic assessment.",
+  clinical:"Non-cancerous prostatic enlargement in aging males → urethral obstruction → urinary hesitancy, frequency, nocturia, weak stream. Dx: <em>DRE</em> + PSA.",
+  analogy:"The prostate wraps around the urethra like a donut. If the donut puffs up, the hole closes down — and pee can't flow.",
+  tested:[
+    "<strong>Definition:</strong> Excessive cell growth in prostate → obstructs urine flow",
+    "<strong>Assessment:</strong> Digital rectal exam (NOT sperm count, NOT urine blood)",
+    "<strong>Not cancer:</strong> 'Benign' hyperplasia"
+  ],
+  oneLiner:"Enlarged prostate → urinary obstruction; Dx = DRE."
+},
+{
+  system:"repro", title:"52. Orchiectomy & Testicular Cancer",
+  questions:[23],
+  plain:"<strong>Surgical removal of a testicle</strong> — performed for testicular cancer. Not used for ED, BPH, or cryptorchidism (that's orchiopexy).",
+  clinical:"<em>Orchiectomy</em>: surgical removal of testis; indication in <em>testicular cancer</em>. Cryptorchidism = orchiopexy (moves it down, doesn't remove).",
+  analogy:"Break it down: ORCH (testis) + ECTOMY (removal) = testis removal. vs. ORCHIOPEXY = testis fixation.",
+  tested:[
+    "<strong>Indication:</strong> Testicular cancer",
+    "<strong>Not used for:</strong> ED, BPH, cryptorchidism (that's orchiopexy)",
+    "<strong>Word parts:</strong> orch = testis, ectomy = remove, pexy = fix in place"
+  ],
+  oneLiner:"Testicle removal for testicular cancer."
+},
+{
+  system:"repro", title:"53. Delayed Puberty (Female)",
+  questions:[24],
+  plain:"If a female <strong>doesn't develop breast buds, pubic hair, etc. by age 13</strong>, she has delayed puberty.",
+  clinical:"<em>Delayed puberty</em>: absence of secondary sexual characteristics by age 13 in females (14 in males). Often due to constitutional delay or hypogonadism.",
+  analogy:"Puberty is like a biological 'adulthood timer.' If the timer hasn't rung by 13 (girls), something's off — could be a dead battery (hormonal) or just a slow start.",
+  tested:[
+    "<strong>Definition:</strong> No secondary sex characteristics by age 13 (female)",
+    "<strong>Distinguish from:</strong> Precocious (too early), Amenorrhea (no periods), Oligomenorrhea (infrequent)",
+    "<strong>Workup:</strong> FSH, LH, estrogen levels"
+  ],
+  oneLiner:"No female secondary sex characteristics by 13."
+},
+{
+  system:"repro", title:"54. Orchitis (Mumps-related)",
+  questions:[28],
+  plain:"<strong>Inflammation of the testicles</strong> — often a mumps virus complication in young males. Testicles suddenly swell up and hurt.",
+  clinical:"<em>Orchitis</em>: testicular inflammation. Classic cause in young males: <em>mumps virus</em>. Sudden tender/swollen testes post-mumps.",
+  analogy:"Mumps is known for giant cheeks (parotid swelling), but in post-pubertal males, it sometimes 'moves south' and attacks the testicles.",
+  tested:[
+    "<strong>Classic trigger:</strong> Mumps viral infection",
+    "<strong>Presentation:</strong> Sudden tender swollen testicles",
+    "<strong>Distinguish from:</strong> Testicular cancer (painless mass), STI, BPH"
+  ],
+  oneLiner:"Mumps → swollen tender testes = orchitis."
+},
+{
+  system:"repro", title:"55. Endometritis",
+  questions:[33],
+  plain:"<strong>Infection of the uterus lining</strong> (endometrium) — usually from bacteria climbing up from the vagina. Fever + smelly discharge + uterine tenderness.",
+  clinical:"<em>Endometritis</em>: uterine lining infection, typically <em>polymicrobial, ascending from vagina</em>. Presents with vaginal bleeding, uterine tenderness, fever, foul discharge.",
+  analogy:"Bacteria from the vagina are like tourists — usually they stay put. Sometimes (after childbirth, IUD, surgery) they climb up to the uterus and throw a chaotic party.",
+  tested:[
+    "<strong>Key features:</strong> Vaginal bleeding + uterine tenderness + fever + malodorous discharge",
+    "<strong>Mechanism:</strong> Mixed infection ascending from vagina",
+    "<strong>Distinguish from:</strong> Endometriosis (tissue in wrong place, not infection)"
+  ],
+  oneLiner:"Uterus infection from ascending vaginal bacteria."
+},
+{
+  system:"repro", title:"56. Amenorrhea",
+  questions:[34],
+  plain:"<strong>No menstrual period</strong> by age 16 (primary) or missing periods for 3+ cycles (secondary).",
+  clinical:"<em>Primary amenorrhea</em>: absence of menarche by age 16. Causes: genetic, anatomic, hormonal.",
+  analogy:"A + MENO (month) + RRHEA (flow) = no monthly flow. Compare to MENARCHE (first period) and MENOPAUSE (last period).",
+  tested:[
+    "<strong>Definition:</strong> No menstrual cycle by age 16",
+    "<strong>Distinguish from:</strong> Dysmenorrhea (painful periods), Menopause (cessation after prior cycles), Menarche (first period)",
+    "<strong>Workup:</strong> hCG, FSH, LH, prolactin, TSH"
+  ],
+  oneLiner:"No menses by age 16 = amenorrhea."
+},
+{
+  system:"repro", title:"57. Menorrhagia",
+  questions:[72],
+  plain:"<strong>Heavy menstrual bleeding lasting more than 7 days.</strong> 'Meno' = month, 'rrhagia' = excessive flow.",
+  clinical:"<em>Menorrhagia</em>: excessive duration/volume of menstrual bleeding (>7 days or >80 mL). Causes: fibroids, PCOS, coagulopathy, endometrial pathology.",
+  analogy:"If normal period is a light rain for 4 days, menorrhagia is a monsoon for a week — too much, too long.",
+  tested:[
+    "<strong>Definition:</strong> Excessive bleeding lasting >7 days",
+    "<strong>Distinguish from:</strong> Metrorrhagia (bleeding between periods), Oligomenorrhea (infrequent), Amenorrhea (none)",
+    "<strong>Complication:</strong> Iron-deficiency anemia"
+  ],
+  oneLiner:"Heavy bleeding >7 days = menorrhagia."
+},
+{
+  system:"repro", title:"58. Polycystic Ovarian Syndrome (PCOS)",
+  questions:[35],
+  plain:"Young women get <strong>too many male hormones, skip ovulation, and develop insulin resistance</strong>. Classic: irregular periods, acne, hairiness, weight gain.",
+  clinical:"<em>PCOS</em>: endocrine disorder of reproductive-aged women. Triad: <em>androgen excess + anovulation + hyperinsulinemia</em>. Often obesity + metabolic syndrome.",
+  analogy:"PCOS is a hormonal 'wrong turn' — the ovaries make too much testosterone (male hormone) instead of cycling estrogen. Ovulation stalls. Insulin stops working well.",
+  tested:[
+    "<strong>Age range:</strong> Puberty to 30 years",
+    "<strong>Triad:</strong> Androgen excess + anovulation + hyperinsulinemia",
+    "<strong>Classic features:</strong> Irregular periods, hirsutism, acne, obesity, infertility"
+  ],
+  oneLiner:"Young woman + androgen excess + anovulation + insulin resistance."
+},
+
+// ═══════════════ INCONTINENCE ═══════════════
+{
+  system:"incon", title:"59. Functional Incontinence",
+  questions:[30],
+  plain:"The bladder works fine, but the <strong>person can't physically get to the toilet</strong> in time (e.g., stroke paralysis). Plumbing is ok — the delivery is broken.",
+  clinical:"<em>Functional incontinence</em>: urine loss due to <em>physical or cognitive impairment</em> preventing timely toileting — not a bladder/sphincter problem.",
+  analogy:"It's like a working phone ringing in a locked room. The phone (bladder) is fine — you just can't get to it in time.",
+  tested:[
+    "<strong>Classic vignette:</strong> Stroke patient with hemiplegia + frequent incontinence",
+    "<strong>Key distinction:</strong> Bladder itself works — impairment is mobility or cognition",
+    "<strong>Distinguish from:</strong> Neurogenic bladder (nerve damage to bladder), Stress (leak with pressure), Overactive (urgency)"
+  ],
+  oneLiner:"Can't reach toilet in time due to disability."
+},
+{
+  system:"incon", title:"60. Stress Incontinence",
+  questions:[31],
+  plain:"You <strong>leak urine when you laugh, cough, sneeze, or squat</strong> — any increase in abdominal pressure. Weak pelvic floor muscles.",
+  clinical:"<em>Stress incontinence</em>: urine loss with increased intra-abdominal pressure (coughing, sneezing, exercise, bending) due to weak pelvic floor/sphincter.",
+  analogy:"Your pelvic floor is a hammock holding up the bladder. If the hammock sags, any bounce (cough, squat) squeezes urine out.",
+  tested:[
+    "<strong>Trigger:</strong> Increased abdominal pressure — squatting, coughing, sneezing, laughing",
+    "<strong>Common in:</strong> Postpartum women, older women, post-prostatectomy men",
+    "<strong>Distinguish from:</strong> Overflow (full bladder overflows), Urge (sudden need), Functional (can't reach toilet)"
+  ],
+  oneLiner:"Leaks with cough/squat = stress incontinence."
+}
+
+];
+</script>
+
+</body>
+</html>
