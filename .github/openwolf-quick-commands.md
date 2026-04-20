@@ -1,0 +1,1 @@
+# OpenWolf Quick Commands\n\nUse these from the repo root:\n\n- `~/.local/bin/openwolf status`\n- `~/.local/bin/openwolf scan`\n- `~/.local/bin/openwolf daemon logs`\n- `~/.local/bin/openwolf dashboard`\n\nUseful checks:\n\n- `~/.local/bin/openwolf daemon restart`\n- `~/.local/bin/openwolf cron --help`\n\nTip: If `openwolf` is not in PATH, run commands with the full path above.
