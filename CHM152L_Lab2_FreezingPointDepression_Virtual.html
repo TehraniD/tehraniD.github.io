@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM 152L – Lab 2: Freezing Point Depression (Virtual Version)</title>
+<style>
+  :root {
+    --blue: #1a5276;
+    --teal: #148f77;
+    --green: #1e8449;
+    --purple: #6c3483;
+    --orange: #ca6f1e;
+    --red: #922b21;
+    --light-blue: #d6eaf8;
+    --light-green: #d5f5e3;
+    --light-yellow: #fef9e7;
+    --light-purple: #f4ecf7;
+    --light-red: #fdedec;
+    --gray: #f2f3f4;
+    --border: #bdc3c7;
+    --text: #1c2833;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #ecf0f1;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(135deg, #1a5276, #2471a3);
+    color: white;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header h1 { font-size: 1.45rem; font-weight: 700; }
+  header p { font-size: 0.88rem; opacity: 0.85; margin-top: 4px; }
+  .progress-wrap { display: flex; align-items: center; gap: 12px; min-width: 260px; }
+  .progress-wrap span { font-size: 0.85rem; white-space: nowrap; }
+  #progressBar { flex: 1; height: 12px; border-radius: 6px; background: rgba(255,255,255,0.3); overflow: hidden; }
+  #progressFill { height: 100%; width: 0%; background: #2ecc71; border-radius: 6px; transition: width 0.4s ease; }
+  nav {
+    background: var(--blue);
+    padding: 0 40px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+  }
+  nav a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  nav a:hover, nav a.active { color: white; border-bottom-color: #2ecc71; background: rgba(255,255,255,0.08); }
+  main { max-width: 960px; margin: 30px auto; padding: 0 20px 60px; }
+  .section { background: white; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+  .section-header { padding: 18px 28px; font-size: 1.1rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 10px; }
+  .section-header.blue { background: var(--blue); }
+  .section-header.teal { background: var(--teal); }
+  .section-header.green { background: var(--green); }
+  .section-header.purple { background: var(--purple); }
+  .section-header.orange { background: var(--orange); }
+  .section-header.red { background: var(--red); }
+  .section-body { padding: 24px 28px; }
+  .info-box { background: var(--light-blue); border-left: 4px solid var(--blue); border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; font-size: 0.95rem; }
+  .tip-box { background: var(--light-yellow); border-left: 4px solid var(--orange); border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; font-size: 0.9rem; }
+  .example-box { background: #f0f3f4; border-left: 4px solid #5d6d7e; border-radius: 6px; padding: 16px 20px; margin: 16px 0; }
+  .example-box .ex-title { font-weight: 700; color: #2c3e50; margin-bottom: 10px; font-size: 0.95rem; }
+  .example-step { color: #1a5276; font-weight: 700; margin-bottom: 6px; font-size: 0.9rem; }
+  .fill-in {
+    display: inline-block; min-width: 130px;
+    border: none; border-bottom: 2px solid var(--blue);
+    padding: 3px 8px; font-size: 1rem; font-family: inherit;
+    background: transparent; outline: none; transition: border-color 0.2s; text-align: center;
+  }
+  .fill-in:focus { border-bottom-color: var(--teal); }
+  .fill-in.correct { border-bottom-color: var(--green); background: #eafaf1; }
+  .fill-in.incorrect { border-bottom-color: var(--red); background: var(--light-red); }
+  .fill-in.sm { min-width: 70px; }
+  .fill-in.md { min-width: 110px; }
+  .fill-in.lg { min-width: 180px; }
+  .btn-reveal {
+    background: none; border: 1.5px solid var(--blue); color: var(--blue);
+    border-radius: 20px; padding: 3px 12px; font-size: 0.78rem;
+    cursor: pointer; transition: all 0.2s; margin-left: 6px;
+  }
+  .btn-reveal:hover { background: var(--blue); color: white; }
+  .answer-badge {
+    display: none; background: var(--green); color: white;
+    border-radius: 12px; padding: 2px 10px; font-size: 0.8rem;
+    margin-left: 6px; font-weight: 600;
+  }
+  .btn { padding: 10px 22px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+  .btn-primary { background: var(--blue); color: white; }
+  .btn-primary:hover { background: #154360; }
+  .btn-success { background: var(--green); color: white; }
+  .btn-success:hover { background: #145a32; }
+  .btn-secondary { background: var(--gray); color: var(--text); border: 1.5px solid var(--border); }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-calc { background: var(--teal); color: white; }
+  .btn-calc:hover { background: #0e6655; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.9rem; }
+  th { background: var(--blue); color: white; padding: 10px 12px; text-align: center; font-weight: 600; }
+  td { border: 1px solid var(--border); padding: 8px 10px; text-align: center; vertical-align: middle; }
+  tr:nth-child(even) td { background: #f8f9fa; }
+  .table-input {
+    width: 90%; border: 1px solid #aab; border-radius: 4px;
+    padding: 5px 8px; font-size: 0.9rem; text-align: center;
+    background: #fdfefe; transition: border-color 0.2s, background 0.2s;
+  }
+  .table-input:focus { outline: none; border-color: var(--teal); background: #eaf4fb; }
+  .calc-panel { background: var(--light-yellow); border: 1.5px solid #f0b27a; border-radius: 8px; padding: 20px 24px; margin-top: 18px; }
+  .calc-panel h4 { color: var(--orange); margin-bottom: 12px; font-size: 1rem; }
+  .calc-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .calc-row label { min-width: 200px; font-size: 0.9rem; }
+  .calc-row input[type=number] { width: 130px; border: 1.5px solid var(--border); border-radius: 5px; padding: 7px 10px; font-size: 0.9rem; }
+  .calc-result { background: white; border: 2px solid var(--green); border-radius: 6px; padding: 12px 18px; font-size: 1rem; font-weight: 700; color: var(--green); text-align: center; margin-top: 8px; min-height: 40px; display: none; }
+  .eq-box { background: #1a252f; color: #f8f9fa; border-radius: 8px; padding: 16px 20px; text-align: center; font-size: 1.3rem; font-weight: 700; margin: 16px 0; font-family: 'Courier New', monospace; }
+  .quiz-option { display: block; padding: 10px 16px; margin: 6px 0; border: 2px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.2s; background: white; }
+  .quiz-option:hover { border-color: var(--blue); background: var(--light-blue); }
+  .quiz-option.correct-ans { border-color: var(--green); background: var(--light-green); color: var(--green); font-weight: 600; }
+  .quiz-option.wrong-ans { border-color: var(--red); background: var(--light-red); color: var(--red); }
+  .lab-textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 6px; padding: 12px; font-family: inherit; font-size: 0.9rem; resize: vertical; transition: border-color 0.2s; min-height: 90px; }
+  .lab-textarea:focus { outline: none; border-color: var(--teal); }
+  .char-count { font-size: 0.8rem; color: #888; text-align: right; margin-top: 4px; }
+  .q-label { font-weight: 700; color: var(--blue); margin-bottom: 8px; display: block; }
+  .q-group { margin-bottom: 22px; }
+  .sub-section-title { font-size: 1rem; font-weight: 700; color: var(--blue); border-bottom: 2px solid var(--blue); padding-bottom: 6px; margin: 22px 0 14px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 620px) { .two-col { grid-template-columns: 1fr; } }
+  .virtual-note { background: #fef5e7; border: 2px dashed #f39c12; border-radius: 8px; padding: 14px 20px; margin-bottom: 20px; font-size: 0.9rem; }
+  .virtual-note strong { color: var(--orange); }
+  .step-badge { display: inline-flex; align-items: center; justify-content: center; background: var(--blue); color: white; border-radius: 4px; padding: 2px 10px; font-size: 0.82rem; font-weight: 700; margin-right: 8px; }
+  .step-row { display: flex; align-items: flex-start; margin-bottom: 10px; font-family: monospace; font-size: 0.95rem; }
+  .salt-tag { display: inline-block; background: var(--teal); color: white; border-radius: 4px; padding: 1px 8px; font-weight: 700; font-size: 0.82rem; margin-right: 6px; }
+  .print-btn { position: fixed; bottom: 24px; right: 24px; background: var(--blue); color: white; border: none; border-radius: 50px; padding: 14px 22px; font-size: 0.9rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.25); z-index: 999; transition: background 0.2s; }
+  .print-btn:hover { background: #154360; }
+  .autosave-note { font-size: 0.8rem; color: #888; font-style: italic; margin-top: 8px; }
+  .formula-table th { background: #2c3e50; }
+  .formula-table td:first-child { font-weight: 700; font-family: monospace; font-size: 1rem; background: #f0f3f4; }
+  .student-work-box { background: #fafafa; border: 1.5px solid var(--border); border-radius: 8px; padding: 18px 22px; margin: 14px 0; }
+  .student-work-box .label { font-weight: 700; color: var(--orange); margin-bottom: 12px; font-size: 0.95rem; border-bottom: 1.5px dashed #f0b27a; padding-bottom: 8px; }
+  @media print {
+    header, nav, .print-btn, .btn-reveal, .calc-panel { display: none !important; }
+    body { background: white; }
+    .section { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🧂 CHM 152L — Lab 2: Freezing Point Depression</h1>
+    <p>"Why Is My City Dumping Salt Everywhere?" &nbsp;|&nbsp; Virtual Fillable Lab &nbsp;|&nbsp; Progress auto-saves</p>
+  </div>
+  <div class="progress-wrap">
+    <span>Progress</span>
+    <div id="progressBar"><div id="progressFill"></div></div>
+    <span id="progressPct">0%</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#info" class="active">Info</a>
+  <a href="#concepts">Concepts</a>
+  <a href="#prelab">Pre-Lab Calcs</a>
+  <a href="#experiment">Experiment</a>
+  <a href="#results">Results</a>
+  <a href="#cost">Cost Analysis</a>
+  <a href="#analysis">Analysis</a>
+</nav>
+
+<main>
+
+  <div class="virtual-note">
+    <strong>📋 Virtual Lab Instructions:</strong> This interactive worksheet mirrors the in-person Lab 2 experience. Read each section, fill in every blank and table cell, complete all calculations, and answer the analysis questions. Your work saves automatically in your browser. Use <em>Hint</em> buttons only after a genuine attempt. Print or save as PDF to submit.
+  </div>
+
+  <!-- ===== STUDENT INFO ===== -->
+  <div class="section" id="info">
+    <div class="section-header blue">📝 Student Information</div>
+    <div class="section-body">
+      <div class="two-col">
+        <div class="q-group">
+          <label class="q-label">Full Name</label>
+          <input type="text" class="fill-in lg" id="s_name" placeholder="Your full name" oninput="saveAll()" style="min-width:260px">
+        </div>
+        <div class="q-group">
+          <label class="q-label">Date</label>
+          <input type="text" class="fill-in" id="s_date" placeholder="e.g. April 26, 2026" oninput="saveAll()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CONCEPTS ===== -->
+  <div class="section" id="concepts">
+    <div class="section-header blue">🌡️ The Big Picture</div>
+    <div class="section-body">
+
+      <div class="info-box">
+        Every winter, cities spend millions dumping salt on roads. Why? Because salt <strong>lowers the freezing point of water</strong>, preventing ice from forming. This is called <strong>freezing point depression</strong> — one of the four colligative properties of solutions. Today you'll calculate exactly how much protection different salts provide and discover why salt stops working in extreme cold.
+      </div>
+
+      <div class="sub-section-title">Concept Check — Fill in the Blanks</div>
+
+      <div style="line-height: 2.6; margin-left: 8px;">
+        <p>
+          Freezing point depression is a &nbsp;
+          <input type="text" class="fill-in md" id="c1" data-answer="colligative" placeholder="__________" oninput="checkFill(this)">
+          &nbsp; property, meaning it depends on the
+          <input type="text" class="fill-in md" id="c2" data-answer="number" placeholder="______" oninput="checkFill(this)">
+          &nbsp; of dissolved particles, NOT their identity.
+          <button class="btn-reveal" onclick="revealAnswer('c1','colligative');revealAnswer('c2','number')">Hint</button>
+          <span class="answer-badge" id="c1_badge">✓ colligative / number</span>
+        </p>
+        <p>
+          Adding salt to water &nbsp;
+          <input type="text" class="fill-in md" id="c3" data-answer="lowers" placeholder="________" oninput="checkFill(this)">
+          &nbsp; the freezing point (makes it freeze at a colder temperature).
+          <button class="btn-reveal" onclick="revealAnswer('c3','lowers')">Hint</button>
+          <span class="answer-badge" id="c3_badge">✓ lowers</span>
+        </p>
+        <p>
+          NaCl dissociates into &nbsp;
+          <input type="text" class="fill-in sm" id="c4" data-answer="2" placeholder="__" oninput="checkFill(this)">
+          &nbsp; ions: &nbsp;
+          <input type="text" class="fill-in md" id="c5" data-answer="Na⁺ and Cl⁻" placeholder="________" oninput="checkFill(this)">
+          &nbsp;, so its van't Hoff factor i = 2.
+          <button class="btn-reveal" onclick="revealAnswer('c4','2');revealAnswer('c5','Na⁺ and Cl⁻')">Hint</button>
+          <span class="answer-badge" id="c4_badge">✓ 2 / Na⁺ and Cl⁻</span>
+        </p>
+        <p>
+          CaCl₂ dissociates into &nbsp;
+          <input type="text" class="fill-in sm" id="c6" data-answer="3" placeholder="__" oninput="checkFill(this)">
+          &nbsp; ions: &nbsp;
+          <input type="text" class="fill-in lg" id="c7" data-answer="Ca²⁺ and 2Cl⁻" placeholder="___________" oninput="checkFill(this)">
+          &nbsp;, so its van't Hoff factor i = 3.
+          <button class="btn-reveal" onclick="revealAnswer('c6','3');revealAnswer('c7','Ca²⁺ and 2Cl⁻')">Hint</button>
+          <span class="answer-badge" id="c6_badge">✓ 3 / Ca²⁺ and 2Cl⁻</span>
+        </p>
+      </div>
+
+      <div class="sub-section-title">The Formula</div>
+      <div class="eq-box">ΔT = i × k<sub style="font-size:0.8rem">f</sub> × m</div>
+
+      <table class="formula-table" style="max-width:580px;">
+        <thead><tr><th>Symbol</th><th>Meaning</th><th>Value / Units</th></tr></thead>
+        <tbody>
+          <tr><td>ΔT</td><td>Freezing point depression</td><td>°C (what we calculate)</td></tr>
+          <tr><td>i</td><td>van't Hoff factor (# of particles)</td><td>NaCl = 2, CaCl₂ = 3</td></tr>
+          <tr><td>k<sub>f</sub></td><td>Freezing point constant for water</td><td><strong>1.86 °C/m</strong></td></tr>
+          <tr><td>m</td><td>Molality (mol solute ÷ kg solvent)</td><td>mol/kg</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-section-title">Quick Concept Quiz</div>
+
+      <div class="q-group">
+        <span class="q-label">Q1. Which salt produces a greater freezing point depression at the same molality — NaCl or CaCl₂?</span>
+        <label class="quiz-option" onclick="quizCheck(this,'q1','wrong')">A. &nbsp; NaCl (i = 2)</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q1','correct')">B. &nbsp; CaCl₂ (i = 3) — more particles means greater ΔT</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q1','wrong')">C. &nbsp; They produce the same ΔT</label>
+      </div>
+
+      <div class="q-group">
+        <span class="q-label">Q2. Molality is calculated as:</span>
+        <label class="quiz-option" onclick="quizCheck(this,'q2','wrong')">A. &nbsp; moles of solute ÷ liters of solution</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q2','correct')">B. &nbsp; moles of solute ÷ kilograms of <em>solvent</em></label>
+        <label class="quiz-option" onclick="quizCheck(this,'q2','wrong')">C. &nbsp; grams of solute ÷ liters of solvent</label>
+      </div>
+
+      <div class="q-group">
+        <span class="q-label">Q3. At temperatures below −10°C, which salt is more effective for road de-icing?</span>
+        <label class="quiz-option" onclick="quizCheck(this,'q3','wrong')">A. &nbsp; NaCl — it is cheaper</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q3','correct')">B. &nbsp; CaCl₂ — it remains effective to −29°C</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q3','wrong')">C. &nbsp; Both work equally well below −10°C</label>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== PRE-LAB CALCULATIONS ===== -->
+  <div class="section" id="prelab">
+    <div class="section-header teal">🔢 Pre-Lab Calculations</div>
+    <div class="section-body">
+
+      <div class="info-box">
+        Complete <strong>all four steps</strong> for each calculation: (1) moles, (2) molality, (3) ΔT, (4) new freezing point. All answers round to 2–3 significant figures.
+      </div>
+
+      <!-- EXAMPLE 1 -->
+      <div class="sub-section-title">Example 1 — Light NaCl (2.5 g NaCl in 50 g water) <em style="font-weight:400; color:#666">— Given / Worked</em></div>
+      <div class="example-box">
+        <div class="ex-title">Given: Molar mass NaCl = 58.44 g/mol, k<sub>f</sub> = 1.86 °C/m, i = 2</div>
+        <div class="example-step">Step 1 — Moles of NaCl: &nbsp; 2.5 g ÷ 58.44 g/mol = <strong>0.0428 mol</strong></div>
+        <div class="example-step">Step 2 — Molality: &nbsp; 0.0428 mol ÷ 0.050 kg = <strong>0.856 m</strong></div>
+        <div class="example-step">Step 3 — ΔT: &nbsp; i × k<sub>f</sub> × m = 2 × 1.86 × 0.856 = <strong>3.18 °C</strong></div>
+        <div class="example-step">Step 4 — Freezing Point: &nbsp; 0°C − 3.18°C = <strong>−3.18°C</strong></div>
+      </div>
+
+      <!-- CALCULATION 1 -->
+      <div class="sub-section-title">Calculation 1 — Heavy NaCl (7.5 g NaCl in 50 g water) <em style="font-weight:400; color:#666">— Your Turn</em></div>
+      <div class="student-work-box">
+        <div class="label">🔶 Show your work step by step</div>
+        <p style="margin-bottom:14px; font-size:0.88rem; color:#555;">Given: Molar mass NaCl = 58.44 g/mol, k<sub>f</sub> = 1.86 °C/m, i = 2</p>
+
+        <div class="step-row">
+          <span class="step-badge">Step 1</span>
+          <span>Moles = 7.5 g ÷ 58.44 g/mol =
+            <input type="text" class="fill-in md" id="c1_s1" data-answer="0.1284" placeholder="? mol" oninput="checkFill(this)"> mol
+            <button class="btn-reveal" onclick="revealAnswer('c1_s1','0.1284')">Hint</button>
+            <span class="answer-badge" id="c1_s1_badge">✓ 0.1284</span>
+          </span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 2</span>
+          <span>Molality = moles ÷ 0.050 kg =
+            <input type="text" class="fill-in md" id="c1_s2" data-answer="2.568" placeholder="? m" oninput="checkFill(this)"> m
+            <button class="btn-reveal" onclick="revealAnswer('c1_s2','2.568')">Hint</button>
+            <span class="answer-badge" id="c1_s2_badge">✓ 2.568</span>
+          </span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 3</span>
+          <span>ΔT = 2 × 1.86 × m =
+            <input type="text" class="fill-in md" id="c1_s3" data-answer="9.55" placeholder="? °C" oninput="checkFill(this)"> °C
+            <button class="btn-reveal" onclick="revealAnswer('c1_s3','9.55')">Hint</button>
+            <span class="answer-badge" id="c1_s3_badge">✓ 9.55</span>
+          </span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 4</span>
+          <span>FP = 0°C − ΔT =
+            <input type="text" class="fill-in md" id="c1_s4" data-answer="-9.55" placeholder="? °C" oninput="checkFill(this)"> °C
+            <button class="btn-reveal" onclick="revealAnswer('c1_s4','-9.55')">Hint</button>
+            <span class="answer-badge" id="c1_s4_badge">✓ −9.55°C</span>
+          </span>
+        </div>
+      </div>
+      <div class="tip-box">💡 Remember: more salt = more moles = higher molality = larger ΔT = much colder freezing point.</div>
+
+      <!-- EXAMPLE 2 -->
+      <div class="sub-section-title">Example 2 — CaCl₂ (3.0 g CaCl₂ in 50 g water) <em style="font-weight:400; color:#666">— Given / Worked</em></div>
+      <div class="example-box">
+        <div class="ex-title">Given: Molar mass CaCl₂ = 110.98 g/mol, k<sub>f</sub> = 1.86 °C/m, <strong>i = 3</strong></div>
+        <div class="example-step">Step 1: &nbsp; 3.0 g ÷ 110.98 g/mol = <strong>0.0270 mol</strong></div>
+        <div class="example-step">Step 2: &nbsp; 0.0270 mol ÷ 0.050 kg = <strong>0.541 m</strong></div>
+        <div class="example-step">Step 3: &nbsp; ΔT = 3 × 1.86 × 0.541 = <strong>3.02 °C</strong></div>
+        <div class="example-step">Step 4: &nbsp; FP = 0°C − 3.02°C = <strong>−3.02°C</strong></div>
+        <div style="margin-top:14px; padding-top:12px; border-top:1.5px dashed #aaa; font-style:italic; color:#2c3e50;">
+          CaCl₂ uses i = &nbsp;
+          <input type="text" class="fill-in sm" id="cacl2_i" data-answer="3" placeholder="__" oninput="checkFill(this)">
+          &nbsp; because it dissociates into &nbsp;
+          <input type="text" class="fill-in sm" id="cacl2_ions_n" data-answer="3" placeholder="__" oninput="checkFill(this)">
+          &nbsp; ions: Ca²⁺ + 2Cl⁻
+          <button class="btn-reveal" onclick="revealAnswer('cacl2_i','3');revealAnswer('cacl2_ions_n','3')">Hint</button>
+          <span class="answer-badge" id="cacl2_i_badge">✓ i = 3 (3 ions)</span>
+        </div>
+      </div>
+
+      <!-- CALCULATION 2 -->
+      <div class="sub-section-title">Calculation 2 — Premium CaCl₂ (5.0 g CaCl₂ in 50 g water) <em style="font-weight:400; color:#666">— Your Turn</em></div>
+      <div class="student-work-box">
+        <div class="label">🔶 Show your work step by step</div>
+        <p style="margin-bottom:14px; font-size:0.88rem; color:#555;">Given: Molar mass CaCl₂ = 110.98 g/mol, k<sub>f</sub> = 1.86 °C/m, i = 3</p>
+
+        <div class="step-row">
+          <span class="step-badge">Step 1</span>
+          <span>Moles = 5.0 g ÷ 110.98 g/mol =
+            <input type="text" class="fill-in md" id="c2_s1" data-answer="0.0451" placeholder="? mol" oninput="checkFill(this)"> mol
+            <button class="btn-reveal" onclick="revealAnswer('c2_s1','0.0451')">Hint</button>
+            <span class="answer-badge" id="c2_s1_badge">✓ 0.0451</span>
+          </span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 2</span>
+          <span>Molality = moles ÷ 0.050 kg =
+            <input type="text" class="fill-in md" id="c2_s2" data-answer="0.901" placeholder="? m" oninput="checkFill(this)"> m
+            <button class="btn-reveal" onclick="revealAnswer('c2_s2','0.901')">Hint</button>
+            <span class="answer-badge" id="c2_s2_badge">✓ 0.901</span>
+          </span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 3</span>
+          <span>ΔT = 3 × 1.86 × m =
+            <input type="text" class="fill-in md" id="c2_s3" data-answer="5.03" placeholder="? °C" oninput="checkFill(this)"> °C
+            <button class="btn-reveal" onclick="revealAnswer('c2_s3','5.03')">Hint</button>
+            <span class="answer-badge" id="c2_s3_badge">✓ 5.03</span>
+          </span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 4</span>
+          <span>FP = 0°C − ΔT =
+            <input type="text" class="fill-in md" id="c2_s4" data-answer="-5.03" placeholder="? °C" oninput="checkFill(this)"> °C
+            <button class="btn-reveal" onclick="revealAnswer('c2_s4','-5.03')">Hint</button>
+            <span class="answer-badge" id="c2_s4_badge">✓ −5.03°C</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- ΔT CALCULATOR -->
+      <div class="calc-panel">
+        <h4>🧮 Interactive ΔT Calculator — Check Your Work</h4>
+        <p style="font-size:0.88rem; margin-bottom:16px;">Enter any values to calculate ΔT and the new freezing point.</p>
+        <div class="calc-row">
+          <label>Mass of solute (g):</label>
+          <input type="number" id="calc_mass" placeholder="e.g. 7.5" step="0.01" min="0">
+        </div>
+        <div class="calc-row">
+          <label>Molar mass (g/mol):</label>
+          <input type="number" id="calc_mm" placeholder="e.g. 58.44" step="0.01" min="1">
+        </div>
+        <div class="calc-row">
+          <label>van't Hoff factor (i):</label>
+          <input type="number" id="calc_i" placeholder="2 or 3" step="1" min="1" max="10">
+        </div>
+        <div class="calc-row">
+          <label>Mass of solvent — water (g):</label>
+          <input type="number" id="calc_solvent" placeholder="e.g. 50" step="0.1" min="1">
+        </div>
+        <div class="calc-row">
+          <label>k<sub>f</sub> (°C/m):</label>
+          <input type="number" id="calc_kf" value="1.86" step="0.01" min="0.01">
+        </div>
+        <button class="btn btn-calc" onclick="runCalc()">Calculate ΔT &amp; FP</button>
+        <div class="calc-result" id="calc_result"></div>
+      </div>
+
+      <!-- PRE-LAB SUMMARY TABLE -->
+      <div class="sub-section-title" style="margin-top:30px;">Pre-Lab Summary Table</div>
+      <p style="margin-bottom:10px; font-size:0.88rem; color:#555;">Complete the shaded cells using your calculations above. Control and Light NaCl rows are given.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Solution</th>
+            <th>Salt (g)</th>
+            <th>Water (g)</th>
+            <th>Molality (m)</th>
+            <th>i</th>
+            <th>ΔT (°C)</th>
+            <th>Expected FP (°C)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Control</strong></td>
+            <td>0</td><td>50</td><td>0</td><td>—</td><td>0</td><td>0</td>
+          </tr>
+          <tr>
+            <td><strong>Light NaCl</strong></td>
+            <td>2.5</td><td>50</td><td>0.856</td><td>2</td><td>3.18</td><td>−3.18 <em>(given)</em></td>
+          </tr>
+          <tr style="background:#fffbe6;">
+            <td><strong>Heavy NaCl</strong></td>
+            <td>7.5</td><td>50</td>
+            <td><input class="table-input" id="pt_hn_m" placeholder="2.568" oninput="saveAll()"></td>
+            <td>2</td>
+            <td><input class="table-input" id="pt_hn_dt" placeholder="9.55" oninput="saveAll()"></td>
+            <td><input class="table-input" id="pt_hn_fp" placeholder="-9.55" oninput="saveAll()"></td>
+          </tr>
+          <tr style="background:#fffbe6;">
+            <td><strong>CaCl₂</strong></td>
+            <td>5.0</td><td>50</td>
+            <td><input class="table-input" id="pt_ca_m" placeholder="0.901" oninput="saveAll()"></td>
+            <td>3</td>
+            <td><input class="table-input" id="pt_ca_dt" placeholder="5.03" oninput="saveAll()"></td>
+            <td><input class="table-input" id="pt_ca_fp" placeholder="-5.03" oninput="saveAll()"></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- ===== EXPERIMENT ===== -->
+  <div class="section" id="experiment">
+    <div class="section-header green">🧪 The Experiment</div>
+    <div class="section-body">
+
+      <div class="sub-section-title">Materials (for reference)</div>
+      <ul style="padding-left:22px; margin-bottom:16px; font-size:0.92rem;">
+        <li>Crushed ice, Rock salt (NaCl), Calcium chloride (CaCl₂)</li>
+        <li>Digital thermometer, Beakers (250 mL), Balance, Stirring rod, Stopwatch</li>
+      </ul>
+
+      <!-- PART A -->
+      <div class="sub-section-title">Part A: Thermometer Calibration (5 min)</div>
+      <div class="virtual-note">
+        <strong>Virtual Lab:</strong> Make an ice-water slurry (50/50 ice and water, no salt), stir for 2 minutes, and record the stable thermometer reading. This calibrates your thermometer against 0°C.
+      </div>
+      <div class="two-col">
+        <div class="q-group">
+          <label class="q-label">Thermometer reading (°C):</label>
+          <input type="text" class="fill-in" id="cal_read" placeholder="e.g. 0.3°C" oninput="saveAll()" style="min-width:160px">
+        </div>
+        <div class="q-group">
+          <label class="q-label">Correction factor (0°C − reading):</label>
+          <input type="text" class="fill-in" id="cal_corr" placeholder="e.g. −0.3°C" oninput="saveAll()" style="min-width:160px">
+        </div>
+      </div>
+      <div class="tip-box">💡 Apply this correction to all your temperature readings. If the thermometer reads +0.3°C at true 0°C, subtract 0.3°C from all values.</div>
+
+      <!-- PART B -->
+      <div class="sub-section-title">Part B: Data Collection (°C)</div>
+      <div class="virtual-note">
+        <strong>Virtual Lab — Simulated Data:</strong> In the actual lab you stir each beaker (50 g ice + salt) and record temperature every 60 s. Use the simulated data below — enter it into the table, then answer the results section.<br><br>
+        <strong>Control (0 g salt):</strong> 0, −0.1, −0.2, −0.2, −0.2, −0.2, −0.2<br>
+        <strong>Light NaCl (2.5 g):</strong> −0.5, −1.8, −2.7, −3.0, −3.1, −3.1, −3.1<br>
+        <strong>Heavy NaCl (7.5 g):</strong> −1.2, −4.5, −7.3, −8.9, −9.4, −9.5, −9.5<br>
+        <strong>CaCl₂ (5.0 g):</strong> −0.8, −2.2, −3.6, −4.7, −4.9, −5.0, −5.0
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Time (s)</th>
+            <th>Control</th>
+            <th>Light NaCl</th>
+            <th>Heavy NaCl</th>
+            <th>CaCl₂</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td><input class="table-input" id="d_0_c" oninput="saveAll()"></td><td><input class="table-input" id="d_0_l" oninput="saveAll()"></td><td><input class="table-input" id="d_0_h" oninput="saveAll()"></td><td><input class="table-input" id="d_0_ca" oninput="saveAll()"></td></tr>
+          <tr><td>60</td><td><input class="table-input" id="d_60_c" oninput="saveAll()"></td><td><input class="table-input" id="d_60_l" oninput="saveAll()"></td><td><input class="table-input" id="d_60_h" oninput="saveAll()"></td><td><input class="table-input" id="d_60_ca" oninput="saveAll()"></td></tr>
+          <tr><td>120</td><td><input class="table-input" id="d_120_c" oninput="saveAll()"></td><td><input class="table-input" id="d_120_l" oninput="saveAll()"></td><td><input class="table-input" id="d_120_h" oninput="saveAll()"></td><td><input class="table-input" id="d_120_ca" oninput="saveAll()"></td></tr>
+          <tr><td>180</td><td><input class="table-input" id="d_180_c" oninput="saveAll()"></td><td><input class="table-input" id="d_180_l" oninput="saveAll()"></td><td><input class="table-input" id="d_180_h" oninput="saveAll()"></td><td><input class="table-input" id="d_180_ca" oninput="saveAll()"></td></tr>
+          <tr><td>240</td><td><input class="table-input" id="d_240_c" oninput="saveAll()"></td><td><input class="table-input" id="d_240_l" oninput="saveAll()"></td><td><input class="table-input" id="d_240_h" oninput="saveAll()"></td><td><input class="table-input" id="d_240_ca" oninput="saveAll()"></td></tr>
+          <tr><td>300</td><td><input class="table-input" id="d_300_c" oninput="saveAll()"></td><td><input class="table-input" id="d_300_l" oninput="saveAll()"></td><td><input class="table-input" id="d_300_h" oninput="saveAll()"></td><td><input class="table-input" id="d_300_ca" oninput="saveAll()"></td></tr>
+          <tr><td><strong>Final</strong></td><td><input class="table-input" id="d_f_c" oninput="saveAll()"></td><td><input class="table-input" id="d_f_l" oninput="saveAll()"></td><td><input class="table-input" id="d_f_h" oninput="saveAll()"></td><td><input class="table-input" id="d_f_ca" oninput="saveAll()"></td></tr>
+        </tbody>
+      </table>
+
+      <!-- PART C -->
+      <div class="sub-section-title">Part C: Cold Limit Test</div>
+      <p style="margin-bottom:12px; font-size:0.92rem;">Create a super-cold bath (ice + large amount of NaCl, target −15°C). Test which solutions freeze.</p>
+      <div class="virtual-note">
+        <strong>Virtual result:</strong> Control froze solid. Light NaCl froze solid. Heavy NaCl remained liquid (slush). CaCl₂ remained liquid.
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Solution</th>
+            <th>Freezes at −15°C?</th>
+            <th>Why? (explain using predicted FP)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Control (water)</td>
+            <td><input class="table-input" id="cl_c_f" placeholder="Yes / No" oninput="saveAll()"></td>
+            <td><input class="table-input" id="cl_c_w" placeholder="Explain..." oninput="saveAll()" style="width:95%;"></td>
+          </tr>
+          <tr>
+            <td>Light NaCl</td>
+            <td><input class="table-input" id="cl_l_f" placeholder="Yes / No" oninput="saveAll()"></td>
+            <td><input class="table-input" id="cl_l_w" placeholder="Explain..." oninput="saveAll()" style="width:95%;"></td>
+          </tr>
+          <tr>
+            <td>Heavy NaCl</td>
+            <td><input class="table-input" id="cl_h_f" placeholder="Yes / No" oninput="saveAll()"></td>
+            <td><input class="table-input" id="cl_h_w" placeholder="Explain..." oninput="saveAll()" style="width:95%;"></td>
+          </tr>
+          <tr>
+            <td>CaCl₂</td>
+            <td><input class="table-input" id="cl_ca_f" placeholder="Yes / No" oninput="saveAll()"></td>
+            <td><input class="table-input" id="cl_ca_w" placeholder="Explain..." oninput="saveAll()" style="width:95%;"></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- ===== RESULTS ===== -->
+  <div class="section" id="results">
+    <div class="section-header orange">📊 Results &amp; % Error</div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <strong>% Error</strong> tells you how accurate your measurement was compared to the theoretical prediction.<br>
+        <code style="font-size:1rem;">% Error = |predicted − actual| ÷ |predicted| × 100</code>
+      </div>
+
+      <div class="sub-section-title">Results Table</div>
+      <p style="font-size:0.88rem; color:#555; margin-bottom:12px;">Enter your final measured temperatures from the Data Collection table as "Actual FP." Then calculate % error.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Treatment</th>
+            <th>Predicted FP (°C)</th>
+            <th>Actual FP (°C)</th>
+            <th>% Error</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Control</td>
+            <td>0°C</td>
+            <td><input class="table-input" id="res_c_act" placeholder="measured" oninput="saveAll()"></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Light NaCl</td>
+            <td>−3.18°C</td>
+            <td><input class="table-input" id="res_l_act" placeholder="measured" oninput="saveAll()"></td>
+            <td><input class="table-input" id="res_l_err" placeholder="calculate" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td>Heavy NaCl</td>
+            <td><input class="table-input" id="res_h_pred" placeholder="from Calc 1" oninput="saveAll()"></td>
+            <td><input class="table-input" id="res_h_act" placeholder="measured" oninput="saveAll()"></td>
+            <td><input class="table-input" id="res_h_err" placeholder="calculate" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td>CaCl₂</td>
+            <td><input class="table-input" id="res_ca_pred" placeholder="from Calc 2" oninput="saveAll()"></td>
+            <td><input class="table-input" id="res_ca_act" placeholder="measured" oninput="saveAll()"></td>
+            <td><input class="table-input" id="res_ca_err" placeholder="calculate" oninput="saveAll()"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="calc-panel" style="margin-top:20px;">
+        <h4>🧮 % Error Calculator</h4>
+        <div class="calc-row">
+          <label>Predicted value (°C):</label>
+          <input type="number" id="err_pred" placeholder="e.g. -3.18" step="0.01">
+        </div>
+        <div class="calc-row">
+          <label>Actual / measured value (°C):</label>
+          <input type="number" id="err_act" placeholder="e.g. -3.10" step="0.01">
+        </div>
+        <button class="btn btn-calc" onclick="runError()">Calculate % Error</button>
+        <div class="calc-result" id="err_result"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== COST ANALYSIS ===== -->
+  <div class="section" id="cost">
+    <div class="section-header purple">💰 Cost Analysis</div>
+    <div class="section-body">
+
+      <div class="info-box">
+        A salt that is cheaper per ton may not be the most cost-effective if it achieves less ΔT. We compare <strong>cost per °C of protection</strong> provided.
+      </div>
+
+      <div class="sub-section-title">Worked Example — NaCl (Heavy):</div>
+      <div class="example-box">
+        <div class="ex-title">NaCl costs $60/ton. Heavy salt (7.5 g) achieved ΔT = 9.55°C</div>
+        <div class="example-step">Step 1 — Cost of 7.5 g: &nbsp; 7.5 g × ($60 ÷ 907,185 g/ton) = <strong>$0.000496</strong></div>
+        <div class="example-step">Step 2 — Cost per °C: &nbsp; $0.000496 ÷ 9.55°C = <strong>$0.0000520 per °C</strong></div>
+      </div>
+
+      <div class="sub-section-title">Cost Table — Complete the CaCl₂ Row</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Salt</th>
+            <th>Cost/ton</th>
+            <th>Mass Used</th>
+            <th>ΔT Achieved (°C)</th>
+            <th>Cost per °C</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>NaCl (Heavy)</strong></td>
+            <td>$60</td><td>7.5 g</td>
+            <td><input class="table-input" id="cost_n_dt" placeholder="9.55" oninput="saveAll()"></td>
+            <td><input class="table-input" id="cost_n_cpc" placeholder="$0.0000520" oninput="saveAll()"></td>
+          </tr>
+          <tr style="background:#fffbe6;">
+            <td><strong>CaCl₂</strong></td>
+            <td>$300</td><td>5.0 g</td>
+            <td><input class="table-input" id="cost_ca_dt" placeholder="calculate" oninput="saveAll()"></td>
+            <td><input class="table-input" id="cost_ca_cpc" placeholder="calculate" oninput="saveAll()"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip-box">
+        💡 CaCl₂ cost per °C: &nbsp; 5.0 g × ($300 ÷ 907,185 g) = $0.001653. &nbsp; Cost per °C = $0.001653 ÷ 5.03°C ≈ $0.000329/°C
+      </div>
+
+      <div class="q-group" style="margin-top:20px;">
+        <span class="q-label">Which salt is more cost-effective (lower cost per °C)?</span>
+        <label class="quiz-option" onclick="quizCheck(this,'costq','correct')">A. &nbsp; NaCl — ~$0.000052 per °C vs ~$0.000329 per °C for CaCl₂</label>
+        <label class="quiz-option" onclick="quizCheck(this,'costq','wrong')">B. &nbsp; CaCl₂ — it produces a higher i factor</label>
+        <label class="quiz-option" onclick="quizCheck(this,'costq','wrong')">C. &nbsp; They are equal in cost-effectiveness</label>
+      </div>
+
+      <div class="sub-section-title">Quick Reference Table</div>
+      <table style="max-width:480px;">
+        <thead><tr><th>Salt</th><th>i</th><th>Effective To</th><th>Cost/ton</th></tr></thead>
+        <tbody>
+          <tr><td>NaCl</td><td>2</td><td>−9°C (15°F)</td><td>$60</td></tr>
+          <tr><td>CaCl₂</td><td>3</td><td>−29°C (−20°F)</td><td>$300</td></tr>
+          <tr><td>MgCl₂</td><td>3</td><td>−15°C (5°F)</td><td>$180</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px; line-height:2.4;">
+        <p>
+          Even though NaCl is more cost-effective per °C, cities use CaCl₂ when temperatures drop below &nbsp;
+          <input type="text" class="fill-in sm" id="cr_temp" data-answer="-9" placeholder="__" oninput="checkFill(this)">
+          &nbsp; °C because NaCl stops working below that point.
+          <button class="btn-reveal" onclick="revealAnswer('cr_temp','-9')">Hint</button>
+          <span class="answer-badge" id="cr_temp_badge">✓ −9°C</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== ANALYSIS QUESTIONS ===== -->
+  <div class="section" id="analysis">
+    <div class="section-header red">💬 Analysis Questions</div>
+    <div class="section-body">
+
+      <div class="q-group">
+        <span class="q-label">1. Why does CaCl₂ produce a greater freezing point depression than NaCl at the same molality?</span>
+        <p style="font-size:0.85rem; color:#666; margin-bottom:8px;">Explain using the ΔT formula and the concept of van't Hoff factor.</p>
+        <textarea class="lab-textarea" id="aq1" oninput="updateCharCount('aq1','cc1');saveAll()" placeholder="Hint: Compare the i values. Which ion count is higher and how does that appear in ΔT = i × kf × m?"></textarea>
+        <div class="char-count" id="cc1">0 characters</div>
+        <div class="tip-box" style="margin-top:8px;">
+          💡 Expected answer: CaCl₂ has i = 3 (Ca²⁺ + 2Cl⁻) vs NaCl i = 2 (Na⁺ + Cl⁻). Since ΔT = i × kf × m, a higher i produces a larger ΔT at the same molality. At m = 0.9 mol/kg: NaCl ΔT = 2 × 1.86 × 0.9 = 3.35°C vs CaCl₂ ΔT = 3 × 1.86 × 0.9 = 5.03°C.
+        </div>
+      </div>
+
+      <div class="q-group">
+        <span class="q-label">2. Why do cities switch from NaCl to CaCl₂ when temperatures drop below −10°C?</span>
+        <p style="font-size:0.85rem; color:#666; margin-bottom:8px;">Consider the effective temperature range of each salt and the practical implications.</p>
+        <textarea class="lab-textarea" id="aq2" oninput="updateCharCount('aq2','cc2');saveAll()" placeholder="Consider: What happens to NaCl's effectiveness at very low temperatures? What does CaCl₂ offer that NaCl cannot?"></textarea>
+        <div class="char-count" id="cc2">0 characters</div>
+        <div class="tip-box" style="margin-top:8px;">
+          💡 Expected answer: NaCl is only effective to about −9°C (15°F). Below that, it cannot lower the freezing point enough to prevent ice formation. CaCl₂ remains effective to −29°C (−20°F) because its higher i factor (3 vs 2) produces a much greater ΔT per unit of molality, keeping the solution liquid at far colder temperatures.
+        </div>
+      </div>
+
+      <div class="q-group">
+        <span class="q-label">3. What were potential sources of error in this experiment? How would each affect your results (too high or too low)?</span>
+        <textarea class="lab-textarea" id="aq3" oninput="updateCharCount('aq3','cc3');saveAll()" placeholder="Examples: inaccurate mass measurements, thermometer not fully submerged, ice melting before weighing, incomplete dissolution of salt..."></textarea>
+        <div class="char-count" id="cc3">0 characters</div>
+      </div>
+
+      <!-- SUBMISSION -->
+      <div style="margin-top:28px; background:var(--light-green); border:2px solid var(--green); border-radius:8px; padding:20px 24px;">
+        <p style="font-weight:700; font-size:1.05rem; color:var(--green); margin-bottom:12px;">✅ Ready to Submit?</p>
+        <p style="font-size:0.9rem; margin-bottom:14px;">Complete all sections above, then print or save as PDF and submit to your instructor.</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+          <button class="btn btn-success" onclick="window.print()">🖨️ Print / Save as PDF</button>
+          <button class="btn btn-secondary" onclick="checkAllProgress()">📊 Check Progress</button>
+          <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All (Reset)</button>
+        </div>
+        <p class="autosave-note" style="margin-top:10px;">💾 Auto-saved in your browser — your work persists if you close and reopen this file.</p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<button class="print-btn" onclick="window.print()">🖨️ Print / PDF</button>
+
+<script>
+// ============ FILL-IN CHECK ============
+function checkFill(el) {
+  const ans = (el.dataset.answer || '').toLowerCase().trim();
+  const val = el.value.toLowerCase().trim();
+  if (!val) { el.className = el.className.replace(/\bcorrect\b|\bincorrect\b/g,'').trim() + ' fill-in'; return; }
+  const match = val === ans || (ans.includes(val) && val.length >= 2) || (val.includes(ans) && ans.length >= 2);
+  if (match) {
+    el.classList.add('correct'); el.classList.remove('incorrect');
+  } else {
+    el.classList.add('incorrect'); el.classList.remove('correct');
+  }
+  updateProgress(); saveAll();
+}
+
+function revealAnswer(id, answer) {
+  const el = document.getElementById(id);
+  if (el) { el.value = answer; el.classList.add('correct'); el.classList.remove('incorrect'); }
+  const badge = document.getElementById(id + '_badge');
+  if (badge) badge.style.display = 'inline-block';
+  updateProgress(); saveAll();
+}
+
+// ============ QUIZ ============
+function quizCheck(el, qid, result) {
+  const parent = el.closest('.q-group');
+  const opts = parent.querySelectorAll('.quiz-option');
+  opts.forEach(o => { o.classList.remove('correct-ans','wrong-ans'); o.style.pointerEvents = 'none'; });
+  if (result === 'correct') {
+    el.classList.add('correct-ans');
+  } else {
+    el.classList.add('wrong-ans');
+    opts.forEach(o => {
+      if (o.getAttribute('onclick') && o.getAttribute('onclick').includes("'correct'")) o.classList.add('correct-ans');
+    });
+  }
+  updateProgress(); saveAll();
+}
+
+// ============ ΔT CALCULATOR ============
+function runCalc() {
+  const mass = parseFloat(document.getElementById('calc_mass').value);
+  const mm = parseFloat(document.getElementById('calc_mm').value);
+  const i = parseFloat(document.getElementById('calc_i').value);
+  const solvent = parseFloat(document.getElementById('calc_solvent').value);
+  const kf = parseFloat(document.getElementById('calc_kf').value);
+  const res = document.getElementById('calc_result');
+  if ([mass,mm,i,solvent,kf].some(isNaN) || mm<=0 || solvent<=0) {
+    res.innerHTML = '⚠️ Enter all fields with valid positive values.';
+    res.style.color='#c0392b'; res.style.borderColor='#c0392b'; res.style.display='block'; return;
+  }
+  const mol = mass / mm;
+  const m = mol / (solvent / 1000);
+  const dT = i * kf * m;
+  const fp = -dT;
+  res.innerHTML = `moles = ${mol.toFixed(4)} mol &nbsp;|&nbsp; m = ${m.toFixed(4)} mol/kg &nbsp;|&nbsp; ΔT = ${dT.toFixed(2)} °C &nbsp;→&nbsp; <strong>FP = ${fp.toFixed(2)} °C</strong>`;
+  res.style.color='var(--green)'; res.style.borderColor='var(--green)'; res.style.display='block';
+}
+
+// ============ % ERROR CALCULATOR ============
+function runError() {
+  const pred = parseFloat(document.getElementById('err_pred').value);
+  const act = parseFloat(document.getElementById('err_act').value);
+  const res = document.getElementById('err_result');
+  if (isNaN(pred) || isNaN(act) || pred === 0) {
+    res.innerHTML = '⚠️ Enter both values (predicted cannot be 0).';
+    res.style.color='#c0392b'; res.style.borderColor='#c0392b'; res.style.display='block'; return;
+  }
+  const err = Math.abs(pred - act) / Math.abs(pred) * 100;
+  res.innerHTML = `|${pred} − ${act}| ÷ |${pred}| × 100 = <strong>${err.toFixed(2)}%</strong>`;
+  res.style.color='var(--green)'; res.style.borderColor='var(--green)'; res.style.display='block';
+}
+
+// ============ CHAR COUNT ============
+function updateCharCount(textareaId, countId) {
+  const ta = document.getElementById(textareaId);
+  const cc = document.getElementById(countId);
+  if (ta && cc) cc.textContent = ta.value.length + ' characters';
+}
+
+// ============ PROGRESS ============
+function updateProgress() {
+  const fills = document.querySelectorAll('.fill-in[data-answer]');
+  let filled = 0;
+  fills.forEach(f => { if (f.value.trim().length >= 1) filled++; });
+  const tables = document.querySelectorAll('.table-input');
+  let tFilled = 0;
+  tables.forEach(t => { if (t.value.trim().length > 0) tFilled++; });
+  const textareas = document.querySelectorAll('.lab-textarea');
+  let taFilled = 0;
+  textareas.forEach(ta => { if (ta.value.trim().length > 20) taFilled++; });
+  const total = fills.length + tables.length + textareas.length;
+  const done = filled + tFilled + taFilled;
+  const pct = Math.min(100, Math.round((done / total) * 100));
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function checkAllProgress() {
+  const fills = document.querySelectorAll('.fill-in[data-answer]');
+  let emptyFills = 0;
+  fills.forEach(f => { if (!f.value.trim()) emptyFills++; });
+  const tables = document.querySelectorAll('.table-input');
+  let tEmpty = 0;
+  tables.forEach(t => { if (!t.value.trim()) tEmpty++; });
+  const textareas = document.querySelectorAll('.lab-textarea');
+  let taEmpty = 0;
+  textareas.forEach(ta => { if (ta.value.trim().length < 20) taEmpty++; });
+  alert(`Progress Check:\n✏️ Fill-in blanks empty: ${emptyFills}\n📊 Table cells empty: ${tEmpty}\n💬 Short/missing responses: ${taEmpty}\n\nComplete all sections before submitting!`);
+}
+
+// ============ SAVE / LOAD ============
+function saveAll() {
+  const data = {};
+  document.querySelectorAll('input[id], textarea[id]').forEach(el => {
+    if (el.id) data[el.id] = el.value;
+  });
+  try { localStorage.setItem('chm152l_lab2_fpd_v1', JSON.stringify(data)); } catch(e) {}
+  updateProgress();
+}
+
+function loadAll() {
+  try {
+    const raw = localStorage.getItem('chm152l_lab2_fpd_v1');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    Object.keys(data).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = data[id];
+        if (el.classList.contains('fill-in') && el.dataset.answer) checkFill(el);
+        if (el.tagName === 'TEXTAREA') {
+          const ccId = el.id.replace('aq','cc');
+          updateCharCount(el.id, ccId);
+        }
+      }
+    });
+  } catch(e) {}
+  updateProgress();
+}
+
+function clearAll() {
+  if (!confirm('Clear all your work? This cannot be undone.')) return;
+  localStorage.removeItem('chm152l_lab2_fpd_v1');
+  document.querySelectorAll('input[id]:not([readonly]), textarea[id]').forEach(el => {
+    el.value = '';
+    el.classList.remove('correct','incorrect');
+  });
+  document.querySelectorAll('.answer-badge').forEach(b => b.style.display = 'none');
+  document.querySelectorAll('.quiz-option').forEach(o => {
+    o.classList.remove('correct-ans','wrong-ans');
+    o.style.pointerEvents = '';
+  });
+  document.querySelectorAll('.calc-result').forEach(r => r.style.display = 'none');
+  updateProgress();
+}
+
+// ============ NAV ACTIVE ============
+window.addEventListener('scroll', function() {
+  const sections = ['info','concepts','prelab','experiment','results','cost','analysis'];
+  const navLinks = document.querySelectorAll('nav a');
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 140) current = id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ============ INIT ============
+window.addEventListener('DOMContentLoaded', function() {
+  loadAll();
+  updateProgress();
+});
+</script>
+</body>
+</html>
