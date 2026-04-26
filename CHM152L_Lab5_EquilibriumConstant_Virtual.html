@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM 152L – Lab 5: Equilibrium Constant of a Reaction (Virtual)</title>
+<style>
+  :root {
+    --blue: #1a5276; --teal: #148f77; --green: #1e8449;
+    --purple: #6c3483; --orange: #ca6f1e; --red: #922b21;
+    --light-blue: #d6eaf8; --light-green: #d5f5e3;
+    --light-yellow: #fef9e7; --light-purple: #f4ecf7;
+    --light-red: #fdedec; --gray: #f2f3f4;
+    --border: #bdc3c7; --text: #1c2833;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #ecf0f1; color: var(--text); font-size: 15px; line-height: 1.6; }
+  header { background: linear-gradient(135deg, #1a5276, #2471a3); color: white; padding: 28px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 3px 10px rgba(0,0,0,.3); position: sticky; top: 0; z-index: 100; }
+  header h1 { font-size: 1.45rem; font-weight: 700; }
+  header p { font-size: .88rem; opacity: .85; margin-top: 4px; }
+  .progress-wrap { display: flex; align-items: center; gap: 12px; min-width: 260px; }
+  .progress-wrap span { font-size: .85rem; white-space: nowrap; }
+  #progressBar { flex: 1; height: 12px; border-radius: 6px; background: rgba(255,255,255,.3); overflow: hidden; }
+  #progressFill { height: 100%; width: 0%; background: #2ecc71; border-radius: 6px; transition: width .4s ease; }
+  nav { background: var(--blue); padding: 0 40px; display: flex; gap: 4px; overflow-x: auto; }
+  nav a { color: rgba(255,255,255,.8); text-decoration: none; padding: 10px 16px; font-size: .85rem; border-bottom: 3px solid transparent; white-space: nowrap; transition: all .2s; }
+  nav a:hover, nav a.active { color: white; border-bottom-color: #2ecc71; background: rgba(255,255,255,.08); }
+  main { max-width: 980px; margin: 30px auto; padding: 0 20px 60px; }
+  .section { background: white; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,.1); overflow: hidden; }
+  .section-header { padding: 18px 28px; font-size: 1.1rem; font-weight: 700; color: white; }
+  .section-header.blue { background: var(--blue); }
+  .section-header.teal { background: var(--teal); }
+  .section-header.green { background: var(--green); }
+  .section-header.purple { background: var(--purple); }
+  .section-header.orange { background: var(--orange); }
+  .section-header.red { background: var(--red); }
+  .section-body { padding: 24px 28px; }
+  .info-box { background: var(--light-blue); border-left: 4px solid var(--blue); border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; font-size: .95rem; }
+  .tip-box { background: var(--light-yellow); border-left: 4px solid var(--orange); border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; font-size: .9rem; }
+  .virtual-note { background: #fef5e7; border: 2px dashed #f39c12; border-radius: 8px; padding: 14px 20px; margin-bottom: 20px; font-size: .9rem; }
+  .virtual-note strong { color: var(--orange); }
+  .fill-in { display: inline-block; min-width: 130px; border: none; border-bottom: 2px solid var(--blue); padding: 3px 8px; font-size: 1rem; font-family: inherit; background: transparent; outline: none; transition: border-color .2s; text-align: center; }
+  .fill-in:focus { border-bottom-color: var(--teal); }
+  .fill-in.correct { border-bottom-color: var(--green); background: #eafaf1; }
+  .fill-in.incorrect { border-bottom-color: var(--red); background: var(--light-red); }
+  .fill-in.sm { min-width: 70px; } .fill-in.md { min-width: 110px; } .fill-in.lg { min-width: 180px; } .fill-in.xl { min-width: 300px; }
+  .btn-reveal { background: none; border: 1.5px solid var(--blue); color: var(--blue); border-radius: 20px; padding: 3px 12px; font-size: .78rem; cursor: pointer; transition: all .2s; margin-left: 6px; }
+  .btn-reveal:hover { background: var(--blue); color: white; }
+  .answer-badge { display: none; background: var(--green); color: white; border-radius: 12px; padding: 2px 10px; font-size: .8rem; margin-left: 6px; font-weight: 600; }
+  .btn { padding: 10px 22px; border: none; border-radius: 6px; cursor: pointer; font-size: .9rem; font-weight: 600; transition: all .2s; }
+  .btn-primary { background: var(--blue); color: white; } .btn-primary:hover { background: #154360; }
+  .btn-success { background: var(--green); color: white; } .btn-success:hover { background: #145a32; }
+  .btn-secondary { background: var(--gray); color: var(--text); border: 1.5px solid var(--border); } .btn-secondary:hover { background: var(--border); }
+  .btn-calc { background: var(--teal); color: white; } .btn-calc:hover { background: #0e6655; }
+  .btn-plot { background: var(--purple); color: white; } .btn-plot:hover { background: #512e5f; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .9rem; }
+  th { background: var(--blue); color: white; padding: 10px 12px; text-align: center; font-weight: 600; }
+  td { border: 1px solid var(--border); padding: 8px 10px; text-align: center; vertical-align: middle; }
+  tr:nth-child(even) td { background: #f8f9fa; }
+  .table-input { width: 100%; border: 1px solid #aab; border-radius: 4px; padding: 5px 8px; font-size: .88rem; text-align: center; background: #fdfefe; transition: border-color .2s; }
+  .table-input:focus { outline: none; border-color: var(--teal); background: #eaf4fb; }
+  .table-input.given { background: #f0f3f4; color: #555; font-style: italic; }
+  .calc-panel { background: var(--light-yellow); border: 1.5px solid #f0b27a; border-radius: 8px; padding: 20px 24px; margin-top: 18px; }
+  .calc-panel h4 { color: var(--orange); margin-bottom: 12px; font-size: 1rem; }
+  .calc-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .calc-row label { min-width: 220px; font-size: .9rem; }
+  .calc-row input[type=number] { width: 140px; border: 1.5px solid var(--border); border-radius: 5px; padding: 7px 10px; font-size: .9rem; }
+  .calc-result { background: white; border: 2px solid var(--green); border-radius: 6px; padding: 12px 18px; font-size: 1rem; font-weight: 700; color: var(--green); text-align: center; margin-top: 8px; display: none; }
+  .eq-box { background: #1a252f; color: #f8f9fa; border-radius: 8px; padding: 16px 20px; text-align: center; font-size: 1.3rem; font-weight: 700; margin: 16px 0; font-family: 'Courier New', monospace; }
+  .quiz-option { display: block; padding: 10px 16px; margin: 6px 0; border: 2px solid var(--border); border-radius: 6px; cursor: pointer; transition: all .2s; background: white; }
+  .quiz-option:hover { border-color: var(--blue); background: var(--light-blue); }
+  .quiz-option.correct-ans { border-color: var(--green); background: var(--light-green); color: var(--green); font-weight: 600; }
+  .quiz-option.wrong-ans { border-color: var(--red); background: var(--light-red); color: var(--red); }
+  .lab-textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 6px; padding: 12px; font-family: inherit; font-size: .9rem; resize: vertical; transition: border-color .2s; min-height: 80px; }
+  .lab-textarea:focus { outline: none; border-color: var(--teal); }
+  .char-count { font-size: .8rem; color: #888; text-align: right; margin-top: 4px; }
+  .q-label { font-weight: 700; color: var(--blue); margin-bottom: 8px; display: block; }
+  .q-group { margin-bottom: 22px; }
+  .sub-section-title { font-size: 1rem; font-weight: 700; color: var(--blue); border-bottom: 2px solid var(--blue); padding-bottom: 6px; margin: 22px 0 14px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width:620px){.two-col{grid-template-columns:1fr;}}
+  .canvas-wrap { background: white; border: 2px solid var(--border); border-radius: 8px; padding: 12px; margin: 16px 0; }
+  canvas { display: block; max-width: 100%; margin: 0 auto; }
+  .step-badge { display: inline-flex; align-items: center; justify-content: center; background: var(--blue); color: white; border-radius: 4px; padding: 2px 10px; font-size: .82rem; font-weight: 700; margin-right: 8px; }
+  .step-row { display: flex; align-items: center; margin-bottom: 10px; font-size: .92rem; flex-wrap: wrap; gap: 6px; }
+  .student-work-box { background: #fafafa; border: 1.5px solid var(--border); border-radius: 8px; padding: 18px 22px; margin: 14px 0; }
+  .student-work-box .label { font-weight: 700; color: var(--orange); margin-bottom: 12px; font-size: .95rem; border-bottom: 1.5px dashed #f0b27a; padding-bottom: 8px; }
+  .autosave-note { font-size: .8rem; color: #888; font-style: italic; margin-top: 8px; }
+  .print-btn { position: fixed; bottom: 24px; right: 24px; background: var(--blue); color: white; border: none; border-radius: 50px; padding: 14px 22px; font-size: .9rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.25); z-index: 999; }
+  .print-btn:hover { background: #154360; }
+  .kc-result { background: var(--light-purple); border: 2px solid var(--purple); border-radius: 6px; padding: 10px 16px; font-size: .95rem; font-weight: 700; color: var(--purple); margin-top: 8px; display: none; }
+  @media print { header,nav,.print-btn,.btn-reveal,.calc-panel,.btn-plot { display:none!important; } body { background:white; } .section { box-shadow:none; border:1px solid #ccc; page-break-inside:avoid; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>⚗️ CHM 152L — Lab 5: Equilibrium Constant of a Reaction</h1>
+    <p>Fe³⁺ + SCN⁻ ⇌ FeSCN²⁺ &nbsp;|&nbsp; Virtual Fillable Lab &nbsp;|&nbsp; Progress auto-saves</p>
+  </div>
+  <div class="progress-wrap">
+    <span>Progress</span>
+    <div id="progressBar"><div id="progressFill"></div></div>
+    <span id="progressPct">0%</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#info" class="active">Info</a>
+  <a href="#prelab">Pre-Lab</a>
+  <a href="#standards">Standards &amp; Curve</a>
+  <a href="#equilibrium">Equilibrium</a>
+  <a href="#calculations">Calculations</a>
+  <a href="#analysis">Analysis</a>
+</nav>
+
+<main>
+
+  <div class="virtual-note">
+    <strong>📋 Virtual Lab Instructions:</strong> This interactive worksheet covers all sections of Lab 5. Fill every blank and table, complete all calculations, plot the standard curve using the interactive tool, and answer the post-lab questions. Your work saves automatically. Print or save as PDF to submit.
+  </div>
+
+  <!-- ===== STUDENT INFO ===== -->
+  <div class="section" id="info">
+    <div class="section-header blue">📝 Student Information</div>
+    <div class="section-body">
+      <div class="two-col">
+        <div class="q-group">
+          <label class="q-label">Full Name</label>
+          <input type="text" class="fill-in lg" id="s_name" placeholder="Your full name" oninput="saveAll()" style="min-width:260px">
+        </div>
+        <div class="q-group">
+          <label class="q-label">Date</label>
+          <input type="text" class="fill-in" id="s_date" placeholder="e.g. April 26, 2026" oninput="saveAll()">
+        </div>
+      </div>
+      <div class="info-box">
+        <strong>Reaction studied:</strong> Fe³⁺ + SCN⁻ ⇌ FeSCN²⁺ &nbsp;&nbsp;(blood-red complex)<br>
+        <strong>Equilibrium expression:</strong> K<sub>c</sub> = [FeSCN²⁺] / ([Fe³⁺][SCN⁻])<br>
+        <strong>Goal:</strong> Determine K<sub>c</sub> by measuring the absorbance of FeSCN²⁺ and using a standard curve (Beer's Law).
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRE-LAB ===== -->
+  <div class="section" id="prelab">
+    <div class="section-header teal">🔬 Pre-Lab Setup</div>
+    <div class="section-body">
+
+      <div class="sub-section-title">Spectrophotometer Setup</div>
+
+      <div style="line-height:2.8; margin-left:8px;">
+        <p>
+          Record the wavelength used for all absorbance measurements:&nbsp;
+          <input type="text" class="fill-in md" id="pl_wave" data-answer="447" placeholder="____ nm" oninput="checkFill(this)"> nm
+          <button class="btn-reveal" onclick="revealAnswer('pl_wave','447')">Hint</button>
+          <span class="answer-badge" id="pl_wave_badge">✓ 447 nm</span>
+        </p>
+      </div>
+
+      <div class="q-group" style="margin-top:16px;">
+        <span class="q-label">Why is Fe³⁺ placed in large excess when preparing the standards?</span>
+        <textarea class="lab-textarea" id="pl_excess" oninput="updateCharCount('pl_excess','cc_excess');saveAll()" placeholder="Think: what does excess Fe³⁺ ensure about the equilibrium position of the standards?"></textarea>
+        <div class="char-count" id="cc_excess">0 characters</div>
+        <div class="tip-box">💡 <strong>Hint:</strong> When [Fe³⁺] is extremely large, it forces the reaction Fe³⁺ + SCN⁻ → FeSCN²⁺ to go to <em>completion</em> (essentially all SCN⁻ reacts). This means [FeSCN²⁺] ≈ [SCN⁻]<sub>initial</sub>, allowing us to know the exact concentration of FeSCN²⁺ in each standard for the calibration curve.</div>
+      </div>
+
+      <div class="q-group">
+        <span class="q-label">Describe what the blank (C1) contains and why it is used:</span>
+        <textarea class="lab-textarea" id="pl_blank" oninput="updateCharCount('pl_blank','cc_blank');saveAll()" placeholder="What is in the blank solution? Why do we zero the spectrophotometer with it?"></textarea>
+        <div class="char-count" id="cc_blank">0 characters</div>
+        <div class="tip-box">💡 <strong>Hint:</strong> The blank contains 10.0 mL of 0.200 M Fe(NO₃)₃ in 0.10 M HNO₃ plus water to total volume — but NO KSCN. It has all the same ions as the standards except SCN⁻/FeSCN²⁺. Zeroing with the blank removes background absorbance from Fe³⁺ ions and the solvent, so only FeSCN²⁺ absorbance is measured.</div>
+      </div>
+
+      <div class="sub-section-title">Concept Quick-Check</div>
+      <div class="q-group">
+        <span class="q-label">Q1. Beer's Law states that absorbance is _____ proportional to concentration.</span>
+        <label class="quiz-option" onclick="quizCheck(this,'bq1','correct')">A. &nbsp; Directly — A = ε·b·c, so as concentration increases, absorbance increases linearly</label>
+        <label class="quiz-option" onclick="quizCheck(this,'bq1','wrong')">B. &nbsp; Inversely — higher concentration means less light is transmitted</label>
+        <label class="quiz-option" onclick="quizCheck(this,'bq1','wrong')">C. &nbsp; Exponentially — absorbance grows much faster than concentration</label>
+      </div>
+      <div class="q-group">
+        <span class="q-label">Q2. If absorbance is measured at 447 nm, what color does FeSCN²⁺ appear to the human eye?</span>
+        <label class="quiz-option" onclick="quizCheck(this,'bq2','wrong')">A. &nbsp; Blue — it absorbs red light</label>
+        <label class="quiz-option" onclick="quizCheck(this,'bq2','correct')">B. &nbsp; Red/orange — it absorbs blue-violet light (447 nm) and transmits red wavelengths</label>
+        <label class="quiz-option" onclick="quizCheck(this,'bq2','wrong')">C. &nbsp; Yellow — it absorbs violet and reflects yellow</label>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== STANDARDS & CURVE ===== -->
+  <div class="section" id="standards">
+    <div class="section-header purple">📈 Part A / B / C: Standards &amp; Standard Curve</div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <strong>How [FeSCN²⁺] is calculated for each standard:</strong> Because Fe³⁺ is in huge excess, essentially ALL of the SCN⁻ reacts to form FeSCN²⁺. Therefore:
+        [FeSCN²⁺] = (C<sub>KSCN</sub> × V<sub>KSCN</sub>) / V<sub>total</sub> = (2.00×10⁻³ M × V<sub>KSCN</sub>) / 50.0 mL
+      </div>
+
+      <div class="sub-section-title">Part A: Standard Preparation Record</div>
+      <div class="virtual-note">
+        <strong>Virtual Lab Absorbance Data (at 447 nm):</strong> Enter these simulated values in the Measured Absorbance column:
+        C1 = 0.000 &nbsp;|&nbsp; C2 = 0.360 &nbsp;|&nbsp; C3 = 0.540 &nbsp;|&nbsp; C4 = 0.720 &nbsp;|&nbsp; C5 = 0.900
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Standard</th>
+            <th>0.200 M Fe(NO₃)₃<br>(mL)</th>
+            <th>2.00×10⁻³ M KSCN<br>(mL)</th>
+            <th>Water to<br>50.0 mL total</th>
+            <th>[FeSCN²⁺] standard (M)</th>
+            <th>Measured Absorbance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>C1 blank</strong></td>
+            <td>10.0</td><td>0.00</td><td>40.0</td>
+            <td>0.00</td>
+            <td><input class="table-input" id="std_c1_abs" placeholder="enter value" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td><strong>C2</strong></td>
+            <td>10.0</td><td>2.00</td><td>38.0</td>
+            <td>8.00×10⁻⁵</td>
+            <td><input class="table-input" id="std_c2_abs" placeholder="enter value" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td><strong>C3</strong></td>
+            <td>10.0</td><td>3.00</td><td>37.0</td>
+            <td>1.20×10⁻⁴</td>
+            <td><input class="table-input" id="std_c3_abs" placeholder="enter value" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td><strong>C4</strong></td>
+            <td>10.0</td><td>4.00</td><td>36.0</td>
+            <td>1.60×10⁻⁴</td>
+            <td><input class="table-input" id="std_c4_abs" placeholder="enter value" oninput="saveAll()"></td>
+          </tr>
+          <tr style="background:#fffbe6;">
+            <td><strong>C5</strong></td>
+            <td>10.0</td><td>5.00</td><td>35.0</td>
+            <td>
+              <input class="table-input" id="std_c5_conc" placeholder="calculate →" oninput="saveAll()" style="max-width:120px;">
+              <button class="btn-reveal" style="margin-top:4px;display:block;" onclick="document.getElementById('std_c5_conc').value='2.00×10⁻⁴';saveAll()">Hint</button>
+            </td>
+            <td><input class="table-input" id="std_c5_abs" placeholder="enter value" oninput="saveAll()"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tip-box">
+        💡 <strong>C5 calculation:</strong> [FeSCN²⁺] = (2.00×10⁻³ M × 5.00 mL) / 50.0 mL = 2.00×10⁻⁴ M
+      </div>
+
+      <div class="sub-section-title">Part B: Standard Curve Data Table</div>
+      <p style="margin-bottom:10px; font-size:.88rem; color:#555;">Transfer the concentrations and absorbances here for graphing. Include all 5 standards.</p>
+      <table>
+        <thead><tr><th>Standard</th><th>[FeSCN²⁺] (M)</th><th>Absorbance at 447 nm</th></tr></thead>
+        <tbody>
+          <tr><td>C1 (blank)</td><td><input class="table-input" id="sc_c1_conc" placeholder="0" oninput="saveAll()"></td><td><input class="table-input" id="sc_c1_abs" placeholder="absorbance" oninput="saveAll()"></td></tr>
+          <tr><td>C2</td><td><input class="table-input" id="sc_c2_conc" placeholder="8.00e-5" oninput="saveAll()"></td><td><input class="table-input" id="sc_c2_abs" placeholder="absorbance" oninput="saveAll()"></td></tr>
+          <tr><td>C3</td><td><input class="table-input" id="sc_c3_conc" placeholder="1.20e-4" oninput="saveAll()"></td><td><input class="table-input" id="sc_c3_abs" placeholder="absorbance" oninput="saveAll()"></td></tr>
+          <tr><td>C4</td><td><input class="table-input" id="sc_c4_conc" placeholder="1.60e-4" oninput="saveAll()"></td><td><input class="table-input" id="sc_c4_abs" placeholder="absorbance" oninput="saveAll()"></td></tr>
+          <tr><td>C5</td><td><input class="table-input" id="sc_c5_conc" placeholder="2.00e-4" oninput="saveAll()"></td><td><input class="table-input" id="sc_c5_abs" placeholder="absorbance" oninput="saveAll()"></td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-section-title">Part C: Standard Curve &amp; Best-Fit Line</div>
+      <p style="font-size:.88rem; color:#555; margin-bottom:12px;">Click <strong>Plot Standard Curve</strong> to generate an interactive graph from your Part B data. Then record the equation and R².</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+        <button class="btn btn-plot" onclick="drawStandardCurve()">📊 Plot Standard Curve</button>
+        <button class="btn btn-secondary" onclick="autofillStandardData()">▶ Autofill Simulated Data</button>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="stdCurveCanvas" width="820" height="420"></canvas>
+      </div>
+      <div class="calc-result" id="curve_result" style="display:none;"></div>
+
+      <div class="student-work-box" style="margin-top:16px;">
+        <div class="label">📐 Best-Fit Line (record from graph)</div>
+        <div class="two-col">
+          <div>
+            <label class="q-label" style="font-size:.9rem;">Equation of the line:</label>
+            <input type="text" class="fill-in xl" id="bf_equation" placeholder="A = _____ × [FeSCN²⁺] + _____" oninput="saveAll()" style="min-width:280px">
+          </div>
+          <div>
+            <label class="q-label" style="font-size:.9rem;">R² value:</label>
+            <input type="text" class="fill-in md" id="bf_r2" placeholder="e.g. 0.9998" oninput="saveAll()">
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <label class="q-label" style="font-size:.9rem;">Slope (ε·b) — will be used in Section E:</label>
+          <input type="text" class="fill-in md" id="curve_slope" placeholder="slope in L/mol" oninput="saveAll()">
+          <span style="font-size:.85rem; color:#555;"> L/mol</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== EQUILIBRIUM MIXTURES ===== -->
+  <div class="section" id="equilibrium">
+    <div class="section-header green">🧪 Part D: Equilibrium Mixtures</div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <strong>Note:</strong> In the equilibrium runs, <em>both</em> solutions are <strong>2.00×10⁻³ M</strong> (unlike the standards where Fe³⁺ was 0.200 M). Total volume = 10.0 mL. Neither reagent is in large excess, so the reaction only goes <em>partway</em> to equilibrium — that's the whole point!
+      </div>
+
+      <div class="virtual-note">
+        <strong>Virtual Lab Absorbance Data (at 447 nm):</strong> Enter these simulated absorbances in the table below:<br>
+        Run 1 = 0.114 &nbsp;|&nbsp; Run 2 = 0.225 &nbsp;|&nbsp; Run 3 = 0.329 &nbsp;|&nbsp; Run 4 = 0.431 &nbsp;|&nbsp; Run 5 = 0.527
+      </div>
+
+      <div class="sub-section-title">Part D: Mixture Preparation Record</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Run</th>
+            <th>2.00×10⁻³ M Fe(NO₃)₃ (mL)</th>
+            <th>2.00×10⁻³ M KSCN (mL)</th>
+            <th>Water to 10.0 mL</th>
+            <th>Measured Absorbance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>5.0</td><td>1.0</td><td>4.0</td><td><input class="table-input" id="eq_r1_abs" placeholder="enter value" oninput="saveAll()"></td></tr>
+          <tr><td>2</td><td>5.0</td><td>2.0</td><td>3.0</td><td><input class="table-input" id="eq_r2_abs" placeholder="enter value" oninput="saveAll()"></td></tr>
+          <tr><td>3</td><td>5.0</td><td>3.0</td><td>2.0</td><td><input class="table-input" id="eq_r3_abs" placeholder="enter value" oninput="saveAll()"></td></tr>
+          <tr><td>4</td><td>5.0</td><td>4.0</td><td>1.0</td><td><input class="table-input" id="eq_r4_abs" placeholder="enter value" oninput="saveAll()"></td></tr>
+          <tr><td>5</td><td>5.0</td><td>5.0</td><td>0.0</td><td><input class="table-input" id="eq_r5_abs" placeholder="enter value" oninput="saveAll()"></td></tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- ===== CALCULATIONS ===== -->
+  <div class="section" id="calculations">
+    <div class="section-header orange">🔢 Part E: Equilibrium Calculations</div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <strong>Step-by-step procedure for each run:</strong><br>
+        1. Calculate <strong>[Fe³⁺]<sub>i</sub></strong> = (2.00×10⁻³ M)(V<sub>Fe</sub> / 10.0 mL)<br>
+        2. Calculate <strong>[SCN⁻]<sub>i</sub></strong> = (2.00×10⁻³ M)(V<sub>SCN</sub> / 10.0 mL)<br>
+        3. Find <strong>[FeSCN²⁺]<sub>eq</sub></strong> from absorbance using slope: [FeSCN²⁺]<sub>eq</sub> = Absorbance ÷ slope<br>
+        4. <strong>[Fe³⁺]<sub>eq</sub></strong> = [Fe³⁺]<sub>i</sub> − [FeSCN²⁺]<sub>eq</sub><br>
+        5. <strong>[SCN⁻]<sub>eq</sub></strong> = [SCN⁻]<sub>i</sub> − [FeSCN²⁺]<sub>eq</sub><br>
+        6. K<sub>c</sub> = [FeSCN²⁺]<sub>eq</sub> / ([Fe³⁺]<sub>eq</sub> × [SCN⁻]<sub>eq</sub>)
+      </div>
+
+      <!-- ABSORBANCE CONVERTER -->
+      <div class="calc-panel">
+        <h4>🧮 Absorbance → [FeSCN²⁺]<sub>eq</sub> Converter</h4>
+        <p style="font-size:.88rem; margin-bottom:14px;">Use your standard curve slope to convert each run's absorbance to concentration.</p>
+        <div class="calc-row">
+          <label>Slope from standard curve (L/mol):</label>
+          <input type="number" id="conv_slope" placeholder="e.g. 4500" step="1" min="1">
+        </div>
+        <div class="calc-row">
+          <label>Absorbance of run:</label>
+          <input type="number" id="conv_abs" placeholder="e.g. 0.114" step="0.001" min="0">
+        </div>
+        <button class="btn btn-calc" onclick="runConvert()">Calculate [FeSCN²⁺]<sub>eq</sub></button>
+        <div class="calc-result" id="conv_result"></div>
+      </div>
+
+      <div class="sub-section-title">Part E: Equilibrium Calculation Table</div>
+      <p style="font-size:.88rem; color:#555; margin-bottom:10px;">Fill in all cells. Use the converter above to get [FeSCN²⁺]<sub>eq</sub> from each absorbance (slope ≈ 4500 L/mol).</p>
+      <div style="overflow-x:auto;">
+      <table style="font-size:.85rem;">
+        <thead>
+          <tr>
+            <th>Run</th>
+            <th>[Fe³⁺]<sub>i</sub> (M)</th>
+            <th>[SCN⁻]<sub>i</sub> (M)</th>
+            <th>[FeSCN²⁺]<sub>eq</sub> (M)</th>
+            <th>[Fe³⁺]<sub>eq</sub> (M)</th>
+            <th>[SCN⁻]<sub>eq</sub> (M)</th>
+            <th>K<sub>c</sub></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><input class="table-input" id="e_r1_fei" placeholder="1.00×10⁻³" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r1_scni" placeholder="2.00×10⁻⁴" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r1_feq" placeholder="from A÷slope" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r1_feeq" placeholder="[Fe]i − [FeSCN]eq" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r1_scneq" placeholder="[SCN]i − [FeSCN]eq" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r1_kc" placeholder="Kc" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><input class="table-input" id="e_r2_fei" placeholder="1.00×10⁻³" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r2_scni" placeholder="4.00×10⁻⁴" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r2_feq" placeholder="from A÷slope" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r2_feeq" placeholder="" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r2_scneq" placeholder="" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r2_kc" placeholder="Kc" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><input class="table-input" id="e_r3_fei" placeholder="1.00×10⁻³" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r3_scni" placeholder="6.00×10⁻⁴" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r3_feq" placeholder="from A÷slope" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r3_feeq" placeholder="" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r3_scneq" placeholder="" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r3_kc" placeholder="Kc" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><input class="table-input" id="e_r4_fei" placeholder="1.00×10⁻³" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r4_scni" placeholder="8.00×10⁻⁴" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r4_feq" placeholder="from A÷slope" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r4_feeq" placeholder="" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r4_scneq" placeholder="" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r4_kc" placeholder="Kc" oninput="saveAll()"></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><input class="table-input" id="e_r5_fei" placeholder="1.00×10⁻³" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r5_scni" placeholder="1.00×10⁻³" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r5_feq" placeholder="from A÷slope" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r5_feeq" placeholder="" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r5_scneq" placeholder="" oninput="saveAll()"></td>
+            <td><input class="table-input" id="e_r5_kc" placeholder="Kc" oninput="saveAll()"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <!-- AVERAGE Kc -->
+      <div class="calc-panel">
+        <h4>📊 K<sub>c</sub> Calculator (per run)</h4>
+        <div class="calc-row">
+          <label>[FeSCN²⁺]<sub>eq</sub> (M):</label>
+          <input type="number" id="kc_feq" placeholder="e.g. 2.53e-5" step="1e-6" min="0">
+        </div>
+        <div class="calc-row">
+          <label>[Fe³⁺]<sub>eq</sub> (M):</label>
+          <input type="number" id="kc_feeq" placeholder="e.g. 9.75e-4" step="1e-6" min="0">
+        </div>
+        <div class="calc-row">
+          <label>[SCN⁻]<sub>eq</sub> (M):</label>
+          <input type="number" id="kc_scneq" placeholder="e.g. 1.75e-4" step="1e-6" min="0">
+        </div>
+        <button class="btn btn-calc" onclick="runKcCalc()">Calculate K<sub>c</sub></button>
+        <div class="kc-result" id="kc_result"></div>
+      </div>
+
+      <div class="sub-section-title">Sample Calculation — Run 1 (Show Full Work)</div>
+      <div class="student-work-box">
+        <div class="label">🔶 Write out each step for Run 1</div>
+        <p style="font-size:.85rem; color:#555; margin-bottom:14px;">Given: V<sub>Fe</sub> = 5.0 mL, V<sub>SCN</sub> = 1.0 mL, water = 4.0 mL, total = 10.0 mL, Absorbance = 0.114</p>
+
+        <div class="step-row">
+          <span class="step-badge">Step 1</span>
+          [Fe³⁺]<sub>i</sub> = (2.00×10⁻³)(5.0/10.0) =
+          <input type="text" class="fill-in md" id="samp_s1" data-answer="1.00e-3" placeholder="? M" oninput="checkFill(this)"> M
+          <button class="btn-reveal" onclick="revealAnswer('samp_s1','1.00×10⁻³')">Hint</button>
+          <span class="answer-badge" id="samp_s1_badge">✓ 1.00×10⁻³ M</span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 2</span>
+          [SCN⁻]<sub>i</sub> = (2.00×10⁻³)(1.0/10.0) =
+          <input type="text" class="fill-in md" id="samp_s2" data-answer="2.00e-4" placeholder="? M" oninput="checkFill(this)"> M
+          <button class="btn-reveal" onclick="revealAnswer('samp_s2','2.00×10⁻⁴')">Hint</button>
+          <span class="answer-badge" id="samp_s2_badge">✓ 2.00×10⁻⁴ M</span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 3</span>
+          [FeSCN²⁺]<sub>eq</sub> = 0.114 ÷ 4500 =
+          <input type="text" class="fill-in md" id="samp_s3" data-answer="2.53e-5" placeholder="? M" oninput="checkFill(this)"> M
+          <button class="btn-reveal" onclick="revealAnswer('samp_s3','2.53×10⁻⁵')">Hint</button>
+          <span class="answer-badge" id="samp_s3_badge">✓ 2.53×10⁻⁵ M</span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 4</span>
+          [Fe³⁺]<sub>eq</sub> = [Fe³⁺]<sub>i</sub> − [FeSCN²⁺]<sub>eq</sub> =
+          <input type="text" class="fill-in md" id="samp_s4" data-answer="9.75e-4" placeholder="? M" oninput="checkFill(this)"> M
+          <button class="btn-reveal" onclick="revealAnswer('samp_s4','9.75×10⁻⁴')">Hint</button>
+          <span class="answer-badge" id="samp_s4_badge">✓ 9.75×10⁻⁴ M</span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 5</span>
+          [SCN⁻]<sub>eq</sub> = [SCN⁻]<sub>i</sub> − [FeSCN²⁺]<sub>eq</sub> =
+          <input type="text" class="fill-in md" id="samp_s5" data-answer="1.75e-4" placeholder="? M" oninput="checkFill(this)"> M
+          <button class="btn-reveal" onclick="revealAnswer('samp_s5','1.75×10⁻⁴')">Hint</button>
+          <span class="answer-badge" id="samp_s5_badge">✓ 1.75×10⁻⁴ M</span>
+        </div>
+        <div class="step-row">
+          <span class="step-badge">Step 6</span>
+          K<sub>c</sub> = [FeSCN²⁺]<sub>eq</sub> / ([Fe³⁺]<sub>eq</sub> × [SCN⁻]<sub>eq</sub>) =
+          <input type="text" class="fill-in md" id="samp_s6" data-answer="149" placeholder="? " oninput="checkFill(this)">
+          <button class="btn-reveal" onclick="revealAnswer('samp_s6','~149')">Hint</button>
+          <span class="answer-badge" id="samp_s6_badge">✓ ≈149</span>
+        </div>
+      </div>
+
+      <!-- Average Kc -->
+      <div class="sub-section-title">Average K<sub>c</sub></div>
+      <div class="student-work-box">
+        <div class="label">📊 Calculate and record the average K<sub>c</sub></div>
+        <div class="calc-row" style="margin-top:10px;">
+          <label style="min-width:180px; font-size:.9rem;">Average K<sub>c</sub>:</label>
+          <input type="text" class="fill-in md" id="avg_kc" placeholder="average of 5 runs" oninput="saveAll()">
+        </div>
+        <div class="calc-row">
+          <label style="min-width:180px; font-size:.9rem;">Standard deviation:</label>
+          <input type="text" class="fill-in md" id="std_kc" placeholder="optional" oninput="saveAll()">
+        </div>
+        <div class="tip-box" style="margin-top:12px;">
+          💡 Expected: Kc ≈ 149–150 for all five runs. If your values are consistent, it confirms equilibrium was reached in each run. The literature value for this reaction at room temperature is Kc ≈ 100–400 (varies with temperature and ionic strength).
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== ANALYSIS ===== -->
+  <div class="section" id="analysis">
+    <div class="section-header red">💬 Analysis &amp; Post-Lab Questions</div>
+    <div class="section-body">
+
+      <div class="sub-section-title">Analysis</div>
+      <div class="q-group">
+        <span class="q-label">Briefly comment on the consistency of your K<sub>c</sub> values across the five runs, and identify one major source of experimental uncertainty:</span>
+        <textarea class="lab-textarea" id="aq_analysis" oninput="updateCharCount('aq_analysis','cc_an');saveAll()" style="min-height:110px;" placeholder="Were the Kc values consistent across runs? What does this tell you about equilibrium? Name one source of error and how it would affect results..."></textarea>
+        <div class="char-count" id="cc_an">0 characters</div>
+        <div class="tip-box">
+          💡 <strong>Expected response:</strong> The Kc values should be consistent (~149–150) across all five runs despite different initial concentrations — this confirms the equilibrium constant is truly constant for a given reaction at constant temperature. One major uncertainty: errors in volume measurement (pipetting) directly affect all calculated concentrations. Even a ±0.1 mL error on 1.0 mL KSCN gives a 10% error in [SCN⁻]<sub>i</sub>.
+        </div>
+      </div>
+
+      <div class="sub-section-title">Post-Lab Questions</div>
+      <table style="margin-bottom:20px;">
+        <thead><tr><th style="width:45%;">Question</th><th>Your Response</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>For an <strong>endothermic</strong> reaction, what happens to K<sub>c</sub> when temperature increases?</td>
+            <td>
+              <label class="quiz-option" onclick="quizCheck(this,'plq1','correct')" style="font-size:.88rem;">K<sub>c</sub> <strong>increases</strong> — higher T shifts equilibrium toward products, increasing Kc</label>
+              <label class="quiz-option" onclick="quizCheck(this,'plq1','wrong')" style="font-size:.88rem;">K<sub>c</sub> <strong>decreases</strong></label>
+              <label class="quiz-option" onclick="quizCheck(this,'plq1','wrong')" style="font-size:.88rem;">K<sub>c</sub> stays the same</label>
+            </td>
+          </tr>
+          <tr>
+            <td>For an <strong>exothermic</strong> reaction, what happens to K<sub>c</sub> when temperature increases?</td>
+            <td>
+              <label class="quiz-option" onclick="quizCheck(this,'plq2','wrong')" style="font-size:.88rem;">K<sub>c</sub> <strong>increases</strong></label>
+              <label class="quiz-option" onclick="quizCheck(this,'plq2','correct')" style="font-size:.88rem;">K<sub>c</sub> <strong>decreases</strong> — higher T shifts equilibrium toward reactants, decreasing Kc</label>
+              <label class="quiz-option" onclick="quizCheck(this,'plq2','wrong')" style="font-size:.88rem;">K<sub>c</sub> stays the same</label>
+            </td>
+          </tr>
+          <tr>
+            <td>For an <strong>endothermic</strong> reaction, which side is favored when temperature increases?</td>
+            <td>
+              <label class="quiz-option" onclick="quizCheck(this,'plq3','correct')" style="font-size:.88rem;"><strong>Products</strong> — heat acts as a reactant; adding heat shifts equilibrium forward</label>
+              <label class="quiz-option" onclick="quizCheck(this,'plq3','wrong')" style="font-size:.88rem;"><strong>Reactants</strong></label>
+              <label class="quiz-option" onclick="quizCheck(this,'plq3','wrong')" style="font-size:.88rem;">Neither — temperature only affects rate, not equilibrium</label>
+            </td>
+          </tr>
+          <tr>
+            <td>For an <strong>exothermic</strong> reaction, which side is favored when temperature increases?</td>
+            <td>
+              <label class="quiz-option" onclick="quizCheck(this,'plq4','wrong')" style="font-size:.88rem;"><strong>Products</strong></label>
+              <label class="quiz-option" onclick="quizCheck(this,'plq4','correct')" style="font-size:.88rem;"><strong>Reactants</strong> — heat is a product; adding heat shifts equilibrium in reverse</label>
+              <label class="quiz-option" onclick="quizCheck(this,'plq4','wrong')" style="font-size:.88rem;">Neither side — only rate changes</label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="q-group">
+        <span class="q-label">Bonus: For the Fe³⁺ + SCN⁻ ⇌ FeSCN²⁺ reaction, predict what would happen to the equilibrium (shift left, right, or no change) if you added more Fe(NO₃)₃. Explain using Le Chatelier's principle.</span>
+        <textarea class="lab-textarea" id="aq_bonus" oninput="updateCharCount('aq_bonus','cc_bon');saveAll()" placeholder="Describe the shift direction and explain why..."></textarea>
+        <div class="char-count" id="cc_bon">0 characters</div>
+        <div class="tip-box">💡 Adding more Fe³⁺ increases [Fe³⁺], creating a stress on the system (Q < Kc). By Le Chatelier's principle, the equilibrium shifts to the <strong>right</strong> (forward direction) to consume the excess Fe³⁺ and produce more FeSCN²⁺, until a new equilibrium is established.</div>
+      </div>
+
+      <!-- SUBMISSION -->
+      <div style="margin-top:28px; background:var(--light-green); border:2px solid var(--green); border-radius:8px; padding:20px 24px;">
+        <p style="font-weight:700; font-size:1.05rem; color:var(--green); margin-bottom:12px;">✅ Ready to Submit?</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+          <button class="btn btn-success" onclick="window.print()">🖨️ Print / Save as PDF</button>
+          <button class="btn btn-secondary" onclick="checkProgress()">📊 Check Progress</button>
+          <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
+        </div>
+        <p class="autosave-note" style="margin-top:10px;">💾 Auto-saved in your browser — work persists if you close and reopen this file.</p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<button class="print-btn" onclick="window.print()">🖨️ Print / PDF</button>
+
+<script>
+// ===== FILL-IN CHECK =====
+function checkFill(el) {
+  const ans = (el.dataset.answer || '').toLowerCase().replace(/\s/g,'');
+  const val = el.value.toLowerCase().replace(/\s/g,'');
+  if (!val) { el.classList.remove('correct','incorrect'); return; }
+  // flexible match for scientific notation
+  const match = val === ans || val.includes(ans.replace('×','e').replace('−','-')) ||
+    ans.includes(val) || parseScientific(val) && Math.abs(parseScientific(val) - parseScientific(ans)) / (Math.abs(parseScientific(ans)) || 1) < 0.05;
+  el.classList.toggle('correct', !!match);
+  el.classList.toggle('incorrect', !match);
+  updateProgress(); saveAll();
+}
+
+function parseScientific(s) {
+  const n = parseFloat(s.replace(/×10[⁻−-](\d+)/, 'e-$1').replace(/×10(\d+)/, 'e$1'));
+  return isNaN(n) ? null : n;
+}
+
+function revealAnswer(id, answer) {
+  const el = document.getElementById(id);
+  if (el) { el.value = answer; el.classList.add('correct'); el.classList.remove('incorrect'); }
+  const badge = document.getElementById(id + '_badge');
+  if (badge) badge.style.display = 'inline-block';
+  updateProgress(); saveAll();
+}
+
+// ===== QUIZ =====
+function quizCheck(el, qid, result) {
+  const parent = el.closest('td') || el.closest('.q-group');
+  const opts = parent.querySelectorAll('.quiz-option');
+  opts.forEach(o => { o.classList.remove('correct-ans','wrong-ans'); o.style.pointerEvents='none'; });
+  if (result === 'correct') {
+    el.classList.add('correct-ans');
+  } else {
+    el.classList.add('wrong-ans');
+    opts.forEach(o => { if(o.getAttribute('onclick')&&o.getAttribute('onclick').includes("'correct'")) o.classList.add('correct-ans'); });
+  }
+  updateProgress(); saveAll();
+}
+
+// ===== AUTOFILL STANDARD DATA =====
+function autofillStandardData() {
+  const concVals = ['0','8e-5','1.2e-4','1.6e-4','2e-4'];
+  const absVals  = ['0','0.360','0.540','0.720','0.900'];
+  const ids = ['c1','c2','c3','c4','c5'];
+  ids.forEach((id,i) => {
+    ['sc_'+id+'_conc','sc_'+id+'_abs'].forEach((elid,j) => {
+      const el = document.getElementById(elid);
+      if (el) el.value = j === 0 ? concVals[i] : absVals[i];
+    });
+    const stdAbs = document.getElementById('std_'+id+'_abs');
+    if (stdAbs) stdAbs.value = absVals[i];
+  });
+  saveAll();
+  setTimeout(() => drawStandardCurve(), 100);
+}
+
+// ===== STANDARD CURVE =====
+function drawStandardCurve() {
+  const data = [];
+  ['c1','c2','c3','c4','c5'].forEach(id => {
+    const c = parseFloat(document.getElementById('sc_'+id+'_conc').value);
+    const a = parseFloat(document.getElementById('sc_'+id+'_abs').value);
+    if (!isNaN(c) && !isNaN(a)) data.push({x:c, y:a});
+  });
+  if (data.length < 2) { alert('Enter at least 2 data points in Part B first.'); return; }
+
+  const n = data.length;
+  const Sx = data.reduce((s,d)=>s+d.x,0);
+  const Sy = data.reduce((s,d)=>s+d.y,0);
+  const Sxy = data.reduce((s,d)=>s+d.x*d.y,0);
+  const Sx2 = data.reduce((s,d)=>s+d.x*d.x,0);
+  const m = (n*Sxy - Sx*Sy) / (n*Sx2 - Sx*Sx);
+  const b = (Sy - m*Sx) / n;
+  const ybar = Sy/n;
+  const SStot = data.reduce((s,d)=>s+Math.pow(d.y-ybar,2),0);
+  const SSres = data.reduce((s,d)=>s+Math.pow(d.y-(m*d.x+b),2),0);
+  const R2 = SStot < 1e-20 ? 1 : 1 - SSres/SStot;
+
+  const canvas = document.getElementById('stdCurveCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = {top:45, right:40, bottom:68, left:85};
+  const pw = W - pad.left - pad.right;
+  const ph = H - pad.top - pad.bottom;
+  const maxX = (Math.max(...data.map(d=>d.x)) || 2e-4) * 1.18;
+  const maxY = (Math.max(...data.map(d=>d.y)) || 1) * 1.15;
+
+  const cx = x => pad.left + (x/maxX)*pw;
+  const cy = y => pad.top + ph - (y/maxY)*ph;
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#fafafa';
+  ctx.fillRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle = '#e0e0e0'; ctx.lineWidth = 1;
+  for(let i=0;i<=5;i++) {
+    const gx = pad.left+i*pw/5, gy = pad.top+i*ph/5;
+    ctx.beginPath(); ctx.moveTo(gx,pad.top); ctx.lineTo(gx,pad.top+ph); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad.left,gy); ctx.lineTo(pad.left+pw,gy); ctx.stroke();
+  }
+
+  // Best-fit line
+  ctx.strokeStyle = '#2471a3'; ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(cx(0), cy(b));
+  ctx.lineTo(cx(maxX), cy(m*maxX+b));
+  ctx.stroke();
+
+  // Data points
+  data.forEach(d => {
+    ctx.beginPath(); ctx.arc(cx(d.x), cy(d.y), 7, 0, 2*Math.PI);
+    ctx.fillStyle = '#e74c3c'; ctx.fill();
+    ctx.strokeStyle = '#922b21'; ctx.lineWidth = 1.5; ctx.stroke();
+  });
+
+  // Axes
+  ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(pad.left,pad.top); ctx.lineTo(pad.left,pad.top+ph); ctx.lineTo(pad.left+pw,pad.top+ph); ctx.stroke();
+
+  // X tick labels
+  ctx.fillStyle = '#333'; ctx.font = '11px Arial'; ctx.textAlign = 'center';
+  for(let i=0;i<=5;i++) {
+    const xv = i*maxX/5;
+    ctx.fillText(xv.toExponential(1), cx(xv), pad.top+ph+20);
+  }
+  // Y tick labels
+  ctx.textAlign = 'right';
+  for(let i=0;i<=5;i++) {
+    const yv = i*maxY/5;
+    ctx.fillText(yv.toFixed(2), pad.left-10, cy(yv)+4);
+  }
+
+  // Axis titles
+  ctx.textAlign = 'center'; ctx.font = 'bold 13px Arial'; ctx.fillStyle = '#2c3e50';
+  ctx.fillText('[FeSCN²⁺] (M)', pad.left+pw/2, H-8);
+  ctx.save(); ctx.translate(18, pad.top+ph/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText('Absorbance (447 nm)', 0, 0); ctx.restore();
+
+  // Equation on canvas
+  const sign = b >= 0 ? '+' : '';
+  const eqStr = `y = ${m.toFixed(0)}x ${sign}${b.toFixed(5)}   R² = ${R2.toFixed(4)}`;
+  ctx.textAlign = 'left'; ctx.font = 'bold 12px monospace'; ctx.fillStyle = '#1a5276';
+  ctx.fillRect(pad.left+6, pad.top+6, 390, 26);
+  ctx.fillStyle = 'white';
+  ctx.fillText(eqStr, pad.left+12, pad.top+23);
+
+  // Update fields
+  const fmtEq = `A = ${m.toFixed(0)}[FeSCN²⁺] ${sign}${b.toFixed(5)}`;
+  document.getElementById('bf_equation').value = fmtEq;
+  document.getElementById('bf_r2').value = R2.toFixed(4);
+  document.getElementById('curve_slope').value = m.toFixed(0);
+
+  const res = document.getElementById('curve_result');
+  res.innerHTML = `✅ <strong>Slope (ε·b) = ${m.toFixed(0)} L/mol</strong> &nbsp;|&nbsp; R² = ${R2.toFixed(4)}<br><small>Use this slope value in the converter below (Section E) to find [FeSCN²⁺]<sub>eq</sub> from absorbance.</small>`;
+  res.style.display = 'block';
+  saveAll();
+}
+
+// ===== CONVERTERS =====
+function runConvert() {
+  const slope = parseFloat(document.getElementById('conv_slope').value);
+  const abs = parseFloat(document.getElementById('conv_abs').value);
+  const res = document.getElementById('conv_result');
+  if (isNaN(slope) || isNaN(abs) || slope <= 0) { res.innerHTML='⚠️ Enter slope and absorbance.'; res.style.borderColor='#c0392b'; res.style.color='#c0392b'; res.style.display='block'; return; }
+  const conc = abs / slope;
+  res.innerHTML = `[FeSCN²⁺]<sub>eq</sub> = ${abs} ÷ ${slope} = <strong>${conc.toExponential(3)} M</strong>`;
+  res.style.borderColor='var(--green)'; res.style.color='var(--green)'; res.style.display='block';
+}
+
+function runKcCalc() {
+  const feq = parseFloat(document.getElementById('kc_feq').value);
+  const feeq = parseFloat(document.getElementById('kc_feeq').value);
+  const scneq = parseFloat(document.getElementById('kc_scneq').value);
+  const res = document.getElementById('kc_result');
+  if ([feq,feeq,scneq].some(isNaN) || feeq<=0 || scneq<=0) { res.innerHTML='⚠️ Enter all three concentrations.'; res.style.borderColor='#922b21'; res.style.color='#922b21'; res.style.display='block'; return; }
+  const kc = feq / (feeq * scneq);
+  res.innerHTML = `K<sub>c</sub> = ${feq.toExponential(3)} / (${feeq.toExponential(3)} × ${scneq.toExponential(3)}) = <strong>${kc.toFixed(1)}</strong>`;
+  res.style.borderColor='var(--purple)'; res.style.color='var(--purple)'; res.style.display='block';
+}
+
+// ===== CHAR COUNT =====
+function updateCharCount(taId, ccId) {
+  const ta = document.getElementById(taId);
+  const cc = document.getElementById(ccId);
+  if (ta && cc) cc.textContent = ta.value.length + ' characters';
+}
+
+// ===== PROGRESS =====
+function updateProgress() {
+  const fills = document.querySelectorAll('.fill-in[data-answer]');
+  const tables = document.querySelectorAll('.table-input');
+  const textareas = document.querySelectorAll('.lab-textarea');
+  let done = 0, total = fills.length + tables.length + textareas.length;
+  fills.forEach(f => { if(f.value.trim()) done++; });
+  tables.forEach(t => { if(t.value.trim()) done++; });
+  textareas.forEach(ta => { if(ta.value.trim().length > 20) done++; });
+  const pct = Math.min(100, Math.round(done/total*100));
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = pct+'%';
+}
+
+function checkProgress() {
+  const fills = document.querySelectorAll('.fill-in[data-answer]');
+  const tables = document.querySelectorAll('.table-input');
+  const tas = document.querySelectorAll('.lab-textarea');
+  let ef=0, et=0, eta=0;
+  fills.forEach(f=>{ if(!f.value.trim()) ef++; });
+  tables.forEach(t=>{ if(!t.value.trim()) et++; });
+  tas.forEach(ta=>{ if(ta.value.trim().length<20) eta++; });
+  alert(`Progress Check:\n✏️ Fill-in blanks empty: ${ef}\n📊 Table cells empty: ${et}\n💬 Short/missing responses: ${eta}\n\nComplete everything before submitting!`);
+}
+
+// ===== SAVE / LOAD =====
+function saveAll() {
+  const data = {};
+  document.querySelectorAll('input[id], textarea[id]').forEach(el => { if(el.id) data[el.id] = el.value; });
+  try { localStorage.setItem('chm152l_lab5_kc_v1', JSON.stringify(data)); } catch(e) {}
+  updateProgress();
+}
+
+function loadAll() {
+  try {
+    const raw = localStorage.getItem('chm152l_lab5_kc_v1');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    Object.keys(data).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = data[id];
+        if (el.classList.contains('fill-in') && el.dataset.answer) checkFill(el);
+        if (el.tagName === 'TEXTAREA') {
+          const ccId = id.replace('aq_','cc_').replace('pl_','cc_');
+          updateCharCount(id, ccId);
+        }
+      }
+    });
+  } catch(e) {}
+  updateProgress();
+}
+
+function clearAll() {
+  if (!confirm('Clear all your work? This cannot be undone.')) return;
+  localStorage.removeItem('chm152l_lab5_kc_v1');
+  document.querySelectorAll('input[id], textarea[id]').forEach(el => { el.value=''; el.classList.remove('correct','incorrect'); });
+  document.querySelectorAll('.answer-badge').forEach(b => b.style.display='none');
+  document.querySelectorAll('.quiz-option').forEach(o => { o.classList.remove('correct-ans','wrong-ans'); o.style.pointerEvents=''; });
+  document.querySelectorAll('.calc-result, .kc-result').forEach(r => r.style.display='none');
+  // Reset canvas
+  const canvas = document.getElementById('stdCurveCanvas');
+  if (canvas) canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+  updateProgress();
+}
+
+// ===== NAV ACTIVE =====
+window.addEventListener('scroll', () => {
+  const sects = ['info','prelab','standards','equilibrium','calculations','analysis'];
+  let cur = '';
+  sects.forEach(id => { const el=document.getElementById(id); if(el && window.scrollY>=el.offsetTop-140) cur=id; });
+  document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.getAttribute('href')==='#'+cur));
+});
+
+// ===== INIT =====
+window.addEventListener('DOMContentLoaded', () => { loadAll(); updateProgress(); });
+</script>
+</body>
+</html>
