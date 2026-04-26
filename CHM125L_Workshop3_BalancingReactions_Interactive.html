@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM 125L – Workshop 3: Writing &amp; Balancing Reaction Equations (Interactive)</title>
+<style>
+  :root {
+    --blue:#1a5276; --teal:#148f77; --green:#1e8449; --purple:#6c3483;
+    --orange:#ca6f1e; --red:#922b21; --indigo:#1a237e;
+    --light-blue:#d6eaf8; --light-green:#d5f5e3; --light-yellow:#fef9e7;
+    --light-purple:#f4ecf7; --light-red:#fdedec; --gray:#f2f3f4;
+    --border:#bdc3c7; --text:#1c2833;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#ecf0f1;color:var(--text);font-size:15px;line-height:1.6;}
+  header{background:linear-gradient(135deg,#1a5276,#2471a3);color:white;padding:24px 36px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 3px 10px rgba(0,0,0,.3);position:sticky;top:0;z-index:100;}
+  header h1{font-size:1.35rem;font-weight:700;}
+  header p{font-size:.85rem;opacity:.85;margin-top:3px;}
+  .progress-wrap{display:flex;align-items:center;gap:10px;min-width:230px;}
+  .progress-wrap span{font-size:.82rem;white-space:nowrap;}
+  #progressBar{flex:1;height:11px;border-radius:6px;background:rgba(255,255,255,.3);overflow:hidden;}
+  #progressFill{height:100%;width:0%;background:#2ecc71;border-radius:6px;transition:width .4s;}
+  nav{background:var(--blue);padding:0 36px;display:flex;gap:2px;overflow-x:auto;}
+  nav a{color:rgba(255,255,255,.8);text-decoration:none;padding:9px 14px;font-size:.82rem;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;}
+  nav a:hover,nav a.active{color:white;border-bottom-color:#2ecc71;background:rgba(255,255,255,.08);}
+  main{max-width:980px;margin:28px auto;padding:0 18px 60px;}
+  .section{background:white;border-radius:10px;margin-bottom:28px;box-shadow:0 2px 8px rgba(0,0,0,.1);overflow:hidden;}
+  .sh{padding:16px 26px;font-size:1.05rem;font-weight:700;color:white;}
+  .sh.blue{background:var(--blue);} .sh.teal{background:var(--teal);}
+  .sh.green{background:var(--green);} .sh.purple{background:var(--purple);}
+  .sh.orange{background:var(--orange);} .sh.red{background:var(--red);}
+  .sh.indigo{background:var(--indigo);}
+  .sb{padding:22px 26px;}
+  .info-box{background:var(--light-blue);border-left:4px solid var(--blue);border-radius:6px;padding:13px 16px;margin-bottom:16px;font-size:.93rem;}
+  .tip-box{background:var(--light-yellow);border-left:4px solid var(--orange);border-radius:6px;padding:12px 16px;margin-bottom:14px;font-size:.88rem;}
+  .virtual-note{background:#fef5e7;border:2px dashed #f39c12;border-radius:8px;padding:13px 18px;margin-bottom:18px;font-size:.88rem;}
+  .virtual-note strong{color:var(--orange);}
+  .fill-in{display:inline-block;min-width:110px;border:none;border-bottom:2px solid var(--blue);padding:3px 8px;font-size:.98rem;font-family:inherit;background:transparent;outline:none;transition:border-color .2s;text-align:center;font-family:'Courier New',monospace;}
+  .fill-in:focus{border-bottom-color:var(--teal);}
+  .fill-in.correct{border-bottom-color:var(--green);background:#eafaf1;}
+  .fill-in.incorrect{border-bottom-color:var(--red);background:var(--light-red);}
+  .fill-in.sm{min-width:60px;} .fill-in.md{min-width:90px;} .fill-in.lg{min-width:160px;}
+  .btn-reveal{background:none;border:1.5px solid var(--blue);color:var(--blue);border-radius:20px;padding:3px 11px;font-size:.76rem;cursor:pointer;transition:all .2s;margin-left:5px;}
+  .btn-reveal:hover{background:var(--blue);color:white;}
+  .ans-badge{display:none;background:var(--green);color:white;border-radius:12px;padding:2px 9px;font-size:.78rem;margin-left:5px;font-weight:700;}
+  .btn{padding:9px 20px;border:none;border-radius:6px;cursor:pointer;font-size:.88rem;font-weight:600;transition:all .2s;}
+  .btn-primary{background:var(--blue);color:white;} .btn-primary:hover{background:#154360;}
+  .btn-success{background:var(--green);color:white;} .btn-success:hover{background:#145a32;}
+  .btn-secondary{background:var(--gray);color:var(--text);border:1.5px solid var(--border);} .btn-secondary:hover{background:var(--border);}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.9rem;}
+  th{background:var(--blue);color:white;padding:9px 11px;text-align:center;font-weight:600;}
+  td{border:1px solid var(--border);padding:8px 10px;text-align:center;vertical-align:middle;}
+  tr:nth-child(even) td{background:#f8f9fa;}
+  .sub-title{font-size:.98rem;font-weight:700;color:var(--blue);border-bottom:2px solid var(--blue);padding-bottom:5px;margin:20px 0 13px;}
+  .q-group{margin-bottom:20px;}
+  .q-label{font-weight:700;color:var(--blue);margin-bottom:8px;display:block;font-size:.93rem;}
+  .quiz-option{display:block;padding:9px 15px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:all .2s;background:white;font-size:.9rem;}
+  .quiz-option:hover{border-color:var(--blue);background:var(--light-blue);}
+  .quiz-option.correct-ans{border-color:var(--green);background:var(--light-green);color:var(--green);font-weight:600;}
+  .quiz-option.wrong-ans{border-color:var(--red);background:var(--light-red);color:var(--red);}
+  .coeff-input{width:46px;border:2px solid var(--border);border-radius:5px;padding:5px 4px;text-align:center;font-size:1rem;font-weight:700;font-family:'Courier New',monospace;transition:border-color .2s;}
+  .coeff-input:focus{outline:none;border-color:var(--teal);}
+  .coeff-input.correct{border-color:var(--green);background:#eafaf1;}
+  .coeff-input.incorrect{border-color:var(--red);background:var(--light-red);}
+  .eq-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0 4px;padding:10px 14px;background:#fafafa;border:1.5px solid var(--border);border-radius:8px;}
+  .eq-formula{font-family:'Courier New',monospace;font-size:.97rem;font-weight:600;color:#1c2833;}
+  .eq-arrow{font-size:1.3rem;color:var(--blue);margin:0 4px;}
+  .eq-plus{font-size:1.1rem;color:#666;margin:0 2px;}
+  .eq-cat{font-size:.82rem;background:var(--purple);color:white;border-radius:4px;padding:2px 7px;font-family:Arial;}
+  .mol-wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:12px 0;}
+  .mol-box{background:#f8fafb;border:1.5px solid var(--border);border-radius:8px;padding:10px;text-align:center;}
+  .mol-box canvas{display:block;}
+  .mol-box .mol-label{font-size:.78rem;color:#666;margin-top:5px;}
+  .reaction-area{background:#fafafa;border:1.5px solid var(--border);border-radius:8px;padding:14px 18px;margin:10px 0;}
+  .reaction-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .lab-textarea{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px;font-family:inherit;font-size:.88rem;resize:vertical;transition:border-color .2s;min-height:70px;}
+  .lab-textarea:focus{outline:none;border-color:var(--teal);}
+  .autosave-note{font-size:.78rem;color:#888;font-style:italic;margin-top:8px;}
+  .print-btn{position:fixed;bottom:22px;right:22px;background:var(--blue);color:white;border:none;border-radius:50px;padding:13px 20px;font-size:.88rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:999;}
+  .print-btn:hover{background:#154360;}
+  .struct-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin:14px 0;}
+  .struct-item{background:#f8fafb;border:1.5px solid var(--border);border-radius:8px;padding:10px;text-align:center;}
+  .struct-item .struct-label{font-weight:700;color:var(--blue);font-size:.9rem;margin-bottom:6px;}
+  .struct-item canvas{display:block;margin:0 auto;}
+  .struct-item select{width:100%;margin-top:8px;padding:5px;border:1.5px solid var(--border);border-radius:5px;font-size:.85rem;background:white;}
+  .struct-item select.correct{border-color:var(--green);background:#eafaf1;}
+  .struct-item select.incorrect{border-color:var(--red);background:var(--light-red);}
+  .step-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:white;border-radius:4px;padding:2px 9px;font-size:.8rem;font-weight:700;margin-right:6px;}
+  .rxn-box{background:#f4ecf7;border:1.5px solid #9b59b6;border-radius:8px;padding:12px 16px;margin:10px 0;font-size:.9rem;}
+  @media print{header,nav,.print-btn,.btn-reveal{display:none!important;}body{background:white;}.section{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>⚗️ CHM 125L — Workshop 3: Writing &amp; Balancing Reaction Equations</h1>
+    <p>Ionic formulas • Balancing • Functional groups • Organic reactions &nbsp;|&nbsp; 34 questions &nbsp;|&nbsp; Auto-saves</p>
+  </div>
+  <div class="progress-wrap">
+    <span>Progress</span>
+    <div id="progressBar"><div id="progressFill"></div></div>
+    <span id="progressPct">0%</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#info" class="active">Info</a>
+  <a href="#part1">Part 1 (Q1–4)</a>
+  <a href="#part2">Part 2 (Q5–8)</a>
+  <a href="#part3">Part 3 (Q9–12)</a>
+  <a href="#part4">Part 4 (Q13–20)</a>
+  <a href="#part5">Part 5 (Q21–26)</a>
+  <a href="#part6">Part 6 (Q27–30)</a>
+  <a href="#part7">Part 7 (Q31–34)</a>
+</nav>
+
+<main>
+
+  <div class="virtual-note">
+    <strong>📋 Interactive Workshop:</strong> Fill every blank, enter coefficients, identify functional groups, and answer reaction questions. Correct answers are color-coded green. Work auto-saves. Print or save as PDF to submit. 34 questions × 2.94 pts each = 100 pts.
+  </div>
+
+  <!-- ===== INFO ===== -->
+  <div class="section" id="info">
+    <div class="sh blue">📝 Student Information</div>
+    <div class="sb">
+      <div class="two-col">
+        <div><label class="q-label">Full Name</label><input type="text" class="fill-in lg" id="s_name" placeholder="Your full name" oninput="saveAll()" style="min-width:240px;font-family:inherit;"></div>
+        <div><label class="q-label">Section</label><input type="text" class="fill-in" id="s_section" placeholder="Section" oninput="saveAll()"></div>
+      </div>
+      <div class="info-box" style="margin-top:14px;">
+        <strong>Workshop overview:</strong> Chemical reactions are written with reactants on the left and products on the right of an arrow. We will practice writing correct ionic formulas, balancing equations, identifying organic functional groups, and predicting products of organic reactions.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART 1 ===== -->
+  <div class="section" id="part1">
+    <div class="sh teal">🔢 Part 1 — Correct Chemical Formulas from Simple Ions (Q1–4)</div>
+    <div class="sb">
+      <div class="info-box">
+        <strong>Rules:</strong> Metals form cations (+), nonmetals form anions (−). Write formulas cation-first. The compound must be electrically neutral. For main-group elements: cation charge = group number; anion charge = group number − 8.<br>
+        <strong>Trick:</strong> Cross-multiply charges to get subscripts — the cation charge becomes the anion subscript and vice versa. Reduce to smallest whole numbers.
+      </div>
+      <div class="tip-box">💡 <strong>Example:</strong> Fe³⁺ + O²⁻ → cross the charges: Fe<sub>2</sub>O<sub>3</sub>. &nbsp;NaCl: Na⁺ + Cl⁻ → 1:1 ratio → NaCl.</div>
+
+      <div class="sub-title">Questions 1–4: Write the correct chemical formula</div>
+
+      <table>
+        <thead><tr><th>#</th><th>Elements / Ions</th><th>Cation (charge)</th><th>Anion (charge)</th><th>Your Formula</th><th>Check</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>1a</strong></td>
+            <td>Ca and Cl</td>
+            <td>Ca²⁺</td>
+            <td>Cl⁻</td>
+            <td><input type="text" class="fill-in md" id="p1a" data-answer="cacl2" placeholder="______" oninput="checkFill(this)"></td>
+            <td><button class="btn-reveal" onclick="revealAnswer('p1a','CaCl₂')">Hint</button><span class="ans-badge" id="p1a_badge">✓ CaCl₂</span></td>
+          </tr>
+          <tr>
+            <td><strong>1b</strong></td>
+            <td>Mg and O</td>
+            <td>Mg²⁺</td>
+            <td>O²⁻</td>
+            <td><input type="text" class="fill-in md" id="p1b" data-answer="mgo" placeholder="______" oninput="checkFill(this)"></td>
+            <td><button class="btn-reveal" onclick="revealAnswer('p1b','MgO')">Hint</button><span class="ans-badge" id="p1b_badge">✓ MgO</span></td>
+          </tr>
+          <tr>
+            <td><strong>1c</strong></td>
+            <td>K and O</td>
+            <td>K⁺</td>
+            <td>O²⁻</td>
+            <td><input type="text" class="fill-in md" id="p1c" data-answer="k2o" placeholder="______" oninput="checkFill(this)"></td>
+            <td><button class="btn-reveal" onclick="revealAnswer('p1c','K₂O')">Hint</button><span class="ans-badge" id="p1c_badge">✓ K₂O</span></td>
+          </tr>
+          <tr>
+            <td><strong>1d</strong></td>
+            <td>Pb⁺⁴ and F</td>
+            <td>Pb⁴⁺</td>
+            <td>F⁻</td>
+            <td><input type="text" class="fill-in md" id="p1d" data-answer="pbf4" placeholder="______" oninput="checkFill(this)"></td>
+            <td><button class="btn-reveal" onclick="revealAnswer('p1d','PbF₄')">Hint</button><span class="ans-badge" id="p1d_badge">✓ PbF₄</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tip-box">
+        💡 <strong>Hints:</strong><br>
+        1a: Ca is +2, Cl is −1. Need 2 Cl for each Ca → CaCl₂<br>
+        1b: Mg is +2, O is −2. Equal magnitudes → 1:1 → MgO<br>
+        1c: K is +1, O is −2. Need 2 K for each O → K₂O<br>
+        1d: Pb⁴⁺, F is −1. Need 4 F for each Pb → PbF₄
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART 2 ===== -->
+  <div class="section" id="part2">
+    <div class="sh purple">🔣 Part 2 — Formulas with Compound Ions (Q5–8)</div>
+    <div class="sb">
+      <div class="info-box">
+        <strong>Compound ions (polyatomic ions)</strong> contain more than one element. Treat them as a single unit. If more than one compound ion is needed, place it in <strong>parentheses</strong> with a subscript.<br>
+        Key ions: carbonate CO₃²⁻ | nitrate NO₃⁻ | phosphate PO₄³⁻ | sulfate SO₄²⁻ | hydroxide OH⁻ | ammonium NH₄⁺ | sulfite SO₃²⁻
+      </div>
+      <div class="tip-box">💡 <strong>Example:</strong> Al³⁺ + OH⁻ → Al(OH)₃ &nbsp;(3 hydroxides needed, placed in parentheses)</div>
+
+      <div class="sub-title">Questions 5–8: Write the correct chemical formula</div>
+
+      <table>
+        <thead><tr><th>#</th><th>Ions</th><th>Cation (charge)</th><th>Anion (charge)</th><th>Your Formula</th><th>Check</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>5a</strong></td>
+            <td>Ca and hydroxide</td>
+            <td>Ca²⁺</td>
+            <td>OH⁻</td>
+            <td><input type="text" class="fill-in md" id="p2a" data-answer="ca(oh)2" placeholder="______" oninput="checkFill(this)"></td>
+            <td><button class="btn-reveal" onclick="revealAnswer('p2a','Ca(OH)₂')">Hint</button><span class="ans-badge" id="p2a_badge">✓ Ca(OH)₂</span></td>
+          </tr>
+          <tr>
+            <td><strong>6b</strong></td>
+            <td>ammonium and Cl</td>
+            <td>NH₄⁺</td>
+            <td>Cl⁻</td>
+            <td><input type="text" class="fill-in md" id="p2b" data-answer="nh4cl" placeholder="______" oninput="checkFill(this)"></td>
+            <td><button class="btn-reveal" onclick="revealAnswer('p2b','NH₄Cl')">Hint</button><span class="ans-badge" id="p2b_badge">✓ NH₄Cl</span></td>
+          </tr>
+          <tr>
+            <td><strong>7c</strong></td>
+            <td>Cu²⁺ and sulfate</td>
+            <td>Cu²⁺</td>
+            <td>SO₄²⁻</td>
+            <td><input type="text" class="fill-in md" id="p2c" data-answer="cuso4" placeholder="______" oninput="checkFill(this)"></td>
+            <td><button class="btn-reveal" onclick="revealAnswer('p2c','CuSO₄')">Hint</button><span class="ans-badge" id="p2c_badge">✓ CuSO₄</span></td>
+          </tr>
+          <tr>
+            <td><strong>8d</strong></td>
+            <td>K and sulfite</td>
+            <td>K⁺</td>
+            <td>SO₃²⁻</td>
+            <td><input type="text" class="fill-in md" id="p2d" data-answer="k2so3" placeholder="______" oninput="checkFill(this)"></td>
+            <td><button class="btn-reveal" onclick="revealAnswer('p2d','K₂SO₃')">Hint</button><span class="ans-badge" id="p2d_badge">✓ K₂SO₃</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tip-box">
+        💡 <strong>Hints:</strong><br>
+        5a: Ca²⁺ + OH⁻. Need 2 OH⁻ → Ca(OH)₂ (parentheses because subscript on compound ion)<br>
+        6b: NH₄⁺ + Cl⁻. Equal charge magnitudes → 1:1 → NH₄Cl<br>
+        7c: Cu²⁺ + SO₄²⁻. Equal magnitudes → 1:1 → CuSO₄<br>
+        8d: K⁺ + SO₃²⁻. Need 2 K⁺ → K₂SO₃
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART 3 ===== -->
+  <div class="section" id="part3">
+    <div class="sh green">⚖️ Part 3 — Balance the Reaction Equations (Q9–12)</div>
+    <div class="sb">
+      <div class="info-box">
+        <strong>Rules:</strong> Never change a chemical formula to balance — only change the coefficients (numbers in front). The same number of each atom must appear on both sides. If no coefficient is written, it is 1.
+      </div>
+      <div class="tip-box">💡 Treat compound ions (like NO₃⁻) as a single unit when counting. Balance C and H first in combustion reactions, then O last.</div>
+
+      <div class="sub-title">Questions 9–12: Enter the correct coefficient in each box</div>
+      <p style="font-size:.85rem;color:#555;margin-bottom:14px;">Type the coefficient (number) in each box. Leave blank = 1. Green = correct, red = incorrect.</p>
+
+      <!-- Q9a -->
+      <div class="q-group">
+        <span class="q-label">Q9a: NaCl(aq) + Pb(NO₃)₂(aq) → NaNO₃(aq) + PbCl₂(s)</span>
+        <div class="eq-row">
+          <input type="number" class="coeff-input" id="q9a_1" data-answer="2" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">NaCl(aq)</span>
+          <span class="eq-plus">+</span>
+          <input type="number" class="coeff-input" id="q9a_2" data-answer="1" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">Pb(NO₃)₂(aq)</span>
+          <span class="eq-arrow">→</span>
+          <input type="number" class="coeff-input" id="q9a_3" data-answer="2" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">NaNO₃(aq)</span>
+          <span class="eq-plus">+</span>
+          <input type="number" class="coeff-input" id="q9a_4" data-answer="1" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">PbCl₂(s)</span>
+        </div>
+        <div class="tip-box" style="margin-top:8px;">💡 Pb(NO₃)₂ has 2 nitrate groups → need 2 NaNO₃ on right → need 2 NaCl on left → 2 Cl on each side ✓</div>
+      </div>
+
+      <!-- Q10b -->
+      <div class="q-group">
+        <span class="q-label">Q10b: CaBr₂(aq) + Na₂CO₃(aq) → NaBr(aq) + CaCO₃(s)</span>
+        <div class="eq-row">
+          <input type="number" class="coeff-input" id="q10b_1" data-answer="1" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">CaBr₂(aq)</span>
+          <span class="eq-plus">+</span>
+          <input type="number" class="coeff-input" id="q10b_2" data-answer="1" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">Na₂CO₃(aq)</span>
+          <span class="eq-arrow">→</span>
+          <input type="number" class="coeff-input" id="q10b_3" data-answer="2" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">NaBr(aq)</span>
+          <span class="eq-plus">+</span>
+          <input type="number" class="coeff-input" id="q10b_4" data-answer="1" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">CaCO₃(s)</span>
+        </div>
+        <div class="tip-box" style="margin-top:8px;">💡 CaBr₂ has 2 Br → need 2 NaBr → Na₂CO₃ provides 2 Na ✓ and CO₃ is 1:1 ✓</div>
+      </div>
+
+      <!-- Q11c -->
+      <div class="q-group">
+        <span class="q-label">Q11c: HCl(aq) + Ba(OH)₂(aq) → H₂O(l) + BaCl₂(aq)</span>
+        <div class="eq-row">
+          <input type="number" class="coeff-input" id="q11c_1" data-answer="2" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">HCl(aq)</span>
+          <span class="eq-plus">+</span>
+          <input type="number" class="coeff-input" id="q11c_2" data-answer="1" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">Ba(OH)₂(aq)</span>
+          <span class="eq-arrow">→</span>
+          <input type="number" class="coeff-input" id="q11c_3" data-answer="2" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">H₂O(l)</span>
+          <span class="eq-plus">+</span>
+          <input type="number" class="coeff-input" id="q11c_4" data-answer="1" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">BaCl₂(aq)</span>
+        </div>
+        <div class="tip-box" style="margin-top:8px;">💡 Ba(OH)₂ has 2 OH⁻ → 2 H₂O needed → 2 HCl → BaCl₂ 1:1 with Ba ✓</div>
+      </div>
+
+      <!-- Q12d combustion -->
+      <div class="q-group">
+        <span class="q-label">Q12d: C₃H₈(g) + O₂(g) → CO₂(g) + H₂O(l) &nbsp;&nbsp;[combustion of propane]</span>
+        <div class="eq-row">
+          <input type="number" class="coeff-input" id="q12d_1" data-answer="1" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">C₃H₈(g)</span>
+          <span class="eq-plus">+</span>
+          <input type="number" class="coeff-input" id="q12d_2" data-answer="5" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">O₂(g)</span>
+          <span class="eq-arrow">→</span>
+          <input type="number" class="coeff-input" id="q12d_3" data-answer="3" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">CO₂(g)</span>
+          <span class="eq-plus">+</span>
+          <input type="number" class="coeff-input" id="q12d_4" data-answer="4" placeholder="?" min="1" oninput="checkCoeff(this)">
+          <span class="eq-formula">H₂O(l)</span>
+        </div>
+        <div class="tip-box" style="margin-top:8px;">💡 Step 1: 3 carbons → 3CO₂. Step 2: 8 H → 4H₂O. Step 3: O on right = 3×2 + 4×1 = 10 O atoms = 5O₂ ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART 4 ===== -->
+  <div class="section" id="part4">
+    <div class="sh orange">🔬 Part 4 — Identify the Functional Group (Q13–20)</div>
+    <div class="sb">
+      <div class="info-box">
+        <strong>Functional Group Key:</strong> Hydrocarbons: alkane (C–C only) | alkene (C=C) | alkyne (C≡C) | aromatic (benzene ring)<br>
+        With oxygen: alcohol (–OH) | ether (–O–) | ketone (C=O in chain) | aldehyde (–CHO at end) | ester (–COO–) | carboxylic acid (–COOH)<br>
+        With nitrogen: amide (–CO–NH–) | amine (–NH₂)
+      </div>
+
+      <div class="sub-title">Questions 13–20: Identify the functional group for each structure</div>
+      <p style="font-size:.85rem;color:#555;margin-bottom:14px;">Each structure is drawn on a canvas below. Select the correct functional group from the dropdown. Green = correct.</p>
+
+      <div class="struct-grid">
+        <!-- a -->
+        <div class="struct-item">
+          <div class="struct-label">a) Q13</div>
+          <canvas id="mol_p4a" width="155" height="70"></canvas>
+          <select id="fg_p4a" onchange="checkFG(this,'alkene')">
+            <option value="">— select —</option>
+            <option>alkane</option><option>alkene</option><option>alcohol</option>
+            <option>ketone</option><option>carboxylic acid</option><option>amine</option>
+          </select>
+          <span class="ans-badge" id="fg_p4a_badge" style="display:block;margin-top:4px;">✓ alkene</span>
+        </div>
+        <!-- b -->
+        <div class="struct-item">
+          <div class="struct-label">b) Q14</div>
+          <canvas id="mol_p4b" width="150" height="90"></canvas>
+          <select id="fg_p4b" onchange="checkFG(this,'alcohol')">
+            <option value="">— select —</option>
+            <option>alkane</option><option>alkene</option><option>alcohol</option>
+            <option>ketone</option><option>carboxylic acid</option><option>amine</option>
+          </select>
+          <span class="ans-badge" id="fg_p4b_badge" style="display:block;margin-top:4px;">✓ alcohol</span>
+        </div>
+        <!-- c -->
+        <div class="struct-item">
+          <div class="struct-label">c) Q15</div>
+          <canvas id="mol_p4c" width="185" height="70"></canvas>
+          <select id="fg_p4c" onchange="checkFG(this,'alkene')">
+            <option value="">— select —</option>
+            <option>alkane</option><option>alkene</option><option>alcohol</option>
+            <option>ketone</option><option>carboxylic acid</option><option>amine</option>
+          </select>
+          <span class="ans-badge" id="fg_p4c_badge" style="display:block;margin-top:4px;">✓ alkene</span>
+        </div>
+        <!-- d -->
+        <div class="struct-item">
+          <div class="struct-label">d) Q16</div>
+          <canvas id="mol_p4d" width="170" height="95"></canvas>
+          <select id="fg_p4d" onchange="checkFG(this,'ketone')">
+            <option value="">— select —</option>
+            <option>alkane</option><option>alkene</option><option>aldehyde</option>
+            <option>ketone</option><option>carboxylic acid</option><option>ester</option>
+          </select>
+          <span class="ans-badge" id="fg_p4d_badge" style="display:block;margin-top:4px;">✓ ketone</span>
+        </div>
+        <!-- e -->
+        <div class="struct-item">
+          <div class="struct-label">e) Q17</div>
+          <canvas id="mol_p4e" width="175" height="85"></canvas>
+          <select id="fg_p4e" onchange="checkFG(this,'carboxylic acid')">
+            <option value="">— select —</option>
+            <option>alkane</option><option>alkene</option><option>aldehyde</option>
+            <option>ketone</option><option>carboxylic acid</option><option>ester</option>
+          </select>
+          <span class="ans-badge" id="fg_p4e_badge" style="display:block;margin-top:4px;">✓ carboxylic acid</span>
+        </div>
+        <!-- f -->
+        <div class="struct-item">
+          <div class="struct-label">f) Q18</div>
+          <canvas id="mol_p4f" width="175" height="90"></canvas>
+          <select id="fg_p4f" onchange="checkFG(this,'amide')">
+            <option value="">— select —</option>
+            <option>amine</option><option>amide</option><option>ketone</option>
+            <option>aldehyde</option><option>carboxylic acid</option><option>ester</option>
+          </select>
+          <span class="ans-badge" id="fg_p4f_badge" style="display:block;margin-top:4px;">✓ amide</span>
+        </div>
+        <!-- g -->
+        <div class="struct-item">
+          <div class="struct-label">g) Q19</div>
+          <canvas id="mol_p4g" width="140" height="105"></canvas>
+          <select id="fg_p4g" onchange="checkFG(this,'alcohol')">
+            <option value="">— select —</option>
+            <option>alkane</option><option>alkene</option><option>alcohol</option>
+            <option>ether</option><option>amine</option><option>amide</option>
+          </select>
+          <span class="ans-badge" id="fg_p4g_badge" style="display:block;margin-top:4px;">✓ alcohol</span>
+        </div>
+        <!-- h -->
+        <div class="struct-item">
+          <div class="struct-label">h) Q20</div>
+          <canvas id="mol_p4h" width="140" height="110"></canvas>
+          <select id="fg_p4h" onchange="checkFG(this,'amine')">
+            <option value="">— select —</option>
+            <option>alkane</option><option>alkene</option><option>alcohol</option>
+            <option>ether</option><option>amine</option><option>amide</option>
+          </select>
+          <span class="ans-badge" id="fg_p4h_badge" style="display:block;margin-top:4px;">✓ amine</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        💡 <strong>Key identifiers:</strong> –OH group = alcohol (or carboxylic acid if C=O is adjacent) | C=O in middle of chain = ketone | C=C double bond in chain = alkene | NH₂ on ring/chain = amine | C=O directly on N = amide
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART 5 ===== -->
+  <div class="section" id="part5">
+    <div class="sh indigo">⚗️ Part 5 — Reactions Involving Alkenes (Q21–26)</div>
+    <div class="sb">
+
+      <div class="sub-title">Hydrogenation (Q21–23): Alkene + H₂ →[Pt]→ Alkane</div>
+      <div class="info-box"><strong>Hydrogenation</strong> adds H₂ across a double bond, converting an alkene to an alkane. A platinum (Pt) or palladium (Pd) catalyst is required. The C=C double bond becomes C–C single bond.</div>
+
+      <!-- Q21 -->
+      <div class="q-group">
+        <span class="q-label">Q21: What is the product of the following hydrogenation? (identify functional group)</span>
+        <div class="mol-wrap">
+          <div class="mol-box">
+            <canvas id="mol_q21" width="155" height="70"></canvas>
+            <div class="mol-label">pent-2-ene</div>
+          </div>
+          <span style="font-size:1.4rem;color:#555;">+ H₂</span>
+          <span class="eq-cat">Pt</span>
+          <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+          <span style="font-size:1.2rem;color:#888;">?</span>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q21','correct')">A. &nbsp; <strong>Alkane</strong> — H₂ adds across the C=C double bond → pentane (all C–C single bonds)</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q21','wrong')">B. &nbsp; Alcohol — H₂O would be needed, not H₂</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q21','wrong')">C. &nbsp; Alkene — the double bond remains unchanged</label>
+      </div>
+
+      <!-- Q22 -->
+      <div class="q-group">
+        <span class="q-label">Q22: Cyclohexene + H₂ →[Pt]→ ?</span>
+        <div class="mol-wrap">
+          <div class="mol-box">
+            <canvas id="mol_q22" width="140" height="110"></canvas>
+            <div class="mol-label">cyclohexene</div>
+          </div>
+          <span style="font-size:1.4rem;color:#555;">+ H₂</span>
+          <span class="eq-cat">Pt</span>
+          <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+          <span style="font-size:1.2rem;color:#888;">?</span>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q22','correct')">A. &nbsp; <strong>Cyclohexane</strong> — the C=C in the ring is hydrogenated to C–C, ring stays intact</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q22','wrong')">B. &nbsp; Cyclohexanol — that would require H₂O addition (hydration)</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q22','wrong')">C. &nbsp; Benzene — ring is not made aromatic by H₂ addition</label>
+      </div>
+
+      <!-- Q23 -->
+      <div class="q-group">
+        <span class="q-label">Q23: 2-methylbut-2-ene + H₂ →[Pt]→ ? (name the product and functional group)</span>
+        <div class="mol-wrap">
+          <div class="mol-box">
+            <canvas id="mol_q23" width="155" height="90"></canvas>
+            <div class="mol-label">2-methylbut-2-ene</div>
+          </div>
+          <span style="font-size:1.4rem;color:#555;">+ H₂</span>
+          <span class="eq-cat">Pt</span>
+          <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+          <input type="text" class="fill-in lg" id="q23_ans" data-answer="alkane" placeholder="product functional group" oninput="checkFill(this)">
+          <button class="btn-reveal" onclick="revealAnswer('q23_ans','alkane')">Hint</button>
+          <span class="ans-badge" id="q23_ans_badge">✓ alkane (2-methylbutane)</span>
+        </div>
+        <div class="tip-box">💡 The C=C double bond gains H₂ → becomes C–C single bond → product is 2-methylbutane (an alkane)</div>
+      </div>
+
+      <div class="sub-title">Hydration (Q24–26): Alkene + H₂O →[H⁺]→ Alcohol</div>
+      <div class="info-box"><strong>Hydration</strong> adds water (H₂O) across the C=C double bond to form an alcohol. An acid catalyst (H⁺) is required. This is the reverse of dehydration.</div>
+
+      <!-- Q24 -->
+      <div class="q-group">
+        <span class="q-label">Q24: Longer alkene + H₂O →[H⁺]→ ? (identify the product functional group)</span>
+        <div class="mol-wrap">
+          <div class="mol-box">
+            <canvas id="mol_q24" width="185" height="70"></canvas>
+            <div class="mol-label">hex-2-ene (alkene)</div>
+          </div>
+          <span style="font-size:1.4rem;color:#555;">+ H₂O</span>
+          <span class="eq-cat">H⁺</span>
+          <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+          <span style="font-size:1.2rem;color:#888;">?</span>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q24','correct')">A. &nbsp; <strong>Alcohol</strong> — H₂O adds across C=C; OH attaches to one carbon, H to the other</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q24','wrong')">B. &nbsp; Ether — requires two alcohols or RX, not simple alkene hydration</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q24','wrong')">C. &nbsp; Alkane — that would require H₂ gas and a metal catalyst</label>
+      </div>
+
+      <!-- Q25 -->
+      <div class="q-group">
+        <span class="q-label">Q25: Cyclohexene + H₂O →[H⁺]→ ? Name the specific product:</span>
+        <div class="mol-wrap">
+          <div class="mol-box">
+            <canvas id="mol_q25" width="140" height="110"></canvas>
+            <div class="mol-label">cyclohexene</div>
+          </div>
+          <span style="font-size:1.4rem;color:#555;">+ H₂O</span>
+          <span class="eq-cat">H⁺</span>
+          <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+          <input type="text" class="fill-in lg" id="q25_ans" data-answer="cyclohexanol" placeholder="product name" oninput="checkFill(this)">
+          <button class="btn-reveal" onclick="revealAnswer('q25_ans','cyclohexanol')">Hint</button>
+          <span class="ans-badge" id="q25_ans_badge">✓ cyclohexanol</span>
+        </div>
+        <div class="tip-box">💡 Cyclohexene ring + H₂O → OH added to ring → cyclohexanol (an alcohol). Ring stays intact.</div>
+      </div>
+
+      <!-- Q26 -->
+      <div class="q-group">
+        <span class="q-label">Q26: 2-methyl-2-butene + H₂O →[H⁺]→ ?</span>
+        <div class="mol-wrap">
+          <div class="mol-box">
+            <canvas id="mol_q26" width="155" height="90"></canvas>
+            <div class="mol-label">2-methyl-2-butene</div>
+          </div>
+          <span style="font-size:1.4rem;color:#555;">+ H₂O</span>
+          <span class="eq-cat">H⁺</span>
+          <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+          <span style="font-size:1.2rem;color:#888;">?</span>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q26','correct')">A. &nbsp; <strong>Alcohol (2-methyl-2-butanol)</strong> — OH and H add across the C=C double bond</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q26','wrong')">B. &nbsp; Alkane — H₂ gas with Pt catalyst would be needed</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q26','wrong')">C. &nbsp; Carboxylic acid — requires oxidation, not hydration</label>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== PART 6 ===== -->
+  <div class="section" id="part6">
+    <div class="sh red">🧪 Part 6 — Reactions of Carboxylic Acids with Alcohols &amp; Amines (Q27–30)</div>
+    <div class="sb">
+
+      <div class="info-box">
+        <strong>Esterification:</strong> Carboxylic acid + Alcohol → Ester + H₂O<br>
+        <strong>Amidization:</strong> Carboxylic acid + Amine → Amide + H₂O<br>
+        In both reactions, the –OH of the acid combines with –H of the other reactant to lose water. These reactions are reversible.
+      </div>
+
+      <!-- Q27 -->
+      <div class="q-group">
+        <span class="q-label">Q27: Identify the products of the following reaction:</span>
+        <div class="reaction-area">
+          <div class="reaction-row">
+            <div class="mol-box"><canvas id="mol_q27a" width="175" height="80"></canvas><div class="mol-label">pentanoic acid</div></div>
+            <span style="font-size:1.2rem;color:#555;">+</span>
+            <div class="mol-box"><canvas id="mol_q27b" width="110" height="70"></canvas><div class="mol-label">ethanol</div></div>
+            <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+            <span style="font-size:1.1rem;color:#888;">? + ?</span>
+          </div>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q27','correct')">A. &nbsp; <strong>Ester + H₂O</strong> — the –OH of the acid and the H of the alcohol's –OH combine to leave as water; the ester linkage (–COO–) forms</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q27','wrong')">B. &nbsp; Amide + H₂O — amide formation requires an amine, not an alcohol</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q27','wrong')">C. &nbsp; Alkene + H₂O — that is dehydration of an alcohol, not acid + alcohol</label>
+      </div>
+
+      <!-- Q28 -->
+      <div class="q-group">
+        <span class="q-label">Q28: Identify the products:</span>
+        <div class="reaction-area">
+          <div class="reaction-row">
+            <div class="mol-box"><canvas id="mol_q28a" width="130" height="75"></canvas><div class="mol-label">propanoic acid</div></div>
+            <span style="font-size:1.2rem;color:#555;">+</span>
+            <div class="mol-box"><canvas id="mol_q28b" width="145" height="70"></canvas><div class="mol-label">n-butanol</div></div>
+            <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+            <span style="font-size:1.1rem;color:#888;">? + ?</span>
+          </div>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q28','correct')">A. &nbsp; <strong>Ester + H₂O</strong> — butyl propanoate forms; acid –OH combines with alcohol H to produce water</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q28','wrong')">B. &nbsp; Two alcohols — acids and alcohols don't just exchange groups</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q28','wrong')">C. &nbsp; Carboxylic acid + alkane — no, esterification produces ester + water</label>
+      </div>
+
+      <!-- Q29 -->
+      <div class="q-group">
+        <span class="q-label">Q29: Branched acid + cyclopentanol → ?</span>
+        <div class="reaction-area">
+          <div class="reaction-row">
+            <div class="mol-box"><canvas id="mol_q29a" width="165" height="90"></canvas><div class="mol-label">3-methylbutanoic acid</div></div>
+            <span style="font-size:1.2rem;color:#555;">+</span>
+            <div class="mol-box"><canvas id="mol_q29b" width="130" height="105"></canvas><div class="mol-label">cyclopentanol</div></div>
+            <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+            <span style="font-size:1.1rem;color:#888;">? + ?</span>
+          </div>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q29','correct')">A. &nbsp; <strong>Ester + H₂O</strong> — cyclopentyl 3-methylbutanoate forms; structure and reactants don't matter — any acid + alcohol → ester + water</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q29','wrong')">B. &nbsp; Amide + H₂O — need an amine, not an alcohol for amide formation</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q29','wrong')">C. &nbsp; Ether + H₂O — ethers form by dehydration of two alcohols</label>
+      </div>
+
+      <!-- Q30 -->
+      <div class="q-group">
+        <span class="q-label">Q30: Carboxylic acid + amine → ?</span>
+        <div class="reaction-area">
+          <div class="reaction-row">
+            <div class="mol-box"><canvas id="mol_q30a" width="175" height="80"></canvas><div class="mol-label">pentanoic acid</div></div>
+            <span style="font-size:1.2rem;color:#555;">+</span>
+            <div class="mol-box"><canvas id="mol_q30b" width="140" height="75"></canvas><div class="mol-label">propylamine</div></div>
+            <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+            <span style="font-size:1.1rem;color:#888;">? + ?</span>
+          </div>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q30','correct')">A. &nbsp; <strong>Amide + H₂O</strong> — the C=O of the acid bonds to the N of the amine, expelling water; the N–CO linkage is the amide bond</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q30','wrong')">B. &nbsp; Ester + H₂O — ester formation requires an alcohol (–OH), not an amine (–NH₂)</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q30','wrong')">C. &nbsp; Alkene + H₂O — that is dehydration, not amidization</label>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== PART 7 ===== -->
+  <div class="section" id="part7">
+    <div class="sh teal">💧 Part 7 — Hydrolysis of Esters and Amides (Q31–34)</div>
+    <div class="sb">
+
+      <div class="info-box">
+        <strong>Hydrolysis</strong> is the reverse of esterification/amidization. Water is added to break the ester or amide bond.<br>
+        <strong>Ester + H₂O → Carboxylic acid + Alcohol</strong><br>
+        <strong>Amide + H₂O → Carboxylic acid + Amine</strong>
+      </div>
+
+      <!-- Q31 -->
+      <div class="q-group">
+        <span class="q-label">Q31: Identify both products when this ester reacts with water:</span>
+        <div class="reaction-area">
+          <div class="reaction-row">
+            <div class="mol-box"><canvas id="mol_q31" width="195" height="80"></canvas><div class="mol-label">ethyl pentanoate (ester)</div></div>
+            <span style="font-size:1.4rem;color:#555;">+ H₂O</span>
+            <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+            <span style="font-size:1.1rem;color:#888;">? + ?</span>
+          </div>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q31','correct')">A. &nbsp; <strong>Carboxylic acid + Alcohol</strong> — water breaks the ester linkage (–COO–) → pentanoic acid + ethanol</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q31','wrong')">B. &nbsp; Carboxylic acid + Amine — that would be amide hydrolysis, not ester hydrolysis</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q31','wrong')">C. &nbsp; Two alcohols — the carboxyl group remains intact as a carboxylic acid</label>
+      </div>
+
+      <!-- Q32 -->
+      <div class="q-group">
+        <span class="q-label">Q32: What are the products of this ester hydrolysis?</span>
+        <div class="reaction-area">
+          <div class="reaction-row">
+            <div class="mol-box"><canvas id="mol_q32" width="175" height="80"></canvas><div class="mol-label">sec-butyl acetate (ester)</div></div>
+            <span style="font-size:1.4rem;color:#555;">+ H₂O</span>
+            <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+            <span style="font-size:1.1rem;color:#888;">? + ?</span>
+          </div>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q32','correct')">A. &nbsp; <strong>Carboxylic acid + Alcohol</strong> — acetic acid + sec-butanol form when the ester bond is hydrolyzed</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q32','wrong')">B. &nbsp; Aldehyde + Alcohol — ester hydrolysis never gives an aldehyde</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q32','wrong')">C. &nbsp; Ether + Water — esters and ethers are different functional groups</label>
+      </div>
+
+      <!-- Q33 -->
+      <div class="q-group">
+        <span class="q-label">Q33: What are the products when this amide reacts with water?</span>
+        <div class="reaction-area">
+          <div class="reaction-row">
+            <div class="mol-box"><canvas id="mol_q33" width="205" height="80"></canvas><div class="mol-label">N-ethylpentanamide (amide)</div></div>
+            <span style="font-size:1.4rem;color:#555;">+ H₂O</span>
+            <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+            <span style="font-size:1.1rem;color:#888;">? + ?</span>
+          </div>
+        </div>
+        <label class="quiz-option" onclick="quizCheck(this,'q33','correct')">A. &nbsp; <strong>Carboxylic acid + Amine</strong> — water breaks the C–N amide bond → pentanoic acid + ethylamine</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q33','wrong')">B. &nbsp; Carboxylic acid + Alcohol — alcohol would only come from ester hydrolysis</label>
+        <label class="quiz-option" onclick="quizCheck(this,'q33','wrong')">C. &nbsp; Two carboxylic acids — the nitrogen-containing fragment becomes the amine</label>
+      </div>
+
+      <!-- Q34 -->
+      <div class="q-group">
+        <span class="q-label">Q34: Identify BOTH products and their functional group types:</span>
+        <div class="reaction-area">
+          <div class="reaction-row">
+            <div class="mol-box"><canvas id="mol_q34" width="175" height="82"></canvas><div class="mol-label">N-sec-butylamide (amide)</div></div>
+            <span style="font-size:1.4rem;color:#555;">+ H₂O</span>
+            <span class="eq-arrow" style="font-size:1.6rem;">→</span>
+            <span style="font-size:1.1rem;color:#888;">? + ?</span>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top:10px;">
+          <div>
+            <label class="q-label" style="font-size:.88rem;">Product 1 (from C=O side):</label>
+            <input type="text" class="fill-in lg" id="q34_p1" data-answer="carboxylic acid" placeholder="functional group" oninput="checkFill(this)">
+            <button class="btn-reveal" onclick="revealAnswer('q34_p1','carboxylic acid')">Hint</button>
+            <span class="ans-badge" id="q34_p1_badge">✓ carboxylic acid</span>
+          </div>
+          <div>
+            <label class="q-label" style="font-size:.88rem;">Product 2 (from N side):</label>
+            <input type="text" class="fill-in lg" id="q34_p2" data-answer="amine" placeholder="functional group" oninput="checkFill(this)">
+            <button class="btn-reveal" onclick="revealAnswer('q34_p2','amine')">Hint</button>
+            <span class="ans-badge" id="q34_p2_badge">✓ amine</span>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top:10px;">💡 Amide + H₂O → breaks the C–N bond → the C=O side becomes a <strong>carboxylic acid</strong> and the N side becomes an <strong>amine</strong>. This is identical in concept to all other amide hydrolysis reactions.</div>
+      </div>
+
+      <!-- Submit area -->
+      <div style="margin-top:26px;background:var(--light-green);border:2px solid var(--green);border-radius:8px;padding:18px 22px;">
+        <p style="font-weight:700;font-size:1rem;color:var(--green);margin-bottom:10px;">✅ Ready to Submit?</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-success" onclick="window.print()">🖨️ Print / Save as PDF</button>
+          <button class="btn btn-secondary" onclick="checkProgress()">📊 Check Progress</button>
+          <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
+        </div>
+        <p class="autosave-note" style="margin-top:8px;">💾 Auto-saved in your browser — reopening this file restores your work.</p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<button class="print-btn" onclick="window.print()">🖨️ Print / PDF</button>
+
+<script>
+// ===== MOLECULAR DRAWING ENGINE =====
+function drawMol(id, data) {
+  const cv = document.getElementById(id);
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.lineCap = 'round';
+
+  // Single bonds
+  (data.bonds || []).forEach(([i,j]) => {
+    ctx.beginPath(); ctx.strokeStyle='#2c3e50'; ctx.lineWidth=1.8;
+    ctx.moveTo(data.a[i][0],data.a[i][1]); ctx.lineTo(data.a[j][0],data.a[j][1]); ctx.stroke();
+  });
+  // Colored single bonds (red for functional groups)
+  (data.rbonds || []).forEach(([i,j]) => {
+    ctx.beginPath(); ctx.strokeStyle='#c0392b'; ctx.lineWidth=1.6;
+    ctx.moveTo(data.a[i][0],data.a[i][1]); ctx.lineTo(data.a[j][0],data.a[j][1]); ctx.stroke();
+  });
+  // Double bonds
+  (data.dbl || []).forEach(([i,j,col]) => {
+    const [x1,y1]=data.a[i],[x2,y2]=data.a[j];
+    const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+    const nx=-dy/len*2.5,ny=dx/len*2.5;
+    ctx.strokeStyle=col||'#2c3e50'; ctx.lineWidth=1.6;
+    [[nx,ny],[-nx,-ny]].forEach(([ox,oy])=>{
+      ctx.beginPath(); ctx.moveTo(x1+ox,y1+oy); ctx.lineTo(x2+ox,y2+oy); ctx.stroke();
+    });
+  });
+  // Labels
+  (data.labels||[]).forEach(l=>{
+    ctx.font=`${l.b?'bold ':''}${l.sz||12}px Arial`;
+    ctx.fillStyle=l.c||'#2c3e50';
+    ctx.textAlign=l.align||'left';
+    ctx.textBaseline=l.base||'middle';
+    ctx.fillText(l.t,l.x,l.y);
+  });
+  ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+}
+
+// ===== MOLECULE DATA =====
+// Chain positions: zigzag right, starting point, bond ~32px at ~30° angle
+// dx=28, dy=16
+const M = {
+  // === PART 4 ===
+  p4a: { // pent-2-ene (alkene) — double bond C1-C2
+    a:[[12,48],[40,32],[68,48],[96,32],[124,48]],
+    bonds:[[0,1],[2,3],[3,4]], dbl:[[1,2]], labels:[] },
+  p4b: { // 3-methylbutan-2-ol (alcohol)
+    a:[[12,62],[40,44],[68,62],[96,44],[68,80],[24,28]],
+    bonds:[[0,1],[1,2],[2,3],[2,4]], rbonds:[[1,5]], dbl:[],
+    labels:[{t:'OH',x:6,y:23,c:'#c0392b',sz:12,align:'left',base:'top'}] },
+  p4c: { // hex-3-ene (alkene) — double bond C2-C3
+    a:[[12,48],[40,32],[68,48],[96,32],[124,48],[152,32]],
+    bonds:[[0,1],[1,2],[3,4],[4,5]], dbl:[[2,3]], labels:[] },
+  p4d: { // pentan-3-one (ketone) — C=O at middle C
+    a:[[12,38],[40,20],[68,38],[96,20],[124,38],[68,60]],
+    bonds:[[0,1],[1,2],[2,3],[3,4]], dbl:[[2,5,'#c0392b']],
+    labels:[{t:'O',x:68,y:78,c:'#c0392b',sz:13,align:'center',base:'top'}] },
+  p4e: { // butanoic acid (carboxylic acid) — COOH at end
+    a:[[12,48],[40,32],[68,48],[96,32],[116,16],[116,48]],
+    bonds:[[0,1],[1,2],[2,3]], rbonds:[[3,5]], dbl:[[3,4,'#c0392b']],
+    labels:[
+      {t:'O',x:118,y:13,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+      {t:'OH',x:118,y:52,c:'#c0392b',sz:12,align:'left',base:'middle'}] },
+  p4f: { // primary amide — H₂N-C(=O)-chain
+    a:[[50,48],[50,22],[78,32],[106,48],[134,32],[22,62]],
+    bonds:[[0,2],[2,3],[3,4]], rbonds:[[0,5]], dbl:[[0,1,'#c0392b']],
+    labels:[
+      {t:'O',x:50,y:16,c:'#c0392b',sz:13,align:'center',base:'bottom'},
+      {t:'H₂N',x:0,y:65,c:'#2471a3',sz:12,align:'left',base:'middle'}] },
+  p4g: { // cyclopentanol (alcohol + ring)
+    a:[[55,22],[79,40],[71,68],[39,68],[31,40],[72,8]],
+    bonds:[[0,1],[1,2],[2,3],[3,4],[4,0]], rbonds:[[0,5]], dbl:[],
+    labels:[{t:'OH',x:74,y:5,c:'#c0392b',sz:12,align:'left',base:'bottom'}] },
+  p4h: { // cyclohexylamine (amine + ring)
+    a:[[60,22],[84,36],[84,64],[60,78],[36,64],[36,36],[60,6]],
+    bonds:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,0]], rbonds:[[0,6]], dbl:[],
+    labels:[{t:'NH₂',x:60,y:3,c:'#2471a3',sz:12,align:'center',base:'bottom'}] },
+
+  // === PART 5 ===
+  q21: { // pent-2-ene (same as p4a)
+    a:[[12,48],[40,32],[68,48],[96,32],[124,48]],
+    bonds:[[0,1],[2,3],[3,4]], dbl:[[1,2]], labels:[] },
+  q22: { // cyclohexene
+    a:[[60,22],[84,36],[84,64],[60,78],[36,64],[36,36]],
+    bonds:[[1,2],[2,3],[3,4],[4,5],[5,0]], dbl:[[0,1]], labels:[] },
+  q23: { // 2-methylbut-2-ene
+    a:[[12,50],[40,32],[68,50],[96,32],[68,70]],
+    bonds:[[0,1],[2,3],[2,4]], dbl:[[1,2]], labels:[] },
+  q24: { // hex-2-ene
+    a:[[12,48],[40,32],[68,48],[96,32],[124,48],[152,32]],
+    bonds:[[0,1],[2,3],[3,4],[4,5]], dbl:[[1,2]], labels:[] },
+  q25: { // cyclohexene (same as q22)
+    a:[[60,22],[84,36],[84,64],[60,78],[36,64],[36,36]],
+    bonds:[[1,2],[2,3],[3,4],[4,5],[5,0]], dbl:[[0,1]], labels:[] },
+  q26: { // 2-methyl-2-butene (same as q23)
+    a:[[12,50],[40,32],[68,50],[96,32],[68,70]],
+    bonds:[[0,1],[2,3],[2,4]], dbl:[[1,2]], labels:[] },
+
+  // === PART 6 (reactants) ===
+  q27a: { // pentanoic acid (5C carboxylic acid)
+    a:[[12,48],[40,32],[68,48],[96,32],[124,48],[144,32],[144,64]],
+    bonds:[[0,1],[1,2],[2,3],[3,4]], rbonds:[[4,6]], dbl:[[4,5,'#c0392b']],
+    labels:[
+      {t:'O',x:146,y:28,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+      {t:'OH',x:146,y:68,c:'#c0392b',sz:12,align:'left',base:'middle'}] },
+  q27b: { // ethanol
+    a:[[12,48],[40,32],[60,20]],
+    bonds:[[0,1]], rbonds:[[1,2]], dbl:[],
+    labels:[{t:'OH',x:62,y:18,c:'#c0392b',sz:12,align:'left',base:'bottom'}] },
+  q28a: { // propanoic acid (3C)
+    a:[[12,48],[40,32],[68,48],[88,32],[88,64]],
+    bonds:[[0,1],[1,2]], rbonds:[[2,4]], dbl:[[2,3,'#c0392b']],
+    labels:[
+      {t:'O',x:90,y:28,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+      {t:'OH',x:90,y:68,c:'#c0392b',sz:12,align:'left',base:'middle'}] },
+  q28b: { // n-butanol (4C)
+    a:[[12,48],[40,32],[68,48],[96,32],[112,18]],
+    bonds:[[0,1],[1,2],[2,3]], rbonds:[[3,4]], dbl:[],
+    labels:[{t:'OH',x:114,y:16,c:'#c0392b',sz:12,align:'left',base:'bottom'}] },
+  q29a: { // 3-methylbutanoic acid (branched)
+    a:[[12,60],[40,42],[68,60],[96,42],[116,26],[116,58],[68,78]],
+    bonds:[[0,1],[1,2],[2,6]], rbonds:[[2,4]], dbl:[[2,3,'#2c3e50'],[2,4,'#c0392b']],
+    labels:[
+      {t:'O',x:118,y:22,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+      {t:'OH',x:118,y:62,c:'#c0392b',sz:12,align:'left',base:'middle'}] },
+  q29b: { // cyclopentanol
+    a:[[55,22],[79,40],[71,68],[39,68],[31,40],[72,8]],
+    bonds:[[0,1],[1,2],[2,3],[3,4],[4,0]], rbonds:[[0,5]], dbl:[],
+    labels:[{t:'OH',x:74,y:5,c:'#c0392b',sz:12,align:'left',base:'bottom'}] },
+  q30a: { // pentanoic acid (same as q27a)
+    a:[[12,48],[40,32],[68,48],[96,32],[124,48],[144,32],[144,64]],
+    bonds:[[0,1],[1,2],[2,3],[3,4]], rbonds:[[4,6]], dbl:[[4,5,'#c0392b']],
+    labels:[
+      {t:'O',x:146,y:28,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+      {t:'OH',x:146,y:68,c:'#c0392b',sz:12,align:'left',base:'middle'}] },
+  q30b: { // propylamine (3C amine)
+    a:[[12,48],[40,32],[68,48],[88,62]],
+    bonds:[[0,1],[1,2]], rbonds:[[2,3]], dbl:[],
+    labels:[{t:'NH₂',x:90,y:65,c:'#2471a3',sz:12,align:'left',base:'middle'}] },
+
+  // === PART 7 (reactants — esters and amides) ===
+  q31: { // ethyl pentanoate (ester): 5C acid + 2C alcohol esterified
+    a:[[12,48],[40,32],[68,48],[96,32],[124,48],[146,32],[146,64],[162,32],[186,48]],
+    bonds:[[0,1],[1,2],[2,3],[3,4],[7,8]], rbonds:[[4,6],[6,7]], dbl:[[4,5,'#c0392b']],
+    labels:[{t:'O',x:148,y:28,c:'#c0392b',sz:12,align:'left',base:'bottom'}] },
+  q32: { // sec-butyl acetate (small ester): CH3-CO-O-CHMe-Et
+    a:[[12,48],[34,32],[34,64],[52,32],[72,48],[100,32],[122,48],[148,32]],
+    bonds:[[0,1],[3,5],[5,6],[6,7]], rbonds:[[1,3],[3,4]], dbl:[[1,2,'#c0392b']],
+    labels:[{t:'O',x:36,y:60,c:'#c0392b',sz:12,align:'left',base:'top'}] },
+  q33: { // N-ethylpentanamide: 5C-CO-NH-CH2-CH3
+    a:[[12,48],[40,32],[68,48],[96,32],[124,48],[148,32],[148,64],[168,48],[196,32]],
+    bonds:[[0,1],[1,2],[2,3],[3,4],[7,8]], rbonds:[[4,6],[6,7]], dbl:[[4,5,'#c0392b']],
+    labels:[
+      {t:'O',x:150,y:28,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+      {t:'NH',x:151,y:68,c:'#2471a3',sz:12,align:'left',base:'middle'}] },
+  q34: { // N-sec-butyl-propanamide: shorter
+    a:[[12,48],[40,32],[68,48],[90,32],[90,64],[108,48],[130,32],[154,48]],
+    bonds:[[0,1],[1,2],[5,6],[6,7]], rbonds:[[2,4],[4,5]], dbl:[[2,3,'#c0392b']],
+    labels:[
+      {t:'O',x:92,y:28,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+      {t:'N',x:92,y:68,c:'#2471a3',sz:11,align:'left',base:'top'},
+      {t:'H',x:100,y:76,c:'#2471a3',sz:10,align:'left',base:'top'}] },
+};
+
+// Fix q29a - simplify (the dual double bond entry was incorrect)
+M.q29a = {
+  a:[[12,60],[40,42],[68,60],[96,42],[116,26],[116,58],[68,82]],
+  bonds:[[0,1],[1,2],[2,6]], rbonds:[[3,5]], dbl:[[3,4,'#c0392b']],
+  labels:[
+    {t:'O',x:118,y:22,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+    {t:'OH',x:118,y:62,c:'#c0392b',sz:12,align:'left',base:'middle'}]
+};
+// also fix - atom[3] and atom[4] aren't connected via bonds or dbl to atom[2]
+// Rebuild q29a properly
+M.q29a = {
+  a:[[12,58],[40,40],[68,58],[96,40],[116,24],[116,56],[68,78]],
+  bonds:[[0,1],[1,2],[2,3],[2,6]], rbonds:[[3,5]], dbl:[[3,4,'#c0392b']],
+  labels:[
+    {t:'O',x:118,y:20,c:'#c0392b',sz:12,align:'left',base:'bottom'},
+    {t:'OH',x:118,y:60,c:'#c0392b',sz:12,align:'left',base:'middle'}]
+};
+
+// ===== INITIALIZE ALL MOLECULES =====
+window.addEventListener('DOMContentLoaded', () => {
+  Object.keys(M).forEach(id => drawMol('mol_'+id, M[id]));
+  loadAll();
+  updateProgress();
+  initNav();
+});
+
+// ===== ANSWER CHECKING =====
+function normalizeAnswer(s) {
+  return s.toLowerCase().replace(/[₂₃₄₅₆₇₈]/g,c=>String.fromCharCode(c.codePointAt(0)-8272+50))
+    .replace(/[²³⁴]/g,c=>c==='²'?'2':c==='³'?'3':'4')
+    .replace(/\s/g,'').replace(/[_\-]/g,'');
+}
+
+function checkFill(el) {
+  const ans = (el.dataset.answer||'').toLowerCase().replace(/\s/g,'').replace(/[_\-]/g,'');
+  const val = normalizeAnswer(el.value);
+  if (!val) { el.classList.remove('correct','incorrect'); return; }
+  const match = val===ans || ans.includes(val) || val.includes(ans);
+  el.classList.toggle('correct',!!match);
+  el.classList.toggle('incorrect',!match);
+  updateProgress(); saveAll();
+}
+
+function revealAnswer(id, answer) {
+  const el = document.getElementById(id);
+  if (el) { el.value=answer; el.classList.add('correct'); el.classList.remove('incorrect'); }
+  const badge = document.getElementById(id+'_badge');
+  if (badge) badge.style.display='inline-block';
+  updateProgress(); saveAll();
+}
+
+function checkCoeff(el) {
+  const ans = parseInt(el.dataset.answer);
+  const val = parseInt(el.value);
+  if (isNaN(val)) { el.classList.remove('correct','incorrect'); return; }
+  el.classList.toggle('correct', val===ans);
+  el.classList.toggle('incorrect', val!==ans);
+  updateProgress(); saveAll();
+}
+
+function checkFG(el, correct) {
+  const val = el.value.toLowerCase();
+  const isCorrect = val === correct.toLowerCase();
+  el.classList.toggle('correct', isCorrect);
+  el.classList.toggle('incorrect', !isCorrect && val!=='');
+  const badge = document.getElementById(el.id.replace('fg_','fg_')+'_badge');
+  if (badge && isCorrect) badge.style.display='inline-block';
+  updateProgress(); saveAll();
+}
+
+function quizCheck(el, qid, result) {
+  const parent = el.closest('.q-group') || el.parentElement;
+  parent.querySelectorAll('.quiz-option').forEach(o=>{
+    o.classList.remove('correct-ans','wrong-ans');
+    o.style.pointerEvents='none';
+  });
+  if (result==='correct') {
+    el.classList.add('correct-ans');
+  } else {
+    el.classList.add('wrong-ans');
+    parent.querySelectorAll('.quiz-option').forEach(o=>{
+      if(o.getAttribute('onclick')&&o.getAttribute('onclick').includes("'correct'")) o.classList.add('correct-ans');
+    });
+  }
+  updateProgress(); saveAll();
+}
+
+// ===== PROGRESS =====
+function updateProgress() {
+  const fills = document.querySelectorAll('.fill-in[data-answer]');
+  const coeffs = document.querySelectorAll('.coeff-input[data-answer]');
+  const selects = document.querySelectorAll('select[id^="fg_"]');
+  let done=0, total=fills.length+coeffs.length+selects.length;
+  fills.forEach(f=>{if(f.value.trim())done++;});
+  coeffs.forEach(c=>{if(c.value.trim())done++;});
+  selects.forEach(s=>{if(s.value)done++;});
+  const pct=Math.min(100,Math.round(done/total*100));
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressPct').textContent=pct+'%';
+}
+
+function checkProgress() {
+  const fills=document.querySelectorAll('.fill-in[data-answer]');
+  const coeffs=document.querySelectorAll('.coeff-input[data-answer]');
+  const selects=document.querySelectorAll('select[id^="fg_"]');
+  let ef=0,ec=0,es=0;
+  fills.forEach(f=>{if(!f.value.trim())ef++;});
+  coeffs.forEach(c=>{if(!c.value.trim())ec++;});
+  selects.forEach(s=>{if(!s.value)es++;});
+  alert(`Progress Check:\n✏️ Fill-in blanks empty: ${ef}\n🔢 Coefficient boxes empty: ${ec}\n📋 Functional group dropdowns empty: ${es}\n\nComplete all before submitting!`);
+}
+
+// ===== SAVE / LOAD =====
+function saveAll() {
+  const data={};
+  document.querySelectorAll('input[id],textarea[id],select[id]').forEach(el=>{if(el.id)data[el.id]=el.value;});
+  // Save quiz states
+  document.querySelectorAll('.quiz-option').forEach((el,i)=>{
+    if(el.classList.contains('correct-ans'))data['quiz_state_'+i]='correct';
+    else if(el.classList.contains('wrong-ans'))data['quiz_state_'+i]='wrong';
+  });
+  try{localStorage.setItem('chm125l_workshop3_v1',JSON.stringify(data));}catch(e){}
+  updateProgress();
+}
+
+function loadAll() {
+  try {
+    const raw=localStorage.getItem('chm125l_workshop3_v1');
+    if(!raw)return;
+    const data=JSON.parse(raw);
+    Object.keys(data).forEach(id=>{
+      if(id.startsWith('quiz_state_'))return;
+      const el=document.getElementById(id);
+      if(!el)return;
+      el.value=data[id];
+      if(el.classList.contains('fill-in')&&el.dataset.answer)checkFill(el);
+      if(el.classList.contains('coeff-input')&&el.dataset.answer)checkCoeff(el);
+      if(el.tagName==='SELECT'&&el.id.startsWith('fg_')){
+        const correctMap={'fg_p4a':'alkene','fg_p4b':'alcohol','fg_p4c':'alkene','fg_p4d':'ketone','fg_p4e':'carboxylic acid','fg_p4f':'amide','fg_p4g':'alcohol','fg_p4h':'amine'};
+        if(correctMap[id])checkFG(el,correctMap[id]);
+      }
+    });
+  } catch(e){}
+  updateProgress();
+}
+
+function clearAll() {
+  if(!confirm('Clear all your work? This cannot be undone.'))return;
+  localStorage.removeItem('chm125l_workshop3_v1');
+  document.querySelectorAll('input[id],textarea[id],select[id]').forEach(el=>{
+    el.value='';
+    el.classList.remove('correct','incorrect');
+  });
+  document.querySelectorAll('.ans-badge').forEach(b=>b.style.display='none');
+  document.querySelectorAll('.quiz-option').forEach(o=>{
+    o.classList.remove('correct-ans','wrong-ans');
+    o.style.pointerEvents='';
+  });
+  document.querySelectorAll('select').forEach(s=>{
+    s.classList.remove('correct','incorrect');
+  });
+  updateProgress();
+}
+
+// ===== NAV ACTIVE =====
+function initNav() {
+  window.addEventListener('scroll',()=>{
+    const ids=['info','part1','part2','part3','part4','part5','part6','part7'];
+    let cur='';
+    ids.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-160)cur=id;});
+    document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+  });
+}
+</script>
+</body>
+</html>
