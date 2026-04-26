@@ -1,0 +1,2775 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHM 152L – Lab 7: Buffer Solutions (Virtual Version)</title>
+    <style>
+      :root {
+        --blue: #1a5276;
+        --teal: #148f77;
+        --green: #1e8449;
+        --purple: #6c3483;
+        --orange: #ca6f1e;
+        --red: #922b21;
+        --light-blue: #d6eaf8;
+        --light-green: #d5f5e3;
+        --light-yellow: #fef9e7;
+        --light-purple: #f4ecf7;
+        --light-red: #fdedec;
+        --gray: #f2f3f4;
+        --border: #bdc3c7;
+        --text: #1c2833;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #ecf0f1;
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      /* ---- HEADER ---- */
+      header {
+        background: linear-gradient(135deg, var(--blue), #2980b9);
+        color: white;
+        padding: 28px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      header p {
+        font-size: 0.9rem;
+        opacity: 0.85;
+        margin-top: 4px;
+      }
+      .progress-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 260px;
+      }
+      .progress-wrap span {
+        font-size: 0.85rem;
+        white-space: nowrap;
+      }
+      #progressBar {
+        flex: 1;
+        height: 12px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.3);
+        overflow: hidden;
+      }
+      #progressFill {
+        height: 100%;
+        width: 0%;
+        background: #2ecc71;
+        border-radius: 6px;
+        transition: width 0.4s ease;
+      }
+      /* ---- NAV ---- */
+      nav {
+        background: var(--blue);
+        padding: 0 40px;
+        display: flex;
+        gap: 4px;
+        overflow-x: auto;
+      }
+      nav a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+        transition: all 0.2s;
+      }
+      nav a:hover,
+      nav a.active {
+        color: white;
+        border-bottom-color: #2ecc71;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      /* ---- MAIN ---- */
+      main {
+        max-width: 960px;
+        margin: 30px auto;
+        padding: 0 20px 60px;
+      }
+      /* ---- SECTIONS ---- */
+      .section {
+        background: white;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .section-header {
+        padding: 18px 28px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-header.blue {
+        background: var(--blue);
+      }
+      .section-header.teal {
+        background: var(--teal);
+      }
+      .section-header.green {
+        background: var(--green);
+      }
+      .section-header.purple {
+        background: var(--purple);
+      }
+      .section-header.orange {
+        background: var(--orange);
+      }
+      .section-body {
+        padding: 24px 28px;
+      }
+      /* ---- INFO BOXES ---- */
+      .info-box {
+        background: var(--light-blue);
+        border-left: 4px solid var(--blue);
+        border-radius: 6px;
+        padding: 14px 18px;
+        margin-bottom: 18px;
+        font-size: 0.95rem;
+      }
+      .tip-box {
+        background: var(--light-yellow);
+        border-left: 4px solid var(--orange);
+        border-radius: 6px;
+        padding: 14px 18px;
+        margin-bottom: 18px;
+        font-size: 0.9rem;
+      }
+      .success-box {
+        background: var(--light-green);
+        border-left: 4px solid var(--green);
+        border-radius: 6px;
+        padding: 14px 18px;
+        margin-bottom: 18px;
+        font-size: 0.9rem;
+        display: none;
+      }
+      /* ---- FILL-IN BLANKS ---- */
+      .fill-in {
+        display: inline-block;
+        min-width: 140px;
+        border: none;
+        border-bottom: 2px solid var(--blue);
+        padding: 3px 8px;
+        font-size: 1rem;
+        font-family: inherit;
+        background: transparent;
+        outline: none;
+        transition: border-color 0.2s;
+        text-align: center;
+      }
+      .fill-in:focus {
+        border-bottom-color: var(--teal);
+      }
+      .fill-in.correct {
+        border-bottom-color: var(--green);
+        background: #eafaf1;
+      }
+      .fill-in.incorrect {
+        border-bottom-color: var(--red);
+        background: var(--light-red);
+      }
+      /* ---- REVEAL BUTTONS ---- */
+      .btn-reveal {
+        background: none;
+        border: 1.5px solid var(--blue);
+        color: var(--blue);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-left: 8px;
+      }
+      .btn-reveal:hover {
+        background: var(--blue);
+        color: white;
+      }
+      .answer-badge {
+        display: none;
+        background: var(--green);
+        color: white;
+        border-radius: 12px;
+        padding: 2px 12px;
+        font-size: 0.82rem;
+        margin-left: 6px;
+        font-weight: 600;
+      }
+      /* ---- BUTTONS ---- */
+      .btn {
+        padding: 10px 22px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .btn-primary {
+        background: var(--blue);
+        color: white;
+      }
+      .btn-primary:hover {
+        background: #154360;
+      }
+      .btn-success {
+        background: var(--green);
+        color: white;
+      }
+      .btn-success:hover {
+        background: #145a32;
+      }
+      .btn-secondary {
+        background: var(--gray);
+        color: var(--text);
+        border: 1.5px solid var(--border);
+      }
+      .btn-secondary:hover {
+        background: var(--border);
+      }
+      .btn-calc {
+        background: var(--teal);
+        color: white;
+      }
+      .btn-calc:hover {
+        background: #0e6655;
+      }
+      /* ---- TABLES ---- */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 0.9rem;
+      }
+      th {
+        background: var(--blue);
+        color: white;
+        padding: 10px 12px;
+        text-align: center;
+        font-weight: 600;
+      }
+      td {
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      tr:nth-child(even) td {
+        background: #f8f9fa;
+      }
+      .table-input {
+        width: 90%;
+        border: 1px solid #aab;
+        border-radius: 4px;
+        padding: 5px 8px;
+        font-size: 0.9rem;
+        text-align: center;
+        background: #fdfefe;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .table-input:focus {
+        outline: none;
+        border-color: var(--teal);
+        background: #eaf4fb;
+      }
+      /* ---- ICE TABLE ---- */
+      .ice-table th {
+        background: #5d6d7e;
+      }
+      .ice-table .ice-label {
+        background: #1a252f;
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      /* ---- CALC PANEL ---- */
+      .calc-panel {
+        background: var(--light-yellow);
+        border: 1.5px solid #f0b27a;
+        border-radius: 8px;
+        padding: 20px 24px;
+        margin-top: 18px;
+      }
+      .calc-panel h4 {
+        color: var(--orange);
+        margin-bottom: 12px;
+        font-size: 1rem;
+      }
+      .calc-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+      }
+      .calc-row label {
+        min-width: 160px;
+        font-size: 0.9rem;
+      }
+      .calc-row input[type="number"],
+      .calc-row input[type="text"] {
+        width: 140px;
+        border: 1.5px solid var(--border);
+        border-radius: 5px;
+        padding: 7px 10px;
+        font-size: 0.9rem;
+      }
+      .calc-result {
+        background: white;
+        border: 2px solid var(--green);
+        border-radius: 6px;
+        padding: 12px 18px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--green);
+        text-align: center;
+        margin-top: 8px;
+        min-height: 40px;
+        display: none;
+      }
+      /* ---- EQUATIONS ---- */
+      .eq-box {
+        background: #1a252f;
+        color: #f8f9fa;
+        border-radius: 8px;
+        padding: 16px 20px;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin: 16px 0;
+        font-family: "Courier New", monospace;
+      }
+      /* ---- QUIZ ---- */
+      .quiz-option {
+        display: block;
+        padding: 10px 16px;
+        margin: 6px 0;
+        border: 2px solid var(--border);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: white;
+      }
+      .quiz-option:hover {
+        border-color: var(--blue);
+        background: var(--light-blue);
+      }
+      .quiz-option.correct-ans {
+        border-color: var(--green);
+        background: var(--light-green);
+        color: var(--green);
+        font-weight: 600;
+      }
+      .quiz-option.wrong-ans {
+        border-color: var(--red);
+        background: var(--light-red);
+        color: var(--red);
+      }
+      /* ---- TEXTAREA ---- */
+      .lab-textarea {
+        width: 100%;
+        border: 1.5px solid var(--border);
+        border-radius: 6px;
+        padding: 12px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        resize: vertical;
+        transition: border-color 0.2s;
+        min-height: 90px;
+      }
+      .lab-textarea:focus {
+        outline: none;
+        border-color: var(--teal);
+      }
+      .char-count {
+        font-size: 0.8rem;
+        color: #888;
+        text-align: right;
+        margin-top: 4px;
+      }
+      /* ---- MISC ---- */
+      .q-label {
+        font-weight: 700;
+        color: var(--blue);
+        margin-bottom: 8px;
+        display: block;
+      }
+      .q-group {
+        margin-bottom: 20px;
+      }
+      .reaction-box {
+        background: #1a252f;
+        color: #aed6f1;
+        border-radius: 6px;
+        padding: 12px 20px;
+        font-family: monospace;
+        font-size: 0.95rem;
+        margin: 12px 0;
+        text-align: center;
+      }
+      ul.lab-list {
+        padding-left: 22px;
+        margin: 8px 0;
+      }
+      ul.lab-list li {
+        margin-bottom: 6px;
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      @media (max-width: 620px) {
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+      }
+      .virtual-note {
+        background: #fef5e7;
+        border: 2px dashed #f39c12;
+        border-radius: 8px;
+        padding: 14px 20px;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+      }
+      .virtual-note strong {
+        color: var(--orange);
+      }
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: var(--blue);
+        color: white;
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-right: 8px;
+        flex-shrink: 0;
+      }
+      .step-row {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 14px;
+      }
+      .beaker-label {
+        display: inline-block;
+        background: var(--teal);
+        color: white;
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-right: 6px;
+      }
+      .print-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: var(--blue);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 14px 22px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        z-index: 999;
+        transition: background 0.2s;
+      }
+      .print-btn:hover {
+        background: #154360;
+      }
+      .autosave-note {
+        font-size: 0.8rem;
+        color: #888;
+        font-style: italic;
+        margin-top: 8px;
+      }
+      .sub-section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--blue);
+        border-bottom: 2px solid var(--blue);
+        padding-bottom: 6px;
+        margin: 20px 0 14px;
+      }
+      .concentration-display {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--purple);
+        background: var(--light-purple);
+        padding: 8px 14px;
+        border-radius: 6px;
+        display: inline-block;
+        margin: 4px;
+      }
+      @media print {
+        header,
+        nav,
+        .print-btn,
+        .btn-reveal,
+        .btn-calc,
+        .calc-panel {
+          display: none !important;
+        }
+        body {
+          background: white;
+        }
+        .section {
+          box-shadow: none;
+          border: 1px solid #ccc;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>🧪 CHM 152L — Lab 7: Buffer Solutions</h1>
+        <p>
+          Virtual Lab &nbsp;|&nbsp; Complete all sections below &nbsp;|&nbsp;
+          Progress is saved automatically
+        </p>
+      </div>
+      <div class="progress-wrap">
+        <span>Progress</span>
+        <div id="progressBar"><div id="progressFill"></div></div>
+        <span id="progressPct">0%</span>
+      </div>
+    </header>
+
+    <nav>
+      <a href="#concepts" class="active">Concepts</a>
+      <a href="#part1">Part I: Preparation</a>
+      <a href="#part2">Part II: HCl</a>
+      <a href="#part3">Part III: NaOH</a>
+      <a href="#calcs">Calculations</a>
+      <a href="#discussion">Discussion</a>
+    </nav>
+
+    <main>
+      <!-- VIRTUAL NOTE -->
+      <div class="virtual-note">
+        <strong>📋 Virtual Lab Instructions:</strong> This interactive worksheet
+        replaces the in-person lab experience. Read each section carefully, fill
+        in all blanks, enter simulated/calculated data in the tables, complete
+        all calculations, and answer the discussion questions. Your work is
+        automatically saved in your browser. Use the
+        <em>Reveal Answer</em> buttons only after you have made a genuine
+        attempt.
+      </div>
+
+      <!-- ============================== SECTION 0: NAME ============================== -->
+      <div class="section">
+        <div class="section-header blue">📝 Student Information</div>
+        <div class="section-body">
+          <div class="two-col">
+            <div class="q-group">
+              <label class="q-label">Full Name</label>
+              <input
+                type="text"
+                class="fill-in"
+                style="min-width: 250px"
+                id="s_name"
+                placeholder="Your full name"
+                oninput="saveAll()"
+              />
+            </div>
+            <div class="q-group">
+              <label class="q-label">Date</label>
+              <input
+                type="text"
+                class="fill-in"
+                id="s_date"
+                placeholder="e.g. April 26, 2026"
+                oninput="saveAll()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================== SECTION 1: CONCEPTS ============================== -->
+      <div class="section" id="concepts">
+        <div class="section-header blue">🔬 What Is a Buffer?</div>
+        <div class="section-body">
+          <div class="info-box">
+            A buffer is a solution that <strong>resists pH changes</strong> when
+            small amounts of acid or base are added. Think of it like a chemical
+            sponge — it absorbs added H⁺ or OH⁻ ions without significantly
+            changing the solution's pH.
+          </div>
+
+          <div class="sub-section-title">How Does It Work?</div>
+          <p>A buffer has <strong>two components</strong> working as a team:</p>
+          <div style="margin: 14px 0 14px 16px">
+            <p style="margin-bottom: 10px">
+              • &nbsp; A &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="b_weakacid"
+                data-answer="weak acid"
+                placeholder="___________"
+                oninput="checkFill(this)"
+              />
+              &nbsp; (HA): ready to neutralize any added base (OH⁻)
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('b_weakacid', 'weak acid')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="b_weakacid_badge"
+                >✓ weak acid</span
+              >
+            </p>
+            <p>
+              • &nbsp; Its conjugate &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="b_conjbase"
+                data-answer="base"
+                placeholder="_______"
+                oninput="checkFill(this)"
+                style="min-width: 90px"
+              />
+              &nbsp; (A⁻): ready to neutralize any added acid (H⁺)
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('b_conjbase', 'base')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="b_conjbase_badge">✓ base</span>
+            </p>
+          </div>
+
+          <div class="reaction-box">
+            When acid is added: &nbsp; A⁻ + H⁺ → HA &nbsp; (conjugate base
+            absorbs the acid)<br />
+            When base is added: &nbsp; HA + OH⁻ → A⁻ + H₂O &nbsp; (weak acid
+            absorbs the base)
+          </div>
+
+          <div class="sub-section-title">Today's Buffer System</div>
+          <div style="line-height: 2.2">
+            <p>
+              • Weak acid: &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="b_acid"
+                data-answer="acetic acid"
+                placeholder="_______________"
+                oninput="checkFill(this)"
+              />
+              &nbsp; (CH₃COOH), Ka = 1.8 × 10⁻⁵
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('b_acid', 'acetic acid')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="b_acid_badge">✓ acetic acid</span>
+            </p>
+            <p>
+              • Conjugate base: Sodium acetate (&nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="b_sa"
+                data-answer="NaCH₃COO"
+                placeholder="_________"
+                oninput="checkFill(this)"
+                style="min-width: 110px"
+              />
+              &nbsp; / CH₃COO⁻)
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('b_sa', 'NaCH₃COO')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="b_sa_badge">✓ NaCH₃COO</span>
+            </p>
+            <p>
+              • This is the same acid found in &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="b_vinegar"
+                data-answer="vinegar"
+                placeholder="___________"
+                oninput="checkFill(this)"
+              />
+              !
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('b_vinegar', 'vinegar')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="b_vinegar_badge">✓ vinegar</span>
+            </p>
+          </div>
+
+          <div class="sub-section-title">
+            Key Equation — Henderson-Hasselbalch
+          </div>
+          <div class="eq-box">pH = pKa + log ([A⁻] / [HA])</div>
+          <div class="tip-box">
+            ⚠️ <strong>Important:</strong> This equation
+            <em>only works for true buffers</em> (Beakers 2 and 3 — where both
+            HA and A⁻ are present).<br />
+            For <strong>pure acid</strong> (Beaker 1) or
+            <strong>pure conjugate base</strong> (Beaker 4), you must use an
+            <strong>ICE table</strong>.
+          </div>
+
+          <!-- Concept Quiz -->
+          <div class="sub-section-title">🧠 Quick Concept Check</div>
+
+          <div class="q-group">
+            <span class="q-label"
+              >Q1. When HCl (a strong acid) is added to an acetate buffer, which
+              component neutralizes it?</span
+            >
+            <label
+              class="quiz-option"
+              onclick="quizCheck(this, 'q1', 'correct')"
+              >A. &nbsp; CH₃COO⁻ (acetate ion / conjugate base)</label
+            >
+            <label class="quiz-option" onclick="quizCheck(this, 'q1', 'wrong')"
+              >B. &nbsp; CH₃COOH (acetic acid)</label
+            >
+            <label class="quiz-option" onclick="quizCheck(this, 'q1', 'wrong')"
+              >C. &nbsp; H₂O</label
+            >
+            <label class="quiz-option" onclick="quizCheck(this, 'q1', 'wrong')"
+              >D. &nbsp; Na⁺ ion</label
+            >
+          </div>
+
+          <div class="q-group">
+            <span class="q-label"
+              >Q2. When NaOH (a strong base) is added to an acetate buffer,
+              which component neutralizes it?</span
+            >
+            <label class="quiz-option" onclick="quizCheck(this, 'q2', 'wrong')"
+              >A. &nbsp; CH₃COO⁻ (acetate ion)</label
+            >
+            <label
+              class="quiz-option"
+              onclick="quizCheck(this, 'q2', 'correct')"
+              >B. &nbsp; CH₃COOH (acetic acid)</label
+            >
+            <label class="quiz-option" onclick="quizCheck(this, 'q2', 'wrong')"
+              >C. &nbsp; Na⁺ ion</label
+            >
+            <label class="quiz-option" onclick="quizCheck(this, 'q2', 'wrong')"
+              >D. &nbsp; Cl⁻ ion</label
+            >
+          </div>
+
+          <div class="q-group">
+            <span class="q-label"
+              >Q3. The Henderson-Hasselbalch equation can be used for Beaker 1
+              (pure acetic acid). True or False?</span
+            >
+            <label class="quiz-option" onclick="quizCheck(this, 'q3', 'wrong')"
+              >A. &nbsp; True — it works for any acetic acid solution</label
+            >
+            <label
+              class="quiz-option"
+              onclick="quizCheck(this, 'q3', 'correct')"
+              >B. &nbsp; False — Beaker 1 has no conjugate base (A⁻ = 0), so an
+              ICE table is required</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================== SECTION 2: PART I ============================== -->
+      <div class="section" id="part1">
+        <div class="section-header teal">🧫 Part I: Buffer Preparation</div>
+        <div class="section-body">
+          <div class="virtual-note">
+            <strong>Virtual Lab:</strong> In the actual lab you would mix these
+            solutions in beakers using graduated pipettes. For this virtual
+            version, the volumes are given — you will use them to calculate
+            concentrations and predict pH in the Calculations section.
+          </div>
+
+          <div class="sub-section-title">Step 2: Label the Beaker Types</div>
+          <p style="margin-bottom: 12px">
+            Each beaker has 10 mL total volume, mixing different ratios of 0.5 M
+            CH₃COOH and 0.5 M NaCH₃COO.
+          </p>
+
+          <div style="line-height: 2.4; margin-left: 8px">
+            <p>
+              <span class="beaker-label">Beaker 1</span> 10 mL acid + 0 mL base
+              = <strong>pure weak acid</strong> (NOT a buffer)
+            </p>
+            <p>
+              <span class="beaker-label">Beaker 2</span> 8 mL acid + 2 mL base =
+              <input
+                type="text"
+                class="fill-in"
+                id="p1_b2type"
+                data-answer="buffer"
+                placeholder="__________"
+                oninput="checkFill(this)"
+                style="min-width: 100px"
+              />
+              , mostly
+              <input
+                type="text"
+                class="fill-in"
+                id="p1_b2char"
+                data-answer="acidic"
+                placeholder="__________"
+                oninput="checkFill(this)"
+                style="min-width: 100px"
+              />
+              <button
+                class="btn-reveal"
+                onclick="
+                  revealAnswer('p1_b2type', 'buffer');
+                  revealAnswer('p1_b2char', 'acidic');
+                "
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="p1_b2type_badge"
+                >✓ buffer, mostly acidic</span
+              >
+            </p>
+            <p>
+              <span class="beaker-label">Beaker 3</span> 2 mL acid + 8 mL base =
+              <input
+                type="text"
+                class="fill-in"
+                id="p1_b3type"
+                data-answer="buffer"
+                placeholder="__________"
+                oninput="checkFill(this)"
+                style="min-width: 100px"
+              />
+              , mostly
+              <input
+                type="text"
+                class="fill-in"
+                id="p1_b3char"
+                data-answer="basic"
+                placeholder="__________"
+                oninput="checkFill(this)"
+                style="min-width: 100px"
+              />
+              <button
+                class="btn-reveal"
+                onclick="
+                  revealAnswer('p1_b3type', 'buffer');
+                  revealAnswer('p1_b3char', 'basic');
+                "
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="p1_b3type_badge"
+                >✓ buffer, mostly basic</span
+              >
+            </p>
+            <p>
+              <span class="beaker-label">Beaker 4</span> 0 mL acid + 10 mL base
+              = <strong>pure conjugate base</strong> (NOT a buffer)
+            </p>
+          </div>
+
+          <div class="sub-section-title">
+            Table 1: Buffer Preparation and Initial pH
+          </div>
+          <p style="margin-bottom: 10px; font-size: 0.88rem; color: #555">
+            Enter <strong>10</strong> for Total Volume (all beakers). Calculate
+            [HA] using: [HA] = (Vol acid × 0.5 M) ÷ 10 mL. Enter the predicted
+            pH from your Calculations section (or a measured value if provided
+            by your instructor).
+          </p>
+          <table id="table1">
+            <thead>
+              <tr>
+                <th>Beaker</th>
+                <th>Vol. 0.5 M CH₃COOH (mL)</th>
+                <th>Vol. 0.5 M NaCH₃COO (mL)</th>
+                <th>Total Vol. (mL)</th>
+                <th>[HA] (M)</th>
+                <th>Measured / Calculated pH</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1</strong></td>
+                <td>10</td>
+                <td>0</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r1_tv"
+                    value="10"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r1_ha"
+                    placeholder="0.5"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r1_ph"
+                    placeholder="2.52"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>2</strong></td>
+                <td>8</td>
+                <td>2</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r2_tv"
+                    value="10"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r2_ha"
+                    placeholder="0.4"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r2_ph"
+                    placeholder="4.14"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>3</strong></td>
+                <td>2</td>
+                <td>8</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r3_tv"
+                    value="10"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r3_ha"
+                    placeholder="0.1"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r3_ph"
+                    placeholder="5.34"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>4</strong></td>
+                <td>0</td>
+                <td>10</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r4_tv"
+                    value="10"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r4_ha"
+                    placeholder="0"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="t1_r4_ph"
+                    placeholder="9.22"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="tip-box">
+            💡 Tip: The [HA] column uses only the acid volume. For Beaker 4 (no
+            acid), [HA] = 0 M.
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================== SECTION 3: PART II ============================== -->
+      <div class="section" id="part2">
+        <div class="section-header green">
+          🧪 Part II: Testing Buffer Capacity with HCl
+        </div>
+        <div class="section-body">
+          <div class="info-box">
+            <strong>Buffer capacity</strong> = how much acid or base a buffer
+            can absorb before the pH changes significantly (more than 0.5
+            units).<br />
+            We are testing how well each beaker resists pH change when
+            <strong>strong acid (HCl)</strong> is added.
+          </div>
+
+          <div class="virtual-note">
+            <strong>Virtual Lab — Simulated Data:</strong> In the actual lab you
+            would add HCl drop by drop and record pH after each addition. For
+            this virtual version, use the simulated data provided below, which
+            reflects typical class results. Enter it into Table 2 and answer the
+            analysis questions.
+          </div>
+
+          <div class="sub-section-title">Simulated Data — HCl Addition</div>
+          <div class="tip-box" style="font-size: 0.88rem">
+            Copy these values into Table 2 below. Stop adding drops for a beaker
+            once ΔpH &gt; 0.5 from the previous measurement.<br /><br />
+            <strong>Beaker 1 (pure acid):</strong> Initial 2.61 → +5: 1.86 →
+            +10: 1.56 → +15: 1.35 → +20: 1.24<br />
+            <strong>Beaker 2 (mostly acidic buffer):</strong> Initial 4.14 → +5:
+            3.72 → +10: 3.44 → +15: 2.98 → +20: 1.82<br />
+            <strong>Beaker 3 (mostly basic buffer):</strong> Initial 5.34 → +5:
+            4.86 → +10: 4.58 → +15: 4.21 → +20: 3.78<br />
+            <strong>Beaker 4 (pure base):</strong> Initial 9.22 → +5: 5.73 →
+            (STOP — ΔpH &gt; 0.5)
+          </div>
+
+          <div class="sub-section-title">
+            Table 2: pH After Addition of 3 M HCl
+          </div>
+          <table id="table2">
+            <thead>
+              <tr>
+                <th>Beaker</th>
+                <th>Initial pH</th>
+                <th>+5 drops</th>
+                <th>+10 drops</th>
+                <th>+15 drops</th>
+                <th>+20 drops</th>
+                <th>Drops until ΔpH &gt; 0.5</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1</strong></td>
+                <td>
+                  <input class="table-input" id="t2_1_i" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_1_5" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_1_10" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_1_15" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_1_20" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_1_d" oninput="saveAll()" />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>2</strong></td>
+                <td>
+                  <input class="table-input" id="t2_2_i" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_2_5" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_2_10" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_2_15" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_2_20" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_2_d" oninput="saveAll()" />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>3</strong></td>
+                <td>
+                  <input class="table-input" id="t2_3_i" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_3_5" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_3_10" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_3_15" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_3_20" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_3_d" oninput="saveAll()" />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>4</strong></td>
+                <td>
+                  <input class="table-input" id="t2_4_i" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_4_5" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_4_10" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_4_15" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_4_20" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t2_4_d" oninput="saveAll()" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="q-group" style="margin-top: 18px">
+            <p style="margin-bottom: 10px">
+              The &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="p2_neut"
+                data-answer="conjugate base"
+                placeholder="_______________"
+                oninput="checkFill(this)"
+              />
+              &nbsp; (A⁻) is what neutralizes added acid.
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('p2_neut', 'conjugate base')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="p2_neut_badge"
+                >✓ conjugate base</span
+              >
+            </p>
+            <p>
+              More A⁻ = more capacity to resist acid. Beaker &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="p2_bestbeaker"
+                data-answer="3"
+                placeholder="__"
+                oninput="checkFill(this)"
+                style="min-width: 50px"
+              />
+              &nbsp; has the most A⁻.
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('p2_bestbeaker', '3')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="p2_bestbeaker_badge"
+                >✓ Beaker 3</span
+              >
+            </p>
+          </div>
+          <div class="tip-box">
+            💡 Beaker 3 has 8 mL of sodium acetate (A⁻) vs only 2 mL of acetic
+            acid — therefore it has the highest A⁻ concentration and best
+            resists added acid.
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================== SECTION 4: PART III ============================== -->
+      <div class="section" id="part3">
+        <div class="section-header purple">
+          🧪 Part III: Testing Buffer Capacity with NaOH
+        </div>
+        <div class="section-body">
+          <div class="info-box">
+            Same process as Part II, but now you are adding a
+            <strong>strong base (NaOH)</strong> instead of a strong acid. Fresh
+            solutions must be prepared first (the old ones were altered by HCl).
+          </div>
+
+          <div class="virtual-note">
+            <strong>Virtual Lab — Simulated Data:</strong> Use the values below
+            (typical class results for NaOH addition). Record them in Table 3.
+            <br /><br />
+            <strong>Beaker 1 (pure acid):</strong> Initial 2.61 → +5: 2.84 →
+            (STOP — ΔpH &gt; 0.5 from 2.61? No: 0.23. Continue.) +10: 3.01 →
+            (ΔpH from +5 = 0.17. Continue.) +15: 3.84 → (STOP — ΔpH from +10 =
+            0.83 &gt; 0.5)<br />
+            <strong>Beaker 2 (mostly acidic buffer):</strong> Initial 4.14 → +5:
+            4.38 → +10: 4.62 → +15: 4.91 → +20: 5.22<br />
+            <strong>Beaker 3 (mostly basic buffer):</strong> Initial 5.34 → +5:
+            5.58 → +10: 5.79 → +15: 6.02 → +20: 6.28<br />
+            <strong>Beaker 4 (pure base):</strong> Initial 9.22 → +5: 9.46 →
+            +10: 9.68 → +15: 9.91 → +20: 10.12
+          </div>
+
+          <div class="sub-section-title">
+            Table 3: pH After Addition of 3 M NaOH
+          </div>
+          <table id="table3">
+            <thead>
+              <tr>
+                <th>Beaker</th>
+                <th>Initial pH</th>
+                <th>+5 drops</th>
+                <th>+10 drops</th>
+                <th>+15 drops</th>
+                <th>+20 drops</th>
+                <th>Drops until ΔpH &gt; 0.5</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1</strong></td>
+                <td>
+                  <input class="table-input" id="t3_1_i" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_1_5" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_1_10" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_1_15" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_1_20" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_1_d" oninput="saveAll()" />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>2</strong></td>
+                <td>
+                  <input class="table-input" id="t3_2_i" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_2_5" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_2_10" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_2_15" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_2_20" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_2_d" oninput="saveAll()" />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>3</strong></td>
+                <td>
+                  <input class="table-input" id="t3_3_i" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_3_5" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_3_10" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_3_15" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_3_20" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_3_d" oninput="saveAll()" />
+                </td>
+              </tr>
+              <tr>
+                <td><strong>4</strong></td>
+                <td>
+                  <input class="table-input" id="t3_4_i" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_4_5" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_4_10" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_4_15" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_4_20" oninput="saveAll()" />
+                </td>
+                <td>
+                  <input class="table-input" id="t3_4_d" oninput="saveAll()" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="q-group" style="margin-top: 18px">
+            <p style="margin-bottom: 10px">
+              The &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="p3_neut"
+                data-answer="weak acid"
+                placeholder="_______________"
+                oninput="checkFill(this)"
+              />
+              &nbsp; (HA) is what neutralizes added base.
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('p3_neut', 'weak acid')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="p3_neut_badge">✓ weak acid</span>
+            </p>
+            <p>
+              More HA = more capacity to resist base. Beaker &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="p3_bestbeaker"
+                data-answer="2"
+                placeholder="__"
+                oninput="checkFill(this)"
+                style="min-width: 50px"
+              />
+              &nbsp; has the most HA.
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('p3_bestbeaker', '2')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="p3_bestbeaker_badge"
+                >✓ Beaker 2</span
+              >
+            </p>
+          </div>
+          <div class="tip-box">
+            💡 Beaker 2 has 8 mL of acetic acid (HA) — the highest HA
+            concentration — so it best resists added base.
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================== SECTION 5: CALCULATIONS ============================== -->
+      <div class="section" id="calcs">
+        <div class="section-header orange">🔢 Calculations</div>
+        <div class="section-body">
+          <!-- STEP 1 -->
+          <div class="sub-section-title">
+            Step 1: Calculate Concentrations Using Dilution
+          </div>
+          <div class="info-box">
+            Stock solutions are both <strong>0.5 M</strong>. When you mix them,
+            concentrations change because you dilute into the total 10 mL
+            volume.<br /><br />
+            <strong>General formulas:</strong><br />
+            [HA] = (Volume of acid used × 0.5 M) ÷ 10 mL<br />
+            [A⁻] = (Volume of base used × 0.5 M) ÷ 10 mL
+          </div>
+
+          <div
+            class="sub-section-title"
+            style="font-size: 0.95rem; color: var(--purple)"
+          >
+            📐 Worked Example — Beaker 2:
+          </div>
+          <div
+            style="
+              background: var(--light-purple);
+              border-radius: 8px;
+              padding: 16px 20px;
+              margin-bottom: 16px;
+              font-size: 0.95rem;
+            "
+          >
+            [HA] = (8 mL × 0.5 M) / 10 mL = 4.0 / 10 = <strong>0.40 M</strong
+            ><br />
+            [A⁻] = (2 mL × 0.5 M) / 10 mL = 1.0 / 10 = <strong>0.10 M</strong>
+          </div>
+
+          <p style="margin-bottom: 12px; font-weight: 600">
+            Complete the table — show your calculation for each beaker:
+          </p>
+
+          <div class="two-col" style="margin-bottom: 20px">
+            <div
+              style="
+                background: var(--light-yellow);
+                border-radius: 8px;
+                padding: 16px;
+                border: 1.5px solid #f0b27a;
+              "
+            >
+              <p
+                style="
+                  font-weight: 700;
+                  color: var(--orange);
+                  margin-bottom: 10px;
+                "
+              >
+                🔶 Beaker 3 (your turn):
+              </p>
+              <p style="font-size: 0.9rem; margin-bottom: 8px">
+                Acid = 2 mL, Base = 8 mL
+              </p>
+              [HA] = (2 × 0.5) / 10 =
+              <input
+                type="text"
+                class="fill-in"
+                id="c_b3ha"
+                data-answer="0.1"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 60px"
+              />
+              M
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('c_b3ha', '0.1')"
+              >
+                Hint</button
+              ><br />
+              [A⁻] = (8 × 0.5) / 10 =
+              <input
+                type="text"
+                class="fill-in"
+                id="c_b3anion"
+                data-answer="0.4"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 60px"
+              />
+              M
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('c_b3anion', '0.4')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="c_b3ha_badge">✓ 0.1</span>
+              <span class="answer-badge" id="c_b3anion_badge">✓ 0.4</span>
+            </div>
+            <div
+              style="
+                background: var(--light-yellow);
+                border-radius: 8px;
+                padding: 16px;
+                border: 1.5px solid #f0b27a;
+              "
+            >
+              <p
+                style="
+                  font-weight: 700;
+                  color: var(--orange);
+                  margin-bottom: 10px;
+                "
+              >
+                🔶 Beaker 4 (your turn):
+              </p>
+              <p style="font-size: 0.9rem; margin-bottom: 8px">
+                Acid = 0 mL, Base = 10 mL
+              </p>
+              [HA] = (0 × 0.5) / 10 =
+              <input
+                type="text"
+                class="fill-in"
+                id="c_b4ha"
+                data-answer="0"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 60px"
+              />
+              M
+              <button class="btn-reveal" onclick="revealAnswer('c_b4ha', '0')">
+                Hint</button
+              ><br />
+              [A⁻] = (10 × 0.5) / 10 =
+              <input
+                type="text"
+                class="fill-in"
+                id="c_b4anion"
+                data-answer="0.5"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 60px"
+              />
+              M
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('c_b4anion', '0.5')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="c_b4ha_badge">✓ 0</span>
+              <span class="answer-badge" id="c_b4anion_badge">✓ 0.5</span>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Beaker</th>
+                <th>[HA] (M)</th>
+                <th>[A⁻] (M)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="c_t_1ha"
+                    placeholder="0.5"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="c_t_1an"
+                    placeholder="0"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="c_t_2ha"
+                    placeholder="0.4"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="c_t_2an"
+                    placeholder="0.1"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="c_t_3ha"
+                    placeholder="0.1"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="c_t_3an"
+                    placeholder="0.4"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="c_t_4ha"
+                    placeholder="0"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="c_t_4an"
+                    placeholder="0.5"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- STEP 2: HH -->
+          <div class="sub-section-title" style="margin-top: 28px">
+            Step 2: Henderson-Hasselbalch for Beakers 2 and 3
+          </div>
+          <div class="eq-box">
+            pH = pKa + log ([A⁻] / [HA]) &nbsp;&nbsp; where pKa = −log(1.8 ×
+            10⁻⁵) = 4.74
+          </div>
+
+          <div
+            class="sub-section-title"
+            style="font-size: 0.95rem; color: var(--purple)"
+          >
+            📐 Worked Example — Beaker 2:
+          </div>
+          <div
+            style="
+              background: var(--light-purple);
+              border-radius: 8px;
+              padding: 16px 20px;
+              margin-bottom: 16px;
+              font-size: 0.95rem;
+            "
+          >
+            pH = 4.74 + log(0.10 / 0.40)<br />
+            pH = 4.74 + log(0.25)<br />
+            pH = 4.74 + (−0.602)<br />
+            pH = <strong>4.14</strong>
+          </div>
+
+          <p style="margin-bottom: 10px; font-weight: 600">
+            Now calculate pH for Beaker 3. Show your work:
+          </p>
+          <div
+            style="
+              background: #fafafa;
+              border: 1.5px solid var(--border);
+              border-radius: 8px;
+              padding: 18px 22px;
+              margin-bottom: 16px;
+            "
+          >
+            <p style="margin-bottom: 8px">
+              pH = 4.74 + log(
+              <input
+                type="text"
+                class="fill-in"
+                id="hh_b3_an"
+                data-answer="0.4"
+                placeholder="[A⁻]"
+                oninput="calcHH_b3()"
+                style="min-width: 60px"
+              />
+              /
+              <input
+                type="text"
+                class="fill-in"
+                id="hh_b3_ha"
+                data-answer="0.1"
+                placeholder="[HA]"
+                oninput="calcHH_b3()"
+                style="min-width: 60px"
+              />
+              )
+            </p>
+            <p style="margin-bottom: 8px">
+              pH = 4.74 + log(
+              <input
+                type="text"
+                class="fill-in"
+                id="hh_b3_ratio"
+                placeholder="ratio"
+                oninput="saveAll()"
+                style="min-width: 70px"
+              />
+              )
+            </p>
+            <p>
+              pH =
+              <input
+                type="text"
+                class="fill-in"
+                id="hh_b3_ans"
+                data-answer="5.34"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 80px"
+              />
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('hh_b3_ans', '5.34')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="hh_b3_ans_badge">✓ 5.34</span>
+            </p>
+          </div>
+
+          <!-- H-H calculator -->
+          <div class="calc-panel">
+            <h4>🧮 Interactive H-H Calculator</h4>
+            <p style="font-size: 0.88rem; margin-bottom: 14px">
+              Use this to check your work or explore how the ratio affects pH.
+            </p>
+            <div class="calc-row">
+              <label>pKa (acetic acid):</label>
+              <input type="number" id="hh_pka" value="4.74" step="0.01" />
+            </div>
+            <div class="calc-row">
+              <label>[A⁻] concentration (M):</label>
+              <input
+                type="number"
+                id="hh_anion"
+                placeholder="e.g. 0.4"
+                step="0.01"
+                min="0.001"
+              />
+            </div>
+            <div class="calc-row">
+              <label>[HA] concentration (M):</label>
+              <input
+                type="number"
+                id="hh_acid"
+                placeholder="e.g. 0.1"
+                step="0.01"
+                min="0.001"
+              />
+            </div>
+            <button class="btn btn-calc" onclick="runHH()">Calculate pH</button>
+            <div class="calc-result" id="hh_calc_result"></div>
+          </div>
+
+          <!-- PATTERN FILL-INS -->
+          <div
+            style="
+              margin-top: 20px;
+              background: var(--gray);
+              border-radius: 8px;
+              padding: 16px 20px;
+            "
+          >
+            <p
+              style="font-style: italic; font-weight: 600; margin-bottom: 10px"
+            >
+              Notice the pattern:
+            </p>
+            <p style="margin-bottom: 8px">
+              When [A⁻] &gt; [HA], pH &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="pat_1"
+                data-answer=">"
+                placeholder=">"
+                oninput="checkFill(this)"
+                style="min-width: 40px"
+              />
+              &nbsp; pKa
+              <button class="btn-reveal" onclick="revealAnswer('pat_1', '>')">
+                Hint
+              </button>
+            </p>
+            <p style="margin-bottom: 8px">
+              When [HA] &gt; [A⁻], pH &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="pat_2"
+                data-answer="<"
+                placeholder="<"
+                oninput="checkFill(this)"
+                style="min-width: 40px"
+              />
+              &nbsp; pKa
+              <button class="btn-reveal" onclick="revealAnswer('pat_2', '<')">
+                Hint
+              </button>
+            </p>
+            <p>
+              When they are equal, pH = &nbsp;
+              <input
+                type="text"
+                class="fill-in"
+                id="pat_3"
+                data-answer="pKa"
+                placeholder="____"
+                oninput="checkFill(this)"
+                style="min-width: 70px"
+              />
+              &nbsp; exactly
+              <button class="btn-reveal" onclick="revealAnswer('pat_3', 'pKa')">
+                Hint
+              </button>
+            </p>
+          </div>
+
+          <!-- STEP 3: ICE BEAKER 1 -->
+          <div class="sub-section-title" style="margin-top: 28px">
+            Step 3: ICE Table for Beaker 1 (Pure&nbsp;
+            <input
+              type="text"
+              class="fill-in"
+              id="ice1_label"
+              data-answer="weak acid"
+              placeholder="__________"
+              oninput="checkFill(this)"
+              style="min-width: 120px"
+            />
+            )
+            <button
+              class="btn-reveal"
+              onclick="revealAnswer('ice1_label', 'weak acid')"
+            >
+              Hint
+            </button>
+          </div>
+
+          <div class="info-box">
+            Beaker 1 has <strong>only acetic acid (0.50 M)</strong> — no
+            conjugate base. This is NOT a buffer. We must use the &nbsp;
+            <input
+              type="text"
+              class="fill-in"
+              id="ice1_method"
+              data-answer="ICE"
+              placeholder="______"
+              oninput="checkFill(this)"
+              style="min-width: 60px"
+            />
+            <button
+              class="btn-reveal"
+              onclick="revealAnswer('ice1_method', 'ICE')"
+            >
+              Hint
+            </button>
+            &nbsp; table approach.
+          </div>
+
+          <div class="reaction-box">
+            Reaction: CH₃COOH ⇌ H⁺ + CH₃COO⁻ &nbsp;&nbsp; Ka = 1.8 × 10⁻⁵
+          </div>
+
+          <table class="ice-table" style="margin: 16px 0; max-width: 480px">
+            <thead>
+              <tr>
+                <th style="width: 50px"></th>
+                <th>CH₃COOH</th>
+                <th>H⁺</th>
+                <th>CH₃COO⁻</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ice-label">I</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_i1"
+                    placeholder="0.5"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_i2"
+                    placeholder="0"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_i3"
+                    placeholder="0"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="ice-label">C</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_c1"
+                    placeholder="−x"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_c2"
+                    placeholder="+x"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_c3"
+                    placeholder="+x"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="ice-label">E</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_e1"
+                    placeholder="0.5−x"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_e2"
+                    placeholder="x"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice1_e3"
+                    placeholder="x"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div
+            style="
+              background: #f8f9fa;
+              border-radius: 8px;
+              padding: 16px 22px;
+              margin-bottom: 16px;
+            "
+          >
+            <p style="font-weight: 700; margin-bottom: 10px">
+              Substitute into Ka expression:
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1.05rem;
+                margin-bottom: 8px;
+              "
+            >
+              Ka = x² / (0.5 − x) ≈ x² / 0.5 = 1.8 × 10⁻⁵
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1.05rem;
+                margin-bottom: 8px;
+              "
+            >
+              x² = (1.8 × 10⁻⁵)(0.5) = 9.0 × 10⁻⁶
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1.05rem;
+                margin-bottom: 12px;
+              "
+            >
+              x = [H⁺] =
+              <input
+                type="text"
+                class="fill-in"
+                id="ice1_x"
+                data-answer="3.0 × 10⁻³"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 120px"
+              />
+              M
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('ice1_x', '3.0 × 10⁻³')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="ice1_x_badge">✓ 3.0 × 10⁻³</span>
+            </p>
+            <p style="font-family: monospace; font-size: 1.05rem">
+              pH = −log(3.0 × 10⁻³) =
+              <input
+                type="text"
+                class="fill-in"
+                id="ice1_ph"
+                data-answer="2.52"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 70px"
+              />
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('ice1_ph', '2.52')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="ice1_ph_badge">✓ 2.52</span>
+            </p>
+          </div>
+
+          <!-- STEP 4: ICE BEAKER 4 -->
+          <div class="sub-section-title" style="margin-top: 28px">
+            Step 4: ICE Table for Beaker 4 (Pure&nbsp;
+            <input
+              type="text"
+              class="fill-in"
+              id="ice4_label"
+              data-answer="conjugate base"
+              placeholder="______________"
+              oninput="checkFill(this)"
+              style="min-width: 150px"
+            />
+            )
+            <button
+              class="btn-reveal"
+              onclick="revealAnswer('ice4_label', 'conjugate base')"
+            >
+              Hint
+            </button>
+          </div>
+
+          <div class="info-box">
+            Beaker 4 has <strong>only sodium acetate (0.50 M)</strong>. The
+            acetate ion (CH₃COO⁻) acts as a <strong>weak base</strong> in water.
+            We need Kb first.
+          </div>
+
+          <div
+            style="
+              background: #f8f9fa;
+              border-radius: 8px;
+              padding: 16px 22px;
+              margin-bottom: 16px;
+            "
+          >
+            <p style="font-weight: 700; margin-bottom: 10px">
+              First, calculate Kb:
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1rem;
+                margin-bottom: 8px;
+              "
+            >
+              Ka × Kb = Kw = 1.0 × 10⁻¹⁴
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1rem;
+                margin-bottom: 8px;
+              "
+            >
+              Kb = Kw / Ka = (1.0 × 10⁻¹⁴) / (1.8 × 10⁻⁵)
+            </p>
+            <p style="font-family: monospace; font-size: 1rem">
+              Kb =
+              <input
+                type="text"
+                class="fill-in"
+                id="ice4_kb"
+                data-answer="5.56 × 10⁻¹⁰"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 140px"
+              />
+              M
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('ice4_kb', '5.56 × 10⁻¹⁰')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="ice4_kb_badge"
+                >✓ 5.56 × 10⁻¹⁰</span
+              >
+            </p>
+          </div>
+
+          <div class="reaction-box">
+            Reaction: CH₃COO⁻ + H₂O ⇌ CH₃COOH + OH⁻
+          </div>
+
+          <table class="ice-table" style="margin: 16px 0; max-width: 520px">
+            <thead>
+              <tr>
+                <th style="width: 50px"></th>
+                <th>CH₃COO⁻</th>
+                <th>CH₃COOH</th>
+                <th>OH⁻</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ice-label">I</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_i1"
+                    placeholder="0.5"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_i2"
+                    placeholder="0"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_i3"
+                    placeholder="0"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="ice-label">C</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_c1"
+                    placeholder="−x"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_c2"
+                    placeholder="+x"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_c3"
+                    placeholder="+x"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="ice-label">E</td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_e1"
+                    placeholder="0.5−x"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_e2"
+                    placeholder="x"
+                    oninput="saveAll()"
+                  />
+                </td>
+                <td>
+                  <input
+                    class="table-input"
+                    id="ice4_e3"
+                    placeholder="x"
+                    oninput="saveAll()"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div
+            style="
+              background: #f8f9fa;
+              border-radius: 8px;
+              padding: 16px 22px;
+              margin-bottom: 16px;
+            "
+          >
+            <p style="font-weight: 700; margin-bottom: 10px">
+              Substitute into Kb expression:
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1rem;
+                margin-bottom: 8px;
+              "
+            >
+              Kb = x² / (0.5 − x) ≈ x² / 0.5 = 5.56 × 10⁻¹⁰
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1rem;
+                margin-bottom: 8px;
+              "
+            >
+              x² = (5.56 × 10⁻¹⁰)(0.5) = 2.78 × 10⁻¹⁰
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1rem;
+                margin-bottom: 8px;
+              "
+            >
+              x = [OH⁻] =
+              <input
+                type="text"
+                class="fill-in"
+                id="ice4_x"
+                data-answer="1.67 × 10⁻⁵"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 140px"
+              />
+              M
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('ice4_x', '1.67 × 10⁻⁵')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="ice4_x_badge">✓ 1.67 × 10⁻⁵</span>
+            </p>
+            <p
+              style="
+                font-family: monospace;
+                font-size: 1rem;
+                margin-bottom: 8px;
+              "
+            >
+              pOH = −log(1.67 × 10⁻⁵) =
+              <input
+                type="text"
+                class="fill-in"
+                id="ice4_poh"
+                data-answer="4.78"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 70px"
+              />
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('ice4_poh', '4.78')"
+              >
+                Hint
+              </button>
+            </p>
+            <p style="font-family: monospace; font-size: 1rem">
+              pH = 14 − pOH =
+              <input
+                type="text"
+                class="fill-in"
+                id="ice4_ph"
+                data-answer="9.22"
+                placeholder="?"
+                oninput="checkFill(this)"
+                style="min-width: 70px"
+              />
+              <button
+                class="btn-reveal"
+                onclick="revealAnswer('ice4_ph', '9.22')"
+              >
+                Hint
+              </button>
+              <span class="answer-badge" id="ice4_ph_badge">✓ 9.22</span>
+            </p>
+          </div>
+
+          <div class="tip-box">
+            ⚠️ <strong>Common mistake:</strong> Don't forget the final step —
+            converting pOH to pH using pH = 14 − pOH. Stopping at pOH is a
+            frequent error.
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================== SECTION 6: DISCUSSION ============================== -->
+      <div class="section" id="discussion">
+        <div class="section-header blue">💬 Discussion Questions</div>
+        <div class="section-body">
+          <div class="q-group">
+            <span class="q-label"
+              >1. How closely did the experimental (simulated/measured) pH match
+              the calculated pH values?</span
+            >
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 8px">
+              Discuss for each beaker. Consider sources of error if there are
+              differences (pH meter calibration, temperature effects, volume
+              measurement).
+            </p>
+            <textarea
+              class="lab-textarea"
+              id="dq1"
+              oninput="
+                updateCharCount('dq1', 'cc1');
+                saveAll();
+              "
+              placeholder="Compare the measured pH from Tables 1/2/3 to your calculated values. Mention possible sources of error..."
+            ></textarea>
+            <div class="char-count" id="cc1">0 characters</div>
+          </div>
+
+          <div class="q-group">
+            <span class="q-label"
+              >2. Reaction when HCl is added to the acetate buffer:</span
+            >
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 8px">
+              Write the equation and explain what happens to pH. Which component
+              neutralizes the added acid?
+            </p>
+            <textarea
+              class="lab-textarea"
+              id="dq2"
+              oninput="
+                updateCharCount('dq2', 'cc2');
+                saveAll();
+              "
+              placeholder="Write the ionic equation for when HCl is added. Example format: CH₃COO⁻ + H⁺ → CH₃COOH..."
+            ></textarea>
+            <div class="char-count" id="cc2">0 characters</div>
+            <div class="tip-box" style="margin-top: 10px">
+              💡 Expected: CH₃COO⁻(aq) + H⁺(aq) → CH₃COOH(aq) — The acetate ion
+              neutralizes the H⁺, resisting a drop in pH.
+            </div>
+          </div>
+
+          <div class="q-group">
+            <span class="q-label"
+              >3. Reaction when NaOH is added to the acetate buffer:</span
+            >
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 8px">
+              Write the equation and explain what happens to pH. Which component
+              neutralizes the added base?
+            </p>
+            <textarea
+              class="lab-textarea"
+              id="dq3"
+              oninput="
+                updateCharCount('dq3', 'cc3');
+                saveAll();
+              "
+              placeholder="Write the ionic equation for when NaOH is added. Example format: CH₃COOH + OH⁻ → CH₃COO⁻ + H₂O..."
+            ></textarea>
+            <div class="char-count" id="cc3">0 characters</div>
+            <div class="tip-box" style="margin-top: 10px">
+              💡 Expected: CH₃COOH(aq) + OH⁻(aq) → CH₃COO⁻(aq) + H₂O(l) — Acetic
+              acid neutralizes the OH⁻, resisting a rise in pH.
+            </div>
+          </div>
+
+          <div class="q-group">
+            <span class="q-label"
+              >4. Which beaker was the most effective buffer against acid?
+              Against base? Explain.</span
+            >
+            <textarea
+              class="lab-textarea"
+              id="dq4"
+              oninput="
+                updateCharCount('dq4', 'cc4');
+                saveAll();
+              "
+              placeholder="Identify which beaker resisted acid best and which resisted base best, and explain why in terms of [A⁻] and [HA]..."
+            ></textarea>
+            <div class="char-count" id="cc4">0 characters</div>
+          </div>
+
+          <div class="q-group">
+            <span class="q-label"
+              >5. Why can't the Henderson-Hasselbalch equation be used for
+              Beaker 1 or Beaker 4?</span
+            >
+            <textarea
+              class="lab-textarea"
+              id="dq5"
+              oninput="
+                updateCharCount('dq5', 'cc5');
+                saveAll();
+              "
+              placeholder="Explain in terms of the requirements of the H-H equation and what is missing from Beakers 1 and 4..."
+            ></textarea>
+            <div class="char-count" id="cc5">0 characters</div>
+          </div>
+
+          <!-- Submission -->
+          <div
+            style="
+              margin-top: 28px;
+              background: var(--light-green);
+              border: 2px solid var(--green);
+              border-radius: 8px;
+              padding: 20px 24px;
+            "
+          >
+            <p
+              style="
+                font-weight: 700;
+                font-size: 1.05rem;
+                color: var(--green);
+                margin-bottom: 12px;
+              "
+            >
+              ✅ Ready to Submit?
+            </p>
+            <p style="font-size: 0.9rem; margin-bottom: 14px">
+              When you have completed all sections, use the Print button below
+              to print this page or save it as a PDF, then submit to your
+              instructor.
+            </p>
+            <div
+              style="
+                display: flex;
+                gap: 14px;
+                flex-wrap: wrap;
+                align-items: center;
+              "
+            >
+              <button class="btn btn-success" onclick="window.print()">
+                🖨️ Print / Save as PDF
+              </button>
+              <button class="btn btn-secondary" onclick="checkAllProgress()">
+                📊 Check Progress
+              </button>
+              <button class="btn btn-secondary" onclick="clearAll()">
+                🗑️ Clear All (Reset)
+              </button>
+            </div>
+            <p class="autosave-note" style="margin-top: 10px">
+              💾 Your work is automatically saved in this browser. It will
+              persist if you close and reopen this file.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <button class="print-btn" onclick="window.print()">
+      🖨️ Print / Save PDF
+    </button>
+
+    <script>
+      // ============ FILL-IN CHECK ============
+      function checkFill(el) {
+        const ans = (el.dataset.answer || "").toLowerCase().trim();
+        const val = el.value.toLowerCase().trim();
+        if (!val) {
+          el.className = "fill-in";
+          return;
+        }
+        // Flexible matching — accept partial match for multi-word answers
+        if (val === ans || (ans.includes(val) && val.length >= 2)) {
+          el.classList.add("correct");
+          el.classList.remove("incorrect");
+        } else {
+          el.classList.add("incorrect");
+          el.classList.remove("correct");
+        }
+        updateProgress();
+        saveAll();
+      }
+
+      function revealAnswer(id, answer) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.value = answer;
+          el.classList.add("correct");
+          el.classList.remove("incorrect");
+        }
+        const badge = document.getElementById(id + "_badge");
+        if (badge) badge.style.display = "inline-block";
+        updateProgress();
+        saveAll();
+      }
+
+      // ============ QUIZ ============
+      function quizCheck(el, qid, result) {
+        const parent = el.closest(".q-group");
+        const opts = parent.querySelectorAll(".quiz-option");
+        opts.forEach((o) => {
+          o.classList.remove("correct-ans", "wrong-ans");
+          o.style.pointerEvents = "none";
+        });
+        if (result === "correct") {
+          el.classList.add("correct-ans");
+        } else {
+          el.classList.add("wrong-ans");
+          opts.forEach((o) => {
+            if (
+              o.getAttribute("onclick") &&
+              o.getAttribute("onclick").includes("'correct'")
+            )
+              o.classList.add("correct-ans");
+          });
+        }
+        updateProgress();
+        saveAll();
+      }
+
+      // ============ HH CALCULATOR ============
+      function runHH() {
+        const pKa = parseFloat(document.getElementById("hh_pka").value);
+        const an = parseFloat(document.getElementById("hh_anion").value);
+        const ha = parseFloat(document.getElementById("hh_acid").value);
+        const res = document.getElementById("hh_calc_result");
+        if (isNaN(pKa) || isNaN(an) || isNaN(ha) || ha <= 0 || an <= 0) {
+          res.textContent = "⚠️ Enter valid positive values for all fields.";
+          res.style.color = "#c0392b";
+          res.style.borderColor = "#c0392b";
+          res.style.display = "block";
+          return;
+        }
+        const ph = pKa + Math.log10(an / ha);
+        const ratio = (an / ha).toFixed(4);
+        const logval = Math.log10(an / ha).toFixed(4);
+        res.innerHTML = `pH = ${pKa} + log(${an}/${ha}) = ${pKa} + log(${ratio}) = ${pKa} + (${logval}) = <strong>${ph.toFixed(2)}</strong>`;
+        res.style.color = "var(--green)";
+        res.style.borderColor = "var(--green)";
+        res.style.display = "block";
+      }
+
+      function calcHH_b3() {
+        const an = parseFloat(document.getElementById("hh_b3_an").value);
+        const ha = parseFloat(document.getElementById("hh_b3_ha").value);
+        if (!isNaN(an) && !isNaN(ha) && ha > 0) {
+          const ratio = (an / ha).toFixed(3);
+          document.getElementById("hh_b3_ratio").value = ratio;
+          const ph = (4.74 + Math.log10(an / ha)).toFixed(2);
+          document.getElementById("hh_b3_ans").value = ph;
+          checkFill(document.getElementById("hh_b3_ans"));
+        }
+        saveAll();
+      }
+
+      // ============ CHAR COUNT ============
+      function updateCharCount(textareaId, countId) {
+        const ta = document.getElementById(textareaId);
+        const cc = document.getElementById(countId);
+        if (ta && cc) cc.textContent = ta.value.length + " characters";
+      }
+
+      // ============ PROGRESS ============
+      function updateProgress() {
+        const fills = document.querySelectorAll(".fill-in[data-answer]");
+        let filled = 0;
+        fills.forEach((f) => {
+          if (f.value.trim().length > 1) filled++;
+        });
+        const tables = document.querySelectorAll(".table-input");
+        let tFilled = 0;
+        tables.forEach((t) => {
+          if (t.value.trim().length > 0) tFilled++;
+        });
+        const textareas = document.querySelectorAll(".lab-textarea");
+        let taFilled = 0;
+        textareas.forEach((ta) => {
+          if (ta.value.trim().length > 20) taFilled++;
+        });
+        const total = fills.length + tables.length + textareas.length;
+        const done = filled + tFilled + taFilled;
+        const pct = Math.min(100, Math.round((done / total) * 100));
+        document.getElementById("progressFill").style.width = pct + "%";
+        document.getElementById("progressPct").textContent = pct + "%";
+      }
+
+      function checkAllProgress() {
+        const fills = document.querySelectorAll(".fill-in[data-answer]");
+        let empty = [];
+        fills.forEach((f) => {
+          if (!f.value.trim()) {
+            const label = f.id || "unknown";
+            empty.push(label);
+          }
+        });
+        const tables = document.querySelectorAll(".table-input");
+        let tEmpty = 0;
+        tables.forEach((t) => {
+          if (!t.value.trim()) tEmpty++;
+        });
+        const textareas = document.querySelectorAll(".lab-textarea");
+        let taEmpty = 0;
+        textareas.forEach((ta) => {
+          if (ta.value.trim().length < 20) taEmpty++;
+        });
+        alert(
+          `Progress Check:\n✏️ Fill-in blanks empty: ${empty.length}\n📊 Table cells empty: ${tEmpty}\n💬 Short/missing discussion answers: ${taEmpty}\n\nKeep going! Complete all sections before submitting.`,
+        );
+      }
+
+      // ============ SAVE / LOAD ============
+      function saveAll() {
+        const data = {};
+        document.querySelectorAll("input[id], textarea[id]").forEach((el) => {
+          if (el.id) data[el.id] = el.value;
+        });
+        try {
+          localStorage.setItem("chm152l_lab7_v1", JSON.stringify(data));
+        } catch (e) {}
+        updateProgress();
+      }
+
+      function loadAll() {
+        try {
+          const raw = localStorage.getItem("chm152l_lab7_v1");
+          if (!raw) return;
+          const data = JSON.parse(raw);
+          Object.keys(data).forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) {
+              el.value = data[id];
+              if (el.classList.contains("fill-in") && el.dataset.answer)
+                checkFill(el);
+              if (el.tagName === "TEXTAREA") {
+                const ccId = el.id.replace("dq", "cc");
+                updateCharCount(el.id, ccId);
+              }
+            }
+          });
+        } catch (e) {}
+        updateProgress();
+      }
+
+      function clearAll() {
+        if (!confirm("Clear all your work? This cannot be undone.")) return;
+        localStorage.removeItem("chm152l_lab7_v1");
+        document.querySelectorAll("input[id], textarea[id]").forEach((el) => {
+          if (!el.readOnly) el.value = "";
+          el.classList.remove("correct", "incorrect");
+        });
+        document
+          .querySelectorAll(".answer-badge")
+          .forEach((b) => (b.style.display = "none"));
+        document.querySelectorAll(".quiz-option").forEach((o) => {
+          o.classList.remove("correct-ans", "wrong-ans");
+          o.style.pointerEvents = "";
+        });
+        updateProgress();
+      }
+
+      // ============ NAV ACTIVE ============
+      window.addEventListener("scroll", function () {
+        const sections = [
+          "concepts",
+          "part1",
+          "part2",
+          "part3",
+          "calcs",
+          "discussion",
+        ];
+        const navLinks = document.querySelectorAll("nav a");
+        let current = "";
+        sections.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el && window.scrollY >= el.offsetTop - 140) current = id;
+        });
+        navLinks.forEach((a) => {
+          a.classList.toggle(
+            "active",
+            a.getAttribute("href") === "#" + current,
+          );
+        });
+      });
+
+      // ============ INIT ============
+      window.addEventListener("DOMContentLoaded", function () {
+        loadAll();
+        updateProgress();
+      });
+    </script>
+  </body>
+</html>
