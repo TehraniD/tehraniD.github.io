@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PATHO JEOPARDY - Midterm Review</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* CRT Effect */
+        .crt::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%),
+                        linear-gradient(90deg, rgba(255,0,0,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .game-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* Header */
+        .game-header {
+            text-align: center;
+            padding: 20px;
+            border: 4px solid #00ff00;
+            background: #000;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .game-header::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 2px solid #00ff00;
+            pointer-events: none;
+        }
+
+        .game-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 22px;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            margin-bottom: 8px;
+            animation: flicker 2s infinite;
+        }
+
+        .game-subtitle {
+            font-size: 18px;
+            color: #00ccff;
+        }
+
+        .game-credit {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+            52% { opacity: 0.9; }
+            54% { opacity: 1; }
+        }
+
+        /* Stats */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background: #111;
+            border: 3px solid #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stat { display: flex; align-items: center; gap: 8px; }
+        .stat-label { color: #888; }
+        .stat-value {
+            color: #ffff00;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 13px;
+        }
+
+        /* Jeopardy Board */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .cat-header {
+            background: #001a66;
+            border: 3px solid #0044cc;
+            padding: 14px 8px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 9px;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 8px rgba(0,100,255,0.5);
+        }
+
+        .cell {
+            background: #001a66;
+            border: 3px solid #0044cc;
+            padding: 18px 8px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 18px;
+            color: #ffcc00;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-shadow: 0 0 8px rgba(255,200,0,0.4);
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cell:hover:not(.used) {
+            background: #002a99;
+            border-color: #ffcc00;
+            box-shadow: 0 0 20px rgba(255,200,0,0.3);
+            transform: scale(1.03);
+        }
+
+        .cell.used {
+            background: #0a0a1a;
+            border-color: #1a1a3a;
+            color: #222;
+            cursor: default;
+            text-shadow: none;
+        }
+
+        /* Clue Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.92);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 500;
+            padding: 20px;
+        }
+
+        .modal-overlay.show { display: flex; }
+
+        .clue-modal {
+            background: #001a66;
+            border: 5px solid #0044cc;
+            padding: 40px 35px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 60px rgba(0,50,200,0.4);
+        }
+
+        .clue-category {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #00ccff;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .clue-value {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            color: #ffcc00;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(255,200,0,0.5);
+        }
+
+        .clue-text {
+            font-size: 28px;
+            color: #fff;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .answer-box {
+            background: #000;
+            border: 3px solid #00ff00;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .answer-box.show { display: block; }
+
+        .answer-label {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #00ff00;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .answer-text {
+            font-size: 26px;
+            color: #00ff00;
+            text-shadow: 0 0 10px rgba(0,255,0,0.4);
+        }
+
+        .answer-detail {
+            font-size: 18px;
+            color: #aaa;
+            margin-top: 12px;
+            line-height: 1.5;
+            border-top: 1px solid #333;
+            padding-top: 12px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: 3px solid;
+            padding: 14px 28px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { transform: scale(1.05); }
+
+        .btn-reveal {
+            background: linear-gradient(to bottom, #0066cc, #003399);
+            border-color: #0088ff;
+            color: #fff;
+        }
+
+        .btn-reveal:hover { box-shadow: 0 0 20px rgba(0,100,255,0.5); }
+
+        .btn-correct {
+            background: linear-gradient(to bottom, #00aa00, #006600);
+            border-color: #00ff00;
+            color: #fff;
+        }
+
+        .btn-correct:hover { box-shadow: 0 0 20px rgba(0,255,0,0.5); }
+
+        .btn-wrong {
+            background: linear-gradient(to bottom, #aa0000, #660000);
+            border-color: #ff4444;
+            color: #fff;
+        }
+
+        .btn-wrong:hover { box-shadow: 0 0 20px rgba(255,0,0,0.5); }
+
+        /* Start Screen */
+        .start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .start-screen h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: #00ff00;
+            margin-bottom: 25px;
+        }
+
+        .start-text {
+            font-size: 22px;
+            color: #888;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .start-btn {
+            background: linear-gradient(to bottom, #ff6600, #cc4400);
+            border: 4px solid #ff9900;
+            padding: 20px 50px;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            cursor: pointer;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px #ff6600; }
+            to { box-shadow: 0 0 30px #ff6600, 0 0 50px #ff6600; }
+        }
+
+        .start-btn:hover { transform: scale(1.05); }
+
+        /* Completion */
+        .completion-screen {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .completion-screen.show { display: block; }
+
+        .completion-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 22px;
+            color: #00ff00;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px #00ff00;
+        }
+
+        .final-score {
+            font-size: 64px;
+            color: #ffff00;
+            font-family: 'Press Start 2P', cursive;
+            margin: 25px 0;
+        }
+
+        .score-breakdown {
+            font-size: 22px;
+            color: #888;
+            margin-bottom: 25px;
+        }
+
+        .grade {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 42px;
+            padding: 18px 35px;
+            border: 4px solid;
+            display: inline-block;
+            margin: 15px 0 25px;
+        }
+
+        .grade.s { color: #ff00ff; border-color: #ff00ff; text-shadow: 0 0 20px #ff00ff; }
+        .grade.a { color: #00ff00; border-color: #00ff00; }
+        .grade.b { color: #00ccff; border-color: #00ccff; }
+        .grade.c { color: #ffff00; border-color: #ffff00; }
+        .grade.d { color: #ff6600; border-color: #ff6600; }
+        .grade.f { color: #ff0000; border-color: #ff0000; }
+
+        .cat-review {
+            margin-top: 25px;
+            text-align: left;
+            background: #111;
+            border: 2px solid #333;
+            padding: 20px;
+        }
+
+        .cat-review h3 {
+            color: #00ccff;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .cat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #222;
+        }
+
+        .cat-name { color: #888; }
+
+        .cat-score {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+        }
+
+        .cat-score.good { color: #00ff00; }
+        .cat-score.ok { color: #ffff00; }
+        .cat-score.bad { color: #ff0000; }
+
+        .replay-btn {
+            background: linear-gradient(to bottom, #ff6600, #cc4400);
+            border: 4px solid #ff9900;
+            padding: 15px 40px;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .replay-btn:hover {
+            box-shadow: 0 0 20px #ff6600;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .game-footer {
+            text-align: center;
+            padding: 15px;
+            color: #444;
+            font-size: 14px;
+            border-top: 1px solid #222;
+            margin-top: 20px;
+        }
+
+        .game-footer a { color: #00ccff; text-decoration: none; }
+        .game-footer a:hover { color: #00ff00; }
+
+        /* Sound toggle */
+        .sound-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #222;
+            border: 2px solid #444;
+            color: #888;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            padding: 6px 12px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .sound-toggle:hover { border-color: #00ff00; color: #00ff00; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .board { grid-template-columns: repeat(3, 1fr); }
+            .cat-header { font-size: 7px; min-height: 55px; padding: 10px 5px; }
+            .cell { font-size: 14px; padding: 12px 5px; min-height: 50px; }
+            .game-title { font-size: 14px; }
+            .clue-text { font-size: 22px; }
+            .clue-modal { padding: 25px 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .board { grid-template-columns: repeat(2, 1fr); }
+            .cat-header { display: none; }
+            .cell::before {
+                content: attr(data-cat);
+                display: block;
+                font-size: 7px;
+                color: #aaa;
+                margin-bottom: 4px;
+            }
+        }
+    </style>
+</head>
+<body class="crt">
+    <button class="sound-toggle" onclick="toggleSound()" id="soundBtn">SFX ON</button>
+
+    <div class="game-container">
+        <header class="game-header">
+            <h1 class="game-title">PATHO JEOPARDY</h1>
+            <p class="game-subtitle">HCR 240 Midterm Review</p>
+            <p class="game-credit">Tehrani Labs &middot; Arizona College of Nursing</p>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="statsBar" style="display:none;">
+            <div class="stat">
+                <span class="stat-label">SCORE:</span>
+                <span class="stat-value" id="scoreDisplay">$0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">CLUES:</span>
+                <span class="stat-value"><span id="cluesAnswered">0</span>/30</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">STREAK:</span>
+                <span class="stat-value" id="streakDisplay">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">ACCURACY:</span>
+                <span class="stat-value" id="accuracyDisplay">--%</span>
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <h2>WELCOME TO PATHO JEOPARDY</h2>
+            <p class="start-text">
+                30 clues across 6 categories from your HCR 240 Midterm material.<br><br>
+                Select a dollar amount. Read the clue. Think of your answer.<br><br>
+                Reveal the answer, then honestly mark if you got it right or wrong.<br><br>
+                Higher dollar values = harder clues. Good luck!
+            </p>
+            <button class="start-btn" onclick="startGame()">START GAME</button>
+        </div>
+
+        <!-- Board -->
+        <div id="boardArea" style="display:none;">
+            <div class="board" id="gameBoard"></div>
+        </div>
+
+        <!-- Completion -->
+        <div class="completion-screen" id="completionScreen">
+            <div class="completion-title">GAME OVER</div>
+            <div id="finalScoreArea"></div>
+        </div>
+    </div>
+
+    <!-- Clue Modal -->
+    <div class="modal-overlay" id="clueModal">
+        <div class="clue-modal">
+            <div class="clue-category" id="modalCategory"></div>
+            <div class="clue-value" id="modalValue"></div>
+            <div class="clue-text" id="modalClue"></div>
+            <div class="answer-box" id="answerBox">
+                <div class="answer-label">ANSWER</div>
+                <div class="answer-text" id="answerText"></div>
+                <div class="answer-detail" id="answerDetail"></div>
+            </div>
+            <div class="btn-row" id="btnReveal">
+                <button class="btn btn-reveal" onclick="revealAnswer()">REVEAL ANSWER</button>
+            </div>
+            <div class="btn-row" id="btnScore" style="display:none;">
+                <button class="btn btn-correct" onclick="scoreClue(true)">I GOT IT</button>
+                <button class="btn btn-wrong" onclick="scoreClue(false)">I MISSED IT</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="game-footer">
+        &copy; Tehrani Labs &middot; HCR 240 Human Pathophysiology &middot; Arizona College of Nursing<br>
+        <a href="https://tehranilabs.org" target="_blank">tehranilabs.org</a>
+    </footer>
+
+    <script>
+        // ====== GAME DATA ======
+        const categories = [
+            {
+                name: "HEART & VESSELS",
+                clues: [
+                    {
+                        value: 200,
+                        clue: "This symptom \u2014 difficulty breathing while lying flat \u2014 is a hallmark sign that the heart is failing to keep up.",
+                        answer: "Orthopnea",
+                        detail: "Lying flat increases venous return, overwhelming a weakened left ventricle and causing pulmonary congestion."
+                    },
+                    {
+                        value: 400,
+                        clue: "After myocardial tissue is damaged, this specific cardiac biomarker rises in the blood and confirms the diagnosis.",
+                        answer: "Cardiac troponin",
+                        detail: "Troponin is released from injured cardiac muscle cells. It is the gold standard for confirming MI."
+                    },
+                    {
+                        value: 600,
+                        clue: "When the right ventricle fails backward, fluid backs up into the systemic circulation. This abdominal finding is a classic result.",
+                        answer: "Ascites",
+                        detail: "Right-sided HF causes systemic venous congestion \u2192 fluid leaks into the peritoneal cavity. Also expect JVD and peripheral edema."
+                    },
+                    {
+                        value: 800,
+                        clue: "Chest pain that is predictably relieved by rest or nitroglycerin is the hallmark presentation of this cardiac condition.",
+                        answer: "Angina pectoris",
+                        detail: "Stable angina occurs when O\u2082 demand exceeds supply during exertion. Rest reduces demand; nitroglycerin dilates coronary vessels."
+                    },
+                    {
+                        value: 1000,
+                        clue: "This life-threatening dysrhythmia is characterized by rapid, uncoordinated quivering of the ventricles with zero effective cardiac output.",
+                        answer: "Ventricular fibrillation (V-fib)",
+                        detail: "V-fib requires immediate defibrillation. The heart quivers instead of pumping \u2014 no pulse, no perfusion, no time to waste."
+                    }
+                ]
+            },
+            {
+                name: "BLOOD & CLOTTING",
+                clues: [
+                    {
+                        value: 200,
+                        clue: "Globally, this nutritional deficiency is the #1 most common cause of anemia.",
+                        answer: "Iron deficiency",
+                        detail: "Iron deficiency anemia results from inadequate intake, poor absorption, or chronic blood loss. Most prevalent nutritional deficiency worldwide."
+                    },
+                    {
+                        value: 400,
+                        clue: "A prolonged prothrombin time (PT) tells the nurse that these specific blood components are not functioning properly.",
+                        answer: "Coagulation factors",
+                        detail: "PT measures the extrinsic and common coagulation pathways. Prolonged PT = deficiency in factors like VII, X, V, II, or fibrinogen."
+                    },
+                    {
+                        value: 600,
+                        clue: "Hair loss combined with a strange craving to chew ice (pica) are classic clinical clues pointing to this specific type of anemia.",
+                        answer: "Iron deficiency anemia",
+                        detail: "Pica (craving non-food items like ice) and hair loss result from iron's critical role in oxygen transport and cell metabolism."
+                    },
+                    {
+                        value: 800,
+                        clue: "For this inherited blood disorder to appear in a child, BOTH parents must carry the gene \u2014 one carrier parent is not enough.",
+                        answer: "Sickle cell anemia",
+                        detail: "Sickle cell disease is autosomal recessive. Both parents must carry at least one HbS gene. Carriers (HbAS) have sickle cell trait."
+                    },
+                    {
+                        value: 1000,
+                        clue: "Clients with this X-linked condition experience prolonged bleeding specifically because they are missing an entire clotting factor.",
+                        answer: "Hemophilia",
+                        detail: "Hemophilia A = missing Factor VIII; Hemophilia B = missing Factor IX. Both are X-linked recessive \u2192 primarily affects males."
+                    }
+                ]
+            },
+            {
+                name: "INFECTION & INFLAMMATION",
+                clues: [
+                    {
+                        value: 200,
+                        clue: "These three classic local signs \u2014 present together at a site \u2014 confirm an inflammatory process is occurring.",
+                        answer: "Swelling, redness, and heat",
+                        detail: "Cardinal signs of inflammation: rubor (redness), calor (heat), tumor (swelling), dolor (pain), and functio laesa (loss of function)."
+                    },
+                    {
+                        value: 400,
+                        clue: "During the inflammatory response, this process guides white blood cells to migrate toward the injury site using chemical signals.",
+                        answer: "Chemotaxis",
+                        detail: "Chemotaxis = directed WBC migration along a chemical gradient toward injured or infected tissue. Essential for immune defense."
+                    },
+                    {
+                        value: 600,
+                        clue: "These specific cells are the primary source of histamine released during both inflammatory and allergic conditions.",
+                        answer: "Mast cells",
+                        detail: "Mast cells degranulate to release histamine \u2192 vasodilation, increased vascular permeability, and classic inflammation signs."
+                    },
+                    {
+                        value: 800,
+                        clue: "These chemical substances reset the hypothalamic thermostat and are primarily responsible for inducing fever during infection.",
+                        answer: "Pyrogens",
+                        detail: "Pyrogens (endogenous: IL-1, TNF; exogenous: from bacteria) act on the hypothalamus to raise the body temperature set point."
+                    },
+                    {
+                        value: 1000,
+                        clue: "This specific virus causes infectious mononucleosis and is also implicated in the development of certain lymphomas.",
+                        answer: "Epstein-Barr Virus (EBV)",
+                        detail: "EBV infects B lymphocytes, causes mono ('the kissing disease'), and is associated with Burkitt lymphoma and Hodgkin lymphoma."
+                    }
+                ]
+            },
+            {
+                name: "RESPIRATORY",
+                clues: [
+                    {
+                        value: 200,
+                        clue: "This bacterium is the most common culprit behind community-acquired pneumonia in adult patients.",
+                        answer: "Streptococcus pneumoniae",
+                        detail: "S. pneumoniae is the #1 cause of CAP. Vaccination (PCV13/PCV15, PPSV23) is a key preventive measure."
+                    },
+                    {
+                        value: 400,
+                        clue: "Unlike COPD, this respiratory condition features airflow obstruction that is REVERSIBLE with bronchodilators.",
+                        answer: "Asthma",
+                        detail: "Asthma = reversible bronchoconstriction + airway inflammation + hyperresponsiveness. COPD = irreversible airflow limitation."
+                    },
+                    {
+                        value: 600,
+                        clue: "Destruction of alveolar walls and loss of elastic recoil in the lungs define the pathology of this disease.",
+                        answer: "Emphysema",
+                        detail: "Emphysema (a type of COPD) destroys alveolar septa \u2192 air trapping, hyperinflation, barrel chest, and impaired gas exchange."
+                    },
+                    {
+                        value: 800,
+                        clue: "On auscultation, the ABSENCE of breath sounds on one side of the chest is the key finding suggesting this emergency.",
+                        answer: "Pneumothorax",
+                        detail: "Air in the pleural space collapses the lung on the affected side. Tension pneumothorax is life-threatening and requires immediate needle decompression."
+                    },
+                    {
+                        value: 1000,
+                        clue: "Persistent cough, chest discomfort, and production of yellow sputum \u2014 without the chronicity of COPD \u2014 describe this acute condition.",
+                        answer: "Acute bronchitis",
+                        detail: "Acute bronchitis = inflammation of the bronchial tree, usually viral. Self-limiting. Treat symptoms; an expectorant helps clear mucus."
+                    }
+                ]
+            },
+            {
+                name: "CELLS & WOUNDS",
+                clues: [
+                    {
+                        value: 200,
+                        clue: "The very first stage of wound healing \u2014 before inflammation even begins \u2014 involves this process that stops the bleeding.",
+                        answer: "Hemostasis",
+                        detail: "Wound healing order: Hemostasis \u2192 Inflammation \u2192 Proliferation \u2192 Contraction & Remodeling. Hemostasis = vasoconstriction + platelet plug + clot."
+                    },
+                    {
+                        value: 400,
+                        clue: "If cells fail to undergo this regulated process of 'programmed cell death,' uncontrolled growth (neoplasia) may result.",
+                        answer: "Apoptosis",
+                        detail: "Apoptosis is orderly, energy-dependent cell death that removes damaged or unneeded cells. Failure of apoptosis \u2192 tumor potential."
+                    },
+                    {
+                        value: 600,
+                        clue: "A pressure ulcer with its entire surface covered by dead necrotic tissue requires this intervention before healing can begin.",
+                        answer: "Debridement",
+                        detail: "Debridement removes eschar/necrotic tissue to promote re-epithelialization and new tissue growth. Eschar blocks wound assessment and healing."
+                    },
+                    {
+                        value: 800,
+                        clue: "In a chronic smoker's airway, the normal ciliated epithelium is replaced by squamous cells primarily to increase the tissue's ability to do this.",
+                        answer: "Tolerate toxins in cigarette smoke",
+                        detail: "Metaplasia is a reversible adaptive change. The airway swaps to tougher squamous epithelium to survive chronic smoke irritation."
+                    },
+                    {
+                        value: 1000,
+                        clue: "When dysplasia is found during a colonoscopy of a patient with chronic ulcerative colitis, it carries this serious clinical significance.",
+                        answer: "Abnormal cell growth with potential for malignancy",
+                        detail: "Dysplasia = disordered, atypical cell growth. In chronic UC, it is a precancerous warning \u2014 may require close surveillance or colectomy."
+                    }
+                ]
+            },
+            {
+                name: "IMMUNE & GENETIC",
+                clues: [
+                    {
+                        value: 200,
+                        clue: "This class of immunoglobulin is the primary driver of immediate hypersensitivity reactions, including allergies and anaphylaxis.",
+                        answer: "IgE",
+                        detail: "IgE binds to mast cells/basophils. When allergen cross-links IgE \u2192 degranulation \u2192 histamine release \u2192 Type I hypersensitivity."
+                    },
+                    {
+                        value: 400,
+                        clue: "A blood transfusion reaction where antibodies destroy the donor's red blood cells is classified as this type of hypersensitivity.",
+                        answer: "Type II: Cytotoxic Hypersensitivity",
+                        detail: "Type II = IgG/IgM antibodies target cell surface antigens \u2192 complement activation \u2192 cell destruction. Also: hemolytic disease of newborn."
+                    },
+                    {
+                        value: 600,
+                        clue: "This diagnostic test examines a patient's chromosomes under a microscope and is the definitive test to confirm trisomy 21.",
+                        answer: "Karyotyping",
+                        detail: "Karyotyping arranges chromosomes by size/shape to detect numerical or structural abnormalities. Down Syndrome = 3 copies of chromosome 21."
+                    },
+                    {
+                        value: 800,
+                        clue: "This fatal genetic disease begins around 6 months old with relentless mental and physical decline \u2014 eventually causing blindness and paralysis.",
+                        answer: "Tay-Sachs disease",
+                        detail: "Tay-Sachs = autosomal recessive lysosomal storage disease (hexosaminidase A deficiency). GM2 ganglioside accumulates in neurons. Fatal by age 3\u20135."
+                    },
+                    {
+                        value: 1000,
+                        clue: "Lupus with elevated ANA and anti-dsDNA, butterfly rash, and joint pain is driven by immune complex deposition \u2014 this specific hypersensitivity type.",
+                        answer: "Type III: Immune Complex Hypersensitivity",
+                        detail: "In SLE, antigen-antibody complexes deposit in tissues \u2192 complement activation \u2192 inflammation in joints, kidneys, skin, and vessels."
+                    }
+                ]
+            }
+        ];
+
+        // ====== GAME STATE ======
+        let score = 0;
+        let correct = 0;
+        let wrong = 0;
+        let streak = 0;
+        let maxStreak = 0;
+        let cluesAnsweredCount = 0;
+        let totalClues = 30;
+        let currentClue = null;
+        let soundEnabled = true;
+        let catScores = {};
+
+        // ====== AUDIO ======
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function playTone(freq, duration, type) {
+            if (!soundEnabled) return;
+            if (!audioCtx) audioCtx = new AudioCtx();
+            type = type || 'square';
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.value = freq;
+            gain.gain.value = 0.08;
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function playSelect() { playTone(600, 0.1); setTimeout(function(){ playTone(800, 0.1); }, 80); }
+        function playReveal() { playTone(400, 0.15); setTimeout(function(){ playTone(500, 0.15); }, 100); setTimeout(function(){ playTone(600, 0.2); }, 200); }
+        function playCorrect() { playTone(523, 0.12); setTimeout(function(){ playTone(659, 0.12); }, 100); setTimeout(function(){ playTone(784, 0.2); }, 200); }
+        function playWrong() { playTone(300, 0.2); setTimeout(function(){ playTone(250, 0.3); }, 150); }
+        function playComplete() {
+            var freqs = [523,587,659,698,784,880,988,1047];
+            for (var i = 0; i < freqs.length; i++) {
+                (function(idx) {
+                    setTimeout(function(){ playTone(freqs[idx], 0.15, 'sine'); }, idx * 100);
+                })(i);
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundBtn').textContent = soundEnabled ? 'SFX ON' : 'SFX OFF';
+        }
+
+        // ====== INIT ======
+        function startGame() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('statsBar').style.display = 'flex';
+            document.getElementById('boardArea').style.display = 'block';
+            playSelect();
+            buildBoard();
+            for (var i = 0; i < categories.length; i++) {
+                catScores[categories[i].name] = { correct: 0, total: 0 };
+            }
+        }
+
+        function buildBoard() {
+            var board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+
+            // Headers
+            for (var c = 0; c < categories.length; c++) {
+                var h = document.createElement('div');
+                h.className = 'cat-header';
+                h.textContent = categories[c].name;
+                board.appendChild(h);
+            }
+
+            // Cells
+            for (var row = 0; row < 5; row++) {
+                for (var ci = 0; ci < categories.length; ci++) {
+                    var cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = 'cell-' + ci + '-' + row;
+                    cell.setAttribute('data-cat', categories[ci].name);
+                    var val = categories[ci].clues[row].value;
+                    cell.textContent = '$' + val;
+                    cell.setAttribute('data-ci', ci);
+                    cell.setAttribute('data-row', row);
+                    cell.onclick = function() {
+                        var catIdx = parseInt(this.getAttribute('data-ci'));
+                        var clueIdx = parseInt(this.getAttribute('data-row'));
+                        openClue(catIdx, clueIdx, this);
+                    };
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        // ====== CLUE HANDLING ======
+        function openClue(catIdx, clueIdx, cellEl) {
+            if (cellEl.classList.contains('used')) return;
+            playSelect();
+
+            var cat = categories[catIdx];
+            var clue = cat.clues[clueIdx];
+            currentClue = { catIdx: catIdx, clueIdx: clueIdx, cellEl: cellEl, clue: clue, cat: cat };
+
+            document.getElementById('modalCategory').textContent = cat.name;
+            document.getElementById('modalValue').textContent = '$' + clue.value;
+            document.getElementById('modalClue').textContent = clue.clue;
+            document.getElementById('answerText').textContent = clue.answer;
+            document.getElementById('answerDetail').textContent = clue.detail;
+
+            document.getElementById('answerBox').classList.remove('show');
+            document.getElementById('btnReveal').style.display = 'flex';
+            document.getElementById('btnScore').style.display = 'none';
+            document.getElementById('clueModal').classList.add('show');
+        }
+
+        function revealAnswer() {
+            playReveal();
+            document.getElementById('answerBox').classList.add('show');
+            document.getElementById('btnReveal').style.display = 'none';
+            document.getElementById('btnScore').style.display = 'flex';
+        }
+
+        function scoreClue(gotIt) {
+            var info = currentClue;
+            info.cellEl.classList.add('used');
+            cluesAnsweredCount++;
+            catScores[info.cat.name].total++;
+
+            if (gotIt) {
+                playCorrect();
+                score += info.clue.value;
+                correct++;
+                streak++;
+                if (streak > maxStreak) maxStreak = streak;
+                catScores[info.cat.name].correct++;
+                info.cellEl.style.color = '#00ff0044';
+            } else {
+                playWrong();
+                score -= Math.floor(info.clue.value / 2);
+                wrong++;
+                streak = 0;
+                info.cellEl.style.color = '#ff000044';
+            }
+
+            updateStats();
+            document.getElementById('clueModal').classList.remove('show');
+            currentClue = null;
+
+            if (cluesAnsweredCount >= totalClues) {
+                setTimeout(showCompletion, 600);
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('scoreDisplay').textContent = '$' + score.toLocaleString();
+            document.getElementById('cluesAnswered').textContent = cluesAnsweredCount;
+            document.getElementById('streakDisplay').textContent = streak;
+            var acc = cluesAnsweredCount > 0 ? Math.round((correct / cluesAnsweredCount) * 100) : 0;
+            document.getElementById('accuracyDisplay').textContent = acc + '%';
+        }
+
+        // ====== COMPLETION ======
+        function showCompletion() {
+            playComplete();
+            document.getElementById('boardArea').style.display = 'none';
+            document.getElementById('statsBar').style.display = 'none';
+
+            var pct = Math.round((correct / totalClues) * 100);
+            var gradeLetter, gradeClass;
+            if (pct === 100) { gradeLetter = 'S+'; gradeClass = 's'; }
+            else if (pct >= 90) { gradeLetter = 'A'; gradeClass = 'a'; }
+            else if (pct >= 80) { gradeLetter = 'B'; gradeClass = 'b'; }
+            else if (pct >= 70) { gradeLetter = 'C'; gradeClass = 'c'; }
+            else if (pct >= 60) { gradeLetter = 'D'; gradeClass = 'd'; }
+            else { gradeLetter = 'F'; gradeClass = 'f'; }
+
+            var html = '<div class="final-score">$' + score.toLocaleString() + '</div>' +
+                '<div class="score-breakdown">' +
+                correct + ' correct &middot; ' + wrong + ' missed &middot; ' + pct + '% accuracy<br>' +
+                'Best streak: ' + maxStreak +
+                '</div>' +
+                '<div class="grade ' + gradeClass + '">' + gradeLetter + '</div>' +
+                '<div class="cat-review"><h3>CATEGORY BREAKDOWN</h3>';
+
+            for (var i = 0; i < categories.length; i++) {
+                var cat = categories[i];
+                var cs = catScores[cat.name];
+                var catPct = cs.total > 0 ? Math.round((cs.correct / cs.total) * 100) : 0;
+                var cls = 'bad';
+                if (catPct >= 80) cls = 'good';
+                else if (catPct >= 60) cls = 'ok';
+                html += '<div class="cat-item">' +
+                    '<span class="cat-name">' + cat.name + '</span>' +
+                    '<span class="cat-score ' + cls + '">' + cs.correct + '/' + cs.total + ' (' + catPct + '%)</span>' +
+                    '</div>';
+            }
+
+            html += '</div><button class="replay-btn" onclick="location.reload()">PLAY AGAIN</button>';
+
+            document.getElementById('finalScoreArea').innerHTML = html;
+            document.getElementById('completionScreen').classList.add('show');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('clueModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+                currentClue = null;
+            }
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (!document.getElementById('clueModal').classList.contains('show')) return;
+            if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                if (document.getElementById('btnReveal').style.display !== 'none') {
+                    revealAnswer();
+                }
+            }
+            if (document.getElementById('btnScore').style.display !== 'none') {
+                if (e.key === '1' || e.key === 'y') scoreClue(true);
+                if (e.key === '2' || e.key === 'n') scoreClue(false);
+            }
+        });
+    </script>
+</body>
+</html>
