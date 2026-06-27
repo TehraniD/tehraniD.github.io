@@ -1,0 +1,1896 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to Beat the NCLEX Question — A 15-Minute Crash Course | Tehrani Labs</title>
+    <meta name="description" content="A complete interactive system for nursing students who study hard but score low on NCLEX-style exams. Based on Nugent & Vitale's Test Success, 10th edition." />
+    <style>
+      :root {
+        --primary: #0077b6;
+        --primary-dark: #005f8a;
+        --accent: #00b4d8;
+        --accent-light: #caf0f8;
+        --success: #2d6a4f;
+        --success-bg: #d8f3dc;
+        --success-light: #b7e4c7;
+        --danger: #d00000;
+        --danger-bg: #fde8e8;
+        --warning: #e85d04;
+        --warning-bg: #fff3cd;
+        --bg: #f0f4f8;
+        --card: #ffffff;
+        --text: #1d3557;
+        --text-light: #457b9d;
+        --border: #dee2e6;
+        --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      /* ---------- TOP BAR ---------- */
+      .top-bar {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        padding: 18px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+      .top-bar-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .top-bar h1 { font-size: 1.25rem; font-weight: 700; }
+      .top-bar .subtitle { font-size: 0.82rem; opacity: 0.9; margin-top: 2px; }
+      .top-bar .brand {
+        font-size: 0.75rem; opacity: 0.75; letter-spacing: 1px; text-transform: uppercase;
+      }
+      .print-btn {
+        background: rgba(255,255,255,0.2);
+        border: 1px solid rgba(255,255,255,0.4);
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      .print-btn:hover { background: rgba(255,255,255,0.32); }
+
+      /* ---------- NAV TABS ---------- */
+      .nav-tabs {
+        background: #fff;
+        border-bottom: 2px solid var(--border);
+        position: sticky;
+        top: 78px;
+        z-index: 90;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      }
+      .nav-tabs-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 10px 16px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        overflow-x: auto;
+      }
+      .nav-tab {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 2px solid var(--border);
+        background: #fff;
+        color: var(--text-light);
+        transition: all 0.2s;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .nav-tab:hover, .nav-tab.active {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+
+      /* ---------- CONTAINER ---------- */
+      .container {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 20px 16px 80px;
+      }
+
+      section { margin-bottom: 60px; scroll-margin-top: 140px; }
+
+      h2 {
+        font-size: 2rem;
+        color: var(--primary-dark);
+        margin-bottom: 8px;
+        border-left: 5px solid var(--accent);
+        padding-left: 14px;
+        line-height: 1.2;
+      }
+      h2 .section-num {
+        display: inline-block;
+        background: var(--accent);
+        color: #fff;
+        font-size: 0.7rem;
+        padding: 4px 10px;
+        border-radius: 12px;
+        vertical-align: middle;
+        margin-right: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      h3 { font-size: 1.3rem; color: var(--primary-dark); margin: 20px 0 10px; }
+      .section-lead {
+        font-size: 1.05rem;
+        color: var(--text-light);
+        margin: 6px 0 24px;
+        padding-left: 19px;
+      }
+
+      /* ---------- HERO ---------- */
+      .hero {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        color: #fff;
+        padding: 60px 30px;
+        border-radius: 18px;
+        margin-top: 20px;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: -50%; right: -20%;
+        width: 80%; height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .hero h1 {
+        font-size: 2.6rem;
+        line-height: 1.1;
+        margin-bottom: 14px;
+        position: relative;
+      }
+      .hero .lead {
+        font-size: 1.2rem;
+        opacity: 0.95;
+        margin-bottom: 20px;
+        max-width: 620px;
+        position: relative;
+      }
+      .hero .meta-pill {
+        display: inline-block;
+        background: rgba(255,255,255,0.18);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.3);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-right: 8px;
+        margin-bottom: 6px;
+        position: relative;
+      }
+
+      /* ---------- STORY CARD ---------- */
+      .story-card {
+        background: #fff;
+        padding: 30px;
+        border-radius: 14px;
+        border-left: 6px solid var(--warning);
+        box-shadow: var(--shadow);
+        margin: 30px 0;
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+      .story-card .quote-mark {
+        font-size: 3rem;
+        color: var(--warning);
+        line-height: 0.3;
+        vertical-align: bottom;
+        margin-right: 4px;
+      }
+      .reveal-line {
+        margin-top: 20px;
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: var(--primary-dark);
+        padding-top: 16px;
+        border-top: 2px dashed var(--border);
+      }
+
+      /* ---------- ANATOMY DIAGRAM ---------- */
+      .anatomy-diagram {
+        background: linear-gradient(180deg, #fff 0%, var(--accent-light) 100%);
+        padding: 36px 24px;
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        margin: 24px 0;
+        text-align: center;
+      }
+      .anatomy-formula {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 20px;
+      }
+      .formula-box {
+        background: #fff;
+        padding: 14px 20px;
+        border-radius: 10px;
+        border: 2px solid var(--primary);
+        min-width: 100px;
+      }
+      .formula-box.distractor { border-color: var(--danger); color: var(--danger); }
+      .formula-box.correct { border-color: var(--success); color: var(--success); }
+      .plus { font-size: 1.5rem; color: var(--text-light); }
+      .arrow {
+        font-size: 2rem;
+        color: var(--accent);
+      }
+      .anatomy-note {
+        background: var(--warning-bg);
+        border-left: 4px solid var(--warning);
+        padding: 14px 18px;
+        text-align: left;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-size: 0.95rem;
+      }
+
+      /* ---------- TECHNIQUE CARDS ---------- */
+      .technique {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        padding: 30px;
+        margin: 20px 0;
+        border-top: 6px solid var(--primary);
+      }
+      .technique:nth-of-type(1) { border-top-color: #e63946; }
+      .technique:nth-of-type(2) { border-top-color: #f77f00; }
+      .technique:nth-of-type(3) { border-top-color: #fcbf49; }
+      .technique:nth-of-type(4) { border-top-color: #06a77d; }
+      .technique:nth-of-type(5) { border-top-color: #6a4c93; }
+
+      .tech-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+      .tech-num {
+        font-size: 2.4rem;
+        font-weight: 900;
+        color: var(--accent);
+        line-height: 1;
+        min-width: 44px;
+      }
+      .tech-title { font-size: 1.4rem; color: var(--primary-dark); font-weight: 700; }
+      .tech-tagline { font-size: 0.9rem; color: var(--text-light); margin-top: 2px; }
+
+      /* ---------- STRATEGIC WORD SPOTTER TOOL ---------- */
+      .word-spotter {
+        background: var(--bg);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 18px;
+        border: 2px dashed var(--accent);
+      }
+      .word-spotter h4 {
+        color: var(--primary-dark);
+        margin-bottom: 10px;
+        font-size: 1rem;
+      }
+      .spotter-input {
+        width: 100%;
+        min-height: 80px;
+        padding: 12px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        resize: vertical;
+      }
+      .spotter-btn {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        margin: 10px 8px 10px 0;
+        font-size: 0.95rem;
+      }
+      .spotter-btn:hover { background: var(--primary); }
+      .spotter-output {
+        background: #fff;
+        padding: 14px 16px;
+        border-radius: 8px;
+        margin-top: 12px;
+        min-height: 60px;
+        font-size: 1rem;
+        line-height: 1.8;
+        border: 1px solid var(--border);
+      }
+      .highlight-priority {
+        background: #ffd166;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 700;
+        color: #6b3a00;
+      }
+      .highlight-negative {
+        background: var(--danger);
+        color: #fff;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 700;
+      }
+      .spotter-legend {
+        display: flex;
+        gap: 14px;
+        font-size: 0.8rem;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+
+      /* ---------- PROBABILITY LADDER ---------- */
+      .prob-ladder {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+        margin: 20px 0;
+      }
+      .prob-step {
+        background: linear-gradient(180deg, #fff 0%, var(--accent-light) 100%);
+        padding: 18px 12px;
+        border-radius: 10px;
+        text-align: center;
+        border: 2px solid var(--border);
+        transition: transform 0.2s;
+      }
+      .prob-step:hover { transform: translateY(-3px); }
+      .prob-step .options-left { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+      .prob-step .odds { font-size: 2rem; font-weight: 900; color: var(--primary-dark); margin: 4px 0; }
+      .prob-step .descr { font-size: 0.8rem; color: var(--text-light); }
+      .prob-step.best { background: linear-gradient(180deg, var(--success-light) 0%, var(--success-bg) 100%); border-color: var(--success); }
+      .prob-step.best .odds { color: var(--success); }
+
+      /* ---------- DETERMINER TRAP ---------- */
+      .determiner-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        margin: 18px 0;
+      }
+      .determiner-word {
+        background: var(--danger-bg);
+        border: 2px solid var(--danger);
+        color: var(--danger);
+        font-weight: 800;
+        padding: 12px;
+        text-align: center;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .determiner-word:hover {
+        background: var(--danger);
+        color: #fff;
+        transform: scale(0.95);
+      }
+      .determiner-word::after {
+        content: '🗑️';
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        font-size: 0.9rem;
+        transition: opacity 0.2s;
+      }
+      .determiner-word:hover::after { opacity: 1; }
+      .determiner-word.eliminated {
+        opacity: 0.3;
+        text-decoration: line-through;
+      }
+
+      /* ---------- TRAP PATTERN FLIP CARDS ---------- */
+      .patterns-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin: 20px 0;
+      }
+      .pattern-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        min-height: 180px;
+        position: relative;
+        transition: all 0.3s;
+        border-top: 4px solid var(--accent);
+      }
+      .pattern-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+      .pattern-card .pattern-icon { font-size: 1.8rem; margin-bottom: 8px; }
+      .pattern-card .pattern-name { font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; font-size: 1.05rem; }
+      .pattern-card .pattern-front { font-size: 0.9rem; color: var(--text-light); }
+      .pattern-card .pattern-back {
+        display: none;
+        font-size: 0.88rem;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed var(--border);
+        color: var(--text);
+      }
+      .pattern-card.flipped .pattern-back { display: block; }
+      .pattern-card.flipped .pattern-front { color: var(--text); font-weight: 600; }
+      .pattern-card .flip-hint {
+        position: absolute;
+        bottom: 6px;
+        right: 10px;
+        font-size: 0.7rem;
+        color: var(--text-light);
+        opacity: 0.7;
+      }
+
+      /* ---------- PRIORITY PYRAMID ---------- */
+      .pyramid {
+        margin: 30px auto;
+        max-width: 700px;
+      }
+      .pyramid-layer {
+        margin: 0 auto 8px;
+        padding: 16px 20px;
+        border-radius: 8px;
+        color: #fff;
+        text-align: center;
+        font-weight: 700;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.2s;
+        font-size: 1rem;
+      }
+      .pyramid-layer:hover { transform: scale(1.02); }
+      .pyramid-layer .layer-rank {
+        position: absolute;
+        left: 14px; top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255,255,255,0.25);
+        width: 30px; height: 30px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.9rem;
+      }
+      .pyramid-layer .layer-sub { font-size: 0.78rem; opacity: 0.9; font-weight: 400; margin-top: 3px; }
+
+      .layer-1 { background: #e63946; width: 100%; }
+      .layer-2 { background: #f77f00; width: 90%; }
+      .layer-3 { background: #fcbf49; width: 78%; color: #6b3a00; }
+      .layer-4 { background: #06a77d; width: 64%; }
+      .layer-5 { background: #6a4c93; width: 48%; }
+
+      .amnes-banner {
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        color: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        margin: 30px 0;
+        text-align: center;
+        box-shadow: var(--shadow-lg);
+      }
+      .amnes-banner .amnes-word {
+        font-size: 3.2rem;
+        font-weight: 900;
+        letter-spacing: 6px;
+        margin-bottom: 6px;
+      }
+      .amnes-banner .amnes-expanded {
+        font-size: 0.95rem;
+        opacity: 0.95;
+        max-width: 600px;
+        margin: 8px auto 0;
+      }
+
+      /* ---------- LIVE WALKTHROUGH ---------- */
+      .walkthrough {
+        background: #fff;
+        padding: 28px;
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        margin: 20px 0;
+        border: 2px solid var(--accent);
+      }
+      .question-stem {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        padding: 16px;
+        background: var(--bg);
+        border-radius: 8px;
+        border-left: 4px solid var(--accent);
+        margin-bottom: 16px;
+      }
+      .question-stem .marked {
+        background: #ffd166;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 800;
+        color: #6b3a00;
+      }
+      .walkthrough-options {
+        list-style: none;
+        padding: 0;
+      }
+      .walkthrough-options li {
+        padding: 12px 14px;
+        margin: 8px 0;
+        background: #fff;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        position: relative;
+      }
+      .walkthrough-options li.eliminated {
+        opacity: 0.45;
+        text-decoration: line-through;
+        background: var(--danger-bg);
+        border-color: var(--danger);
+      }
+      .walkthrough-options li.correct {
+        background: var(--success-bg);
+        border-color: var(--success);
+        font-weight: 700;
+      }
+      .walkthrough-options li .reason {
+        display: block;
+        font-size: 0.82rem;
+        color: var(--text-light);
+        margin-top: 4px;
+        font-weight: 400;
+        text-decoration: none;
+      }
+      .walkthrough-controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .step-btn {
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .step-btn:hover { background: var(--primary-dark); }
+      .step-btn:disabled { background: var(--border); cursor: not-allowed; }
+      .step-indicator { color: var(--text-light); font-size: 0.85rem; padding: 10px; }
+
+      /* ---------- PRACTICE QUESTIONS ---------- */
+      .practice-section { background: #fff; padding: 30px; border-radius: 14px; box-shadow: var(--shadow); }
+      .practice-controls {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid var(--border);
+      }
+      .score-pill {
+        background: var(--accent-light);
+        color: var(--primary-dark);
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-weight: 700;
+      }
+      .filter-btn {
+        background: #fff;
+        border: 2px solid var(--border);
+        color: var(--text-light);
+        padding: 6px 12px;
+        border-radius: 16px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+      .filter-btn:hover { background: var(--accent-light); color: var(--primary-dark); }
+      .filter-btn.active:hover { background: var(--primary); color: #fff; }
+
+      .question-card {
+        background: var(--bg);
+        padding: 22px;
+        border-radius: 12px;
+        margin: 16px 0;
+        border-left: 5px solid var(--primary);
+      }
+      .question-meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+      .tag {
+        background: var(--accent-light);
+        color: var(--primary-dark);
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+      .tag.tech { background: var(--warning-bg); color: var(--warning); }
+      .question-text { font-size: 1.02rem; font-weight: 600; margin-bottom: 14px; line-height: 1.5; }
+      .options-list {
+        list-style: none;
+        padding: 0;
+      }
+      .options-list li {
+        padding: 12px 16px;
+        margin: 8px 0;
+        background: #fff;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.15s;
+        font-size: 0.95rem;
+      }
+      .options-list li:hover:not(.locked) { background: var(--accent-light); border-color: var(--accent); }
+      .options-list.answered li { cursor: default; }
+      .options-list.answered li.correct {
+        background: var(--success-bg);
+        border-color: var(--success);
+        color: var(--success);
+        font-weight: 700;
+      }
+      .options-list.answered li.wrong {
+        background: var(--danger-bg);
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+      .rationale {
+        display: none;
+        margin-top: 14px;
+        padding: 14px 16px;
+        background: #fff;
+        border-radius: 8px;
+        border-left: 4px solid var(--success);
+        font-size: 0.9rem;
+      }
+      .rationale.show { display: block; }
+      .rationale h5 { color: var(--success); margin-bottom: 6px; font-size: 0.92rem; }
+      .rationale .why-wrong { margin-top: 10px; }
+      .rationale .why-wrong h6 { color: var(--danger); font-size: 0.85rem; margin-bottom: 4px; }
+      .rationale .why-wrong ul { padding-left: 20px; font-size: 0.88rem; }
+      .rationale .technique-note {
+        background: var(--warning-bg);
+        padding: 10px 12px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: var(--warning);
+        font-weight: 600;
+      }
+
+      /* ---------- CHEAT SHEET ---------- */
+      .cheat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
+        margin: 20px 0;
+      }
+      .cheat-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        border-top: 5px solid var(--primary);
+      }
+      .cheat-card h4 {
+        font-size: 1rem;
+        color: var(--primary-dark);
+        margin-bottom: 10px;
+      }
+      .cheat-card ul {
+        list-style: none;
+        padding: 0;
+        font-size: 0.9rem;
+      }
+      .cheat-card ul li {
+        padding: 6px 0;
+        border-bottom: 1px dashed var(--border);
+      }
+      .cheat-card ul li:last-child { border-bottom: none; }
+
+      /* ---------- 5 THINGS ---------- */
+      .five-things {
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        color: #fff;
+        padding: 36px;
+        border-radius: 16px;
+        margin: 30px 0;
+        box-shadow: var(--shadow-lg);
+      }
+      .five-things h3 {
+        color: #fff;
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .five-things ol {
+        list-style: none;
+        counter-reset: rule;
+        padding: 0;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .five-things ol li {
+        counter-increment: rule;
+        padding: 12px 16px 12px 60px;
+        position: relative;
+        font-size: 1.02rem;
+        line-height: 1.5;
+      }
+      .five-things ol li::before {
+        content: counter(rule);
+        position: absolute;
+        left: 10px; top: 12px;
+        background: var(--accent);
+        color: var(--primary-dark);
+        font-weight: 900;
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.2rem;
+      }
+
+      /* ---------- FOOTER ---------- */
+      .citation {
+        background: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        margin-top: 40px;
+        font-size: 0.85rem;
+        color: var(--text-light);
+        border-left: 4px solid var(--text-light);
+      }
+      .citation strong { color: var(--text); }
+
+      /* ---------- TABLE ---------- */
+      .strat-words-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .strat-words-table th {
+        background: var(--primary-dark);
+        color: #fff;
+        padding: 14px;
+        font-size: 0.95rem;
+        text-align: left;
+      }
+      .strat-words-table td {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.92rem;
+      }
+      .strat-words-table td.priority { background: #fff3cd; color: #6b3a00; font-weight: 700; }
+      .strat-words-table td.negative { background: var(--danger-bg); color: var(--danger); font-weight: 700; }
+      .strat-words-table tr:last-child td { border-bottom: none; }
+
+      /* ---------- PRINT STYLES ---------- */
+      @media print {
+        .top-bar, .nav-tabs, .print-btn, .practice-controls, .filter-btn,
+        .walkthrough-controls, .step-btn, .word-spotter, .spotter-btn,
+        section#hook, section#anatomy, section#walkthrough, section#practice {
+          display: none !important;
+        }
+        body { background: #fff; font-size: 11pt; }
+        .container { max-width: 100%; padding: 0; }
+        .technique, .cheat-card, .five-things, .pyramid-layer {
+          break-inside: avoid;
+          box-shadow: none !important;
+        }
+        h2 { font-size: 1.4rem; }
+      }
+
+      /* ---------- RESPONSIVE ---------- */
+      @media (max-width: 600px) {
+        .hero h1 { font-size: 1.8rem; }
+        .hero { padding: 40px 20px; }
+        h2 { font-size: 1.5rem; }
+        .nav-tabs { top: 90px; }
+        .anatomy-formula { font-size: 0.95rem; }
+        .amnes-banner .amnes-word { font-size: 2.2rem; letter-spacing: 3px; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ========== TOP BAR ========== -->
+    <header class="top-bar">
+      <div class="top-bar-inner">
+        <div>
+          <h1>How to Beat the NCLEX Question</h1>
+          <div class="subtitle">A 15-Minute Crash Course for Students Who Study Hard But Score Low</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="brand">Tehrani Labs</span>
+          <button class="print-btn" onclick="window.print()">🖨 Print Cheat Sheet</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== NAV TABS ========== -->
+    <nav class="nav-tabs">
+      <div class="nav-tabs-inner">
+        <a href="#hook" class="nav-tab active">The Hook</a>
+        <a href="#anatomy" class="nav-tab">Anatomy</a>
+        <a href="#techniques" class="nav-tab">5 Techniques</a>
+        <a href="#walkthrough" class="nav-tab">Live Walkthrough</a>
+        <a href="#practice" class="nav-tab">25 Practice Q's</a>
+        <a href="#cheatsheet" class="nav-tab">Cheat Sheet</a>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <!-- ========== HOOK ========== -->
+      <section id="hook">
+        <div class="hero">
+          <span class="meta-pill">🩺 NCLEX-RN / PN Prep</span>
+          <span class="meta-pill">⏱ 15-Minute System</span>
+          <span class="meta-pill">📚 Based on Nugent & Vitale</span>
+          <h1>Same Brain. Same Hours.<br/>Different Score.</h1>
+          <p class="lead">
+            If you study hard and score low, you don't have a knowledge problem — you have a <strong>question-reading problem</strong>. This page fixes that in 5 techniques.
+          </p>
+        </div>
+
+        <div class="story-card">
+          <span class="quote-mark">"</span>
+          Let me describe a student. She studies 4 hours a night. She color-codes her notes. She makes flashcards. She knows the material cold when you quiz her in conversation. Then she walks into the exam… and scores a 68.
+          <br/><br/>
+          Sound familiar? Maybe it sounds like <em>you</em>.
+          <div class="reveal-line">
+            🎯 The fix isn't more studying. It's learning how to <u>read the question</u>.
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ANATOMY ========== -->
+      <section id="anatomy">
+        <h2><span class="section-num">01</span>The Anatomy of Every NCLEX Question</h2>
+        <p class="section-lead">Before you can beat the question, you have to see what it's actually made of.</p>
+
+        <div class="anatomy-diagram">
+          <div class="anatomy-formula">
+            <div class="formula-box">ITEM</div>
+            <span class="plus">=</span>
+            <div class="formula-box">STEM<br/><small style="font-weight:400; color:var(--text-light);">(the question)</small></div>
+            <span class="plus">+</span>
+            <div class="formula-box correct">1 CORRECT<br/><small style="font-weight:400;">answer</small></div>
+            <span class="plus">+</span>
+            <div class="formula-box distractor">3 DISTRACTORS<br/><small style="font-weight:400;">designed to fool you</small></div>
+          </div>
+          <div class="anatomy-note">
+            <strong>The trap most students miss:</strong> Distractors aren't "wrong answers." They're written by psychometricians to <em>distract</em> you from the correct answer. They contain accurate nursing information. They sound clinically reasonable. <strong>An option being correct-sounding does not make it the correct answer to the question being asked.</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TECHNIQUES ========== -->
+      <section id="techniques">
+        <h2><span class="section-num">02</span>The 5 Power Techniques</h2>
+        <p class="section-lead">Distilled from the 12 techniques in Nugent & Vitale Chapter 7 — the 5 highest-leverage moves you can make on any NCLEX question.</p>
+
+        <!-- TECH 1: Strategic Word -->
+        <div class="technique">
+          <div class="tech-header">
+            <div class="tech-num">1</div>
+            <div>
+              <div class="tech-title">Find the Strategic Word</div>
+              <div class="tech-tagline">The question hides a word that tells you what to look for. Miss the word, miss the question.</div>
+            </div>
+          </div>
+          <p>Every NCLEX question contains a <strong>strategic word</strong> that flips your search. Two categories to spot:</p>
+
+          <table class="strat-words-table">
+            <thead>
+              <tr>
+                <th style="width:50%;">⚡ Priority Words</th>
+                <th>🚨 Negative Polarity Words</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="priority">FIRST · INITIALLY · INITIAL</td><td class="negative">NOT · EXCEPT</td></tr>
+              <tr><td class="priority">BEST · PRIORITY</td><td class="negative">NEVER · AVOID</td></tr>
+              <tr><td class="priority">MOST IMPORTANT</td><td class="negative">VIOLATES · CONTRAINDICATED</td></tr>
+              <tr><td class="priority">SAFEST · HIGHEST</td><td class="negative">LEAST · UNACCEPTABLE</td></tr>
+              <tr><td class="priority">REQUIRES IMMEDIATE</td><td class="negative">UNRELATED · INAPPROPRIATE</td></tr>
+            </tbody>
+          </table>
+
+          <p><strong>The rule:</strong> If two or more options look correct, you almost certainly missed a strategic word. <em>Reread the stem.</em></p>
+
+          <!-- Live Strategic Word Spotter -->
+          <div class="word-spotter">
+            <h4>🔍 Live Tool: Strategic Word Spotter</h4>
+            <p style="font-size:0.88rem; color:var(--text-light); margin-bottom:10px;">Paste any NCLEX-style question stem below. Click to highlight strategic words.</p>
+            <textarea id="spotterInput" class="spotter-input">A nurse is caring for four clients. Which client should the nurse assess first? The post-op client with a respiratory rate of 8 should never be left without monitoring.</textarea>
+            <div>
+              <button class="spotter-btn" onclick="runSpotter()">Highlight Strategic Words</button>
+              <button class="spotter-btn" style="background:var(--text-light);" onclick="resetSpotter()">Reset</button>
+            </div>
+            <div id="spotterOutput" class="spotter-output">Click the button to see the words light up.</div>
+            <div class="spotter-legend">
+              <span><span class="highlight-priority">priority word</span> — flips you into ranking mode</span>
+              <span><span class="highlight-negative">negative word</span> — flips you into finding what's WRONG</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TECH 2: Power of Elimination -->
+        <div class="technique">
+          <div class="tech-header">
+            <div class="tech-num">2</div>
+            <div>
+              <div class="tech-title">The Power of Elimination</div>
+              <div class="tech-tagline">You don't need to find the right answer. You need to kill the wrong ones first.</div>
+            </div>
+          </div>
+          <p>Every distractor you eliminate <strong>dramatically increases</strong> your odds of being right. Always hunt for what to delete before you choose.</p>
+
+          <div class="prob-ladder">
+            <div class="prob-step">
+              <div class="options-left">4 options</div>
+              <div class="odds">25%</div>
+              <div class="descr">starting blind</div>
+            </div>
+            <div class="prob-step">
+              <div class="options-left">3 options</div>
+              <div class="odds">33%</div>
+              <div class="descr">1 eliminated</div>
+            </div>
+            <div class="prob-step best">
+              <div class="options-left">2 options</div>
+              <div class="odds">50%</div>
+              <div class="descr">2 eliminated · doubled odds</div>
+            </div>
+          </div>
+
+          <div class="anatomy-note">
+            <strong>The reframe:</strong> Don't ask "which one is right?" Ask <em>"which two can I prove are wrong?"</em> The right answer often reveals itself by elimination, even when you don't know the content cold.
+          </div>
+        </div>
+
+        <!-- TECH 3: Specific Determiner Trap -->
+        <div class="technique">
+          <div class="tech-header">
+            <div class="tech-num">3</div>
+            <div>
+              <div class="tech-title">The Specific Determiner Trap</div>
+              <div class="tech-tagline">Extreme words inside an option are almost always WRONG. Click each to "trash" it.</div>
+            </div>
+          </div>
+          <p>Nursing — and life — is rarely absolute. When you see these words <em>inside an answer choice</em>, eliminate on sight:</p>
+
+          <div class="determiner-grid">
+            <div class="determiner-word" onclick="this.classList.toggle('eliminated')">ALWAYS</div>
+            <div class="determiner-word" onclick="this.classList.toggle('eliminated')">NEVER</div>
+            <div class="determiner-word" onclick="this.classList.toggle('eliminated')">ALL</div>
+            <div class="determiner-word" onclick="this.classList.toggle('eliminated')">NONE</div>
+            <div class="determiner-word" onclick="this.classList.toggle('eliminated')">ONLY</div>
+            <div class="determiner-word" onclick="this.classList.toggle('eliminated')">MUST</div>
+            <div class="determiner-word" onclick="this.classList.toggle('eliminated')">EVERY</div>
+            <div class="determiner-word" onclick="this.classList.toggle('eliminated')">NOTHING</div>
+          </div>
+
+          <p style="font-size:0.92rem; color:var(--text-light); margin-top:10px;">👆 <em>Tap each to practice the elimination motion. Make it a reflex.</em></p>
+
+          <div class="anatomy-note">
+            <strong>Worked example:</strong><br/>
+            "Which statement about pain is true?"<br/>
+            ❌ <s>Pain is <strong>always</strong> subjective</s> · ✅ <strong>Pain ratings should be documented routinely</strong> · ❌ <s>Patients <strong>never</strong> lie about pain</s> · ❌ <s>Vital signs <strong>must</strong> be elevated with severe pain</s><br/>
+            <em>You eliminated 3 distractors without knowing any pain content.</em>
+          </div>
+        </div>
+
+        <!-- TECH 4: Trap Patterns -->
+        <div class="technique">
+          <div class="tech-header">
+            <div class="tech-num">4</div>
+            <div>
+              <div class="tech-title">Spot the 4 Trap Patterns</div>
+              <div class="tech-tagline">Tap each card to see how to use it. These eliminate distractors without needing the content.</div>
+            </div>
+          </div>
+          <p>Even when you don't know the answer, these structural clues let you eliminate distractors:</p>
+
+          <div class="patterns-grid">
+            <div class="pattern-card" onclick="this.classList.toggle('flipped')">
+              <div class="pattern-icon">⚔️</div>
+              <div class="pattern-name">Two Opposites</div>
+              <div class="pattern-front">When two options directly contradict each other.</div>
+              <div class="pattern-back"><strong>Strategy:</strong> The answer is usually ONE of the two opposites. Eliminate the other two options first, then choose between the opposites using your knowledge.</div>
+              <div class="flip-hint">tap →</div>
+            </div>
+
+            <div class="pattern-card" onclick="this.classList.toggle('flipped')">
+              <div class="pattern-icon">👯</div>
+              <div class="pattern-name">Equally Plausible</div>
+              <div class="pattern-front">When two options say essentially the same thing.</div>
+              <div class="pattern-back"><strong>Strategy:</strong> If they're both right, they're both wrong (only one option can be the answer). Eliminate both immediately.</div>
+              <div class="flip-hint">tap →</div>
+            </div>
+
+            <div class="pattern-card" onclick="this.classList.toggle('flipped')">
+              <div class="pattern-icon">☂️</div>
+              <div class="pattern-name">The Global Option</div>
+              <div class="pattern-front">One option that umbrellas the others.</div>
+              <div class="pattern-back"><strong>Strategy:</strong> The umbrella option is usually the answer. "Assess the client" beats "check vital signs," "review labs," "ask about pain" — because it includes all of them.</div>
+              <div class="flip-hint">tap →</div>
+            </div>
+
+            <div class="pattern-card" onclick="this.classList.toggle('flipped')">
+              <div class="pattern-icon">🚫</div>
+              <div class="pattern-name">Denies Client Feelings</div>
+              <div class="pattern-front">Options that dismiss, minimize, or rush past emotions.</div>
+              <div class="pattern-back"><strong>Strategy:</strong> Eliminate on sight. Anything like "Don't worry," "You'll be fine," "Many people feel that way" — gone. Therapeutic responses acknowledge and invite.</div>
+              <div class="flip-hint">tap →</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TECH 5: Priority Hierarchy -->
+        <div class="technique">
+          <div class="tech-header">
+            <div class="tech-num">5</div>
+            <div>
+              <div class="tech-title">The Priority Hierarchy</div>
+              <div class="tech-tagline">When you see FIRST / INITIAL / BEST / MOST IMPORTANT — apply these frameworks IN THIS ORDER.</div>
+            </div>
+          </div>
+          <p>Work from the bottom of the pyramid up. The first framework that produces a clear winner is your answer.</p>
+
+          <div class="pyramid">
+            <div class="pyramid-layer layer-1">
+              <span class="layer-rank">1</span>
+              🫁 ABCs — Airway → Breathing → Circulation
+              <div class="layer-sub">Airway issue ALWAYS wins, even over bleeding</div>
+            </div>
+            <div class="pyramid-layer layer-2">
+              <span class="layer-rank">2</span>
+              🛏️ Maslow — Physiologic before Safety before Psychosocial
+              <div class="layer-sub">Physical need beats emotional need</div>
+            </div>
+            <div class="pyramid-layer layer-3">
+              <span class="layer-rank">3</span>
+              📋 Nursing Process — Assess BEFORE Act
+              <div class="layer-sub">When in doubt, the answer is "assess"</div>
+            </div>
+            <div class="pyramid-layer layer-4">
+              <span class="layer-rank">4</span>
+              ⏱️ Acute over Chronic
+              <div class="layer-sub">New problem beats managed problem</div>
+            </div>
+            <div class="pyramid-layer layer-5">
+              <span class="layer-rank">5</span>
+              📉 Unstable over Stable
+              <div class="layer-sub">Deteriorating patient wins</div>
+            </div>
+          </div>
+
+          <div class="amnes-banner">
+            <div class="amnes-word">AMNES</div>
+            <div style="font-size:0.92rem; opacity:0.9; margin-bottom:10px;">Always Make Nurses Evaluate Survival</div>
+            <div class="amnes-expanded">
+              <strong>A</strong>BCs → <strong>M</strong>aslow → <strong>N</strong>ursing process → <strong>E</strong>asier waits → <strong>S</strong>urvival first
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== LIVE WALKTHROUGH ========== -->
+      <section id="walkthrough">
+        <h2><span class="section-num">03</span>Live Walkthrough</h2>
+        <p class="section-lead">Watch the techniques applied step by step. Click "Next Step" to advance.</p>
+
+        <div class="walkthrough">
+          <div class="question-stem" id="walkStem">
+            A nurse is caring for four clients on a medical unit. Which client should the nurse assess <span class="marked">FIRST</span>?
+          </div>
+          <ol class="walkthrough-options" id="walkOpts">
+            <li data-step="0">
+              <span class="opt-text">A 72-year-old with stable angina requesting PRN nitroglycerin</span>
+              <span class="reason"></span>
+            </li>
+            <li data-step="0">
+              <span class="opt-text">A 58-year-old post-op day 1 with a respiratory rate of 8 and shallow breathing</span>
+              <span class="reason"></span>
+            </li>
+            <li data-step="0">
+              <span class="opt-text">A 45-year-old with newly diagnosed type 2 diabetes asking about insulin</span>
+              <span class="reason"></span>
+            </li>
+            <li data-step="0">
+              <span class="opt-text">A 30-year-old with anxiety waiting for discharge paperwork</span>
+              <span class="reason"></span>
+            </li>
+          </ol>
+          <div class="walkthrough-controls">
+            <button class="step-btn" id="walkPrev" onclick="walkStep(-1)" disabled>← Previous</button>
+            <button class="step-btn" id="walkNext" onclick="walkStep(1)">Next Step →</button>
+            <span class="step-indicator" id="walkIndicator">Step 0 of 5 — Read the question</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== PRACTICE QUESTIONS ========== -->
+      <section id="practice">
+        <h2><span class="section-num">04</span>25 Practice Questions</h2>
+        <p class="section-lead">Click an option. The rationale reveals why each wrong answer is wrong + which technique catches it.</p>
+
+        <div class="practice-section">
+          <div class="practice-controls">
+            <div class="score-pill">Score: <span id="scoreNum">0</span> / <span id="scoreDenom">0</span></div>
+            <span style="font-size:0.85rem; color:var(--text-light);">Filter:</span>
+            <button class="filter-btn active" data-filter="all" onclick="filterQuestions(this, 'all')">All</button>
+            <button class="filter-btn" data-filter="strategic" onclick="filterQuestions(this, 'strategic')">Strategic Word</button>
+            <button class="filter-btn" data-filter="determiner" onclick="filterQuestions(this, 'determiner')">Determiner</button>
+            <button class="filter-btn" data-filter="pattern" onclick="filterQuestions(this, 'pattern')">Trap Pattern</button>
+            <button class="filter-btn" data-filter="priority" onclick="filterQuestions(this, 'priority')">Priority</button>
+            <button class="filter-btn" data-filter="mixed" onclick="filterQuestions(this, 'mixed')">Mixed</button>
+            <button class="filter-btn" onclick="resetPractice()" style="background:var(--danger-bg); color:var(--danger); border-color:var(--danger);">↺ Reset</button>
+          </div>
+          <div id="questionsContainer"></div>
+        </div>
+      </section>
+
+      <!-- ========== 5 THINGS YOU MUST KNOW ========== -->
+      <section id="five">
+        <div class="five-things">
+          <h3>🎯 The 5 Things You Must Know</h3>
+          <ol>
+            <li><strong>The distractor was designed to fool you.</strong> Slow down. The "right-looking" option is usually the trap.</li>
+            <li><strong>If 2+ options look right, reread the stem.</strong> You missed a strategic word.</li>
+            <li><strong>Eliminate first, choose second.</strong> Every distractor you kill doubles your odds.</li>
+            <li><strong>Kill the extremes.</strong> "Always / never / all / only" almost always go in the trash.</li>
+            <li><strong>Priority order: ABC → Maslow → Assessment → Acute over chronic.</strong> Every priority question.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ========== CHEAT SHEET ========== -->
+      <section id="cheatsheet">
+        <h2><span class="section-num">05</span>Printable Cheat Sheet</h2>
+        <p class="section-lead">Click 🖨 Print at the top to get a 1-page take-anywhere version.</p>
+
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <h4>⚡ Priority Words (rank the options)</h4>
+            <ul>
+              <li>FIRST · INITIAL · INITIALLY</li>
+              <li>BEST · PRIORITY · MOST</li>
+              <li>MOST IMPORTANT</li>
+              <li>SAFEST · HIGHEST</li>
+              <li>REQUIRES IMMEDIATE</li>
+            </ul>
+          </div>
+          <div class="cheat-card">
+            <h4>🚨 Negative Polarity Words (find what's WRONG)</h4>
+            <ul>
+              <li>NOT · EXCEPT · NEVER</li>
+              <li>AVOID · VIOLATES</li>
+              <li>CONTRAINDICATED</li>
+              <li>LEAST · UNACCEPTABLE</li>
+              <li>UNRELATED · INAPPROPRIATE</li>
+            </ul>
+          </div>
+          <div class="cheat-card">
+            <h4>🗑 Trash on Sight (in answer options)</h4>
+            <ul>
+              <li>ALWAYS · NEVER</li>
+              <li>ALL · NONE</li>
+              <li>ONLY · MUST</li>
+              <li>EVERY · NOTHING</li>
+            </ul>
+          </div>
+          <div class="cheat-card">
+            <h4>🏆 Priority Hierarchy (apply in order)</h4>
+            <ul>
+              <li>1️⃣ ABCs (Airway · Breathing · Circulation)</li>
+              <li>2️⃣ Maslow (Physiologic before Safety)</li>
+              <li>3️⃣ Assess before Intervene</li>
+              <li>4️⃣ Acute over Chronic</li>
+              <li>5️⃣ Unstable over Stable</li>
+            </ul>
+          </div>
+          <div class="cheat-card">
+            <h4>🧩 Trap Patterns (in the options)</h4>
+            <ul>
+              <li>⚔️ Opposites → one is usually right</li>
+              <li>👯 Equally plausible → both wrong</li>
+              <li>☂️ Global option → usually right</li>
+              <li>🚫 Denies feelings → eliminate</li>
+            </ul>
+          </div>
+          <div class="cheat-card">
+            <h4>🧠 The AMNES Mnemonic</h4>
+            <ul>
+              <li><strong>A</strong>BCs first</li>
+              <li><strong>M</strong>aslow physiologic</li>
+              <li><strong>N</strong>ursing process (assess)</li>
+              <li><strong>E</strong>asier waits (chronic)</li>
+              <li><strong>S</strong>urvival first (unstable)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="citation">
+          <strong>Source:</strong> Nugent, P. M., & Vitale, B. A. (2023). <em>Test Success: Clinical Judgment and Test-Taking Strategies</em> (10th ed.). F.A. Davis Company. ISBN: 978-1-7196-4724-3.<br/><br/>
+          <strong>Built by:</strong> Tehrani Labs · <a href="https://tehranilabs.org" style="color: var(--primary);">tehranilabs.org</a> · For pre-licensure nursing students preparing for NCLEX-RN / PN and ATI examinations.
+        </div>
+      </section>
+
+    </div>
+
+    <script>
+      // ====================================================
+      // STRATEGIC WORD SPOTTER
+      // ====================================================
+      const PRIORITY_WORDS = ['first', 'initial', 'initially', 'best', 'priority', 'most important', 'most appropriate', 'most', 'safest', 'highest', 'requires immediate', 'immediate'];
+      const NEGATIVE_WORDS = ['not', 'except', 'never', 'avoid', 'violates', 'violate', 'contraindicated', 'least', 'unacceptable', 'unrelated', 'inappropriate', 'further teaching', 'requires correction', 'need for further teaching'];
+
+      function runSpotter() {
+        const text = document.getElementById('spotterInput').value;
+        let out = text;
+        // Longest phrases first so they don't get partial-matched
+        const sortedPriority = [...PRIORITY_WORDS].sort((a, b) => b.length - a.length);
+        const sortedNegative = [...NEGATIVE_WORDS].sort((a, b) => b.length - a.length);
+
+        sortedNegative.forEach(w => {
+          const re = new RegExp('\\b(' + w.replace(/ /g, '\\s+') + ')\\b', 'gi');
+          out = out.replace(re, '<span class="highlight-negative">$1</span>');
+        });
+        sortedPriority.forEach(w => {
+          const re = new RegExp('\\b(' + w.replace(/ /g, '\\s+') + ')\\b', 'gi');
+          out = out.replace(re, (match) => {
+            // Don't double-wrap if already inside a negative span
+            return '<span class="highlight-priority">' + match + '</span>';
+          });
+        });
+
+        document.getElementById('spotterOutput').innerHTML = out;
+      }
+      function resetSpotter() {
+        document.getElementById('spotterOutput').innerHTML = 'Click the button to see the words light up.';
+      }
+
+      // ====================================================
+      // LIVE WALKTHROUGH
+      // ====================================================
+      const walkSteps = [
+        { label: 'Step 0 of 5 — Read the question', actions: () => clearWalk() },
+        { label: 'Step 1 — Identify the strategic word: FIRST (priority)', actions: () => {} },
+        { label: 'Step 2 — Eliminate Option 4: anxiety + discharge = not life-threatening', actions: () => eliminateWalk(3, 'Not physiologic. Discharge paperwork can wait.') },
+        { label: 'Step 3 — Eliminate Option 3: knowledge gap is not a life threat', actions: () => eliminateWalk(2, 'Education need, not urgent. Stable client.') },
+        { label: 'Step 4 — Apply ABCs: respiratory rate 8 (Breathing) beats stable angina (Circulation)', actions: () => eliminateWalk(0, 'Stable angina + PRN order = stable circulation.') },
+        { label: 'Step 5 — Answer: Option 2 (respiratory depression wins)', actions: () => markCorrectWalk(1, 'Respiratory rate of 8 = respiratory depression. ABCs → Breathing wins.') }
+      ];
+      let walkIdx = 0;
+      function walkStep(delta) {
+        walkIdx = Math.max(0, Math.min(walkSteps.length - 1, walkIdx + delta));
+        if (delta < 0) clearWalk();
+        for (let i = 1; i <= walkIdx; i++) walkSteps[i].actions();
+        document.getElementById('walkIndicator').textContent = walkSteps[walkIdx].label;
+        document.getElementById('walkPrev').disabled = walkIdx === 0;
+        document.getElementById('walkNext').disabled = walkIdx === walkSteps.length - 1;
+      }
+      function clearWalk() {
+        document.querySelectorAll('#walkOpts li').forEach(li => {
+          li.classList.remove('eliminated', 'correct');
+          li.querySelector('.reason').textContent = '';
+        });
+      }
+      function eliminateWalk(idx, reason) {
+        const li = document.querySelectorAll('#walkOpts li')[idx];
+        li.classList.add('eliminated');
+        li.querySelector('.reason').textContent = '✗ ' + reason;
+      }
+      function markCorrectWalk(idx, reason) {
+        const li = document.querySelectorAll('#walkOpts li')[idx];
+        li.classList.add('correct');
+        li.querySelector('.reason').textContent = '✓ ' + reason;
+      }
+
+      // ====================================================
+      // 25 PRACTICE QUESTIONS
+      // ====================================================
+      const QUESTIONS = [
+        // ============ STRATEGIC WORD (5) ============
+        {
+          category: 'strategic', technique: 'Priority Word: FIRST',
+          q: 'A nurse is caring for four clients. Which client should the nurse assess FIRST?',
+          opts: [
+            'A client with stable angina requesting PRN nitroglycerin',
+            'A post-op client with a respiratory rate of 8 and shallow breathing',
+            'A newly diagnosed diabetic asking about insulin',
+            'A client with anxiety waiting for discharge paperwork'
+          ],
+          correct: 1,
+          rationale: 'Respiratory rate of 8 = respiratory depression — a Breathing (ABC) emergency.',
+          why: [
+            'Stable angina with PRN order is a managed condition.',
+            'CORRECT — Breathing in the ABCs always wins.',
+            'Knowledge gap is not life-threatening.',
+            'Anxiety + discharge wait is not physiologic urgency.'
+          ]
+        },
+        {
+          category: 'strategic', technique: 'Negative Polarity: REQUIRES INTERVENTION',
+          q: 'Which action by a new nurse requires immediate intervention by the preceptor?',
+          opts: [
+            'Verifies the prescription before medication administration',
+            'Uses two patient identifiers before drawing blood',
+            'Recaps a used needle after an injection',
+            'Performs hand hygiene before patient contact'
+          ],
+          correct: 2,
+          rationale: 'The stem flips you into looking for what is WRONG. Recapping needles violates needlestick prevention guidelines.',
+          why: [
+            'Correct practice (verifying meds).',
+            'Correct practice (two identifiers).',
+            'CORRECT — recapping needles is a needlestick risk and violates OSHA standards.',
+            'Correct practice (hand hygiene).'
+          ]
+        },
+        {
+          category: 'strategic', technique: 'Priority Word: MOST IMPORTANT',
+          q: 'A nurse is teaching a client about home use of warfarin. Which is the MOST IMPORTANT teaching point?',
+          opts: [
+            'Take the medication at the same time every day',
+            'Report any unusual bleeding or bruising',
+            'Maintain consistent intake of vitamin K foods',
+            'Use a soft-bristled toothbrush'
+          ],
+          correct: 1,
+          rationale: 'All four are correct teaching points — but the safety concern (bleeding) trumps lifestyle and consistency.',
+          why: [
+            'True but routine timing — not a safety issue.',
+            'CORRECT — bleeding can be life-threatening; this is the safety teaching.',
+            'Important for INR stability but not the safety priority.',
+            'Bleeding-prevention strategy, but secondary to recognizing bleeding.'
+          ]
+        },
+        {
+          category: 'strategic', technique: 'Priority Word: INITIALLY',
+          q: 'A nurse responds to a code blue. What should the nurse do INITIALLY?',
+          opts: [
+            'Start chest compressions',
+            'Check responsiveness and a pulse',
+            'Call for the defibrillator',
+            'Establish IV access'
+          ],
+          correct: 1,
+          rationale: 'Nursing process: Assess before Intervene. You must confirm absence of pulse / responsiveness before starting CPR.',
+          why: [
+            'Wrong — only after confirming no pulse.',
+            'CORRECT — Assessment first (nursing process).',
+            'Needed but not initial.',
+            'Comes later in resuscitation.'
+          ]
+        },
+        {
+          category: 'strategic', technique: 'Priority Word: BEST',
+          q: 'A client with terminal cancer says, "I\'m not afraid to die, but I worry about my family." Which is the BEST nurse response?',
+          opts: [
+            '"Your family will be fine — they have each other."',
+            '"Tell me more about your worries for them."',
+            '"Have you considered hospice services?"',
+            '"Many families grow stronger after a loss."'
+          ],
+          correct: 1,
+          rationale: 'Therapeutic communication: open-ended invitation to explore the feeling. The other three deny, deflect, or false-reassure.',
+          why: [
+            'Denies feelings (false reassurance).',
+            'CORRECT — therapeutic, open-ended, invites exploration.',
+            'Premature problem-solving — skips the feeling.',
+            'Cliché reassurance — minimizes the worry.'
+          ]
+        },
+
+        // ============ SPECIFIC DETERMINER (5) ============
+        {
+          category: 'determiner', technique: 'Specific Determiner: NEVER',
+          q: 'A nurse is teaching a postpartum mother about breastfeeding. Which statement by the mother indicates a need for further teaching?',
+          opts: [
+            '"I will breastfeed my baby on demand."',
+            '"Babies should NEVER be supplemented with formula."',
+            '"Engorgement can be relieved with warm compresses."',
+            '"Breast milk provides immune protection."'
+          ],
+          correct: 1,
+          rationale: 'NEVER is an extreme word AND clinically incorrect. Supplementation is appropriate in many situations (medical indication, mother\'s choice).',
+          why: [
+            'Correct practice (feeding on demand).',
+            'CORRECT — "NEVER" is too absolute and clinically wrong.',
+            'Correct teaching.',
+            'Correct teaching.'
+          ]
+        },
+        {
+          category: 'determiner', technique: 'Multiple Extremes',
+          q: 'Which statement about pain assessment is true?',
+          opts: [
+            'Pain is ALWAYS subjective.',
+            'Pain ratings should be documented routinely.',
+            'Patients NEVER lie about pain.',
+            'Vital signs MUST be elevated with severe pain.'
+          ],
+          correct: 1,
+          rationale: 'Three options contain absolute words — eliminate on sight, even without content knowledge.',
+          why: [
+            'ALWAYS is extreme — chronic pain can have objective findings.',
+            'CORRECT — the only option without an absolute word.',
+            'NEVER is extreme — false.',
+            'MUST is extreme — chronic pain often has normal vitals.'
+          ]
+        },
+        {
+          category: 'determiner', technique: 'Specific Determiner: ALL',
+          q: 'A nurse reviews standard precautions with a new aide. Which statement requires correction?',
+          opts: [
+            '"I will perform hand hygiene between every patient."',
+            '"Gloves are needed for ALL patient contact."',
+            '"I should wear a mask if there is splash risk."',
+            '"I will use the sharps container for needle disposal."'
+          ],
+          correct: 1,
+          rationale: 'ALL is extreme. Gloves are required only for blood/body-fluid exposure or contaminated surfaces — not routine contact.',
+          why: [
+            'Correct practice.',
+            'CORRECT — "ALL" is too absolute. Wrong statement = needs correction.',
+            'Correct practice.',
+            'Correct practice.'
+          ]
+        },
+        {
+          category: 'determiner', technique: 'Specific Determiner: ALWAYS',
+          q: 'Which statement about insulin is true?',
+          opts: [
+            'Insulin should ALWAYS be given subcutaneously.',
+            'Injection sites should be rotated.',
+            'Insulin can be safely mixed with ALL other medications.',
+            'Insulin is given to ALL diabetic clients.'
+          ],
+          correct: 1,
+          rationale: 'Three options contain ALWAYS/ALL — eliminate on sight.',
+          why: [
+            'ALWAYS — wrong. Regular insulin can be given IV.',
+            'CORRECT — the only non-absolute option.',
+            'ALL — wrong. Many drug incompatibilities.',
+            'ALL — wrong. Many Type 2 diabetics use oral meds.'
+          ]
+        },
+        {
+          category: 'determiner', technique: 'Specific Determiner: ONLY',
+          q: 'A client diagnosed with MRSA is preparing for discharge. Which client statement indicates a need for further teaching?',
+          opts: [
+            '"Hand hygiene is the most important way to prevent spread."',
+            '"I should ONLY use the bathroom in my room."',
+            '"I will not share my towels with family members."',
+            '"I will complete my full course of antibiotics."'
+          ],
+          correct: 1,
+          rationale: 'ONLY is extreme AND clinically untrue. Bathroom restrictions are not standard MRSA precautions for home discharge.',
+          why: [
+            'Correct teaching.',
+            'CORRECT — "ONLY" is extreme; needs teaching.',
+            'Correct teaching.',
+            'Correct teaching.'
+          ]
+        },
+
+        // ============ TRAP PATTERNS (5) ============
+        {
+          category: 'pattern', technique: 'Trap Pattern: Opposites',
+          q: 'A client with type 1 diabetes is sweating, shaky, and confused. The blood glucose is 50 mg/dL. What should the nurse do FIRST?',
+          opts: [
+            'Administer regular insulin',
+            'Administer 15 g of oral glucose',
+            'Encourage ambulation to stabilize symptoms',
+            'Recheck glucose in 30 minutes'
+          ],
+          correct: 1,
+          rationale: 'Opposites: insulin (lowers glucose) vs. glucose (raises glucose). The answer is one of the opposites. Glucose 50 = hypoglycemia → give glucose.',
+          why: [
+            'Wrong direction — would worsen hypoglycemia.',
+            'CORRECT — "Rule of 15": 15g fast-acting carb, recheck in 15 minutes.',
+            'Ambulation lowers glucose further — dangerous.',
+            'Delay risks unconsciousness — treat immediately.'
+          ]
+        },
+        {
+          category: 'pattern', technique: 'Trap Pattern: Equally Plausible',
+          q: 'A nurse is teaching a client about COPD exacerbation. Which intervention should the nurse PRIORITIZE?',
+          opts: [
+            'Encourage deep breathing exercises',
+            'Position the client in high Fowler\'s',
+            'Promote oxygenation',
+            'Teach pursed-lip breathing techniques'
+          ],
+          correct: 2,
+          rationale: 'Options 1 and 4 are essentially the same (breathing exercises) → eliminate both. Option 3 is the global option that umbrellas position + breathing.',
+          why: [
+            'Equally plausible with #4 — both are breathing exercises.',
+            'Specific intervention — included under "promote oxygenation."',
+            'CORRECT — the global option; the priority outcome.',
+            'Equally plausible with #1 — both are breathing exercises.'
+          ]
+        },
+        {
+          category: 'pattern', technique: 'Trap Pattern: Global Option',
+          q: 'Which action should the nurse take FIRST when admitting a new client to the unit?',
+          opts: [
+            'Take vital signs',
+            'Obtain the client\'s medication history',
+            'Perform a head-to-toe assessment',
+            'Complete a full nursing admission assessment'
+          ],
+          correct: 3,
+          rationale: 'Option 4 is the umbrella that includes the other three. "Full assessment" is the global answer.',
+          why: [
+            'Part of the admission assessment, not the whole.',
+            'Part of the admission assessment, not the whole.',
+            'Part of the admission assessment, not the whole.',
+            'CORRECT — the global option that umbrellas vitals, history, and physical.'
+          ]
+        },
+        {
+          category: 'pattern', technique: 'Trap Pattern: Denies Feelings',
+          q: 'A client about to undergo surgery says, "I\'m scared I won\'t wake up." Which response is BEST?',
+          opts: [
+            '"Don\'t worry — this is a routine procedure."',
+            '"Tell me more about what scares you."',
+            '"Many people share that same fear."',
+            '"Your surgeon is excellent and has a great record."'
+          ],
+          correct: 1,
+          rationale: 'Three options deny or deflect the feeling. Only one invites the client to explore.',
+          why: [
+            'Denies feelings ("don\'t worry").',
+            'CORRECT — therapeutic, open-ended.',
+            'Cliché reassurance — minimizes the feeling.',
+            'Diverts to the surgeon — bypasses the feeling.'
+          ]
+        },
+        {
+          category: 'pattern', technique: 'Trap Pattern: Unique Option',
+          q: 'A nurse is teaching about cardiac risk factors. Which is a MODIFIABLE risk factor for coronary artery disease?',
+          opts: [
+            'Age over 65',
+            'Family history of heart disease',
+            'Smoking 1 pack per day',
+            'Male gender'
+          ],
+          correct: 2,
+          rationale: 'Three options share a property: non-modifiable. The unique option (the only modifiable one) is the answer.',
+          why: [
+            'Non-modifiable (shared trait with #2, #4).',
+            'Non-modifiable (shared trait).',
+            'CORRECT — the only modifiable factor; the unique option.',
+            'Non-modifiable (shared trait).'
+          ]
+        },
+
+        // ============ PRIORITY HIERARCHY (5) ============
+        {
+          category: 'priority', technique: 'Priority: ABCs (Airway)',
+          q: 'A nurse is triaging four clients. Which client should be seen FIRST?',
+          opts: [
+            'Client with new-onset chest pain',
+            'Client with severe abdominal pain',
+            'Client with stridor and drooling',
+            'Client with a fractured wrist and bleeding'
+          ],
+          correct: 2,
+          rationale: 'Stridor + drooling = impending airway obstruction. Airway always wins over circulation, breathing, or pain.',
+          why: [
+            'Circulation — important but airway wins.',
+            'Pain — not life-threatening.',
+            'CORRECT — Airway obstruction. ABC = A FIRST.',
+            'Circulation — bleeding from a fracture is rarely immediately life-threatening.'
+          ]
+        },
+        {
+          category: 'priority', technique: 'Priority: Maslow (Physiologic)',
+          q: 'Which client need should the nurse address FIRST?',
+          opts: [
+            'Pain control for a post-op client',
+            'Anxiety about upcoming surgery',
+            'Family wanting to discuss prognosis',
+            'A spiritual care request'
+          ],
+          correct: 0,
+          rationale: 'Maslow: physiologic needs come before safety, love/belonging, and self-actualization. Pain is physiologic.',
+          why: [
+            'CORRECT — pain is a physiologic need.',
+            'Psychosocial — lower priority than physical pain.',
+            'Family need — lower priority than client physical need.',
+            'Self-actualization level — lower priority than physical need.'
+          ]
+        },
+        {
+          category: 'priority', technique: 'Priority: Assess First',
+          q: 'A nurse enters a room and the client appears to be in distress. What should the nurse do FIRST?',
+          opts: [
+            'Call the rapid response team',
+            'Assess the client\'s airway, breathing, and vital signs',
+            'Notify the provider',
+            'Administer a PRN medication'
+          ],
+          correct: 1,
+          rationale: 'Nursing process: Assess before Act. You cannot intervene appropriately without data.',
+          why: [
+            'Premature without assessment.',
+            'CORRECT — assess first; data drives the next action.',
+            'Premature without assessment.',
+            'Premature without assessment.'
+          ]
+        },
+        {
+          category: 'priority', technique: 'Priority: Acute over Chronic',
+          q: 'Which client should the nurse see FIRST?',
+          opts: [
+            'A client with chronic hypertension reporting a mild headache',
+            'A client with new-onset slurred speech and facial droop',
+            'A client with stable diabetes asking about meal options',
+            'A client with chronic back pain requesting PRN medication'
+          ],
+          correct: 1,
+          rationale: 'New neurologic symptoms (slurred speech + facial droop) = possible stroke. Acute beats chronic, every time.',
+          why: [
+            'Chronic + mild — manageable.',
+            'CORRECT — acute neuro symptoms = stroke until proven otherwise.',
+            'Stable + non-urgent.',
+            'Chronic + non-emergent.'
+          ]
+        },
+        {
+          category: 'priority', technique: 'Priority: Unstable over Stable',
+          q: 'The nurse must reassess four post-op clients. Which should be assessed FIRST?',
+          opts: [
+            'Client awaiting discharge with stable vitals',
+            'Client with stable vital signs requesting pain medication',
+            'Client whose blood pressure has dropped 30 points in the last hour',
+            'Client asking for ice chips'
+          ],
+          correct: 2,
+          rationale: 'A BP drop of 30 points in one hour = deteriorating client. Unstable beats stable.',
+          why: [
+            'Stable + non-urgent.',
+            'Stable + manageable pain.',
+            'CORRECT — deteriorating client wins.',
+            'Stable + comfort request.'
+          ]
+        },
+
+        // ============ MIXED (5) ============
+        {
+          category: 'mixed', technique: 'Mixed: Negative + ABCs',
+          q: 'A nurse is providing care for a client with a chest tube. Which finding REQUIRES IMMEDIATE intervention?',
+          opts: [
+            'Tidaling in the water-seal chamber with respiration',
+            'Drainage of 50 mL of serosanguineous fluid in 1 hour',
+            'New continuous bubbling in the water-seal chamber',
+            'Mild discomfort at the insertion site'
+          ],
+          correct: 2,
+          rationale: 'Continuous bubbling in the water-seal chamber = air leak in the system → potential pneumothorax. Breathing (ABC) emergency.',
+          why: [
+            'Tidaling is normal and expected.',
+            'Within normal post-op range.',
+            'CORRECT — air leak; affects breathing → ABC priority.',
+            'Expected post-op finding.'
+          ]
+        },
+        {
+          category: 'mixed', technique: 'Mixed: Negative + Determiner',
+          q: 'A nurse teaches a client about activity after MI. Which client statement indicates need for further teaching?',
+          opts: [
+            '"I will take aspirin daily as prescribed."',
+            '"I will avoid ALL physical activity for 6 months."',
+            '"I will report chest pain immediately."',
+            '"I will follow the cardiac diet."'
+          ],
+          correct: 1,
+          rationale: 'Negative stem ("need for further teaching") + extreme word ("ALL") = double trap. Progressive activity is actually encouraged.',
+          why: [
+            'Correct teaching.',
+            'CORRECT — "ALL" is extreme + clinically wrong.',
+            'Correct teaching.',
+            'Correct teaching.'
+          ]
+        },
+        {
+          category: 'mixed', technique: 'Mixed: Priority + Safety',
+          q: 'A nurse is caring for a postpartum client. Which finding is MOST CONCERNING?',
+          opts: [
+            'Lochia rubra, moderate amount',
+            'Fundus firm at the umbilicus',
+            'Peri-pad saturated within 30 minutes',
+            'Afterpains with breastfeeding'
+          ],
+          correct: 2,
+          rationale: 'A saturated peri-pad in 30 minutes = postpartum hemorrhage. Circulation/safety priority.',
+          why: [
+            'Expected finding.',
+            'Expected and reassuring finding.',
+            'CORRECT — sign of postpartum hemorrhage.',
+            'Expected with breastfeeding.'
+          ]
+        },
+        {
+          category: 'mixed', technique: 'Mixed: Priority + Acute',
+          q: 'A nurse is administering scheduled medications. Which client should receive medication FIRST?',
+          opts: [
+            'A stable client requesting PRN acetaminophen for a mild headache',
+            'A client with a scheduled antihypertensive, BP 165/95',
+            'A client awaiting discharge with a routine vitamin',
+            'A client with a scheduled antibiotic due in 30 minutes'
+          ],
+          correct: 1,
+          rationale: 'Acute physiologic need (elevated BP requiring antihypertensive) beats PRN comfort, routine vitamin, and not-yet-due scheduled medication.',
+          why: [
+            'Non-urgent comfort.',
+            'CORRECT — acute physiologic need (BP control).',
+            'Non-urgent and not time-critical.',
+            'Not yet due — can wait.'
+          ]
+        },
+        {
+          category: 'mixed', technique: 'Mixed: Assess + ABCs',
+          q: 'A client post-op reports, "I can\'t breathe." Which is the PRIORITY nursing action?',
+          opts: [
+            'Reposition the client to high Fowler\'s position',
+            'Assess respirations, breath sounds, and oxygen saturation',
+            'Notify the provider immediately',
+            'Administer oxygen via nasal cannula'
+          ],
+          correct: 1,
+          rationale: 'Two-layer priority: Nursing process (assess before act) + ABCs (Breathing). You cannot intervene appropriately without assessment data.',
+          why: [
+            'Intervention before assessment.',
+            'CORRECT — assess first; ABC priority.',
+            'Premature without data.',
+            'Intervention before assessment.'
+          ]
+        }
+      ];
+
+      let score = 0, answered = 0;
+      function renderQuestions(filter = 'all') {
+        const c = document.getElementById('questionsContainer');
+        c.innerHTML = '';
+        QUESTIONS.forEach((q, i) => {
+          if (filter !== 'all' && q.category !== filter) return;
+          const card = document.createElement('div');
+          card.className = 'question-card';
+          card.dataset.idx = i;
+          card.innerHTML = `
+            <div class="question-meta">
+              <span class="tag">Q${i + 1}</span>
+              <span class="tag">${labelFor(q.category)}</span>
+              <span class="tag tech">${q.technique}</span>
+            </div>
+            <div class="question-text">${q.q}</div>
+            <ul class="options-list" id="opts-${i}">
+              ${q.opts.map((o, j) => `<li onclick="answerQ(${i}, ${j})">${j + 1}. ${o}</li>`).join('')}
+            </ul>
+            <div class="rationale" id="rat-${i}">
+              <h5>✓ Correct Answer: Option ${q.correct + 1}</h5>
+              <div>${q.rationale}</div>
+              <div class="why-wrong">
+                <h6>Why each option is right or wrong:</h6>
+                <ul>${q.why.map((w, j) => `<li><strong>Option ${j + 1}:</strong> ${w}</li>`).join('')}</ul>
+              </div>
+              <div class="technique-note">🎯 Technique used: ${q.technique}</div>
+            </div>
+          `;
+          c.appendChild(card);
+        });
+        document.getElementById('scoreDenom').textContent = c.children.length;
+      }
+
+      function answerQ(qIdx, optIdx) {
+        const list = document.getElementById('opts-' + qIdx);
+        if (list.classList.contains('answered')) return;
+        list.classList.add('answered');
+        const q = QUESTIONS[qIdx];
+        Array.from(list.children).forEach((li, j) => {
+          li.classList.add('locked');
+          if (j === q.correct) li.classList.add('correct');
+          else if (j === optIdx) li.classList.add('wrong');
+        });
+        document.getElementById('rat-' + qIdx).classList.add('show');
+        answered++;
+        if (optIdx === q.correct) score++;
+        document.getElementById('scoreNum').textContent = score;
+      }
+
+      function labelFor(cat) {
+        return { strategic: 'Strategic Word', determiner: 'Determiner Trap', pattern: 'Trap Pattern', priority: 'Priority', mixed: 'Mixed' }[cat] || cat;
+      }
+
+      function filterQuestions(btn, filter) {
+        document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        score = 0; answered = 0;
+        document.getElementById('scoreNum').textContent = '0';
+        renderQuestions(filter);
+      }
+
+      function resetPractice() {
+        score = 0; answered = 0;
+        document.getElementById('scoreNum').textContent = '0';
+        document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
+        document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+        renderQuestions('all');
+      }
+
+      // ====================================================
+      // NAV TAB SCROLL HIGHLIGHTING
+      // ====================================================
+      const tabs = document.querySelectorAll('.nav-tab');
+      tabs.forEach(t => t.addEventListener('click', e => {
+        tabs.forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+      }));
+
+      // ====================================================
+      // INIT
+      // ====================================================
+      renderQuestions();
+      runSpotter();
+    </script>
+  </body>
+</html>
