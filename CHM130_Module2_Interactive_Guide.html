@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM-130 Module 2: Compounds &amp; How They Interact | Pro: Tehrani</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0f13;
+    --surface: #1a1a24;
+    --surface2: #22222e;
+    --surface3: #2a2a38;
+    --border: #333346;
+    --text: #e8e8f0;
+    --text-dim: #9999b0;
+    --accent: #6c63ff;
+    --accent-glow: rgba(108, 99, 255, 0.3);
+    --green: #10b981;
+    --green-glow: rgba(16, 185, 129, 0.2);
+    --red: #ef4444;
+    --red-glow: rgba(239, 68, 68, 0.2);
+    --orange: #f59e0b;
+    --orange-glow: rgba(245, 158, 11, 0.2);
+    --cyan: #06b6d4;
+    --cyan-glow: rgba(6, 182, 212, 0.2);
+    --pink: #ec4899;
+    --pink-glow: rgba(236, 72, 153, 0.2);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 60px 20px 50px;
+    text-align: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 40%, var(--accent-glow) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, var(--pink-glow) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero .subtitle {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .hero .byline {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 600;
+    position: relative;
+  }
+  .hero .time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    padding: 8px 18px;
+    background: rgba(108, 99, 255, 0.15);
+    border: 1px solid rgba(108, 99, 255, 0.3);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    position: relative;
+  }
+
+  /* ── NAV ── */
+  .topic-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 15, 19, 0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    overflow-x: auto;
+    display: flex;
+    gap: 8px;
+    scrollbar-width: none;
+  }
+  .topic-nav::-webkit-scrollbar { display: none; }
+  .topic-nav a {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text-dim);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .topic-nav a:hover, .topic-nav a:focus {
+    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 200;
+    background: var(--surface);
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--pink));
+    transition: width 0.3s;
+  }
+
+  /* ── MAIN ── */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 30px 20px 80px;
+  }
+
+  /* ── TOPIC CARD ── */
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 32px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .topic-card:hover { border-color: var(--accent); }
+
+  .topic-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 24px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .topic-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .topic-header h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    flex: 1;
+  }
+  .topic-header .badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .badge-exam { background: var(--red-glow); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+  .badge-formula { background: var(--orange-glow); color: var(--orange); border: 1px solid rgba(245,158,11,0.3); }
+  .badge-concept { background: var(--cyan-glow); color: var(--cyan); border: 1px solid rgba(6,182,212,0.3); }
+
+  .topic-body { padding: 0 24px 24px; }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    padding: 4px 12px;
+    border-radius: 6px;
+  }
+  .label-explain { background: rgba(6,182,212,0.12); color: var(--cyan); }
+  .label-memory { background: rgba(236,72,153,0.12); color: var(--pink); }
+  .label-example { background: rgba(16,185,129,0.12); color: var(--green); }
+
+  /* ── EXPLANATION BOX ── */
+  .explain-box {
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    border-left: 3px solid var(--cyan);
+    font-size: 0.95rem;
+  }
+  .explain-box p { margin-bottom: 10px; }
+  .explain-box p:last-child { margin-bottom: 0; }
+
+  /* ── MEMORY AID BOX ── */
+  .memory-box {
+    background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(108,99,255,0.08));
+    border: 1px solid rgba(236,72,153,0.2);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .memory-box::before {
+    content: '💡';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 3.5rem;
+    opacity: 0.08;
+  }
+  .memory-title {
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--pink);
+    margin-bottom: 8px;
+  }
+  .memory-box .mnemonic {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(0,0,0,0.3);
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
+  .memory-box .analogy {
+    font-size: 0.92rem;
+    color: var(--text-dim);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── EXAMPLE BOX ── */
+  .example-box {
+    background: var(--surface2);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin-bottom: 10px;
+  }
+  .example-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+  .step {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-text { flex: 1; font-size: 0.93rem; }
+  .answer-highlight {
+    display: inline-block;
+    background: var(--green-glow);
+    color: var(--green);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 0.95rem;
+  }
+
+  /* ── TABLES ── */
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.88rem;
+  }
+  .info-table th {
+    background: var(--surface3);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    border-bottom: 2px solid var(--border);
+  }
+  .info-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .info-table tr:last-child td { border-bottom: none; }
+  .info-table tr:hover td { background: rgba(108,99,255,0.05); }
+
+  /* ── FORMULA HIGHLIGHT ── */
+  .formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    background: rgba(108,99,255,0.12);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+  .formula-block {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 18px;
+    margin: 14px 0;
+    background: rgba(108,99,255,0.08);
+    border: 1px solid rgba(108,99,255,0.2);
+    border-radius: var(--radius-sm);
+    color: #fff;
+  }
+
+  /* ── QUIZ SECTION ── */
+  .quiz-section {
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 30px 24px;
+    margin-top: 40px;
+  }
+  .quiz-section h2 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .quiz-subtitle {
+    text-align: center;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+  }
+  .quiz-score {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    padding: 12px;
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+  }
+  .quiz-score .score-num { color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+
+  .quiz-q {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s;
+  }
+  .quiz-q.correct { border-color: var(--green); }
+  .quiz-q.incorrect { border-color: var(--red); }
+  .quiz-q-text {
+    font-weight: 700;
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+  }
+  .quiz-q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .quiz-opt:hover:not(:disabled) {
+    background: rgba(108,99,255,0.1);
+    border-color: var(--accent);
+  }
+  .quiz-opt:disabled { cursor: default; opacity: 0.7; }
+  .quiz-opt.selected-correct {
+    background: var(--green-glow) !important;
+    border-color: var(--green) !important;
+    color: var(--green) !important;
+    opacity: 1 !important;
+    font-weight: 600;
+  }
+  .quiz-opt.selected-wrong {
+    background: var(--red-glow) !important;
+    border-color: var(--red) !important;
+    color: var(--red) !important;
+    opacity: 1 !important;
+  }
+  .quiz-opt.show-correct {
+    background: var(--green-glow) !important;
+    border-color: var(--green) !important;
+    opacity: 1 !important;
+  }
+  .quiz-feedback {
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct-fb { background: var(--green-glow); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+  .quiz-feedback.incorrect-fb { background: var(--red-glow); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+
+  .reset-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 32px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .reset-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-glow); }
+
+  /* ── CHEAT SHEET ── */
+  .cheat-sheet {
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-top: 36px;
+  }
+  .cheat-sheet h2 {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .cheat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .cheat-item {
+    background: var(--surface3);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+  .cheat-item .cheat-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .cheat-item .cheat-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* ── TRY-IT (inline practice) ── */
+  .try-it {
+    background: var(--surface3);
+    border: 1px dashed var(--orange);
+    border-radius: var(--radius-sm);
+    padding: 18px 20px;
+    margin-top: 14px;
+  }
+  .try-it-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+  }
+  .try-it p { font-size: 0.93rem; margin-bottom: 10px; }
+  .reveal-btn {
+    padding: 8px 20px;
+    background: rgba(245,158,11,0.15);
+    border: 1px solid rgba(245,158,11,0.3);
+    color: var(--orange);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .reveal-btn:hover { background: rgba(245,158,11,0.25); }
+  .reveal-answer {
+    margin-top: 12px;
+    padding: 14px;
+    background: rgba(16,185,129,0.08);
+    border-radius: 8px;
+    border: 1px solid rgba(16,185,129,0.2);
+    display: none;
+    font-size: 0.92rem;
+  }
+  .reveal-answer.show { display: block; }
+
+  /* ── REACTION TYPE CARDS ── */
+  .rxn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  @media (max-width: 500px) { .rxn-grid { grid-template-columns: 1fr; } }
+  .rxn-card {
+    background: var(--surface3);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .rxn-card .rxn-emoji { font-size: 1.6rem; margin-bottom: 4px; }
+  .rxn-card .rxn-name { font-weight: 800; font-size: 0.9rem; margin-bottom: 4px; }
+  .rxn-card .rxn-pattern { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent); margin-bottom: 6px; }
+  .rxn-card .rxn-desc { font-size: 0.8rem; color: var(--text-dim); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .topic-body { padding: 0 16px 20px; }
+    .topic-header { padding: 18px 16px 14px; }
+    .quiz-section { padding: 24px 16px; }
+    .cheat-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── ANIMATIONS ── */
+  .topic-card { animation: fadeUp 0.5s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── DIVIDER ── */
+  .topic-divider {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+  }
+
+  /* ── COMPARISON BOX (endo/exo, etc) ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+  }
+  @media (max-width: 500px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-col {
+    background: var(--surface3);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .compare-col h4 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .compare-col ul {
+    list-style: none;
+    font-size: 0.88rem;
+    color: var(--text-dim);
+  }
+  .compare-col ul li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-container"><div class="progress-bar-fill" id="progressBar"></div></div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Module 2: <span>Compounds &amp; Reactions</span></h1>
+  <div class="subtitle">CHM-130 &middot; Interactive Study Guide</div>
+  <div class="byline">Pro: Tehrani</div>
+  <div class="time-badge">⏱ Designed for a 2-hour session &middot; 19 exam questions from this module</div>
+</div>
+
+<!-- TOPIC NAV -->
+<nav class="topic-nav">
+  <a href="#atomic">Atoms</a>
+  <a href="#molarmass">Molar Mass</a>
+  <a href="#moles">Moles</a>
+  <a href="#avogadro">Avogadro's #</a>
+  <a href="#reactprod">React. vs Prod.</a>
+  <a href="#balancing">Balancing</a>
+  <a href="#redox">Redox</a>
+  <a href="#reactions">Reaction Types</a>
+  <a href="#energy">Endo vs Exo</a>
+  <a href="#stoich">Stoichiometry</a>
+  <a href="#states">States of Matter</a>
+  <a href="#gaslaws">Gas Laws</a>
+  <a href="#quiz">Exam Quiz</a>
+</nav>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 1. ATOMIC STRUCTURE -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="atomic">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(6,182,212,0.12);">⚛️</div>
+    <h2>Atomic Structure</h2>
+    <span class="badge badge-exam">2 Exam Qs</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <p>Every atom has three parts. Think of it like a hospital room:</p>
+      <table class="info-table">
+        <tr><th>Particle</th><th>Charge</th><th>Location</th><th>How to Find</th></tr>
+        <tr><td><strong>Protons (p⁺)</strong></td><td>Positive (+)</td><td>Nucleus</td><td>= Atomic number</td></tr>
+        <tr><td><strong>Neutrons (n⁰)</strong></td><td>Neutral (0)</td><td>Nucleus</td><td>= Mass # − Atomic #</td></tr>
+        <tr><td><strong>Electrons (e⁻)</strong></td><td>Negative (−)</td><td>Electron cloud</td><td>= Protons (neutral atom)</td></tr>
+      </table>
+      <p>The <strong>atomic number</strong> is the element's permanent ID &mdash; change it and you've got a different element entirely. The <strong>mass number</strong> can change (that's what isotopes are).</p>
+      <p><strong>Atomic Size Trends:</strong> Big atoms live in the <strong>bottom-left</strong> corner of the periodic table. Going down a group = bigger (more shells). Going left = bigger (fewer protons pulling inward).</p>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The Hospital Wristband</div>
+      <div class="mnemonic">PEN</div>
+      <p><strong>P</strong>rotons = <strong>P</strong>ositive &nbsp;|&nbsp; <strong>E</strong>lectrons = n<strong>E</strong>gative &nbsp;|&nbsp; <strong>N</strong>eutrons = <strong>N</strong>eutral</p>
+      <p class="analogy">Think of the atomic number like a patient's wristband at the hospital &mdash; it never changes. You can gain weight (mass number), but your hospital ID stays the same. Change the ID and you're literally a different person.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Find all particles for Neon-21</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">Look up Neon on the periodic table → Atomic number = <span class="formula">10</span> → <strong>10 protons</strong></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Mass number is in the name: "Neon-<strong>21</strong>"</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Neutrons = 21 − 10 = <span class="formula">11 neutrons</span></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Neutral atom → electrons = protons = <span class="formula">10 electrons</span></div></div>
+      <div class="answer-highlight">Neon-21: 10 p⁺, 11 n⁰, 10 e⁻</div>
+    </div>
+    <div class="try-it">
+      <div class="try-it-label">🎯 Your Turn</div>
+      <p>How many neutrons does Carbon-14 have?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+      <div class="reveal-answer">Carbon atomic # = 6. Neutrons = 14 − 6 = <strong>8 neutrons</strong>. (This is the radioactive isotope used in carbon dating!)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 2. MOLAR MASS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="molarmass">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(245,158,11,0.12);">⚖️</div>
+    <h2>Molecular Weight &amp; Molar Mass</h2>
+    <span class="badge badge-formula">Formula</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <p><strong>Molar mass</strong> = the weight of ONE mole of a substance in <strong>g/mol</strong>. You find it by shopping the periodic table: look up each element's atomic mass, multiply by how many atoms you have, add it all up.</p>
+      <p>Once you know the molar mass, you can convert between <strong>grams</strong> and <strong>moles</strong>:</p>
+      <div class="formula-block">grams = moles × molar mass &nbsp;&nbsp;|&nbsp;&nbsp; moles = grams ÷ molar mass</div>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The Grocery Receipt</div>
+      <div class="mnemonic">G = M × MM</div>
+      <p>Molar mass is like checking out at a grocery store. Each element has a price tag (atomic mass). You scan each item, multiply by quantity, and your receipt total is the molar mass.</p>
+      <p class="analogy">Picture the GMM triangle like a pizza slice: <strong>G</strong>rams on top, <strong>M</strong>oles and <strong>M</strong>olar <strong>M</strong>ass on the bottom. Cover what you need &mdash; what's left is your formula.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam: Find the molar mass of MgCl₂</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">MgCl₂ = 1 Magnesium + 2 Chlorine</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Mg = <span class="formula">24.31 g/mol</span> &nbsp;|&nbsp; Cl = <span class="formula">35.45 g/mol</span></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">24.31 + 2(35.45) = 24.31 + 70.90 = <span class="formula">95.21 g/mol</span></div></div>
+      <div class="answer-highlight">MgCl₂ = 95.21 g/mol</div>
+    </div>
+    <div class="example-box" style="margin-top:12px;">
+      <div class="example-title">Exam: Blanca needs 0.50 mol of CO. How many grams?</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">Molar mass of CO: C(12.01) + O(16.00) = <span class="formula">28.01 g/mol</span></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">grams = 0.50 mol × 28.01 g/mol = <span class="formula">14.01 g</span></div></div>
+      <div class="answer-highlight">14.01 grams of CO</div>
+    </div>
+    <div class="try-it">
+      <div class="try-it-label">🎯 Your Turn</div>
+      <p>How many grams in 0.70 mol of H₂O₂?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+      <div class="reveal-answer">H₂O₂ molar mass: 2(1.008) + 2(16.00) = 34.02 g/mol. Grams = 0.70 × 34.02 = <strong>23.8 g</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 3. MOLE CONCEPT -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="moles">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(16,185,129,0.12);">📦</div>
+    <h2>The Mole Concept</h2>
+    <span class="badge badge-exam">2 Exam Qs</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <p>A <strong>mole</strong> is just a counting word. "Dozen" means 12. "Mole" means <strong>6.02 × 10²³</strong>. That's it.</p>
+      <p>The <strong>subscript</strong> in a chemical formula tells you the mole ratio. In C₁₂H₂₂O₁₁ (sucrose), every 1 mole of sucrose contains 22 moles of hydrogen atoms.</p>
+      <p><strong>The trick:</strong> moles of element = moles of compound × subscript.</p>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The Med Supply Closet</div>
+      <p>Nurses don't count individual gauze pads &mdash; they order by the <strong>box</strong>. Each box has a set number inside.</p>
+      <p>Chemists don't count atoms &mdash; they order by the <strong>mole</strong>. And the subscript on the formula tells you how many are packed in each "box."</p>
+      <p class="analogy">If each box of a wound care kit has 22 gauze pads, then 3 boxes = 3 × 22 = 66 gauze pads. Same logic: 3 mol sucrose = 3 × 22 = 66 mol hydrogen.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam: 3 mol of sucrose (C₁₂H₂₂O₁₁) → how many moles of hydrogen?</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">Subscript on H = <span class="formula">22</span></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">3 mol × 22 = <span class="formula">66 mol H</span></div></div>
+      <div class="answer-highlight">66 moles of hydrogen</div>
+    </div>
+    <div class="try-it">
+      <div class="try-it-label">🎯 Your Turn</div>
+      <p>2 mol of fructose (C₆H₁₂O₆). How many moles of oxygen?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+      <div class="reveal-answer">Subscript on O = 6. So 2 × 6 = <strong>12 mol O</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 4. AVOGADRO'S NUMBER -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="avogadro">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(236,72,153,0.12);">🔢</div>
+    <h2>Avogadro's Number</h2>
+    <span class="badge badge-exam">Exam</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <div class="formula-block">1 mole = 6.02 × 10²³ particles</div>
+      <p>Two conversions &mdash; that's all you need:</p>
+      <p><strong>Molecules → Moles:</strong> DIVIDE by 6.02 × 10²³ (big → small)</p>
+      <p><strong>Moles → Molecules:</strong> MULTIPLY by 6.02 × 10²³ (small → big)</p>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">Mole Day: 6:02 on 10/23</div>
+      <div class="mnemonic">6.02 × 10²³</div>
+      <p>Chemists actually celebrate <strong>Mole Day</strong> on October 23rd (10/23) at 6:02 AM.</p>
+      <p class="analogy">Direction trick: Think of it like hospital shift changes. Going from a BIG number (molecules, like a packed ER) to a SMALL number (moles, like a summary count) → you DIVIDE. Going from a SMALL summary back out → you MULTIPLY.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam: 1.8 × 10²⁴ molecules of CO₂ → how many moles?</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">Big → small, so <strong>divide</strong></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">1.8 × 10²⁴ ÷ 6.02 × 10²³ = <span class="formula">~3.0 mol</span></div></div>
+      <div class="answer-highlight">≈ 3.0 moles of CO₂</div>
+    </div>
+    <div class="try-it">
+      <div class="try-it-label">🎯 Your Turn</div>
+      <p>2.4 × 10²⁴ molecules of CH₄. How many moles?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+      <div class="reveal-answer">2.4 × 10²⁴ ÷ 6.02 × 10²³ = <strong>~4.0 mol CH₄</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 5. REACTANTS vs PRODUCTS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="reactprod">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(108,99,255,0.12);">➡️</div>
+    <h2>Reactants vs. Products</h2>
+    <span class="badge badge-exam">1 Exam Q</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <div class="formula-block">REACTANTS → PRODUCTS</div>
+      <p><strong>Left side</strong> = Reactants (what goes IN). <strong>Right side</strong> = Products (what comes OUT).</p>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The Kitchen Rule</div>
+      <p>Reactants are your <strong>ingredients</strong>. Products are the <strong>finished meal</strong>.</p>
+      <p>You READ left to right &mdash; <strong>R</strong>eactants are what you <strong>R</strong>EAD first.</p>
+      <p class="analogy">Eggs + flour + sugar → cake. Nobody calls the cake an ingredient. Exam question: "What are the substances produced on the right side?" → Products. Always.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Identify reactants and products: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Reactants</strong> (left): C₆H₁₂O₆ and O₂</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Products</strong> (right): CO₂ and H₂O</div></div>
+      <div class="answer-highlight">Reactants = C₆H₁₂O₆, O₂ &nbsp;|&nbsp; Products = CO₂, H₂O</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 6. BALANCING EQUATIONS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="balancing">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(245,158,11,0.12);">⚖️</div>
+    <h2>Balancing Chemical Equations</h2>
+    <span class="badge badge-exam">2 Exam Qs</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <p>Atoms don't appear or vanish. What goes in must come out &mdash; just rearranged. <strong>Same number of each atom on both sides.</strong></p>
+      <p>Strategy: Balance metals first, nonmetals next, save H and O for last.</p>
+      <p><strong>Golden rule:</strong> NEVER change subscripts. Subscripts change <em>what</em> the molecule is. Coefficients (the big numbers in front) change <em>how many</em>.</p>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The Hospital Census</div>
+      <p>Every patient who checks <strong>IN</strong> must also check <strong>OUT</strong>. No disappearances, no clones.</p>
+      <p class="analogy">If 5 patients walk into the ER, 5 must be accounted for in discharge. You can move them to different rooms (rearrange into new compounds), but the head count stays the same. Changing a subscript is like changing a patient's identity &mdash; that's fraud. Only change coefficients (how many of each compound you have).</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Balance: Zn + HCl → H₂ + ZnCl₂</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Count:</strong> Left: Zn=1, H=1, Cl=1 | Right: H=2, Zn=1, Cl=2. Not balanced!</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Fix:</strong> Put <span class="formula">2</span> in front of HCl → Left: H=2, Cl=2</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Check:</strong> Zn: 1=1 ✓ H: 2=2 ✓ Cl: 2=2 ✓</div></div>
+      <div class="answer-highlight">1 Zn + 2 HCl → 1 H₂ + 1 ZnCl₂</div>
+    </div>
+    <div class="try-it">
+      <div class="try-it-label">🎯 Your Turn</div>
+      <p>Balance: S₂ + O₂ → SO₂. What are the coefficients?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+      <div class="reveal-answer">Put 2 in front of SO₂ (S=2, O=4 on right). Then put 2 in front of O₂ (O=4 on left). Check: S 2=2 ✓ O 4=4 ✓. <strong>Coefficients: 1, 2, 2</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 7. OXIDATION & REDUCTION -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="redox">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(239,68,68,0.12);">⚡</div>
+    <h2>Oxidation &amp; Reduction (Redox)</h2>
+    <span class="badge badge-exam">Exam</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <table class="info-table">
+        <tr><th></th><th>Oxidation</th><th>Reduction</th></tr>
+        <tr><td><strong>Electrons</strong></td><td>LOSES them</td><td>GAINS them</td></tr>
+        <tr><td><strong>Charge</strong></td><td>Becomes more positive</td><td>Becomes more negative</td></tr>
+      </table>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The #1 Chemistry Mnemonic</div>
+      <div class="mnemonic">OIL RIG</div>
+      <p><strong>O</strong>xidation <strong>I</strong>s <strong>L</strong>oss (of electrons) &nbsp;|&nbsp; <strong>R</strong>eduction <strong>I</strong>s <strong>G</strong>ain (of electrons)</p>
+      <p class="analogy">Think of an oil rig worker: he LOSES his hard hat on a windy day (Oxidation = Loss). His buddy finds it and GAINS a free hat (Reduction = Gain). Or remember LEO the lion says GER: Lose Electrons = Oxidation, Gain Electrons = Reduction.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam: "Reduction is characterized by:"</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">OIL RIG → Reduction Is Gain</div></div>
+      <div class="answer-highlight">Answer: Gain of an electron</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 8. REACTION TYPES -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="reactions">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(16,185,129,0.12);">🔬</div>
+    <h2>5 Reaction Types</h2>
+    <span class="badge badge-exam">2 Exam Qs</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <p>Every reaction on your exam falls into one of five types. Count the reactants and products to tell them apart:</p>
+    </div>
+
+    <div class="rxn-grid">
+      <div class="rxn-card">
+        <div class="rxn-emoji">💑</div>
+        <div class="rxn-name">Synthesis</div>
+        <div class="rxn-pattern">A + B → AB</div>
+        <div class="rxn-desc">Two singles get together</div>
+      </div>
+      <div class="rxn-card">
+        <div class="rxn-emoji">💔</div>
+        <div class="rxn-name">Decomposition</div>
+        <div class="rxn-pattern">AB → A + B</div>
+        <div class="rxn-desc">The breakup</div>
+      </div>
+      <div class="rxn-card">
+        <div class="rxn-emoji">😈</div>
+        <div class="rxn-name">Single Replacement</div>
+        <div class="rxn-pattern">A + BC → AC + B</div>
+        <div class="rxn-desc">Someone steals your date</div>
+      </div>
+      <div class="rxn-card">
+        <div class="rxn-emoji">🔄</div>
+        <div class="rxn-name">Double Replacement</div>
+        <div class="rxn-pattern">AB + CD → AD + CB</div>
+        <div class="rxn-desc">Two couples swap partners</div>
+      </div>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The Dating App</div>
+      <div class="mnemonic">Some Dudes Can't Sing Duets</div>
+      <p><strong>S</strong>ynthesis, <strong>D</strong>ecomposition, <strong>C</strong>ombustion, <strong>S</strong>ingle Replacement, <strong>D</strong>ouble Replacement</p>
+      <p class="analogy"><strong>Quick ID trick:</strong> 2→1 = Synthesis (coming together). 1→2+ = Decomposition (breaking up). Element + Compound = Single Replacement (third wheel). Compound + Compound = Double Replacement (partner swap).</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam: Which is a double replacement? HBr + KOH → H₂O + KBr</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">Two compounds on the left (HBr, KOH) → Two compounds on the right (H₂O, KBr)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Partners swapped: H went with OH, K went with Br</div></div>
+      <div class="answer-highlight">Double Replacement (Answer: B)</div>
+    </div>
+    <div class="try-it">
+      <div class="try-it-label">🎯 Your Turn</div>
+      <p>Classify: SO₂ + H₂O → H₂SO₃</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+      <div class="reveal-answer">2 things → 1 thing = <strong>Synthesis (Combination)</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 9. ENDO vs EXO -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="energy">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(239,68,68,0.12);">🔥</div>
+    <h2>Endothermic vs. Exothermic</h2>
+    <span class="badge badge-exam">2 Exam Qs</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <div class="compare-grid">
+        <div class="compare-col" style="border-top: 3px solid var(--red);">
+          <h4 style="color:var(--red);">🔥 Exothermic</h4>
+          <ul>
+            <li>Energy is <strong>released</strong></li>
+            <li>Surroundings get <strong>warmer</strong></li>
+            <li>Fire, breathing, hot packs</li>
+          </ul>
+        </div>
+        <div class="compare-col" style="border-top: 3px solid var(--cyan);">
+          <h4 style="color:var(--cyan);">🧊 Endothermic</h4>
+          <ul>
+            <li>Energy is <strong>absorbed</strong></li>
+            <li>Surroundings get <strong>cooler</strong></li>
+            <li>Ice packs, evaporation, melting</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The ER Doors</div>
+      <div class="mnemonic">EXO = EXIT &nbsp;|&nbsp; ENDO = ENTER</div>
+      <p><strong>Exo</strong>thermic: energy <strong>exits</strong> the reaction (like a patient being discharged &mdash; heat leaves and warms the hallway).</p>
+      <p><strong>Endo</strong>thermic: energy <strong>enters</strong> the reaction (like an admission &mdash; the reaction sucks heat from the room, so the room feels cold).</p>
+      <p class="analogy">The tricky part: "endothermic cools surroundings" sounds backwards. But the reaction is an energy vacuum &mdash; it's pulling heat FROM the room into itself. That's why an instant cold pack gets cold. It's not making cold; it's stealing your warmth.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam patterns</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">"Heat is produced during respiration" → <span class="formula">Exothermic</span> (heat exits)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">"A glass of water turns cold" → <span class="formula">Endothermic</span> (heat absorbed from water)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">"Lighting a match / burning paper" → <span class="formula">Exothermic</span></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">"Hot pad for back pain" → <span class="formula">Exothermic</span> (releases heat)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 10. STOICHIOMETRY -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="stoich">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(108,99,255,0.12);">🗺️</div>
+    <h2>Stoichiometry (Equation Conversions)</h2>
+    <span class="badge badge-exam">2 Exam Qs</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <p>The <strong>coefficients</strong> in a balanced equation give you the <strong>mole ratio</strong>. This ratio is your conversion bridge.</p>
+      <div class="formula-block">3CH₄ → C₃H₈ + 2H₂<br><span style="font-size:0.8rem;color:var(--text-dim)">3 mol CH₄ : 1 mol C₃H₈ : 2 mol H₂</span></div>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">GPS Navigation</div>
+      <div class="mnemonic">Grams A → Moles A → Moles B → Grams B</div>
+      <p>Think of it like driving with GPS:</p>
+      <p>🛣️ <strong>On-ramp</strong> (grams → moles): Divide by molar mass to enter the highway<br>
+      🔀 <strong>Highway</strong> (moles A → moles B): Use the coefficient ratio to change lanes<br>
+      🛣️ <strong>Off-ramp</strong> (moles → grams): Multiply by molar mass to exit</p>
+      <p class="analogy">If you already start in moles, skip the on-ramp. If you only need moles at the end, skip the off-ramp.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam: 0.5 mol C₃H₈ produced → how many mol H₂?</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">Ratio from equation: 1 mol C₃H₈ : 2 mol H₂</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">0.5 × (2/1) = <span class="formula">1.0 mol H₂</span></div></div>
+      <div class="answer-highlight">1.0 mol H₂</div>
+    </div>
+    <div class="example-box" style="margin-top:12px;">
+      <div class="example-title">Exam: 3 mol CH₄ → how many grams C₃H₈?</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">Ratio: 3 mol CH₄ → 1 mol C₃H₈. So 3 mol CH₄ = 1 mol C₃H₈</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Molar mass C₃H₈: 3(12.01) + 8(1.008) = <span class="formula">44.09 g/mol</span></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">1 mol × 44.09 = <span class="formula">44.09 g</span></div></div>
+      <div class="answer-highlight">44.09 grams of C₃H₈</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 11. STATES OF MATTER -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="states">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(6,182,212,0.12);">🧊</div>
+    <h2>States of Matter</h2>
+    <span class="badge badge-exam">1 Exam Q</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <table class="info-table">
+        <tr><th>Property</th><th>Solid (s)</th><th>Liquid (l)</th><th>Gas (g)</th></tr>
+        <tr><td><strong>Shape</strong></td><td>Definite</td><td>Takes container</td><td>Fills container</td></tr>
+        <tr><td><strong>Volume</strong></td><td>Definite</td><td>Definite</td><td>Expands to fill</td></tr>
+        <tr><td><strong>Density</strong></td><td>HIGH</td><td>Medium</td><td>Low</td></tr>
+        <tr><td><strong>Compressible?</strong></td><td>No</td><td>No</td><td>Yes</td></tr>
+      </table>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">The Elevator Analogy</div>
+      <p>🏢 <strong>Solid</strong> = Packed elevator at rush hour. Everyone's squished in place, vibrating with impatience, but nobody can move. HIGH density.</p>
+      <p>🍸 <strong>Liquid</strong> = Cocktail party. People slide past each other, take the shape of the room, but stay on the same floor.</p>
+      <p>🎈 <strong>Gas</strong> = Kids at recess. Running everywhere, filling whatever space is available, easy to push closer together (compress).</p>
+      <p class="analogy">Exam shortcut: "Definite shape?" = Solid. "High density?" = Solid. "Compressible?" = Gas.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam: "High density is a characteristic of which state?"</div>
+      <div class="answer-highlight">Solid</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 12. GAS LAWS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="topic-card" id="gaslaws">
+  <div class="topic-header">
+    <div class="topic-icon" style="background:rgba(245,158,11,0.12);">💨</div>
+    <h2>Gas Laws</h2>
+    <span class="badge badge-exam">3 Exam Qs</span>
+  </div>
+  <div class="topic-body">
+    <div class="section-label label-explain">📖 Explanation</div>
+    <div class="explain-box">
+      <p><strong>Ideal Gas Law:</strong></p>
+      <div class="formula-block">PV = nRT<br><span style="font-size:0.8rem;color:var(--text-dim);">P = atm | V = L | n = moles | R = 0.0821 | T = Kelvin</span></div>
+      <p>⚠️ <strong>ALWAYS convert to Kelvin first:</strong> T<sub>K</sub> = T<sub>°C</sub> + 273. Forgetting this = wrong answer every time.</p>
+      <p><strong>Pressure conversion:</strong> <span class="formula">1 atm = 760 mmHg</span>. To convert mmHg → atm: divide by 760.</p>
+      <p><strong>Dalton's Law of Partial Pressures:</strong></p>
+      <div class="formula-block">P<sub>Total</sub> = P<sub>A</sub> + P<sub>B</sub> + ...</div>
+      <p>Each gas contributes its share. Missing one gas? Subtract the others from the total.</p>
+    </div>
+
+    <div class="section-label label-memory">🧠 Memory Aid</div>
+    <div class="memory-box">
+      <div class="memory-title">Two Tricks That Cover All 3 Exam Questions</div>
+      <div class="mnemonic">PIVNERT (say it: "piv-nert")</div>
+      <p>That's PV = nRT out loud. Say it five times and you'll never forget.</p>
+      <p style="margin-top:10px;"><strong>Dalton's Law =</strong> "Everyone splits the check."</p>
+      <p class="analogy">At a restaurant, each person pays their share (partial pressure). Add everyone's share = total bill (total pressure). One friend forgot their wallet? Total minus everyone else's share = what that friend owes. It's always just addition or subtraction.</p>
+    </div>
+
+    <div class="section-label label-example">✏️ Example Problem</div>
+    <div class="example-box">
+      <div class="example-title">Exam: 2.67 mol gas, 5.00 L, 25.0°C → Find pressure</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Convert T:</strong> 25.0 + 273 = <span class="formula">298 K</span></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">P = nRT/V = (2.67)(0.0821)(298) / 5.00</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">P = 65.33 / 5.00 = <span class="formula">13.1 atm</span></div></div>
+      <div class="answer-highlight">P = 13.1 atm</div>
+    </div>
+    <div class="example-box" style="margin-top:12px;">
+      <div class="example-title">Exam: Blood pressure 100 mmHg → convert to atm</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">100 ÷ 760 = <span class="formula">0.132 atm</span></div></div>
+      <div class="answer-highlight">0.132 atm</div>
+    </div>
+    <div class="try-it">
+      <div class="try-it-label">🎯 Your Turn</div>
+      <p>Neon + Argon mixture: P<sub>total</sub> = 0.900 atm, P<sub>Neon</sub> = 0.799 atm. Find P<sub>Argon</sub>.</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+      <div class="reveal-answer">P<sub>Argon</sub> = 0.900 − 0.799 = <strong>0.101 atm</strong>. Just subtraction.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- EXAM QUIZ -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="quiz-section" id="quiz">
+  <h2>🎯 Midterm Practice Quiz</h2>
+  <p class="quiz-subtitle">18 exam-style questions &middot; Instant feedback &middot; Try each one before clicking!</p>
+  <div class="quiz-score">Score: <span class="score-num" id="scoreDisplay">0 / 0</span></div>
+
+  <div id="quizContainer"></div>
+
+  <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- CHEAT SHEET -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="cheat-sheet">
+  <h2>📋 Quick-Reference Cheat Sheet</h2>
+  <div class="cheat-grid">
+    <div class="cheat-item"><div class="cheat-label">Grams from Moles</div><div class="cheat-formula">g = mol × molar mass</div></div>
+    <div class="cheat-item"><div class="cheat-label">Moles from Grams</div><div class="cheat-formula">mol = g ÷ molar mass</div></div>
+    <div class="cheat-item"><div class="cheat-label">Moles from Molecules</div><div class="cheat-formula">mol = molecules ÷ 6.02×10²³</div></div>
+    <div class="cheat-item"><div class="cheat-label">Neutrons</div><div class="cheat-formula">n = mass # − atomic #</div></div>
+    <div class="cheat-item"><div class="cheat-label">Ideal Gas Law</div><div class="cheat-formula">PV = nRT (R = 0.0821)</div></div>
+    <div class="cheat-item"><div class="cheat-label">°C to Kelvin</div><div class="cheat-formula">K = °C + 273</div></div>
+    <div class="cheat-item"><div class="cheat-label">mmHg to atm</div><div class="cheat-formula">atm = mmHg ÷ 760</div></div>
+    <div class="cheat-item"><div class="cheat-label">Dalton's Law</div><div class="cheat-formula">P<sub>T</sub> = P<sub>A</sub> + P<sub>B</sub> + ...</div></div>
+    <div class="cheat-item"><div class="cheat-label">Stoichiometry Road</div><div class="cheat-formula">g A → mol A → mol B → g B</div></div>
+    <div class="cheat-item"><div class="cheat-label">Redox</div><div class="cheat-formula">OIL RIG</div></div>
+    <div class="cheat-item"><div class="cheat-label">Reaction Types</div><div class="cheat-formula">Some Dudes Can't Sing Duets</div></div>
+    <div class="cheat-item"><div class="cheat-label">Endo vs Exo</div><div class="cheat-formula">EXO=EXIT | ENDO=ENTER</div></div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<!-- FOOTER -->
+<div class="footer">
+  CHM-130 Module 2 &middot; Pro: Tehrani &middot; Interactive Study Guide<br>
+  <em>Try each problem yourself before revealing the answer. You learn more by struggling first.</em>
+</div>
+
+<script>
+// ── QUIZ DATA ──
+const quizData = [
+  {
+    q: "Based on the information given, choose the best answer for Neon-21.",
+    opts: [
+      "Neon has 10 protons and 11 neutrons",
+      "Neon has 11 neutrons and 11 protons",
+      "Neon has 21 protons and 10 neutrons",
+      "Neon has 11 electrons and 10 protons"
+    ],
+    correct: 0,
+    explain: "Ne atomic # = 10 → 10 protons. Mass # 21 − 10 = 11 neutrons."
+  },
+  {
+    q: "Determine the molecular weight of Magnesium Chloride (MgCl₂) in grams.",
+    opts: ["95.211 g/mol", "290.124 g/mol", "59.758 g/mol", "163.220 g/mol"],
+    correct: 0,
+    explain: "Mg(24.31) + 2×Cl(35.45) = 24.31 + 70.90 = 95.21 g/mol"
+  },
+  {
+    q: "A student needs 0.70 moles of H₂O₂. How many grams?",
+    opts: ["23.8 g", "0.0206 g", "4.21 × 10²³ g", "1.16 × 10⁻²⁴ g"],
+    correct: 0,
+    explain: "H₂O₂ = 2(1.008) + 2(16.00) = 34.02 g/mol. 0.70 × 34.02 = 23.8 g"
+  },
+  {
+    q: "2 mol of fructose (C₆H₁₂O₆). How many moles of hydrogen?",
+    opts: ["24 mol", "12 mol", "6 mol", "1.2 × 10²⁴ mol"],
+    correct: 0,
+    explain: "Subscript on H = 12. So 2 × 12 = 24 mol H."
+  },
+  {
+    q: "A sample of CH₄ contains 2.4 × 10²⁴ molecules. How many moles?",
+    opts: ["4.0 mol", "1.4 × 10⁴⁸ mol", "16 mol", "9.7 × 10²⁴ mol"],
+    correct: 0,
+    explain: "2.4 × 10²⁴ ÷ 6.02 × 10²³ = ~4.0 mol"
+  },
+  {
+    q: "Reduction is characterized by:",
+    opts: ["Gain of an electron", "Loss of a hydrogen", "Gain of an oxygen", "Loss of an electron"],
+    correct: 0,
+    explain: "OIL RIG → Reduction Is Gain of electrons."
+  },
+  {
+    q: "Which is a combination (synthesis) reaction?",
+    opts: [
+      "SO₂ + H₂O → H₂SO₃",
+      "2HI → I₂ + H₂",
+      "CuO + H₂ → Cu + H₂O",
+      "HBr + KOH → H₂O + KBr"
+    ],
+    correct: 0,
+    explain: "2 things → 1 thing = Synthesis/Combination."
+  },
+  {
+    q: "Heat is produced during respiration. What type of reaction?",
+    opts: ["Exothermic", "Endothermic", "Combination", "Single Replacement"],
+    correct: 0,
+    explain: "EXO = EXIT → energy exits (released as heat). Respiration releases energy."
+  },
+  {
+    q: "Which is an endothermic reaction?",
+    opts: [
+      "A glass of water turns cold when glucose is stirred in",
+      "Lighting a match",
+      "A heating pad for back pain",
+      "Burning paper"
+    ],
+    correct: 0,
+    explain: "ENDO = ENTER → the reaction absorbs heat FROM the water, making it cold."
+  },
+  {
+    q: "What are the substances produced on the right side of a chemical equation?",
+    opts: ["Products", "Reactants", "Equilibrium", "Balanced"],
+    correct: 0,
+    explain: "Right side = Products (what comes OUT). You READ left first = Reactants."
+  },
+  {
+    q: "Balance: S₂ + O₂ → SO₂. What should the coefficients be?",
+    opts: ["1, 2, 2", "Already balanced", "1, 2, 1", "2, 2, 1"],
+    correct: 0,
+    explain: "1 S₂ + 2 O₂ → 2 SO₂. Check: S: 2=2 ✓, O: 4=4 ✓"
+  },
+  {
+    q: "In C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O, is O₂ a reactant?",
+    opts: ["True", "False"],
+    correct: 0,
+    explain: "O₂ is on the LEFT side → it's a reactant."
+  },
+  {
+    q: "3CH₄ → C₃H₈ + 2H₂. If 0.75 mol C₃H₈ produced, how many mol H₂?",
+    opts: ["1.5 mol", "0.38 mol", "0.75 mol", "2.25 mol"],
+    correct: 0,
+    explain: "Ratio: 1 C₃H₈ : 2 H₂. So 0.75 × 2 = 1.5 mol H₂."
+  },
+  {
+    q: "3CH₄ → C₃H₈ + 2H₂. How many grams of C₃H₈ from 3 mol CH₄?",
+    opts: ["44.097 g", "132.29 g", "14.699 g", "16.043 g"],
+    correct: 0,
+    explain: "3 mol CH₄ → 1 mol C₃H₈. Molar mass C₃H₈ = 44.09. 1 × 44.09 = 44.097 g."
+  },
+  {
+    q: "Definite shape is a characteristic of which state of matter?",
+    opts: ["Solid", "Liquid", "Gas", "All of the above"],
+    correct: 0,
+    explain: "Only solids have a definite (fixed) shape."
+  },
+  {
+    q: "Blood pressure of 100 mmHg. Express in atm.",
+    opts: ["0.132 atm", "10.32 atm", "3.2 atm", "111.2 atm"],
+    correct: 0,
+    explain: "mmHg ÷ 760 = atm. 100 ÷ 760 = 0.132 atm."
+  },
+  {
+    q: "2.67 mol gas in 5.00 L tank at 25.0°C. What is the pressure?",
+    opts: ["13.1 atm", "1.10 atm", "327 atm", "27.4 atm"],
+    correct: 0,
+    explain: "T = 298K. P = nRT/V = (2.67)(0.0821)(298)/5.00 = 13.1 atm."
+  },
+  {
+    q: "Neon + Argon: P_total = 0.900 atm, P_Ne = 0.799 atm. Find P_Ar.",
+    opts: ["0.101 atm", "−0.101 atm", "0.719 atm", "1.699 atm"],
+    correct: 0,
+    explain: "Dalton's Law: P_Ar = 0.900 − 0.799 = 0.101 atm. Just subtraction!"
+  }
+];
+
+let score = 0;
+let answered = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    div.id = 'qq-' + i;
+    let optsHTML = '';
+    q.opts.forEach((opt, j) => {
+      optsHTML += `<button class="quiz-opt" data-q="${i}" data-o="${j}" onclick="checkAnswer(${i},${j},this)">${opt}</button>`;
+    });
+    div.innerHTML = `
+      <div class="quiz-q-text"><span class="quiz-q-num">${i+1}</span>${q.q}</div>
+      <div class="quiz-options">${optsHTML}</div>
+      <div class="quiz-feedback" id="fb-${i}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function checkAnswer(qi, oi, btn) {
+  const qDiv = document.getElementById('qq-' + qi);
+  if (qDiv.dataset.answered) return;
+  qDiv.dataset.answered = 'true';
+  answered++;
+
+  const buttons = qDiv.querySelectorAll('.quiz-opt');
+  buttons.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('fb-' + qi);
+
+  if (oi === quizData[qi].correct) {
+    score++;
+    btn.classList.add('selected-correct');
+    qDiv.classList.add('correct');
+    fb.className = 'quiz-feedback show correct-fb';
+    fb.innerHTML = '✅ Correct! ' + quizData[qi].explain;
+  } else {
+    btn.classList.add('selected-wrong');
+    buttons[quizData[qi].correct].classList.add('show-correct');
+    qDiv.classList.add('incorrect');
+    fb.className = 'quiz-feedback show incorrect-fb';
+    fb.innerHTML = '❌ ' + quizData[qi].explain;
+  }
+
+  document.getElementById('scoreDisplay').textContent = score + ' / ' + answered;
+}
+
+function resetQuiz() {
+  score = 0;
+  answered = 0;
+  document.getElementById('scoreDisplay').textContent = '0 / 0';
+  buildQuiz();
+}
+
+// ── PROGRESS BAR ──
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+});
+
+// ── INIT ──
+buildQuiz();
+</script>
+</body>
+</html>
