@@ -1,22 +1,30 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-04-20T23:38:01.784Z
-> Files: 121 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-04-21T00:14:18.463Z
+> Files: 133 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
 
 - `.DS_Store` (~2729 tok)
 - `.gitignore` — Git ignore rules (~63 tok)
+- `bio_205_interactive_study_guide (1).jsx` — sections (~6523 tok)
+- `bio_205_interactive_study_guide.html` — BIO 205 Interactive Study Guide (~1510 tok)
+- `BIO205_Interactive_Study_Guide.html` — BIO 205 Interactive Study Guide (~7312 tok)
 - `bio205-module3.html` — BIO 205 Module 3 — Microbial Growth | Interactive Study Guide (~12093 tok)
 - `chem-review.html` — Week 2 Practice Quiz — Answers & Walkthrough (~10326 tok)
+- `CHM125_Workshop3_Guide.html` — CHM125 Workshop 3 — Interactive Learning Guide (~10896 tok)
 - `CHM130_Week1_Interactive_Guide.html` — CHM-130 Week 1 — The Molecule Manifesto (~18677 tok)
 - `CHM130_Week2_Interactive_Guide.html` — CHM-130 Week 2 Interactive Study Guide | Pro: Tehrani (~20228 tok)
 - `CHM130_Weeks4_5_Interactive_Guide.html` — CHM-130 Weeks 4 &amp; 5 Interactive Study Guide | Prof. Tehrani (~14524 tok)
 - `CHM152L_Lab6_Interactive_Guide.html` — CHM 152L Lab 6 — Standardization of NaOH &amp; Titration of a Weak Acid (~21099 tok)
 - `CHM152L_Lab6_Virtual_Lab_v5.html` — Lab Mystery: The Case of the Unknown Acid | CHM 152L Lab 6 (~20537 tok)
 - `CHM152L_Lab6_Virtual_Lab_v6.html` — Lab Mystery: The Case of the Unknown Acid | CHM 152L Lab 6 (~21057 tok)
+- `CHM152L_Lab7_Interactive_Guide.html` — CHM 152L Lab 7 — Buffer Solutions | Tehrani Labs (~11779 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `CNAME` (~5 tok)
+- `Copilot_CLI_OpenWolf_Cheat_Sheet.html` — Copilot CLI + OpenWolf Cheat Sheet (~1971 tok)
+- `Copilot_CLI_OpenWolf_Cheat_Sheet.docx` — Word export of the Copilot CLI + OpenWolf cheat sheet (~binary)
+- `Course_Evaluation_Flyer_Template_4up.html` — Course Evaluation Index Card | Tehrani Labs (~3895 tok)
 - `HCR240_Final_Exam_Study_Guide.html` — HCR-240 Final Exam Study Guide (~5888 tok)
 - `HCR240_Final_Exam_Study_Guide.md` — HCR-240 Final Exam Study Guide (~1173 tok)
 - `index.html` — HCR-240 Pathophysiology Resources (~3330 tok)
@@ -84,11 +92,14 @@
 - `MH_schizophrenia.html` — Schizophrenia — Mental Health Nursing (~10571 tok)
 - `NUR356_Exam3_Part2_Study_Guide.html` — Mental Health Nursing — Interactive Study Guide (~28489 tok)
 - `Patho_Week2_Interactive_Guide.html` — Patho W2 | Interactive Study Guide (~21913 tok)
+- `Patho_Week2_Study_Guide_Enhanced.html` — Patho W2 Enhanced | analogies, memory hooks, labs, nursing considerations, 10 NCLEX Qs (~9500 tok)
 - `Patho_Week6_Jeopardy.html` — HCR-240 Week 6 Jeopardy! (~8035 tok)
+- `patho-final-fun-jam_v1 copy.html` — PATHO FINAL FUN JAM | tehranilabs.org (~18683 tok)
 - `QUALITY_ASSURANCE_REPORT.md` — 🔍 Quality Assurance Report (~2818 tok)
 - `Research_Prompts_Cheatsheet.html` — AI Research Prompt Cheat Sheet (~2898 tok)
 - `RN_Comprehensive_Predictor_Part1.html` — ATI Comprehensive Predictor Study Guide 2026 — Part 1 of 4 (~16929 tok)
 - `RN_Comprehensive_Predictor_Part2.html` — ATI Comprehensive Predictor Study Guide 2026 — Part 2 of 4 (~16651 tok)
+- `schedule-builder (4).html` — Arizona College of Nursing · Campus Schedule Builder (~12883 tok)
 - `Teams_Live_Event_Guide.html` — Teams Live Event – Complete Guide | Arizona College (~3683 tok)
 - `Workshop2_Complete_Guide_and_Key.html` — Workshop 2: Chemical Kinetics &mdash; Learning Guide &amp; Answer Key (~19795 tok)
 - `Workshop2_Interactive_Learning_Guide.html` — Workshop 2: Chemical Kinetics - Interactive Learning Guide (~13949 tok)
@@ -106,6 +117,10 @@
 ## .claude/rules/
 
 - `openwolf.md` (~313 tok)
+
+## .github/
+
+- `openwolf-quick-commands.md` — OpenWolf Quick Commands (~92 tok)
 
 ## .github/agents/
 
@@ -141,6 +156,10 @@
 ## ati-comprehensive-predictor/
 
 - `index.html` — ATI Comprehensive Predictor Hub | Tehrani Labs (~1466 tok)
+
+## chemistry-workshops/
+
+- `index.html` — Chemistry Workshops — Tehrani Labs (~4323 tok)
 
 ## labs/
 

@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pathophysiology Week 2 — Enhanced Study Guide | Tehrani Labs</title>
+<style>
+  :root {
+    --ink: #1e1e2a;
+    --paper: #f7f6f3;
+    --accent: #b33024;
+    --accent-light: #e8d5d2;
+    --accent2: #1a5276;
+    --accent2-light: #d4e6f1;
+    --teal: #117a65;
+    --teal-light: #d1f2eb;
+    --gold: #7d6608;
+    --gold-light: #fef9e7;
+    --purple: #6c3483;
+    --purple-light: #ebdef0;
+    --muted: #636878;
+    --rule: #d5d5d0;
+    --card: #ffffff;
+    --card-border: #e0dfdb;
+    --danger: #c0392b;
+    --danger-light: #fadbd8;
+    --success: #1e8449;
+    --success-light: #d5f5e3;
+    --nav-bg: #2c1810;
+    --nav-fg: #f0e6e0;
+    --section-head: #3b1a0a;
+    --font-display: Georgia, 'Times New Roman', serif;
+    --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #e4e2de;
+      --paper: #141416;
+      --accent: #e07060;
+      --accent-light: #2e1a18;
+      --accent2: #5dade2;
+      --accent2-light: #162030;
+      --teal: #48c9b0;
+      --teal-light: #0e2420;
+      --gold: #f4d03f;
+      --gold-light: #2a2510;
+      --purple: #bb8fce;
+      --purple-light: #1e1228;
+      --muted: #9a9baa;
+      --rule: #2e2e34;
+      --card: #1c1c22;
+      --card-border: #2a2a32;
+      --danger: #e74c3c;
+      --danger-light: #2a1210;
+      --success: #2ecc71;
+      --success-light: #0e2a16;
+      --nav-bg: #1a1210;
+      --nav-fg: #d8cec6;
+      --section-head: #e8d0c0;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e4e2de;
+    --paper: #141416;
+    --accent: #e07060;
+    --accent-light: #2e1a18;
+    --accent2: #5dade2;
+    --accent2-light: #162030;
+    --teal: #48c9b0;
+    --teal-light: #0e2420;
+    --gold: #f4d03f;
+    --gold-light: #2a2510;
+    --purple: #bb8fce;
+    --purple-light: #1e1228;
+    --muted: #9a9baa;
+    --rule: #2e2e34;
+    --card: #1c1c22;
+    --card-border: #2a2a32;
+    --danger: #e74c3c;
+    --danger-light: #2a1210;
+    --success: #2ecc71;
+    --success-light: #0e2a16;
+    --nav-bg: #1a1210;
+    --nav-fg: #d8cec6;
+    --section-head: #e8d0c0;
+  }
+  :root[data-theme="light"] {
+    --ink: #1e1e2a;
+    --paper: #f7f6f3;
+    --accent: #b33024;
+    --accent-light: #e8d5d2;
+    --accent2: #1a5276;
+    --accent2-light: #d4e6f1;
+    --teal: #117a65;
+    --teal-light: #d1f2eb;
+    --gold: #7d6608;
+    --gold-light: #fef9e7;
+    --purple: #6c3483;
+    --purple-light: #ebdef0;
+    --muted: #636878;
+    --rule: #d5d5d0;
+    --card: #ffffff;
+    --card-border: #e0dfdb;
+    --danger: #c0392b;
+    --danger-light: #fadbd8;
+    --success: #1e8449;
+    --success-light: #d5f5e3;
+    --nav-bg: #2c1810;
+    --nav-fg: #f0e6e0;
+    --section-head: #3b1a0a;
+    --font-display: Georgia, 'Times New Roman', serif;
+    --font-body: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ── Nav ── */
+  .topnav {
+    background: var(--nav-bg);
+    color: var(--nav-fg);
+    padding: 1rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--accent);
+  }
+  .topnav h1 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  .topnav .sub {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    letter-spacing: 0.04em;
+  }
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.6rem;
+    margin-top: 0.6rem;
+  }
+  .nav-links a {
+    color: var(--nav-fg);
+    text-decoration: none;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { background: rgba(255,255,255,0.18); }
+
+  /* ── Page ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 3rem;
+  }
+
+  /* ── Why Banner ── */
+  .why-banner {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 2rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* ── Section Headers ── */
+  .section-head {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--section-head);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.35rem;
+    margin: 2.2rem 0 1rem;
+    scroll-margin-top: 110px;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1rem;
+    break-inside: avoid;
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--accent2);
+  }
+  .card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0.7rem 0 0.3rem;
+    color: var(--accent);
+  }
+
+  /* ── Analogy boxes ── */
+  .analogy {
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    padding: 0.6rem 0.9rem;
+    margin: 0.5rem 0;
+    border-radius: 0 5px 5px 0;
+    font-size: 0.88rem;
+  }
+  .analogy-label {
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 0.15rem;
+  }
+
+  /* ── Memory Hook boxes ── */
+  .hook {
+    background: var(--purple-light);
+    border-left: 3px solid var(--purple);
+    padding: 0.6rem 0.9rem;
+    margin: 0.5rem 0;
+    border-radius: 0 5px 5px 0;
+    font-size: 0.88rem;
+  }
+  .hook-label {
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--purple);
+    margin-bottom: 0.15rem;
+  }
+
+  /* ── Nursing boxes ── */
+  .nursing {
+    background: var(--teal-light);
+    border-left: 3px solid var(--teal);
+    padding: 0.6rem 0.9rem;
+    margin: 0.5rem 0;
+    border-radius: 0 5px 5px 0;
+    font-size: 0.88rem;
+  }
+  .nursing-label {
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 0.15rem;
+  }
+
+  /* ── Mistake boxes ── */
+  .mistake {
+    background: var(--danger-light);
+    border-left: 3px solid var(--danger);
+    padding: 0.6rem 0.9rem;
+    margin: 0.5rem 0;
+    border-radius: 0 5px 5px 0;
+    font-size: 0.88rem;
+  }
+  .mistake-label {
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--danger);
+    margin-bottom: 0.15rem;
+  }
+
+  /* ── Lab values ── */
+  .lab-box {
+    background: var(--accent2-light);
+    border: 1px solid var(--accent2);
+    border-radius: 6px;
+    padding: 0.6rem 0.9rem;
+    margin: 0.5rem 0;
+    font-size: 0.88rem;
+  }
+  .lab-box-label {
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent2);
+    margin-bottom: 0.15rem;
+  }
+
+  /* ── Comparison tables ── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 0.6rem 0;
+  }
+  .cmp-table th {
+    background: var(--nav-bg);
+    color: var(--nav-fg);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.45rem 0.6rem;
+    text-align: left;
+  }
+  .cmp-table td {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .cmp-table tr:nth-child(even) td { background: var(--card); }
+  .cmp-table .em { font-weight: 700; color: var(--accent); }
+
+  /* ── Lists ── */
+  ul, ol { margin-left: 1.2rem; margin-top: 0.3rem; }
+  li { margin-bottom: 0.25rem; }
+  li strong { color: var(--accent2); }
+
+  /* ── Quiz ── */
+  .quiz-card {
+    background: var(--card);
+    border: 2px solid var(--accent2);
+    border-radius: 8px;
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .quiz-card .q-num {
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent2);
+    margin-bottom: 0.3rem;
+  }
+  .quiz-card .q-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+  }
+  .tag-foundation { background: var(--success-light); color: var(--success); }
+  .tag-application { background: var(--gold-light); color: var(--gold); }
+  .tag-analysis { background: var(--danger-light); color: var(--danger); }
+  .quiz-card .stem { font-weight: 600; margin-bottom: 0.5rem; }
+  .quiz-card .opts { list-style: upper-alpha; margin-left: 1.4rem; }
+  .quiz-card .opts li { margin-bottom: 0.2rem; cursor: pointer; }
+  .quiz-card .opts li:hover { color: var(--accent2); }
+  .rationale {
+    display: none;
+    margin-top: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .rationale.show { display: block; }
+  .rationale.correct { background: var(--success-light); border-left: 3px solid var(--success); }
+  .rationale.wrong { background: var(--danger-light); border-left: 3px solid var(--danger); }
+  .reveal-btn {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: var(--accent2);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .reveal-btn:hover { opacity: 0.85; }
+
+  /* ── Divider ── */
+  hr.section-rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 1.5rem 0;
+  }
+
+  /* ── Five Must Know ── */
+  .must-know {
+    background: var(--accent-light);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.1rem 1.2rem;
+    margin-top: 2rem;
+  }
+  .must-know h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .must-know ol { margin-left: 1.2rem; }
+  .must-know li { margin-bottom: 0.4rem; font-weight: 500; }
+
+  /* ── Print ── */
+  @media print {
+    .topnav { position: static; }
+    .card, .quiz-card, .analogy, .hook, .nursing, .mistake, .lab-box, .must-know {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      break-inside: avoid;
+    }
+    .rationale.show { display: block !important; }
+  }
+  @media (max-width: 600px) {
+    .page { padding: 1rem 0.75rem 2rem; }
+    .topnav { padding: 0.75rem 1rem; }
+    .cmp-table { font-size: 0.78rem; }
+    .nav-links a { font-size: 0.68rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <h1>Pathophysiology Week 2 &mdash; Enhanced Study Guide</h1>
+  <div class="sub">Immune Disorders &bull; Blood Cell Disorders &bull; Vascular Pathology &nbsp;|&nbsp; Pro: Tehrani</div>
+  <div class="nav-links">
+    <a href="#hypersensitivity">Hypersensitivity</a>
+    <a href="#autoimmune">Autoimmune</a>
+    <a href="#immunodeficiency">Immunodeficiency</a>
+    <a href="#wbc">WBC Disorders</a>
+    <a href="#rbc">RBC Disorders</a>
+    <a href="#platelets">Platelets &amp; Coag</a>
+    <a href="#vascular">Vascular Disorders</a>
+    <a href="#quiz">Practice Questions</a>
+    <a href="#mustknow">5 Must-Knows</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<div class="why-banner">
+  <strong>Why this matters:</strong> Week 2 covers how the immune system misfires (hypersensitivity &amp; autoimmunity), how blood cell production goes wrong (leukemia, anemia, clotting disorders), and how blood vessels fail (atherosclerosis, DVT, hypertension). These are among the most commonly tested pathophysiology topics because nearly every patient in a hospital has at least one of these conditions affecting their care plan.
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 1: HYPERSENSITIVITY                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="section-head" id="hypersensitivity">1. Hypersensitivity Reactions</h2>
+
+<p><strong>Hypersensitivity</strong> = the immune system overreacts to something that shouldn't be dangerous, causing tissue damage instead of protection. Think of it as your body's security system going haywire &mdash; shooting at the furniture instead of the burglar.</p>
+
+<div class="analogy">
+  <div class="analogy-label">The Analogy</div>
+  Your immune system is a security team. In hypersensitivity, the team is <em>too aggressive</em> &mdash; tackling guests at the party, breaking windows to catch a fly, or setting off the fire alarm because someone lit a candle.
+</div>
+
+<table class="cmp-table">
+  <tr>
+    <th>Type</th>
+    <th>Name</th>
+    <th>Mediator</th>
+    <th>Speed</th>
+    <th>Classic Example</th>
+    <th>Memory Cue</th>
+  </tr>
+  <tr>
+    <td class="em">I</td>
+    <td>Immediate</td>
+    <td>IgE + Mast cells</td>
+    <td>Minutes</td>
+    <td>Anaphylaxis, hay fever, asthma</td>
+    <td>One = fast &amp; furious</td>
+  </tr>
+  <tr>
+    <td class="em">II</td>
+    <td>Cytotoxic</td>
+    <td>IgG/IgM + Complement</td>
+    <td>Hours</td>
+    <td>Transfusion reaction, hemolytic disease of newborn</td>
+    <td>Two = antibody attacks your cells</td>
+  </tr>
+  <tr>
+    <td class="em">III</td>
+    <td>Immune Complex</td>
+    <td>Antigen-antibody complexes</td>
+    <td>Hours&ndash;Days</td>
+    <td>SLE, serum sickness, RA</td>
+    <td>Three = trash piles clogging pipes</td>
+  </tr>
+  <tr>
+    <td class="em">IV</td>
+    <td>Delayed/Cell-mediated</td>
+    <td>T cells (no antibodies)</td>
+    <td>24&ndash;72 hrs</td>
+    <td>Contact dermatitis, TB skin test, transplant rejection</td>
+    <td>Four = T cells take foreeever</td>
+  </tr>
+</table>
+
+<div class="card">
+  <h3>Type I &mdash; Immediate Hypersensitivity</h3>
+  <p><strong>Mechanism:</strong> First exposure &rarr; B cells make <strong>IgE antibodies</strong> &rarr; IgE coats mast cells (sensitization). Second exposure &rarr; antigen cross-links IgE on mast cells &rarr; mast cells degranulate &rarr; <strong>histamine flood</strong> &rarr; vasodilation, bronchoconstriction, increased permeability, itching.</p>
+  <ul>
+    <li><strong>Mild:</strong> Hay fever (rhinitis), hives (urticaria), watery eyes</li>
+    <li><strong>Severe:</strong> Anaphylaxis &mdash; airway closure, BP crash, death within minutes without epinephrine</li>
+  </ul>
+  <div class="nursing">
+    <div class="nursing-label">Nursing Priority</div>
+    Anaphylaxis = <strong>IM epinephrine (EpiPen) FIRST</strong>, then airway management, IV fluids, and antihistamines. Epinephrine reverses bronchoconstriction AND vasodilation. Never delay epi for an antihistamine.
+  </div>
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>"MAST cells are the BLAST cells"</strong> &mdash; mast cells blast out histamine. IgE is the key that unlocks the blast.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Type II &mdash; Cytotoxic Hypersensitivity</h3>
+  <p><strong>Mechanism:</strong> Antibodies (IgG or IgM) bind directly to antigens <em>on your own cell surfaces</em> &rarr; complement activates &rarr; cell is lysed (destroyed). The antibody paints a target on your cells, and complement blows them up.</p>
+  <ul>
+    <li><strong>ABO transfusion reaction:</strong> Give type A blood to a type B patient &rarr; anti-A antibodies attack the donated RBCs &rarr; massive hemolysis &rarr; kidney failure</li>
+    <li><strong>Erythroblastosis fetalis:</strong> Rh-negative mom makes antibodies against Rh-positive baby's RBCs</li>
+    <li><strong>Drug-induced hemolytic anemia:</strong> Some drugs bind to RBC surface, triggering antibody attack</li>
+  </ul>
+  <div class="mistake">
+    <div class="mistake-label">Common Mistake</div>
+    Students confuse Type II with Type III. <strong>Type II</strong> = antibody attacks cells <em>directly</em> (targets stuck on the cell). <strong>Type III</strong> = antigen-antibody complexes <em>float around</em> and get stuck in tissues. Type II is a sniper (aimed at specific cells). Type III is a trash dump (debris everywhere).
+  </div>
+</div>
+
+<div class="card">
+  <h3>Type III &mdash; Immune Complex</h3>
+  <p><strong>Mechanism:</strong> Antigen + antibody form <strong>immune complexes</strong> (clumps) &rarr; complexes deposit in tissues (joints, kidneys, blood vessel walls) &rarr; complement activates at the deposit site &rarr; inflammation and tissue damage.</p>
+  <div class="analogy">
+    <div class="analogy-label">The Analogy</div>
+    Imagine your blood is a river and the immune complexes are garbage bags floating downstream. When too many bags pile up at a bend in the river (your kidneys, joints, or skin), they clog and damage the riverbank. That's SLE &mdash; immune trash clogging your body's plumbing.
+  </div>
+  <ul>
+    <li><strong>SLE:</strong> Complexes deposit everywhere (kidneys, joints, skin, brain)</li>
+    <li><strong>Serum sickness:</strong> Reaction to foreign proteins (antivenom, some drugs)</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Type IV &mdash; Delayed / Cell-Mediated</h3>
+  <p><strong>Mechanism:</strong> No antibodies involved &mdash; this one is all <strong>T cells</strong>. Sensitized T cells encounter the antigen &rarr; release cytokines &rarr; recruit macrophages &rarr; inflammation peaks at 24&ndash;72 hours.</p>
+  <ul>
+    <li><strong>Contact dermatitis:</strong> Poison ivy, nickel allergy, latex reaction</li>
+    <li><strong>TB skin test (PPD/Mantoux):</strong> Read at 48&ndash;72 hours because Type IV takes time</li>
+    <li><strong>Transplant rejection:</strong> T cells attack the foreign organ</li>
+  </ul>
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>"4th of July is DELAYED"</strong> &mdash; Type IV is delayed hypersensitivity. Also: <strong>T = IV</strong> (T cells run Type IV). Types I&ndash;III all use antibodies; Type IV is the rebel that uses T cells only.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 2: AUTOIMMUNE DISORDERS                -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="section-head" id="autoimmune">2. Autoimmune Disorders</h2>
+
+<p>The immune system loses <strong>self-tolerance</strong> &mdash; it can no longer tell "self" from "not-self" and starts attacking your own healthy tissues. It's friendly fire.</p>
+
+<div class="card">
+  <h3>Systemic Lupus Erythematosus (SLE)</h3>
+  <h4>The Analogy</h4>
+  <p>SLE is like a rogue demolition crew that can't read blueprints &mdash; it tears down the building it was supposed to protect. It can hit <em>any</em> organ system, which is why SLE is called the <strong>"great imitator"</strong> &mdash; it mimics dozens of other diseases.</p>
+
+  <h4>The Mechanism</h4>
+  <ul>
+    <li><strong>Type III hypersensitivity</strong> &mdash; body makes antibodies against its own DNA and nuclear components</li>
+    <li>Immune complexes deposit in kidneys, joints, skin, brain, heart, lungs</li>
+    <li>Chronic inflammation damages every tissue they settle in</li>
+    <li>Characteristic <strong>ANA</strong> (antinuclear antibody) test is positive</li>
+  </ul>
+
+  <h4>The Clinical Connection</h4>
+  <ul>
+    <li><strong>Butterfly (malar) rash:</strong> Red rash across nose and cheeks &mdash; triggered or worsened by sunlight</li>
+    <li><strong>Kidney involvement (lupus nephritis):</strong> The #1 cause of death in SLE patients</li>
+    <li><strong>Joint pain:</strong> Mimics rheumatoid arthritis but usually non-deforming</li>
+    <li>Flares and remissions &mdash; stress, sunlight, and infection trigger flares</li>
+    <li>More common in women of childbearing age (9:1 female-to-male ratio)</li>
+  </ul>
+
+  <div class="lab-box">
+    <div class="lab-box-label">Key Lab Values</div>
+    <strong>ANA (antinuclear antibody):</strong> Positive in ~95% of SLE patients (screening test)<br>
+    <strong>Anti-dsDNA:</strong> Specific to SLE, correlates with disease activity and nephritis<br>
+    <strong>Complement (C3, C4):</strong> Low during flares (consumed by immune complexes)<br>
+    <strong>ESR &amp; CRP:</strong> Elevated during active inflammation
+  </div>
+
+  <div class="nursing">
+    <div class="nursing-label">Nursing Considerations</div>
+    Teach patients to <strong>avoid sunlight</strong> (UV triggers flares) &mdash; SPF 30+, protective clothing. Monitor <strong>renal function</strong> (BUN, creatinine, urinalysis for proteinuria). Report signs of flare: new rash, joint swelling, fatigue, fever.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>"SOAP BRAIN MD"</strong> for SLE criteria: <strong>S</strong>erositis, <strong>O</strong>ral ulcers, <strong>A</strong>rthritis, <strong>P</strong>hotosensitivity, <strong>B</strong>lood disorders, <strong>R</strong>enal involvement, <strong>A</strong>NA positive, <strong>I</strong>mmunologic markers, <strong>N</strong>eurologic disorders, <strong>M</strong>alar rash, <strong>D</strong>iscoid rash.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Rheumatoid Arthritis (RA)</h3>
+  <h4>The Mechanism</h4>
+  <ul>
+    <li>Autoimmune attack on the <strong>synovial membrane</strong> (the lining inside joints)</li>
+    <li>T cells activate &rarr; inflammatory cytokines released &rarr; synovium thickens (pannus formation) &rarr; cartilage and bone erode over time</li>
+    <li><strong>Symmetric</strong> joint involvement (both hands, both knees &mdash; not just one side)</li>
+  </ul>
+
+  <h4>The Clinical Connection</h4>
+  <ul>
+    <li><strong>Morning stiffness > 1 hour</strong> (vs. osteoarthritis stiffness &lt;30 min)</li>
+    <li>Affects <strong>small joints first</strong>: fingers (MCP, PIP joints), wrists</li>
+    <li>Swan-neck and boutonniere deformities in advanced disease</li>
+    <li><strong>Rheumatoid factor (RF)</strong> positive in ~80% of patients</li>
+  </ul>
+
+  <table class="cmp-table">
+    <tr><th>Feature</th><th>Rheumatoid Arthritis</th><th>Osteoarthritis</th></tr>
+    <tr><td class="em">Cause</td><td>Autoimmune</td><td>Wear-and-tear / degeneration</td></tr>
+    <tr><td class="em">Joints</td><td>Small joints, symmetric</td><td>Large weight-bearing joints, asymmetric</td></tr>
+    <tr><td class="em">Stiffness</td><td>&gt;1 hour in morning, improves with use</td><td>&lt;30 min, worse with use</td></tr>
+    <tr><td class="em">Inflammation</td><td>Systemic (fatigue, fever, anemia)</td><td>Local only</td></tr>
+    <tr><td class="em">Treatment</td><td>DMARDs (methotrexate), biologics</td><td>NSAIDs, joint replacement</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 3: IMMUNODEFICIENCY                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="section-head" id="immunodeficiency">3. Immunodeficiency Disorders</h2>
+
+<p>If hypersensitivity is the security team being <em>too aggressive</em>, immunodeficiency is the security team being <em>understaffed or absent</em>. The body can't mount a proper defense, so infections run wild.</p>
+
+<div class="card">
+  <h3>Selective IgA Deficiency</h3>
+  <p>The <strong>most common primary immunodeficiency</strong>. IgA is the antibody that guards your mucosal surfaces &mdash; the mouth, nose, gut, and lungs. Without it, those front doors are unlocked.</p>
+  <ul>
+    <li>Recurrent <strong>respiratory and GI infections</strong> (sinusitis, pneumonia, diarrhea)</li>
+    <li>Many patients are <strong>asymptomatic</strong> &mdash; other antibodies partially compensate</li>
+    <li><strong>Transfusion risk:</strong> Can have anaphylaxis to blood products containing IgA because their body sees IgA as foreign</li>
+  </ul>
+  <div class="analogy">
+    <div class="analogy-label">The Analogy</div>
+    IgA is like the bouncer at every entrance to a nightclub (your mucous membranes). Without bouncers, troublemakers walk right in through the front door &mdash; but the inside security (IgG, IgM) can still catch some of them once they're inside.
+  </div>
+</div>
+
+<div class="card">
+  <h3>DiGeorge Syndrome</h3>
+  <p><strong>Chromosome 22q11.2 deletion</strong> &rarr; thymus fails to develop &rarr; T cells can't mature. No mature T cells means no cell-mediated immunity.</p>
+  <ul>
+    <li><strong>CATCH-22:</strong> <strong>C</strong>ardiac defects, <strong>A</strong>bnormal facies, <strong>T</strong>hymic aplasia, <strong>C</strong>left palate, <strong>H</strong>ypocalcemia (missing parathyroids) &mdash; chromosome <strong>22</strong></li>
+    <li>Recurrent viral and fungal infections (T cells normally fight these)</li>
+    <li>Low calcium &rarr; tetany, seizures (parathyroid glands also fail to develop)</li>
+  </ul>
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>"No thymus = no T cells"</strong> &mdash; and remember <strong>CATCH-22</strong> for the clinical features. If you see a child with heart defects + recurrent infections + low calcium, think DiGeorge.
+  </div>
+</div>
+
+<div class="card">
+  <h3>HIV / AIDS</h3>
+  <p>HIV specifically targets and destroys <strong>CD4+ T helper cells</strong> &mdash; the generals that coordinate the entire immune army. Without them, the rest of the immune system falls apart.</p>
+  <ul>
+    <li><strong>CD4 count:</strong> Normal = 500&ndash;1,500 cells/&mu;L</li>
+    <li><strong>AIDS defined:</strong> CD4 &lt; 200 cells/&mu;L OR development of an AIDS-defining illness (Pneumocystis pneumonia, Kaposi sarcoma, etc.)</li>
+    <li>HIV is a <strong>retrovirus</strong> &mdash; uses reverse transcriptase to insert its DNA into the host T cell</li>
+    <li>Progressive decline: acute infection &rarr; clinical latency (years) &rarr; AIDS</li>
+  </ul>
+  <div class="lab-box">
+    <div class="lab-box-label">Key Lab Values</div>
+    <strong>CD4 count:</strong> Normal 500&ndash;1,500/&mu;L. Below 200 = AIDS<br>
+    <strong>Viral load:</strong> Number of HIV copies in blood &mdash; higher = more active replication<br>
+    <strong>Goal of ART:</strong> Undetectable viral load (&lt;20&ndash;50 copies/mL) + rising CD4
+  </div>
+  <div class="nursing">
+    <div class="nursing-label">Nursing Considerations</div>
+    <strong>Standard precautions</strong> for all patients. Teach medication adherence &mdash; ART (antiretroviral therapy) must be taken consistently or resistance develops. Monitor for <strong>opportunistic infections</strong> when CD4 drops: PCP prophylaxis starts at CD4 &lt;200, MAC prophylaxis at CD4 &lt;50.
+  </div>
+  <div class="analogy">
+    <div class="analogy-label">The Analogy</div>
+    CD4 T cells are the <strong>911 dispatchers</strong> of your immune system. HIV destroys the dispatchers. Even though you still have police, fire, and paramedics (B cells, macrophages, NK cells), nobody is coordinating them. Eventually the whole system collapses.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 4: WBC DISORDERS                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="section-head" id="wbc">4. Disorders of White Blood Cells</h2>
+
+<div class="lab-box">
+  <div class="lab-box-label">Reference Values</div>
+  <strong>Total WBC:</strong> 4,000&ndash;11,000 cells/&mu;L<br>
+  <strong>Leukocytosis:</strong> WBC &gt;11,000 &mdash; infection, inflammation, stress, leukemia<br>
+  <strong>Leukopenia:</strong> WBC &lt;4,000 &mdash; bone marrow suppression, overwhelming infection, immunosuppressive drugs
+</div>
+
+<div class="card">
+  <h3>Leukemia &mdash; Cancer of the Blood-Forming Cells</h3>
+  <p>The bone marrow produces <strong>massive numbers of immature, non-functional WBCs</strong> that crowd out normal blood cells. The patient ends up with high WBC counts but a broken immune system &mdash; plus anemia (low RBCs) and thrombocytopenia (low platelets) because the marrow is full of useless blasts.</p>
+
+  <div class="analogy">
+    <div class="analogy-label">The Analogy</div>
+    Imagine a factory that's supposed to make trained soldiers. In leukemia, the factory starts mass-producing untrained recruits who never graduate boot camp. They flood the barracks (bone marrow), push out the veterans (mature RBCs and platelets), and can't fight anyone. You have a huge army that's completely useless.
+  </div>
+
+  <table class="cmp-table">
+    <tr><th>Feature</th><th>ALL</th><th>CLL</th></tr>
+    <tr><td class="em">Full Name</td><td>Acute Lymphoblastic Leukemia</td><td>Chronic Lymphocytic Leukemia</td></tr>
+    <tr><td class="em">Cell Line</td><td>Immature lymphoblasts</td><td>Abnormal mature B cells</td></tr>
+    <tr><td class="em">Age Group</td><td>Children (peak 2&ndash;5 yrs)</td><td>Elderly adults (&gt;65 yrs)</td></tr>
+    <tr><td class="em">Onset</td><td>Rapid, aggressive</td><td>Slow, insidious</td></tr>
+    <tr><td class="em">Symptoms</td><td>Fatigue, fever, bleeding, bone pain</td><td>Often asymptomatic early; lymphadenopathy, splenomegaly</td></tr>
+    <tr><td class="em">Prognosis</td><td>Cure rate &gt;85% in children</td><td>Incurable but manageable for years</td></tr>
+  </table>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>Acute = young patients, fast onset.</strong> ALL = kids (ALL kids play). <strong>Chronic = old patients, slow onset.</strong> CLL = elderly (Chronic = grandpa's been Living Long). Also: <strong>Acute = blasts (immature).</strong> <strong>Chronic = mature but dysfunctional cells.</strong>
+  </div>
+
+  <div class="mistake">
+    <div class="mistake-label">Common Mistake</div>
+    Students focus only on the elevated WBC count and forget the <strong>pancytopenia effect</strong>. In leukemia, the patient bleeds (low platelets), gets infections (non-functional WBCs), and is exhausted (low RBCs) &mdash; all because the marrow is overrun with useless blasts. The triad of <em>anemia + infection + bleeding</em> screams leukemia.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Lymphoma &mdash; Cancer of the Lymphatic System</h3>
+  <p>Unlike leukemia (bone marrow), lymphoma starts in the <strong>lymph nodes</strong>. The lymphocytes become malignant <em>inside</em> the lymphatic tissue.</p>
+
+  <table class="cmp-table">
+    <tr><th>Feature</th><th>Hodgkin's Lymphoma</th><th>Non-Hodgkin's Lymphoma (NHL)</th></tr>
+    <tr><td class="em">Cell</td><td>B lymphocytes</td><td>Both B and T cells</td></tr>
+    <tr><td class="em">Hallmark</td><td><strong>Reed-Sternberg cells</strong> ("owl-eye" appearance)</td><td>No Reed-Sternberg cells</td></tr>
+    <tr><td class="em">Spread</td><td>Orderly, contiguous (node to node)</td><td>Unpredictable, non-contiguous</td></tr>
+    <tr><td class="em">Symptoms</td><td>Painless lymphadenopathy, B symptoms (fever, night sweats, weight loss &gt;10%)</td><td>Variable presentation</td></tr>
+    <tr><td class="em">Risk Factor</td><td>Epstein-Barr virus (EBV)</td><td>Immunodeficiency, autoimmune disease</td></tr>
+    <tr><td class="em">Prognosis</td><td>Highly curable (~90% early stage)</td><td>Varies widely by subtype</td></tr>
+  </table>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>"Reed-Sternberg = Hodgkin's STAMP"</strong> &mdash; if you see Reed-Sternberg cells, stamp it Hodgkin's. No Reed-Sternberg? It's NHL. Also: Hodgkin's spreads in an <strong>orderly</strong> fashion (like a polite disease). NHL is <strong>chaotic</strong>.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 5: RBC DISORDERS                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="section-head" id="rbc">5. Disorders of Red Blood Cells</h2>
+
+<div class="lab-box">
+  <div class="lab-box-label">Reference Values</div>
+  <strong>RBC count:</strong> Male 4.7&ndash;6.1 million/&mu;L | Female 4.2&ndash;5.4 million/&mu;L<br>
+  <strong>Hemoglobin (Hgb):</strong> Male 14&ndash;18 g/dL | Female 12&ndash;16 g/dL<br>
+  <strong>Hematocrit (Hct):</strong> Male 42&ndash;52% | Female 37&ndash;47%<br>
+  <strong>Reticulocyte count:</strong> 0.5&ndash;2.0% (immature RBCs; elevated = marrow is trying to compensate)<br>
+  <strong>Erythropoietin (EPO):</strong> Produced by kidneys &rarr; stimulates RBC production in bone marrow
+</div>
+
+<p><strong>Anemia</strong> = not enough functional RBCs or hemoglobin to carry adequate oxygen. The body compensates with <strong>tachycardia</strong> (heart pumps faster to move oxygen around with fewer delivery trucks).</p>
+
+<div class="analogy">
+  <div class="analogy-label">The Analogy</div>
+  RBCs are delivery trucks carrying oxygen packages. Anemia means you don't have enough trucks (low RBC count), the trucks are too small (microcytic), or the packages are defective (abnormal hemoglobin). Either way, the tissues don't get their deliveries. The heart compensates by running the remaining trucks faster (tachycardia).
+</div>
+
+<div class="card">
+  <h3>Anemia of Acute Blood Loss</h3>
+  <ul>
+    <li><strong>Cause:</strong> Sudden hemorrhage &mdash; trauma, surgery, ruptured aneurysm</li>
+    <li><strong>Signs:</strong> Tachycardia, hypotension, cool/clammy skin, decreased urine output</li>
+    <li><strong>Key point:</strong> Hematocrit drops <em>only after</em> IV fluids dilute the remaining blood &mdash; initial labs can look falsely normal</li>
+    <li><strong>Treatment:</strong> Stop the bleeding, IV fluids, blood transfusion</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Anemia of Chronic Blood Loss</h3>
+  <ul>
+    <li><strong>Cause:</strong> Slow, ongoing bleeding &mdash; GI ulcers, heavy menstrual periods, colon cancer</li>
+    <li>Over time, iron stores deplete &rarr; evolves into <strong>iron-deficiency anemia</strong></li>
+    <li>Patient often doesn't realize they're bleeding (occult blood in stool)</li>
+    <li><strong>Treatment:</strong> Find and fix the bleeding source + oral iron supplementation</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Iron-Deficiency Anemia</h3>
+  <p>The <strong>most common anemia worldwide</strong>. Not enough iron &rarr; not enough hemoglobin &rarr; RBCs are small and pale (<strong>microcytic, hypochromic</strong>).</p>
+  <ul>
+    <li><strong>Symptoms:</strong> Fatigue, pallor, brittle nails (koilonychia/spoon nails), <strong>pica</strong> (craving ice, dirt, starch)</li>
+    <li><strong>Labs:</strong> Low ferritin (iron stores), low serum iron, elevated TIBC (body is hungry for iron)</li>
+  </ul>
+  <div class="nursing">
+    <div class="nursing-label">Nursing Considerations</div>
+    <strong>Oral ferrous sulfate:</strong> Take on empty stomach, with <strong>vitamin C</strong> (orange juice) to enhance absorption. Avoid with milk, antacids, or tea (they block absorption). Warn patient: stools will turn <strong>black/tarry</strong> (this is normal, not bleeding). Use a straw for liquid iron to prevent tooth staining. IV iron if oral is not tolerated.
+  </div>
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>"PICA = Please I Crave Anything"</strong> &mdash; abnormal cravings (ice, clay, starch) = think iron deficiency. Also: <strong>ferritin = iron savings account</strong>. Low ferritin = empty savings = iron-deficiency anemia.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Pernicious Anemia</h3>
+  <p>Can't absorb <strong>vitamin B12</strong> because the stomach lacks <strong>intrinsic factor</strong> (a protein the stomach makes specifically to grab B12 in the gut). Without B12, RBCs grow too large and can't divide properly &rarr; <strong>macrocytic (megaloblastic) anemia</strong>.</p>
+  <ul>
+    <li><strong>Symptoms:</strong> Fatigue + <strong>neurological changes</strong> (paresthesia, balance problems, memory loss) &mdash; B12 is needed for nerve myelin</li>
+    <li><strong>Key distinction:</strong> The neuro symptoms are what separate B12 deficiency from folate deficiency (both cause macrocytic anemia, but only B12 deficiency causes neuro damage)</li>
+    <li><strong>Treatment:</strong> <strong>IM B12 injections</strong> for life (oral B12 won't help because the absorption problem is in the gut)</li>
+  </ul>
+  <div class="mistake">
+    <div class="mistake-label">Common Mistake</div>
+    Students confuse iron-deficiency anemia (microcytic &mdash; small RBCs) with B12/folate-deficiency anemia (macrocytic &mdash; large RBCs). <strong>Micro = iron. Macro = B12 or folate.</strong> Also: if a question mentions neurological symptoms + anemia, it's B12, not folate.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Sickle Cell Anemia</h3>
+  <p>A single gene mutation produces abnormal <strong>hemoglobin S (HbS)</strong> instead of normal hemoglobin A. Under low-oxygen conditions, HbS polymerizes and forces the RBC into a rigid <strong>crescent (sickle) shape</strong>.</p>
+  <ul>
+    <li><strong>Autosomal recessive:</strong> Both parents must carry the gene (carriers have <strong>sickle cell trait</strong> and are usually asymptomatic)</li>
+    <li><strong>Sickled RBCs:</strong> Rigid &rarr; get stuck in small vessels &rarr; <strong>vaso-occlusive crisis</strong> (severe pain, organ damage)</li>
+    <li><strong>Triggers for sickling:</strong> Dehydration, infection, cold, high altitude, stress (anything that lowers O&#8322;)</li>
+    <li><strong>Complications:</strong> Stroke, splenic sequestration, acute chest syndrome, chronic organ damage</li>
+    <li><strong>Treatment:</strong> Hydroxyurea (increases fetal hemoglobin, which resists sickling), pain management, hydration, blood transfusions</li>
+  </ul>
+  <div class="nursing">
+    <div class="nursing-label">Nursing Priority in Sickle Cell Crisis</div>
+    <strong>Pain is REAL</strong> &mdash; do not undertreat. Priorities: <strong>hydration</strong> (IV fluids dilute sickled cells and improve flow), <strong>oxygenation</strong> (prevents further sickling), <strong>pain management</strong> (often requires opioids), and <strong>warmth</strong> (cold triggers sickling). Avoid ice packs.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Hemolytic Anemia &amp; Erythroblastosis Fetalis</h3>
+  <p><strong>Hemolytic anemia</strong> = RBCs are destroyed faster than the bone marrow can replace them. Causes include autoimmune reactions, infections, toxins, and mechanical damage (prosthetic heart valves).</p>
+
+  <h4>Hemolytic Disease of the Newborn (Erythroblastosis Fetalis)</h4>
+  <ul>
+    <li><strong>Rh-negative mother</strong> carrying an <strong>Rh-positive baby</strong></li>
+    <li>First pregnancy usually fine. At delivery, fetal blood mixes with maternal blood &rarr; mom produces <strong>anti-Rh antibodies</strong> (sensitization)</li>
+    <li>Second Rh-positive pregnancy: mom's antibodies cross the placenta &rarr; attack fetal RBCs &rarr; hemolysis &rarr; jaundice, anemia, hydrops fetalis</li>
+    <li><strong>Prevention:</strong> <strong>RhoGAM (Rh immunoglobulin)</strong> given at 28 weeks and within 72 hours after delivery &mdash; prevents mom from making antibodies</li>
+    <li><strong>Newborn treatment:</strong> Phototherapy (breaks down bilirubin from hemolysis), exchange transfusion in severe cases</li>
+  </ul>
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>"Mom is Negative, baby is Positive = Problem."</strong> Rh-negative mom + Rh-positive baby = risk. RhoGAM at 28 weeks and after delivery. Think of RhoGAM as a <strong>blindfold for the mother's immune system</strong> &mdash; it prevents her from "seeing" the Rh antigen and forming antibodies.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 6: PLATELETS & COAGULATION             -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="section-head" id="platelets">6. Platelets, Hemostasis &amp; Coagulation</h2>
+
+<div class="lab-box">
+  <div class="lab-box-label">Reference Values</div>
+  <strong>Platelet count:</strong> 150,000&ndash;450,000/&mu;L<br>
+  <strong>Thrombocytopenia:</strong> &lt;150,000/&mu;L (bleeding risk increases significantly below 50,000)<br>
+  <strong>PT (prothrombin time):</strong> 11&ndash;13.5 seconds (monitors warfarin / extrinsic pathway)<br>
+  <strong>INR:</strong> 0.8&ndash;1.1 normal | 2.0&ndash;3.0 therapeutic on warfarin<br>
+  <strong>aPTT:</strong> 25&ndash;35 seconds (monitors heparin / intrinsic pathway)
+</div>
+
+<p><strong>Hemostasis</strong> = the body's 3-step process to stop bleeding:</p>
+<ol>
+  <li><strong>Vasoconstriction</strong> &mdash; blood vessel squeezes down to reduce blood flow</li>
+  <li><strong>Platelet plug formation</strong> &mdash; platelets stick to exposed collagen and aggregate</li>
+  <li><strong>Coagulation cascade</strong> &mdash; clotting factors activate in sequence &rarr; fibrin mesh reinforces the platelet plug</li>
+</ol>
+
+<div class="card">
+  <h3>Immune Thrombocytopenic Purpura (ITP)</h3>
+  <p>Autoimmune destruction of platelets &mdash; the immune system makes antibodies that tag platelets for destruction by the spleen.</p>
+  <ul>
+    <li><strong>Symptoms:</strong> <strong>Petechiae</strong> (pinpoint purple dots), purpura (larger purple patches), easy bruising, mucosal bleeding (gums, nosebleeds)</li>
+    <li>Often follows a <strong>viral infection</strong> in children (post-viral ITP &mdash; usually self-limiting)</li>
+    <li><strong>Key:</strong> Platelet count is very low, but PT/aPTT are <em>normal</em> (the clotting factors work fine, there just aren't enough platelets)</li>
+    <li><strong>Treatment:</strong> Corticosteroids (suppress immune attack), IVIG, splenectomy in refractory cases</li>
+  </ul>
+  <div class="mistake">
+    <div class="mistake-label">Common Mistake</div>
+    Students confuse petechiae with ecchymoses (bruises). <strong>Petechiae</strong> are tiny pinpoint dots (&lt;3mm) &mdash; they indicate platelet problems. <strong>Ecchymoses</strong> are larger bruises &mdash; they can indicate either platelet or clotting factor problems. If you see <em>petechiae</em> on an exam question, think platelet disorder first.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Hemophilia</h3>
+  <p>Genetic deficiency of clotting factors. The platelets work, but the coagulation cascade breaks because a key factor is missing.</p>
+  <ul>
+    <li><strong>Hemophilia A:</strong> Missing <strong>Factor VIII</strong> (most common &mdash; ~80% of cases)</li>
+    <li><strong>Hemophilia B (Christmas disease):</strong> Missing <strong>Factor IX</strong></li>
+    <li><strong>X-linked recessive</strong> &mdash; almost exclusively affects males (mothers are carriers)</li>
+    <li><strong>Symptoms:</strong> Prolonged bleeding after minor cuts, <strong>hemarthrosis</strong> (bleeding into joints &mdash; most characteristic), deep tissue/muscle bleeds</li>
+    <li><strong>Labs:</strong> Prolonged <strong>aPTT</strong>, normal PT, normal platelet count</li>
+    <li><strong>Treatment:</strong> Replace the missing factor (recombinant Factor VIII or IX), desmopressin (DDAVP) for mild Hemophilia A</li>
+  </ul>
+
+  <table class="cmp-table">
+    <tr><th>Feature</th><th>ITP (Platelet problem)</th><th>Hemophilia (Factor problem)</th></tr>
+    <tr><td class="em">What's wrong</td><td>Not enough platelets</td><td>Missing clotting factor</td></tr>
+    <tr><td class="em">Platelet count</td><td>Very low</td><td>Normal</td></tr>
+    <tr><td class="em">PT / aPTT</td><td>Normal</td><td>aPTT prolonged</td></tr>
+    <tr><td class="em">Bleeding pattern</td><td>Superficial: petechiae, mucosal</td><td>Deep: joints, muscles, organs</td></tr>
+    <tr><td class="em">Inheritance</td><td>Autoimmune (acquired)</td><td>X-linked recessive</td></tr>
+  </table>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>"Hemo-FEEL-ia"</strong> &mdash; patients feel the bleeding deep in their joints (hemarthrosis). <strong>Hemophilia A = f-Eight-or</strong> (Factor 8). <strong>Hemophilia B = Christ-NINE-s disease</strong> (Factor 9). And: <strong>aPTT monitors the intrinsic pathway</strong> = hemophilia. <strong>PT monitors the extrinsic pathway</strong> = warfarin.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 7: VASCULAR DISORDERS                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="section-head" id="vascular">7. Vascular Disorders</h2>
+
+<div class="card">
+  <h3>Hyperlipidemia</h3>
+  <ul>
+    <li>Elevated cholesterol and/or triglycerides in the blood</li>
+    <li><strong>LDL ("bad" cholesterol):</strong> Delivers cholesterol INTO artery walls &rarr; plaque buildup</li>
+    <li><strong>HDL ("good" cholesterol):</strong> Removes cholesterol FROM artery walls &rarr; protective</li>
+    <li><strong>Treatment:</strong> Statins (HMG-CoA reductase inhibitors) are first-line &mdash; lower LDL by 30&ndash;50%</li>
+  </ul>
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>LDL = Lousy (want it Low). HDL = Happy (want it High).</strong> Statins block the liver's cholesterol factory.
+  </div>
+  <div class="nursing">
+    <div class="nursing-label">Nursing Considerations for Statins</div>
+    Take at <strong>bedtime</strong> (cholesterol synthesis peaks at night). Monitor <strong>liver enzymes (AST/ALT)</strong> and report muscle pain (rhabdomyolysis risk). Avoid grapefruit juice (increases statin levels). Teach lifestyle: DASH diet, exercise, weight management.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Hypertension</h3>
+  <p><strong>Persistent BP &ge; 130/80 mmHg</strong> (per 2017 ACC/AHA guidelines). Called the <strong>"silent killer"</strong> because most people have no symptoms until organ damage occurs.</p>
+  <ul>
+    <li><strong>Primary (essential) HTN:</strong> ~95% of cases &mdash; no identifiable cause (genetic + lifestyle)</li>
+    <li><strong>Secondary HTN:</strong> Caused by renal disease, endocrine disorders, or medication</li>
+    <li><strong>Target organ damage:</strong> Heart (LV hypertrophy, CHF), brain (stroke), kidneys (nephrosclerosis), eyes (retinopathy)</li>
+    <li><strong>Treatment:</strong> Lifestyle first (DASH diet, Na &lt;2,300 mg/day, exercise, weight loss). Medications: ACE inhibitors (-prils), ARBs (-sartans), beta-blockers (-olols), calcium channel blockers (-dipines), thiazide diuretics</li>
+  </ul>
+  <div class="mistake">
+    <div class="mistake-label">Common Mistake</div>
+    Students say "hypertension causes headaches." In reality, most hypertension is <strong>asymptomatic</strong> until it damages organs. Headache is a late sign of <em>severely</em> elevated BP (hypertensive crisis &ge;180/120). That's why screening is critical &mdash; the patient feels fine while their kidneys and heart are slowly being destroyed.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Atherosclerosis</h3>
+  <p>Chronic, progressive buildup of <strong>lipid-laden plaques (atheromas)</strong> inside arterial walls. This is the underlying cause of most heart attacks and strokes.</p>
+  <div class="analogy">
+    <div class="analogy-label">The Analogy</div>
+    Think of your arteries as water pipes. Atherosclerosis is rust and mineral buildup inside the pipe. Over decades, the opening gets smaller and smaller. Eventually the pipe either gets so narrow that water barely flows (angina) or a chunk of rust breaks off and blocks the pipe completely (heart attack or stroke).
+  </div>
+  <ul>
+    <li><strong>Pathophysiology:</strong> Endothelial injury &rarr; LDL infiltrates &rarr; macrophages eat LDL &rarr; become foam cells &rarr; fatty streak &rarr; fibrous plaque &rarr; complicated plaque (calcification, rupture risk)</li>
+    <li><strong>Consequences:</strong> Angina, MI (heart attack), stroke, peripheral arterial disease (PAD), aortic aneurysm</li>
+    <li><strong>Risk factors:</strong> Smoking, diabetes, hypertension, hyperlipidemia, family history, obesity, sedentary lifestyle</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Deep Vein Thrombosis (DVT)</h3>
+  <p>Blood clot forms in a <strong>deep vein</strong>, usually in the legs. The big danger: the clot breaks loose and travels to the lungs &rarr; <strong>pulmonary embolism (PE)</strong> &mdash; a life-threatening emergency.</p>
+
+  <h4>Virchow's Triad (3 causes of clot formation)</h4>
+  <ol>
+    <li><strong>Stasis</strong> &mdash; blood flow slows down (bed rest, long flights, post-surgery immobility)</li>
+    <li><strong>Endothelial injury</strong> &mdash; damage to the blood vessel wall (surgery, trauma, IV catheters)</li>
+    <li><strong>Hypercoagulability</strong> &mdash; blood clots too easily (cancer, pregnancy, oral contraceptives, genetic clotting disorders)</li>
+  </ol>
+
+  <ul>
+    <li><strong>Symptoms:</strong> Unilateral leg swelling, warmth, redness, calf pain (positive Homans' sign is <em>unreliable</em> but still tested on exams)</li>
+    <li><strong>Diagnosis:</strong> Doppler ultrasound, D-dimer blood test</li>
+    <li><strong>Treatment:</strong> Anticoagulation (heparin &rarr; warfarin or DOACs)</li>
+  </ul>
+
+  <div class="nursing">
+    <div class="nursing-label">Nursing Priority</div>
+    <strong>Prevention is key:</strong> Ambulate post-surgery ASAP, SCDs (sequential compression devices), anti-embolism stockings, prophylactic anticoagulation. <strong>Do NOT massage the affected leg</strong> (could dislodge the clot). Monitor for sudden dyspnea, chest pain, tachycardia = PE &rarr; emergency.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>Virchow's Triad = "SHE"</strong> &mdash; <strong>S</strong>tasis, <strong>H</strong>ypercoagulability, <strong>E</strong>ndothelial injury. Three things that make blood clot where it shouldn't.
+  </div>
+</div>
+
+<div class="card">
+  <h3>Varicose Veins</h3>
+  <ul>
+    <li>Superficial veins become <strong>dilated and tortuous</strong> because the one-way valves inside the vein fail</li>
+    <li>Blood pools in the veins (venous insufficiency) instead of returning to the heart</li>
+    <li><strong>Risk factors:</strong> Prolonged standing, pregnancy, obesity, family history</li>
+    <li><strong>Complications:</strong> Venous stasis ulcers (typically at the medial malleolus/inner ankle), edema, thrombophlebitis</li>
+    <li><strong>Treatment:</strong> Compression stockings, leg elevation, sclerotherapy or surgery for severe cases</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 8: PRACTICE QUESTIONS                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="section-head" id="quiz">Practice Questions</h2>
+
+<div class="quiz-card" id="q1">
+  <div class="q-num">Question 1 <span class="q-tag tag-foundation">Foundation</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">Hypersensitivity</span></div>
+  <div class="stem">A patient develops hives, wheezing, and lip swelling within 5 minutes of eating shrimp. Which type of hypersensitivity reaction is occurring?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q1','A')">Type I &mdash; Immediate</li>
+    <li onclick="showAnswer('q1','B')">Type II &mdash; Cytotoxic</li>
+    <li onclick="showAnswer('q1','C')">Type III &mdash; Immune Complex</li>
+    <li onclick="showAnswer('q1','D')">Type IV &mdash; Delayed</li>
+  </ol>
+  <div class="rationale" id="q1-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q1','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q2">
+  <div class="q-num">Question 2 <span class="q-tag tag-application">Application</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">Autoimmune</span></div>
+  <div class="stem">A 28-year-old woman presents with a butterfly-shaped facial rash, joint pain, and proteinuria. The nurse suspects SLE. Which lab result would most strongly support this diagnosis?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q2','A')">Elevated rheumatoid factor (RF)</li>
+    <li onclick="showAnswer('q2','B')">Positive anti-double-stranded DNA (anti-dsDNA)</li>
+    <li onclick="showAnswer('q2','C')">Elevated ESR</li>
+    <li onclick="showAnswer('q2','D')">Low hemoglobin</li>
+  </ol>
+  <div class="rationale" id="q2-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q2','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q3">
+  <div class="q-num">Question 3 <span class="q-tag tag-application">Application</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">Immunodeficiency</span></div>
+  <div class="stem">A patient with HIV has a CD4 count of 180 cells/&mu;L. Which action by the nurse is the priority?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q3','A')">Teach about safe sex practices</li>
+    <li onclick="showAnswer('q3','B')">Initiate Pneumocystis jirovecii pneumonia (PCP) prophylaxis</li>
+    <li onclick="showAnswer('q3','C')">Schedule a follow-up CD4 count in 3 months</li>
+    <li onclick="showAnswer('q3','D')">Recommend increased caloric intake</li>
+  </ol>
+  <div class="rationale" id="q3-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q3','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q4">
+  <div class="q-num">Question 4 <span class="q-tag tag-analysis">Analysis</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">WBC Disorders</span></div>
+  <div class="stem">A 4-year-old child presents with fatigue, fever, easy bruising, and bone pain. The CBC shows WBC 45,000/&mu;L with 80% blasts, hemoglobin 7.2 g/dL, and platelets 32,000/&mu;L. Which diagnosis is most likely?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q4','A')">Chronic lymphocytic leukemia (CLL)</li>
+    <li onclick="showAnswer('q4','B')">Hodgkin's lymphoma</li>
+    <li onclick="showAnswer('q4','C')">Acute lymphoblastic leukemia (ALL)</li>
+    <li onclick="showAnswer('q4','D')">Iron-deficiency anemia</li>
+  </ol>
+  <div class="rationale" id="q4-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q4','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q5">
+  <div class="q-num">Question 5 <span class="q-tag tag-foundation">Foundation</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">Lymphoma</span></div>
+  <div class="stem">Which diagnostic finding differentiates Hodgkin's lymphoma from Non-Hodgkin's lymphoma?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q5','A')">Elevated white blood cell count</li>
+    <li onclick="showAnswer('q5','B')">Presence of Reed-Sternberg cells on biopsy</li>
+    <li onclick="showAnswer('q5','C')">Painless lymphadenopathy</li>
+    <li onclick="showAnswer('q5','D')">Night sweats and weight loss</li>
+  </ol>
+  <div class="rationale" id="q5-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q5','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q6">
+  <div class="q-num">Question 6 <span class="q-tag tag-application">Application</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">Anemia</span></div>
+  <div class="stem">A patient with iron-deficiency anemia asks why they should take their ferrous sulfate with orange juice. The nurse's best response is:</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q6','A')">&ldquo;It prevents nausea from the medication.&rdquo;</li>
+    <li onclick="showAnswer('q6','B')">&ldquo;Vitamin C enhances iron absorption in the GI tract.&rdquo;</li>
+    <li onclick="showAnswer('q6','C')">&ldquo;It masks the metallic taste of the supplement.&rdquo;</li>
+    <li onclick="showAnswer('q6','D')">&ldquo;The sugar in juice helps the iron dissolve faster.&rdquo;</li>
+  </ol>
+  <div class="rationale" id="q6-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q6','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q7">
+  <div class="q-num">Question 7 <span class="q-tag tag-analysis">Analysis</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">Anemia</span></div>
+  <div class="stem">A patient has macrocytic anemia with paresthesia in the hands and feet and difficulty with balance. Which type of anemia does this presentation most suggest?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q7','A')">Iron-deficiency anemia</li>
+    <li onclick="showAnswer('q7','B')">Folate-deficiency anemia</li>
+    <li onclick="showAnswer('q7','C')">Pernicious anemia (B12 deficiency)</li>
+    <li onclick="showAnswer('q7','D')">Sickle cell anemia</li>
+  </ol>
+  <div class="rationale" id="q7-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q7','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q8">
+  <div class="q-num">Question 8 <span class="q-tag tag-application">Application</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">Sickle Cell</span></div>
+  <div class="stem">A patient with sickle cell disease is admitted in vaso-occlusive crisis. Which nursing intervention is contraindicated?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q8','A')">Administering IV fluids for hydration</li>
+    <li onclick="showAnswer('q8','B')">Applying ice packs to the painful extremity</li>
+    <li onclick="showAnswer('q8','C')">Administering supplemental oxygen</li>
+    <li onclick="showAnswer('q8','D')">Providing opioid analgesia as ordered</li>
+  </ol>
+  <div class="rationale" id="q8-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q8','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q9">
+  <div class="q-num">Question 9 <span class="q-tag tag-analysis">Analysis</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">Coagulation</span></div>
+  <div class="stem">A patient has a platelet count of 18,000/&mu;L with normal PT and aPTT. The nurse observes petechiae on the trunk and mucosal bleeding. Which condition is most consistent with these findings?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q9','A')">Hemophilia A</li>
+    <li onclick="showAnswer('q9','B')">Disseminated intravascular coagulation (DIC)</li>
+    <li onclick="showAnswer('q9','C')">Immune thrombocytopenic purpura (ITP)</li>
+    <li onclick="showAnswer('q9','D')">Deep vein thrombosis (DVT)</li>
+  </ol>
+  <div class="rationale" id="q9-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q9','reveal')">Show Answer</button>
+</div>
+
+<div class="quiz-card" id="q10">
+  <div class="q-num">Question 10 <span class="q-tag tag-application">Application</span> <span class="q-tag" style="background:var(--accent2-light);color:var(--accent2);">DVT</span></div>
+  <div class="stem">A post-operative patient develops unilateral leg swelling, warmth, and calf tenderness. Which nursing action should the nurse take FIRST?</div>
+  <ol class="opts">
+    <li onclick="showAnswer('q10','A')">Massage the affected leg to relieve pain</li>
+    <li onclick="showAnswer('q10','B')">Apply compression stockings to both legs</li>
+    <li onclick="showAnswer('q10','C')">Notify the healthcare provider immediately</li>
+    <li onclick="showAnswer('q10','D')">Ambulate the patient to promote circulation</li>
+  </ol>
+  <div class="rationale" id="q10-r"></div>
+  <button class="reveal-btn" onclick="showAnswer('q10','reveal')">Show Answer</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- 5 MUST KNOWS                                   -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="must-know" id="mustknow">
+  <h2>The 5 Things You Must Know</h2>
+  <ol>
+    <li><strong>Type I (IgE/mast cell/histamine) = anaphylaxis.</strong> Epinephrine IM is always the first intervention, never delay it for antihistamines.</li>
+    <li><strong>Leukemia fills marrow with useless blasts &rarr; pancytopenia triad.</strong> High WBC but the patient gets infections (non-functional WBCs), bleeds (low platelets), and is exhausted (low RBCs). ALL = kids, CLL = elderly.</li>
+    <li><strong>Microcytic = iron deficiency. Macrocytic + neuro symptoms = B12 (pernicious anemia).</strong> Ferrous sulfate with vitamin C, B12 by IM injection. These are the two most testable anemias.</li>
+    <li><strong>ITP vs. hemophilia = platelets vs. factors.</strong> ITP: low platelets, normal PT/aPTT, superficial bleeding (petechiae). Hemophilia: normal platelets, prolonged aPTT, deep bleeding (joints).</li>
+    <li><strong>DVT prevention is nursing priority #1 post-surgery.</strong> Virchow's triad (SHE: stasis, hypercoagulability, endothelial injury). Never massage a DVT leg. Watch for PE signs: sudden dyspnea + chest pain + tachycardia = emergency.</li>
+  </ol>
+</div>
+
+</div><!-- /page -->
+
+<script>
+const answers = {
+  q1: { correct: 'A', rationale: '<strong>A is correct.</strong> Rapid onset (minutes), IgE-mediated, mast cell degranulation with histamine release causing hives, wheezing, and angioedema = classic Type I immediate hypersensitivity.<br><br><strong>Why the others are wrong:</strong><br><strong>B) Type II</strong> involves antibodies attacking cell surfaces (transfusion reactions) &mdash; not food allergies.<br><strong>C) Type III</strong> involves immune complex deposition in tissues (SLE) &mdash; takes hours to days, not minutes.<br><strong>D) Type IV</strong> is T-cell mediated and takes 24&ndash;72 hours (contact dermatitis, TB test) &mdash; this reaction was immediate.' },
+  q2: { correct: 'B', rationale: '<strong>B is correct.</strong> Anti-dsDNA is highly specific to SLE and correlates with disease activity, especially lupus nephritis (which explains the proteinuria).<br><br><strong>Why the others are wrong:</strong><br><strong>A) Rheumatoid factor</strong> is associated with rheumatoid arthritis, not SLE. It can be elevated in SLE but is not specific.<br><strong>C) Elevated ESR</strong> indicates inflammation but is non-specific &mdash; elevated in dozens of conditions.<br><strong>D) Low hemoglobin</strong> indicates anemia, which can occur in SLE but is not a diagnostic marker.' },
+  q3: { correct: 'B', rationale: '<strong>B is correct.</strong> CD4 &lt;200 = AIDS diagnosis. PCP prophylaxis (trimethoprim-sulfamethoxazole) must be initiated because PCP is the most common opportunistic infection in AIDS and is potentially fatal.<br><br><strong>Why the others are wrong:</strong><br><strong>A) Safe sex teaching</strong> is important but not the priority &mdash; the immediate threat is opportunistic infection at this CD4 level.<br><strong>C) Follow-up in 3 months</strong> is too passive when the patient is at a critical CD4 threshold right now.<br><strong>D) Increased calories</strong> may help with wasting but does not address the immediate infection risk.' },
+  q4: { correct: 'C', rationale: '<strong>C is correct.</strong> A 4-year-old with pancytopenia (anemia + thrombocytopenia) plus very high WBC with 80% blasts + bone pain = classic ALL. ALL is the most common childhood cancer, peaks at ages 2&ndash;5.<br><br><strong>Why the others are wrong:</strong><br><strong>A) CLL</strong> occurs in elderly adults, involves mature (not blast) cells, and progresses slowly.<br><strong>B) Hodgkin\'s lymphoma</strong> presents with painless lymphadenopathy and Reed-Sternberg cells, not blasts in the blood.<br><strong>D) Iron-deficiency anemia</strong> causes low hemoglobin but does not cause blast cells in the blood or thrombocytopenia.' },
+  q5: { correct: 'B', rationale: '<strong>B is correct.</strong> Reed-Sternberg cells (large, binucleated "owl-eye" cells) on lymph node biopsy are the hallmark diagnostic finding of Hodgkin\'s lymphoma. They are NEVER found in NHL.<br><br><strong>Why the others are wrong:</strong><br><strong>A) Elevated WBC</strong> can occur in many conditions and is not a differentiating feature.<br><strong>C) Painless lymphadenopathy</strong> occurs in BOTH Hodgkin\'s and NHL &mdash; it doesn\'t differentiate them.<br><strong>D) Night sweats and weight loss</strong> (B symptoms) can occur in both types of lymphoma.' },
+  q6: { correct: 'B', rationale: '<strong>B is correct.</strong> Vitamin C (ascorbic acid) converts ferric iron to ferrous iron in the GI tract, which is the form that can be absorbed. This significantly increases iron absorption.<br><br><strong>Why the others are wrong:</strong><br><strong>A)</strong> Orange juice does not prevent nausea &mdash; taking iron with food reduces nausea but also reduces absorption.<br><strong>C)</strong> While it may help with taste, that is not the therapeutic reason for the recommendation.<br><strong>D)</strong> Sugar does not help iron dissolve &mdash; this is the ascorbic acid mechanism, not a sugar effect.' },
+  q7: { correct: 'C', rationale: '<strong>C is correct.</strong> Macrocytic anemia + neurological symptoms (paresthesia, balance problems) = pernicious anemia (B12 deficiency). B12 is essential for myelin synthesis, so its deficiency causes nerve damage. This is the key distinction from folate deficiency.<br><br><strong>Why the others are wrong:</strong><br><strong>A) Iron-deficiency</strong> causes microcytic (small) anemia, not macrocytic.<br><strong>B) Folate deficiency</strong> also causes macrocytic anemia but does NOT cause neurological symptoms &mdash; that\'s the critical differentiator.<br><strong>D) Sickle cell</strong> is a normocytic anemia caused by abnormal hemoglobin shape, not a nutritional deficiency.' },
+  q8: { correct: 'B', rationale: '<strong>B is correct &mdash; ice packs are CONTRAINDICATED.</strong> Cold causes vasoconstriction, which worsens sickling by reducing oxygen delivery and slowing blood flow. Cold is a known trigger for sickle cell crisis.<br><br><strong>Why the others are wrong:</strong><br><strong>A) IV fluids</strong> are a priority &mdash; hydration reduces blood viscosity and helps prevent further sickling.<br><strong>C) Supplemental oxygen</strong> prevents further sickling by maintaining oxygen saturation.<br><strong>D) Opioid analgesia</strong> is appropriate &mdash; sickle cell crisis pain is severe and should not be undertreated.' },
+  q9: { correct: 'C', rationale: '<strong>C is correct.</strong> Very low platelets + normal PT/aPTT + petechiae + mucosal bleeding = ITP. The clotting factors are intact (normal PT/aPTT), but there aren\'t enough platelets to form the initial plug.<br><br><strong>Why the others are wrong:</strong><br><strong>A) Hemophilia A</strong> has normal platelets but prolonged aPTT, with deep bleeding (joints), not petechiae.<br><strong>B) DIC</strong> consumes BOTH platelets AND clotting factors, so PT and aPTT would both be prolonged.<br><strong>D) DVT</strong> is a clot formation problem (too much clotting), not a bleeding disorder.' },
+  q10: { correct: 'C', rationale: '<strong>C is correct.</strong> Unilateral leg swelling + warmth + calf tenderness post-surgery = suspected DVT. The nurse must notify the provider immediately for diagnostic workup (Doppler ultrasound, D-dimer) and initiation of anticoagulation therapy. DVT can lead to life-threatening PE.<br><br><strong>Why the others are wrong:</strong><br><strong>A) Massage is CONTRAINDICATED</strong> &mdash; it can dislodge the clot, causing a pulmonary embolism.<br><strong>B) Compression stockings</strong> should not be applied to a leg with a suspected DVT &mdash; they could dislodge the clot.<br><strong>D) Ambulation</strong> without medical evaluation could dislodge the clot. Bed rest with leg elevation until the provider orders diagnostic studies.' }
+};
+
+function showAnswer(qId, selected) {
+  const el = document.getElementById(qId + '-r');
+  const data = answers[qId];
+  el.innerHTML = data.rationale;
+  if (selected === 'reveal' || selected === data.correct) {
+    el.className = 'rationale show correct';
+  } else {
+    el.className = 'rationale show wrong';
+  }
+}
+</script>
+</body>
+</html>
