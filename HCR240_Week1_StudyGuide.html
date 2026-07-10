@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HCR-240 Week 1 Study Guide | Tehrani Labs</title>
+<style>
+:root {
+  --blue:#1a4a8a; --teal:#1a7a8a; --orange:#e07b2a; --gold:#b8920e;
+  --green:#2a7a4a; --red:#8a2a2a; --purple:#5a2a8a; --light:#f0f6ff;
+  --navy:#0d2d5a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:#eef2f8;color:#222;}
+
+/* HEADER */
+header{background:linear-gradient(135deg,var(--navy),var(--teal));color:white;text-align:center;padding:30px 16px 22px;box-shadow:0 4px 16px rgba(0,0,0,.3);}
+header h1{font-size:2.1em;letter-spacing:1px;}
+header p{margin-top:6px;font-size:1em;opacity:.85;}
+.badge{display:inline-block;background:var(--orange);color:white;border-radius:20px;padding:5px 16px;font-size:.78em;margin-top:10px;font-weight:700;letter-spacing:.5px;}
+
+/* NAV */
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:12px 10px;background:var(--navy);position:sticky;top:0;z-index:100;box-shadow:0 3px 10px rgba(0,0,0,.3);}
+nav button{background:rgba(255,255,255,.15);border:none;color:white;border-radius:20px;padding:7px 14px;cursor:pointer;font-size:.83em;font-weight:600;transition:.2s;}
+nav button:hover,nav button.active{background:var(--orange);transform:translateY(-1px);}
+
+/* SECTIONS */
+.section{display:none;padding:24px 16px;max-width:1000px;margin:0 auto;}
+.section.active{display:block;}
+.sec-title{font-size:1.5em;color:var(--blue);border-left:5px solid var(--orange);padding-left:12px;margin-bottom:20px;margin-top:4px;}
+.sec-sub{font-size:1.1em;color:var(--blue);font-weight:700;margin:22px 0 12px;padding-bottom:4px;border-bottom:2px solid #dde;}
+
+/* FLIP CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:24px;}
+.flip-card{height:175px;perspective:900px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:.5s;border-radius:14px;}
+.flip-card:hover .flip-inner,.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{position:absolute;width:100%;height:100%;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.15);}
+.flip-front{background:var(--blue);color:white;}
+.flip-front.teal{background:var(--teal);}
+.flip-front.orange{background:var(--orange);}
+.flip-front.green{background:var(--green);}
+.flip-front.purple{background:var(--purple);}
+.flip-front.red{background:var(--red);}
+.flip-front.gold{background:var(--gold);}
+.flip-front.navy{background:var(--navy);}
+.flip-front .emoji{font-size:2em;margin-bottom:7px;}
+.flip-front .term{font-size:1em;font-weight:700;line-height:1.25;}
+.flip-back{background:var(--light);color:#222;transform:rotateY(180deg);}
+.flip-back .def{font-size:.8em;line-height:1.5;}
+.flip-hint{font-size:.66em;opacity:.6;margin-top:5px;}
+
+/* INFO CARDS */
+.info-card{background:white;border-radius:14px;padding:18px 20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.09);border-left:5px solid var(--blue);}
+.info-card.orange-border{border-left-color:var(--orange);}
+.info-card.teal-border{border-left-color:var(--teal);}
+.info-card.green-border{border-left-color:var(--green);}
+.info-card.red-border{border-left-color:var(--red);}
+.info-card.purple-border{border-left-color:var(--purple);}
+.info-card.gold-border{border-left-color:var(--gold);}
+.info-card h3{color:var(--blue);margin-bottom:8px;font-size:1.02em;}
+.info-card ul{padding-left:18px;font-size:.88em;line-height:1.7;}
+.info-card p{font-size:.88em;line-height:1.7;margin-top:4px;}
+
+/* ACCORDION */
+.accordion{margin-bottom:10px;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.09);}
+.acc-header{background:var(--blue);color:white;padding:13px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:.92em;transition:.2s;}
+.acc-header:hover{filter:brightness(1.1);}
+.acc-header.orange-bg{background:var(--orange);}
+.acc-header.green-bg{background:var(--green);}
+.acc-header.purple-bg{background:var(--purple);}
+.acc-header.red-bg{background:var(--red);}
+.acc-header.gold-bg{background:var(--gold);}
+.acc-header.teal-bg{background:var(--teal);}
+.acc-header.navy-bg{background:var(--navy);}
+.acc-body{background:white;padding:0 18px;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;}
+.acc-body.open{max-height:1000px;padding:16px 18px;}
+.acc-body p,.acc-body li{font-size:.87em;line-height:1.72;}
+.acc-body ul,.acc-body ol{padding-left:18px;margin-top:6px;}
+.acc-body h4{color:var(--blue);margin:10px 0 5px;font-size:.9em;}
+.arrow{transition:.3s;display:inline-block;}
+.acc-header.expanded .arrow{transform:rotate(180deg);}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:32px;margin:10px 0 20px;}
+.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--red),var(--orange),var(--teal),var(--blue));border-radius:2px;}
+.tl-item{position:relative;margin-bottom:20px;}
+.tl-dot{position:absolute;left:-27px;top:4px;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px currentColor;}
+.tl-label{font-weight:700;color:var(--blue);font-size:.93em;}
+.tl-time{display:inline-block;font-size:.75em;color:white;border-radius:10px;padding:2px 8px;margin-left:8px;font-weight:600;vertical-align:middle;}
+.tl-desc{font-size:.84em;color:#444;margin-top:5px;line-height:1.6;}
+.tl-bullets{font-size:.82em;color:#555;margin-top:5px;padding-left:16px;}
+.tl-bullets li{margin-bottom:3px;line-height:1.55;}
+
+/* COMPARE TABLES */
+.compare-table{width:100%;border-collapse:collapse;font-size:.84em;margin:10px 0 20px;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.compare-table th{background:var(--blue);color:white;padding:10px 12px;text-align:left;}
+.compare-table td{padding:9px 12px;border-bottom:1px solid #dde;vertical-align:top;}
+.compare-table tr:nth-child(even) td{background:#f4f7ff;}
+.compare-table tr:hover td{background:#e8f0ff;}
+
+/* HIGHLIGHT BOXES */
+.highlight-box{border-radius:12px;padding:13px 16px;margin:12px 0;display:flex;gap:12px;align-items:flex-start;}
+.highlight-box.blue{background:#ddeeff;border-left:5px solid var(--blue);}
+.highlight-box.orange{background:#fff0dc;border-left:5px solid var(--orange);}
+.highlight-box.green{background:#d4f0d4;border-left:5px solid var(--green);}
+.highlight-box.red{background:#f5d4d4;border-left:5px solid var(--red);}
+.highlight-box.purple{background:#ede0ff;border-left:5px solid var(--purple);}
+.highlight-box.gold{background:#fff8d4;border-left:5px solid var(--gold);}
+.hb-icon{font-size:1.5em;flex-shrink:0;}
+.hb-text{font-size:.87em;line-height:1.6;}
+.hb-title{font-weight:700;margin-bottom:3px;}
+
+/* PILLS */
+.pill{display:inline-block;border-radius:20px;padding:3px 11px;font-size:.74em;font-weight:700;margin:2px;}
+.pill.blue{background:var(--blue);color:white;}
+.pill.orange{background:var(--orange);color:white;}
+.pill.green{background:var(--green);color:white;}
+.pill.red{background:var(--red);color:white;}
+.pill.purple{background:var(--purple);color:white;}
+.pill.gold{background:var(--gold);color:white;}
+.pill.teal{background:var(--teal);color:white;}
+.pill.navy{background:var(--navy);color:white;}
+
+/* GRID CARDS */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
+.five-col{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+
+/* STAT CARDS */
+.stat-card{background:white;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+.stat-card .stat-emoji{font-size:2.2em;}
+.stat-card .stat-title{font-weight:700;color:var(--blue);font-size:.95em;margin:6px 0 3px;}
+.stat-card .stat-desc{font-size:.78em;color:#555;line-height:1.5;}
+
+/* OVERVIEW */
+.obj-list{background:white;border-radius:14px;padding:18px 22px;box-shadow:0 2px 10px rgba(0,0,0,.09);margin-bottom:16px;}
+.obj-list li{font-size:.9em;line-height:1.75;padding:3px 0;border-bottom:1px solid #eee;}
+.obj-list li:last-child{border-bottom:none;}
+
+/* QUIZ */
+.quiz-container{max-width:720px;margin:0 auto;}
+.quiz-progress-bar{background:#ddd;border-radius:10px;height:10px;margin-bottom:18px;overflow:hidden;}
+.quiz-progress-fill{background:linear-gradient(90deg,var(--teal),var(--blue));height:100%;border-radius:10px;transition:.4s;}
+.quiz-q-num{color:var(--blue);font-size:.83em;font-weight:700;margin-bottom:5px;}
+.quiz-question{font-size:1.04em;font-weight:700;color:#222;margin-bottom:15px;line-height:1.42;}
+.quiz-options{display:flex;flex-direction:column;gap:9px;margin-bottom:18px;}
+.quiz-opt{background:white;border:2px solid #ccd;border-radius:10px;padding:11px 15px;cursor:pointer;text-align:left;font-size:.89em;transition:.2s;}
+.quiz-opt:hover{border-color:var(--blue);background:var(--light);}
+.quiz-opt.correct{background:#d4f0d4;border-color:#2a7a4a;color:#1a5a2a;font-weight:700;}
+.quiz-opt.incorrect{background:#f5d4d4;border-color:#8a2a2a;color:#5a1a1a;}
+.quiz-feedback{padding:12px 15px;border-radius:10px;font-size:.86em;margin-bottom:14px;display:none;line-height:1.55;}
+.quiz-feedback.show{display:block;}
+.quiz-feedback.correct-fb{background:#d4f0d4;color:#1a5a2a;border-left:4px solid #2a7a4a;}
+.quiz-feedback.incorrect-fb{background:#f5d4d4;color:#5a1a1a;border-left:4px solid #8a2a2a;}
+.quiz-btn{background:var(--blue);color:white;border:none;border-radius:10px;padding:10px 24px;cursor:pointer;font-size:.93em;font-weight:700;transition:.2s;margin-right:8px;}
+.quiz-btn:hover{background:var(--teal);transform:translateY(-1px);}
+.quiz-btn.secondary{background:var(--orange);}
+.quiz-score{text-align:center;font-size:1.2em;font-weight:700;color:var(--blue);margin:20px 0;}
+.score-emoji{font-size:2.8em;display:block;margin-bottom:10px;}
+
+/* MATCH */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 20px;}
+.match-item{background:white;border:2px solid #ccd;border-radius:10px;padding:10px 13px;cursor:pointer;font-size:.82em;text-align:center;transition:.2s;min-height:52px;display:flex;align-items:center;justify-content:center;line-height:1.35;}
+.match-item:hover{border-color:var(--blue);background:var(--light);}
+.match-item.selected{border-color:var(--orange);background:#fff5e8;}
+.match-item.matched{border-color:var(--green);background:#d4f0d4;cursor:default;color:#1a5a2a;font-weight:700;}
+.match-item.wrong{border-color:var(--red);background:#f5d4d4;}
+.match-score-display{font-weight:700;color:var(--blue);text-align:center;margin:8px 0;font-size:.95em;}
+
+/* SCENARIO CARDS */
+.scenario-card{background:white;border-radius:14px;padding:18px 20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.09);border-top:4px solid var(--orange);}
+.scenario-card .s-title{font-weight:700;color:var(--orange);font-size:.95em;margin-bottom:8px;}
+.scenario-card .s-prompt{font-size:.88em;line-height:1.65;background:#fff8f0;border-radius:8px;padding:10px;margin-bottom:10px;}
+.scenario-card .s-answer{font-size:.85em;line-height:1.65;display:none;background:#f0f7ff;border-radius:8px;padding:10px;border-left:3px solid var(--blue);}
+.scenario-card .s-answer.open{display:block;}
+.toggle-btn{background:var(--blue);color:white;border:none;border-radius:8px;padding:6px 14px;font-size:.8em;cursor:pointer;font-weight:600;margin-top:4px;}
+.toggle-btn:hover{background:var(--teal);}
+
+/* NCLEX BOX */
+.nclex-box{background:linear-gradient(135deg,#fff8e1,#fffde7);border:2px solid var(--gold);border-radius:12px;padding:14px 16px;margin:12px 0;}
+.nclex-box .nclex-title{font-weight:700;color:var(--gold);font-size:.88em;margin-bottom:5px;}
+.nclex-box p,.nclex-box li{font-size:.84em;line-height:1.65;}
+.nclex-box ul{padding-left:16px;margin-top:4px;}
+
+/* FOOTER */
+footer{text-align:center;padding:22px;font-size:.8em;color:#888;background:#dde4f0;margin-top:32px;}
+
+@media(max-width:650px){
+  header h1{font-size:1.4em;}
+  .card-grid{grid-template-columns:repeat(2,1fr);}
+  .two-col,.three-col,.five-col{grid-template-columns:1fr;}
+  .match-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧬 HCR-240 Pathophysiology</h1>
+  <p>Week 1 Interactive Study Guide — Complete Review</p>
+  <span class="badge">Tehrani Labs · Arizona College of Nursing</span>
+</header>
+
+<nav>
+  <button class="active" onclick="showSection('overview',this)">🏠 Overview</button>
+  <button onclick="showSection('cells',this)">🔬 Cell Adaptation</button>
+  <button onclick="showSection('inflammation',this)">🔥 Inflammation</button>
+  <button onclick="showSection('wounds',this)">🩹 Wound Healing</button>
+  <button onclick="showSection('genetic',this)">🧬 Genetic Disorders</button>
+  <button onclick="showSection('infectious',this)">🦠 Infectious Diseases</button>
+  <button onclick="showSection('keyterms',this)">📚 Key Terms</button>
+  <button onclick="showSection('scenarios',this)">🏥 Clinical Scenarios</button>
+  <button onclick="showSection('match',this)">🎯 Match Game</button>
+  <button onclick="showSection('quiz',this)">✏️ Quiz</button>
+</nav>
+
+<!-- ======================================================= OVERVIEW -->
+<div id="overview" class="section active">
+  <h2 class="sec-title">🏠 Week 1 — Course Overview</h2>
+
+  <div class="highlight-box blue">
+    <span class="hb-icon">📖</span>
+    <div class="hb-text">
+      <div class="hb-title">How to Use This Guide</div>
+      Navigate using the tabs above. Each section covers a major topic from Week 1. Use the Quiz and Match Game to test yourself. Clinical Scenarios apply the concepts to patient care. Study the NCLEX tips — they appear throughout!
+    </div>
+  </div>
+
+  <h3 class="sec-sub">📋 Learning Objectives</h3>
+  <div class="obj-list">
+    <ul style="list-style:none;padding:0">
+      <li>✅ Differentiate the five types of cellular adaptation (hypertrophy, atrophy, hyperplasia, metaplasia, dysplasia)</li>
+      <li>✅ Explain apoptosis vs. necrosis and their clinical significance</li>
+      <li>✅ Describe the 5 cardinal signs of inflammation and the inflammatory cascade</li>
+      <li>✅ Identify the 4 stages of wound healing and factors that impair healing</li>
+      <li>✅ Compare primary vs. secondary intention healing</li>
+      <li>✅ Distinguish wound complications: dehiscence vs. evisceration</li>
+      <li>✅ Describe the inheritance patterns and key features of major genetic disorders (CF, Tay-Sachs, Huntington's, Down Syndrome)</li>
+      <li>✅ Compare the mechanisms and presentations of selected infectious diseases</li>
+      <li>✅ Apply pathophysiology concepts to NCLEX-style clinical scenarios</li>
+    </ul>
+  </div>
+
+  <h3 class="sec-sub">🗺️ Week 1 Topic Map</h3>
+  <div class="five-col">
+    <div class="stat-card"><div class="stat-emoji">🔬</div><div class="stat-title">Cell Adaptation</div><div class="stat-desc">5 types + apoptosis + necrosis</div></div>
+    <div class="stat-card"><div class="stat-emoji">🔥</div><div class="stat-title">Inflammation</div><div class="stat-desc">Cardinal signs, mediators, cascade</div></div>
+    <div class="stat-card"><div class="stat-emoji">🩹</div><div class="stat-title">Wound Healing</div><div class="stat-desc">4 stages, complications, types</div></div>
+    <div class="stat-card"><div class="stat-emoji">🧬</div><div class="stat-title">Genetics</div><div class="stat-desc">CF, Tay-Sachs, HD, Trisomy 21</div></div>
+    <div class="stat-card"><div class="stat-emoji">🦠</div><div class="stat-title">Infection</div><div class="stat-desc">Bacteria, viruses, resistance</div></div>
+  </div>
+
+  <h3 class="sec-sub">⚡ Quick Concept Refresher</h3>
+  <div class="highlight-box orange">
+    <span class="hb-icon">🔺</span>
+    <div class="hb-text">
+      <div class="hb-title">Pathophysiology Core Concept</div>
+      Pathophysiology studies how <strong>normal physiology is disrupted</strong> by disease. Understanding what is <em>normal</em> first lets you recognize what is <em>abnormal</em>. Disease = deviation from homeostasis.
+    </div>
+  </div>
+  <div class="highlight-box green">
+    <span class="hb-icon">💡</span>
+    <div class="hb-text">
+      <div class="hb-title">Key Vocabulary: Know These Definitions</div>
+      <strong>Etiology</strong> = cause of disease &nbsp;|&nbsp; <strong>Pathogenesis</strong> = mechanism of disease development &nbsp;|&nbsp; <strong>Sign</strong> = objective (measurable) finding &nbsp;|&nbsp; <strong>Symptom</strong> = subjective (patient-reported) experience &nbsp;|&nbsp; <strong>Prognosis</strong> = expected outcome
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= CELL ADAPTATION -->
+<div id="cells" class="section">
+  <h2 class="sec-title">🔬 Cellular Adaptation</h2>
+
+  <div class="highlight-box blue">
+    <span class="hb-icon">💡</span>
+    <div class="hb-text"><div class="hb-title">Tap any card to flip it!</div>Flip each card to reveal the definition, examples, and clinical connections.</div>
+  </div>
+
+  <h3 class="sec-sub">5 Types of Cellular Adaptation</h3>
+  <div class="card-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><span class="emoji">💪</span><span class="term">Hypertrophy</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>Cell SIZE increases</strong><br>Cell number stays the same<br><br>✅ Physiologic: athlete's heart, pregnant uterus<br>⚠️ Pathologic: heart failure (cardiomegaly)<br><br>Trigger: ↑ workload / demand</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front teal"><span class="emoji">📉</span><span class="term">Atrophy</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>Cell SIZE decreases</strong><br>Function also decreases<br><br>Causes: Disuse, malnutrition, ↓ nerve supply, ↓ blood flow, aging<br><br>Example: Bed-rest muscle wasting; organ atrophy in denervation</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front orange"><span class="emoji">📈</span><span class="term">Hyperplasia</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>Cell NUMBER increases</strong><br>Cell size stays the same<br><br>✅ Physiologic: breast tissue in pregnancy<br>⚠️ Pathologic: BPH (enlarged prostate), goiter (↑ TSH stimulation)</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front green"><span class="emoji">🔄</span><span class="term">Metaplasia</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>One cell type → another cell type</strong><br>Reversible, protective response<br><br>🚬 Smoking: ciliated columnar → squamous (↓ airway defense)<br>🔥 GERD: squamous → columnar = Barrett's esophagus</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front purple"><span class="emoji">⚠️</span><span class="term">Dysplasia</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>Abnormal cell growth + organization</strong><br>NOT yet cancer, but a precursor<br><br>From: chronic inflammation, chronic irritation<br><br>Example: Cervical dysplasia on Pap smear → may progress to cervical cancer</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front red"><span class="emoji">💀</span><span class="term">Apoptosis</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>Programmed cell death</strong><br>Orderly, regulated, intentional<br><br>Purpose: Remove damaged or unnecessary cells<br>⚠️ If apoptosis fails → cells survive when they shouldn't → cancer / neoplasia</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front navy"><span class="emoji">🔥</span><span class="term">Necrosis</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>Unplanned cell death</strong><br>Pathological, uncontrolled<br><br>Causes: ischemia, toxins, infection<br>Releases inflammatory contents into surrounding tissue → inflammatory response<br><br>Contrast: Apoptosis = clean; Necrosis = messy</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box orange">
+    <span class="hb-icon">🔺</span>
+    <div class="hb-text"><div class="hb-title">Cancer Progression Pathway</div>Chronic Irritation → <strong>Metaplasia</strong> → <strong>Dysplasia</strong> → <strong>Carcinoma in situ</strong> → <strong>Invasive Cancer</strong></div>
+  </div>
+
+  <h3 class="sec-sub">📊 Full Comparison Table</h3>
+  <table class="compare-table">
+    <tr><th>Type</th><th>What Changes</th><th>Cell Size</th><th>Cell #</th><th>Reversible?</th><th>Example</th></tr>
+    <tr><td><strong>Hypertrophy</strong></td><td>Size ↑</td><td>↑</td><td>Same</td><td>Yes</td><td>Athlete's heart; cardiomegaly</td></tr>
+    <tr><td><strong>Atrophy</strong></td><td>Size ↓, function ↓</td><td>↓</td><td>Same or ↓</td><td>Often yes</td><td>Muscle wasting from bed rest</td></tr>
+    <tr><td><strong>Hyperplasia</strong></td><td>Cell number ↑</td><td>Same</td><td>↑</td><td>Yes</td><td>BPH; thyroid goiter</td></tr>
+    <tr><td><strong>Metaplasia</strong></td><td>Cell type changes</td><td>Varies</td><td>Varies</td><td>Yes</td><td>Barrett's esophagus; smoker's airways</td></tr>
+    <tr><td><strong>Dysplasia</strong></td><td>Abnormal growth/organization</td><td>Abnormal</td><td>Abnormal</td><td>Sometimes</td><td>Cervical dysplasia</td></tr>
+    <tr><td><strong>Apoptosis</strong></td><td>Programmed death</td><td>Shrinks</td><td>↓</td><td>N/A</td><td>Embryonic development; immune regulation</td></tr>
+    <tr><td><strong>Necrosis</strong></td><td>Unplanned death</td><td>Swells</td><td>↓</td><td>No</td><td>MI, gangrene, pressure ulcer</td></tr>
+  </table>
+
+  <div class="nclex-box">
+    <div class="nclex-title">🎯 NCLEX TIPS — Cell Adaptation</div>
+    <ul>
+      <li>Hypertrophy vs Hyperplasia: SIZE vs NUMBER</li>
+      <li>Metaplasia is <strong>reversible</strong> (if irritant removed); Dysplasia may not be</li>
+      <li>Apoptosis failure = cancer risk; Apoptosis is <strong>normal and necessary</strong></li>
+      <li>Atrophy from disuse: encourage ROM and exercise to prevent/reverse</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ======================================================= INFLAMMATION -->
+<div id="inflammation" class="section">
+  <h2 class="sec-title">🔥 Inflammation</h2>
+
+  <div class="highlight-box blue">
+    <span class="hb-icon">🛡️</span>
+    <div class="hb-text"><div class="hb-title">Inflammation = Protective Response</div>Inflammation is the body's <strong>non-specific defense mechanism</strong> against injury, infection, or irritation. Its goal is to remove the harmful stimulus and begin healing.</div>
+  </div>
+
+  <h3 class="sec-sub">5 Cardinal Signs of Inflammation</h3>
+  <div class="five-col">
+    <div class="stat-card"><div class="stat-emoji">🔴</div><div class="stat-title">1. Redness<br><em>(Rubor)</em></div><div class="stat-desc">Vasodilation → ↑ blood flow to area</div></div>
+    <div class="stat-card"><div class="stat-emoji">🌡️</div><div class="stat-title">2. Heat<br><em>(Calor)</em></div><div class="stat-desc">↑ blood flow + metabolic activity raise local temp</div></div>
+    <div class="stat-card"><div class="stat-emoji">💧</div><div class="stat-title">3. Swelling<br><em>(Tumor)</em></div><div class="stat-desc">↑ vascular permeability → fluid/cells leak into tissue</div></div>
+    <div class="stat-card"><div class="stat-emoji">😣</div><div class="stat-title">4. Pain<br><em>(Dolor)</em></div><div class="stat-desc">Prostaglandins + bradykinin stimulate sensory neurons</div></div>
+    <div class="stat-card"><div class="stat-emoji">🚫</div><div class="stat-title">5. Loss of Function<br><em>(Functio Laesa)</em></div><div class="stat-desc">Pain + swelling limit movement and use</div></div>
+  </div>
+
+  <h3 class="sec-sub">🔬 Inflammatory Cascade — Step by Step</h3>
+
+  <div class="accordion">
+    <div class="acc-header orange-bg" onclick="toggleAcc(this)">Step 1 — Tissue Injury / Pathogen Entry <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <p>Injury, infection, or irritant triggers the initial response. Can be caused by:</p>
+      <ul>
+        <li>Physical trauma (cut, burn, fracture)</li>
+        <li>Chemical agents (toxins, acids)</li>
+        <li>Biological agents (bacteria, viruses, fungi)</li>
+        <li>Immune reactions (autoimmune, hypersensitivity)</li>
+        <li>Ischemia (loss of blood supply)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">Step 2 — Mast Cell Activation & Histamine Release <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <p><strong>Mast cells</strong> (found in connective tissue) are activated by injury and release <strong>histamine</strong>.</p>
+      <h4>Effects of Histamine:</h4>
+      <ul>
+        <li>Causes <strong>vasodilation</strong> → ↑ blood flow → redness and heat</li>
+        <li>Increases <strong>vascular permeability</strong> → fluid and proteins leak into tissue → swelling</li>
+        <li>Contributes to pain by sensitizing pain receptors</li>
+      </ul>
+      <div class="nclex-box" style="margin-top:10px">
+        <div class="nclex-title">🎯 NCLEX: Mast cells = PRIMARY source of histamine. Antihistamines block this response.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header teal-bg" onclick="toggleAcc(this)">Step 3 — Chemotaxis: WBC Migration <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <p><strong>Chemotaxis</strong> = directed migration of leukocytes (WBCs) toward the injury site, guided by chemical signals.</p>
+      <h4>How it works:</h4>
+      <ul>
+        <li>Injured tissue releases <strong>chemical mediators</strong> (cytokines, complement)</li>
+        <li>WBCs respond to the chemical gradient and travel toward the site</li>
+        <li><strong>Diapedesis</strong>: WBCs squeeze through capillary walls to reach tissue</li>
+        <li>Neutrophils arrive first (first responders) → Monocytes/Macrophages follow</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header green-bg" onclick="toggleAcc(this)">Step 4 — Phagocytosis: Cleanup <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <p>WBCs (especially neutrophils and macrophages) engulf and destroy pathogens, debris, and dead cells.</p>
+      <ul>
+        <li><strong>Neutrophils</strong>: first responders; short-lived; destroy bacteria</li>
+        <li><strong>Macrophages</strong>: arrive later; long-lived; clean up debris; present antigens</li>
+        <li>Pus = dead neutrophils + bacteria + tissue debris</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header gold-bg" onclick="toggleAcc(this)">Step 5 — Pyrogens & Fever <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <p><strong>Pyrogens</strong> = fever-inducing substances that act on the hypothalamus to raise body temperature.</p>
+      <h4>Two Types:</h4>
+      <ul>
+        <li><strong>Exogenous pyrogens</strong>: from outside the body (bacteria, bacterial toxins)</li>
+        <li><strong>Endogenous pyrogens</strong>: made by our own immune cells (IL-1, IL-6, TNF-α)</li>
+      </ul>
+      <h4>Why Fever Helps:</h4>
+      <ul>
+        <li>↑ body temp makes environment less hospitable for pathogens</li>
+        <li>Stimulates immune cell activity</li>
+        <li>Promotes antibody production</li>
+      </ul>
+      <div class="highlight-box orange" style="margin-top:8px">
+        <span class="hb-icon">⚠️</span>
+        <div class="hb-text"><div class="hb-title">Danger Zone</div>Fever &gt;104°F (40°C) is dangerous — can cause seizures, brain damage, organ failure.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sec-sub">⚖️ Acute vs. Chronic Inflammation</h3>
+  <table class="compare-table">
+    <tr><th>Feature</th><th>Acute Inflammation</th><th>Chronic Inflammation</th></tr>
+    <tr><td>Duration</td><td>Minutes to days</td><td>Weeks to years</td></tr>
+    <tr><td>Cells Involved</td><td>Neutrophils</td><td>Macrophages, lymphocytes</td></tr>
+    <tr><td>Onset</td><td>Rapid</td><td>Slow</td></tr>
+    <tr><td>Resolution</td><td>Usually resolves completely</td><td>Can cause permanent damage, fibrosis</td></tr>
+    <tr><td>Example</td><td>Sprained ankle, appendicitis (early)</td><td>Rheumatoid arthritis, Crohn's disease, TB</td></tr>
+  </table>
+
+  <h3 class="sec-sub">💊 Key Inflammatory Mediators</h3>
+  <div class="two-col">
+    <div class="info-card orange-border">
+      <h3>Prostaglandins</h3>
+      <p>Produced from arachidonic acid via the COX enzyme pathway. Cause:</p>
+      <ul>
+        <li>Fever (reset hypothalamic set point)</li>
+        <li>Pain sensitization</li>
+        <li>Vasodilation and increased permeability</li>
+      </ul>
+      <p style="margin-top:6px"><strong>NSAIDs</strong> (ibuprofen, aspirin) block COX → reduce prostaglandins → reduce fever, pain, swelling</p>
+    </div>
+    <div class="info-card teal-border">
+      <h3>Cytokines (IL-1, TNF-α, IL-6)</h3>
+      <p>Signaling proteins released by macrophages and other immune cells:</p>
+      <ul>
+        <li>Trigger fever (endogenous pyrogens)</li>
+        <li>Recruit more WBCs to the site</li>
+        <li>Promote systemic inflammatory response</li>
+        <li>Elevated in sepsis, autoimmune disease</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nclex-box">
+    <div class="nclex-title">🎯 NCLEX TIPS — Inflammation</div>
+    <ul>
+      <li>Mast cells = histamine. Histamine = vasodilation + ↑ permeability</li>
+      <li>Chemotaxis = WBC migration; Diapedesis = WBC squeezing through vessel walls</li>
+      <li>Neutrophils = first; Macrophages = cleanup crew</li>
+      <li>NSAIDs inhibit prostaglandins → anti-inflammatory, antipyretic, analgesic</li>
+      <li>Pus = neutrophils + bacteria + debris (sign of active infection)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ======================================================= WOUND HEALING -->
+<div id="wounds" class="section">
+  <h2 class="sec-title">🩹 Wound Healing</h2>
+
+  <h3 class="sec-sub">⏱️ 4 Stages of Wound Healing</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--red);box-shadow:0 0 0 2px var(--red)"></div>
+      <div class="tl-label">Stage 1: Hemostasis (Clotting) <span class="tl-time" style="background:var(--red)">Immediate → Minutes</span></div>
+      <div class="tl-desc">Body's emergency stop-the-bleeding response.</div>
+      <ul class="tl-bullets">
+        <li>Damaged blood vessels <strong>vasoconstrict</strong> to slow blood flow</li>
+        <li>Platelets aggregate and form a <strong>platelet plug</strong></li>
+        <li>Clotting cascade activated → fibrin clot forms</li>
+        <li>Clot acts as a temporary seal and scaffold for future repair</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--orange);box-shadow:0 0 0 2px var(--orange)"></div>
+      <div class="tl-label">Stage 2: Inflammation <span class="tl-time" style="background:var(--orange)">Days 1–4</span></div>
+      <div class="tl-desc">Defense and cleanup phase — looks like infection but is normal.</div>
+      <ul class="tl-bullets">
+        <li>WBCs (neutrophils then macrophages) migrate to site via chemotaxis</li>
+        <li>Classic signs of inflammation present: redness, heat, swelling, pain</li>
+        <li>Macrophages phagocytize debris and release growth factors</li>
+        <li>Wound may appear red, warm, and slightly swollen — this is <em>expected</em></li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--teal);box-shadow:0 0 0 2px var(--teal)"></div>
+      <div class="tl-label">Stage 3: Proliferation (Rebuilding) <span class="tl-time" style="background:var(--teal)">Days 4–21+</span></div>
+      <div class="tl-desc">New tissue replaces the clot.</div>
+      <ul class="tl-bullets">
+        <li><strong>Fibroblasts</strong> arrive and produce <strong>collagen</strong> — the structural protein of scar tissue</li>
+        <li><strong>Granulation tissue</strong> forms: pink/red, moist, fragile — very healthy!</li>
+        <li>Angiogenesis: new blood vessels grow to supply the new tissue</li>
+        <li><strong>Epithelialization</strong>: new skin cells grow across the wound surface</li>
+        <li>Wound starts to contract (myofibroblasts pull edges together)</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--blue);box-shadow:0 0 0 2px var(--blue)"></div>
+      <div class="tl-label">Stage 4: Remodeling (Maturation) <span class="tl-time" style="background:var(--blue)">Weeks to 1 Year+</span></div>
+      <div class="tl-desc">Scar tissue reorganizes and strengthens.</div>
+      <ul class="tl-bullets">
+        <li>Collagen fibers reorganize along tension lines for maximum strength</li>
+        <li>Scar tissue reaches only ~80% of original tensile strength</li>
+        <li>Wound may fade from red to white/silver over time</li>
+        <li>Hypertrophic scarring or keloid formation may occur in some patients</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sec-sub">🔀 Types of Wound Healing</h3>
+  <div class="two-col">
+    <div class="info-card teal-border">
+      <h3>✅ Primary Intention (1°)</h3>
+      <ul>
+        <li>Clean wound edges approximated (brought together)</li>
+        <li>Closed with sutures, staples, steri-strips, or tissue adhesive</li>
+        <li>Minimal scarring; fastest healing</li>
+        <li><strong>Examples:</strong> Surgical incision, clean laceration closed in the ER</li>
+      </ul>
+    </div>
+    <div class="info-card orange-border">
+      <h3>⚠️ Secondary Intention (2°)</h3>
+      <ul>
+        <li>Edges cannot be approximated — wound left open</li>
+        <li>Fills in from the base up (bottom to top)</li>
+        <li>Significant granulation tissue; larger scar</li>
+        <li><strong>Examples:</strong> Pressure ulcers, large infected wounds, abscesses after drainage</li>
+      </ul>
+    </div>
+  </div>
+  <div class="info-card purple-border">
+    <h3>⏳ Tertiary Intention (3° / Delayed Primary Closure)</h3>
+    <ul>
+      <li>Wound intentionally left open initially, then closed later (days later)</li>
+      <li>Used when wound is contaminated or infected</li>
+      <li>Allows infection to clear before closure</li>
+      <li><strong>Examples:</strong> Contaminated traumatic wounds, animal bites</li>
+    </ul>
+  </div>
+
+  <h3 class="sec-sub">🚨 Wound Complications</h3>
+  <div class="two-col">
+    <div class="info-card red-border">
+      <h3>💥 Dehiscence</h3>
+      <ul>
+        <li>Disruption / separation of wound edges</li>
+        <li>Skin layers split open (but organs stay inside)</li>
+        <li>Risk factors: obesity, malnutrition, infection, excessive coughing/straining, steroid use</li>
+        <li>Management: Cover with sterile, moist dressing; notify surgeon</li>
+      </ul>
+    </div>
+    <div class="info-card red-border">
+      <h3>😨 Evisceration (EMERGENCY)</h3>
+      <ul>
+        <li>Protrusion of internal organs through the wound opening</li>
+        <li>MORE severe than dehiscence</li>
+        <li>Surgical emergency — call for help immediately</li>
+        <li><strong>Nursing Action:</strong> Cover organs with warm sterile saline-soaked gauze; do NOT attempt to push back; place patient in low Fowler's with knees bent; call surgeon</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sec-sub">🛏️ Pressure Ulcers & Wound Care Concepts</h3>
+  <div class="info-card green-border">
+    <h3>Key Wound Care Terms</h3>
+    <ul>
+      <li><strong>Eschar</strong> — Black, leathery dead tissue covering a wound. Must be removed for healing.</li>
+      <li><strong>Debridement</strong> — Removal of dead tissue (eschar). Methods: surgical, enzymatic (collagenase), autolytic (moisture-retentive dressings), mechanical (wet-to-dry)</li>
+      <li><strong>Granulation tissue</strong> — Healthy, red, moist tissue indicating healing in progress. Fragile — do not disturb.</li>
+      <li><strong>Slough</strong> — Yellow/tan/white stringy devitalized tissue. Also needs removal.</li>
+      <li><strong>Maceration</strong> — Softening/breakdown of surrounding skin from excess moisture</li>
+    </ul>
+  </div>
+
+  <h3 class="sec-sub">⚠️ Factors That Impair Wound Healing</h3>
+  <div class="two-col">
+    <div class="info-card orange-border">
+      <h3>Local Factors</h3>
+      <ul>
+        <li>Infection / contamination</li>
+        <li>Wound desiccation (too dry)</li>
+        <li>Poor blood supply to the area</li>
+        <li>Presence of foreign bodies</li>
+        <li>Repeated trauma / pressure</li>
+      </ul>
+    </div>
+    <div class="info-card red-border">
+      <h3>Systemic Factors</h3>
+      <ul>
+        <li>Diabetes mellitus (↓ circulation + ↑ infection risk)</li>
+        <li>Malnutrition / protein deficiency (collagen needs protein + Vitamin C)</li>
+        <li>Obesity (↓ blood supply to fat tissue)</li>
+        <li>Corticosteroid use (↓ inflammation and collagen synthesis)</li>
+        <li>Age (↓ healing rate in elderly)</li>
+        <li>Immunosuppression</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nclex-box">
+    <div class="nclex-title">🎯 NCLEX TIPS — Wound Healing</div>
+    <ul>
+      <li>Granulation tissue (red, moist, beefy) = <strong>healthy</strong> healing — protect it!</li>
+      <li>Dehiscence: wound splits open. Evisceration: organs come out. Evisceration = EMERGENCY</li>
+      <li>Reposition patients every <strong>2 hours</strong> to prevent pressure ulcers</li>
+      <li>Vitamin C and protein are essential for collagen synthesis and wound healing</li>
+      <li>Eschar must be debrided before secondary-intention healing can progress</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ======================================================= GENETIC DISORDERS -->
+<div id="genetic" class="section">
+  <h2 class="sec-title">🧬 Genetic Disorders</h2>
+
+  <div class="highlight-box blue">
+    <span class="hb-icon">🔑</span>
+    <div class="hb-text"><div class="hb-title">Inheritance Patterns Review</div>
+      <strong>Autosomal Dominant (AD)</strong>: One copy of the mutated gene is enough to cause disease. 50% risk if one parent is affected.<br>
+      <strong>Autosomal Recessive (AR)</strong>: Two copies needed. Parents are often unaffected carriers. 25% risk if both parents are carriers.<br>
+      <strong>X-linked</strong>: Gene is on the X chromosome. Males (XY) more commonly affected.
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header teal-bg" onclick="toggleAcc(this)">💨 Cystic Fibrosis (CF) <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill blue">Autosomal Recessive</span><span class="pill orange">CFTR gene — Chromosome 7</span><span class="pill green">Both parents must carry</span><span class="pill red">25% risk per child</span>
+      <br><br>
+      <h4>Pathophysiology:</h4>
+      <p>Defective CFTR (Cystic Fibrosis Transmembrane conductance Regulator) protein → faulty chloride channel → chloride stays inside cells → water follows → mucus becomes abnormally <strong>thick and sticky</strong></p>
+      <h4>Most Common In:</h4>
+      <p>Caucasians, Ashkenazi Jews; most common fatal genetic disease in white populations in the US</p>
+      <h4>Systems Affected:</h4>
+      <ul>
+        <li><strong>Lungs:</strong> Thick mucus → chronic bacterial infections (Pseudomonas, Staph aureus), bronchiectasis, respiratory failure</li>
+        <li><strong>Pancreas:</strong> Mucus blocks pancreatic ducts → malabsorption, steatorrhea (fatty stools), diabetes</li>
+        <li><strong>Reproductive:</strong> Males: vas deferens obstruction → infertility. Females: reduced fertility</li>
+        <li><strong>Sweat glands:</strong> High sodium/chloride in sweat → salty-tasting skin (diagnostic clue)</li>
+      </ul>
+      <h4>Diagnosis:</h4>
+      <ul>
+        <li><strong>Sweat chloride test</strong> — &gt;60 mEq/L = positive (gold standard)</li>
+        <li>Newborn screening, genetic testing</li>
+      </ul>
+      <h4>Nursing Interventions & Treatments:</h4>
+      <ul>
+        <li><strong>Chest physiotherapy (CPT) / airway clearance</strong> — percussion, vibration, postural drainage. Perform <em>1 hour before meals</em> to prevent aspiration.</li>
+        <li><strong>Bronchodilators</strong> — open airways before CPT</li>
+        <li><strong>Mucolytics (DNase / dornase alfa)</strong> — break down DNA in mucus to thin it</li>
+        <li><strong>Acetylcysteine (Mucomyst)</strong> — mucolytic; educate patient about the unpleasant odor (normal and expected)</li>
+        <li><strong>Corticosteroid inhalers</strong> — decrease lung inflammation</li>
+        <li><strong>Pancreatic enzyme replacement</strong> — taken with every meal and snack to aid digestion</li>
+        <li><strong>High-calorie, high-protein diet</strong> — needed due to malabsorption</li>
+        <li><strong>CFTR modulators</strong> (e.g., ivacaftor, elexacaftor) — newer targeted therapy that corrects the defective CFTR protein</li>
+      </ul>
+      <div class="nclex-box" style="margin-top:10px">
+        <div class="nclex-title">🎯 NCLEX: CPT 1 hour BEFORE meals. Sweat test = diagnostic. Expect salty skin. Males are often infertile.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header red-bg" onclick="toggleAcc(this)">🧠 Tay-Sachs Disease <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill red">Fatal (infantile form)</span><span class="pill blue">Autosomal Recessive</span><span class="pill purple">Missing Hex-A enzyme</span><span class="pill orange">Chromosome 15</span>
+      <br><br>
+      <h4>Pathophysiology:</h4>
+      <p>Deficiency of <strong>Hexosaminidase-A (Hex-A)</strong> enzyme → <strong>GM2 ganglioside</strong> (a fatty substance) accumulates in neurons → progressive destruction of nerve cells in brain and spinal cord</p>
+      <h4>Most Common In:</h4>
+      <p>Ashkenazi Jews, French-Canadians, Cajun populations (carrier rates significantly higher)</p>
+      <h4>Infantile Form (Classic — most severe):</h4>
+      <ul>
+        <li>Baby appears normal at birth</li>
+        <li>Symptoms begin ~3–6 months: exaggerated startle response, muscle weakness (floppy baby)</li>
+        <li>Progressive loss of: vision, hearing, swallowing ability, motor function</li>
+        <li>"Cherry-red spot" on macula (visible on fundoscopic exam)</li>
+        <li>Seizures, paralysis, dementia follow</li>
+        <li><strong>Prognosis: Fatal by age 4–6 years</strong></li>
+      </ul>
+      <h4>Late-Onset Form:</h4>
+      <ul>
+        <li>Occurs in teens to adults (30s–40s)</li>
+        <li>Usually NOT fatal</li>
+        <li>Muscle weakness, poor coordination, psychiatric symptoms</li>
+      </ul>
+      <h4>Treatment:</h4>
+      <p>No cure. Supportive care only: seizure management, nutrition, respiratory support, comfort measures.</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header purple-bg" onclick="toggleAcc(this)">🧠 Huntington's Disease (HD) <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill purple">Autosomal Dominant</span><span class="pill orange">50% risk if parent affected</span><span class="pill blue">HTT gene — Chromosome 4</span>
+      <br><br>
+      <h4>Pathophysiology:</h4>
+      <p>Mutation in the <strong>HTT gene</strong> — abnormal expansion of CAG trinucleotide repeats (&gt;40 repeats) → toxic mutant huntingtin protein → progressive neurodegeneration (especially striatum, cerebral cortex)</p>
+      <h4>Key Features:</h4>
+      <ul>
+        <li>Late onset: typically 30s–40s (adult onset)</li>
+        <li>Genetically inevitable — if you have the gene, you will develop HD</li>
+        <li>Genetic testing possible — but ethical complexities around testing asymptomatic adults</li>
+      </ul>
+      <h4>Symptom Progression:</h4>
+      <ul>
+        <li><strong>Early:</strong> Mood changes, irritability, depression; subtle movement issues</li>
+        <li><strong>Middle:</strong> <strong>Chorea</strong> — involuntary, jerky, dance-like movements (pathognomonic); cognitive decline; difficulty with ADLs</li>
+        <li><strong>Late:</strong> Severe chorea, dysphagia, dementia, loss of independence; aspiration pneumonia is common cause of death</li>
+      </ul>
+      <h4>Treatment:</h4>
+      <ul>
+        <li>No cure; no disease-modifying therapy available</li>
+        <li>Tetrabenazine or deutetrabenazine — reduce chorea</li>
+        <li>Antidepressants, antipsychotics for psychiatric symptoms</li>
+        <li>Supportive: speech therapy, physical therapy, dysphagia precautions</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header gold-bg" onclick="toggleAcc(this)">🔢 Down Syndrome — Trisomy 21 <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill gold" style="color:white">Extra Chromosome 21</span><span class="pill blue">~1 in 700–800 births</span><span class="pill orange">↑ risk with maternal age</span>
+      <br><br>
+      <h4>Cause:</h4>
+      <p><strong>Trisomy 21</strong> — 3 copies of chromosome 21. Caused by <strong>meiotic non-disjunction</strong> (failure of chromosomes to separate) in 95% of cases. Translocation in ~4%; Mosaic in ~1%</p>
+      <h4>Risk Factor:</h4>
+      <p>Advanced maternal age is the strongest risk factor. Risk at 35 = 1 in 350; at 45 = 1 in 30</p>
+      <h4>Diagnosis:</h4>
+      <ul>
+        <li>Prenatal: Chorionic villus sampling, amniocentesis, NIPT (non-invasive prenatal testing)</li>
+        <li>Postnatal: <strong>Karyotyping</strong> — gold standard to confirm chromosomal pattern</li>
+      </ul>
+      <h4>Clinical Features:</h4>
+      <ul>
+        <li>Flat facial profile, epicanthal folds, upslanting palpebral fissures</li>
+        <li>Hypotonia (decreased muscle tone) — especially at birth</li>
+        <li>Simian crease (single palmar crease)</li>
+        <li>Short stature, small hands/feet</li>
+        <li>Intellectual disability (variable severity)</li>
+      </ul>
+      <h4>Associated Complications:</h4>
+      <ul>
+        <li><strong>Congenital heart defects</strong> — present in ~40–50% (AV canal most common)</li>
+        <li>Gastrointestinal atresias (duodenal atresia)</li>
+        <li>Hypothyroidism</li>
+        <li>↑ Risk of acute leukemia (AML, ALL)</li>
+        <li>Early-onset Alzheimer's disease (nearly universal by 40s–50s)</li>
+        <li>Atlantoaxial instability (cervical spine instability) — screen before athletic activity</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sec-sub">📊 Genetic Disorders Summary</h3>
+  <table class="compare-table">
+    <tr><th>Disorder</th><th>Inheritance</th><th>Key Defect</th><th>Classic Feature</th><th>Prognosis</th></tr>
+    <tr><td><strong>Cystic Fibrosis</strong></td><td>Autosomal Recessive</td><td>Defective CFTR → thick mucus</td><td>Salty skin; chronic lung infections</td><td>Reduced lifespan; improving with CFTR modulators</td></tr>
+    <tr><td><strong>Tay-Sachs</strong></td><td>Autosomal Recessive</td><td>Missing Hex-A → GM2 accumulation</td><td>Cherry-red spot; infantile onset</td><td>Fatal by age 4–6 (infantile form)</td></tr>
+    <tr><td><strong>Huntington's</strong></td><td>Autosomal Dominant</td><td>HTT gene CAG repeat → neurodegeneration</td><td>Chorea; adult onset (30s–40s)</td><td>Progressive; fatal 10–30 yrs after onset</td></tr>
+    <tr><td><strong>Down Syndrome</strong></td><td>Chromosomal (Trisomy 21)</td><td>Extra chromosome 21</td><td>Hypotonia; flat facies; congenital heart disease</td><td>Variable; most reach adulthood with support</td></tr>
+  </table>
+</div>
+
+<!-- ======================================================= INFECTIOUS DISEASES -->
+<div id="infectious" class="section">
+  <h2 class="sec-title">🦠 Infectious Diseases</h2>
+
+  <div class="accordion">
+    <div class="acc-header" onclick="toggleAcc(this)">🍯 Clostridium botulinum <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill blue">Gram-positive</span><span class="pill red">Anaerobic</span><span class="pill orange">Spore-forming</span>
+      <br><br>
+      <h4>Mechanism:</h4>
+      <p>Botulinum toxin is one of the most potent known toxins. It <strong>blocks the release of acetylcholine (ACh)</strong> at the neuromuscular junction → nerve impulse cannot be transmitted to muscle → <strong>flaccid paralysis</strong> (muscles are floppy, cannot contract)</p>
+      <h4>Sources:</h4>
+      <ul>
+        <li>Improperly canned or home-canned foods (anaerobic environment)</li>
+        <li>Wound botulism (contaminated wounds)</li>
+        <li>Infant botulism (honey in infants &lt;1 year — spores colonize gut)</li>
+      </ul>
+      <h4>Symptoms (Descending Paralysis):</h4>
+      <ul>
+        <li>Begins with cranial nerves: blurred/double vision, drooping eyelids, difficulty swallowing/speaking</li>
+        <li>Progresses downward: weakness, then respiratory failure</li>
+        <li>No fever; patient is alert</li>
+      </ul>
+      <h4>Treatment:</h4>
+      <ul>
+        <li>Antitoxin (if given early)</li>
+        <li>Mechanical ventilation for respiratory failure</li>
+      </ul>
+      <div class="highlight-box blue" style="margin-top:8px">
+        <span class="hb-icon">🎯</span>
+        <div class="hb-text">Botulism = <strong>FLACCID</strong> paralysis. Descending. Blocks ACh RELEASE. No fever.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header orange-bg" onclick="toggleAcc(this)">🔩 Clostridium tetani <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill blue">Gram-positive</span><span class="pill red">Anaerobic</span><span class="pill orange">Spore-forming</span>
+      <br><br>
+      <h4>Mechanism:</h4>
+      <p>Tetanus toxin (tetanospasmin) <strong>blocks inhibitory neurotransmitters</strong> (GABA, glycine) at the spinal cord → muscles cannot relax → sustained, painful muscle <strong>spasms (spastic paralysis)</strong></p>
+      <h4>Source:</h4>
+      <ul>
+        <li>Deep puncture wounds, contaminated soil, rusty objects</li>
+        <li>Can also occur in burns, surgical wounds</li>
+      </ul>
+      <h4>Symptoms:</h4>
+      <ul>
+        <li><strong>Trismus (lockjaw)</strong> — masseter muscle spasm; cannot open mouth</li>
+        <li><strong>Risus sardonicus</strong> — spastic facial expression ("evil grin")</li>
+        <li><strong>Opisthotonos</strong> — severe arching of the back from spasm</li>
+        <li>Generalized muscle spasms triggered by stimuli (light, noise, touch)</li>
+        <li>Seizures, respiratory failure</li>
+      </ul>
+      <h4>Prevention:</h4>
+      <ul>
+        <li>DTaP immunization series in childhood</li>
+        <li>Tdap booster every 10 years in adults</li>
+        <li>Tetanus prophylaxis for wounds</li>
+      </ul>
+      <div class="highlight-box orange" style="margin-top:8px">
+        <span class="hb-icon">🎯</span>
+        <div class="hb-text">Tetanus = <strong>SPASTIC</strong> paralysis. Ascending. Blocks inhibitory NTs. Lockjaw is the classic sign.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header red-bg" onclick="toggleAcc(this)">🫧 Staphylococcus aureus / MRSA / VRSA <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill blue">Gram-positive cocci</span><span class="pill orange">Clusters</span>
+      <br><br>
+      <h4>Normal Staph aureus:</h4>
+      <p>Common skin colonizer. Causes skin infections, abscesses, food poisoning (enterotoxin), pneumonia, bacteremia, septic arthritis, osteomyelitis.</p>
+      <h4>MRSA — Methicillin-Resistant Staphylococcus aureus:</h4>
+      <ul>
+        <li>Resistant to beta-lactam antibiotics (penicillin, methicillin, most cephalosporins)</li>
+        <li>Treatment: <strong>Vancomycin</strong> (IV) is the drug of choice</li>
+        <li>Contact precautions: gown + gloves when entering patient's room</li>
+        <li>HA-MRSA (hospital-acquired) vs. CA-MRSA (community-acquired)</li>
+      </ul>
+      <h4>VRSA — Vancomycin-Resistant Staphylococcus aureus:</h4>
+      <ul>
+        <li>Also resistant to vancomycin — very limited treatment options</li>
+        <li>Extremely concerning — last-line antibiotics required</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header purple-bg" onclick="toggleAcc(this)">🧠 Bacterial Meningitis <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill purple">EMERGENCY</span><span class="pill blue">Bacterial</span><span class="pill red">Potentially Fatal</span>
+      <br><br>
+      <h4>Definition:</h4>
+      <p>Inflammation of the <strong>meninges</strong> (3 protective membranes surrounding the brain and spinal cord: dura mater, arachnoid mater, pia mater)</p>
+      <h4>Most Common Pathogens:</h4>
+      <ul>
+        <li><em>Streptococcus pneumoniae</em> (most common in adults)</li>
+        <li><em>Neisseria meningitidis</em> (common in teens/young adults; can cause epidemic outbreaks)</li>
+        <li><em>Haemophilus influenzae</em> (less common since Hib vaccine)</li>
+        <li><em>Listeria monocytogenes</em> (neonates, elderly, immunocompromised)</li>
+      </ul>
+      <h4>Classic Triad:</h4>
+      <ul>
+        <li>Fever + Severe headache + <strong>Nuchal rigidity</strong> (neck stiffness)</li>
+        <li>Plus: photophobia, phonophobia, altered mental status</li>
+        <li>Petechial rash — seen with <em>N. meningitidis</em> (meningococcal), indicates septicemia (very serious)</li>
+      </ul>
+      <h4>Assessment Signs for Meningitis:</h4>
+      <ul>
+        <li><strong>Kernig's Sign</strong> — Patient supine, hip flexed to 90°; pain/resistance when you try to extend the knee. Positive = meningitis irritation.</li>
+        <li><strong>Brudzinski's Sign</strong> — Patient supine; passively flex the neck forward → knees involuntarily flex. Positive = meningeal irritation.</li>
+      </ul>
+      <h4>Diagnosis — Gold Standard: Lumbar Puncture (LP / Spinal Tap)</h4>
+      <ul>
+        <li>CSF findings in bacterial meningitis: ↑ Protein, ↓ Glucose, ↑ WBC (neutrophils), Positive Gram stain/culture</li>
+        <li>CT scan before LP if any papilledema or focal neurological signs (to rule out ↑ ICP)</li>
+      </ul>
+      <h4>Treatment:</h4>
+      <ul>
+        <li><strong>Immediate antibiotics</strong> (do NOT delay for CT/LP if clinically suspicious)</li>
+        <li>Corticosteroids (dexamethasone) to reduce inflammation</li>
+        <li>Isolation precautions: droplet precautions for N. meningitidis</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header teal-bg" onclick="toggleAcc(this)">😴 Epstein-Barr Virus (EBV) — Mononucleosis <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <span class="pill teal">Herpesvirus</span><span class="pill blue">Transmitted via saliva</span>
+      <br><br>
+      <h4>Disease: Infectious Mononucleosis ("Mono" / "Kissing Disease")</h4>
+      <h4>Pathophysiology:</h4>
+      <p>EBV infects B lymphocytes → immune response activates T lymphocytes → "atypical lymphocytes" on blood smear → lymphadenopathy, splenomegaly</p>
+      <h4>Classic Triad:</h4>
+      <ul>
+        <li><strong>Fever + Severe sore throat (pharyngitis) + Lymphadenopathy</strong> (swollen lymph nodes, especially posterior cervical)</li>
+      </ul>
+      <h4>Additional Findings:</h4>
+      <ul>
+        <li><strong>Splenomegaly</strong> (enlarged spleen) — present in ~50%</li>
+        <li>Fatigue (can be profound and prolonged — weeks to months)</li>
+        <li>Hepatomegaly, elevated liver enzymes</li>
+        <li>Rash if amoxicillin/ampicillin given (almost always causes diffuse maculopapular rash)</li>
+      </ul>
+      <h4>Serious Complication:</h4>
+      <ul>
+        <li><strong>Splenic rupture</strong> — rare but life-threatening</li>
+        <li><strong>Nursing: Avoid contact sports and strenuous activity</strong> for 4–6 weeks until spleen normalizes</li>
+      </ul>
+      <h4>Diagnosis:</h4>
+      <ul>
+        <li>Monospot test (heterophile antibody test)</li>
+        <li>CBC: lymphocytosis with atypical lymphocytes</li>
+      </ul>
+      <h4>Treatment:</h4>
+      <ul>
+        <li>Supportive: rest, hydration, analgesics</li>
+        <li>Avoid amoxicillin/ampicillin (causes rash)</li>
+        <li>Corticosteroids for severe airway obstruction</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-header green-bg" onclick="toggleAcc(this)">💊 Expectorants & Mucolytics <span class="arrow">▼</span></div>
+    <div class="acc-body">
+      <h4>Expectorants</h4>
+      <p>Help <strong>loosen and expel mucus</strong> from the respiratory tract by increasing respiratory tract secretions</p>
+      <ul>
+        <li><strong>Guaifenesin (Mucinex)</strong> — most common OTC expectorant</li>
+        <li>Encourage: 8–10 glasses of water daily (hydration thins secretions)</li>
+        <li>Used in: bronchitis, URTI, productive cough</li>
+      </ul>
+      <h4>Mucolytics</h4>
+      <p>Break down chemical bonds in mucus to make it less viscous (thinner/easier to clear)</p>
+      <ul>
+        <li><strong>Acetylcysteine (Mucomyst / NAC)</strong> — also used for acetaminophen overdose antidote</li>
+        <li>Has very unpleasant sulfur odor — educate patient this is expected</li>
+        <li><strong>Dornase alfa (Pulmozyme)</strong> — used in CF; breaks down DNA in mucus</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sec-sub">⚡ Quick Compare: Botulinum vs. Tetani</h3>
+  <table class="compare-table">
+    <tr><th>Feature</th><th>C. botulinum</th><th>C. tetani</th></tr>
+    <tr><td>Toxin Action</td><td>Blocks <strong>ACh release</strong></td><td>Blocks <strong>inhibitory NTs</strong> (GABA, glycine)</td></tr>
+    <tr><td>Paralysis Type</td><td><strong>Flaccid</strong> (floppy, cannot contract)</td><td><strong>Spastic</strong> (cannot relax, rigid)</td></tr>
+    <tr><td>Direction</td><td>Descending (cranial nerves first)</td><td>Ascending (lockjaw, then generalized)</td></tr>
+    <tr><td>Muscle Tone</td><td>Decreased ↓</td><td>Increased ↑</td></tr>
+    <tr><td>Classic Sign</td><td>Diplopia, ptosis, dysphagia; no fever</td><td>Trismus (lockjaw), opisthotonos</td></tr>
+    <tr><td>Source</td><td>Improperly canned food, honey (infants), wounds</td><td>Soil, puncture wounds</td></tr>
+    <tr><td>Prevention</td><td>Proper food preservation</td><td>Tdap vaccine; wound care</td></tr>
+  </table>
+</div>
+
+<!-- ======================================================= KEY TERMS -->
+<div id="keyterms" class="section">
+  <h2 class="sec-title">📚 Key Terms — Flip Cards</h2>
+
+  <div class="highlight-box blue">
+    <span class="hb-icon">💡</span>
+    <div class="hb-text"><div class="hb-title">Tap any card to flip it!</div>Know both the definition AND an example for each term.</div>
+  </div>
+
+  <h3 class="sec-sub">Foundational Pathophysiology Terms</h3>
+  <div class="card-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><span class="emoji">👁️</span><span class="term">Sign</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>Objective</strong> — observable, measurable finding<br><br>Seen or measured by the nurse<br>Examples: Fever 101.4°F, BP 180/100, rash, tachycardia</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front teal"><span class="emoji">😷</span><span class="term">Symptom</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def"><strong>Subjective</strong> — experienced and reported by patient<br><br>Cannot be directly measured<br>Examples: "I feel nauseated," "my head hurts," fatigue</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front orange"><span class="emoji">🔮</span><span class="term">Prognosis</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">Expected <strong>outcome or course</strong> of a disease<br><br>Based on statistics, patient factors, treatment response<br>Example: "The prognosis for Stage I cancer is excellent."</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front green"><span class="emoji">🔍</span><span class="term">Etiology</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">The <strong>cause or origin</strong> of a disease<br><br>Includes: genetic factors, pathogens, environmental exposures<br>Example: Etiology of Type 1 DM = autoimmune; Etiology of lung cancer = often smoking</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front purple"><span class="emoji">⚙️</span><span class="term">Pathogenesis</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">The <strong>mechanism by which disease develops</strong><br><br>HOW the disease progresses at the cellular/tissue level<br>Example: In atherosclerosis, lipids accumulate in arterial walls → plaque forms → narrowing → ischemia</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front red"><span class="emoji">🏥</span><span class="term">Disease</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">A <strong>disorder or pathological condition</strong> that deviates from normal health<br><br>Disrupts homeostasis<br>Can be acute (short-term) or chronic (long-term)<br>Has identifiable etiology, pathogenesis, signs, symptoms, prognosis</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front gold"><span class="emoji">🗑️</span><span class="term">Debridement</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">Removal of <strong>dead tissue (eschar/slough)</strong> from a wound<br><br>Essential before healing can progress<br>Methods: Surgical (fastest), enzymatic (collagenase), autolytic (moist dressings), mechanical</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front navy"><span class="emoji">🧬</span><span class="term">Homeostasis</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">The body's ability to maintain a <strong>stable internal environment</strong><br><br>Regulated by feedback mechanisms<br>Disease = failure of homeostasis<br>Examples: Normal pH 7.35–7.45, temp 98.6°F, glucose 70–100 mg/dL</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front teal"><span class="emoji">🔄</span><span class="term">Diapedesis</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">Process by which <strong>WBCs squeeze through capillary walls</strong> into surrounding tissue<br><br>Part of the inflammatory response<br>Allows immune cells to reach site of infection/injury</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front orange"><span class="emoji">🌡️</span><span class="term">Pyrexia</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">Medical term for <strong>fever</strong><br><br>Core temp &gt;38°C (100.4°F)<br>Caused by pyrogens acting on the hypothalamic thermostat<br>Low-grade: 99–100.4°F; High-grade: &gt;103°F</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front green"><span class="emoji">📊</span><span class="term">Epidemiology</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">The study of <strong>distribution and determinants of disease</strong> in populations<br><br>Who gets it, where, when, why<br>Key terms: Incidence (new cases), Prevalence (all existing cases), Morbidity, Mortality</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front purple"><span class="emoji">🔑</span><span class="term">Idiopathic</span><span class="flip-hint">tap to flip</span></div>
+        <div class="flip-back"><div class="def">Disease of <strong>unknown cause / origin</strong><br><br>Etiology has not been determined<br>Example: Idiopathic hypertension (essential HTN) — no identifiable cause in ~95% of patients</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================= CLINICAL SCENARIOS -->
+<div id="scenarios" class="section">
+  <h2 class="sec-title">🏥 Clinical Scenarios — Apply Your Knowledge</h2>
+
+  <div class="highlight-box blue">
+    <span class="hb-icon">🧠</span>
+    <div class="hb-text"><div class="hb-title">How to Use This Section</div>Read the clinical scenario, think through your answer, then click "Reveal Answer" to check your reasoning.</div>
+  </div>
+
+  <div class="scenario-card">
+    <div class="s-title">Scenario 1 — Cellular Adaptation</div>
+    <div class="s-prompt">A 68-year-old male has had urinary retention for years due to an enlarged prostate. His bladder wall has become significantly thickened and stronger over time as it works harder to push against the obstruction. What type of cellular adaptation is occurring in the bladder, and why?</div>
+    <button class="toggle-btn" onclick="toggleScenario(this)">Reveal Answer</button>
+    <div class="s-answer"><strong>Hypertrophy</strong> — The individual smooth muscle cells of the bladder wall are INCREASING IN SIZE in response to the increased workload (pushing against the obstruction). Cell number stays the same. This is a physiological adaptation to increased demand. If the obstruction is relieved, the hypertrophy can reverse. The enlarged prostate itself is likely an example of <strong>hyperplasia</strong> (increased cell number due to hormonal stimulation).</div>
+  </div>
+
+  <div class="scenario-card">
+    <div class="s-title">Scenario 2 — Wound Healing Complication</div>
+    <div class="s-prompt">You are caring for a post-op patient on Day 5 after abdominal surgery. The patient calls you urgently — you arrive to find a loop of bowel visible through the abdominal wound opening. The patient is anxious and pale. What is happening, and what do you do first?</div>
+    <button class="toggle-btn" onclick="toggleScenario(this)">Reveal Answer</button>
+    <div class="s-answer"><strong>Evisceration</strong> — A surgical emergency. The wound has dehisced and internal organs (bowel) are protruding through the opening.<br><br><strong>Immediate nursing actions (in order):</strong><br>1. Stay calm; call for help (activate the team/call surgeon STAT)<br>2. Cover the exposed bowel with warm, sterile saline-moistened gauze — never push the bowel back<br>3. Place patient in low Fowler's position with knees slightly bent (reduce tension on abdomen)<br>4. Do NOT leave the patient<br>5. Monitor vital signs; anticipate emergency return to OR</div>
+  </div>
+
+  <div class="scenario-card">
+    <div class="s-title">Scenario 3 — Inflammation Interpretation</div>
+    <div class="s-prompt">A 22-year-old athlete sprains her ankle playing basketball. Within 20 minutes, the ankle is red, warm, swollen, and painful. She cannot bear weight on it. Her family is worried and wants to give her cold medicine because "she must be getting an infection." How do you explain what is happening?</div>
+    <button class="toggle-btn" onclick="toggleScenario(this)">Reveal Answer</button>
+    <div class="s-answer">What she's experiencing is <strong>acute inflammation</strong> — a normal, protective response to tissue injury (ligament tearing). All 5 cardinal signs are present:<br>• Redness and heat = vasodilation and ↑ blood flow<br>• Swelling = ↑ vascular permeability → fluid leaks into tissue<br>• Pain = prostaglandins and bradykinin stimulating pain receptors<br>• Loss of function = pain and swelling limit movement<br><br>This is NOT an infection. It is the body's immediate repair response. Appropriate management: RICE (Rest, Ice, Compression, Elevation) + NSAIDs if appropriate. The inflammation will subside as the healing process begins.</div>
+  </div>
+
+  <div class="scenario-card">
+    <div class="s-title">Scenario 4 — Meningitis Assessment</div>
+    <div class="s-prompt">A 19-year-old college student is brought to the ED with a sudden severe headache (10/10), fever of 103.2°F, neck stiffness, and sensitivity to light. A petechial rash is noted on the trunk. You flex the patient's neck and his knees involuntarily bend. What do you suspect, and what is the first priority?</div>
+    <button class="toggle-btn" onclick="toggleScenario(this)">Reveal Answer</button>
+    <div class="s-answer"><strong>Suspected bacterial meningitis</strong> (likely meningococcal — <em>Neisseria meningitidis</em>) with meningococcemia.<br><br>Positive <strong>Brudzinski's sign</strong> (neck flex → knee flex). Petechial rash suggests septicemia and is an ominous sign.<br><br><strong>First priorities:</strong><br>1. <strong>Airway, Breathing, Circulation</strong> — stabilize the patient<br>2. <strong>Droplet isolation precautions</strong> immediately (meningococcal is spread via droplets)<br>3. <strong>IV antibiotics STAT</strong> — do NOT delay for LP; start treatment immediately in a critically ill patient<br>4. Notify provider for LP, CT if indicated, blood cultures<br>5. <strong>Lumbar puncture</strong> is the gold standard diagnostic test — expect: ↑ protein, ↓ glucose, ↑ WBC</div>
+  </div>
+
+  <div class="scenario-card">
+    <div class="s-title">Scenario 5 — Genetic Disorder Nursing Care</div>
+    <div class="s-prompt">You are caring for a 10-year-old with Cystic Fibrosis. Before starting airway clearance therapy (chest physiotherapy), the child says she's hungry and wants to eat first. What do you tell her and why?</div>
+    <button class="toggle-btn" onclick="toggleScenario(this)">Reveal Answer</button>
+    <div class="s-answer">Explain kindly that she needs to <strong>wait to eat until after the CPT is done</strong>. Chest physiotherapy (percussion, vibration, postural drainage) should be performed <strong>1 hour before meals</strong>.<br><br><strong>Why?</strong> The therapy involves positional changes that loosen and mobilize large amounts of mucus. If done after eating, the repositioning can trigger vomiting and aspiration of food contents into the lungs — which would be dangerous and counterproductive for someone who already has compromised airways.<br><br>She can have a light snack now, then do CPT, then eat her full meal afterward.</div>
+  </div>
+
+  <div class="scenario-card">
+    <div class="s-title">Scenario 6 — Botulism vs. Tetanus</div>
+    <div class="s-prompt">Two patients present to the ED. Patient A: stepped on a rusty nail 4 days ago, now has jaw stiffness and painful muscle spasms triggered by noise. Patient B: ate home-canned green beans at a church potluck 3 days ago; now has drooping eyelids, blurred vision, and difficulty swallowing — but no fever. Which toxin is affecting each patient, and what is the key difference in mechanism?</div>
+    <button class="toggle-btn" onclick="toggleScenario(this)">Reveal Answer</button>
+    <div class="s-answer"><strong>Patient A → Clostridium tetani (Tetanus)</strong><br>Source: puncture wound (rusty nail, soil contamination). Toxin blocks inhibitory neurotransmitters → muscles cannot relax → SPASTIC paralysis. Lockjaw (trismus) is the hallmark sign.<br><br><strong>Patient B → Clostridium botulinum (Botulism)</strong><br>Source: improperly home-canned food (anaerobic conditions allow spore germination). Toxin blocks ACh release at neuromuscular junction → muscles cannot contract → FLACCID (floppy) paralysis. Descending pattern: cranial nerves first (eyelids, vision, swallowing) → respiratory failure risk. No fever distinguishes it from infection.<br><br><strong>Memory trick:</strong> Botulism = Block ACh = no contraction = FLOPPY. Tetanus = TENSE (lockjaw).</div>
+  </div>
+</div>
+
+<!-- ======================================================= MATCH GAME -->
+<div id="match" class="section">
+  <h2 class="sec-title">🎯 Match the Term to Its Definition</h2>
+  <div class="highlight-box blue">
+    <span class="hb-icon">🎮</span>
+    <div class="hb-text"><div class="hb-title">How to Play</div>Click a term on the left, then click its matching definition on the right. Match all pairs to win!</div>
+  </div>
+  <div class="match-score-display" id="matchScore">Matched: 0 / 12</div>
+  <button class="quiz-btn secondary" onclick="resetMatch()" style="margin-bottom:14px">🔄 Reset Game</button>
+  <div class="match-grid" id="matchGrid"></div>
+</div>
+
+<!-- ======================================================= QUIZ -->
+<div id="quiz" class="section">
+  <h2 class="sec-title">✏️ Practice Quiz — 20 Questions</h2>
+  <div class="quiz-container">
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizBar" style="width:0%"></div></div>
+    <div id="quizContent"></div>
+  </div>
+</div>
+
+<footer>
+  © Tehrani Labs · HCR-240 Human Pathophysiology · Arizona College of Nursing<br>
+  <span style="font-size:.75em">Interactive study guide — for educational use only · <a href="https://tehranilabs.org" target="_blank" style="color:#aab;text-decoration:none;">tehranilabs.org</a></span>
+</footer>
+
+<script>
+// ===== NAVIGATION =====
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ===== ACCORDION =====
+function toggleAcc(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+  header.classList.toggle('expanded');
+}
+
+// ===== CLINICAL SCENARIOS =====
+function toggleScenario(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  answer.classList.toggle('open');
+  btn.textContent = isOpen ? 'Reveal Answer' : 'Hide Answer';
+}
+
+// ===== QUIZ =====
+const questions = [
+  { q:"What type of cellular adaptation involves an INCREASE in cell SIZE?", opts:["Hyperplasia","Hypertrophy","Metaplasia","Atrophy"], ans:1, exp:"Hypertrophy = increase in cell SIZE. Hyperplasia = increase in cell NUMBER. Remember: HyperTROPHY = Trophy goes to the bigger cell." },
+  { q:"A patient has been on bed rest for 6 weeks. Their muscles have visibly decreased in size and strength. This is called:", opts:["Hypertrophy","Dysplasia","Atrophy","Metaplasia"], ans:2, exp:"Atrophy is a decrease in cell size and function caused by disuse, malnutrition, or loss of nerve/blood supply. Muscle wasting from immobility is a classic example." },
+  { q:"Barrett's esophagus (caused by chronic GERD) is an example of which cellular adaptation?", opts:["Atrophy","Dysplasia","Hyperplasia","Metaplasia"], ans:3, exp:"Metaplasia — chronic acid exposure causes normal squamous epithelium to be replaced by columnar epithelium (intestinal-type). Metaplasia is reversible if the irritant (acid) is removed." },
+  { q:"Which process describes programmed, regulated cell death that is NORMAL and necessary?", opts:["Necrosis","Apoptosis","Dysplasia","Metaplasia"], ans:1, exp:"Apoptosis is programmed cell death — orderly elimination of damaged or unneeded cells. Failure of apoptosis allows damaged cells to survive and can lead to cancer. Necrosis is unplanned, pathological cell death." },
+  { q:"What is the PRIMARY cellular source of histamine during the inflammatory response?", opts:["Neutrophils","Basophils","Mast cells","Macrophages"], ans:2, exp:"Mast cells are the primary source of histamine. Histamine causes vasodilation and increases vascular permeability, producing the redness, heat, and swelling of inflammation. Antihistamines work by blocking histamine receptors." },
+  { q:"Which stage of wound healing involves formation of granulation tissue and collagen deposition by fibroblasts?", opts:["Hemostasis","Inflammation","Proliferation","Remodeling"], ans:2, exp:"Proliferation (Stage 3) is the rebuilding phase. Fibroblasts produce collagen, granulation tissue forms, angiogenesis occurs, and epithelialization begins. This stage lasts days to weeks." },
+  { q:"A patient's abdominal surgical incision has separated and loops of bowel are visible through the opening. The nurse's FIRST action is:", opts:["Apply dry sterile dressing","Push the bowel back gently","Cover with warm sterile saline-moistened gauze and call surgeon","Place patient flat and call a code"], ans:2, exp:"Evisceration (organ protrusion) is a surgical emergency. Cover the exposed bowel with warm, sterile saline-moistened gauze immediately. Do NOT push organs back. Place in low Fowler's, knees bent, and notify surgeon STAT." },
+  { q:"Cystic Fibrosis is caused by a defect in which protein?", opts:["Hexosaminidase-A","Huntingtin","CFTR","Dystrophin"], ans:2, exp:"CF is caused by a defective CFTR (Cystic Fibrosis Transmembrane conductance Regulator) protein, which is a chloride channel. The defect leads to abnormally thick, sticky mucus in the lungs, pancreas, and other organs." },
+  { q:"Chest physiotherapy (CPT) for a patient with Cystic Fibrosis should be performed:", opts:["Immediately after meals","1 hour before meals","Only at bedtime","During meals with small sips of water"], ans:1, exp:"CPT should be performed 1 HOUR BEFORE meals. Performing it after eating increases the risk of aspiration when the patient changes positions. The schedule is typically: CPT → wait → eat." },
+  { q:"Clostridium botulinum causes paralysis by:", opts:["Blocking inhibitory neurotransmitters","Releasing excess ACh","Blocking ACh RELEASE at the NMJ","Destroying motor neurons directly"], ans:2, exp:"Botulinum toxin blocks the RELEASE of acetylcholine at the neuromuscular junction. Without ACh, the nerve signal cannot reach the muscle → FLACCID (floppy) paralysis. This is the OPPOSITE of tetanus." },
+  { q:"The gold standard diagnostic test for bacterial meningitis is:", opts:["CT scan of the head","MRI with contrast","Lumbar puncture (spinal tap)","CBC with differential"], ans:2, exp:"Lumbar puncture (LP) is the gold standard. CSF analysis in bacterial meningitis shows: ↑ Protein, ↓ Glucose, ↑ WBC (predominantly neutrophils), positive Gram stain/culture. A CT is done first if there are signs of ↑ ICP." },
+  { q:"Huntington's Disease is inherited in which pattern?", opts:["Autosomal recessive","X-linked recessive","Autosomal dominant","Mitochondrial inheritance"], ans:2, exp:"Huntington's is autosomal dominant. One copy of the mutated HTT gene is sufficient to cause disease. If one parent is affected, each child has a 50% chance of inheriting the mutation. Symptoms typically appear in the 30s–40s." },
+  { q:"The process by which leukocytes move toward the site of injury, guided by chemical signals, is called:", opts:["Diapedesis","Histamine release","Chemotaxis","Phagocytosis"], ans:2, exp:"Chemotaxis is directed migration toward a chemical gradient. Diapedesis is the actual squeezing through capillary walls. Phagocytosis is the engulfing and destroying of pathogens/debris." },
+  { q:"A Pap smear shows abnormal cell growth and disorganization that could be a cancer precursor. This finding is most consistent with:", opts:["Metaplasia","Hyperplasia","Atrophy","Dysplasia"], ans:3, exp:"Dysplasia = abnormal cell growth and disorganization within a tissue. Cervical dysplasia on a Pap smear is a pre-cancerous change. Unlike metaplasia, dysplasia may not be fully reversible and requires monitoring/treatment." },
+  { q:"Tay-Sachs disease is caused by a deficiency of:", opts:["CFTR protein","Huntingtin protein","Hexosaminidase-A (Hex-A)","Dystrophin"], ans:2, exp:"Tay-Sachs is caused by missing Hexosaminidase-A, which is needed to break down GM2 ganglioside. Without it, GM2 accumulates in neurons → progressive neurodegeneration. Infantile form is fatal by age 4–6." },
+  { q:"Which sign of inflammation is the direct result of INCREASED VASCULAR PERMEABILITY allowing fluid to leak into tissues?", opts:["Pain","Heat","Swelling (edema)","Redness"], ans:2, exp:"Swelling (edema) results from histamine-induced increased vascular permeability, allowing plasma proteins and fluid to leak from capillaries into the interstitial space. Redness and heat come from vasodilation and ↑ blood flow." },
+  { q:"In a patient with Huntington's Disease, which characteristic involuntary movement is most associated with this condition?", opts:["Tremor at rest","Chorea","Athetosis","Fasciculations"], ans:1, exp:"Chorea — sudden, jerky, dance-like involuntary movements — is the hallmark motor symptom of Huntington's disease. The term comes from the Greek word for 'dance.' It typically worsens as the disease progresses." },
+  { q:"A patient with Down Syndrome should be screened for atlantoaxial instability before participating in contact sports because of risk of:", opts:["Spinal cord injury from C1-C2 instability","Tracheal collapse","Cardiac arrhythmia from exertion","Femoral fracture"], ans:0, exp:"Atlantoaxial instability (AAI) involves laxity between C1 (atlas) and C2 (axis) — present in ~15% of people with Down Syndrome. Contact sports or activities with risk of neck compression/flexion can cause cervical spinal cord injury. Screening is required before participation." },
+  { q:"Which condition produces SPASTIC paralysis with lockjaw (trismus), caused by blocking INHIBITORY neurotransmitters?", opts:["Botulism","Tetanus","Meningitis","Botulinum toxin injection"], ans:1, exp:"Tetanus (C. tetani) produces spastic/rigid paralysis by blocking GABA and glycine (inhibitory neurotransmitters) in the spinal cord. Muscles cannot relax → sustained spasm. Lockjaw (trismus) is the classic early sign. Opposite of botulism." },
+  { q:"A young adult presents with severe sore throat, profound fatigue, posterior cervical lymphadenopathy, and splenomegaly. The monospot test is positive. Which activity must be RESTRICTED for several weeks?", opts:["Swimming in chlorinated pools","Contact sports and strenuous exercise","Consuming dairy products","Taking OTC antihistamines"], ans:1, exp:"Infectious mononucleosis (EBV) causes splenomegaly, which dramatically increases the risk of splenic rupture with trauma or straining. Contact sports and strenuous exercise must be avoided for 4–6 weeks until the spleen returns to normal size. This is a potentially life-threatening complication." },
+];
+
+let curQ=0, score=0, answered=false;
+
+function buildQuiz(){
+  if(curQ>=questions.length){showScore();return;}
+  const q=questions[curQ];
+  const pct=Math.round((curQ/questions.length)*100);
+  document.getElementById('quizBar').style.width=pct+'%';
+  let html=`<div class="quiz-q-num">Question ${curQ+1} of ${questions.length}</div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="quiz-options">`;
+  q.opts.forEach((o,i)=>{
+    html+=`<button class="quiz-opt" onclick="checkAns(${i})">${String.fromCharCode(65+i)}. ${o}</button>`;
+  });
+  html+=`</div>
+    <div class="quiz-feedback" id="qfb"></div>
+    <button class="quiz-btn" onclick="nextQ()" id="nextBtn" style="display:none">Next Question →</button>`;
+  document.getElementById('quizContent').innerHTML=html;
+  answered=false;
+}
+
+function checkAns(chosen){
+  if(answered)return;
+  answered=true;
+  const q=questions[curQ];
+  const opts=document.querySelectorAll('.quiz-opt');
+  const fb=document.getElementById('qfb');
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(i===q.ans)o.classList.add('correct');
+    else if(i===chosen&&i!==q.ans)o.classList.add('incorrect');
+  });
+  if(chosen===q.ans){
+    score++;
+    fb.className='quiz-feedback correct-fb show';
+    fb.innerHTML='✅ Correct! '+q.exp;
+  }else{
+    fb.className='quiz-feedback incorrect-fb show';
+    fb.innerHTML='❌ Not quite. '+q.exp;
+  }
+  document.getElementById('nextBtn').style.display='inline-block';
+}
+
+function nextQ(){curQ++;buildQuiz();}
+
+function showScore(){
+  document.getElementById('quizBar').style.width='100%';
+  const pct=Math.round((score/questions.length)*100);
+  let emoji=pct>=90?'🏆':pct>=75?'🌟':pct>=60?'👍':'📚';
+  let msg=pct>=90?'Outstanding! You\'ve mastered Week 1 material!':pct>=75?'Great work! A little more review and you\'re set.':pct>=60?'Good effort — focus on the sections you missed.':'Keep studying! Review each section and try again.';
+  document.getElementById('quizContent').innerHTML=`
+    <div class="quiz-score">
+      <span class="score-emoji">${emoji}</span>
+      You scored ${score} / ${questions.length} (${pct}%)<br>
+      <span style="font-size:.65em;font-weight:400;color:#555">${msg}</span>
+    </div>
+    <button class="quiz-btn secondary" onclick="curQ=0;score=0;buildQuiz()">🔄 Retake Quiz</button>
+    <button class="quiz-btn" onclick="showSection('cells',null)" style="margin-top:10px">📖 Review Material</button>
+  `;
+}
+
+// ===== MATCH GAME =====
+const matchData=[
+  {term:"Hypertrophy",def:"Increase in cell SIZE from increased workload"},
+  {term:"Apoptosis",def:"Programmed, regulated cell death — orderly elimination"},
+  {term:"Metaplasia",def:"Reversible change: one mature cell type replaces another"},
+  {term:"Chemotaxis",def:"Directed migration of WBCs toward site of injury via chemical signals"},
+  {term:"Dehiscence",def:"Disruption and separation of a surgical wound's edges"},
+  {term:"Eschar",def:"Dead, leathery tissue covering a wound; must be debrided"},
+  {term:"Kernig's Sign",def:"Pain/resistance extending knee when hip is flexed — meningitis indicator"},
+  {term:"Dysplasia",def:"Abnormal cell growth and organization; potential cancer precursor"},
+  {term:"Diapedesis",def:"WBCs squeezing through capillary walls into surrounding tissue"},
+  {term:"Chorea",def:"Jerky, involuntary, dance-like movements seen in Huntington's disease"},
+  {term:"Granulation tissue",def:"Healthy red, moist tissue that forms during wound proliferation"},
+  {term:"Pyrogen",def:"Substance that causes fever by acting on the hypothalamus"},
+];
+
+let selectedMatch=null,matchedCount=0;
+
+function buildMatch(){
+  matchedCount=0;selectedMatch=null;
+  const total=matchData.length;
+  document.getElementById('matchScore').textContent=`Matched: 0 / ${total}`;
+  const terms=shuffle([...matchData.map((d,i)=>({type:'term',text:d.term,id:i}))]);
+  const defs=shuffle([...matchData.map((d,i)=>({type:'def',text:d.def,id:i}))]);
+  const combined=interleave(terms,defs);
+  document.getElementById('matchGrid').innerHTML=combined.map((item,idx)=>
+    `<div class="match-item" id="mi-${idx}" data-type="${item.type}" data-id="${item.id}" onclick="handleMatch(this)">${item.text}</div>`
+  ).join('');
+}
+
+function handleMatch(el){
+  if(el.classList.contains('matched')||el.classList.contains('wrong'))return;
+  if(!selectedMatch){
+    clearWrong();
+    document.querySelectorAll('.match-item.selected').forEach(i=>i.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedMatch=el;
+  }else{
+    if(el===selectedMatch){el.classList.remove('selected');selectedMatch=null;return;}
+    if(selectedMatch.dataset.type===el.dataset.type){
+      selectedMatch.classList.remove('selected');el.classList.add('selected');selectedMatch=el;return;
+    }
+    if(selectedMatch.dataset.id===el.dataset.id){
+      selectedMatch.classList.remove('selected');selectedMatch.classList.add('matched');
+      el.classList.add('matched');matchedCount++;
+      document.getElementById('matchScore').textContent=`Matched: ${matchedCount} / ${matchData.length}`;
+      selectedMatch=null;
+      if(matchedCount===matchData.length)setTimeout(()=>alert('🎉 Perfect! You matched all '+matchData.length+' pairs!'),200);
+    }else{
+      const a=selectedMatch,b=el;
+      a.classList.remove('selected');a.classList.add('wrong');b.classList.add('wrong');
+      setTimeout(()=>{a.classList.remove('wrong');b.classList.remove('wrong');},700);
+      selectedMatch=null;
+    }
+  }
+}
+
+function clearWrong(){document.querySelectorAll('.match-item.wrong').forEach(i=>i.classList.remove('wrong'));}
+function resetMatch(){buildMatch();}
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function interleave(a,b){const r=[];const len=Math.max(a.length,b.length);for(let i=0;i<len;i++){if(i<a.length)r.push(a[i]);if(i<b.length)r.push(b[i]);}return r;}
+
+// ===== INIT =====
+buildQuiz();
+buildMatch();
+</script>
+</body>
+</html>
