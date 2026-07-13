@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO 205 Midterm Jeopardy! - Tehrani Labs</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1f3c 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .splash-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, #1a2a4a 0%, #0a1628 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .splash-screen.hidden { opacity: 0; pointer-events: none; }
+
+        .splash-logo {
+            font-size: 5em;
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 3px 3px 6px rgba(0,0,0,0.8);
+            letter-spacing: 8px;
+            animation: pulseGlow 2s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .splash-subtitle {
+            font-size: 1.5em;
+            color: #8ab4f8;
+            margin-bottom: 10px;
+        }
+
+        .splash-course {
+            font-size: 1.1em;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .splash-btn {
+            padding: 18px 50px;
+            font-size: 1.4em;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .splash-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { text-shadow: 0 0 30px rgba(255,215,0,0.6), 3px 3px 6px rgba(0,0,0,0.8); }
+            50% { text-shadow: 0 0 50px rgba(255,215,0,0.9), 3px 3px 6px rgba(0,0,0,0.8); }
+        }
+
+        .game-container { display: none; padding: 15px; max-width: 1500px; margin: 0 auto; }
+        .game-container.active { display: block; }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .top-bar h1 {
+            font-size: 2.2em;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 4px;
+        }
+
+        .round-indicator {
+            font-size: 1.1em;
+            color: #8ab4f8;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(138, 180, 248, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .ctrl-btn {
+            padding: 8px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            background: rgba(255,255,255,0.1);
+            color: #ccc;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ctrl-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+        .ctrl-btn.gold {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+            border: none;
+            font-weight: bold;
+        }
+
+        .ctrl-btn.gold:hover { box-shadow: 0 0 15px rgba(255,215,0,0.5); }
+
+        .scoreboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .team {
+            background: linear-gradient(135deg, rgba(50,70,120,0.8), rgba(30,50,90,0.8));
+            padding: 12px 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(255,215,0,0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .team.active {
+            border-color: #00e676;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+        }
+
+        .team h3 { font-size: 1.1em; color: #ffd700; margin-bottom: 5px; }
+        .team .score { font-size: 1.8em; font-weight: bold; }
+
+        .team .score-controls {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .score-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .score-btn:hover { background: rgba(255,255,255,0.25); }
+
+        .board {
+            background: rgba(0,0,0,0.6);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,215,0,0.15);
+        }
+
+        .category-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .category-header {
+            background: linear-gradient(180deg, #0055aa, #003d7a);
+            padding: 15px 8px;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+            border-radius: 8px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .question-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .cell {
+            background: linear-gradient(180deg, #1a3a7a, #0d2555);
+            padding: 18px 8px;
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #ffd700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: 1px solid rgba(255,215,0,0.15);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .cell:hover:not(.used) {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.4);
+            border-color: #ffd700;
+        }
+
+        .cell.used {
+            background: rgba(20,30,50,0.6);
+            color: rgba(255,255,255,0.1);
+            cursor: default;
+            border-color: transparent;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: linear-gradient(135deg, #0d2555, #1a3a7a);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(255,215,0,0.3);
+            animation: modalIn 0.4s ease;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-category {
+            font-size: 0.9em;
+            color: #8ab4f8;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .modal-value {
+            font-size: 2.5em;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .modal-question {
+            font-size: 1.4em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e8e8e8;
+            padding: 0 10px;
+        }
+
+        .modal-question em { color: #8ab4f8; font-style: italic; }
+
+        .modal-answer {
+            background: rgba(0,230,118,0.1);
+            border: 2px solid #00e676;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: none;
+            animation: revealAnswer 0.5s ease;
+        }
+
+        .modal-answer.visible { display: block; }
+
+        @keyframes revealAnswer {
+            from { transform: translateY(15px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-answer h4 {
+            color: #00e676;
+            font-size: 1em;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .modal-answer p {
+            font-size: 1.3em;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .modal-answer .explanation {
+            font-size: 0.85em;
+            color: #aaa;
+            margin-top: 10px;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        .modal-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .modal-btn {
+            padding: 12px 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .btn-reveal {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+        }
+
+        .btn-reveal:hover { box-shadow: 0 0 20px rgba(255,215,0,0.5); }
+
+        .btn-correct {
+            background: linear-gradient(135deg, #00e676, #00c853);
+            color: #1a1a2e;
+        }
+
+        .btn-wrong {
+            background: linear-gradient(135deg, #ff5252, #d32f2f);
+            color: #fff;
+        }
+
+        .btn-close {
+            background: rgba(255,255,255,0.15);
+            color: #ccc;
+        }
+
+        .btn-close:hover { background: rgba(255,255,255,0.25); }
+
+        .daily-double-flash {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse, #ffd700, #ff8800);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            animation: ddFlash 1.5s ease-in-out forwards;
+        }
+
+        .daily-double-flash.active { display: flex; }
+
+        .daily-double-flash h1 {
+            font-size: 5em;
+            color: #1a1a2e;
+            text-shadow: 2px 2px 0 rgba(255,255,255,0.3);
+            letter-spacing: 10px;
+            animation: ddBounce 0.5s ease infinite alternate;
+        }
+
+        @keyframes ddFlash {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes ddBounce {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .final-jeopardy-container {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .final-jeopardy-container.active { display: block; }
+
+        .final-jeopardy-container h2 {
+            font-size: 3em;
+            color: #ffd700;
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(255,215,0,0.5);
+        }
+
+        .fj-category {
+            font-size: 1.3em;
+            color: #8ab4f8;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .fj-question {
+            font-size: 1.5em;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            display: none;
+        }
+
+        .fj-question.visible { display: block; }
+
+        .timer-bar {
+            width: 100%;
+            max-width: 600px;
+            height: 12px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            margin: 20px auto;
+            overflow: hidden;
+            display: none;
+        }
+
+        .timer-bar.active { display: block; }
+
+        .timer-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00e676, #ffd700, #ff5252);
+            border-radius: 6px;
+            width: 100%;
+            transition: width linear;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        .footer a { color: #8ab4f8; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        .winner-screen {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .winner-screen.active { display: block; }
+
+        .winner-screen h1 {
+            font-size: 3.5em;
+            color: #ffd700;
+            margin-bottom: 15px;
+            animation: pulseGlow 1.5s ease-in-out infinite;
+        }
+
+        .winner-screen .trophy { font-size: 6em; margin-bottom: 20px; }
+        .winner-screen .winner-name { font-size: 2em; color: #00e676; margin-bottom: 10px; }
+        .winner-screen .winner-score { font-size: 1.5em; color: #8ab4f8; }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8em;
+            color: #8ab4f8;
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            min-width: 80px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00e676, #ffd700);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        .setup-screen {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .setup-screen.active { display: block; }
+
+        .setup-screen h2 {
+            font-size: 2em;
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .setup-option {
+            margin-bottom: 20px;
+        }
+
+        .setup-option label {
+            display: block;
+            font-size: 1em;
+            color: #8ab4f8;
+            margin-bottom: 8px;
+        }
+
+        .setup-option select, .setup-option input {
+            width: 100%;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .setup-option select option { background: #1a2a4a; }
+
+        .team-name-inputs {
+            display: grid;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .team-name-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .team-name-input span {
+            color: #ffd700;
+            font-weight: bold;
+            min-width: 80px;
+        }
+
+        @media (max-width: 900px) {
+            .splash-logo { font-size: 3em; }
+            .top-bar h1 { font-size: 1.5em; }
+            .category-header { font-size: 0.7em; padding: 10px 4px; min-height: 55px; }
+            .cell { font-size: 1.1em; padding: 12px 4px; }
+            .modal { padding: 25px 20px; }
+            .modal-value { font-size: 2em; }
+            .modal-question { font-size: 1.15em; }
+        }
+
+        @media (max-width: 600px) {
+            .splash-logo { font-size: 2.2em; letter-spacing: 4px; }
+            .category-header { font-size: 0.6em; padding: 8px 3px; min-height: 50px; }
+            .cell { font-size: 0.9em; padding: 10px 3px; }
+            .scoreboard { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div class="splash-screen" id="splashScreen">
+    <div class="splash-logo">JEOPARDY!</div>
+    <div class="splash-subtitle">BIO 205 Midterm Review</div>
+    <div class="splash-course">Microbiology &mdash; Modules 1, 2 &amp; 3</div>
+    <button class="splash-btn" onclick="showSetup()">START GAME</button>
+    <div style="margin-top: 40px; color: #555; font-size: 0.8em;">Tehrani Labs &middot; Arizona College of Nursing</div>
+</div>
+
+<!-- SETUP SCREEN -->
+<div class="setup-screen" id="setupScreen">
+    <h2>Game Setup</h2>
+    <div class="setup-option">
+        <label>Number of Teams</label>
+        <select id="teamCount" onchange="updateTeamInputs()">
+            <option value="2">2 Teams</option>
+            <option value="3">3 Teams</option>
+            <option value="4" selected>4 Teams</option>
+            <option value="5">5 Teams</option>
+            <option value="6">6 Teams</option>
+        </select>
+    </div>
+    <div class="setup-option">
+        <label>Team Names</label>
+        <div class="team-name-inputs" id="teamNameInputs"></div>
+    </div>
+    <div style="text-align:center; margin-top: 30px;">
+        <button class="splash-btn" onclick="startGame()" style="font-size:1.1em; padding:14px 40px;">LET'S PLAY!</button>
+    </div>
+</div>
+
+<!-- GAME CONTAINER -->
+<div class="game-container" id="gameContainer">
+    <div class="top-bar">
+        <h1>JEOPARDY!</h1>
+        <div class="round-indicator" id="roundIndicator">Round 1 of 2</div>
+        <div class="progress-bar">
+            <span id="progressText">0/25</span>
+            <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        </div>
+        <div class="controls">
+            <button class="ctrl-btn" onclick="toggleScoreEdit()">Edit Scores</button>
+            <button class="ctrl-btn gold" id="nextRoundBtn" onclick="nextRound()" style="display:none;">Round 2 &rarr;</button>
+        </div>
+    </div>
+
+    <div class="scoreboard" id="scoreboard"></div>
+
+    <div class="board" id="gameBoard"></div>
+
+    <div class="final-jeopardy-container" id="finalJeopardy">
+        <h2>FINAL JEOPARDY!</h2>
+        <div class="fj-category">The Category Is...</div>
+        <div class="fj-category" style="font-size:1.8em; color:#ffd700; margin-bottom:30px;" id="fjCatName"></div>
+        <button class="modal-btn btn-reveal" onclick="showFJQuestion()" id="fjRevealBtn">Reveal Question</button>
+        <div class="fj-question" id="fjQuestion"></div>
+        <div class="timer-bar" id="fjTimer"><div class="timer-fill" id="fjTimerFill"></div></div>
+        <div class="modal-answer" id="fjAnswer" style="max-width:700px; margin:20px auto;">
+            <h4>ANSWER</h4>
+            <p id="fjAnswerText"></p>
+            <div class="explanation" id="fjExplanation"></div>
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="modal-btn btn-reveal" onclick="revealFJAnswer()" id="fjShowAnswer" style="display:none;">Show Answer</button>
+            <button class="modal-btn btn-close" onclick="showWinner()" id="fjEndBtn" style="display:none;">End Game</button>
+        </div>
+    </div>
+
+    <div class="winner-screen" id="winnerScreen">
+        <div class="trophy">&#127942;</div>
+        <h1>CONGRATULATIONS!</h1>
+        <div class="winner-name" id="winnerName"></div>
+        <div class="winner-score" id="winnerScore"></div>
+        <div style="margin-top: 40px;">
+            <button class="ctrl-btn gold" onclick="location.reload()" style="font-size:1.1em; padding:14px 30px;">Play Again</button>
+        </div>
+    </div>
+</div>
+
+<!-- QUESTION MODAL -->
+<div class="modal-overlay" id="questionModal">
+    <div class="modal">
+        <div class="modal-category" id="modalCategory"></div>
+        <div class="modal-value" id="modalValue"></div>
+        <div class="modal-question" id="modalQuestion"></div>
+        <div class="modal-answer" id="modalAnswer">
+            <h4>ANSWER</h4>
+            <p id="modalAnswerText"></p>
+            <div class="explanation" id="modalExplanation"></div>
+        </div>
+        <div class="modal-buttons" id="modalButtons">
+            <button class="modal-btn btn-reveal" id="revealBtn" onclick="revealAnswer()">Show Answer</button>
+            <button class="modal-btn btn-correct" id="correctBtn" onclick="markCorrect()" style="display:none;">Correct!</button>
+            <button class="modal-btn btn-wrong" id="wrongBtn" onclick="markWrong()" style="display:none;">Incorrect</button>
+            <button class="modal-btn btn-close" id="closeBtn" onclick="closeModal()" style="display:none;">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- DAILY DOUBLE FLASH -->
+<div class="daily-double-flash" id="ddFlash">
+    <h1>DAILY DOUBLE!</h1>
+</div>
+
+<div class="footer" id="footerArea">
+    &copy; Tehrani Labs &middot; BIO 205 Microbiology &middot; <a href="https://tehranilabs.org">Arizona College of Nursing</a>
+</div>
+
+<script>
+const ROUND1 = {
+    categories: [
+        "Micro Pioneers",
+        "Cell Showdown",
+        "Name That Microbe",
+        "Stain & Gain",
+        "Viral World"
+    ],
+    questions: [
+        // ---- MICRO PIONEERS ----
+        [
+            { q: "This scientist developed a set of four criteria, known as his 'postulates,' to prove that a specific microbe causes a specific disease.", a: "Robert Koch", ex: "Koch's postulates are still foundational in microbiology for establishing disease causation." },
+            { q: "Before germ theory was accepted, many believed living organisms could arise from non-living matter. This disproven idea was called ___.", a: "Spontaneous generation", ex: "Pasteur's swan-neck flask experiment was key to disproving this theory." },
+            { q: "Often called the 'Father of Microbiology,' this Dutch scientist was the first person to observe bacteria through his handmade single-lens microscopes.", a: "Antonie van Leeuwenhoek", ex: "He called the tiny organisms he saw 'animalcules.'" },
+            { q: "The process by which microorganisms like yeast convert sugars into alcohol and CO&#8322;, famously studied in the 1850s-60s, is called ___.", a: "Fermentation", ex: "Pasteur demonstrated that fermentation was caused by living microorganisms, not a purely chemical reaction." },
+            { q: "This English surgeon pioneered the use of carbolic acid (phenol) to sterilize surgical instruments and clean wounds, dramatically reducing post-surgical infections.", a: "Joseph Lister", ex: "Lister is considered the father of antiseptic surgery. His work built upon Pasteur's germ theory." }
+        ],
+        // ---- CELL SHOWDOWN ----
+        [
+            { q: "This type of cell possesses a true, membrane-enclosed nucleus that houses its DNA.", a: "Eukaryotic cell", ex: "The prefix 'eu-' means true, and 'karyon' means nucleus." },
+            { q: "This organelle, found only in eukaryotic cells, is often called the 'powerhouse' because it generates most of the cell's ATP.", a: "Mitochondria (mitochondrion)", ex: "Prokaryotic cells generate ATP at the plasma membrane instead." },
+            { q: "In prokaryotic cells, the DNA is concentrated in a region called the ___, which is NOT enclosed by a membrane.", a: "Nucleoid", ex: "Unlike eukaryotes, prokaryotes lack a nuclear envelope around their genetic material." },
+            { q: "These small structures serve as the site of protein synthesis and are found in BOTH prokaryotic and eukaryotic cells.", a: "Ribosomes", ex: "Prokaryotic ribosomes (70S) are smaller than eukaryotic ribosomes (80S)." },
+            { q: "Name the compound that makes up the bulk of bacterial cell walls but is completely absent in eukaryotic cells.", a: "Peptidoglycan", ex: "Peptidoglycan is a polymer of sugars and amino acids unique to bacterial cell walls." }
+        ],
+        // ---- NAME THAT MICROBE ----
+        [
+            { q: "In the binomial naming system, the first word of a scientific name represents this taxonomic level.", a: "Genus", ex: "For example, in <em>Staphylococcus aureus</em>, 'Staphylococcus' is the genus." },
+            { q: "The three domains of life are Bacteria, Eukarya, and this third domain of prokaryotes often found in extreme environments.", a: "Archaea", ex: "Archaea include methanogens, extreme halophiles, and thermophiles." },
+            { q: "Carl Linnaeus is credited with developing this two-name system for scientifically naming organisms.", a: "Binomial nomenclature", ex: "Each organism gets a genus name and a species epithet, written in italics or underlined." },
+            { q: "When classifying prokaryotes, scientists rely on shape, staining patterns, gene sequences, and these types of differences related to metabolism and physiology.", a: "Biochemical (or physiological) differences", ex: "Multiple criteria are used because prokaryotes cannot be classified by appearance alone." },
+            { q: "A microorganism must have at least one cell to be considered a living organism. This means ___ are technically NOT classified as living.", a: "Viruses", ex: "Viruses lack cellular structure and cannot reproduce on their own." }
+        ],
+        // ---- STAIN & GAIN ----
+        [
+            { q: "In the Gram stain, the first dye applied to the heat-fixed smear is this purple reagent.", a: "Crystal violet", ex: "Crystal violet is the primary stain that initially colors ALL bacteria purple." },
+            { q: "After decolorization, Gram-negative bacteria are colorless. They are then visualized by applying this pink/red counterstain.", a: "Safranin", ex: "Gram-positive bacteria retain crystal violet and remain purple, so safranin doesn't change their color." },
+            { q: "Gram-positive bacteria retain the crystal violet-iodine complex because they have a much thicker layer of ___ in their cell wall.", a: "Peptidoglycan", ex: "Gram-positive walls have 60-90% peptidoglycan vs. a thin layer in Gram-negative walls." },
+            { q: "In the Gram stain procedure, iodine is applied after crystal violet. Iodine functions as a ___, which helps fix the stain to the cell.", a: "Mordant", ex: "The mordant forms a crystal violet-iodine complex that is harder to wash out." },
+            { q: "Gram-negative bacteria have an outer membrane containing this molecule, abbreviated LPS, which can trigger fever and shock if released into the bloodstream.", a: "Lipopolysaccharide (endotoxin)", ex: "LPS is part of the outer membrane unique to Gram-negative bacteria." }
+        ],
+        // ---- VIRAL WORLD ----
+        [
+            { q: "Viruses are called obligate intracellular parasites because they can ONLY replicate inside a living ___.", a: "Host cell", ex: "Without a host cell, viruses are metabolically inert particles." },
+            { q: "The protein shell that surrounds and protects a virus's nucleic acid is known as this.", a: "Capsid", ex: "Capsids are made up of protein subunits called capsomeres." },
+            { q: "Unlike cells, a virus genome may consist of either DNA or this other type of nucleic acid, but not both simultaneously.", a: "RNA", ex: "Examples: influenza has RNA; herpes has DNA." },
+            { q: "Some viruses, like influenza and HIV, possess an outer lipid layer derived from the host cell membrane. This structure is called the viral ___.", a: "Envelope", ex: "Enveloped viruses are generally more susceptible to disinfectants than non-enveloped viruses." },
+            { q: "The complete viral particle, including the nucleic acid and its capsid (and envelope if present), as it exists outside a host cell, is called a ___.", a: "Virion", ex: "A virion is the extracellular, infectious form of a virus." }
+        ]
+    ]
+};
+
+const ROUND2 = {
+    categories: [
+        "Scope It Out",
+        "Fungi, Protists & Co.",
+        "Friend or Foe?",
+        "Lab Life",
+        "The Grow Zone"
+    ],
+    questions: [
+        // ---- SCOPE IT OUT ----
+        [
+            { q: "This is the most commonly used microscope in teaching labs. It uses visible light and multiple lenses to magnify specimens, producing a dark image on a bright background.", a: "Brightfield (compound) microscope", ex: "The brightfield microscope is the standard light microscope used in most microbiology courses." },
+            { q: "To view internal structures of viruses or cellular ultrastructure, this type of microscope uses a beam of electrons instead of light.", a: "Electron microscope", ex: "Electron microscopes can achieve magnifications over 100,000x." },
+            { q: "This microscopy technique creates a bright image against a dark background and is useful for observing live, unstained organisms like spirochetes.", a: "Darkfield microscopy", ex: "Darkfield uses a special condenser that scatters direct light away from the objective." },
+            { q: "Total magnification is calculated by multiplying the power of the ocular (eyepiece) lens by the power of the ___ lens.", a: "Objective", ex: "With a 10x eyepiece and a 40x objective, total magnification = 400x." },
+            { q: "This advanced microscope uses laser light and fluorescent markers to create sharp, thin optical sections of a specimen, useful for 3D reconstruction.", a: "Confocal microscope", ex: "Confocal microscopy eliminates out-of-focus light for clearer images of thick specimens." }
+        ],
+        // ---- FUNGI, PROTISTS & CO. ----
+        [
+            { q: "The branch of microbiology devoted to the study of fungi is called ___.", a: "Mycology", ex: "Fungi include yeasts, molds, and mushrooms." },
+            { q: "Protozoa move using three types of locomotion structures: cilia, flagella, and these temporary cytoplasmic extensions.", a: "Pseudopods (pseudopodia)", ex: "Amoeba is the classic example of pseudopod-based movement." },
+            { q: "The kingdom Protista includes protozoa and these photosynthetic, often aquatic, organisms.", a: "Algae", ex: "Algae are plant-like protists that produce oxygen through photosynthesis." },
+            { q: "Parasitic multicellular worms, including tapeworms, roundworms, and flukes, belong to this group.", a: "Helminths", ex: "Although macroscopic, helminths are studied in microbiology because they cause infectious diseases." },
+            { q: "Creutzfeldt-Jakob disease (CJD), mad cow disease, and scrapie are all caused by these misfolded infectious proteins that contain no nucleic acid.", a: "Prions", ex: "Prions are unique because they are infectious agents without DNA or RNA." }
+        ],
+        // ---- FRIEND OR FOE? ----
+        [
+            { q: "Microorganisms that permanently colonize the body without normally causing disease are collectively called the resident ___.", a: "Microbiota (normal flora / microbiome)", ex: "Resident microbiota help protect against colonization by pathogens." },
+            { q: "An infection that occurs when a person's immune system is weakened, allowing normally harmless microbes to cause disease, is called an ___ infection.", a: "Opportunistic", ex: "AIDS patients are especially vulnerable to opportunistic infections." },
+            { q: "Infections that patients acquire while receiving treatment in a healthcare facility are called ___ infections (also known as HAIs).", a: "Nosocomial (hospital-acquired)", ex: "Common HAIs include catheter-associated UTIs and ventilator-associated pneumonia." },
+            { q: "This sticky, sugar-based layer surrounding some bacteria helps them adhere to surfaces and evade the host's immune cells.", a: "Capsule (glycocalyx)", ex: "The capsule is a major virulence factor that inhibits phagocytosis." },
+            { q: "A poisonous substance actively secreted by living bacteria that can damage host tissues at distant sites is called an ___.", a: "Exotoxin", ex: "Unlike endotoxins (part of the cell wall), exotoxins are released by the bacterium and can be very potent." }
+        ],
+        // ---- LAB LIFE ----
+        [
+            { q: "Agar plates should be incubated in this orientation to prevent condensation from dripping onto bacterial colonies.", a: "Inverted (upside down / lid side down)", ex: "Water droplets on colonies could cause them to spread and merge." },
+            { q: "Nutrient agar and tryptic soy agar are examples of this type of media designed to grow a wide variety of organisms without any special additives.", a: "General-purpose (all-purpose) media", ex: "These media support the growth of most non-fastidious organisms." },
+            { q: "A type of media that contains ingredients to inhibit the growth of unwanted organisms while allowing target organisms to grow is called ___ media.", a: "Selective", ex: "Example: MacConkey agar inhibits Gram-positive bacteria." },
+            { q: "Media that allows microbiologists to visually distinguish between different types of organisms based on a color change or other observable reaction is called ___ media.", a: "Differential", ex: "Example: Blood agar differentiates bacteria by their hemolysis patterns." },
+            { q: "Used biological materials, including bacterial cultures and contaminated disposables, must be discarded in this special container before autoclaving.", a: "Biohazard container (biohazard waste bag/bin)", ex: "Proper disposal prevents the spread of potentially infectious materials." }
+        ],
+        // ---- THE GROW ZONE ----
+        [
+            { q: "Bacteria reproduce asexually by splitting into two genetically identical daughter cells through a process called ___.", a: "Binary fission", ex: "This is the primary method of reproduction for most bacteria." },
+            { q: "During this phase of the bacterial growth curve, cells are dividing at their maximum, constant rate, producing a straight line on a log-scale graph.", a: "Log phase (exponential phase)", ex: "Antibiotics are most effective during the log phase when bacteria are actively growing." },
+            { q: "A microorganism that grows best at moderate temperatures, typically between 25-45 degrees C, including human body temperature (37 degrees C), is called a ___.", a: "Mesophile", ex: "Most human pathogens are mesophiles because they thrive at body temperature." },
+            { q: "An organism that can grow with or without oxygen is described as a ___ anaerobe.", a: "Facultative", ex: "Facultative anaerobes prefer oxygen but can switch to fermentation if oxygen is absent." },
+            { q: "The temperature at which a microorganism achieves its fastest growth rate is called its ___ growth temperature.", a: "Optimal (optimum)", ex: "Each species has a minimum, optimum, and maximum growth temperature." }
+        ]
+    ]
+};
+
+const FINAL_JEOPARDY = {
+    category: "Microbiology in Clinical Practice",
+    question: "A nursing student is caring for a patient with a wound infection. The lab report states the causative organism is a Gram-positive coccus found in grape-like clusters. Based on these characteristics, the student would correctly identify this organism as belonging to the genus ___.",
+    answer: "Staphylococcus",
+    explanation: "Staphylo- means grape-like clusters, and -coccus means spherical. This is a key identification concept combining bacterial morphology and arrangement."
+};
+
+let teams = [];
+let currentRound = 1;
+let answeredR1 = new Set();
+let answeredR2 = new Set();
+let currentQuestion = null;
+let currentValue = 0;
+let dailyDoubleR1 = null;
+let dailyDoubleR2 = null;
+let scoreEditMode = false;
+
+function showSetup() {
+    document.getElementById('splashScreen').classList.add('hidden');
+    setTimeout(() => {
+        document.getElementById('splashScreen').style.display = 'none';
+        document.getElementById('setupScreen').classList.add('active');
+        updateTeamInputs();
+    }, 800);
+}
+
+function updateTeamInputs() {
+    const count = parseInt(document.getElementById('teamCount').value);
+    const container = document.getElementById('teamNameInputs');
+    const defaults = ['Team Alpha', 'Team Beta', 'Team Gamma', 'Team Delta', 'Team Epsilon', 'Team Zeta'];
+    container.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+        const div = document.createElement('div');
+        div.className = 'team-name-input';
+        div.innerHTML = `<span>Team ${i+1}:</span><input type="text" id="tname${i}" placeholder="${defaults[i]}" value="${defaults[i]}">`;
+        container.appendChild(div);
+    }
+}
+
+function startGame() {
+    const count = parseInt(document.getElementById('teamCount').value);
+    teams = [];
+    for (let i = 0; i < count; i++) {
+        const name = document.getElementById(`tname${i}`).value.trim() || `Team ${i+1}`;
+        teams.push({ name, score: 0 });
+    }
+
+    dailyDoubleR1 = Math.floor(Math.random() * 25);
+    dailyDoubleR2 = Math.floor(Math.random() * 25);
+
+    document.getElementById('setupScreen').classList.remove('active');
+    document.getElementById('gameContainer').classList.add('active');
+    renderScoreboard();
+    renderBoard(ROUND1, 1);
+    if (teams.length > 0) teams[0].el && teams[0].el.classList.add('active');
+}
+
+function renderScoreboard() {
+    const sb = document.getElementById('scoreboard');
+    sb.innerHTML = '';
+    teams.forEach((t, i) => {
+        const div = document.createElement('div');
+        div.className = 'team' + (i === 0 ? ' active' : '');
+        div.onclick = () => setActiveTeam(i);
+        div.innerHTML = `
+            <h3>${esc(t.name)}</h3>
+            <div class="score" id="score${i}">$${t.score}</div>
+            <div class="score-controls" style="display:${scoreEditMode ? 'flex' : 'none'}">
+                <button class="score-btn" onclick="adjustScore(${i}, -100, event)">-</button>
+                <button class="score-btn" onclick="adjustScore(${i}, 100, event)">+</button>
+            </div>`;
+        t.el = div;
+        sb.appendChild(div);
+    });
+}
+
+function setActiveTeam(idx) {
+    teams.forEach((t, i) => t.el.classList.toggle('active', i === idx));
+}
+
+function getActiveTeam() {
+    return teams.findIndex(t => t.el.classList.contains('active'));
+}
+
+function adjustScore(idx, amount, e) {
+    e && e.stopPropagation();
+    teams[idx].score += amount;
+    document.getElementById(`score${idx}`).textContent = `$${teams[idx].score}`;
+}
+
+function toggleScoreEdit() {
+    scoreEditMode = !scoreEditMode;
+    document.querySelectorAll('.score-controls').forEach(el => el.style.display = scoreEditMode ? 'flex' : 'none');
+}
+
+function renderBoard(roundData, roundNum) {
+    const board = document.getElementById('gameBoard');
+    board.innerHTML = '';
+    document.getElementById('roundIndicator').textContent = `Round ${roundNum} of 2`;
+
+    const catRow = document.createElement('div');
+    catRow.className = 'category-row';
+    roundData.categories.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = 'category-header';
+        div.textContent = cat;
+        catRow.appendChild(div);
+    });
+    board.appendChild(catRow);
+
+    const values = [200, 400, 600, 800, 1000];
+    if (roundNum === 2) values.forEach((v, i) => values[i] = v * 2);
+
+    for (let row = 0; row < 5; row++) {
+        const qRow = document.createElement('div');
+        qRow.className = 'question-row';
+        for (let col = 0; col < 5; col++) {
+            const idx = col * 5 + row;
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.id = `cell-${roundNum}-${idx}`;
+            const answered = roundNum === 1 ? answeredR1 : answeredR2;
+            if (answered.has(idx)) {
+                cell.classList.add('used');
+                cell.textContent = '';
+            } else {
+                cell.textContent = `$${values[row]}`;
+                cell.onclick = () => openQuestion(roundNum, col, row, values[row], idx);
+            }
+            qRow.appendChild(cell);
+        }
+        board.appendChild(qRow);
+    }
+
+    updateProgress();
+}
+
+function openQuestion(roundNum, catIdx, qIdx, value, flatIdx) {
+    const roundData = roundNum === 1 ? ROUND1 : ROUND2;
+    const dd = roundNum === 1 ? dailyDoubleR1 : dailyDoubleR2;
+
+    currentQuestion = { roundNum, catIdx, qIdx, flatIdx };
+    currentValue = value;
+
+    const qData = roundData.questions[catIdx][qIdx];
+
+    if (flatIdx === dd) {
+        const flash = document.getElementById('ddFlash');
+        flash.classList.add('active');
+        setTimeout(() => {
+            flash.classList.remove('active');
+            showQuestionModal(roundData.categories[catIdx], value, qData, true);
+        }, 1500);
+    } else {
+        showQuestionModal(roundData.categories[catIdx], value, qData, false);
+    }
+}
+
+function showQuestionModal(category, value, qData, isDD) {
+    document.getElementById('modalCategory').textContent = category;
+    document.getElementById('modalValue').textContent = isDD ? 'DAILY DOUBLE!' : `$${value}`;
+    document.getElementById('modalQuestion').innerHTML = qData.q;
+    document.getElementById('modalAnswerText').innerHTML = qData.a;
+    document.getElementById('modalExplanation').innerHTML = qData.ex || '';
+
+    document.getElementById('modalAnswer').classList.remove('visible');
+    document.getElementById('revealBtn').style.display = '';
+    document.getElementById('correctBtn').style.display = 'none';
+    document.getElementById('wrongBtn').style.display = 'none';
+    document.getElementById('closeBtn').style.display = 'none';
+
+    document.getElementById('questionModal').classList.add('active');
+}
+
+function revealAnswer() {
+    document.getElementById('modalAnswer').classList.add('visible');
+    document.getElementById('revealBtn').style.display = 'none';
+    document.getElementById('correctBtn').style.display = '';
+    document.getElementById('wrongBtn').style.display = '';
+    document.getElementById('closeBtn').style.display = '';
+}
+
+function markCorrect() {
+    const active = getActiveTeam();
+    if (active >= 0) {
+        teams[active].score += currentValue;
+        document.getElementById(`score${active}`).textContent = `$${teams[active].score}`;
+    }
+    finishQuestion();
+}
+
+function markWrong() {
+    const active = getActiveTeam();
+    if (active >= 0) {
+        teams[active].score -= currentValue;
+        document.getElementById(`score${active}`).textContent = `$${teams[active].score}`;
+    }
+    finishQuestion();
+}
+
+function finishQuestion() {
+    const { roundNum, flatIdx } = currentQuestion;
+    const answered = roundNum === 1 ? answeredR1 : answeredR2;
+    answered.add(flatIdx);
+
+    const cell = document.getElementById(`cell-${roundNum}-${flatIdx}`);
+    if (cell) { cell.classList.add('used'); cell.textContent = ''; cell.onclick = null; }
+
+    closeModal();
+    updateProgress();
+    checkRoundComplete();
+}
+
+function closeModal() {
+    document.getElementById('questionModal').classList.remove('active');
+}
+
+function updateProgress() {
+    const answered = currentRound === 1 ? answeredR1 : answeredR2;
+    const total = 25;
+    const pct = (answered.size / total) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${answered.size}/${total}`;
+}
+
+function checkRoundComplete() {
+    const answered = currentRound === 1 ? answeredR1 : answeredR2;
+    if (answered.size >= 25) {
+        if (currentRound === 1) {
+            document.getElementById('nextRoundBtn').style.display = '';
+        } else {
+            startFinalJeopardy();
+        }
+    }
+}
+
+function nextRound() {
+    currentRound = 2;
+    document.getElementById('nextRoundBtn').style.display = 'none';
+    renderBoard(ROUND2, 2);
+}
+
+function startFinalJeopardy() {
+    document.getElementById('gameBoard').style.display = 'none';
+    document.getElementById('finalJeopardy').classList.add('active');
+    document.getElementById('fjCatName').textContent = FINAL_JEOPARDY.category;
+    document.getElementById('fjQuestion').innerHTML = FINAL_JEOPARDY.question;
+    document.getElementById('fjAnswerText').textContent = FINAL_JEOPARDY.answer;
+    document.getElementById('fjExplanation').textContent = FINAL_JEOPARDY.explanation;
+}
+
+function showFJQuestion() {
+    document.getElementById('fjQuestion').classList.add('visible');
+    document.getElementById('fjRevealBtn').style.display = 'none';
+    document.getElementById('fjShowAnswer').style.display = '';
+
+    const timer = document.getElementById('fjTimer');
+    const fill = document.getElementById('fjTimerFill');
+    timer.classList.add('active');
+    fill.style.width = '100%';
+    setTimeout(() => { fill.style.transition = 'width 30s linear'; fill.style.width = '0%'; }, 50);
+}
+
+function revealFJAnswer() {
+    document.getElementById('fjAnswer').classList.add('visible');
+    document.getElementById('fjShowAnswer').style.display = 'none';
+    document.getElementById('fjEndBtn').style.display = '';
+}
+
+function showWinner() {
+    document.getElementById('finalJeopardy').classList.remove('active');
+    let maxScore = -Infinity, winner = '';
+    teams.forEach(t => { if (t.score > maxScore) { maxScore = t.score; winner = t.name; } });
+    document.getElementById('winnerName').textContent = winner;
+    document.getElementById('winnerScore').textContent = `Final Score: $${maxScore}`;
+    document.getElementById('winnerScreen').classList.add('active');
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+updateTeamInputs();
+</script>
+</body>
+</html>
