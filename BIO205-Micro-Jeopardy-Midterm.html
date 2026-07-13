@@ -1,0 +1,827 @@
+<title>BIO 205 Microbiology Jeopardy | Tehrani Labs</title>
+<style>
+  @import url('data:text/css,');
+
+  :root {
+    --board-bg: #0A2F35;
+    --card-bg: #0E3B42;
+    --card-hover: #145A64;
+    --accent: #39FF14;
+    --accent-dim: #2ACC10;
+    --gold: #FFB627;
+    --cream: #F5F0E8;
+    --text: #FAFAFA;
+    --text-dim: #A0B8BC;
+    --modal-bg: #0D1B2A;
+    --modal-border: #1A3A4A;
+    --correct: #39FF14;
+    --wrong: #FF3B5C;
+    --overlay: rgba(5, 20, 25, 0.92);
+    --body-bg: #071E23;
+    --header-bg: #0A2F35;
+    --score-bg: #0E3B42;
+    --cat-text: #39FF14;
+    --value-text: #FFB627;
+    --footer-text: #5A8A90;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --board-bg: #E8F0F2;
+      --card-bg: #FFFFFF;
+      --card-hover: #D4EAED;
+      --accent: #0E7C5F;
+      --accent-dim: #0A5E48;
+      --gold: #D4940A;
+      --cream: #FFFFFF;
+      --text: #0D1B2A;
+      --text-dim: #5A7A80;
+      --modal-bg: #FFFFFF;
+      --modal-border: #C0D8DD;
+      --correct: #0E7C5F;
+      --wrong: #CC2244;
+      --overlay: rgba(200, 220, 225, 0.94);
+      --body-bg: #F0F5F6;
+      --header-bg: #D8EAED;
+      --score-bg: #E0EEF0;
+      --cat-text: #0E7C5F;
+      --value-text: #B07D08;
+      --footer-text: #7A9A9E;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --board-bg: #0A2F35;
+    --card-bg: #0E3B42;
+    --card-hover: #145A64;
+    --accent: #39FF14;
+    --accent-dim: #2ACC10;
+    --gold: #FFB627;
+    --cream: #F5F0E8;
+    --text: #FAFAFA;
+    --text-dim: #A0B8BC;
+    --modal-bg: #0D1B2A;
+    --modal-border: #1A3A4A;
+    --correct: #39FF14;
+    --wrong: #FF3B5C;
+    --overlay: rgba(5, 20, 25, 0.92);
+    --body-bg: #071E23;
+    --header-bg: #0A2F35;
+    --score-bg: #0E3B42;
+    --cat-text: #39FF14;
+    --value-text: #FFB627;
+    --footer-text: #5A8A90;
+  }
+
+  :root[data-theme="light"] {
+    --board-bg: #E8F0F2;
+    --card-bg: #FFFFFF;
+    --card-hover: #D4EAED;
+    --accent: #0E7C5F;
+    --accent-dim: #0A5E48;
+    --gold: #D4940A;
+    --cream: #FFFFFF;
+    --text: #0D1B2A;
+    --text-dim: #5A7A80;
+    --modal-bg: #FFFFFF;
+    --modal-border: #C0D8DD;
+    --correct: #0E7C5F;
+    --wrong: #CC2244;
+    --overlay: rgba(200, 220, 225, 0.94);
+    --body-bg: #F0F5F6;
+    --header-bg: #D8EAED;
+    --score-bg: #E0EEF0;
+    --cat-text: #0E7C5F;
+    --value-text: #B07D08;
+    --footer-text: #7A9A9E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--body-bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  .header {
+    background: var(--header-bg);
+    padding: 1.5rem 1rem 1rem;
+    text-align: center;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .header h1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .header h1 span {
+    color: var(--gold);
+  }
+
+  .header .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .score-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 0.75rem 1rem;
+    background: var(--score-bg);
+    border-bottom: 1px solid var(--modal-border);
+    flex-wrap: wrap;
+  }
+
+  .score-display {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .score-display .label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  .score-bar button {
+    background: transparent;
+    border: 1px solid var(--text-dim);
+    color: var(--text-dim);
+    padding: 0.35rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all 0.2s;
+  }
+
+  .score-bar button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .progress {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .board-wrap {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(130px, 1fr));
+    gap: 6px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .cat-header {
+    background: var(--card-bg);
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.75rem 0.4rem;
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+    color: var(--cat-text);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cell {
+    background: var(--card-bg);
+    border: 1px solid var(--modal-border);
+    border-radius: 6px;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 900;
+    color: var(--value-text);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+
+  .cell:hover:not(.used) {
+    background: var(--card-hover);
+    transform: scale(1.04);
+    border-color: var(--accent);
+  }
+
+  .cell.used {
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--overlay);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal {
+    background: var(--modal-bg);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    max-width: 580px;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { transform: scale(0.9) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .modal .category-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+  }
+
+  .modal .value-label {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .modal .clue-text {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  .answer-area {
+    display: none;
+    padding: 1rem;
+    background: var(--score-bg);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--accent);
+  }
+
+  .answer-area .answer-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-bottom: 0.3rem;
+  }
+
+  .answer-area .answer-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: all 0.2s;
+  }
+
+  .btn-reveal {
+    background: var(--accent);
+    color: #0A2F35;
+  }
+
+  .btn-reveal:hover { filter: brightness(1.15); }
+
+  .btn-correct {
+    background: var(--correct);
+    color: #0A2F35;
+  }
+
+  .btn-wrong {
+    background: var(--wrong);
+    color: #FFF;
+  }
+
+  .btn-close {
+    background: transparent;
+    border: 1px solid var(--text-dim);
+    color: var(--text-dim);
+  }
+
+  .btn-close:hover {
+    border-color: var(--text);
+    color: var(--text);
+  }
+
+  .flash-correct {
+    animation: flashGreen 0.5s ease;
+  }
+
+  .flash-wrong {
+    animation: flashRed 0.5s ease;
+  }
+
+  @keyframes flashGreen {
+    0%, 100% { border-color: var(--accent); }
+    50% { border-color: var(--correct); box-shadow: 0 0 30px var(--correct); }
+  }
+
+  @keyframes flashRed {
+    0%, 100% { border-color: var(--accent); }
+    50% { border-color: var(--wrong); box-shadow: 0 0 30px var(--wrong); }
+  }
+
+  .game-over {
+    display: none;
+    text-align: center;
+    padding: 3rem 1rem;
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+
+  .game-over.active { display: block; }
+
+  .game-over h2 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .game-over .final-score {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .game-over .rating {
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .game-over button {
+    background: var(--accent);
+    color: #0A2F35;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.75rem;
+    color: var(--footer-text);
+    border-top: 1px solid var(--modal-border);
+    margin-top: 2rem;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  @media (max-width: 700px) {
+    .board {
+      grid-template-columns: repeat(6, 120px);
+    }
+    .modal { padding: 1.5rem 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .modal, .cell, .flash-correct, .flash-wrong {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<div class="header">
+  <h1>BIO 205 <span>Jeopardy!</span></h1>
+  <div class="subtitle">Microbiology Midterm Review</div>
+</div>
+
+<div class="score-bar">
+  <div class="score-display">
+    <span class="label">Score</span>
+    <span id="score">$0</span>
+  </div>
+  <div class="progress" id="progress">0 / 30</div>
+  <button onclick="resetGame()">Reset</button>
+</div>
+
+<div class="board-wrap">
+  <div class="board" id="board"></div>
+</div>
+
+<div class="game-over" id="gameOver">
+  <h2>Game Over!</h2>
+  <div class="final-score" id="finalScore">$0</div>
+  <div class="rating" id="rating"></div>
+  <button onclick="resetGame()">Play Again</button>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="category-label" id="modalCat"></div>
+    <div class="value-label" id="modalVal"></div>
+    <div class="clue-text" id="modalClue"></div>
+    <div class="answer-area" id="answerArea">
+      <div class="answer-label">Answer</div>
+      <div class="answer-text" id="answerText"></div>
+    </div>
+    <div class="modal-buttons" id="modalButtons"></div>
+  </div>
+</div>
+
+<footer>
+  &copy; Tehrani Labs &middot; BIO 205 Microbiology &middot; Arizona College of Nursing<br>
+  <a href="https://tehranilabs.org" target="_blank">tehranilabs.org</a>
+</footer>
+
+<script>
+const categories = [
+  "Micro Legends",
+  "Shape Shift",
+  "Purple Rain",
+  "Uninvited Guests",
+  "Petri Dish Drama",
+  "Pro vs. Eu"
+];
+
+const clues = {
+  "Micro Legends": [
+    {
+      value: 100,
+      clue: "This scientist proved that microbes don't just appear out of thin air by using a flask with a very long, curvy neck—like a swan doing yoga.",
+      answer: "Who is Louis Pasteur?"
+    },
+    {
+      value: 200,
+      clue: "Before this person came along, surgeons basically operated with the hygiene standards of a hot dog vendor. He pioneered antiseptic technique in surgery.",
+      answer: "Who is Joseph Lister?"
+    },
+    {
+      value: 300,
+      clue: "This scientist figured out that yeast is the life of the party—literally causing fermentation. He also shares a name with a process that keeps your milk from going rogue.",
+      answer: "Who is Louis Pasteur?"
+    },
+    {
+      value: 400,
+      clue: "Need to prove a specific microbe causes a specific disease? Follow this scientist's famous 4-step set of rules—his 'postulates' are basically the detective handbook of microbiology.",
+      answer: "Who is Robert Koch?"
+    },
+    {
+      value: 500,
+      clue: "Compound, electron, and confocal are all types of these instruments that let you spy on bacteria. All of them can be used to examine bacterial cells.",
+      answer: "What are microscopes?"
+    }
+  ],
+  "Shape Shift": [
+    {
+      value: 100,
+      clue: "If a bacterium looks like a tiny hot dog or a Tic Tac under the microscope, a microbiologist would call its shape this.",
+      answer: "What is bacillus (rod-shaped)?"
+    },
+    {
+      value: 200,
+      clue: "The prefix 'strepto-' in a bacterial name doesn't describe its shape or size—it actually tells you about this characteristic, like beads on a necklace.",
+      answer: "What is arrangement (chain formation)?"
+    },
+    {
+      value: 300,
+      clue: "Staphylococcus bacteria form messy, grape-like clusters of spherical cells. This makes their arrangement look like a bunch of tiny balls that failed at being organized.",
+      answer: "What are irregular clusters of spherical cells?"
+    },
+    {
+      value: 400,
+      clue: "The golden child of hospital infections, this bacterium's species name 'aureus' literally means this color in Latin—and yes, its colonies actually look that way.",
+      answer: "What is yellow (golden)?"
+    },
+    {
+      value: 500,
+      clue: "Most bacteria skip the romance and reproduce by simply splitting themselves in half through this process. It's efficient, if a bit lonely.",
+      answer: "What is binary fission?"
+    }
+  ],
+  "Purple Rain": [
+    {
+      value: 100,
+      clue: "After a Gram stain, these bacteria show up purple. The reagent responsible for this regal color is crystal violet—because they're worth it.",
+      answer: "What are Gram-positive bacteria?"
+    },
+    {
+      value: 200,
+      clue: "In the Gram stain procedure, iodine isn't the primary stain or the counterstain—it plays this supporting role, locking crystal violet into the cell wall like a bouncer at a nightclub.",
+      answer: "What is a mordant?"
+    },
+    {
+      value: 300,
+      clue: "Put these Gram stain steps in order and you get: Crystal violet first, then iodine, then alcohol-acetone, then safranin. As a numbered sequence (given 1=alcohol-acetone, 2=crystal violet, 3=safranin, 4=iodine), the correct order is this.",
+      answer: "What is 2-4-1-3?"
+    },
+    {
+      value: 400,
+      clue: "Lipopolysaccharide (LPS) is a nasty endotoxin found exclusively in the outer membrane of this type of bacterial cell wall. These bacteria stain pink, not purple.",
+      answer: "What is the Gram-negative cell wall?"
+    },
+    {
+      value: 500,
+      clue: "This compound is the major structural component of bacterial cell walls—both Gram-positive and Gram-negative have it, though the positive ones have way more. It's basically bacterial armor made of sugar and amino acids.",
+      answer: "What is peptidoglycan?"
+    }
+  ],
+  "Uninvited Guests": [
+    {
+      value: 100,
+      clue: "Mad Cow Disease, Scrapie, CJD, and Kuru walk into a bar. The bartender says, 'We don't serve your kind—you're not even alive!' These infectious agents are just misfolded proteins called this.",
+      answer: "What are prions?"
+    },
+    {
+      value: 200,
+      clue: "Hepatitis A, B, C, and Herpes simplex are all examples of diseases caused by this type of microbe—the ultimate freeloader that can't even reproduce without hijacking your cells.",
+      answer: "What are viruses?"
+    },
+    {
+      value: 300,
+      clue: "Athlete's foot and ringworm are caused by dermatophyte infections. Despite the name 'ringworm,' the actual culprit is this type of organism—no worms involved!",
+      answer: "What are fungi?"
+    },
+    {
+      value: 400,
+      clue: "Eating undercooked beef or pork might introduce you to this unwelcome flatworm passenger. It's the parasitic helminth that hitches a ride in contaminated meat.",
+      answer: "What is a tapeworm?"
+    },
+    {
+      value: 500,
+      clue: "When a virus decides to take a nap inside your cells and can wake up later to cause trouble again (like herpes), this dormant, asymptomatic state of viral infection is called this.",
+      answer: "What is latency?"
+    }
+  ],
+  "Petri Dish Drama": [
+    {
+      value: 100,
+      clue: "When you use an EMB plate to block Gram-positive bacteria and only let Gram-negatives grow, you're using this type of media. It's basically a VIP list for bacteria.",
+      answer: "What is selective media?"
+    },
+    {
+      value: 200,
+      clue: "When you're done with your stock cultures in lab, you should toss them in this specific container—not the regular trash, not the sharps, and definitely not the incubator.",
+      answer: "What is the biohazard disposal container?"
+    },
+    {
+      value: 300,
+      clue: "Bacteria can grow on solid media using both an agar plate AND one of these tube-based surfaces. Together they give you colonies to admire from two different angles.",
+      answer: "What is a test tube slant (agar plate and test tube slant)?"
+    },
+    {
+      value: 400,
+      clue: "These bacteria are the divas of the microbial world—they absolutely refuse to live where there's oxygen. The one gas they do NOT require is O₂.",
+      answer: "What are anaerobic bacteria (obligate anaerobes)?"
+    },
+    {
+      value: 500,
+      clue: "Salt-loving bacteria that thrive in extremely salty environments like the Dead Sea or your grandma's pickle jar are called this—from the Greek word for 'salt.'",
+      answer: "What are halophiles?"
+    }
+  ],
+  "Pro vs. Eu": [
+    {
+      value: 100,
+      clue: "This unicellular organism is characterized by lacking a nucleus, making it the minimalist of the cell world. Think bacteria—no fancy nuclear envelope needed.",
+      answer: "What are bacteria (prokaryotes)?"
+    },
+    {
+      value: 200,
+      clue: "The three domains of life are Archaea, Bacteria, and Eukarya. 'Prokarya' is NOT one of them—even though it sounds like it should be. This fake domain is the odd one out.",
+      answer: "What is Prokarya?"
+    },
+    {
+      value: 300,
+      clue: "Eukaryotic cells have ribosomes, a nucleus, AND organelles. When asked which characteristic is true, the answer is: all of them! Eukaryotes are basically the overachievers of the cell world.",
+      answer: "What is 'all of the above' (ribosomes, nucleus, and organelles)?"
+    },
+    {
+      value: 400,
+      clue: "In the name Staphylococcus aureus, the second word 'aureus' represents this level of taxonomic classification—the most specific one in the binomial naming system.",
+      answer: "What is species?"
+    },
+    {
+      value: 500,
+      clue: "This organelle is nicknamed the 'powerhouse of the cell' because it generates ATP. Even your microbiology professor runs on the energy this little guy produces.",
+      answer: "What is the mitochondria?"
+    }
+  ]
+};
+
+let score = 0;
+let answered = 0;
+const total = 30;
+const usedCells = new Set();
+
+function buildBoard() {
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+
+  categories.forEach(cat => {
+    const header = document.createElement('div');
+    header.className = 'cat-header';
+    header.textContent = cat;
+    board.appendChild(header);
+  });
+
+  const values = [100, 200, 300, 400, 500];
+  values.forEach(val => {
+    categories.forEach(cat => {
+      const cell = document.createElement('div');
+      const id = cat + '-' + val;
+      cell.className = 'cell';
+      cell.id = id;
+      cell.textContent = '$' + val;
+      cell.addEventListener('click', () => openClue(cat, val, id));
+      if (usedCells.has(id)) cell.classList.add('used');
+      board.appendChild(cell);
+    });
+  });
+}
+
+function openClue(cat, val, id) {
+  if (usedCells.has(id)) return;
+
+  const clue = clues[cat].find(c => c.value === val);
+  if (!clue) return;
+
+  document.getElementById('modalCat').textContent = cat;
+  document.getElementById('modalVal').textContent = '$' + val;
+  document.getElementById('modalClue').textContent = clue.clue;
+  document.getElementById('answerText').textContent = clue.answer;
+  document.getElementById('answerArea').style.display = 'none';
+
+  const btns = document.getElementById('modalButtons');
+  btns.innerHTML = '';
+
+  const revealBtn = document.createElement('button');
+  revealBtn.className = 'btn btn-reveal';
+  revealBtn.textContent = 'Reveal Answer';
+  revealBtn.addEventListener('click', () => {
+    document.getElementById('answerArea').style.display = 'block';
+    btns.innerHTML = '';
+
+    const correctBtn = document.createElement('button');
+    correctBtn.className = 'btn btn-correct';
+    correctBtn.textContent = 'I Got It!';
+    correctBtn.addEventListener('click', () => {
+      score += val;
+      markUsed(id, true);
+    });
+
+    const wrongBtn = document.createElement('button');
+    wrongBtn.className = 'btn btn-wrong';
+    wrongBtn.textContent = 'Nope';
+    wrongBtn.addEventListener('click', () => {
+      score -= val;
+      markUsed(id, false);
+    });
+
+    btns.appendChild(correctBtn);
+    btns.appendChild(wrongBtn);
+  });
+
+  btns.appendChild(revealBtn);
+
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function markUsed(id, correct) {
+  usedCells.add(id);
+  answered++;
+
+  const modal = document.getElementById('modal');
+  modal.classList.remove('flash-correct', 'flash-wrong');
+  void modal.offsetWidth;
+  modal.classList.add(correct ? 'flash-correct' : 'flash-wrong');
+
+  document.getElementById('score').textContent = (score >= 0 ? '$' : '-$') + Math.abs(score);
+  document.getElementById('progress').textContent = answered + ' / ' + total;
+
+  const cell = document.getElementById(id);
+  if (cell) cell.classList.add('used');
+
+  setTimeout(() => {
+    document.getElementById('modalOverlay').classList.remove('active');
+    modal.classList.remove('flash-correct', 'flash-wrong');
+
+    if (answered >= total) showGameOver();
+  }, 600);
+}
+
+function showGameOver() {
+  document.getElementById('gameOver').classList.add('active');
+  document.getElementById('finalScore').textContent = (score >= 0 ? '$' : '-$') + Math.abs(score);
+
+  const maxScore = (100 + 200 + 300 + 400 + 500) * 6;
+  const pct = score / maxScore;
+  let rating;
+  if (pct >= 0.8) rating = "Lab genius! You're ready to culture anything.";
+  else if (pct >= 0.6) rating = "Solid work! Your Gram stain game is strong.";
+  else if (pct >= 0.4) rating = "Not bad! A few more study sessions and you'll ace it.";
+  else if (pct >= 0.2) rating = "Keep reviewing! Those microbes aren't going to memorize themselves.";
+  else rating = "Time to hit the textbook! The bacteria believe in you.";
+
+  document.getElementById('rating').textContent = rating;
+}
+
+function resetGame() {
+  score = 0;
+  answered = 0;
+  usedCells.clear();
+  document.getElementById('score').textContent = '$0';
+  document.getElementById('progress').textContent = '0 / 30';
+  document.getElementById('gameOver').classList.remove('active');
+  document.getElementById('modalOverlay').classList.remove('active');
+  buildBoard();
+}
+
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+});
+
+buildBoard();
+</script>
