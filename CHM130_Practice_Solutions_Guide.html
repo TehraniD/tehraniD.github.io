@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM-130 Practice Quiz Solutions Guide · Tehrani Labs</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a2340;--ink2:#3a4668;--paper:#f4f6fb;--card:#ffffff;
+  --brand:#7a1e46;--brand2:#a83263;--accent:#2451b8;--accent-soft:#e8f0ff;
+  --gold:#c8952f;--good:#1f9d55;--good-soft:#e6f7ee;--line:#e2e7f2;
+  --shadow:0 2px 14px rgba(26,35,64,.07);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Segoe UI',-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+sub,sup{font-size:.72em}
+.wrap{max-width:920px;margin:0 auto;padding:0 18px 80px}
+
+/* Header */
+header{
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff;padding:36px 18px 30px;text-align:center;
+  box-shadow:0 4px 24px rgba(122,30,70,.25);
+}
+header .kicker{font-size:.8rem;letter-spacing:3px;text-transform:uppercase;opacity:.85;font-weight:600}
+header h1{font-size:clamp(1.5rem,4vw,2.3rem);font-weight:800;margin:6px 0 4px}
+header .sub{font-size:clamp(.9rem,2vw,1.05rem);opacity:.9;font-weight:400}
+header .brand{margin-top:12px;font-size:.85rem;opacity:.8}
+header .brand a{color:#ffd9e6;text-decoration:none;font-weight:600}
+
+/* Intro card */
+.intro{
+  background:var(--card);border-radius:14px;box-shadow:var(--shadow);
+  padding:20px 22px;margin:24px 0;border-left:5px solid var(--gold);
+}
+.intro h2{font-size:1.05rem;color:var(--brand);margin-bottom:8px}
+.intro p{font-size:.95rem;color:var(--ink2);margin-bottom:6px}
+.intro .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:.85rem}
+.intro .legend span{display:flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+
+/* Controls */
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0;position:sticky;top:0;
+  background:var(--paper);padding:12px 0;z-index:20;border-bottom:1px solid var(--line)}
+.btn{
+  border:none;border-radius:30px;padding:9px 18px;font-size:.85rem;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all .15s;background:var(--card);
+  color:var(--ink2);box-shadow:var(--shadow);
+}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.ghost{background:var(--card);border:1px solid var(--line)}
+
+/* Section */
+.section{margin:30px 0 10px}
+.section-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;
+  padding-bottom:10px;border-bottom:2px solid var(--line);
+}
+.section-head .num{
+  background:var(--brand);color:#fff;border-radius:9px;min-width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;
+}
+.section-head h2{font-size:1.15rem;color:var(--ink)}
+.section-head .count{margin-left:auto;font-size:.8rem;color:var(--ink2);
+  background:var(--accent-soft);padding:4px 12px;border-radius:20px;font-weight:600}
+
+/* Question card */
+.card{
+  background:var(--card);border-radius:12px;box-shadow:var(--shadow);
+  margin-bottom:12px;overflow:hidden;border:1px solid var(--line);
+}
+.q-top{padding:16px 18px;cursor:pointer;display:flex;gap:14px;align-items:flex-start;
+  transition:background .15s}
+.q-top:hover{background:#fafbff}
+.q-num{
+  background:var(--ink);color:#fff;border-radius:8px;min-width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;
+}
+.q-body{flex:1}
+.q-topic{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;
+  color:var(--accent);font-weight:700;margin-bottom:3px}
+.q-text{font-size:.98rem;color:var(--ink);font-weight:500}
+.chev{color:var(--ink2);font-size:1.1rem;flex-shrink:0;transition:transform .25s;margin-top:4px}
+.card.open .chev{transform:rotate(90deg)}
+
+.q-reveal{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.card.open .q-reveal{max-height:1400px}
+.reveal-inner{padding:0 18px 18px 66px}
+@media(max-width:560px){.reveal-inner{padding:0 16px 16px 16px}}
+
+.answer{
+  background:var(--good-soft);border-radius:9px;padding:10px 14px;margin-bottom:14px;
+  border-left:4px solid var(--good);font-size:.95rem;
+}
+.answer b{color:var(--good)}
+.steps-title{font-size:.78rem;text-transform:uppercase;letter-spacing:1px;
+  color:var(--ink2);font-weight:700;margin-bottom:8px}
+ol.steps{margin:0 0 14px 4px;padding-left:22px}
+ol.steps li{margin-bottom:7px;font-size:.93rem;color:var(--ink2)}
+.calc{font-family:'SFMono-Regular',Consolas,monospace;background:#f3f5fa;
+  padding:2px 7px;border-radius:5px;font-size:.9em;color:var(--brand);white-space:nowrap}
+.trick{
+  background:linear-gradient(135deg,#fff9ec,#fff3d6);border-radius:9px;
+  padding:12px 14px;font-size:.92rem;border-left:4px solid var(--gold);
+}
+.trick b{color:var(--gold)}
+.trick .tlabel{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;
+  color:var(--gold);font-weight:800;display:block;margin-bottom:4px}
+
+footer{text-align:center;padding:30px 18px;color:var(--ink2);font-size:.82rem;
+  border-top:1px solid var(--line);margin-top:20px}
+footer a{color:var(--brand);text-decoration:none;font-weight:600}
+
+/* Formula helpers */
+.formula-box{background:var(--accent-soft);border-radius:9px;padding:12px 14px;
+  margin:14px 0;font-size:.92rem;text-align:center;font-weight:600;color:var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">CHM-130 · Introductory Chemistry</div>
+  <h1>Practice Quiz Solutions Guide</h1>
+  <div class="sub">Modules 1, 2 &amp; 3 · Summer B 2026 · Every question, solved the easy way</div>
+  <div class="brand">Tehrani Labs · <a href="https://tehranilabs.org">tehranilabs.org</a></div>
+</header>
+
+<div class="wrap">
+  <div class="intro">
+    <h2>How to use this guide</h2>
+    <p>Tap any question to reveal the <b>answer</b>, a plain-English <b>step-by-step solution</b>, and a <b>memory trick</b> to make it stick. Nothing to install — works on your phone or laptop.</p>
+    <p style="margin-top:8px"><b>✓ Every method below uses only the formulas and periodic-table values on your official <span style="color:var(--brand)">CHM-130 Midterm Formula Sheet</span></b> — so you can reproduce all of it on exam day.</p>
+    <p style="margin-top:8px"><b>The formulas you'll reuse the most (all straight from the sheet):</b></p>
+    <div class="formula-box" style="text-align:left">
+      Moles = grams ÷ molar mass &nbsp;·&nbsp; Molarity (M) = moles ÷ liters<br>
+      pH = –log[H₃O⁺] &nbsp;·&nbsp; pH + pOH = 14 &nbsp;·&nbsp; [H₃O⁺]×[OH⁻] = 1×10⁻¹⁴<br>
+      Density: V = mass ÷ density &nbsp;·&nbsp; Dilution: M₁V₁ = M₂V₂<br>
+      Temp: K = ⁵⁄₉(°F – 32) + 273 &nbsp;·&nbsp; %(w/v) = (grams ÷ mL) × 100
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn primary" onclick="toggleAll(true)">▸ Expand all</button>
+    <button class="btn ghost" onclick="toggleAll(false)">▾ Collapse all</button>
+    <a class="btn ghost" href="#sec0">Midterm</a>
+    <a class="btn ghost" href="#sec1">Week 1</a>
+    <a class="btn ghost" href="#sec2">Week 2</a>
+    <a class="btn ghost" href="#sec3">Week 3</a>
+  </div>
+
+  <div id="content"></div>
+
+  <footer>
+    Study smart, not hard. You've got this. 💪<br><br>
+    &copy; Tehrani Labs · CHM-130 · Arizona College of Nursing
+  </footer>
+</div>
+
+<script>
+const DATA = [
+{
+  title:"Midterm Practice Exam",
+  questions:[
+    {topic:"Atomic mass",q:"The atomic mass of an element is equal to ___.",ans:'the mass of an "average atom"',
+     steps:["The number on the periodic table is a <b>weighted average</b> of all the isotopes of that element.","It is NOT the heaviest isotope and NOT just the mass number of one atom.","Because different isotopes exist in nature, we report the average."],
+     trick:"Think of it like a class GPA — it's the <b>average</b> of everyone, not the single highest grade."},
+    {topic:"Periodic trends · Ionization energy",q:"The ionization energy of atoms ___.",ans:"decreases going down within a group",
+     steps:["Ionization energy = how hard it is to pull off an electron.","Going <b>down</b> a group, electrons are farther from the nucleus → easier to remove → energy <b>decreases</b>.","(Going across a period it increases.)"],
+     trick:"<b>\"Far from home, easy to leave.\"</b> The farther an electron is from the nucleus, the easier it escapes."},
+    {topic:"Periodic trends · Atomic size",q:"The atomic size of atoms ___.",ans:"increases going down within a group",
+     steps:["Each step down a group adds a whole new electron shell.","More shells = bigger atom → size <b>increases</b> going down.","(Across a period, size shrinks because protons pull tighter.)"],
+     trick:"<b>Size goes DOWN-and-UP:</b> biggest at bottom-left, smallest at top-right. More floors on the building = taller building."},
+    {topic:"Naming · Ionic compound",q:"The compound MgCl₂ is named ___.",ans:"magnesium chloride",
+     steps:["Metal + nonmetal = <b>ionic</b> → no Greek prefixes.","Name the metal (magnesium), then the nonmetal root + \"-ide\" (chlor → chloride).","The subscript 2 is ignored in the name — the charges already tell us."],
+     trick:"<b>Metals don't need prefixes.</b> \"Di-\" belongs only to two-nonmetal (covalent) compounds."},
+    {topic:"Naming · Covalent compound",q:"The correct name for the compound N₂O₃ is ___.",ans:"dinitrogen trioxide",
+     steps:["Two nonmetals = <b>covalent</b> → use Greek prefixes.","N₂ = <b>di</b>nitrogen (2), O₃ = <b>tri</b>oxide (3).","Put them together: dinitrogen trioxide."],
+     trick:"Prefix cheat: mono(1), <b>di</b>(2), <b>tri</b>(3), tetra(4), penta(5). Count the subscript, grab the prefix."},
+    {topic:"Mole concept",q:"How many moles of carbon atoms are there in 0.500 mole of C₂H₆?",ans:"1.00 mole",
+     steps:["Look at the subscript on C: there are <b>2</b> carbons per molecule.","Multiply: 0.500 mol C₂H₆ × 2 = <span class='calc'>1.00 mole C</span>."],
+     trick:"<b>Moles of atom = moles of compound × subscript.</b> The little number is your multiplier."},
+    {topic:"Molar mass",q:"Calculate the molar mass of potassium chloride, KCl.",ans:"74.55 g/mole",
+     steps:["Add the atomic masses from the periodic table.","K = 39.10, Cl = 35.45.","<span class='calc'>39.10 + 35.45 = 74.55 g/mol</span>."],
+     trick:"<b>Molar mass = just add up the atoms.</b> One of each here, so simple addition."},
+    {topic:"Mole → gram",q:"3.00 moles of NO₂ have a mass of ___.",ans:"138 g",
+     steps:["Find molar mass of NO₂: N(14.01) + 2×O(16.00) = 46.01 g/mol.","Multiply by moles: <span class='calc'>3.00 × 46.0 = 138 g</span>."],
+     trick:"<b>Grams = moles × molar mass.</b> Going from moles to grams? Multiply."},
+    {topic:"Reaction types",q:"What is the classification for this reaction? SO₃ + H₂O → H₂SO₄",ans:"Combination",
+     steps:["Count the products: only <b>one</b> (H₂SO₄).","Two reactants joined into one product = <b>combination</b> (a.k.a. synthesis)."],
+     trick:"<b>Two become one = combination.</b> Like a wedding: two join together."},
+    {topic:"Redox",q:"In an oxidation-reduction reaction, the substance reduced always ___.",ans:"gains electrons",
+     steps:["<b>Reduction</b> = gain of electrons.","The word feels backwards, but gaining negative electrons \"reduces\" the charge number."],
+     trick:"<b>OIL RIG:</b> Oxidation Is Loss, Reduction Is Gain (of electrons)."},
+    {topic:"Stoichiometry",q:"For N₂ + 3H₂ → 2NH₃, how many moles of hydrogen are needed to react with two moles of nitrogen?",ans:"6 moles",
+     steps:["Read the coefficients: 1 N₂ needs 3 H₂.","Scale up for 2 N₂: <span class='calc'>2 × 3 = 6 moles H₂</span>."],
+     trick:"<b>Coefficients are the recipe ratio.</b> Double the nitrogen → double the hydrogen."},
+    {topic:"Acids & bases · Brønsted",q:"HCl + H₂O ⇌ H₃O⁺ + Br⁻ — identify the Brønsted acid and base.",ans:"Acid = HCl, Base = H₂O",
+     steps:["Brønsted <b>acid = proton (H⁺) donor</b>; <b>base = proton acceptor</b>.","HCl gives away its H⁺ → acid.","H₂O picks up that H⁺ (becoming H₃O⁺) → base."],
+     trick:"<b>Acid gives, base takes.</b> Follow the H⁺: whoever loses it is the acid."},
+    {topic:"Conjugate acid",q:"The conjugate acid of NH₃ is ___.",ans:"NH₄⁺",
+     steps:["\"Conjugate acid\" means: <b>add one H⁺</b>.","NH₃ + H⁺ → <b>NH₄⁺</b> (charge goes up by +1)."],
+     trick:"<b>Conjugate ACID = ADD an H.</b> Base → conjugate acid means +1 hydrogen and +1 charge."},
+    {topic:"pH · Kw relationship",q:"What is the [H₃O⁺] in a solution with [OH⁻] = 1×10⁻¹² M?",ans:"1×10⁻² M",
+     steps:["Use [H₃O⁺] × [OH⁻] = 1×10⁻¹⁴.","Divide: <span class='calc'>1×10⁻¹⁴ ÷ 1×10⁻¹² = 1×10⁻² M</span>.","Shortcut: the two exponents must add to –14. –12 needs –2."],
+     trick:"<b>The exponents always add to –14.</b> Given –12? The partner is –2. No calculator needed."},
+    {topic:"pH calculation",q:"What is the pH of a solution with [H₃O⁺] = 1×10⁻⁹ M?",ans:"9.0",
+     steps:["pH = –log[H₃O⁺].","When the number is exactly 1×10⁻ⁿ, the pH is just <b>n</b>.","So 1×10⁻⁹ → pH = <b>9.0</b>."],
+     trick:"<b>Clean powers of 10 are free:</b> pH = the exponent without the minus sign."},
+    {topic:"pH from [OH⁻]",q:"What is the pH of a solution with [OH⁻] = 1×10⁻⁴ M?",ans:"10.0",
+     steps:["First find pOH = –log[OH⁻] = 4.","Then pH = 14 – pOH = <span class='calc'>14 – 4 = 10.0</span>."],
+     trick:"<b>Given OH⁻? Do the OH first, then subtract from 14.</b> pH + pOH = 14 always."},
+    {topic:"[H₃O⁺] from pH",q:"The [H₃O⁺] of a solution with pH = 2.0 is ___.",ans:"1×10⁻² M",
+     steps:["Reverse the pH formula: [H₃O⁺] = 10^(–pH).","10^(–2) = <b>1×10⁻² M</b>."],
+     trick:"<b>Going backwards from pH:</b> the concentration is just 1×10 to the negative pH."},
+    {topic:"[H₃O⁺] from pH (decimal)",q:"The [H₃O⁺] of a solution with pH = 9.7 is ___.",ans:"2×10⁻¹⁰ M",
+     steps:["[H₃O⁺] = 10^(–9.7).","On the calculator: 10 xʸ 9.7 +/– = <span class='calc'>2×10⁻¹⁰ M</span>.","Sanity check: pH 9.7 is between 9 and 10, so the exponent lands at –10."],
+     trick:"<b>For a decimal pH, the exponent is the next whole number DOWN's neighbor.</b> pH 9.7 → 10⁻¹⁰ range."},
+    {topic:"Buffers",q:"The function of a buffer is to ___.",ans:"maintain the pH of a solution",
+     steps:["A buffer <b>resists changes in pH</b> when small amounts of acid or base are added.","It does NOT lock pH at 7 — it holds whatever pH it's set to."],
+     trick:"<b>Buffers are bouncers</b> — they keep pH from swinging when acid or base crashes the party. (Your blood uses one!)"},
+    {topic:"% (w/v) concentration",q:"How many grams of glucose are needed to prepare 400 mL of a 2.0% (w/v) glucose solution?",ans:"8.0 g",
+     steps:["% (w/v) means grams per 100 mL. So 2.0% = 2.0 g per 100 mL.","Scale to 400 mL: <span class='calc'>2.0 g × (400 ÷ 100) = 8.0 g</span>."],
+     trick:"<b>% (w/v) = grams in 100 mL.</b> Then just scale to your actual volume."},
+    {topic:"Dilution",q:"What volume of 0.10 M NaOH can be prepared from 250 mL of 0.30 M NaOH?",ans:"0.75 L (750 mL)",
+     steps:["Use M₁V₁ = M₂V₂.","(0.30)(250) = (0.10)(V₂).","<span class='calc'>V₂ = 75 ÷ 0.10 = 750 mL = 0.75 L</span>."],
+     trick:"<b>Dilute = more volume, less concentration.</b> You made it 3× weaker, so you get 3× the volume."},
+  ]
+},
+{
+  title:"Week 1 Practice Quiz",
+  questions:[
+    {topic:"Significant figures",q:"Which number has the greatest number of significant digits? (17.5000 · 0.0000625 · 6.2200×10²³ · 170000)",ans:"17.5000  (6 sig figs)",
+     steps:["17.5000 → all 6 digits count (trailing zeros after a decimal are significant).","0.0000625 → only 3 (leading zeros don't count).","6.2200×10²³ → 5. &nbsp; 170000 → 2 (no decimal, trailing zeros don't count)."],
+     trick:"<b>Atlantic–Pacific rule:</b> decimal Present → count from Pacific (left); decimal Absent → count from Atlantic (right). Start at first non-zero."},
+    {topic:"Density",q:"Methanol has a density of 0.70 g/mL. If 80 g is needed, what volume in mL should be added?",ans:"114 mL",
+     steps:["Rearrange density: Volume = mass ÷ density.","<span class='calc'>80 g ÷ 0.70 g/mL = 114 mL</span>."],
+     trick:"<b>Density triangle:</b> cover what you want. Cover V → m/d is left. Need volume? Divide mass by density."},
+    {topic:"Classifying molecules",q:"CO₂ is ___.",ans:"Triatomic & Heteroatomic",
+     steps:["Count atoms: C + O + O = 3 atoms → <b>triatomic</b>.","Count element types: carbon and oxygen = 2 different → <b>heteroatomic</b>."],
+     trick:"<b>Two questions:</b> How many atoms? (mono/di/tri) How many elements? (homo=same / hetero=different)."},
+    {topic:"Definitions · Mass",q:"Define Mass:",ans:"The amount of matter in an object (or a measure of its inertia)",
+     steps:["Mass = how much matter/\"stuff\" is present.","Weight is different — that's gravity pulling on the mass."],
+     trick:"<b>Mass stays, weight plays.</b> Your mass is the same on the Moon; your weight isn't."},
+    {topic:"Temperature conversion",q:"Convert 88°F to Kelvin.",ans:"304 K",
+     steps:["Your formula sheet gives this in one shot: K = ⁵⁄₉(°F – 32) + 273.","Inside the parentheses first: 88 – 32 = 56.","Then ⁵⁄₉ × 56 = 31, and 31 + 273 = <span class='calc'>304 K</span>."],
+     trick:"<b>Order of operations:</b> subtract 32 first, then × 5/9, then add 273. The +273 is the step people forget."},
+    {topic:"Atomic structure",q:"The number of protons, electrons and neutrons in an atom of O-16 is ___.",ans:"8 protons, 8 electrons, 8 neutrons",
+     steps:["Oxygen's atomic number = 8 → <b>8 protons</b>. Neutral atom → <b>8 electrons</b>.","Neutrons = mass number – protons = 16 – 8 = <b>8 neutrons</b>."],
+     trick:"<b>Bottom number = protons</b> (atomic #). <b>Neutrons = mass – protons.</b> Electrons match protons when neutral."},
+    {topic:"Periodic table location",q:"Which element is located in period 3 and group 2?",ans:"Magnesium (Mg)",
+     steps:["Period 3 = the 3rd row. Group 2 = the 2nd column.","Where they meet = <b>Magnesium (Mg)</b>."],
+     trick:"<b>Period = row, Group = column.</b> Like a seat: row 3, column 2."},
+    {topic:"Valence electrons",q:"How many electrons are in the outer energy orbital of Calcium?",ans:"2",
+     steps:["Calcium is in <b>Group 2</b>.","For main-group elements, the group number = valence electrons → <b>2</b>."],
+     trick:"<b>Group number = valence electrons</b> (for the tall columns). Group 2 → 2 outer electrons."},
+    {topic:"Ion formation",q:"What ion is formed when a sulfur (S) atom undergoes ionization?",ans:"S²⁻",
+     steps:["Sulfur is Group 16 → 6 valence electrons.","It <b>gains 2</b> to reach 8 (octet) → charge becomes –2 → <b>S²⁻</b>."],
+     trick:"<b>Nonmetals gain, go negative.</b> Sulfur needs 2 to fill up, so it's 2–."},
+    {topic:"Ion formation",q:"What ion would a magnesium (Mg) atom form?",ans:"Mg²⁺",
+     steps:["Magnesium is Group 2 → 2 valence electrons.","It <b>loses 2</b> to empty its outer shell → charge +2 → <b>Mg²⁺</b>."],
+     trick:"<b>Metals lose, go positive.</b> Mg drops 2 electrons → 2+."},
+    {topic:"Naming · Covalent",q:"What is the name for compound N₂O₅?",ans:"dinitrogen pentoxide",
+     steps:["Two nonmetals → use prefixes.","N₂ = dinitrogen, O₅ = <b>pent</b>oxide (5).","= dinitrogen pentoxide."],
+     trick:"Penta = 5. Grab the prefix for each subscript and stack them."},
+    {topic:"Naming · Ionic",q:"What is the name for compound Na₂O?",ans:"sodium oxide",
+     steps:["Metal (Na) + nonmetal (O) = ionic → no prefixes.","Sodium + oxide = <b>sodium oxide</b> (ignore the subscript 2)."],
+     trick:"<b>Metal in front? Skip the prefixes.</b> \"Disodium\" would be wrong here."},
+  ]
+},
+{
+  title:"Week 2 Practice Quiz",
+  questions:[
+    {topic:"Molar mass",q:"Calculate the molar mass of magnesium chloride, MgCl₂.",ans:"95.21 g/mole",
+     steps:["Mg = 24.31, Cl = 35.45 (and there are two Cl).","<span class='calc'>24.31 + 2(35.45) = 24.31 + 70.90 = 95.21 g/mol</span>."],
+     trick:"<b>Don't forget the subscript!</b> Two chlorines means you count Cl twice."},
+    {topic:"Mole concept",q:"0.5 mole of sucrose, C₁₂H₂₂O₁₁, contains ___ moles of C.",ans:"6",
+     steps:["There are 12 carbons per sucrose molecule.","0.5 mol × 12 = <span class='calc'>6 moles C</span>."],
+     trick:"<b>Moles of atom = moles × subscript.</b> Half a mole × 12 carbons = 6."},
+    {topic:"Gram → mole",q:"How many moles of water, H₂O, are present in 75.0 g H₂O?",ans:"4.16 moles",
+     steps:["Molar mass of H₂O = 2(1.01) + 16.00 = 18.02 g/mol.","Moles = grams ÷ molar mass = <span class='calc'>75.0 ÷ 18.02 = 4.16 mol</span>."],
+     trick:"<b>Grams to moles? Divide by molar mass.</b> (Moles to grams? Multiply. It's a two-way street.)"},
+    {topic:"Mole → gram",q:"How many grams of MgCl₂ are there in 0.5 mole of MgCl₂?",ans:"47.6 g",
+     steps:["Molar mass MgCl₂ = 95.21 g/mol (from Q1).","Grams = moles × molar mass = <span class='calc'>0.5 × 95.21 = 47.6 g</span>."],
+     trick:"<b>Half a mole = half the molar mass.</b> Quick gut-check before you trust the number."},
+    {topic:"Mole → gram",q:"What is the mass of 2.00 moles of CO₂?",ans:"88 g",
+     steps:["Molar mass CO₂ = 12.01 + 2(16.00) = 44.01 g/mol.","Mass = 2.00 × 44.0 = <span class='calc'>88 g</span>."],
+     trick:"<b>Two moles = double the molar mass.</b> 44 × 2 = 88, easy."},
+    {topic:"Balancing equations",q:"Correct coefficients for N₂H₄ + H₂O₂ → N₂ + H₂O?",ans:"1, 2, 1, 4",
+     steps:["Balance N: 2 on each side ✓ (1 N₂H₄ → 1 N₂).","Balance O and H by trial: put 2 in front of H₂O₂ and 4 in front of H₂O.","Check: H → 4 + 4 = 8 on left, 4×2 = 8 on right ✓. O → 2×2 = 4 left, 4 right ✓.","Coefficients: <b>1, 2, 1, 4</b>."],
+     trick:"<b>Save H and O for last</b> — balance the \"lonely\" element (N) first, then juggle the rest."},
+    {topic:"Reaction types",q:"What is the classification for this reaction? SO₃ + H₂O → H₂SO₄",ans:"Combination",
+     steps:["Two reactants → one product.","That's a <b>combination</b> (synthesis) reaction."],
+     trick:"<b>Two into one = combination.</b> Same pattern shows up again — learn it once."},
+    {topic:"Redox",q:"In an oxidation-reduction reaction, the substance oxidized always ___.",ans:"loses electrons",
+     steps:["<b>Oxidation = loss</b> of electrons.","(The opposite of the reduction question — reduction gains.)"],
+     trick:"<b>OIL RIG:</b> Oxidation Is Loss, Reduction Is Gain. Or \"LEO the lion says GER.\""},
+    {topic:"Stoichiometry (mole→mole)",q:"2Mg + O₂ → 2MgO. How many moles of MgO are produced when 0.50 mole of O₂ reacts completely?",ans:"1 mole",
+     steps:["Ratio from coefficients: 1 O₂ makes 2 MgO.","0.50 mol O₂ × 2 = <span class='calc'>1 mole MgO</span>."],
+     trick:"<b>Use the coefficient ratio like a conversion factor.</b> 1 O₂ : 2 MgO."},
+    {topic:"Stoichiometry (mole→gram)",q:"2Mg + O₂ → 2MgO. 1 mole of O₂ reacts completely to produce how many grams of MgO?",ans:"80.6 g",
+     steps:["1 mol O₂ → 2 mol MgO (from the ratio).","Molar mass MgO = 24.31 + 16.00 = 40.31 g/mol.","2 mol × 40.3 = <span class='calc'>80.6 g</span>."],
+     trick:"<b>Mole bridge:</b> moles given → moles wanted (ratio) → grams (× molar mass)."},
+    {topic:"Stoichiometry (mole→mole)",q:"2KClO₃ → 2KCl + 3O₂. How many moles of O₂ are produced when 4.0 mol of KCl are produced?",ans:"6.0 mol",
+     steps:["Ratio: 2 KCl : 3 O₂.","4.0 mol KCl × (3 ÷ 2) = <span class='calc'>6.0 mol O₂</span>."],
+     trick:"<b>Multiply by the ratio in the direction you're going.</b> Want O₂? Put O₂'s coefficient on top."},
+    {topic:"Balancing equations",q:"Balance: Al + Cl₂ → AlCl₃",ans:"2, 3, 2",
+     steps:["Cl comes in pairs (Cl₂) but AlCl₃ needs 3 — find the common number, 6.","Put 3 Cl₂ (=6 Cl) and 2 AlCl₃ (=6 Cl). That fixes Al at 2.","<span class='calc'>2Al + 3Cl₂ → 2AlCl₃</span> → coefficients 2, 3, 2."],
+     trick:"<b>Odd vs even? Find the least common multiple.</b> 2 and 3 → 6, then back-fill."},
+  ]
+},
+{
+  title:"Week 3 Practice Quiz",
+  questions:[
+    {topic:"pH scale",q:"A solution with a pH of 11.2 is ___.",ans:"basic",
+     steps:["The pH scale: below 7 = acidic, exactly 7 = neutral, above 7 = basic.","11.2 is well above 7 → <b>basic</b>."],
+     trick:"<b>7 is neutral (Switzerland).</b> Higher = basic, lower = acidic."},
+    {topic:"Brønsted acid",q:"HClO₄ + H₂O → ClO₄⁻ + H₃O⁺. Which is acting as the Brønsted acid?",ans:"HClO₄",
+     steps:["Follow the H⁺: HClO₄ loses an H to become ClO₄⁻.","The one that <b>donates H⁺ is the acid</b> → HClO₄."],
+     trick:"<b>Acid gives away H.</b> Watch which molecule shrinks by one hydrogen."},
+    {topic:"Conjugate acid",q:"C₅H₅N + H₂CO₃ ⇌ C₅H₆N⁺ + HCO₃⁻. The conjugate acid of C₅H₅N is ___.",ans:"C₅H₆N⁺",
+     steps:["C₅H₅N acts as a base — it <b>accepts an H⁺</b>.","Add H⁺: C₅H₅N → <b>C₅H₆N⁺</b> (one more H, charge +1)."],
+     trick:"<b>Conjugate acid = original + one H.</b> Notice H₅ became H₆ and it gained a +."},
+    {topic:"pH calculation",q:"What is the pH of a solution in which [H₃O⁺] = 3.8×10⁻⁸ M?",ans:"7.42",
+     steps:["pH = –log[H₃O⁺] = –log(3.8×10⁻⁸).","Calculator: log₁₀ ( 3.8 × 10 xʸ 8 +/– ) = –7.42, then +/– → <span class='calc'>7.42</span>.","Sanity check: 3.8×10⁻⁸ sits between 10⁻⁷ and 10⁻⁸, so pH is between 7 and 8. ✓"],
+     trick:"<b>For (number)×10⁻ⁿ, the pH lands between (n–1) and n.</b> Here n=8 → pH between 7 and 8."},
+    {topic:"pH calculation",q:"What is the pH of a solution in which [H₃O⁺] = 4.1×10⁻² M?",ans:"1.39",
+     steps:["pH = –log(4.1×10⁻²).","Calculator: –log(0.041) = <span class='calc'>1.39</span>.","Check: 4.1×10⁻² is between 10⁻¹ and 10⁻², so pH between 1 and 2. ✓"],
+     trick:"<b>Big [H₃O⁺] = small pH = strong acid.</b> A low pH like 1.39 means very acidic."},
+    {topic:"pH · Kw relationship",q:"What is the hydroxide ion concentration in a solution that has [H₃O⁺] = 1×10⁻⁶ M?",ans:"1×10⁻⁸ M",
+     steps:["[H₃O⁺] × [OH⁻] = 1×10⁻¹⁴.","[OH⁻] = 1×10⁻¹⁴ ÷ 1×10⁻⁶ = <span class='calc'>1×10⁻⁸ M</span>.","Exponent shortcut: –6 and –8 add to –14. ✓"],
+     trick:"<b>Exponents add to –14.</b> Given –6? Partner is –8. Instant answer."},
+    {topic:"% (w/v)",q:"What is the % (w/v) of a solution containing 8.0 g of alcohol in 0.05 L of solution?",ans:"16%",
+     steps:["Convert volume to mL: 0.05 L = 50 mL.","% (w/v) = (g ÷ mL) × 100 = <span class='calc'>(8.0 ÷ 50) × 100 = 16%</span>."],
+     trick:"<b>% (w/v) = grams per 100 mL.</b> Always convert liters → mL first."},
+    {topic:"pH → [OH⁻]",q:"The [OH⁻] of a solution with pH = 9.7 is ___.",ans:"5×10⁻⁵ M",
+     steps:["pOH = 14 – 9.7 = 4.3.","[OH⁻] = 10^(–4.3) = <span class='calc'>5×10⁻⁵ M</span> (calculator: 10 xʸ 4.3 +/–)."],
+     trick:"<b>Given pH, want OH⁻?</b> First pOH = 14 – pH, then 10^(–pOH)."},
+    {topic:"Buffers",q:"A buffer solution ___.",ans:"closely maintains its original pH",
+     steps:["A buffer <b>resists pH change</b> when acid or base is added.","It holds whatever pH it started at — not necessarily 7."],
+     trick:"<b>Buffer = shock absorber for pH.</b> It keeps the ride smooth when acid/base hits."},
+    {topic:"Solutions · Solute",q:"A mixture is prepared by dissolving 2 g of KCl in 100 g of H₂O. In this mixture, KCl is the ___.",ans:"solute",
+     steps:["The thing being dissolved (smaller amount) = <b>solute</b> → KCl.","The thing doing the dissolving (larger amount) = solvent → water."],
+     trick:"<b>Solute is the Smaller amount.</b> Water (the majority) is the solvent."},
+    {topic:"Molarity",q:"What is the molarity of a solution that contains 17 g of NH₃ in 0.50 L of solution?",ans:"2.0 M",
+     steps:["Molar mass NH₃ = 14.01 + 3(1.01) = 17.03 ≈ 17 g/mol.","Moles = 17 ÷ 17 = 1.0 mol.","M = moles ÷ liters = <span class='calc'>1.0 ÷ 0.50 = 2.0 M</span>."],
+     trick:"<b>Molarity = moles ÷ liters.</b> Get moles first (grams ÷ molar mass), then divide by volume."},
+    {topic:"Molarity",q:"What is the molarity of a solution that contains 58.5 g of sodium chloride in 0.500 L of solution?",ans:"2.00 M",
+     steps:["Molar mass NaCl = 22.99 + 35.45 = 58.44 ≈ 58.5 g/mol.","Moles = 58.5 ÷ 58.5 = 1.00 mol.","M = 1.00 ÷ 0.500 = <span class='calc'>2.00 M</span>."],
+     trick:"<b>58.5 g NaCl = exactly 1 mole.</b> A handy number to recognize on sight."},
+    {topic:"Dialysis · Colloids",q:"Starch (colloid), NaCl, glucose, and albumin (colloid) are placed in a dialysis bag in distilled water. Where is the albumin after dialysis?",ans:"Albumin inside",
+     steps:["Dialysis membranes let small particles (NaCl, glucose) pass through, but not large ones.","Albumin is a <b>colloid = too big</b> to cross → it stays <b>inside</b> the bag."],
+     trick:"<b>Big stays, small strays.</b> Colloids (proteins, starch) can't fit through the membrane's tiny pores."},
+  ]
+},
+];
+
+const content = document.getElementById('content');
+DATA.forEach((sec,si)=>{
+  const secEl = document.createElement('div');
+  secEl.className='section';
+  secEl.id='sec'+si;
+  secEl.innerHTML = `
+    <div class="section-head">
+      <div class="num">${si+1}</div>
+      <h2>${sec.title}</h2>
+      <span class="count">${sec.questions.length} questions</span>
+    </div>`;
+  sec.questions.forEach((qq,qi)=>{
+    const card = document.createElement('div');
+    card.className='card';
+    const stepsHtml = qq.steps.map(s=>`<li>${s}</li>`).join('');
+    card.innerHTML = `
+      <div class="q-top">
+        <div class="q-num">${qi+1}</div>
+        <div class="q-body">
+          <div class="q-topic">${qq.topic}</div>
+          <div class="q-text">${qq.q}</div>
+        </div>
+        <div class="chev">▸</div>
+      </div>
+      <div class="q-reveal">
+        <div class="reveal-inner">
+          <div class="answer">✓ Answer: <b>${qq.ans}</b></div>
+          <div class="steps-title">Easy way to solve it</div>
+          <ol class="steps">${stepsHtml}</ol>
+          <div class="trick"><span class="tlabel">💡 Memory trick</span>${qq.trick}</div>
+        </div>
+      </div>`;
+    card.querySelector('.q-top').addEventListener('click',()=>card.classList.toggle('open'));
+    secEl.appendChild(card);
+  });
+  content.appendChild(secEl);
+});
+
+function toggleAll(open){
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('open',open));
+}
+</script>
+</body>
+</html>
