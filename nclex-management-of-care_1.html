@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NCLEX-RN Management of Care — Activity Statement Workbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1b4f8a; --blue-lt:#e8f0f9; --blue-mid:#3d7ab8;
+  --green:#1f6b4a; --green-lt:#e6f3ec; --green-mid:#3f9670;
+  --purple:#5b3a86; --purple-lt:#f0eaf8; --purple-mid:#8360b5;
+  --yellow:#fdf6d8; --yellow-br:#d4a72c;
+  --red:#8c2f2f; --red-lt:#fbeaea;
+  --ink:#1c1c1e; --muted:#5b5f66; --rule:#d8dbe0; --paper:#ffffff; --bg:#f4f5f7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Source Sans Pro',-apple-system,Segoe UI,sans-serif;font-size:17px;line-height:1.62}
+h1,h2,h3,h4{font-family:Merriweather,Georgia,serif;line-height:1.3;margin:0}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px 60px}
+
+header.masthead{background:linear-gradient(160deg,#12304f 0%,#1b4f8a 55%,#5b3a86 100%);color:#fff;padding:34px 0 28px;margin-bottom:0}
+header.masthead .wrap{padding-bottom:0}
+header.masthead h1{font-size:1.85rem;font-weight:900;letter-spacing:-.4px}
+header.masthead .sub{margin-top:8px;font-size:1.02rem;opacity:.93;max-width:62ch}
+header.masthead .meta{margin-top:14px;font-size:.83rem;opacity:.8;letter-spacing:.3px;text-transform:uppercase}
+
+/* ---- how to use ---- */
+.howto{background:var(--paper);border:1px solid var(--rule);border-left:5px solid var(--blue);
+  border-radius:6px;padding:18px 22px;margin:24px 0 8px}
+.howto h3{font-size:1.05rem;margin-bottom:8px;color:var(--blue)}
+.howto ol{margin:0;padding-left:20px}
+.howto li{margin:5px 0}
+
+/* ---- tabs ---- */
+nav.tabs{position:sticky;top:0;z-index:40;background:var(--bg);padding:12px 0 10px;
+  border-bottom:1px solid var(--rule);margin-bottom:22px}
+nav.tabs .inner{max-width:1000px;margin:0 auto;padding:0 18px;display:flex;flex-wrap:wrap;gap:8px}
+.tab{border:1px solid var(--rule);background:var(--paper);color:var(--muted);
+  font-family:'Source Sans Pro',sans-serif;font-weight:600;font-size:.88rem;
+  padding:8px 14px;border-radius:20px;cursor:pointer;transition:.15s;white-space:nowrap}
+.tab:hover{border-color:var(--blue-mid);color:var(--blue)}
+.tab.on{color:#fff;border-color:transparent}
+.tab.on.c-blue{background:var(--blue)} .tab.on.c-green{background:var(--green)} .tab.on.c-purple{background:var(--purple)}
+.tab .n{opacity:.65;font-weight:400;margin-left:5px}
+
+/* ---- section head ---- */
+.sechead{border-radius:8px;padding:20px 24px;margin-bottom:22px;color:#fff}
+.sechead.c-blue{background:var(--blue)} .sechead.c-green{background:var(--green)} .sechead.c-purple{background:var(--purple)}
+.sechead h2{font-size:1.4rem;font-weight:900}
+.sechead p{margin:10px 0 0;font-size:1rem;opacity:.94;max-width:70ch}
+
+/* ---- bullet cards ---- */
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:8px;
+  margin-bottom:20px;overflow:hidden}
+.card .top{padding:16px 22px;border-bottom:1px solid var(--rule);display:flex;gap:12px;align-items:flex-start}
+.card.c-blue .top{background:var(--blue-lt)} .card.c-green .top{background:var(--green-lt)} .card.c-purple .top{background:var(--purple-lt)}
+.num{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  font-weight:700;font-size:.9rem;color:#fff}
+.c-blue .num{background:var(--blue)} .c-green .num{background:var(--green)} .c-purple .num{background:var(--purple)}
+.card .top h3{font-size:1.06rem;font-weight:700;flex:1}
+.star{display:inline-block;background:#2b2b2e;color:#fff;font-size:.63rem;font-weight:700;
+  letter-spacing:.5px;padding:2px 7px;border-radius:3px;margin-left:6px;vertical-align:2px}
+.body{padding:18px 22px 22px}
+.lbl{font-family:Merriweather,serif;font-size:.76rem;font-weight:700;letter-spacing:1.1px;
+  text-transform:uppercase;color:var(--muted);margin:20px 0 7px;display:block}
+.body>.lbl:first-child{margin-top:0}
+.body p{margin:0 0 10px}
+.body ol,.body ul{margin:0 0 10px;padding-left:22px}
+.body li{margin:6px 0}
+.k{font-weight:700}
+.term{background:#eef1f4;padding:1px 5px;border-radius:3px;font-size:.94em;font-weight:600}
+
+/* ---- callouts ---- */
+.clin{background:var(--yellow);border-left:5px solid var(--yellow-br);border-radius:0 5px 5px 0;
+  padding:13px 17px;margin:14px 0}
+.clin .h{font-family:Merriweather,serif;font-weight:700;font-size:.83rem;letter-spacing:.6px;
+  text-transform:uppercase;color:#7a5c07;display:block;margin-bottom:5px}
+.clin p{margin:0}
+.trap{background:var(--red-lt);border-left:5px solid var(--red);border-radius:0 5px 5px 0;
+  padding:13px 17px;margin:14px 0}
+.trap .h{font-family:Merriweather,serif;font-weight:700;font-size:.83rem;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--red);display:block;margin-bottom:5px}
+.trap p,.trap ul{margin:0} .trap ul{padding-left:20px}
+
+/* ---- practice ---- */
+.q{border:1px solid var(--rule);border-radius:7px;margin-top:20px;overflow:hidden}
+.q .qh{background:#2b2b2e;color:#fff;padding:8px 16px;font-size:.75rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+.q .qtype{opacity:.7;font-weight:400;letter-spacing:.4px;text-transform:none;font-size:.82rem}
+.q .qbody{padding:16px 18px}
+.q .stem{margin:0 0 12px}
+.opt{display:block;border:1px solid var(--rule);border-radius:5px;padding:9px 13px;margin:6px 0;
+  cursor:pointer;transition:.12s;background:#fff}
+.opt:hover{border-color:#9aa2ad;background:#fafbfc}
+.opt.sel{border-color:var(--blue);background:var(--blue-lt);font-weight:600}
+.opt.right{border-color:var(--green);background:var(--green-lt)}
+.opt.wrong{border-color:var(--red);background:var(--red-lt)}
+.opt .ol{font-weight:700;margin-right:8px;color:var(--muted)}
+.reveal{margin-top:12px;background:#2b2b2e;color:#fff;border:none;border-radius:5px;
+  padding:9px 18px;font-family:'Source Sans Pro',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer}
+.reveal:hover{background:#43434a}
+.rat{display:none;margin-top:14px;border-top:2px solid var(--rule);padding-top:13px}
+.rat.show{display:block}
+.rat .ans{font-weight:700;color:var(--green);margin:0 0 9px}
+.rat .why{margin:0 0 9px}
+.rat .take{background:#eef1f4;border-radius:5px;padding:10px 13px;margin:10px 0 0;font-size:.95rem}
+.rat .take b{font-family:Merriweather,serif;font-size:.78rem;letter-spacing:.8px;text-transform:uppercase;
+  display:block;color:var(--muted);margin-bottom:3px}
+
+/* ---- flowchart ---- */
+.flow{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:22px;margin:22px 0}
+.flow h3{font-size:1.12rem;margin-bottom:4px}
+.flow .cap{color:var(--muted);font-size:.92rem;margin:0 0 16px}
+.fbox{border:2px solid var(--blue);background:var(--blue-lt);border-radius:6px;padding:11px 15px;
+  margin:0 auto;max-width:660px;text-align:center;font-weight:600;font-size:.95rem}
+.fbox.d{border-color:var(--yellow-br);background:var(--yellow)}
+.fbox.stop{border-color:var(--red);background:var(--red-lt)}
+.fbox.go{border-color:var(--green);background:var(--green-lt)}
+.farrow{text-align:center;color:var(--muted);font-size:1.3rem;line-height:1;margin:7px 0}
+.fsplit{display:flex;gap:14px;max-width:660px;margin:0 auto;flex-wrap:wrap}
+.fsplit>div{flex:1;min-width:200px}
+.fsplit .tagl{text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.7px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+
+/* ---- quick ref ---- */
+.qrgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.qr{background:var(--paper);border:1px solid var(--rule);border-top:4px solid var(--purple);
+  border-radius:7px;padding:16px 18px}
+.qr h4{font-size:1rem;margin-bottom:8px;color:var(--purple)}
+.qr ul{margin:0;padding-left:19px} .qr li{margin:5px 0;font-size:.95rem}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.94rem}
+th,td{border:1px solid var(--rule);padding:8px 11px;text-align:left;vertical-align:top}
+th{background:#eef1f4;font-family:Merriweather,serif;font-size:.83rem;letter-spacing:.4px}
+
+/* ---- transfer prompts ---- */
+.transfer{background:#2b2b2e;color:#fff;border-radius:8px;padding:20px 24px;margin:8px 0 30px}
+.transfer h4{color:#fff;font-size:1rem;margin-bottom:9px}
+.transfer ul{margin:0;padding-left:20px} .transfer li{margin:7px 0;opacity:.92}
+
+.pane{display:none} .pane.on{display:block}
+.scorebar{position:sticky;bottom:0;background:#2b2b2e;color:#fff;padding:9px 18px;font-size:.85rem;
+  display:flex;justify-content:space-between;align-items:center;z-index:30}
+.scorebar button{background:none;border:1px solid #6b6b73;color:#fff;border-radius:4px;
+  padding:4px 11px;font-size:.8rem;cursor:pointer;font-family:'Source Sans Pro',sans-serif}
+footer{text-align:center;color:var(--muted);font-size:.83rem;padding:26px 18px 34px}
+
+@media print{
+  nav.tabs,.reveal,.scorebar,.howto{display:none!important}
+  .pane{display:block!important} body{background:#fff;font-size:11pt}
+  .rat{display:block!important} .card{break-inside:avoid;page-break-inside:avoid}
+  .q{break-inside:avoid} header.masthead{background:#1b4f8a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(max-width:640px){
+  body{font-size:16px} header.masthead h1{font-size:1.4rem}
+  .card .top,.body{padding-left:15px;padding-right:15px}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <h1>Management of Care — Activity Statement Workbook</h1>
+    <p class="sub">Every activity statement on this page of the NCLEX-RN Test Plan, unpacked three ways: what the statement is really testing, what the nurse actually does at the bedside, and an original practice item with full reasoning.</p>
+    <p class="meta">NCSBN NCLEX-RN Test Plan 2026 &middot; Client Needs: Safe and Effective Care Environment &rarr; Management of Care &middot; 27 activity statements</p>
+  </div>
+</header>
+
+<nav class="tabs"><div class="inner" id="tabs"></div></nav>
+
+<div class="wrap">
+  <div class="howto">
+    <h3>How to work this</h3>
+    <ol>
+      <li>Read <b>What it is really testing</b> first. Do not skip to the question. The test plan statement is a verb plus an object — the verb tells you which clinical judgment step is being measured, and that is the whole game.</li>
+      <li>Read <b>What the nurse actually does</b> and say it out loud in your own words. If you cannot say it without reading it, you do not have it yet.</li>
+      <li>Answer the practice item <b>before</b> revealing the rationale. Commit to an option. Guessing and then reading is how people memorize rationales instead of building judgment.</li>
+      <li>After the rationale, answer this out loud: <i>what would have to change in the stem for a different option to become correct?</i> That question is where the transfer happens.</li>
+    </ol>
+  </div>
+  <div id="panes"></div>
+</div>
+
+<div class="scorebar">
+  <span id="score">Answered 0 of 27 &middot; 0 correct</span>
+  <button onclick="resetAll()">Reset all</button>
+</div>
+
+<footer>Tehrani 2028</footer>
+
+<script>
+/* ============ DATA ============ */
+const SECTIONS = [];
+SECTIONS.push({
+tab:'Informed Consent', color:'blue',
+title:'Ethical Practice (carryover) &amp; Informed Consent',
+blurb:'Consent is not a signature. It is a conversation that a signature documents. Almost every item in this cluster turns on one question: did the right person, with the legal capacity to decide, actually understand what they were agreeing to before anything was done to their body?',
+pre:'<div class="flow"><h3>Who is allowed to give consent?</h3><p class="cap">Walk this every time. The order matters, and skipping a step is how a nurse ends up witnessing a signature that is legally worthless.</p>'+
+'<div class="fbox d">Is the client an adult (or an emancipated minor) who is alert, oriented, and not premedicated?</div>'+
+'<div class="farrow">&darr;</div>'+
+'<div class="fsplit">'+
+ '<div><div class="tagl">Yes</div><div class="fbox go">The client consents. Nobody else. Not the spouse, not the adult child, not the person who drove them in.</div></div>'+
+ '<div><div class="tagl">No</div><div class="fbox">Go to the surrogate ladder &rarr;</div></div>'+
+'</div>'+
+'<div class="farrow">&darr;</div>'+
+'<div class="fbox">1. Health care proxy / durable power of attorney for health care named by the client &nbsp;&rarr;&nbsp; 2. Court-appointed guardian &nbsp;&rarr;&nbsp; 3. Next of kin in the order your state statute lists (typically spouse, then adult child, then parent, then sibling)</div>'+
+'<div class="farrow">&darr;</div>'+
+'<div class="fbox d">No surrogate reachable AND the delay would threaten life or limb?</div>'+
+'<div class="farrow">&darr;</div>'+
+'<div class="fsplit">'+
+ '<div><div class="tagl">Yes</div><div class="fbox go">Emergency doctrine. Consent is implied. Treat. Document the emergency, the attempts to reach a surrogate, and the times.</div></div>'+
+ '<div><div class="tagl">No</div><div class="fbox stop">Stop. Do not proceed. Keep trying to reach the decision maker and notify the provider.</div></div>'+
+'</div></div>',
+items:[
+{n:1, star:false, stmt:'Evaluate outcomes of interventions to promote ethical practice <span style="font-weight:400;color:#5b5f66">(carryover from Ethical Practice)</span>',
+testing:'<p>This is the sixth step of the clinical judgment model applied to an ethical problem instead of a physiologic one. You already know how to evaluate a fever after acetaminophen — you look for the temperature to come down. Here, the intervention was ethical (an ethics consult, a values clarification conversation, an advocacy phone call), and you have to name what the measurable improvement would look like.</p><p>The verb is <span class="term">evaluate</span>, which means the item will hand you an ethical action that already happened and ask you what result tells you it worked.</p>',
+does:'<ol><li>Name the ethical intervention that was performed: ethics committee consult, family meeting, chaplain referral, advance directive review, transfer of a client away from a nurse with a conscientious objection.</li><li>State the expected outcome in observable terms. Not "the family feels better." Rather: the family and the team have stated the same goal of care; the code status in the chart now matches what the client said out loud; the client can describe an alternative to the treatment she is refusing.</li><li>Re-collect the data. Ask the client. Read the note. Look at the order.</li><li>If the outcome was not met, escalate again rather than documenting a false resolution.</li></ol>',
+clin:'<p>A client with metastatic pancreatic cancer keeps saying "I am done" while his daughter keeps signing consents for the next line of chemotherapy. The ethics consult happens. The outcome that proves it worked is not that everybody stopped arguing. It is that a goals-of-care note now exists, the code status order matches the client\'s stated wish, and the daughter can articulate what her father wants even if she disagrees with it.</p>',
+trap:'<p>Selecting an outcome that measures <b>comfort with the process</b> rather than <b>resolution of the ethical problem</b>. "The family verbalized appreciation for the meeting" is a satisfaction outcome, not an ethical one. Agreement is also not the target — a family can remain unhappy while the client\'s autonomy is fully protected, and that is a success.</p>',
+q:{type:'Single best answer', stem:'A nurse advocated for an ethics consultation after a client with intact decision-making capacity repeatedly refused hemodialysis while his son insisted it be started. The consult occurred two days ago. Which finding <b>best</b> indicates the intervention achieved its purpose?',
+opts:['The son now states that he agrees his father should stop dialysis.','The client\'s chart contains a documented goals-of-care discussion, and the treatment plan reflects the client\'s stated refusal.','The nephrologist has discharged the client to home hospice.','Nursing staff report less conflict at the bedside during shift report.'],
+correct:[1],
+why:'<p><b>B is correct.</b> The ethical problem was a threat to the client\'s autonomy. The outcome that proves the problem is resolved is that the decision now on record belongs to the client and the plan of care follows it. That is observable, chartable, and directly tied to the principle at stake.</p><p><b>A</b> measures the son\'s agreement. A competent client\'s right to refuse does not become valid when the family finally endorses it — it was valid on day one. Making agreement the endpoint quietly re-installs the family as the decision maker. <b>C</b> is a possible downstream consequence, not evidence the ethical process worked; a client can refuse dialysis and decline hospice too. <b>D</b> measures staff comfort. Conflict decreasing is pleasant and irrelevant to whether autonomy was protected.</p>',
+take:'Evaluate an ethical intervention by asking whether the person with the right to decide is the one whose decision is now in the chart and in the orders. Harmony is not the outcome measure.'}},
+
+{n:2, star:false, stmt:'Identify appropriate person to provide informed consent for client',
+testing:'<p>Two separate things have to be true about the person signing: they must have <span class="term">capacity</span> (they can understand and communicate a choice right now) and they must have <span class="term">authority</span> (the law says this decision is theirs to make). A confused client has lost capacity. A perfectly lucid husband never had authority in the first place if his wife can speak for herself.</p><p>Notice that competence and capacity are not the same word. <b>Competence is a legal status that only a court can remove.</b> Capacity is a clinical judgment you make at the bedside, and it can come and go with sedation, delirium, or a low blood sugar.</p>',
+does:'<ol><li>Confirm the client is an adult, alert, and oriented, and has <b>not</b> received preoperative sedation, opioids, or anxiolytics. Once a benzodiazepine is on board, that client cannot sign.</li><li>If the client cannot decide, look for a health care proxy or durable power of attorney for health care in the chart first. A designated agent outranks the next of kin every time.</li><li>If no agent exists, follow your state statute for surrogate order, then a court-appointed guardian if one has been named.</li><li>For a minor: the parent or legal guardian consents, unless the minor is emancipated (married, in the military, court-declared) or the care falls into a state carve-out such as prenatal care, sexually transmitted infection treatment, or substance use treatment.</li><li>In a true emergency with no reachable decision maker, consent is implied. Document what you tried and when.</li></ol>',
+clin:'<p>Your client is 78, admitted for a hip fracture, and answers every question with "whatever my daughter thinks." She is oriented, she knows the year, she can tell you what a hip replacement is. She still has capacity. Deferring to her daughter is a preference, not a transfer of authority — the client must sign, and she may consult her daughter while doing so.</p>',
+trap:'<ul><li>Treating <b>confused</b> as automatically <b>incompetent</b>. Disorientation to time in an 80-year-old at 0300 is not a legal determination.</li><li>Assuming the spouse automatically decides. If the client named her brother as health care agent, the brother decides and the husband does not.</li><li>Letting a client sign after the versed. That consent is void, and the nurse who witnessed it owns the problem.</li></ul>',
+q:{type:'Single best answer', stem:'A client scheduled for an emergency appendectomy received midazolam 20 minutes ago for anxiety. The surgical consent form is unsigned. The client\'s adult daughter is at the bedside; the client has a health care power of attorney naming his brother, who is two hours away by car but reachable by phone. What should the nurse do <b>first</b>?',
+opts:['Have the daughter sign the consent form as the available family member.','Ask the client to sign now, while he is calm and cooperative.','Notify the surgeon that the client has been sedated and that the designated health care agent must be contacted.','Document that consent is implied because the surgery is an emergency.'],
+correct:[2],
+why:'<p><b>C is correct.</b> The sedation removed the client\'s capacity, so the signature must come from the person with legal authority — the named health care agent, the brother. He is reachable. The nurse\'s job is to stop the process and tell the surgeon, who holds the duty to disclose, so the discussion can happen by phone.</p><p><b>A</b> substitutes convenience for authority. A designated agent outranks any other relative, and the daughter has no standing while the brother exists and can be reached. <b>B</b> is the single most dangerous option: a signature obtained after midazolam is not informed consent, and witnessing it makes the nurse party to it. <b>D</b> misapplies the emergency doctrine, which requires that no decision maker be available — this one is a phone call away.</p>',
+take:'Implied consent is a last resort, not a shortcut. Before you use it, you must be able to document that the person with authority could not be reached.'}},
+
+{n:3, star:false, stmt:'Provide written materials in client&rsquo;s spoken language, when possible',
+testing:'<p>Consent that is not understood is not consent. Language access is not a courtesy — under federal civil rights law, a facility receiving federal funds must provide meaningful access, and that includes documents the client can actually read.</p><p>Watch the wording of the statement: <b>spoken</b> language, and <b>when possible</b>. The test plan is acknowledging that a translated form may not exist for every language and that some clients cannot read in any language. Your fallback is a qualified interpreter, not a family member.</p>',
+does:'<ol><li>Identify the client\'s preferred language for health care discussions on admission and flag it in the record.</li><li>Provide the consent form and teaching materials in that language when the translated version exists.</li><li>Use a <b>qualified medical interpreter</b> — in person, telephonic, or video — for the disclosure conversation. Document the interpreter\'s name or identification number.</li><li>Use teach-back. Ask the client to explain the procedure back to you in their own words. Never ask "do you understand?" — the answer is always yes.</li><li>Assess literacy separately from language. A translated form is useless to a client who cannot read; read it aloud through the interpreter.</li></ol>',
+clin:'<p>A Farsi-speaking client is nodding along while her son translates the surgeon\'s explanation of a mastectomy. The son shortens "we will remove the entire breast and sample the lymph nodes" into "they will take out the lump." She signs. Nothing about that consent is valid, and the nurse standing there watching it happen is the person who was supposed to stop it.</p>',
+trap:'<ul><li>Using family members, especially children, as interpreters. They edit for emotional protection, they lack the vocabulary, and they destroy confidentiality.</li><li>Using a bilingual staff member who has not been qualified as an interpreter by the facility.</li><li>Assuming a nodding client understands. Nodding is often politeness or the effort to appear cooperative.</li></ul>',
+q:{type:'Select all that apply', stem:'A client who speaks only Vietnamese is scheduled for a cardiac catheterization. Which nursing actions support valid informed consent? <b>Select all that apply.</b>',
+opts:['Arrange a facility-approved medical interpreter for the provider\'s disclosure conversation.','Provide the consent form and procedure teaching sheet in Vietnamese if available.','Ask the client\'s 16-year-old granddaughter to translate to save time.','Document the interpreter\'s name or identification number in the medical record.','Ask the client to describe the procedure and its risks back through the interpreter before witnessing the signature.','Have the client sign the English form and note that language was a barrier.'],
+correct:[0,1,3,4],
+why:'<p><b>A, B, D, and E are correct.</b> Together they create a defensible chain: the disclosure happened in a language the client understands, the written material matched, the interpreter is identifiable if the record is ever reviewed, and teach-back demonstrated comprehension rather than assuming it.</p><p><b>C</b> is wrong on three counts — a minor interpreter, an untrained interpreter, and a confidentiality breach. Even a well-meaning adult relative filters and softens. <b>F</b> documents the problem instead of solving it. Noting a barrier in the chart does not cure an invalid consent; it creates a written record that the nurse knew consent was not informed and proceeded anyway.</p>',
+take:'When a language barrier appears in a stem, the correct action always removes the barrier. Options that document the barrier, work around it, or accept it are distractors.'}},
+
+{n:4, star:false, stmt:'Describe components of informed consent',
+testing:'<p>This is a recall statement, but the NCLEX will test it by giving you a disclosure conversation with one element missing and asking what the nurse should do. So you need the list cold, and you need to notice absences.</p>'+
+'<table><tr><th>Component</th><th>What it sounds like at the bedside</th></tr>'+
+'<tr><td>Nature and purpose of the procedure</td><td>What we are doing and why</td></tr>'+
+'<tr><td>Who will perform it</td><td>Named provider, and whether trainees participate</td></tr>'+
+'<tr><td>Expected benefits</td><td>What we hope changes</td></tr>'+
+'<tr><td>Material risks and complications</td><td>The ones a reasonable person would want to weigh</td></tr>'+
+'<tr><td>Reasonable alternatives</td><td>Including doing nothing, and what happens if we do nothing</td></tr>'+
+'<tr><td>Right to refuse or withdraw</td><td>At any time, including after signing</td></tr>'+
+'<tr><td>Opportunity to ask questions</td><td>Answered before the signature, not after</td></tr>'+
+'<tr><td>Voluntariness</td><td>No coercion, no pressure, no bundling with pain medication</td></tr></table>',
+does:'<ol><li>Listen for all eight during the provider\'s discussion. The two most commonly omitted are <b>alternatives including no treatment</b> and <b>the right to withdraw</b>.</li><li>If a component is missing, stop the process and get the provider back before the client signs.</li><li>Explain to the client that signing does not lock them in — consent can be withdrawn at any point, including in the pre-op holding area.</li></ol>',
+trap:'<p>Believing the form <b>is</b> the consent. The signed paper is evidence that a disclosure occurred. If the disclosure was incomplete, a perfect signature on a perfect form still means the client did not consent, and the paper becomes evidence against the facility rather than for it.</p>',
+q:{type:'Single best answer', stem:'After the surgeon explains a planned laparoscopic cholecystectomy, a client says, "So there is really no other option — it is either the surgery or I just live with this pain forever, right?" The consent form is on the bedside table, unsigned. Which action by the nurse is <b>most appropriate</b>?',
+opts:['Reassure the client that surgery is the standard treatment for symptomatic gallstones.','Explain the available alternatives, including medical management and taking no action.','Ask the client to sign the form and document that questions were answered.','Notify the surgeon that the client requires additional discussion of alternatives before signing.'],
+correct:[3],
+why:'<p><b>D is correct.</b> The client\'s question reveals that a required component of disclosure — reasonable alternatives, including no treatment — was not covered. The duty to disclose belongs to the provider performing the procedure. The nurse recognizes the gap and returns the conversation to the person legally responsible for it.</p><p><b>B</b> is tempting because the information is accurate and the nurse may well know it. But supplying the missing disclosure is the surgeon\'s legal duty, and a nurse who fills that gap has stepped outside the witnessing role and assumed liability for the adequacy of the explanation. Reinforcing and clarifying what the provider already said is in scope; supplying an omitted element is not. <b>A</b> answers a different question and pushes the client toward the procedure. <b>C</b> documents something that did not happen.</p>',
+take:'The nurse clarifies and reinforces disclosure. The nurse does not create it. When an element is missing, the correct action returns the provider to the bedside.'}},
+
+{n:5, star:false, stmt:'Participate in obtaining informed consent',
+testing:'<p>The word is <span class="term">participate</span>, and it is doing heavy lifting. The nurse does not obtain consent for a procedure she is not performing. She participates by verifying three things and documenting them.</p><p>Think of it as a chain of custody. The provider makes the disclosure. The nurse verifies the client is who they say they are, appears to understand what was said, and is signing freely. Then the nurse witnesses the signature.</p>',
+does:'<ol><li><b>Verify identity</b> using two identifiers.</li><li><b>Verify comprehension</b> with teach-back. "Tell me in your own words what is going to happen tomorrow."</li><li><b>Verify voluntariness.</b> Ask directly whether anyone is pressuring them.</li><li><b>Verify the form is complete</b> — correct procedure, correct site and side, correct date, no blanks.</li><li><b>Witness the signature</b> and document your role, the time, and that the client had the opportunity to ask questions.</li><li>If the client cannot restate the plan, or expresses doubt: <b>stop</b>. Do not premedicate. Notify the provider.</li></ol>',
+clin:'<p>Your client says, "They are taking the left knee, right?" and the form says right knee. That single sentence is the entire reason the nurse is in the room. Stop. Do not correct the client. Do not correct the form. Notify the surgeon and let the discrepancy be resolved by the person who will hold the saw.</p>',
+trap:'<p>Answering the client\'s procedural questions to keep the schedule moving. A well-intentioned nurse who explains graft options to a client who did not understand the surgeon has just become the discloser of record. Reinforce, clarify, and escalate — do not substitute.</p>',
+q:{type:'Ordered response &mdash; place in the correct sequence', stem:'A client is scheduled for a bronchoscopy. The pulmonologist has completed the disclosure discussion and left the unit. Number the nurse\'s actions in the order they should occur. <i>(Select the option that shows the correct sequence.)</i>',
+opts:['Witness the signature &rarr; verify identity &rarr; ask the client to restate the procedure &rarr; check the form for blanks &rarr; administer the ordered midazolam','Verify identity with two identifiers &rarr; ask the client to restate the procedure and risks &rarr; confirm the form is complete and voluntary &rarr; witness the signature &rarr; administer the ordered midazolam','Administer the ordered midazolam &rarr; verify identity &rarr; witness the signature &rarr; ask the client to restate the procedure &rarr; check the form','Check the form for blanks &rarr; witness the signature &rarr; verify identity &rarr; administer the ordered midazolam &rarr; ask the client to restate the procedure'],
+correct:[1],
+why:'<p><b>B is correct.</b> Identity comes first, because everything after it is meaningless if you are talking to the wrong person. Comprehension is verified next, while the client is still unmedicated and can demonstrate it. Completeness and voluntariness are confirmed, then the signature is witnessed. Sedation is <b>always last</b> — it is the step that ends the client\'s capacity to consent.</p><p><b>A, C, and D</b> all place the signature or the sedation before comprehension is verified. <b>C</b> is the worst: every consent step after that midazolam is legally void.</p>',
+take:'In any consent sequence, sedation is the final action. If an option places a benzodiazepine or opioid before the signature, eliminate it without reading further.'}},
+
+{n:6, star:true, stmt:'Verify the client receives education and consents for care and procedures',
+testing:'<p>The first five statements built the consent. This one maintains it. Consent is not a one-time event that clears the client for everything that follows — it is procedure-specific, it can expire, and it can be withdrawn.</p><p>The verb <span class="term">verify</span> means checking that something is still true at the moment it matters, which is why this statement lives in the pre-procedure pause, the hand-off, and the surgical time-out.</p>',
+does:'<ol><li>Before transport or premedication, confirm the signed consent is in the record and matches the scheduled procedure, site, and side.</li><li>Confirm nothing material has changed since the signature — a new diagnosis, a change in surgical plan, or a different surgeon voids the original consent and requires a new one.</li><li>Confirm the client has not withdrawn. Ask.</li><li>Participate in the time-out: right client, right procedure, right site, correct consent, correct positioning, available implants.</li><li>Honor a withdrawal <b>immediately</b>, at any point, including in the holding area with the room open and the team scrubbed. Notify the provider and document the client\'s words.</li></ol>',
+clin:'<p>Consent for a "diagnostic laparoscopy" does not cover an appendectomy the surgeon decides to do while inside, unless the consent explicitly included that possibility or an emergency arises intraoperatively. This is exactly why consent forms carry language about additional indicated procedures — and exactly why the nurse reads what the form actually says instead of assuming.</p>',
+trap:'<p>Treating a withdrawal as a delay to be negotiated. "Let me get the surgeon so he can explain it again" sounds helpful, but if the client has said no, the correct action is to stop and notify — not to arrange more persuasion. Continuing after a clear refusal is battery.</p>',
+q:{type:'Single best answer', stem:'A client is in the pre-operative holding area, has signed consent for a total knee arthroplasty, and has received no medications. As the transport team arrives the client grips the nurse\'s arm and says, "I have changed my mind. I am not doing this today." Which action should the nurse take <b>first</b>?',
+opts:['Explain that the operating room and surgical team are already prepared and ask the client to reconsider.','Hold the transport, notify the surgeon of the client\'s withdrawal of consent, and document the client\'s statement.','Ask the client\'s spouse to help talk the client through the anxiety.','Reassure the client that anxiety before surgery is normal and proceed with transport.'],
+correct:[1],
+why:'<p><b>B is correct.</b> Consent may be withdrawn at any time, for any reason or no reason, up to and including the moment before incision. The nurse stops the process, notifies the provider, and documents in the client\'s own words. Whether the client later changes his mind again is his decision to make, unpressured.</p><p><b>A</b> uses institutional cost as leverage, which is coercion. <b>C</b> recruits a family member to apply pressure the nurse is not permitted to apply directly. <b>D</b> reframes a competent refusal as a symptom and then proceeds — this is the option that becomes battery.</p>',
+take:'A competent client\'s refusal is a stop order, not a problem to be solved. Any option that continues toward the procedure, or that recruits someone else to persuade, is wrong regardless of how kind it sounds.'}}
+],
+transfer:[
+ 'A client is oriented but illiterate, and the consent form is in her language. What changes about your process?',
+ 'The health care agent named in the chart is unreachable, the client is unconscious, and the surgery can safely wait six hours. What is the correct action, and what makes it different from a true emergency?',
+ 'Which single component of informed consent, if omitted, most often turns a signed form into an invalid consent — and why does that one get skipped so often?'
+]
+});
+SECTIONS.push({
+tab:'Information Technology', color:'blue',
+title:'Information Technology',
+blurb:'This cluster is not about computers. It is about the accuracy and security of the information that clinical decisions are built on. An order you did not verify, a note you charted from memory at 1900, a chart you opened because you were curious — each one is a safety failure wearing an IT costume.',
+items:[
+{n:1, star:true, stmt:'Receive, verify and implement health care provider orders',
+testing:'<p>Three verbs, three separate obligations. <span class="term">Receive</span> it correctly. <span class="term">Verify</span> that it is complete, legible, appropriate for this client, and within your scope. Only then <span class="term">implement</span>. The NCLEX loves the middle verb, because that is the one nurses skip when they are busy.</p><p>A complete medication order has five parts: drug, dose, route, frequency, and — for anything not scheduled — the indication. Missing any one of them means the order is not implementable, no matter how obvious the missing piece seems.</p>',
+does:'<ol><li>For a verbal or telephone order: <b>write it down, read it back, obtain confirmation.</b> That is the sequence and the NCLEX tests it in that order. Accept verbal orders only in an emergency or when the provider is sterile.</li><li>Have the provider countersign within the facility timeframe, typically 24 hours.</li><li>Refuse and clarify any order with a dangerous abbreviation: <span class="term">U</span> for units, <span class="term">IU</span>, <span class="term">QD</span>, <span class="term">QOD</span>, <span class="term">MS</span>, a trailing zero (1.0 mg), or a missing leading zero (.5 mg).</li><li>Question an order that is illegible, incomplete, contraindicated by an allergy or a current lab value, or outside the usual dose range. Question it to the prescriber directly.</li><li>If the prescriber insists and you still believe the order is unsafe, <b>do not implement it.</b> Escalate up the chain of command and document each step. "I was following orders" is not a legal defense for a nurse.</li></ol>',
+clin:'<p>Order reads: <i>Insulin glargine 10U subcut daily.</i> Two problems. The <b>U</b> can be misread as a zero, turning 10 units into 100 units, which is the classic insulin overdose. Clarify to "10 units." This is not pedantry — it is one of the most reliably fatal transcription errors in hospital medicine.</p>',
+trap:'<ul><li>Reading the order back <b>before</b> writing it down. The sequence exists because writing first is what catches the mishearing.</li><li>Implementing an incomplete order by supplying the missing route or frequency from experience.</li><li>Escalating to the charge nurse and then giving the drug anyway because the provider got annoyed. Escalation without withholding is not escalation.</li></ul>',
+q:{type:'Single best answer', stem:'A nurse receives a telephone order from a provider for a client with acute kidney injury: "Give ketorolac 30 milligrams IV every 6 hours for pain." The client\'s creatinine this morning is 3.1 mg/dL, up from 1.0 mg/dL on admission. Which action should the nurse take?',
+opts:['Write the order down, read it back for confirmation, and administer the first dose.','Write the order down, read it back, then hold the medication and discuss the rising creatinine with the provider before administering.','Administer the dose and notify the provider of the creatinine after the first administration.','Enter the order as written and ask the pharmacist to contact the provider.'],
+correct:[1],
+why:'<p><b>B is correct.</b> Read-back is required, but read-back only verifies that the order was <b>heard</b> correctly — it does not verify that the order is <b>appropriate</b>. Ketorolac is an NSAID and is contraindicated in acute kidney injury; giving it to a client whose creatinine has tripled would worsen the injury. The nurse completes the read-back, then withholds and clarifies.</p><p><b>A</b> performs the receiving step flawlessly and then skips verification entirely. <b>C</b> reverses the order of harm and notification — once the drug is in, the notification is a report of an event rather than a prevention of one. <b>D</b> delegates the nurse\'s independent judgment to pharmacy while the order stands active; the nurse remains accountable for what she administers.</p>',
+take:'Read-back confirms accuracy of transmission, never appropriateness of content. A correctly transcribed unsafe order is still an unsafe order, and the nurse who administers it owns it.'}},
+
+{n:2, star:false, stmt:'Apply knowledge of facility regulations when accessing client records',
+testing:'<p>HIPAA\'s <span class="term">minimum necessary</span> standard, translated into a rule you can apply at 0200: open the chart only for a client you are caring for, only for information you need to care for them, only under your own login.</p><p>The item will usually give you a sympathetic reason to look — a coworker was admitted, your aunt is on the floor upstairs, the client is a local celebrity, you want to see how a former patient did. Every one of those is a violation.</p>',
+does:'<ol><li>Access records only for clients assigned to you or for whom you have a legitimate care role.</li><li>Use your own unique credentials. Never share a password, never chart under someone else\'s open session, log off every time you step away.</li><li>Do not photograph any screen or document, and never post anything about a client on social media — including de-identified stories, because context re-identifies people.</li><li>Do not access your own record through the clinical system; request it through health information management like any other person.</li><li>Report a suspected breach through the facility\'s process. Failing to report is itself a violation.</li><li>Release information outside the facility only with a signed authorization, or under a permitted exception such as mandated reporting.</li></ol>',
+clin:'<p>A nurse looks up her son\'s girlfriend\'s chart after the girlfriend mentions an ER visit. She does not tell anyone what she saw. Audit logs catch it anyway. The absence of disclosure does not matter — the <b>access</b> is the violation, and it is terminable and reportable to the board of nursing.</p>',
+trap:'<p>Believing that "I did not tell anyone" or "I was just checking on her" is a defense. It is not. The other frequent trap: assuming that a client\'s family member has an automatic right to information. Adult clients decide who may be told, and that decision is documented, not assumed.</p>',
+q:{type:'Select all that apply', stem:'Which nurse actions violate client privacy regulations? <b>Select all that apply.</b>',
+opts:['Reviewing the chart of a client on another unit whom the nurse cared for last week, to see whether the client improved.','Discussing a client\'s wound care plan with the wound ostomy nurse who was consulted on the case.','Logging in with a coworker\'s credentials because the nurse\'s own account is locked out.','Photographing a client\'s pressure injury with a personal cell phone to show the provider.','Accessing a hospitalized coworker\'s record after the coworker asks the nurse to check the lab results.','Leaving a computer workstation logged in while stepping into a client room across the hall.'],
+correct:[0,2,3,4,5],
+why:'<p><b>A, C, D, E, and F are violations.</b> <b>A</b> is curiosity, not care — the treatment relationship ended. <b>C</b> destroys the audit trail and misattributes every action taken in that session. <b>D</b> puts protected health information on an unsecured personal device; use the facility\'s approved imaging system. <b>E</b> is the subtle one: verbal permission from a coworker does not authorize access through the clinical record. The coworker can view her own results through the patient portal or request them formally. <b>F</b> leaves the record open to anyone walking past, under your name.</p><p><b>B</b> is appropriate. A consulted specialist is part of the treatment team, and sharing information needed for that consult is exactly what the minimum necessary standard permits.</p>',
+take:'The test for legitimate access is a current treatment relationship plus a care-related need. Permission from the client, curiosity, and good intentions do not create access rights.'}},
+
+{n:3, star:false, stmt:'Access data for client through online databases and journals',
+testing:'<p>This is evidence-based practice as an information-retrieval skill. The item will ask you to choose the best source, and "best" means the highest level of evidence that is current and relevant to your clinical question.</p>'+
+'<table><tr><th>Level</th><th>Source type</th><th>Where you meet it</th></tr>'+
+'<tr><td>Strongest</td><td>Systematic review / meta-analysis</td><td>Cochrane Library</td></tr>'+
+'<tr><td></td><td>Randomized controlled trial</td><td>PubMed, CINAHL</td></tr>'+
+'<tr><td></td><td>Cohort and case-control studies</td><td>PubMed, CINAHL</td></tr>'+
+'<tr><td></td><td>Qualitative and descriptive studies</td><td>CINAHL</td></tr>'+
+'<tr><td>Weakest</td><td>Expert opinion, case report, editorial</td><td>Anywhere, including textbooks</td></tr></table>',
+does:'<ol><li>Turn the clinical problem into an answerable question before you search — population, intervention, comparison, outcome.</li><li>Search peer-reviewed databases: <b>CINAHL</b> for nursing, <b>PubMed</b> for biomedical literature, <b>Cochrane</b> for synthesized evidence.</li><li>Screen for currency. Generally within five years, unless the work is a landmark study that has not been superseded.</li><li>Check that the study population resembles your client. An RCT in healthy 25-year-olds does not settle a question about an 88-year-old with heart failure.</li><li>Reconcile the evidence with facility policy and the client\'s values before changing anything. Evidence alone does not authorize practice change; policy does.</li></ol>',
+trap:'<p>Choosing the source that is <b>most recent</b> over the source that is <b>strongest</b>. A 2024 case report does not outrank a 2021 meta-analysis. The other trap: treating a drug manufacturer\'s website or a consumer health page as a clinical source.</p>',
+q:{type:'Single best answer', stem:'A unit council is deciding whether to change its practice for preventing catheter-associated urinary tract infections. Which source should the nurse recommend as the <b>strongest</b> basis for the decision?',
+opts:['A 2025 case report describing a novel catheter securement technique.','A 2022 Cochrane systematic review of strategies to reduce catheter-associated urinary tract infection.','A 2025 continuing education webinar presented by an infection prevention expert.','A 2024 product brochure summarizing clinical data on an antimicrobial-coated catheter.'],
+correct:[1],
+why:'<p><b>B is correct.</b> A systematic review pools and critically appraises multiple studies, which places it at the top of the evidence hierarchy. Being three years old does not weaken it relative to the alternatives offered.</p><p><b>A</b> is a single uncontrolled observation — the weakest form of published evidence. <b>C</b> is expert opinion, which is useful for context and near the bottom of the hierarchy. <b>D</b> is marketing material with a financial interest in the conclusion, regardless of how much data it contains.</p>',
+take:'Rank by level of evidence first, recency second. Newer is not stronger, and a single case does not overturn synthesized findings.'}},
+
+{n:4, star:false, stmt:'Enter computer documentation accurately, completely and in a timely manner',
+testing:'<p>Three adjectives, and each maps to a distinct legal exposure. <span class="term">Accurate</span> — what actually happened, in objective terms. <span class="term">Complete</span> — the assessment, the intervention, and the client\'s response, which is the part everyone forgets. <span class="term">Timely</span> — at or near the point of care, because a note written at the end of shift is a memory, not a record.</p>',
+does:'<ol><li>Chart at the point of care whenever possible. Never chart in advance — documenting a medication before giving it is falsification, and it is how a dose gets given twice or not at all.</li><li>Record objective data and use direct quotation for subjective data. Write "client states, I feel like I cannot get a breath," not "client is anxious."</li><li>Document the <b>response</b>. "Morphine 2 mg IV given" is half a note. "Pain 8/10 before, 3/10 at 30 minutes, respirations 16" is a complete one.</li><li>Correct an error according to policy: single line through, initial and date, enter the correction. In the electronic record, use the addendum function. Never delete, never backdate, never write over.</li><li>Label a late entry as a late entry, with the time of the event and the time of documentation.</li><li>Document objectively that an incident occurred and what was assessed and done. Do <b>not</b> chart that an incident report was filed — that report is an internal quality document, not part of the medical record.</li></ol>',
+clin:'<p>A client falls. The nurse charts the assessment, vital signs, provider notification, and neuro checks — and then adds "incident report completed." That last phrase pulls the internal report into the discoverable medical record and strips its protection. The event goes in the chart. The report does not.</p>',
+trap:'<ul><li>Charting interpretation instead of observation: "appears intoxicated," "is drug-seeking," "uncooperative." Describe the behavior; let the reader interpret.</li><li>Blank-charting the shift at 1845 and calling it timely.</li><li>Deleting an entry rather than amending it. In an electronic record the deletion is visible anyway, and now it looks like concealment.</li></ul>',
+q:{type:'Single best answer', stem:'At 1400 a nurse realizes that a dressing change performed at 1030 was never documented. Which entry is <b>most appropriate</b>?',
+opts:['Enter the documentation into the 1030 time slot so the record reads chronologically.','Ask the oncoming nurse to document the dressing change during the next shift.','Enter a late entry at 1400 stating the date and time of the dressing change and the findings observed at that time.','Omit the entry, since the dressing change was routine and the wound was unchanged.'],
+correct:[2],
+why:'<p><b>C is correct.</b> A late entry is entirely legitimate as long as it is labeled as one, gives the actual time of the event, and is entered at the time it is written. That preserves both the truth of what happened and the truth of when it was recorded.</p><p><b>A</b> is backdating. It makes the record look cleaner and makes the nurse look dishonest if the audit trail is ever examined — and in an electronic record, it always can be. <b>B</b> asks someone to document care she did not provide and did not witness, which is falsification by both nurses. <b>D</b> creates a gap; care that is not documented is legally treated as care that was not given.</p>',
+take:'A late entry is honest. A backdated entry is fraud. The difference is whether the record shows when you actually wrote it.'}},
+
+{n:5, star:true, stmt:'Utilize resources to promote quality client care (e.g., evidence-based research, information technology, policies and procedures)',
+testing:'<p>The safest nurse is not the one who knows everything. It is the one who reliably knows where to look and does it before acting. This statement is testing whether you reach for the right resource under pressure instead of relying on memory.</p><p>Notice that <b>facility policy and procedure</b> is listed alongside research. When a policy and a journal article conflict, policy governs your practice until the policy changes — and changing it is a quality improvement process, not an individual decision.</p>',
+does:'<ol><li>Use clinical decision support the way it is designed: read the alert, evaluate it against the client, then act or override with documented reasoning. Reflex overriding is how alert fatigue kills people.</li><li>Scan barcodes for every medication and every client, every time. The workaround that saves ninety seconds is the workaround that defeats the entire safety system.</li><li>Look up the policy before an unfamiliar procedure. "I have seen it done" is not competence.</li><li>Use a current drug reference for any medication you have not given recently — dose range, compatibility, dilution, rate.</li><li>Escalate through structured tools: SBAR for communication, rapid response criteria for deterioration.</li></ol>',
+trap:'<p>Choosing the option where the nurse asks an experienced coworker instead of consulting the policy or reference. Peer knowledge is valuable and it is also unverified. On the NCLEX, the authoritative source beats the available colleague — with one exception: when the situation is emergent and the delay would cause harm, calling for help comes first.</p>',
+q:{type:'Single best answer', stem:'A nurse is about to administer an unfamiliar intravenous antibiotic. The electronic system generates an alert that the drug is incompatible with the potassium infusion running in the client\'s only patent line. The nurse is behind on the medication pass. Which action is <b>most appropriate</b>?',
+opts:['Override the alert and flush the line thoroughly between the two medications.','Consult the drug reference and facility policy to determine compatibility and the correct administration approach, then contact pharmacy if unresolved.','Ask the charge nurse whether she has given these two together before.','Hold the antibiotic until the potassium infusion is complete and document the delay.'],
+correct:[1],
+why:'<p><b>B is correct.</b> The alert flagged a real problem and the nurse does not know the answer. The correct move is to consult the authoritative sources — reference and policy — and involve pharmacy, which exists for exactly this question. This resolves the problem rather than deferring it.</p><p><b>A</b> overrides a safety alert based on an assumption; flushing does not make all incompatible drugs safe, and some precipitate on contact. <b>C</b> substitutes anecdote for verified data. <b>D</b> is not unreasonable on its face, but it delays an antibiotic without determining whether a delay is even necessary and without exploring alternatives such as a second access site — it manages the nurse\'s uncertainty rather than the client\'s need.</p>',
+take:'When an option resolves the underlying question through an authoritative source, it beats options that work around the question, defer it, or ask someone who is also guessing.'}}
+],
+transfer:[
+ 'A provider gives you a verbal order in a non-emergency while standing at the desk with a computer in front of her. What is the correct response, and why is this a scope and safety issue rather than a rudeness issue?',
+ 'You discover that a colleague has been charting assessments at the start of shift for the whole shift. What are your obligations, and in what order?',
+ 'A meta-analysis supports a practice your facility policy prohibits. What is the correct pathway from evidence to practice change?'
+]
+});
+SECTIONS.push({
+tab:'Legal Rights', color:'green',
+title:'Legal Rights and Responsibilities',
+blurb:'Seven statements, and every one of them protects something the client cannot protect alone: their body, their belongings, their information, their safety, and their right to say no. Two of these — scope of practice and mandatory reporting — generate more NCLEX items than almost anything else in Management of Care.',
+pre:'<div class="flow"><h3>The four torts that show up on the NCLEX</h3><p class="cap">Learn these by their trigger, not their definition.</p>'+
+'<table><tr><th>Term</th><th>Trigger in a stem</th><th>Example</th></tr>'+
+'<tr><td><b>Assault</b></td><td>A threat that creates fear of harmful contact. No touching required.</td><td>"If you do not hold still, I will have to restrain you."</td></tr>'+
+'<tr><td><b>Battery</b></td><td>Contact without consent. Harm is not required.</td><td>Starting an IV after the client said no.</td></tr>'+
+'<tr><td><b>False imprisonment</b></td><td>Restricting movement without consent or lawful authority.</td><td>Applying a vest restraint to a wandering but non-dangerous client without an order.</td></tr>'+
+'<tr><td><b>Negligence / malpractice</b></td><td>Duty, breach of the standard, causation, and actual damages &mdash; all four.</td><td>Not assessing a client after a fall, who then dies of an undetected bleed.</td></tr></table></div>',
+items:[
+{n:1, star:false, stmt:'Identify legal issues affecting the client (e.g., refusing treatment)',
+testing:'<p>The parenthetical is a hint, not a limit. Refusal is the flagship legal issue because it is where autonomy collides hardest with the instinct to help. A competent adult may refuse <b>anything</b> — a medication, a transfusion, dialysis, food, a life-saving surgery — and may refuse it for reasons you find irrational.</p><p>Your job when a client refuses is not to obtain compliance. It is to make sure the refusal is <span class="term">informed</span> and then to protect it.</p>',
+does:'<ol><li>Confirm the client understands what is being refused and the likely consequence. Explore the reason — refusals are often built on a fixable misunderstanding, a side effect, or a fear.</li><li>Never threaten, never bargain with pain medication, never restrain to force treatment.</li><li>Notify the provider and document the refusal, the education provided, and the client\'s stated reason in their own words.</li><li>Check for an advance directive, living will, or POLST on admission. Federal law requires that clients be asked whether they have one and offered information about creating one.</li><li>Know that a valid DNR order limits resuscitation, not care. A client with a DNR still gets oxygen, antibiotics, suctioning, pain control, and everything else that is indicated.</li></ol>',
+clin:'<p>A Jehovah\'s Witness client with a hemoglobin of 5.8 refuses transfusion. She is alert and can explain exactly what will happen to her without it. The refusal stands. What the team does next is find every alternative — cell salvage, erythropoietin, iron, minimizing draws — because respecting a refusal is not the same as withdrawing effort.</p>',
+trap:'<ul><li>Assuming a DNR means comfort care only. It does not.</li><li>Assuming a psychiatric diagnosis removes the right to refuse. It does not, absent a specific legal finding.</li><li>Confusing <b>leaving against medical advice</b> with forfeiting care. The client still gets discharge teaching, prescriptions, and follow-up.</li></ul>',
+q:{type:'Single best answer', stem:'A client with pneumonia and an oxygen saturation of 89% repeatedly removes his nasal cannula, stating, "I hate that thing on my face." He is alert, oriented, and can explain that his oxygen level drops without it. Which action by the nurse is <b>most appropriate</b>?',
+opts:['Apply soft wrist restraints to prevent removal of the oxygen and notify the provider.','Explore the reason for the discomfort and offer alternative delivery devices, such as a different cannula or a mask.','Document that the client is noncompliant with the plan of care.','Ask the client\'s wife to hold the cannula in place while the client sleeps.'],
+correct:[1],
+why:'<p><b>B is correct.</b> The client is not refusing oxygen — he is refusing <b>that device</b>. The stated reason is a comfort problem with a nursing solution. Exploring and offering alternatives addresses the actual barrier and preserves both autonomy and oxygenation.</p><p><b>A</b> restrains a competent client to force treatment he has the right to refuse; that is false imprisonment, and a restraint applied for staff convenience has no clinical justification. <b>C</b> labels the client instead of solving anything and puts a judgment in a legal record. <b>D</b> recruits a family member to physically override the client\'s choice.</p>',
+take:'When a client refuses, find out what is actually being refused. Most refusals in NCLEX stems are refusals of a method, and the correct answer removes the barrier rather than the choice.'}},
+
+{n:2, star:false, stmt:'Identify and manage client&rsquo;s valuables according to facility/agency policy',
+testing:'<p>Low-glamour, high-frequency. Missing valuables generate real liability, and the NCLEX tests whether you follow a defined process instead of improvising.</p><p>The safest destination for valuables is <b>home with family</b>. The second safest is the facility safe with a written receipt. The bedside drawer is not a destination.</p>',
+does:'<ol><li>Send valuables home with a family member when possible and document who took what.</li><li>If they stay, inventory them <b>with a witness</b>, list them on the facility form, and secure them in the safe. Give the client the receipt.</li><li>Describe objectively. Write "yellow metal ring with clear stone," not "gold ring with a diamond." You are not an appraiser, and the description you write becomes the claim.</li><li>Treat dentures, hearing aids, glasses, and prosthetics as valuables — they are expensive, they are constantly lost in linens, and losing them causes real functional harm. Label the container and store it consistently.</li><li>Document any refusal by the client to surrender valuables, and document that the risk was explained.</li></ol>',
+trap:'<p>Recording subjective value ("diamond earrings," "expensive watch"). It creates an obligation you cannot verify. Also: bagging dentures in a napkin on the meal tray. That is how they end up in the trash, and it happens constantly.</p>',
+q:{type:'Single best answer', stem:'An alert client is admitted through the emergency department wearing a wedding band and a wristwatch, and has no family present. Which nursing action is <b>most appropriate</b>?',
+opts:['Place the items in the bedside drawer and tell the client where they are.','Inventory the items with a second staff member using objective descriptions, secure them per facility policy, and give the client a copy of the receipt.','Tape the items into an envelope and store them in the medication cart.','Document that the client was wearing jewelry and allow the client to keep it, since no family is available.'],
+correct:[1],
+why:'<p><b>B is correct.</b> Witnessed inventory, objective description, secure storage, and a receipt for the client — this is the full process, and each piece of it exists because of a specific way valuables get lost or disputed.</p><p><b>A</b> leaves valuables in an unsecured space that housekeeping, transport, and visitors all pass through. <b>C</b> stores personal property in a medication storage area, which violates both security and medication-storage policy. <b>D</b> is not automatically wrong — a competent client may choose to keep his ring — but as written it documents observation without offering safekeeping or explaining the risk, and it does not represent the nurse\'s responsibility.</p>',
+take:'Valuables require a witnessed, documented, objectively described chain of custody. Any option where a single nurse handles them alone or stores them casually is wrong.'}},
+
+{n:3, star:true, stmt:'Recognize limitations of self and others and utilize resources',
+testing:'<p>This is the statement that separates confident nurses from safe ones. The NCLEX rewards the nurse who says "I have not done this before" out loud.</p><p>It cuts two ways: recognizing <b>your own</b> limits, and recognizing when a colleague, a UAP, or a student is working past theirs.</p>',
+does:'<ol><li>Decline to perform a skill you have not been trained and validated on. Say so, request orientation or a resource nurse, and do not abandon the client while you sort it out.</li><li>When floated to an unfamiliar unit, accept the assignment but negotiate the scope: state clearly what you can and cannot safely do, and ask for tasks within your competence with a resource nurse for the rest. Outright refusal risks abandonment; silent acceptance risks the client.</li><li>Supervise delegated tasks. Delegation transfers the task, never the accountability.</li><li>Intervene when you observe unsafe practice, then report through the chain of command.</li><li>Report an impaired colleague immediately to the supervisor — remove them from client care first. This is a legal obligation in every state, and protecting a friend is participating in the harm.</li></ol>',
+clin:'<p>You are floated from med-surg to a step-down unit and given a client on an amiodarone drip you have never titrated. The correct move is not to refuse the whole assignment and not to quietly figure it out from the pump screen. It is to tell the charge nurse specifically: "I can manage these four clients; I have never titrated amiodarone and I need that drip reassigned or a resource nurse with me."</p>',
+trap:'<ul><li>Refusing an entire float assignment. That is abandonment territory, and it is almost never the keyed answer.</li><li>Attempting an unfamiliar skill with a textbook open. Reading is not validation.</li><li>Telling the impaired colleague to go home and covering for them. You have now removed the documentation and kept the license at risk.</li></ul>',
+q:{type:'Single best answer', stem:'A medical-surgical nurse is floated to the pediatric unit and assigned four clients, including an infant receiving a continuous IV infusion titrated by weight. The nurse has never cared for infants. Which action is <b>most appropriate</b>?',
+opts:['Refuse the assignment and return to the medical-surgical unit.','Accept the full assignment and ask a pediatric nurse questions as problems arise.','Inform the charge nurse which aspects of the assignment are outside the nurse\'s competence and request reassignment of those clients or direct support from a pediatric nurse.','Accept the assignment and document that the nurse was floated without orientation.'],
+correct:[2],
+why:'<p><b>C is correct.</b> It is specific, it happens before harm, and it keeps the nurse engaged in care while moving the high-risk client to someone competent. Naming the limitation precisely is what makes the request actionable for the charge nurse.</p><p><b>A</b> leaves clients without a nurse and exposes the nurse to abandonment. <b>B</b> is the most common real-world answer and the most dangerous — it treats a titrated weight-based pediatric infusion as something you can learn during a crisis. <b>D</b> creates a paper trail while the client remains assigned to a nurse who cannot safely manage the drip; documentation is not a substitute for a safe assignment.</p>',
+take:'The safe answer names the specific limitation and asks for a specific remedy, before care begins. Blanket refusal and silent acceptance are both wrong.'}},
+
+{n:4, star:false, stmt:'Review facility policy and legal considerations when using interpreter services for a client',
+testing:'<p>Statement 3 in the Informed Consent cluster covered translated materials. This one is about the <b>interpreter</b> as a legal instrument. The facility is obligated to provide qualified interpretation at no cost to the client, and the nurse is obligated to use it and document it.</p>',
+does:'<ol><li>Use a facility-qualified interpreter: on-site, telephonic, or video. Document the interpreter\'s name or ID number, and the method used.</li><li>Do not use family, friends, or minors. Do not use an untrained bilingual staff member.</li><li>Speak to the <b>client</b>, not the interpreter. Use first person, short segments, and normal volume.</li><li>A client may decline an interpreter and request a family member. Facilities generally permit this for non-critical conversations, but it must be the client\'s documented choice, and a qualified interpreter is still required for consent, discharge teaching, and anything with legal weight.</li><li>Confirm understanding with teach-back through the interpreter, not with a yes-or-no question.</li></ol>',
+trap:'<p>Assuming an interpreter is only needed when the client speaks no English at all. Conversational fluency does not equal medical fluency — a client who orders lunch confidently may not follow anticoagulation teaching. Also: American Sign Language is a distinct language, and a Deaf client\'s right to a qualified ASL interpreter is not satisfied by writing notes back and forth.</p>',
+q:{type:'Single best answer', stem:'A Deaf client who communicates using American Sign Language is being admitted for a scheduled procedure. The client\'s adult son, who signs fluently, offers to interpret. Which response by the nurse is <b>most appropriate</b>?',
+opts:['Accept the son\'s offer, since he communicates fluently with his mother and is available immediately.','Communicate with the client in writing to avoid the need for an interpreter.','Arrange a qualified ASL interpreter through the facility and explain that this service is provided at no cost.','Ask the provider whether an interpreter is necessary for this procedure.'],
+correct:[2],
+why:'<p><b>C is correct.</b> Effective communication for a Deaf client is a legal obligation of the facility, provided at no cost. A qualified interpreter is required for admission, consent, and teaching, and telling the client the service is free removes a barrier clients frequently assume exists.</p><p><b>A</b> uses a family member for legally weighted communication, with the same filtering and confidentiality problems as any family interpretation. <b>B</b> assumes written English is equivalent — ASL is a separate language with its own grammar, and English literacy varies widely among Deaf adults. <b>D</b> asks a provider to authorize something the client is already entitled to.</p>',
+take:'Interpretation for consent, admission, and discharge teaching is a legal requirement, not a clinical judgment call. Options that ask permission, substitute writing, or use family are wrong.'}},
+
+{n:5, star:false, stmt:'Educate client and staff on legal issues',
+testing:'<p>The nurse is often the only person in the building who explains a client\'s rights in language they can use. The Patient Self-Determination Act requires that clients be asked about advance directives on admission and given information about them — and the person doing the asking is usually you.</p>',
+does:'<ol><li>On admission, ask whether the client has an advance directive. If yes, get a copy into the chart. If no, offer information about creating one — without steering the decision.</li><li>Explain the difference clearly: a <b>living will</b> states what treatment the client wants; a <b>durable power of attorney for health care</b> names <b>who</b> decides. Many clients need both, and most think they are the same document.</li><li>Explain the right to refuse, the right to a second opinion, the right to see the record, and the right to file a grievance.</li><li>Teach staff: what constitutes a restraint, what triggers mandatory reporting, what a UAP may and may not do, what belongs in a note and what does not.</li><li>Document that the education occurred and what the client demonstrated understanding of.</li></ol>',
+trap:'<p>Advising the client on <b>what</b> to put in an advance directive, or telling them what you would choose. The nurse informs and facilitates; the nurse does not counsel toward a decision. The other trap is answering a legal question you are not qualified to answer — refer to social work, the ethics committee, or risk management.</p>',
+q:{type:'Single best answer', stem:'A newly admitted client says, "My daughter has my power of attorney for my finances, so she can make all my medical decisions too, right?" Which response by the nurse is <b>most appropriate</b>?',
+opts:['"Yes, a power of attorney allows your daughter to speak for you in all matters."','"A financial power of attorney does not cover health care decisions. A separate document, a durable power of attorney for health care, names who speaks for you medically. Would you like information about completing one?"','"You should call your attorney to sort that out before your procedure."','"As long as your daughter is here, the team will include her in all decisions."'],
+correct:[1],
+why:'<p><b>B is correct.</b> It corrects a common and consequential misconception, names the correct instrument, and offers the resource without pressuring the client toward a particular choice. This is exactly the scope of nursing education on legal issues.</p><p><b>A</b> is factually wrong and could lead the team to accept decisions from someone without health care authority. <b>C</b> deflects a question the nurse is fully qualified to answer and adds a cost barrier. <b>D</b> sidesteps the legal question and quietly implies that presence confers authority, which it does not.</p>',
+take:'Financial power of attorney and health care power of attorney are separate instruments. Being present, being related, and being trusted are not sources of legal authority.'}},
+
+{n:6, star:true, stmt:'Report client conditions as required by law (e.g., abuse/neglect, communicable diseases)',
+testing:'<p>Mandatory reporting is the point where the nurse\'s duty to the client overrides the duty of confidentiality — and the threshold is lower than students expect.</p><p>The standard is <span class="term">reasonable suspicion</span>. Not proof. Not certainty. Not confirmation from the family. If a reasonable nurse in your position would suspect abuse or neglect, you report, and you report even if you turn out to be wrong. Good-faith reporting is legally protected in every state.</p>',
+does:'<ol><li>Ensure immediate safety first. If the client is in danger right now, safety precedes the phone call.</li><li>Report to the designated agency within the required timeframe: child protective services, adult protective services, or law enforcement, and public health for reportable communicable diseases.</li><li>Do <b>not</b> investigate. Do not interrogate the client, do not confront the suspected abuser, do not go looking for corroboration.</li><li>Document objectively: exact quotes in quotation marks, a body map of injuries with size and color, the explanation given for the injury, and the discrepancy between the injury and the explanation if there is one.</li><li>Interview the client alone whenever possible, and separately from the accompanying person.</li><li>Notify the provider and the facility social worker, but understand that telling the social worker does not discharge <b>your</b> legal reporting duty unless facility policy designates a single reporter.</li></ol>',
+clin:'<p>An 84-year-old arrives from home with a stage 4 sacral pressure injury, a weight 18 pounds below her last recorded weight, and a caregiver son who answers every question directed at her. You do not need to know whether the neglect was intentional. You need to report it.</p>',
+trap:'<ul><li>Waiting for proof. The threshold is suspicion, and waiting is how clients are sent back.</li><li>Confronting the suspected abuser, which endangers the client and can destroy the investigation.</li><li>Believing that a family\'s objection blocks a report. It does not, and it is not a confidentiality breach — mandatory reporting is a legal exception to HIPAA.</li></ul>',
+q:{type:'Select all that apply', stem:'A 6-year-old is brought to the emergency department with a spiral fracture of the humerus. The caregiver states the child fell off a couch. The nurse notes multiple bruises in varying stages of healing on the child\'s back and thighs. Which nursing actions are appropriate? <b>Select all that apply.</b>',
+opts:['Report the suspicion of abuse to child protective services according to state law and facility policy.','Ask the caregiver directly whether anyone in the home has hurt the child.','Document the injuries objectively, including location, size, and color, and record the caregiver\'s explanation verbatim.','Interview the child separately from the caregiver when possible.','Wait to report until radiology confirms the fracture pattern is inconsistent with the stated mechanism.','Ensure the child\'s immediate safety and notify the provider and social work.'],
+correct:[0,2,3,5],
+why:'<p><b>A, C, D, and F are correct.</b> The mechanism does not match the injury — spiral fractures result from twisting force, not a fall — and bruises in varying stages of healing indicate repeated trauma over time. That is reasonable suspicion, which is the entire threshold. Objective documentation, separate interview, safety, and reporting are the four actions.</p><p><b>B</b> is investigation and confrontation. It can escalate danger for the child and compromise the formal investigation; the nurse gathers observations, not confessions. <b>E</b> delays a mandated report while waiting for confirmation the nurse does not need and is not required to obtain.</p>',
+take:'Suspicion triggers the report. Confirmation is the investigating agency\'s job, and waiting for it is itself a failure to report.'}},
+
+{n:7, star:true, stmt:'Provide care within the legal scope of practice',
+testing:'<p>Scope comes from three nested layers, and the narrowest one wins.</p><ol><li>Your state\'s <b>Nurse Practice Act</b> sets the outer boundary. It is state law and it varies.</li><li><b>Facility policy</b> may narrow that boundary but can never widen it.</li><li>Your <b>documented competency</b> narrows it further. Legal authorization plus no validated training still equals unsafe.</li></ol><p>An order from a physician cannot expand your scope. Neither can urgency, short staffing, or the fact that you have watched it done a hundred times.</p>',
+does:'<ol><li>Know what a <b>UAP</b> may do: standard, unchanging tasks with predictable outcomes on stable clients — bathing, feeding, ambulating, positioning, vital signs, intake and output, specimen collection. A UAP never assesses, never teaches, never evaluates, and never handles medications in most states.</li><li>Know what an <b>LPN/LVN</b> may do: care for stable clients with predictable outcomes, reinforce teaching already provided by the RN, perform ongoing data collection, and administer many medications. In most states an LPN does not perform the initial assessment, develop the plan of care, give IV push medications, administer blood, or care for an unstable client.</li><li>Reserve for the <b>RN</b>: initial and ongoing assessment, nursing diagnosis, care planning, initial teaching, evaluation of outcomes, and any unstable client.</li><li>Delegate using the five rights: right task, right circumstance, right person, right direction and communication, right supervision and evaluation.</li><li>Refuse and clarify a task outside your scope. Document the refusal and the escalation.</li></ol>',
+clin:'<p>A UAP reports, "Room 12 says he is dizzy when he sits up." The UAP <b>collected</b> that — reporting an observation is within scope. What happens next is not: the RN goes and assesses. If the answer option has the UAP checking orthostatic vitals and deciding whether the client can ambulate, that is assessment and judgment, and it is out of scope no matter how competent that particular aide is.</p>',
+trap:'<ul><li>Assuming a highly experienced UAP or LPN has expanded scope. Scope belongs to the license, not the person.</li><li>Delegating <b>the first</b> anything — first ambulation, first teaching, first assessment after a change in condition.</li><li>Delegating a task on an <b>unstable</b> client. Instability alone moves the task back to the RN.</li></ul>',
+q:{type:'Select all that apply', stem:'A charge nurse is making assignments on a medical-surgical unit. Which tasks may be appropriately delegated to unlicensed assistive personnel? <b>Select all that apply.</b>',
+opts:['Obtaining vital signs on a stable client two days after an uncomplicated cholecystectomy.','Assisting a stable client with a bed bath and oral care.','Reinforcing discharge instructions about a new anticoagulant.','Ambulating a stable client who has been walking in the hall independently since yesterday.','Measuring and recording intake and output on a client receiving maintenance IV fluids.','Performing the first postoperative ambulation for a client who returned from surgery three hours ago.'],
+correct:[0,1,3,4],
+why:'<p><b>A, B, D, and E are correct.</b> All four are standard, unchanging tasks with predictable outcomes on stable clients, and none requires assessment or judgment.</p><p><b>C</b> is teaching. Even reinforcement of teaching belongs to a licensed nurse, and initial anticoagulant teaching is an RN function — a UAP cannot answer the questions that follow. <b>F</b> is the first postoperative ambulation, which is an assessment of tolerance, hemodynamic stability, and pain control. Once the RN has established that the client ambulates safely, subsequent ambulation may be delegated — which is precisely why <b>D</b> is acceptable and <b>F</b> is not.</p>',
+take:'Look for the words first, new, unstable, teach, assess, or evaluate. Any one of them pulls the task back to the RN, regardless of who is available.'}}
+],
+transfer:[
+ 'A competent client refuses a blood transfusion, becomes unresponsive, and the family demands you transfuse. Whose decision governs, and what document would settle it?',
+ 'An LPN reports that her assigned client is now hypotensive and confused. What has just changed about the appropriateness of that assignment?',
+ 'You suspect elder neglect but the client, who is alert and oriented, asks you not to report it. What do you do, and what makes this different from ordinary confidentiality?'
+]
+});
+SECTIONS.push({
+tab:'Quality Improvement', color:'purple',
+title:'Performance Improvement (Quality Improvement)',
+blurb:'The organizing idea for all five statements: quality improvement asks what in the system allowed this to happen, not who did it. Every item in this cluster can be answered by choosing the option that examines the process instead of the person.',
+pre:'<div class="flow"><h3>Four tools, four different questions</h3><p class="cap">Stems tell you which tool by telling you when the event happened.</p>'+
+'<table><tr><th>Tool</th><th>Timing</th><th>The question it answers</th></tr>'+
+'<tr><td><b>Root cause analysis</b></td><td>After an event, especially a sentinel event</td><td>Why did this happen? What system factors converged?</td></tr>'+
+'<tr><td><b>Failure mode and effects analysis</b></td><td>Before an event &mdash; proactive</td><td>What could go wrong with this new process, and how badly?</td></tr>'+
+'<tr><td><b>PDSA cycle</b></td><td>During a change</td><td>Plan, Do, Study, Act &mdash; did the small test of change work?</td></tr>'+
+'<tr><td><b>Benchmarking</b></td><td>Ongoing</td><td>How do our rates compare to similar units nationally?</td></tr></table></div>',
+items:[
+{n:1, star:false, stmt:'Define performance improvement/quality assurance activities',
+testing:'<p>The exam wants you to distinguish two mindsets that get used interchangeably in conversation and mean different things on paper.</p>'+
+'<table><tr><th></th><th>Quality assurance (QA)</th><th>Performance / quality improvement (PI, QI)</th></tr>'+
+'<tr><td>Looks</td><td>Backward at what already happened</td><td>Forward and continuously</td></tr>'+
+'<tr><td>Asks</td><td>Did we meet the standard?</td><td>How can the process work better?</td></tr>'+
+'<tr><td>Focus</td><td>Outliers, individuals, compliance</td><td>Systems, processes, everyone</td></tr>'+
+'<tr><td>Feels</td><td>Inspection</td><td>Redesign</td></tr></table>'+
+'<p>Also learn Donabedian\'s three categories, because indicators get sorted into them: <b>structure</b> (staffing ratios, equipment available), <b>process</b> (was the fall risk assessment completed), <b>outcome</b> (the fall rate itself).</p>',
+does:'<ol><li>Recognize which activity a stem is describing before choosing an action.</li><li>Frame findings without blame. "Fourteen of forty charts lacked a documented reassessment" is QI language. "Three nurses failed to document" is not.</li><li>Use the right tool for the timing: RCA after, FMEA before, PDSA during.</li></ol>',
+trap:'<p>Choosing the option that identifies and counsels the individual involved. Even when an individual made an error, the QI answer looks for what made the error possible — look-alike packaging, an interruption-prone medication room, a policy nobody could find.</p>',
+q:{type:'Single best answer', stem:'A unit is preparing to implement a new smart infusion pump. The quality council wants to identify what could go wrong before the pumps reach the bedside. Which approach is <b>most appropriate</b>?',
+opts:['Root cause analysis','Failure mode and effects analysis','Retrospective chart audit','Incident report trend review'],
+correct:[1],
+why:'<p><b>B is correct.</b> FMEA is the proactive tool. It maps a process that has not yet been used, identifies the ways each step could fail, and ranks those failures by severity and likelihood so the highest-risk ones are designed out before anyone is harmed.</p><p><b>A</b> requires an event that has already occurred. <b>C</b> and <b>D</b> both look backward at data generated by the old process, which cannot tell you how the new pump will fail.</p>',
+take:'If the event has not happened yet, the tool is FMEA. If it already happened, the tool is RCA. Read the stem for tense before you read the options.'}},
+
+{n:2, star:true, stmt:'Participate in performance improvement projects and quality improvement processes',
+testing:'<p>The word is <span class="term">participate</span>. The NCLEX is not asking whether you can lead a Six Sigma project. It is asking whether the staff nurse recognizes her role: collecting data, following the bundle, joining the huddle, sitting on the council, testing the change on her own clients.</p>',
+does:'<ol><li>Collect data accurately even when the data will make the unit look bad. Sanitized data produces improvements that do not improve anything.</li><li>Follow evidence-based bundles fully. A bundle only works when every element is done every time — partial compliance with a CLABSI bundle produces the infection rate of no bundle.</li><li>Bring frontline knowledge to the table. The nurse knows why the workaround exists; the committee usually does not.</li><li>Test small before spreading. One nurse, five clients, one week — that is a PDSA cycle, and it is how you learn a change is unworkable before rolling it out to sixty people.</li></ol>',
+clin:'<p>Falls are up on nights. The committee proposes hourly rounding. Before it becomes policy for the whole unit, two nurses try it for a week on one hallway, discover the 0200 round wakes everyone and drives more unassisted bathroom trips, and adjust the timing. That week of failure is worth more than a year of the unadjusted policy.</p>',
+trap:'<p>Treating QI participation as extra work that belongs to management. On the exam, the nurse who declines to participate, or who reports only favorable data, is always the wrong answer.</p>',
+q:{type:'Single best answer', stem:'A staff nurse is collecting data for a unit project on catheter-associated urinary tract infections. She realizes that on three of her own clients, the indwelling catheter remained in place two days past the point when it met removal criteria. What should the nurse do?',
+opts:['Record the data accurately as found, including her own clients.','Exclude her own clients to avoid biasing the results.','Record the data but discuss it privately with the manager rather than submitting it.','Record the catheters as appropriately removed, since the delays were caused by heavy assignments.'],
+correct:[0],
+why:'<p><b>A is correct.</b> The purpose of the data is to reveal how often the process fails, and her clients are part of that reality. Delayed removal in a heavy assignment is exactly the kind of system finding a QI project exists to surface — it points toward a removal protocol, a daily prompt, or a nurse-driven removal order.</p><p><b>B</b> removes the most informative cases and biases the result toward looking fine. <b>C</b> converts a system finding into a private performance conversation, which is the QA reflex, not the QI one. <b>D</b> is falsification, and it also destroys the very evidence that would justify fixing the staffing problem she is describing.</p>',
+take:'QI data is only useful if it is honest, and honest data usually implicates the person collecting it. An option that hides, excludes, or softens data is always wrong.'}},
+
+{n:3, star:false, stmt:'Report identified client care issues to appropriate personnel',
+testing:'<p>Two things are being tested at once: <b>who</b> you tell, and <b>how</b> the report is handled.</p><p>Escalation follows the chain of command — but the chain has an emergency bypass. A deteriorating client gets a rapid response call now, not a page to the charge nurse followed by a page to the provider.</p>',
+does:'<ol><li>Escalate clinical deterioration by activating rapid response using the facility criteria. Do not wait for permission.</li><li>Escalate an unresolved concern up the chain: charge nurse, nurse manager, nursing supervisor, chief nursing officer, and the facility ethics or risk pathway.</li><li>Use SBAR so the report contains a recommendation, not just a description. "I need you to come see him" is part of the report.</li><li>File an <b>incident, occurrence, or variance report</b> for any event inconsistent with routine care — including <b>near misses</b>, which are the cheapest safety data a hospital ever gets.</li><li>Remember what the incident report is: an internal quality document. It is factual and objective, it is not part of the medical record, and no reference to it belongs in the nurse\'s note.</li></ol>',
+trap:'<ul><li>Charting "incident report completed" in the medical record, which drags the protected document into the discoverable chart.</li><li>Putting opinion or blame in the report. "Pharmacy sent the wrong concentration again" is an accusation. Record what was sent, what was ordered, what was given, and what the client\'s response was.</li><li>Not reporting a near miss because no one was hurt. The near miss is the free lesson.</li></ul>',
+q:{type:'Select all that apply', stem:'A nurse catches an error before it reaches the client: the pharmacy dispensed heparin 25,000 units/250 mL instead of the ordered 25,000 units/500 mL, and the nurse identified the discrepancy during the independent double check. Which actions are appropriate? <b>Select all that apply.</b>',
+opts:['Complete an occurrence report describing the discrepancy factually.','Notify pharmacy and the charge nurse of the dispensing error.','Document in the client\'s medical record that an occurrence report was filed.','Verify the correct concentration and administer the ordered infusion.','Take no further action, since the client was not harmed.','Report the near miss so the dispensing process can be reviewed.'],
+correct:[0,1,3,5],
+why:'<p><b>A, B, D, and F are correct.</b> A near miss is reportable precisely because the safety net worked — the double check caught it this time, and the system needs to know how the wrong concentration got that far. Notifying pharmacy addresses the immediate source, and the client still needs the correct infusion.</p><p><b>C</b> places a reference to a protected internal document into the discoverable medical record. <b>E</b> discards the most valuable kind of safety data there is; a near miss today is an adverse event next Tuesday when the double check gets rushed.</p>',
+take:'Near misses are reportable events. Absence of harm never removes the obligation to report, and the incident report never appears in the chart.'}},
+
+{n:4, star:false, stmt:'Utilize research and other references for performance improvement actions',
+testing:'<p>This is the Information Technology evidence hierarchy pointed at a unit problem rather than a client problem. The added dimension is <span class="term">benchmarking</span> — comparing your rate against an external standard so you know whether you have a problem at all.</p>',
+does:'<ol><li>Search for published evidence and existing bundles before inventing a local solution. Someone has already studied your problem.</li><li>Benchmark against national data such as the National Database of Nursing Quality Indicators, or against comparable units within your system.</li><li>Check regulatory and accreditation standards, which sometimes dictate the intervention regardless of what the local team prefers.</li><li>Match the evidence to your population. An intervention validated in an adult ICU may not transfer to a pediatric floor.</li></ol>',
+trap:'<p>Comparing this month to last month and concluding you have improved. Without an external benchmark, a unit can congratulate itself for a fall rate that is still double the national median.</p>',
+q:{type:'Single best answer', stem:'A unit\'s pressure injury rate has decreased from 6.2 to 5.1 per 1,000 patient days over two quarters. Which additional information is <b>most</b> important for the quality committee to determine whether the unit\'s performance is acceptable?',
+opts:['The number of nurses who completed the pressure injury education module.','The benchmark pressure injury rate for comparable units nationally.','The total number of pressure injuries documented last quarter.','Staff satisfaction with the new turning schedule.'],
+correct:[1],
+why:'<p><b>B is correct.</b> A downward trend tells you the direction of change; only a benchmark tells you whether the current rate is acceptable. A unit can improve steadily and still be performing worse than nearly every comparable unit in the country.</p><p><b>A</b> is a process measure about education completion, not about client outcomes. <b>C</b> is a raw count, which is uninterpretable without a denominator — more injuries on a busier unit may represent better performance. <b>D</b> measures staff experience, which matters for sustainability but does not answer whether clients are safe.</p>',
+take:'Improvement and adequacy are separate questions. Trend data answers the first; benchmark data answers the second.'}},
+
+{n:5, star:false, stmt:'Evaluate the impact of performance improvement measures on client care and resource use',
+testing:'<p>The last step of any improvement cycle, and the one most often skipped in practice. You re-measure the <b>same indicator</b>, the <b>same way</b>, and you look for two things: did the outcome move, and did anything else break.</p><p>The phrase <b>resource use</b> is in the statement on purpose. An intervention that cuts falls in half by requiring a sitter for every client is not an improvement if the unit cannot staff it.</p>',
+does:'<ol><li>Re-measure the original indicator using the original definition. Changing the measurement between cycles makes the comparison meaningless.</li><li>Look for unintended consequences. Restraint use falling while sedative administration rises is not a win — the restraint became chemical.</li><li>Assess sustainability. A rate that improves for one month during active monitoring and returns to baseline afterward means the change never became the way work is done.</li><li>Evaluate cost, staffing burden, and length of stay alongside the clinical outcome.</li><li>If the outcome did not improve, return to the cycle. Adjust the change or the theory behind it rather than abandoning the effort.</li></ol>',
+clin:'<p>A unit implements hourly rounding and the fall rate drops 40 percent. Excellent. Then someone notices call light response times doubled, because staff stopped answering promptly on the assumption that someone had just rounded. The falls number improved and a different failure opened underneath it. Evaluation means looking for that.</p>',
+trap:'<p>Choosing an outcome that measures activity rather than result. "Ninety-four percent of staff completed the training" tells you the intervention was delivered, not that it worked. On the exam, the correct evaluation measure is almost always a client outcome, not a compliance percentage.</p>',
+q:{type:'Single best answer', stem:'Six months ago a unit implemented a delirium prevention bundle to reduce the use of physical restraints in older adults. Which finding <b>best</b> indicates the initiative achieved its intended impact?',
+opts:['Ninety-six percent of staff completed the delirium prevention education.','Physical restraint hours per 1,000 patient days decreased, with no increase in antipsychotic or sedative administration or in fall-related injuries.','Nurses report that the bundle is easy to incorporate into daily care.','Documentation of delirium screening was completed on 90 percent of eligible clients.'],
+correct:[1],
+why:'<p><b>B is correct.</b> It measures the target outcome and simultaneously checks for the two most predictable displacements — chemical restraint substituting for physical restraint, and injuries rising because a genuinely at-risk client was left unrestrained. That combination is what distinguishes real improvement from a number that moved.</p><p><b>A</b> and <b>D</b> are process and compliance measures; both can be at 100 percent while restraint use is unchanged. <b>C</b> measures acceptability, which predicts sustainability but says nothing about client outcomes.</p>',
+take:'Evaluate improvement with an outcome measure plus a balancing measure. A single improved number with nothing checked underneath it is not evidence of improvement.'}}
+],
+transfer:[
+ 'A sentinel event occurs and the manager suspends the nurse involved pending review. What is the quality improvement critique of that response, and what would a system-focused response look like instead?',
+ 'Your unit\'s CLABSI rate is zero this quarter. Name three things that could be true besides excellent practice.',
+ 'A change improves the target outcome and worsens nothing you measured. What would you want to have measured that you probably did not?'
+]
+});
+SECTIONS.push({
+tab:'Referrals', color:'purple',
+title:'Referrals',
+blurb:'A referral item is a cue recognition item in disguise. The exam gives you a functional deficit and asks which discipline owns it. Learn the disciplines by the cue that triggers them, not by their job descriptions.',
+pre:'<div class="flow"><h3>Cue to discipline &mdash; the map that answers most referral items</h3><p class="cap">Read the cue column first. That is the part that appears in the stem.</p>'+
+'<table><tr><th>Cue in the stem</th><th>Refer to</th></tr>'+
+'<tr><td>Coughing or choking with thin liquids, wet or gurgly voice after swallowing, pocketing food, new aphasia or slurred speech</td><td><b>Speech-language pathology</b></td></tr>'+
+'<tr><td>Unsteady gait, new weakness, difficulty transferring, needs strengthening or a walker fitted</td><td><b>Physical therapy</b></td></tr>'+
+'<tr><td>Cannot dress, bathe, or feed self; needs adaptive equipment; fine motor deficit; home safety evaluation</td><td><b>Occupational therapy</b></td></tr>'+
+'<tr><td>Non-healing wound, new ostomy, complex incontinence</td><td><b>Wound, ostomy, continence nurse</b></td></tr>'+
+'<tr><td>Unintended weight loss, new diabetes, new renal or cardiac diet, enteral feeding</td><td><b>Registered dietitian</b></td></tr>'+
+'<tr><td>No housing, no transportation, cannot afford medications, suspected abuse, grief, substance use</td><td><b>Social work</b></td></tr>'+
+'<tr><td>Complex discharge, multiple readmissions, insurance and equipment coordination</td><td><b>Case management</b></td></tr>'+
+'<tr><td>Caregiver exhaustion, family needs a break from 24-hour care</td><td><b>Respite care</b></td></tr>'+
+'<tr><td>Life expectancy under six months, goal shifted to comfort</td><td><b>Hospice</b></td></tr>'+
+'<tr><td>Symptom burden in serious illness, at any stage, alongside curative treatment</td><td><b>Palliative care</b></td></tr></table></div>',
+items:[
+{n:1, star:false, stmt:'Assess the need to refer clients for assistance with existing or potential problems (e.g., physical therapy, speech therapy)',
+testing:'<p>Two words carry the item: <span class="term">existing</span> and <span class="term">potential</span>. The nurse is expected to refer before the deficit becomes a complication — a fall risk before the fall, a swallowing screen before the aspiration pneumonia.</p><p>Dysphagia deserves special attention because the consequence is fast and lethal. Any new stroke, any new neurologic change, any coughing with liquids: the client stays NPO until swallowing is evaluated.</p>',
+does:'<ol><li>Screen systematically: mobility, ADLs, swallowing, nutrition, skin, cognition, mood, and home situation.</li><li>Match the cue to the discipline rather than to the diagnosis. A client with a stroke may need PT, OT, SLP, dietitian, and social work — each one triggered by a different deficit.</li><li>Refer early. A referral placed on day one produces a therapy plan; a referral placed the afternoon of discharge produces a phone number.</li><li>Include palliative care for symptom burden at any stage, not only at end of life. This is one of the most common misconceptions students carry into practice.</li></ol>',
+trap:'<p>Confusing PT with OT. The shortcut that holds: <b>PT moves the body from place to place</b> — gait, strength, transfers, stairs. <b>OT makes daily life possible</b> — dressing, bathing, feeding, adaptive equipment, home safety. If the stem is about buttoning a shirt, it is OT even though fingers are moving.</p>',
+q:{type:'Single best answer', stem:'A client admitted with a left-hemisphere stroke coughs during the initial sips of water at breakfast and has a moist, gurgling voice quality afterward. Which action should the nurse take <b>first</b>?',
+opts:['Request a referral to physical therapy for mobility evaluation.','Place the client on NPO status and request a swallowing evaluation by speech-language pathology.','Thicken the client\'s liquids and continue the meal.','Position the client upright at 90 degrees and offer smaller sips.'],
+correct:[1],
+why:'<p><b>B is correct.</b> Coughing with thin liquids and a wet voice quality are classic cues of dysphagia with aspiration risk. The client goes NPO and stays NPO until a formal swallowing evaluation determines what, if anything, is safe. Aspiration pneumonia is a leading cause of death after stroke.</p><p><b>C</b> and <b>D</b> both continue feeding an unevaluated client — thickening and repositioning are legitimate interventions <b>after</b> an evaluation prescribes them, and choosing a consistency without evaluation is practicing outside the nurse\'s scope. <b>A</b> is a real need for a stroke client, but mobility is not the priority when the airway is at risk right now.</p>',
+take:'Suspected dysphagia means NPO first, evaluation second, modified diet third. Never modify the diet yourself to keep the meal going.'}},
+
+{n:2, star:true, stmt:'Assess the need for referrals and obtain necessary orders',
+testing:'<p>The second half is the tested half. The nurse <b>identifies</b> the need independently — that is nursing assessment — but most consults require a provider order or a protocol before the other discipline can bill and evaluate.</p><p>So the nursing action is a sequence: assess, communicate the data, obtain the order, document, follow up.</p>',
+does:'<ol><li>Gather the objective data that justifies the consult. "She seems weak" does not get an order; "she required two-person assist to the chair today and ambulated independently at home last week" does.</li><li>Communicate using SBAR and include the recommendation explicitly: "I am requesting a PT consult."</li><li>Obtain and verify the order, then place the consult through the correct system.</li><li>Know which referrals are nurse-driven under protocol at your facility — many places allow the RN to initiate wound, nutrition, or social work consults directly.</li><li>Follow up. An ordered consult that never happens is the nurse\'s problem too. Document the request, the response, and the recommendations received.</li></ol>',
+trap:'<p>Choosing "notify the provider" as a complete action when the option that also communicates the specific data and the specific request is available. The NCLEX prefers the nurse who arrives with an assessment and a recommendation over the nurse who arrives with a concern.</p>',
+q:{type:'Single best answer', stem:'A client four days after hip arthroplasty required maximum assistance of two staff members to transfer to a chair this morning and reports that he lived alone and climbed stairs without difficulty before surgery. No therapy consult has been ordered. Which action by the nurse is <b>most appropriate</b>?',
+opts:['Document the transfer difficulty and reassess in the morning.','Contact the provider, report the transfer assistance required and the client\'s prior functional level, and request a physical therapy consult.','Instruct the client\'s family to begin assisting with ambulation in the hallway.','Ask the unlicensed assistive personnel to ambulate the client three times today to build strength.'],
+correct:[1],
+why:'<p><b>B is correct.</b> The nurse has assessed a clear functional gap between prior and current status, and the correct action carries that specific data to the provider along with a specific request. This is the full statement in one action: assess the need, obtain the order.</p><p><b>A</b> documents a deteriorating discharge picture and does nothing about it. <b>C</b> delegates ambulation of a client requiring two-person assist to untrained family, which is a fall waiting to happen. <b>D</b> delegates ambulation of an unstable client to a UAP; a client needing maximum two-person assist is by definition not appropriate for delegated ambulation.</p>',
+take:'Referral items reward the nurse who brings data plus a recommendation. Options that only document, only notify, or delegate to the untrained are distractors.'}},
+
+{n:3, star:false, stmt:'Identify community resources for the client (e.g., respite care, social services, shelters)',
+testing:'<p>Discharge is where hospital care either holds or falls apart, and the NCLEX tests whether you know what exists outside the building.</p>'+
+'<table><tr><th>Resource</th><th>Who it fits</th></tr>'+
+'<tr><td>Home health</td><td>Homebound client needing skilled nursing or therapy at home</td></tr>'+
+'<tr><td>Hospice</td><td>Prognosis roughly six months or less, goals are comfort</td></tr>'+
+'<tr><td>Respite care</td><td>The <b>caregiver</b> needs relief; the client is stable at home</td></tr>'+
+'<tr><td>Adult day program</td><td>Client needs daytime supervision; caregiver works</td></tr>'+
+'<tr><td>Area Agency on Aging</td><td>Older adults: meals, transportation, benefits navigation</td></tr>'+
+'<tr><td>Meals on Wheels</td><td>Homebound client with nutrition risk</td></tr>'+
+'<tr><td>Domestic violence shelter / hotline</td><td>Client unsafe at home and ready to leave</td></tr>'+
+'<tr><td>Support groups</td><td>New diagnosis, caregiving strain, grief, recovery</td></tr>'+
+'<tr><td>Durable medical equipment supplier</td><td>Client needs a walker, commode, hospital bed, oxygen</td></tr></table>',
+does:'<ol><li>Assess the actual barrier before naming a resource. Transportation, cost, literacy, language, caregiver capacity, and housing each point to a different answer.</li><li>Involve social work or case management for anything involving housing, benefits, or safety.</li><li>Obtain the client\'s consent for the referral. A client may decline any resource, and pushing one on a competent adult is not advocacy.</li><li>Give the client something concrete before discharge: a name, a phone number, a first appointment. "Look into home health" is not a plan.</li><li>Address caregiver strain explicitly. Caregiver collapse is one of the most common reasons a good discharge plan fails.</li></ol>',
+clin:'<p>A daughter caring for her mother with advanced dementia says, "I have not slept through the night in four months, and I cannot leave her alone to go to my own doctor." That is not a client problem, and it is still your problem. Respite care and an adult day program are the interventions, and if the caregiver breaks down, the client is readmitted within the month.</p>',
+trap:'<p>Confusing <b>respite care</b> with <b>hospice</b> or with <b>long-term placement</b>. Respite exists to give the caregiver a break so the client can <b>stay</b> home. When a stem describes an exhausted caregiver and a stable client, respite is the answer.</p>',
+q:{type:'Single best answer', stem:'The spouse of a client with advanced Parkinson disease tells the nurse, "I manage his care around the clock. I have not been able to attend my own medical appointments in months, but I do not want to place him in a facility." Which referral is <b>most appropriate</b>?',
+opts:['Hospice services','Long-term care placement evaluation','Respite care services','Home infusion therapy'],
+correct:[2],
+why:'<p><b>C is correct.</b> The spouse has named the problem precisely: she needs temporary relief and she wants to keep caring for him at home. Respite care provides short-term substitute care for exactly this purpose, and it is one of the most reliable interventions against caregiver burnout and unplanned placement.</p><p><b>A</b> requires a prognosis of roughly six months or less and a shift to comfort-focused goals; nothing in the stem establishes either. <b>B</b> directly contradicts the spouse\'s stated wish. <b>D</b> addresses a need that has not been described.</p>',
+take:'When the caregiver is the one describing the problem, the referral usually supports the caregiver. Respite keeps the client home; placement and hospice change the plan the family did not ask to change.'}},
+
+{n:4, star:false, stmt:'Identify which documents to include when referring a client (e.g., medical record, referral form)',
+testing:'<p>A referral that arrives without information produces a duplicate workup, a delay, and sometimes a medication error. This statement tests whether you know what the receiving clinician needs to act safely.</p><p>The one students forget: when the referral crosses <b>outside</b> the covered entity, a signed <b>authorization for release of information</b> is required.</p>',
+does:'<p>Send, at minimum:</p><ol><li>The referral form or order, with the reason for referral stated specifically.</li><li>Pertinent history and physical, and the relevant portion of the record — not the entire chart.</li><li>Current medication list and <b>allergies</b>.</li><li>Relevant recent labs, imaging, and culture results.</li><li>Functional and cognitive assessment findings, and current activity and diet orders.</li><li><b>Advance directive and code status.</b></li><li>Insurance information and demographics.</li><li>Signed authorization for release of information when the receiving agency is outside the facility.</li></ol><p>Then verify receipt and document what was sent, to whom, and when.</p>',
+trap:'<p>Sending the entire medical record because more feels safer. The minimum necessary standard applies to referrals too — send what is relevant to the reason for referral. The opposite trap is sending a bare referral form, which forces the receiving clinician to start from nothing.</p>',
+q:{type:'Select all that apply', stem:'A client is being discharged home with a referral to a home health agency for wound care. Which items should the nurse ensure are included in the referral packet? <b>Select all that apply.</b>',
+opts:['The referral order specifying the reason for the referral','Current medication list and documented allergies','A signed authorization for release of information','The client\'s complete inpatient record, including all nursing notes from the admission','Wound assessment findings, current dressing orders, and relevant culture results','Advance directive information and code status'],
+correct:[0,1,2,4,5],
+why:'<p><b>A, B, C, E, and F are correct.</b> Together they let the home health nurse walk into the house on day one and provide safe, continuous care: she knows why she is there, what the client takes, what she is legally permitted to receive, what the wound looks like and what grew from it, and what the client wants if he deteriorates.</p><p><b>D</b> violates the minimum necessary standard. The complete record including every nursing note exceeds what is needed for wound care and unnecessarily discloses protected information. Send the relevant portions.</p>',
+take:'A referral packet answers four questions: why, what is the client taking and allergic to, what is the clinical picture for this specific problem, and what does the client want if things go badly. Everything beyond that is over-disclosure.'}}
+],
+transfer:[
+ 'A client had a stroke and now needs PT, OT, SLP, dietitian, and social work. Which referral has the shortest fuse before a serious complication, and why?',
+ 'A competent client declines the home health referral you believe he needs. What are your obligations before discharge?',
+ 'What is the difference between palliative care and hospice, and what specific detail in a stem would tell you which one is being described?'
+]
+});
+SECTIONS.push({
+tab:'Quick Reference', color:'purple',
+title:'Quick Reference Cards',
+blurb:'The compressions. Use these the week before the exam, after you have already reasoned through the sections. Reading these first would be memorizing conclusions without the arguments underneath them, which is how people miss the item that is worded slightly differently.',
+post:'<div class="qrgrid">'+
+
+'<div class="qr"><h4>The eight components of informed consent</h4><ul>'+
+'<li>Nature and purpose of the procedure</li><li>Who will perform it</li><li>Expected benefits</li><li>Material risks and complications</li>'+
+'<li>Reasonable alternatives, <b>including no treatment</b></li><li>Right to refuse or withdraw at any time</li>'+
+'<li>Opportunity to ask questions</li><li>Voluntariness &mdash; no coercion</li></ul></div>'+
+
+'<div class="qr"><h4>Consent: who signs</h4><ul>'+
+'<li>Capacitated adult &rarr; the client, always</li>'+
+'<li>Then: health care agent / DPOA &rarr; court-appointed guardian &rarr; next of kin per state law</li>'+
+'<li>Minor &rarr; parent or legal guardian, unless emancipated or a state carve-out applies</li>'+
+'<li>Emergency, no surrogate reachable &rarr; implied consent</li>'+
+'<li><b>After sedation &rarr; nobody can sign but a surrogate</b></li></ul></div>'+
+
+'<div class="qr"><h4>Nurse&rsquo;s consent role</h4><ul>'+
+'<li>Verify identity</li><li>Verify understanding by teach-back</li><li>Verify voluntariness</li>'+
+'<li>Verify the form is complete and matches site and side</li><li>Witness the signature</li>'+
+'<li><b>Not</b> the discloser &mdash; that is the provider performing the procedure</li></ul></div>'+
+
+'<div class="qr"><h4>Verbal and telephone orders</h4><ul>'+
+'<li>Write it down &rarr; read it back &rarr; obtain confirmation</li>'+
+'<li>Emergency or sterile procedure only</li><li>Countersigned per policy, usually 24 hours</li>'+
+'<li>Clarify: U, IU, QD, QOD, MS, trailing zero (1.0), missing leading zero (.5)</li>'+
+'<li>Unsafe order &rarr; do not give it, escalate, document</li></ul></div>'+
+
+'<div class="qr"><h4>Documentation rules</h4><ul>'+
+'<li>Objective findings; direct quotes for subjective</li>'+
+'<li>Chart the response, not just the action</li>'+
+'<li>Never chart in advance; never backdate</li>'+
+'<li>Late entry &rarr; label it, give event time and entry time</li>'+
+'<li>Errors &rarr; single line, initial, date, addendum. Never delete</li>'+
+'<li>Never chart that an incident report was filed</li></ul></div>'+
+
+'<div class="qr"><h4>The four torts</h4><ul>'+
+'<li><b>Assault</b> &mdash; the threat</li><li><b>Battery</b> &mdash; the touch without consent</li>'+
+'<li><b>False imprisonment</b> &mdash; restricting movement without order or consent</li>'+
+'<li><b>Negligence</b> &mdash; duty, breach, causation, damages (all four required)</li></ul></div>'+
+
+'<div class="qr"><h4>Delegation: five rights</h4><ul>'+
+'<li>Right task</li><li>Right circumstance</li><li>Right person</li>'+
+'<li>Right direction and communication</li><li>Right supervision and evaluation</li>'+
+'<li><b>The task transfers. The accountability never does.</b></li></ul></div>'+
+
+'<div class="qr"><h4>Scope stop-words</h4><ul>'+
+'<li>See <b>first</b>, <b>new</b>, <b>unstable</b>, <b>assess</b>, <b>teach</b>, or <b>evaluate</b> &rarr; RN</li>'+
+'<li>Stable, predictable, reinforce prior teaching, ongoing data collection &rarr; LPN/LVN</li>'+
+'<li>Standard, unchanging, no judgment, stable client &rarr; UAP</li>'+
+'<li>Facility policy can narrow scope, never widen it</li>'+
+'<li>A provider order cannot expand your scope</li></ul></div>'+
+
+'<div class="qr"><h4>Mandatory reporting</h4><ul>'+
+'<li>Threshold is <b>reasonable suspicion</b>, not proof</li>'+
+'<li>Safety first, then report to the designated agency</li>'+
+'<li>Do not investigate. Do not confront the suspected abuser</li>'+
+'<li>Document quotes verbatim; map injuries with size and color</li>'+
+'<li>Interview the client alone when possible</li>'+
+'<li>Good-faith reporting is legally protected</li></ul></div>'+
+
+'<div class="qr"><h4>QI tools by timing</h4><ul>'+
+'<li><b>FMEA</b> &mdash; before, proactive</li><li><b>RCA</b> &mdash; after an event</li>'+
+'<li><b>PDSA</b> &mdash; during a small test of change</li><li><b>Benchmarking</b> &mdash; ongoing external comparison</li>'+
+'<li>QI examines the system; QA inspects the individual</li></ul></div>'+
+
+'<div class="qr"><h4>Incident / occurrence report</h4><ul>'+
+'<li>Internal quality document, not part of the chart</li>'+
+'<li>Factual and objective &mdash; no opinion, no blame</li>'+
+'<li>File for <b>near misses</b> too</li>'+
+'<li>The event goes in the chart. The report does not</li></ul></div>'+
+
+'<div class="qr"><h4>Evidence hierarchy</h4><ul>'+
+'<li>Systematic review / meta-analysis (strongest)</li><li>Randomized controlled trial</li>'+
+'<li>Cohort, case-control</li><li>Qualitative and descriptive</li>'+
+'<li>Expert opinion, case report (weakest)</li>'+
+'<li>Strength outranks recency</li></ul></div>'+
+
+'<div class="qr"><h4>Referral triggers</h4><ul>'+
+'<li>Coughing on liquids, wet voice &rarr; SLP, and NPO now</li>'+
+'<li>Gait, transfers, strength &rarr; PT</li><li>ADLs, adaptive equipment, home safety &rarr; OT</li>'+
+'<li>Non-healing wound, ostomy &rarr; WOC nurse</li><li>Housing, cost, safety, grief &rarr; social work</li>'+
+'<li>Exhausted caregiver, stable client &rarr; respite</li></ul></div>'+
+
+'<div class="qr"><h4>Referral packet</h4><ul>'+
+'<li>Referral order with a specific reason</li><li>Medication list and allergies</li>'+
+'<li>Relevant record &mdash; minimum necessary, not the whole chart</li>'+
+'<li>Pertinent labs, imaging, cultures</li><li>Functional and cognitive status</li>'+
+'<li>Advance directive and code status</li><li>Signed release when going outside the facility</li></ul></div>'+
+
+'</div>',
+transfer:[
+ 'Cover the cards. Say the eight components of informed consent out loud. Then say which two get omitted most often and why that is predictable.',
+ 'Give an example of a task that is appropriate for a UAP on Monday and inappropriate for the same UAP with the same client on Tuesday. What changed?',
+ 'Pick any three cards above and write one NCLEX-style stem where the correct answer requires content from two of them at once. That is roughly what a real Management of Care item feels like.'
+]
+});
+
+/* ============ RENDER ============ */
+const LET = ['A','B','C','D','E','F','G'];
+let answered = {}, correctCt = 0, totalQ = 0;
+
+function esc(s){return s;}
+
+function itemHTML(sec, it, qid){
+  const q = it.q;
+  let opts = '';
+  if(q){
+    q.opts.forEach((o,i)=>{
+      opts += '<label class="opt" data-q="'+qid+'" data-i="'+i+'" onclick="pick(\''+qid+'\','+i+')">'+
+              '<span class="ol">'+LET[i]+'</span>'+o+'</label>';
+    });
+    totalQ++;
+  }
+  return '<div class="card c-'+sec.color+'">'+
+    '<div class="top"><div class="num">'+it.n+'</div><h3>'+it.stmt+
+      (it.star?'<span class="star">2024 PRACTICE ANALYSIS</span>':'')+'</h3></div>'+
+    '<div class="body">'+
+      '<span class="lbl">What it is really testing</span>'+it.testing+
+      '<span class="lbl">What the nurse actually does</span>'+it.does+
+      (it.clin?'<div class="clin"><span class="h">Clinical connection</span>'+it.clin+'</div>':'')+
+      (it.trap?'<div class="trap"><span class="h">Where students lose the point</span>'+it.trap+'</div>':'')+
+      (q?('<div class="q"><div class="qh"><span>Practice</span><span class="qtype">'+q.type+'</span></div>'+
+        '<div class="qbody"><p class="stem">'+q.stem+'</p>'+opts+
+        '<button class="reveal" onclick="show(\''+qid+'\')">Check my reasoning</button>'+
+        '<div class="rat" id="rat-'+qid+'">'+
+          '<p class="ans">Answer: '+q.correct.map(i=>LET[i]).join(', ')+'</p>'+
+          '<div class="why">'+q.why+'</div>'+
+          '<div class="take"><b>Transferable principle</b>'+q.take+'</div>'+
+        '</div></div></div>'):'')+
+    '</div></div>';
+}
+
+function build(){
+  let tabs='', panes='';
+  SECTIONS.forEach((s,si)=>{
+    tabs += '<button class="tab c-'+s.color+(si===0?' on':'')+'" onclick="go('+si+')" id="tab'+si+'">'+
+            s.tab+'<span class="n">'+(s.items?s.items.length:'')+'</span></button>';
+    let inner = '<div class="sechead c-'+s.color+'"><h2>'+s.title+'</h2><p>'+s.blurb+'</p></div>';
+    if(s.pre) inner += s.pre;
+    if(s.items) s.items.forEach((it,ii)=>{ inner += itemHTML(s,it,si+'-'+ii); });
+    if(s.post) inner += s.post;
+    if(s.transfer){
+      inner += '<div class="transfer"><h4>Before you leave this section, answer these out loud</h4><ul>'+
+               s.transfer.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';
+    }
+    panes += '<div class="pane'+(si===0?' on':'')+'" id="pane'+si+'">'+inner+'</div>';
+  });
+  document.getElementById('tabs').innerHTML = tabs;
+  document.getElementById('panes').innerHTML = panes;
+  tally();
+}
+function go(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',i===j));
+  document.querySelectorAll('.pane').forEach((p,j)=>p.classList.toggle('on',i===j));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function pick(qid,i){
+  const sec = SECTIONS[qid.split('-')[0]], it = sec.items[qid.split('-')[1]], q = it.q;
+  const multi = q.correct.length>1;
+  const els = document.querySelectorAll('[data-q="'+qid+'"]');
+  if(document.getElementById('rat-'+qid).classList.contains('show')) return;
+  if(multi){ els[i].classList.toggle('sel'); }
+  else { els.forEach(e=>e.classList.remove('sel')); els[i].classList.add('sel'); }
+}
+function show(qid){
+  const p = qid.split('-'), q = SECTIONS[p[0]].items[p[1]].q;
+  const els = document.querySelectorAll('[data-q="'+qid+'"]');
+  const chosen = []; els.forEach((e,i)=>{ if(e.classList.contains('sel')) chosen.push(i); });
+  els.forEach((e,i)=>{
+    e.classList.remove('sel');
+    if(q.correct.includes(i)) e.classList.add('right');
+    else if(chosen.includes(i)) e.classList.add('wrong');
+  });
+  document.getElementById('rat-'+qid).classList.add('show');
+  if(!answered[qid]){
+    const ok = chosen.length===q.correct.length && chosen.every(i=>q.correct.includes(i));
+    answered[qid] = ok?1:0; if(ok) correctCt++;
+    tally();
+  }
+}
+function tally(){
+  const n = Object.keys(answered).length;
+  document.getElementById('score').textContent =
+    'Answered '+n+' of '+totalQ+' \u00b7 '+correctCt+' correct';
+}
+function resetAll(){ answered={}; correctCt=0; totalQ=0; build(); go(0); }
+build();
+</script>
+</body>
+</html>
