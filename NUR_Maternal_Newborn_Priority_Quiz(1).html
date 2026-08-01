@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maternal–Newborn Nursing Priority Quiz</title>
+<meta name="description" content="Interactive maternal-newborn nursing quiz with grading and detailed rationales.">
+<style>
+:root {
+  --navy:#17385f; --blue:#2563a8; --blue2:#eaf3fc; --ink:#203040; --muted:#617182;
+  --bg:#eef3f8; --card:#fff; --line:#d8e1ea; --good:#16824b; --goodbg:#eaf8f0;
+  --bad:#bb2d3b; --badbg:#fff0f1; --warn:#9a6410; --warnbg:#fff8e8; --shadow:0 8px 28px rgba(26,55,88,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+button,input{font:inherit}
+a{color:inherit}
+.skip{position:absolute;left:-9999px;top:auto}
+.skip:focus{left:12px;top:12px;z-index:9999;background:#fff;padding:10px;border-radius:8px}
+.hero{background:linear-gradient(135deg,#102b4a,#285d91);color:white;padding:34px 20px 28px}
+.hero-inner{max-width:1120px;margin:auto}
+.eyebrow{font-weight:750;letter-spacing:.08em;text-transform:uppercase;font-size:.75rem;opacity:.82}
+h1{font-size:clamp(1.65rem,3vw,2.6rem);line-height:1.15;margin:.35rem 0 .55rem}
+.hero p{max-width:790px;margin:0;opacity:.9}
+.notice{max-width:1120px;margin:18px auto 0;padding:0 20px}
+.notice-box{background:var(--warnbg);border:1px solid #e6c982;border-left:5px solid #c88918;border-radius:10px;padding:13px 16px;font-size:.92rem}
+.toolbar-wrap{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(27,48,73,.06)}
+.toolbar{max-width:1120px;margin:auto;padding:12px 20px;display:grid;grid-template-columns:minmax(180px,1fr) auto;gap:12px;align-items:center}
+.progress-meta{display:flex;justify-content:space-between;gap:12px;font-size:.86rem;color:var(--muted);margin-bottom:6px}
+.progress{height:9px;background:#dfe7ef;border-radius:99px;overflow:hidden}
+.progress > span{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f7bc2,#20a464);transition:width .25s}
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{border:0;border-radius:9px;padding:9px 14px;font-weight:720;cursor:pointer;transition:.16s;display:inline-flex;gap:7px;align-items:center;justify-content:center}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--blue);color:white}
+.btn-ghost{background:#edf2f7;color:var(--navy);border:1px solid #d6e0ea}
+.btn-danger{background:#fff1f2;color:var(--bad);border:1px solid #f1c7cc}
+main{max-width:1120px;margin:22px auto 60px;padding:0 20px}
+.controls{display:grid;grid-template-columns:1fr auto;gap:12px;margin-bottom:16px}
+.search{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:white;color:var(--ink)}
+.filter{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:white;color:var(--ink)}
+.summary{display:none;background:white;border-radius:14px;padding:22px;margin:0 0 20px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.summary.show{display:block}
+.score-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.metric{background:#f6f9fc;border:1px solid var(--line);border-radius:11px;padding:14px;text-align:center}
+.metric b{display:block;font-size:1.55rem;color:var(--navy)}
+.metric span{font-size:.82rem;color:var(--muted)}
+.result-message{font-size:1.05rem;font-weight:700}
+.q-card{background:var(--card);border:1px solid var(--line);border-left:5px solid #5d90be;border-radius:14px;padding:22px;margin:0 0 16px;box-shadow:var(--shadow);scroll-margin-top:110px}
+.q-card.hidden{display:none}
+.q-card.correct{border-left-color:var(--good)}
+.q-card.incorrect{border-left-color:var(--bad)}
+.q-card.legacy{border-left-color:#c88918}
+.q-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
+.q-num{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:var(--blue)}
+.badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.badge{border-radius:99px;padding:3px 8px;font-size:.72rem;font-weight:750;background:#edf3f8;color:#49657f}
+.badge.sata{background:#f0eefe;color:#5e45a7}
+.badge.rank{background:#e9f7f5;color:#08776b}
+.badge.legacy{background:var(--warnbg);color:var(--warn)}
+.badge.ok{background:var(--goodbg);color:var(--good)}
+.badge.no{background:var(--badbg);color:var(--bad)}
+.q-stem{font-size:1.02rem;font-weight:670;margin:0 0 13px}
+.q-note{font-size:.86rem;color:var(--muted);background:#f5f8fb;border:1px solid var(--line);padding:10px 12px;border-radius:9px;margin:0 0 12px}
+.choice{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:10px;padding:11px 12px;margin:8px 0;cursor:pointer;transition:.15s;background:#fff}
+.choice:hover{border-color:#79a7d0;background:#f7fbff}
+.choice input{margin-top:4px;accent-color:var(--blue);transform:scale(1.08)}
+.choice-key{min-width:24px;height:24px;border-radius:50%;background:#edf3f8;display:inline-flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#4d6d89}
+.choice.is-user{border-color:#5f8fba;background:#f1f7fd}
+.choice.is-correct{border-color:var(--good);background:var(--goodbg)}
+.choice.is-wrong{border-color:var(--bad);background:var(--badbg)}
+.review{display:none;margin-top:15px;border-radius:10px;padding:14px 15px;background:#f7f9fb;border:1px solid var(--line)}
+.review.show{display:block}
+.review .answer-line{margin:4px 0;font-size:.91rem}
+.rationale{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:.91rem}
+.rank-help{font-size:.83rem;color:var(--muted);margin:0 0 8px}
+.rank-list{list-style:none;margin:0;padding:0}
+.rank-item{display:grid;grid-template-columns:42px 1fr auto;gap:10px;align-items:center;border:2px solid var(--line);border-radius:10px;padding:9px;margin:8px 0;background:#fff}
+.rank-index{width:31px;height:31px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e9f2fb;color:var(--navy);font-weight:800}
+.rank-buttons{display:flex;gap:5px}
+.rank-buttons button{width:34px;height:34px;border-radius:7px;border:1px solid var(--line);background:#f5f8fb;cursor:pointer;font-weight:800}
+.rank-buttons button:hover{background:#e7f0f9}
+.submit-zone{background:white;border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center;box-shadow:var(--shadow);margin-top:24px}
+.submit-zone p{margin:0 0 13px;color:var(--muted)}
+.submit-zone .btn{font-size:1.05rem;padding:12px 24px}
+.empty{display:none;text-align:center;color:var(--muted);padding:35px}
+footer{text-align:center;color:#6b7785;padding:28px 20px 45px;font-size:.82rem}
+.float-top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border:0;border-radius:50%;background:var(--navy);color:#fff;box-shadow:0 5px 18px rgba(0,0,0,.2);cursor:pointer;display:none}
+.float-top.show{display:block}
+@media(max-width:760px){
+  .toolbar{grid-template-columns:1fr}
+  .toolbar-actions{justify-content:flex-start}
+  .controls{grid-template-columns:1fr}
+  .score-grid{grid-template-columns:repeat(2,1fr)}
+  .q-card{padding:17px}
+  .q-head{display:block}
+  .badges{justify-content:flex-start;margin-top:8px}
+}
+@media print{
+  .toolbar-wrap,.controls,.submit-zone,.float-top,.hero p,.notice{display:none!important}
+  body{background:white}
+  .hero{padding:16px;background:white;color:#111;border-bottom:2px solid #111}
+  .q-card{break-inside:avoid;box-shadow:none}
+  .review{display:block}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#quiz">Skip to quiz</a>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Tehrani Labs · Nursing Review</div>
+    <h1>Maternal–Newborn Priority, Delegation & Safety Quiz</h1>
+    <p>Complete all items, submit once, and receive a grade with the correct answer and rationale for every question.</p>
+  </div>
+</header>
+
+<div class="notice">
+  <div class="notice-box">
+    <strong>Study note:</strong> All 77 questions are graded according to the supplied answer key. Question 38 is marked as a source-era item because current clinical guidance may differ. Scope-of-practice and reporting rules may vary by jurisdiction and facility.
+  </div>
+</div>
+
+<div class="toolbar-wrap">
+  <div class="toolbar">
+    <div>
+      <div class="progress-meta"><span id="progressText">0 of 77 graded questions answered</span><span id="progressPct">0%</span></div>
+      <div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn btn-ghost" id="printBtn" type="button">Print</button>
+      <button class="btn btn-ghost" id="reviewWrongBtn" type="button" disabled>Incorrect only</button>
+      <button class="btn btn-danger" id="resetBtn" type="button">Reset</button>
+    </div>
+  </div>
+</div>
+
+<main id="quiz">
+  <div class="controls">
+    <input id="searchBox" class="search" type="search" placeholder="Search questions or topics…" aria-label="Search questions">
+    <select id="categoryFilter" class="filter" aria-label="Filter questions by category">
+      <option value="all">All categories</option>
+      <option>Antepartum &amp; Postpartum</option>
+      <option>Labor &amp; Emergencies</option>
+      <option>Newborn Care</option>
+      <option>Delegation &amp; Management</option>
+      <option>Ethics, Safety &amp; Leadership</option>
+    </select>
+  </div>
+
+  <section class="summary" id="scoreSummary" aria-live="polite"></section>
+  <div id="questionList"></div>
+  <div class="empty" id="emptyState">No questions match this filter.</div>
+
+  <section class="submit-zone">
+    <p id="submitHint">Your work is saved automatically in this browser.</p>
+    <button class="btn btn-primary" id="submitBtn" type="button">Submit Quiz for Grade</button>
+  </section>
+</main>
+
+<button class="float-top" id="topBtn" type="button" aria-label="Back to top">↑</button>
+<footer>
+  Educational review only—not a substitute for current institutional policy, state scope-of-practice rules, or clinical judgment.
+</footer>
+
+<script>
+const QUESTIONS = [{"id":1,"stem":"Which client should the postpartum nurse assess first after receiving the a.m. shift report?","options":["The client reporting perineal pain when urinating","The client saturating multiple peri-pads during the night","The client refusing to have their newborn in the room","The client crying because the baby will not nurse"],"type":"single","answer":2,"rationale":"Saturating multiple peri-pads suggests excessive postpartum bleeding and possible hemorrhage. Hemorrhage is an immediate circulation threat and takes priority over pain, bonding concerns, or breastfeeding difficulty.","category":"Delegation & Management","graded":true},{"id":2,"stem":"Which newborn infant would warrant immediate intervention by the nursery nurse?","options":["The 1-hour-old newborn with abundant lanugo","The 6-hour-old newborn with respirations of 52 breaths/min","The 12-hour-old newborn turning red and crying","The 24-hour-old newborn who has not passed meconium"],"type":"single","answer":4,"rationale":"A newborn should pass meconium within the first 24 hours. Failure to do so may indicate obstruction or another gastrointestinal problem; the other findings are expected newborn variations.","category":"Newborn Care","graded":true},{"id":3,"stem":"The client in labor is showing late decelerations on the fetal monitor. Which intervention should the nurse implement first?","options":["Notify the healthcare provider (HCP) immediately.","Instruct the client to take slow, deep breaths.","Place the client in the left lateral position.","Prepare for an immediate delivery of the fetus."],"type":"single","answer":3,"rationale":"Late decelerations indicate uteroplacental insufficiency. Repositioning to the left side is the fastest independent action to improve uterine and placental perfusion before escalating care.","category":"Labor & Emergencies","graded":true},{"id":4,"stem":"The nurse walks into the client’s room to check on the mother and her newborn. The client states another nurse just took her baby back to the nursery. Which intervention should the nurse implement first?","options":["Initiate an emergency Code Pink, indicating an infant abduction.","Ask the mother to describe the nurse who took the baby.","Determine whether the infant was returned to the nursery.","Ask the mother whether the nurse asked for the code word."],"type":"single","answer":3,"rationale":"First verify the infant’s location. Initiating an abduction response without determining whether the infant was appropriately returned to the nursery may create an unnecessary emergency.","category":"Antepartum & Postpartum","graded":true},{"id":5,"stem":"The women’s health clinic nurse is returning telephone calls. Which client should the nurse contact first?","options":["The 16-year-old client reporting severe lower abdominal cramping","The 27-year-old primigravida client reporting blurred vision","The 48-year-old perimenopausal client expelling dark-red blood clots","The 68-year-old client thinking her uterus is falling out of her vagina"],"type":"single","answer":2,"rationale":"Blurred vision in pregnancy may indicate severe preeclampsia and impending neurologic complications. This is more urgent than the other reported concerns.","category":"Antepartum & Postpartum","graded":true},{"id":6,"stem":"The charge nurse has received laboratory results for clients on the postpartum unit. Which client would warrant intervention by the nurse?","options":["The client with white blood cell count 18,000/mm3","The client with serum creatinine level 0.8 mg/dL","The client with platelet count of 410,000/mm3","The client with serum glucose level of 280 mg/dL"],"type":"single","answer":4,"rationale":"A glucose of 280 mg/dL is markedly elevated and requires intervention. Mild postpartum leukocytosis can be physiologic, and the creatinine and platelet values listed are not the most urgent abnormality.","category":"Delegation & Management","graded":true},{"id":7,"stem":"The nurse on the postpartum unit is administering a.m. medications. Which medication should the nurse administer first?","options":["The sliding scale insulin to the client diagnosed with type 1 diabetes","The stool softener to the client reporting severe constipation","The non-narcotic analgesic to the client reporting a headache, rated as a 3 on a pain scale of 1 to 10","The rectal suppository for the client reporting hemorrhoidal pain"],"type":"single","answer":1,"rationale":"Rapid-acting or regular insulin tied to mealtime must be administered on schedule to prevent significant hyperglycemia and coordinate with food intake. The other medications address nonurgent comfort concerns.","category":"Delegation & Management","graded":true},{"id":8,"stem":"The labor and delivery nurse is performing a vaginal examination and assesses a prolapsed cord. Which intervention should the nurse implement first?","options":["Place the client in the Trendelenburg position.","Ask the father to leave the delivery room.","Request the client not to push during contractions.","Prepare the client for an emergency cesarean section (C-section)."],"type":"single","answer":1,"rationale":"A prolapsed cord can be compressed between the fetus and pelvis. Trendelenburg or another position that relieves pressure on the presenting part is the immediate action while preparing definitive delivery.","category":"Labor & Emergencies","graded":true},{"id":9,"stem":"Which newborn infant would the nursery nurse assess first?","options":["The 3-hour-old newborn weighing 6 lb 2 oz (2.8 kg)","The 4-hour-old newborn delivered at 42 weeks’ gestation","The 6-hour-old newborn measuring 22 in (55.9 cm) long","The 8-hour-old newborn delivered at 40 weeks’ gestation"],"type":"single","answer":2,"rationale":"A post-term newborn is at increased risk for placental insufficiency, meconium aspiration, hypoglycemia, and dysmaturity. The other findings do not independently indicate comparable risk.","category":"Newborn Care","graded":true},{"id":10,"stem":"Which antepartum client should the charge nurse assign to the most experienced nurse?","options":["The 34-week gestation client receiving terbutaline and on strict bedrest","The 36-week gestation client in active labor with a fetal biophysical profile of 10","The 38-week gestation client dilated to 10 cm and 100% effaced","The 42-week gestation client after pushing for 4 hours and showing yellow amniotic fluid"],"type":"single","answer":4,"rationale":"Prolonged pushing with yellow or meconium-stained fluid at 42 weeks suggests fetal compromise and a difficult delivery. This unstable, high-risk client requires the most experienced nurse.","category":"Labor & Emergencies","graded":true},{"id":11,"stem":"A registered nurse (RN) has been floated from the medical unit to the postpartum unit. Which client should be assigned to this nurse?","options":["The 4-hour postpartum client whose fundus is not midline","The 8-hour postpartum client saturating three peri-pads in 1 hour","The 14-hour postpartum client after experiencing eclampsia during delivery","The 23-hour postpartum client being discharged home this morning"],"type":"single","answer":3,"rationale":"The 14-hour postpartum client who experienced eclampsia remains at risk for another seizure, but a medical-surgical RN has the general nursing skills to manage seizure precautions and obtain help. The displaced fundus, active hemorrhage risk, and postpartum discharge teaching require more specialized postpartum assessment or teaching.","category":"Delegation & Management","graded":true},{"id":12,"stem":"Which priority intervention should the nurse implement for the 38-weeks’ gestation client receiving epidural anesthesia?","options":["Place the client in the fetal position.","Assess the client’s respiratory rate.","Prehydrate the client with IV fluid.","Ensure the client has been NPO for 4 hours."],"type":"single","answer":2,"rationale":"Epidural anesthesia can produce a high block and respiratory compromise. Respiratory rate is therefore a priority assessment after the procedure; prehydration is performed before placement.","category":"Labor & Emergencies","graded":true},{"id":13,"stem":"The 28-year-old female client is being scheduled for an emergency appendectomy. Which priority question should the emergency department nurse ask the client?","options":["“Are you currently breastfeeding?”","“Have you ever had general anesthesia?”","“Do you have any medication allergies?”","“Is there any chance you are pregnant?”"],"type":"single","answer":4,"rationale":"Pregnancy status affects anesthesia, medications, imaging, and surgical planning. Because the surgery is urgent, determining possible pregnancy is the priority reproductive-safety question.","category":"Antepartum & Postpartum","graded":true},{"id":14,"stem":"Which client should the labor and delivery RN charge nurse assign to the most experienced nurse?","options":["The client with a fetal heart rate of 130 bpm","The client with nonreassuring fetal heart rate patterns","The client scheduled for a cesarean section","The client having a vaginal birth and has been pushing for 1 hour"],"type":"single","answer":2,"rationale":"Nonreassuring fetal heart rate patterns may represent fetal hypoxia and require rapid assessment and intervention. The other clients are stable or undergoing expected care.","category":"Labor & Emergencies","graded":true},{"id":15,"stem":"The UAP informs the RN postpartum nurse she has helped the 1-day postpartum client change her peri-pad three times in the last 4 hours. Which action should the nurse implement?","options":["Ask the UAP why the nurse was not notified earlier.","Go to the room and check the client immediately.","Instruct the UAP to massage the client’s uterus.","Document the finding in the client’s electronic health record (EHR)."],"type":"single","answer":2,"rationale":"The RN must immediately assess the amount of bleeding, fundal tone, vital signs, and overall status. The nurse should not rely only on the UAP’s report or delegate uterine assessment and treatment.","category":"Delegation & Management","graded":true},{"id":16,"stem":"The UAP is assisting the RN nursery nurse in the newborn nursery. Which action by the UAP would warrant intervention?","options":["The UAP swaddles the infant securely in a blanket.","The UAP uses gloves when changing the infant.","The UAP is bathing the newborn with a bar of soap.","The UAP wipes down the crib with a disinfectant."],"type":"single","answer":3,"rationale":"Routine bar soap can dry and irritate a newborn’s delicate skin. Plain water or a mild newborn cleanser is generally preferred for routine bathing.","category":"Newborn Care","graded":true},{"id":17,"stem":"The charge nurse is making assignments in the labor and delivery department. Which client should be assigned to the most experienced nurse?","options":["The 26-week gestational client having Braxton Hicks contractions","The 32-week gestational client having triplets and on bedrest","The 38-week gestational client with contractions 3 minutes apart","The 39-week gestational client with late decelerations on the fetal monitor"],"type":"single","answer":4,"rationale":"Late decelerations indicate uteroplacental insufficiency and possible fetal hypoxia. This client is the least stable and should receive the most experienced labor nurse.","category":"Labor & Emergencies","graded":true},{"id":18,"stem":"Which tasks should the RN postpartum nurse delegate to the UAP? Select all that apply.","options":["Instruct the UAP to prepare a sitz bath for the client.","Ask the UAP to call the laboratory for a STAT complete blood count (CBC).","Tell the UAP to show the mother how to breastfeed.","Direct the UAP to check the client’s fundus.","Have the UAP take the breakfast tray to the client."],"type":"multi","answer":[1,5],"rationale":"A UAP may prepare a sitz bath and deliver a meal tray because these are routine, non-assessment tasks. Calling for a STAT test, teaching breastfeeding, and assessing the fundus require licensed nursing judgment or unit-specific personnel.","category":"Delegation & Management","graded":true},{"id":19,"stem":"A nurse from the medical-surgical unit is assigned to the postpartum unit. Which client should the charge nurse assign to the medical-surgical nurse?","options":["The client diagnosed with mastitis and trying to breastfeed","The client postsurgical vaginal hysterectomy and oophorectomy","The client having difficulty bonding with her infant","The unmarried client giving her child up for adoption"],"type":"single","answer":2,"rationale":"A postoperative vaginal hysterectomy and oophorectomy client has care needs familiar to a medical-surgical nurse. Mastitis with breastfeeding, impaired bonding, and adoption involve specialized postpartum teaching or psychosocial care.","category":"Delegation & Management","graded":true},{"id":20,"stem":"The UAP responds to a code in the newborn nursery. Which task should the RN house supervisor delegate to the UAP?","options":["Tell the UAP to sit in the waiting room with the family.","Give medication to the nurse from the crash cart.","Assist the nurse anesthetist with intubation.","Instruct the UAP to obtain supplies needed during the code."],"type":"single","answer":4,"rationale":"During a code, the UAP can retrieve supplies and perform support tasks. Medication handling and assisting with intubation require licensed or specially trained personnel.","category":"Delegation & Management","graded":true},{"id":21,"stem":"Which action by the RN nursery nurse would warrant immediate intervention by the charge nurse?","options":["The nurse allows an experienced volunteer to rock an infant.","The nurse puts a gloved finger into the newborn’s mouth.","The nurse performs the Ortolani maneuver on the newborn.","The nurse requests the licensed practical nurse (LPN) to bathe the newborn infant."],"type":"single","answer":3,"rationale":"The Ortolani maneuver can injure an unstable hip if performed incorrectly and is generally reserved for a trained advanced clinician or provider. The other actions fall within appropriate nursery care or delegation.","category":"Delegation & Management","graded":true},{"id":22,"stem":"The RN and UAP are caring for clients on a postpartum unit. Which task would be most appropriate for the RN to assign to the UAP?","options":["Perform an in-and-out catheterization.","Complete the client’s discharge instructions.","Escort the client to the car and check for a car seat.","Spray anesthetic foam on the client’s episiotomy."],"type":"single","answer":3,"rationale":"Escorting a discharged client and confirming that a car seat is available is a routine task suitable for a UAP. Catheterization, discharge teaching, and medication application require licensed nursing responsibilities or policy-specific competency.","category":"Delegation & Management","graded":true},{"id":23,"stem":"The RN charge nurse is making assignments on the postpartum unit. Which client should be assigned to the LPN?","options":["The client delivering her sixth baby now returning to her room","The client postsurgical C-section yesterday running a low-grade fever","The client postvaginal delivery this morning with foul-smelling lochia","The client 1-day postvaginal delivery and ambulating in the hall"],"type":"single","answer":4,"rationale":"The 1-day postpartum client ambulating in the hall is stable and has predictable care needs appropriate for an LPN. The other clients have hemorrhage or infection risk requiring RN assessment.","category":"Delegation & Management","graded":true},{"id":24,"stem":"The RN nursery nurse and UAP are caring for babies in the newborn nursery. Which action by the UAP would warrant immediate intervention?","options":["The UAP does not check the mother’s identification (ID) band with the infant’s ID band.","The UAP brings the mother a full package of newborn diapers.","The UAP applies baby lotion to the newborn while the mother is watching.","The UAP tells the father to support the newborn’s head."],"type":"single","answer":1,"rationale":"Mother–infant identification bands must be matched before the infant is released. Failure to verify identity is an immediate security and safety violation.","category":"Delegation & Management","graded":true},{"id":25,"stem":"Which tasks should the RN postpartum nurse delegate to the UAP? Select all that apply.","options":["Tell the UAP to assess the vital signs of the 4 hours postvaginal delivery client.","Request the UAP to pass out the breakfast trays to the clients.","Instruct the UAP to administer Rho(D) immune globulin to the Rh-negative client.","Ask the UAP to remove the client’s indwelling urinary catheter.","Direct the UAP to assist the client to breastfeed her infant."],"type":"multi","answer":[1,2,4],"rationale":"A trained UAP may obtain routine vital signs, distribute meal trays, and remove a urinary catheter when allowed by policy. Medication administration and breastfeeding teaching or assessment remain licensed nursing responsibilities.","category":"Delegation & Management","graded":true},{"id":26,"stem":"Which behavior by the UAP warrants immediate intervention by the RN postpartum nurse?","options":["The UAP helped the client with an episiotomy apply an ice pack to the perineal area.","The UAP pushes the PCA button for the 8-hour postoperative C-section client.","The UAP uses nonsterile gloves to remove the client’s peri-pad.","The UAP encourages the client to eat all the food on the breakfast tray."],"type":"single","answer":2,"rationale":"Only the client may activate a patient-controlled analgesia button. A UAP pressing it bypasses the safety design and can cause oversedation or respiratory depression.","category":"Delegation & Management","graded":true},{"id":27,"stem":"The RN charge nurse is making assignments on a postpartum unit that has two RNs, two LPNs, and two UAPs. Which task or assignment is most appropriate?","options":["Instruct the UAP to evaluate how the mother and infant are bonding.","Tell the RN to change the sharps container in the medication room.","Ask the LPN to administer ibuprofen to the client experiencing afterbirth pains.","Request the LPN to care for the 6-hours postpartum client after eclampsia."],"type":"single","answer":3,"rationale":"Administering oral ibuprofen to a stable postpartum client is within typical LPN scope. Evaluation, unstable post-eclampsia care, and environmental safety management belong to the RN or appropriate support staff.","category":"Delegation & Management","graded":true},{"id":28,"stem":"The RN postpartum nurse instructed the UAP to provide a sitz bath to the postpartum client diagnosed with hemorrhoids. Which priority intervention should the nurse implement?","options":["Document the sitz bath in the client’s nurse’s notes.","Follow up to ensure the UAP gave the sitz bath.","Assess the client’s hemorrhoids every 4 hours.","Discuss the importance of not getting constipated."],"type":"single","answer":2,"rationale":"The RN remains accountable for delegated care and must verify that the sitz bath was completed and evaluate the outcome. Documentation alone does not substitute for follow-up.","category":"Delegation & Management","graded":true},{"id":29,"stem":"Which newborn should the RN charge nurse in the nursery assign to the LPN?","options":["The 4-hour neonate born at 42 weeks","The jittery and irritable 8-hour newborn","The 18-hour newborn with a mother addicted to heroin","The 22-hour neonate born vaginally after 2 hours of pushing"],"type":"single","answer":4,"rationale":"The 22-hour neonate after an uncomplicated vaginal birth is the most stable assignment. Post-term status, jitteriness, and opioid exposure require RN assessment and closer monitoring.","category":"Delegation & Management","graded":true},{"id":30,"stem":"The client being seen in the obstetric (OB) clinic tells the nurse, “I don’t think it is right that the judge is making me get a contraceptive implant just because they don’t think I am a good mother.” Which ethical principle does the requirement violate?","options":["Autonomy","Justice","Fidelity","Beneficence"],"type":"single","answer":1,"rationale":"Autonomy protects a competent person’s right to make reproductive decisions without coercion. A court-mandated contraceptive implant directly limits self-determination.","category":"Ethics, Safety & Leadership","graded":true},{"id":31,"stem":"The client in labor is diagnosed with gestational hypertension and has preeclampsia. Which interventions should the nurse implement? Select all that apply.","options":["Monitor the IV magnesium sulfate.","Check the client’s telemetry monitor.","Assess the client’s deep tendon reflexes.","Administer furosemide IV push (IVP).","Notify the nursery when delivery is imminent or has occurred."],"type":"multi","answer":[1,3,5],"rationale":"Magnesium sulfate and deep tendon reflexes must be monitored because loss of reflexes can signal toxicity. The nursery should be notified as delivery approaches; routine telemetry and furosemide are not standard first-line interventions for preeclampsia.","category":"Labor & Emergencies","graded":true},{"id":32,"stem":"The father of a newborn infant tells the nurse excitedly, “Someone just took our baby and they removed the infant security bracelet.” Which action should the nurse implement first?","options":["Tell the father to remain calm and return to the newborn’s mother.","Assign staff members to block all exits from the unit.","Page a Code Pink, indicating an infant abduction.","Question the father about what exactly happened in the room."],"type":"single","answer":3,"rationale":"A missing infant with a removed security bracelet meets criteria for an abduction emergency. Activating Code Pink immediately mobilizes the hospital response; exit control and investigation follow.","category":"Ethics, Safety & Leadership","graded":true},{"id":33,"stem":"The client after delivering twins 3 days ago calls the women’s health clinic and tells the nurse, “I am having hip pain that makes it difficult to walk.” Which statement is the nurse’s best response?","options":["“I will make you an appointment to see the HCP today.”","“This often occurs a few days after delivery and will disappear with time.”","“Make sure you perform the Kegel exercises 10 to 20 times daily.”","“The pain may decrease if you empty your bladder every 2 hours.”"],"type":"single","answer":2,"rationale":"Relaxin-related ligament and pelvic-joint changes can cause temporary hip discomfort in the first postpartum days. Reassurance is appropriate when no red-flag symptoms are described.","category":"Antepartum & Postpartum","graded":true},{"id":34,"stem":"The 36-week gestational client has just delivered a stillborn infant. To whom should the nurse refer the client at this time?","options":["The sudden infant death syndrome (SIDS) support group","The maternal-child case manager","The hospital chaplain","Child Protective Services"],"type":"single","answer":3,"rationale":"A hospital chaplain can provide immediate spiritual and grief support after stillbirth. SIDS resources concern infants who die after birth, and the other referrals do not directly address acute bereavement.","category":"Ethics, Safety & Leadership","graded":true},{"id":35,"stem":"The client is 20 weeks pregnant and comes to the women’s health clinic. The nurse notices bruises on her abdomen and back. Which response is most appropriate for the nurse?","options":["“Please tell me the name of your abuser.”","“This could cause you to lose your baby.”","“How did you get these bruises?”","“Do you feel safe in your home?”"],"type":"single","answer":4,"rationale":"The priority is to assess immediate safety without assuming or accusing. Asking whether the client feels safe opens a confidential, trauma-informed discussion and guides protective planning.","category":"Ethics, Safety & Leadership","graded":true},{"id":36,"stem":"The client’s partner comes to the postpartum unit and demands the girlfriend’s room number. The nurse can smell alcohol on the person’s breath, and they are acting erratically. Which action should the nurse implement?","options":["Explain to the client her partner is causing problems.","Give the client’s room number to the significant other.","Contact hospital security to come to the unit.","Tell the partner they cannot be here while intoxicated."],"type":"single","answer":3,"rationale":"An intoxicated, erratic visitor may endanger the client, infant, and staff. Security should manage the situation rather than the nurse confronting the person or disclosing the client’s location.","category":"Ethics, Safety & Leadership","graded":true},{"id":37,"stem":"The nurse is caring for a Jehovah’s Witness postpartum client needing a Rho(D) immune globulin injection. Which question should the nurse ask the client?","options":["“Rho(D) immune globulin is a blood product. Do you want the injection?”","“Do you know what blood type your spouse has?”","“Did you know that you have Rh-negative blood?”","“Do you know whether your insurance will pay for the shot?”"],"type":"single","answer":1,"rationale":"Rho(D) immune globulin is a human plasma-derived product. The nurse should disclose this and support the client’s informed decision in accordance with religious beliefs.","category":"Ethics, Safety & Leadership","graded":true},{"id":38,"stem":"The nurse is administering medications to clients on a postpartum floor. Which medication should the nurse question administering?","options":["The rubella vaccine to the postpartum client with a negative titer","The yearly flu vaccine to a client reporting an allergy to eggs","The PPD to a client with recent tuberculosis exposure concerns","The hepatitis B vaccine to a breastfeeding client"],"type":"single","answer":2,"rationale":"According to the supplied source answer key, the nurse should question the yearly influenza vaccine for a client reporting an egg allergy because the vaccine was described as being produced with egg-based technology. The rubella vaccine is appropriate for a negative titer, a PPD is appropriate after tuberculosis exposure concerns, and hepatitis B vaccination is compatible with breastfeeding. This is a source-era item; current clinical guidance may differ.","category":"Antepartum & Postpartum","graded":true,"legacy":true,"note":"This question is graded according to the supplied source answer key and reflects source-era influenza-vaccine guidance."},{"id":39,"stem":"Which client would the newborn nursery nurse assess first after receiving shift report?","options":["The newborn diagnosed with chignon","The neonate diagnosed with caput succedaneum","The newborn diagnosed with a cephalohematoma","The neonate with a port-wine stain"],"type":"single","answer":3,"rationale":"A cephalohematoma represents bleeding beneath the periosteum and can contribute to hyperbilirubinemia or anemia. Chignon and caput are usually self-limited edema, while a port-wine stain is a vascular birthmark.","category":"Newborn Care","graded":true},{"id":40,"stem":"Which statement indicates to the postpartum nurse the discharge teaching for the first-time mother is effective?","options":["“I should contact my baby’s doctor if she refuses two or more feedings.”","“My baby will have green liquid stools for at least 1 month after I take her home.”","“I must administer vitamin K elixir daily with formula to my daughter.”","“If my daughter has thick, dark-colored stool I will call her doctor.”"],"type":"single","answer":1,"rationale":"Refusal of two or more feedings may indicate illness or dehydration and should be reported. The other statements incorrectly describe stool patterns or vitamin K administration.","category":"Newborn Care","graded":true},{"id":41,"stem":"Which primigravida client should the RN clinic nurse report to the certified nurse midwife?","options":["The 12-week gestation client reporting nausea and vomiting","The 24-week gestation client reporting ankle edema","The 32-week gestation client reporting facial edema","The 38-week gestation client reporting urinary frequency"],"type":"single","answer":3,"rationale":"Facial edema at 32 weeks is concerning for preeclampsia, especially if sudden or associated with hypertension or proteinuria. Nausea early in pregnancy, ankle edema, and urinary frequency are commonly expected findings.","category":"Antepartum & Postpartum","graded":true},{"id":42,"stem":"The nurse is caring for a postpartum client in the “taking in” phase. Which intervention is most appropriate for the nurse to implement?","options":["Ask the client to demonstrate how to change the infant’s diaper.","Determine whether the client’s blood is Rh-negative or Rh-positive.","Allow the client to express feelings about the birth of her infant.","Discuss the advantages of breastfeeding over bottle feeding."],"type":"single","answer":3,"rationale":"During the taking-in phase, the client is focused on the birth experience and personal needs. Encouraging the client to talk about the delivery supports psychological integration before expecting independent infant-care learning.","category":"Antepartum & Postpartum","graded":true},{"id":43,"stem":"Which data should the nurse assess on the 2-hour postpartum client who delivered vaginally? Select all that apply.","options":["Palpate the client’s breasts.","Check the client’s vaginal discharge.","Assess the client’s pedal pulses.","Inspect the client’s surgical incision.","Check the client’s pupillary response."],"type":"multi","answer":[1,2],"rationale":"Early postpartum assessment includes breast status and lochia/vaginal discharge. Pedal pulses, a surgical incision, and pupillary response are not routine priorities for an uncomplicated vaginal birth unless another indication exists.","category":"Antepartum & Postpartum","graded":true},{"id":44,"stem":"Which interventions should the postpartum nurse teach the client who is breastfeeding her infant to avoid developing mastitis? Select all that apply.","options":["Clean nipples and breasts with soap before each breastfeeding.","Ensure the infant latches on correctly to the breast when feeding.","Apply a nipple shield between breastfeeding attempts.","Perform hand washing before breastfeeding the infant.","Wear a breast binder when not breastfeeding."],"type":"multi","answer":[2,4],"rationale":"Correct latch prevents nipple trauma and milk stasis, and hand hygiene reduces bacterial transmission. Soap, routine nipple shields, and breast binding can worsen irritation or impair milk drainage.","category":"Antepartum & Postpartum","graded":true},{"id":45,"stem":"The nurse volunteering in a free clinic has cared for a female client for several weeks. The client states, “My partner and I have been trying to have a baby for 6 years. What can we do?” Which statement is the nurse’s best response?","options":["“You should discuss your concerns with the doctor when they come in.”","“Infertility treatments are very expensive, and you would have to pay for it.”","“You are concerned because you have been unable to get pregnant.”","“Have you tried the rhythm method to try and conceive a child?”"],"type":"single","answer":2,"rationale":"This is the source-keyed response: the nurse directly answers the practical question by explaining that infertility evaluation and treatment may be costly. In current practice, the nurse should also provide nonjudgmental referral options and avoid assuming inability to pay.","category":"Antepartum & Postpartum","graded":true},{"id":46,"stem":"Which client should the labor and delivery nurse assess first after receiving the shift report? Rank in order of priority.","options":["The client “needing to push,” is 10 cm dilated, and 100% effaced","The client exhibiting early decelerations on the fetal monitor","The client hesitating about whether or not to have an epidural","The upset client because her obstetrician is on vacation","The client in the latent phase of labor and ambulating in the hallway"],"type":"rank","answer":[1,2,3,5,4],"rationale":"The client fully dilated with an urge to push is closest to delivery and is first. Early decelerations are usually benign; the epidural decision is time-sensitive but not physiologically urgent. The ambulatory latent-phase client is stable, and distress about the absent obstetrician is last.","category":"Labor & Emergencies","graded":true},{"id":47,"stem":"The nurse is caring for clients in a women’s health clinic. Which client warrants intervention by the nurse?","options":["The pregnant client with hemoglobin and hematocrit levels of 11 g/dL and 33%.","The pregnant client with a fasting blood glucose level of 100 mg/dL","The pregnant client with 3+ protein in her urine","The pregnant client with white blood cell count of 11.5 × 103/microL"],"type":"single","answer":3,"rationale":"Three-plus proteinuria is abnormal and may indicate preeclampsia or renal disease. The other listed laboratory values can occur within expected pregnancy ranges.","category":"Antepartum & Postpartum","graded":true},{"id":48,"stem":"The client is 1 day postpartum, and the nurse notes the fundus is displaced laterally to the right. Which nursing intervention should be implemented first?","options":["Prepare to perform an in-and-out catheterization.","Assess the bladder using the bladder scanner.","Massage the client’s fundus for 2 minutes.","Assist the client to the bathroom to urinate."],"type":"single","answer":4,"rationale":"A uterus displaced to the right commonly indicates a full bladder. Assisting the client to void is the least invasive first intervention and often allows the fundus to return to midline.","category":"Antepartum & Postpartum","graded":true},{"id":49,"stem":"The 27-year-old female client is being scheduled for a chest x-ray. Which question should the nurse ask the client?","options":["“Have you ever had a chest x-ray before?”","“Is there any chance you may be pregnant?”","“When was the date of your last period?”","“Do you have any allergies to shellfish?”"],"type":"single","answer":2,"rationale":"Radiation exposure may affect a fetus, so possible pregnancy must be assessed before a chest x-ray. Shellfish allergy is unrelated unless iodinated contrast is planned.","category":"Antepartum & Postpartum","graded":true},{"id":50,"stem":"The clinical manager is reviewing hospital occurrence reports and notes that the nurse on the postpartum unit has documented three medication errors in the last 2 months. Which action should the clinical manager implement first?","options":["Initiate the formal counseling procedure for multiple medication errors.","Continue to monitor the nurse for any further medication errors.","Discuss the errors with the nurse to determine whether there is a medication system problem.","Arrange for the nurse to attend a medication administration review course."],"type":"single","answer":3,"rationale":"The manager should first investigate whether errors arise from workflow, labeling, staffing, technology, or individual practice. Corrective action should follow assessment of the cause.","category":"Antepartum & Postpartum","graded":true},{"id":51,"stem":"The nursery nurse is assessing newborns. Which newborn warrants immediate intervention by the nurse?","options":["The newborn remaining in the fetal position when lying supine","The newborn with toes flaring out when the lateral heel is stroked","The newborn turning their head toward the cheek being stroked","The newborn extending their arms when hearing a loud noise"],"type":"single","answer":1,"rationale":"A normal supine newborn should demonstrate flexor tone and primitive reflex patterns rather than remaining tightly fixed in the fetal position. The other responses are expected Babinski, rooting, and Moro reflexes.","category":"Newborn Care","graded":true},{"id":52,"stem":"The client on the postpartum unit tells the nurse, “My partner thinks he is the father of my baby, but he is not. What should I tell him?” Which response supports the ethical principle of nonmaleficence?","options":["“You should tell the truth before he becomes attached to the infant.”","“How do you think your partner will feel knowing he is not the father?”","“I know my partner would want to know whether my child was theirs or not.”","“Do you know what the real father is planning on doing about the baby?”"],"type":"single","answer":2,"rationale":"Nonmaleficence means avoiding harm. Asking the client to consider the partner’s likely response supports thoughtful decision-making without directing, judging, or imposing the nurse’s values.","category":"Ethics, Safety & Leadership","graded":true},{"id":53,"stem":"The hospital’s chief nursing officer instructed the RN clinical manager of the postpartum unit to research a change in the care delivery system. Which statement best describes modular nursing?","options":["Nurses are designated the primary responsible persons for client care.","The RN and UAP are assigned a group of postpartum clients.","Nursing staff members are divided into groups responsible for client care.","Nurses are assigned specific tasks rather than specific clients."],"type":"single","answer":2,"rationale":"Modular nursing pairs an RN with a less extensively trained caregiver, such as a UAP, to care for a geographic group of clients. The other descriptions correspond to primary, team, or functional nursing.","category":"Ethics, Safety & Leadership","graded":true},{"id":54,"stem":"Which action by the postpartum clinical manager would be most effective in producing a smooth transition to the new medication delivery system?","options":["Counsel any nurses unable to adapt to the change.","Ask the staff to vote on accepting the new system.","Have an open-door policy to discuss the change.","Send written documentation of the change by hospital e-mail."],"type":"single","answer":3,"rationale":"An open-door policy permits questions, feedback, and ongoing communication, which reduces resistance and supports change. Threats, a vote on a mandated change, or one-way email communication are less effective.","category":"Ethics, Safety & Leadership","graded":true},{"id":55,"stem":"During an interview, the pregnant client at the women’s health clinic hesitantly tells the nurse, “I think I should let someone know that I can’t stop eating dirt. I crave it all the time.” Which action should the nurse implement first?","options":["Explain that the behavior is normal.","Ask whether the client is taking the prenatal vitamins.","Check the client’s hemoglobin and hematocrit.","Determine whether there is a history of pica in the family."],"type":"single","answer":3,"rationale":"Pica can impair nutrient intake and contribute to iron-deficiency anemia. Checking hemoglobin and hematocrit assesses whether the behavior has already caused a clinically important complication.","category":"Antepartum & Postpartum","graded":true},{"id":56,"stem":"The client is 16 weeks pregnant and tells the office nurse, “My partner’s insurance has changed, and they say I can’t use you anymore.” Which statement is the nurse’s best response?","options":["“If we continue to see you, it will cost you much more money.”","“Because you are already pregnant your insurance company must pay.”","“You are concerned you don’t want to change doctors now?”","“Can your partner get a supplemental policy to cover this pregnancy?”"],"type":"single","answer":1,"rationale":"This is the source-keyed factual response: continuing with an out-of-network clinician may increase out-of-pocket cost. Actual coverage rules vary, so current benefits should be verified with the insurer rather than assumed.","category":"Antepartum & Postpartum","graded":true},{"id":57,"stem":"The 16-year-old mother of a 1-day-old infant wants her son circumcised. Which intervention should the nurse implement?","options":["Request the client’s mother to sign the permit.","Determine whether the insurance will pay for the procedure.","Refer the client to the social worker to apply for Medicaid.","Have the 16-year-old client sign for informed consent."],"type":"single","answer":4,"rationale":"A minor who is a parent generally has authority to consent for the medical care of their child. The 16-year-old mother therefore signs the circumcision consent.","category":"Ethics, Safety & Leadership","graded":true},{"id":58,"stem":"Which client should the RN newborn nurse refer to the hospital ethics committee?","options":["The anencephalic newborn with parents wanting everything done","The newborn with a 16-year-old mother wanting to place the infant up for adoption","The newborn with a known cocaine user mother who is positive for HIV","The newborn needing a unit of blood with parents refusing consent"],"type":"single","answer":1,"rationale":"Parents requesting maximal treatment for an anencephalic newborn creates a conflict about benefit, burden, and goals of care that may require ethics consultation. Adoption and mandated reporting are primarily legal or policy processes; blood refusal may require urgent legal action.","category":"Ethics, Safety & Leadership","graded":true},{"id":59,"stem":"The client has delivered a 37-week gestation infant with the cord wrapped around its neck. The infant died in utero. Which interventions should the nurse implement? Select all that apply.","options":["Allow the mother to hold and cuddle the infant.","Have the mother transferred to the medical unit.","Encourage the father to talk about his child with the nurse.","Recommend to the parents that the child be cremated.","Discourage the client from giving the infant a name."],"type":"multi","answer":[1,2,3],"rationale":"Parents should be offered the opportunity to see, hold, and name the infant, and both parents should receive grief support. Transfer away from crying infants can be compassionate; the nurse should not impose funeral choices or discourage naming.","category":"Ethics, Safety & Leadership","graded":true},{"id":60,"stem":"Which action would be most important for the RN clinical manager to take regarding a primary nurse receiving numerous compliments from clients and their families for excellent care they provide?","options":["Ask the nurse what they do that makes their care so special.","Document the comments on the nurse’s performance evaluation.","Acknowledge the comments with a celebration on the station.","Take no action because excellent care is expected by all nurses."],"type":"single","answer":2,"rationale":"Positive client feedback should be formally documented in the nurse’s performance evaluation. Written recognition supports fair appraisal, advancement, and professional development.","category":"Ethics, Safety & Leadership","graded":true},{"id":61,"stem":"The client asks the nurse in the women’s health clinic, “I am so miserable during my premenstrual syndrome I can’t even go to work. What can I do?” Which teaching interventions should the nurse implement? Select all that apply.","options":["Increase the amount of colas and coffee daily.","Avoid simple sugars such as cakes and candy.","Drink at least two glasses of red wine nightly.","Decrease the intake of foods high in salt.","Adhere to a regular schedule for sleep."],"type":"multi","answer":[2,4,5],"rationale":"Reducing simple sugars and sodium can lessen rebound symptoms and fluid retention, while consistent sleep may improve fatigue and irritability. Caffeine and alcohol may worsen PMS symptoms.","category":"Antepartum & Postpartum","graded":true},{"id":62,"stem":"The nurse is completing the admission assessment for a 12-week pregnant client visiting the women’s health clinic. The client tells the nurse, “Being a vegan, I will not drink milk or eat meat.” Which intervention should the nurse implement?","options":["Recommend the client eat grains, legumes, and nuts daily.","Suggest that the client eat at least two eggs every day.","Discuss not adhering to the vegan diet during pregnancy.","Explain that a vegan diet does not require iron supplements."],"type":"single","answer":1,"rationale":"A vegan pregnancy can meet protein needs by combining plant sources such as grains, legumes, and nuts. The nurse should support the diet while ensuring adequate protein, iron, vitamin B12, calcium, vitamin D, and other nutrients.","category":"Antepartum & Postpartum","graded":true},{"id":63,"stem":"The RN charge nurse of the postpartum unit is making assignments. Which clients should be assigned to the medical-surgical nurse assigned to the unit for the day? Select all that apply.","options":["The client reporting pain after delivering 4 hours ago","The client being discharged and needing discharge teaching about breastfeeding","The client being treated for HELLP syndrome","The client on a fetal monitor at 30 weeks’ gestation","The client on a Pitocin drip and gravida 8"],"type":"multi","answer":[1,4],"rationale":"The medical-surgical nurse may care for the stable client reporting pain four hours after delivery and the 30-week client who is being monitored; the nurse can obtain obstetric assistance if the fetal tracing changes or labor begins. Breastfeeding discharge teaching, HELLP syndrome, and Pitocin management require specialized obstetric knowledge.","category":"Delegation & Management","graded":true},{"id":64,"stem":"The labor and delivery nurse is assisting the anesthetist preparing to insert an epidural catheter in a client nearing delivery. Which picture indicates the correct position for the client?","options":["Position one — reclining with the head and trunk elevated","Position two — side-lying with the back and legs mostly straight","Position three — side-lying with knees drawn up and the back rounded","Position four — lying prone on the abdomen"],"note":"The source text omitted the four pictures. These descriptions reconstruct the positions shown in the source figure.","type":"single","answer":3,"rationale":"For epidural insertion, the client should flex the spine by rounding the back and drawing the knees upward while side-lying or sitting. This opens the intervertebral spaces and helps the anesthetist identify landmarks.","category":"Newborn Care","graded":true},{"id":65,"stem":"The 34-week pregnant client in the labor and delivery unit is on a magnesium sulfate IV drip for eclampsia. The nurse assesses the client’s reflexes as absent despite repeated stimulation. Which nursing intervention should the nurse implement first?","options":["Notify the obstetrician.","Document the finding as absent.","Have another nurse assess the reflexes.","Turn off the magnesium drip."],"type":"single","answer":4,"rationale":"Absent deep tendon reflexes during magnesium sulfate therapy indicate possible magnesium toxicity. Stop the infusion immediately, then notify the provider and prepare for further assessment and possible calcium gluconate.","category":"Labor & Emergencies","graded":true,"note":"Deep tendon reflex scale: 0 = absent despite reinforcement; 1 = present only with reinforcement; 2 = normal; 3 = increased but normal; 4 = markedly hyperactive with clonus."},{"id":66,"stem":"The public health nurse works at the clinic for sexually transmitted infections (STIs). The female client has been diagnosed with gonorrhea. Which nursing interventions should the nurse implement? Rank in order of performance.","options":["Notify the client’s sexual partners of potential exposure to an STI.","Complete the report to the Centers for Disease Control and Prevention.","Teach the client safe sex procedures and precautions.","Administer the prescribed antibiotic to the client.","Ask the client to provide a list of sexual partners."],"type":"rank","answer":[4,5,3,1,2],"rationale":"First administer the prescribed antibiotic to treat the client. Next obtain the list of sexual partners, then use the clinic encounter to teach safe-sex practices. After obtaining the necessary contact information, notify exposed partners, and complete the required public-health report last.","category":"Labor & Emergencies","graded":true},{"id":67,"stem":"The emergency department nurse observed a motor vehicle accident on the way home from work. The driver of one of the vehicles is several months pregnant. Which nursing intervention should the nurse implement first?","options":["Determine the length of gestation.","Assess the driver for signs of trauma.","Check to see whether the client was wearing a seat belt.","Monitor for fetal heart tones."],"type":"single","answer":2,"rationale":"Maternal stabilization comes before fetal assessment. The nurse first assesses the pregnant driver for trauma and life-threatening problems, then evaluates gestational and fetal status.","category":"Labor & Emergencies","graded":true},{"id":68,"stem":"Which postpartum client should the charge nurse assign to the new graduate nurse?","options":["The client reporting pain and with hemorrhoids","The client, during the night, saturated multiple peri-pads","The client refusing to have the newborn in the room","The client crying because the baby will not nurse"],"type":"single","answer":1,"rationale":"Pain from hemorrhoids is stable, predictable, and appropriate for a new graduate. Heavy bleeding, impaired bonding, and breastfeeding distress require greater assessment, teaching, or psychosocial experience.","category":"Delegation & Management","graded":true},{"id":69,"stem":"Which newborn infant would warrant immediate intervention by the nursery nurse?","options":["The 1-hour-old newborn with tiny, white, hard spots on the nose","The 6-hour-old newborn with a respiratory rate of 24","The 12-hour-old newborn turning red and crying","The 18-hour-old newborn with a viscous, sticky tar, odorless stool"],"type":"single","answer":2,"rationale":"A respiratory rate of 24 breaths/min is below the expected newborn range and may signal respiratory or neurologic compromise. Milia, crying with color change, and meconium stool are expected findings.","category":"Newborn Care","graded":true},{"id":70,"stem":"The laboring client is showing late decelerations on the fetal monitor. After placing the client in the left lateral position, which intervention should the labor and delivery nurse implement first?","options":["Notify the client’s obstetrician immediately.","Encourage the client to pant when contractions occur.","Administer oxytocin intravenously.","Prepare for an immediate delivery of the fetus."],"type":"single","answer":1,"rationale":"After the first intrauterine-resuscitation step, persistent late decelerations require immediate provider notification and further corrective measures. Oxytocin should not be started because it may worsen uteroplacental insufficiency.","category":"Labor & Emergencies","graded":true},{"id":71,"stem":"The charge nurse is monitoring laboratory results for clients on the postpartum unit. Which client would warrant intervention by the postpartum nurse?","options":["The client after a vaginal delivery with a white blood cell count of 15 × 103/microL","The client after a C-section with a serum potassium level of 4.8 mEq/L","The client diagnosed with preeclampsia and a platelet count of 90 × 103/microL","The client diagnosed with gestational diabetes and a serum glucose level of 140 mg/dL"],"type":"single","answer":3,"rationale":"A platelet count of 90,000/microL in preeclampsia indicates thrombocytopenia and possible HELLP syndrome. The other values are expected or less urgent in the stated contexts.","category":"Labor & Emergencies","graded":true},{"id":72,"stem":"The charge nurse is making assignments in the labor and delivery department. Which client should be assigned to the most experienced nurse?","options":["The 26-week gestational client having Braxton Hicks contractions","The 32-week gestational client having twins and on bedrest","The 38-week gestational client 100% effaced and 10 cm dilated","The 39-week gestational client with early decelerations on the fetal monitor"],"type":"single","answer":3,"rationale":"A client who is fully dilated and completely effaced is at imminent delivery and requires rapid, skilled intrapartum care. Braxton Hicks contractions, stable twins on bedrest, and early decelerations are less urgent.","category":"Delegation & Management","graded":true},{"id":73,"stem":"Which task should the RN postpartum nurse delegate to the UAP?","options":["Instruct the UAP to take the client having a fundus not midline to the bathroom.","Ask the UAP to take the vital signs for the client diagnosed with HELLP syndrome.","Tell the UAP to assist the new mother with breastfeeding her infant daughter.","Request the UAP to administer Rho(D) immune globulin to the Rh-negative mother."],"type":"single","answer":1,"rationale":"Once the RN identifies bladder distention as the likely cause of a displaced fundus, the UAP may assist the stable client to the bathroom. HELLP assessment, breastfeeding assistance involving teaching, and medication administration are not appropriate UAP assignments.","category":"Delegation & Management","graded":true},{"id":74,"stem":"A float nurse from the medical-surgical unit is assigned to the postpartum unit. Which client should the charge nurse assign to the float nurse?","options":["The client with a fetal demise at 34 weeks’ gestation","The client with a boggy fundus that massaging has not helped","The client with six saturated peri-pads in the last shift","The unmarried client giving her child up for adoption"],"type":"single","answer":1,"rationale":"The fetal-demise client is the least physiologically unstable option and a medical-surgical nurse is familiar with bereavement care, with postpartum support available. A boggy fundus unresponsive to massage and multiple saturated pads suggest hemorrhage; adoption involves specialized legal and psychosocial care.","category":"Delegation & Management","graded":true},{"id":75,"stem":"The postpartum nurse is administering medications to clients on a postpartum floor. Which medication should the nurse question administering?","options":["The yearly flu vaccine to the client reporting an allergy to tomatoes","The hepatitis B vaccine to a breastfeeding client","The Rho(D) immune globulin to the Rh-negative mother whose infant is Rh-positive","The rubella vaccine to the postpartum client with a positive titer"],"type":"single","answer":4,"rationale":"A positive rubella titer indicates immunity, so rubella vaccine is not indicated. The other listed vaccines or immune globulin are appropriate in the stated circumstances.","category":"Antepartum & Postpartum","graded":true},{"id":76,"stem":"Which client should the newborn nursery nurse assess first after receiving the shift report?","options":["The Asian newborn with purple splotches on the lower back","The Caucasian newborn with a purple area on the right side of the face","The Hispanic newborn with a red rash, “flea bites,” on the chest","The Black newborn with edema between suture lines"],"type":"single","answer":4,"rationale":"The newborn with edema confined between suture lines may have a cephalohematoma, which represents bleeding between the skull and periosteum and warrants assessment. Purple lower-back splotches, a port-wine stain, and erythema toxicum are expected or nonurgent findings in the context of this question.","category":"Newborn Care","graded":true},{"id":77,"stem":"The nursery nurse is assessing newborns. Which newborn would require further assessment by the nurse?","options":["The newborn remaining in the fetal position when lying supine","The newborn whose toes flare out when the lateral heel is stroked","The newborn acting as if they are walking when their feet are placed on a hard surface","The newborn grasping the finger placed in their hand"],"type":"single","answer":1,"rationale":"Persistent fetal positioning while supine may indicate abnormal tone or neurologic dysfunction. Babinski, stepping, and palmar grasp are expected primitive newborn reflexes.","category":"Newborn Care","graded":true}];
+const STORAGE_KEY = "tehrani_maternal_newborn_quiz_v2";
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let answers = {};
+let submitted = false;
+let incorrectOnly = false;
+
+const listEl = document.getElementById("questionList");
+const summaryEl = document.getElementById("scoreSummary");
+const progressText = document.getElementById("progressText");
+const progressPct = document.getElementById("progressPct");
+const progressFill = document.getElementById("progressFill");
+const searchBox = document.getElementById("searchBox");
+const categoryFilter = document.getElementById("categoryFilter");
+const reviewWrongBtn = document.getElementById("reviewWrongBtn");
+
+function esc(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));
+}
+
+function getSaved() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    if (saved && typeof saved.answers === "object") answers = saved.answers;
+    submitted = Boolean(saved.submitted);
+  } catch (e) {}
+}
+
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({answers, submitted})); } catch (e) {}
+}
+
+function typeLabel(q) {
+  if (q.type === "multi") return '<span class="badge sata">Select all that apply</span>';
+  if (q.type === "rank") return '<span class="badge rank">Rank in order</span>';
+  if (q.legacy) return '<span class="badge legacy">Source-era item</span><span class="badge">Single best answer</span>';
+  return '<span class="badge">Single best answer</span>';
+}
+
+function currentRank(q) {
+  const v = answers[q.id];
+  if (Array.isArray(v) && v.length === q.options.length) return v.map(Number);
+  return q.options.map((_,i)=>i+1);
+}
+
+function renderRank(q) {
+  const order = currentRank(q);
+  return `<p class="rank-help">Move the highest-priority action or client to position 1.</p>
+    <ol class="rank-list" data-rank-q="${q.id}">
+      ${order.map((optionNo, idx) => `
+        <li class="rank-item" data-option="${optionNo}">
+          <span class="rank-index">${idx+1}</span>
+          <span>${esc(q.options[optionNo-1])}</span>
+          <span class="rank-buttons">
+            <button type="button" aria-label="Move up" onclick="moveRank(${q.id},${idx},-1)" ${idx===0?'disabled':''}>↑</button>
+            <button type="button" aria-label="Move down" onclick="moveRank(${q.id},${idx},1)" ${idx===order.length-1?'disabled':''}>↓</button>
+          </span>
+        </li>`).join("")}
+    </ol>`;
+}
+
+function renderChoices(q) {
+  if (q.type === "rank") return renderRank(q);
+  const isMulti = q.type === "multi";
+  const selected = answers[q.id];
+  return q.options.map((opt,i) => {
+    const n = i+1;
+    const checked = isMulti ? Array.isArray(selected) && selected.map(Number).includes(n) : Number(selected) === n;
+    return `<label class="choice" data-choice="${n}">
+      <input type="${isMulti?'checkbox':'radio'}" name="q${q.id}" value="${n}" ${checked?'checked':''}
+        onchange="setChoice(${q.id},${n},${isMulti})">
+      <span class="choice-key">${letters[i]}</span>
+      <span>${esc(opt)}</span>
+    </label>`;
+  }).join("");
+}
+
+function render() {
+  listEl.innerHTML = QUESTIONS.map(q => `
+    <article class="q-card ${q.legacy?'legacy':''}" id="q${q.id}" data-qid="${q.id}" data-category="${esc(q.category)}">
+      <div class="q-head">
+        <div class="q-num">Question ${q.id} of ${QUESTIONS.length}</div>
+        <div class="badges"><span class="badge">${esc(q.category)}</span>${typeLabel(q)}<span class="result-badge"></span></div>
+      </div>
+      <div class="q-stem">${esc(q.stem)}</div>
+      ${q.note ? `<div class="q-note">${esc(q.note)}</div>` : ""}
+      <div class="answer-area">${renderChoices(q)}</div>
+      <div class="review" aria-live="polite"></div>
+    </article>`).join("");
+  if (submitted) grade(false);
+  updateProgress();
+  applyFilters();
+}
+
+function setChoice(qid, optionNo, isMulti) {
+  if (submitted) return;
+  if (isMulti) {
+    const current = Array.isArray(answers[qid]) ? answers[qid].map(Number) : [];
+    const ix = current.indexOf(optionNo);
+    if (ix >= 0) current.splice(ix,1); else current.push(optionNo);
+    answers[qid] = current.sort((a,b)=>a-b);
+  } else {
+    answers[qid] = optionNo;
+  }
+  save();
+  updateProgress();
+}
+
+window.moveRank = function(qid, index, direction) {
+  if (submitted) return;
+  const q = QUESTIONS.find(x=>x.id===qid);
+  const order = currentRank(q);
+  const target = index + direction;
+  if (target < 0 || target >= order.length) return;
+  [order[index], order[target]] = [order[target], order[index]];
+  answers[qid] = order;
+  save();
+  render();
+  document.getElementById("q"+qid)?.scrollIntoView({block:"center"});
+};
+
+function isAnswered(q) {
+  const a = answers[q.id];
+  if (q.type === "multi") return Array.isArray(a) && a.length>0;
+  if (q.type === "rank") return Array.isArray(a) && a.length===q.options.length;
+  return a !== undefined && a !== null && a !== "";
+}
+
+function isCorrect(q) {
+  if (!q.graded) return null;
+  const a = answers[q.id];
+  if (q.type === "single") return Number(a) === Number(q.answer);
+  if (q.type === "multi") {
+    const x = (Array.isArray(a)?a:[]).map(Number).sort((m,n)=>m-n);
+    const y = q.answer.map(Number).slice().sort((m,n)=>m-n);
+    return JSON.stringify(x) === JSON.stringify(y);
+  }
+  if (q.type === "rank") return JSON.stringify((a||[]).map(Number)) === JSON.stringify(q.answer.map(Number));
+  return false;
+}
+
+function formatAnswer(q, value) {
+  if (value === undefined || value === null || (Array.isArray(value) && value.length===0)) return "No answer";
+  if (q.type === "rank") return value.map((n,i)=>`${i+1}. ${q.options[Number(n)-1]}`).join(" → ");
+  const vals = Array.isArray(value) ? value : [value];
+  return vals.map(n => `${letters[Number(n)-1]}. ${q.options[Number(n)-1]}`).join("; ");
+}
+
+function updateProgress() {
+  const graded = QUESTIONS.filter(q=>q.graded);
+  const done = graded.filter(isAnswered).length;
+  const pct = Math.round(done/graded.length*100);
+  progressText.textContent = `${done} of ${graded.length} graded questions answered`;
+  progressPct.textContent = pct+"%";
+  progressFill.style.width = pct+"%";
+}
+
+function markCard(q) {
+  const card = document.getElementById("q"+q.id);
+  const resultBadge = card.querySelector(".result-badge");
+  const review = card.querySelector(".review");
+  card.querySelectorAll("input,button").forEach(el=>el.disabled=true);
+  card.querySelectorAll(".choice").forEach(el=>el.classList.remove("is-user","is-correct","is-wrong"));
+
+  if (!q.graded) {
+    resultBadge.innerHTML = '<span class="badge legacy">Not graded</span>';
+    review.innerHTML = `<div class="answer-line"><strong>Current guidance:</strong> This item has no scored choice.</div>
+      <div class="rationale"><strong>Explanation:</strong> ${esc(q.rationale)}</div>`;
+    review.classList.add("show");
+    return;
+  }
+
+  const correct = isCorrect(q);
+  card.classList.toggle("correct", correct);
+  card.classList.toggle("incorrect", !correct);
+  resultBadge.innerHTML = correct ? '<span class="badge ok">Correct</span>' : '<span class="badge no">Incorrect</span>';
+
+  if (q.type !== "rank") {
+    const userVals = Array.isArray(answers[q.id]) ? answers[q.id].map(Number) : [Number(answers[q.id])];
+    const correctVals = Array.isArray(q.answer) ? q.answer.map(Number) : [Number(q.answer)];
+    card.querySelectorAll(".choice").forEach(label => {
+      const n = Number(label.dataset.choice);
+      if (userVals.includes(n)) label.classList.add("is-user");
+      if (correctVals.includes(n)) label.classList.add("is-correct");
+      if (userVals.includes(n) && !correctVals.includes(n)) label.classList.add("is-wrong");
+    });
+  }
+
+  review.innerHTML = `<div class="answer-line"><strong>Your answer:</strong> ${esc(formatAnswer(q,answers[q.id]))}</div>
+    <div class="answer-line"><strong>Correct answer:</strong> ${esc(formatAnswer(q,q.answer))}</div>
+    <div class="rationale"><strong>Explanation:</strong> ${esc(q.rationale)}</div>`;
+  review.classList.add("show");
+}
+
+function grade(scroll=true) {
+  const graded = QUESTIONS.filter(q=>q.graded);
+  const unanswered = graded.filter(q=>!isAnswered(q));
+  if (!submitted && unanswered.length) {
+    const proceed = confirm(`${unanswered.length} graded question(s) are unanswered. They will count as incorrect. Submit anyway?`);
+    if (!proceed) {
+      document.getElementById("q"+unanswered[0].id)?.scrollIntoView({behavior:"smooth",block:"center"});
+      return;
+    }
+  }
+  submitted = true;
+  QUESTIONS.forEach(markCard);
+  const correct = graded.filter(isCorrect).length;
+  const incorrect = graded.length-correct;
+  const percent = Math.round(correct/graded.length*100);
+  const letter = percent>=90?"A":percent>=80?"B":percent>=70?"C":percent>=60?"D":"F";
+  const msg = percent>=90 ? "Excellent mastery." : percent>=80 ? "Strong performance." : percent>=70 ? "Good foundation—review the missed rationales." : "Review the priority frameworks and retry.";
+  summaryEl.innerHTML = `<div class="result-message">${msg}</div>
+    <div class="score-grid">
+      <div class="metric"><b>${percent}%</b><span>Grade</span></div>
+      <div class="metric"><b>${letter}</b><span>Letter grade</span></div>
+      <div class="metric"><b>${correct} / ${graded.length}</b><span>Correct</span></div>
+      <div class="metric"><b>${incorrect}</b><span>Incorrect</span></div>
+    </div>`;
+  summaryEl.classList.add("show");
+  reviewWrongBtn.disabled=false;
+  document.getElementById("submitBtn").textContent="Quiz Submitted";
+  document.getElementById("submitBtn").disabled=true;
+  document.getElementById("submitHint").textContent="Use “Incorrect only” to focus your review, or Reset to try again.";
+  save();
+  applyFilters();
+  if (scroll) summaryEl.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function resetAll() {
+  if (!confirm("Clear all answers and start over?")) return;
+  answers={}; submitted=false; incorrectOnly=false;
+  try{localStorage.removeItem(STORAGE_KEY)}catch(e){}
+  summaryEl.classList.remove("show");
+  reviewWrongBtn.disabled=true;
+  reviewWrongBtn.textContent="Incorrect only";
+  document.getElementById("submitBtn").disabled=false;
+  document.getElementById("submitBtn").textContent="Submit Quiz for Grade";
+  document.getElementById("submitHint").textContent="Your work is saved automatically in this browser.";
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function applyFilters() {
+  const term = searchBox.value.trim().toLowerCase();
+  const cat = categoryFilter.value;
+  let shown=0;
+  QUESTIONS.forEach(q => {
+    const card=document.getElementById("q"+q.id);
+    const text=(q.stem+" "+q.options.join(" ")+" "+q.category).toLowerCase();
+    const matchText=!term || text.includes(term);
+    const matchCat=cat==="all" || q.category===cat;
+    const matchWrong=!incorrectOnly || (submitted && q.graded && !isCorrect(q));
+    const visible=matchText && matchCat && matchWrong;
+    card.classList.toggle("hidden",!visible);
+    if(visible)shown++;
+  });
+  document.getElementById("emptyState").style.display=shown?"none":"block";
+}
+
+document.getElementById("submitBtn").addEventListener("click",()=>grade(true));
+document.getElementById("resetBtn").addEventListener("click",resetAll);
+document.getElementById("printBtn").addEventListener("click",()=>window.print());
+searchBox.addEventListener("input",applyFilters);
+categoryFilter.addEventListener("change",applyFilters);
+reviewWrongBtn.addEventListener("click",()=>{
+  incorrectOnly=!incorrectOnly;
+  reviewWrongBtn.textContent=incorrectOnly?"Show all":"Incorrect only";
+  applyFilters();
+});
+const topBtn=document.getElementById("topBtn");
+window.addEventListener("scroll",()=>topBtn.classList.toggle("show",window.scrollY>700));
+topBtn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+getSaved();
+render();
+</script>
+</body>
+</html>
