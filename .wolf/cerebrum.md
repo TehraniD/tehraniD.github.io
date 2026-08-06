@@ -21,6 +21,7 @@
 <!-- Mistakes made and corrected. Each entry prevents the same mistake recurring. -->
 <!-- Format: [YYYY-MM-DD] Description of what went wrong and what to do instead. -->
 
+- [2026-08-06] Assembled an HTML guide by concatenating a head slice of an existing guide with new body files, but the head slice already ended with `</style>` while the new body opened with more CSS — the rules rendered as visible text at the top of the live page. When building a file by concatenation, always verify tag balance at every seam (`<style>`/`</style>`, `<head>`, `<body>` counts) before publishing, not just div balance.
 - [2026-08-06] Pushed to `origin/main` without fetching first and the push was rejected (local branch 6 commits behind). Always `git fetch` + `git rebase --autostash origin/main` before pushing this repo — the user uploads files through the GitHub web UI between sessions.
 
 ## Decision Log

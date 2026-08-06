@@ -1,4 +1,23 @@
 {
   "version": 1,
-  "bugs": []
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-08-06T16:47:11.759216",
+      "error_message": "Raw CSS (site-footer and compare-grid rules) displayed as visible text at the top of Patho_Week6_Interactive_Guide.html",
+      "file": "Patho_Week6_Interactive_Guide.html",
+      "root_cause": "The guide was assembled by concatenating a head slice of the Week 2 guide with new body files. The head slice ended with </style>, and the new body file began with additional CSS rules, so those rules landed outside the stylesheet and the browser rendered them as page text.",
+      "fix": "Removed the stray </style> at the seam so the appended CSS sits inside the single <style> block. Verified with a parser check: exactly one <style>/</style> pair, no CSS after the closing tag.",
+      "tags": [
+        "html",
+        "css",
+        "file-assembly",
+        "concatenation",
+        "study-guide"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-06T16:47:11.759216"
+    }
+  ]
 }
