@@ -93,6 +93,7 @@
 - `NUR356_Exam3_Part2_Study_Guide.html` — Mental Health Nursing — Interactive Study Guide (~28489 tok)
 - `Patho_Week2_Interactive_Guide.html` — Patho W2 | Interactive Study Guide (~21913 tok)
 - `Patho_Week2_Study_Guide_Enhanced.html` — Patho W2 Enhanced | analogies, memory hooks, labs, nursing considerations, 10 NCLEX Qs (~9500 tok)
+- `Patho_Week6_Interactive_Guide.html` — Patho W6 | Interactive Study Guide; 5 tabs (Vitals & Endocrine, Diabetes, Neuro, Renal, 15-Q Quiz), 6 SVG flow diagrams, flip cards, quick checks (~30000 tok)
 - `Patho_Week6_Jeopardy.html` — HCR-240 Week 6 Jeopardy! (~8035 tok)
 - `patho-final-fun-jam_v1 copy.html` — PATHO FINAL FUN JAM | tehranilabs.org (~18683 tok)
 - `QUALITY_ASSURANCE_REPORT.md` — 🔍 Quality Assurance Report (~2818 tok)

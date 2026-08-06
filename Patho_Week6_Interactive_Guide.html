@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patho W6 | Interactive Study Guide</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1e3a5f;--navy-dark:#0f2444;
+  --white:#fff;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;
+  --gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;
+  --blue:#3b82f6;--blue-light:#eff6ff;
+  --purple:#8b5cf6;--purple-light:#f5f3ff;
+  --green:#10b981;--green-light:#ecfdf5;
+  --amber:#f59e0b;--amber-light:#fffbeb;
+  --red:#ef4444;--red-light:#fef2f2;
+  --teal:#14b8a6;--teal-light:#f0fdfa;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.08);
+  --shadow:0 4px 6px -1px rgba(0,0,0,0.08);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1);
+  --radius:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--gray-100);color:var(--gray-800);line-height:1.6;font-size:15px}
+
+/* HEADER */
+#site-header{position:sticky;top:0;z-index:100;background:#0f2444;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.header-logo{color:#fff;font-weight:800;font-size:1rem;letter-spacing:-0.3px}
+.header-logo span{color:#60a5fa}
+
+/* TAB NAV */
+#tab-nav{position:sticky;top:52px;z-index:99;background:#0a1c35;border-bottom:2px solid rgba(255,255,255,0.07);overflow-x:auto}
+#tab-nav::-webkit-scrollbar{height:3px}
+#tab-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:3px}
+.tab-list{display:flex;gap:0;padding:0 12px;white-space:nowrap;justify-content:center}
+.tab-btn{background:none;border:none;border-bottom:3px solid transparent;color:rgba(255,255,255,0.6);font-family:inherit;font-size:0.8rem;font-weight:500;padding:11px 16px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.tab-btn:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.tab-btn.active{color:#60a5fa;border-bottom-color:#60a5fa;background:rgba(96,165,250,0.08);font-weight:700}
+
+/* HERO */
+#hero{background:linear-gradient(135deg,#0a1c35,#1e3a5f);padding:14px 24px;text-align:center}
+#hero h1{color:#fff;font-size:1.15rem;font-weight:700;letter-spacing:-0.3px}
+#hero h1 span{color:#60a5fa}
+
+/* MAIN */
+main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+.section-wrap{display:none}
+.section-wrap.active{display:block}
+
+/* SECTION HEADER */
+.section-header{margin-bottom:22px}
+.section-header h2{font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:4px}
+.section-header .sec-intro{color:var(--gray-600);font-size:0.9rem;border-left:3px solid #60a5fa;padding-left:12px;margin-top:8px}
+
+/* CONTENT CARD */
+.content-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);border-left:4px solid var(--blue);padding:18px 20px;margin-bottom:16px}
+.content-card h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:10px}
+.content-card h4{font-size:0.9rem;font-weight:700;color:var(--gray-700);margin:10px 0 6px}
+.content-card ul{padding-left:18px;margin:4px 0 8px}
+.content-card li{font-size:0.87rem;margin-bottom:3px;color:var(--gray-700)}
+.content-card p{font-size:0.87rem;color:var(--gray-700);margin-bottom:6px}
+.content-card strong{color:var(--gray-800)}
+.border-purple{border-left-color:var(--purple)}
+.border-green{border-left-color:var(--green)}
+.border-amber{border-left-color:var(--amber)}
+.border-red{border-left-color:var(--red)}
+.border-teal{border-left-color:var(--teal)}
+
+/* ACCORDION */
+.acc-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:12px}
+.acc-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.acc-title{font-size:0.92rem;font-weight:600;color:var(--navy)}
+.acc-chevron{color:var(--gray-600);font-size:0.8rem;transition:transform 0.3s}
+.acc-card.open .acc-chevron{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.acc-card.open .acc-body{max-height:2000px}
+.acc-content{padding:4px 18px 16px;border-top:1px solid var(--gray-100)}
+.acc-content ul{padding-left:18px;margin:4px 0 6px}
+.acc-content li{font-size:0.85rem;margin-bottom:3px;color:var(--gray-700)}
+.acc-content p{font-size:0.85rem;color:var(--gray-700);margin-bottom:6px}
+
+/* CLINICAL SCENARIO */
+.scenario{background:#0f2444;border-radius:var(--radius);padding:16px 18px;margin:14px 0;color:#fff}
+.scenario-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#60a5fa;margin-bottom:8px}
+.scenario p{font-size:0.87rem;line-height:1.6;margin-bottom:10px}
+.scenario-reveal{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 14px;cursor:pointer;transition:background 0.2s}
+.scenario-reveal:hover{background:rgba(255,255,255,0.13)}
+.tap-text{font-size:0.78rem;color:#93c5fd;font-weight:600}
+.answer-text{display:none;font-size:0.85rem;color:#e2e8f0;margin-top:8px;line-height:1.6}
+.scenario-reveal.reveal .tap-text{display:none}
+.scenario-reveal.reveal .answer-text{display:block}
+
+/* KEY POINT BOX */
+.key-point{background:var(--amber-light);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.key-point p{font-size:0.85rem;color:#78350f;margin:0;line-height:1.55}
+.key-point strong{color:#92400e}
+
+/* MNEMONIC BOX */
+.mnemonic-box{background:var(--purple-light);border-left:4px solid var(--purple);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.mnemonic-box p,.mnemonic-box li{font-size:0.85rem;color:#3b0764}
+.mnemonic-box ul{padding-left:16px;margin:4px 0}
+.mnemonic-box li{margin-bottom:4px}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin:14px 0}
+.flip-card{height:130px;perspective:1000px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.5s}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;backface-visibility:hidden;text-align:center}
+.flip-front{background:linear-gradient(135deg,#0f2444,#1e3a5f);color:#fff}
+.flip-back{background:linear-gradient(135deg,#5b2d8e,#8b5cf6);color:#fff;transform:rotateY(180deg)}
+.flip-front .big-letter{font-size:2.2rem;font-weight:800;line-height:1}
+.flip-front .hint{font-size:0.68rem;opacity:0.6;margin-top:6px}
+.flip-back .meaning{font-size:0.82rem;font-weight:700;line-height:1.35}
+.flip-back .sub{font-size:0.68rem;opacity:0.8;margin-top:6px;line-height:1.3}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;margin:12px 0;border-radius:8px;box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:0.85rem}
+th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-weight:700;font-size:0.78rem}
+td{padding:8px 12px;border-bottom:1px solid var(--gray-200)}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:var(--gray-50)}
+
+/* QUIZ */
+#quiz-section{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:28px;margin-top:12px}
+#quiz-section h2{font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:4px}
+.quiz-meta{color:var(--gray-600);font-size:0.85rem;margin-bottom:20px}
+.quiz-progress-wrap{background:var(--gray-200);border-radius:4px;height:5px;margin-bottom:24px}
+.quiz-progress-bar{height:5px;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:4px;transition:width 0.3s}
+.quiz-q{display:none}
+.quiz-q.active{display:block}
+.quiz-q-num{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:6px}
+.quiz-q-text{font-size:0.95rem;font-weight:600;color:var(--gray-800);margin-bottom:16px;line-height:1.5}
+.quiz-choices{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.quiz-choice{background:var(--gray-50);border:2px solid var(--gray-200);border-radius:8px;padding:10px 16px;font-size:0.87rem;cursor:pointer;transition:all 0.2s;text-align:left;font-family:inherit;font-weight:500;color:var(--gray-800)}
+.quiz-choice:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light)}
+.quiz-choice.correct{background:#dcfce7;border-color:var(--green);color:#047857;font-weight:600}
+.quiz-choice.wrong{background:#fee2e2;border-color:var(--red);color:#b91c1c}
+.quiz-choice:disabled{cursor:default}
+.quiz-feedback{display:none;padding:10px 14px;border-radius:8px;font-size:0.85rem;margin-bottom:14px;font-weight:500;line-height:1.5}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct-fb{background:#dcfce7;color:#047857;border-left:4px solid var(--green)}
+.quiz-feedback.wrong-fb{background:#fee2e2;color:#b91c1c;border-left:4px solid var(--red)}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:8px;border:none;font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#1d4ed8}
+.btn-secondary{background:var(--gray-200);color:var(--gray-700)}
+.btn-secondary:hover{background:#cbd5e1}
+.btn-success{background:var(--green);color:#fff}
+.btn-success:hover{background:#047857}
+#quiz-result{display:none;text-align:center;padding:20px 0}
+.score-circle{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.8rem;font-weight:800;box-shadow:0 8px 24px rgba(99,102,241,0.35)}
+.score-circle .score-lbl{font-size:0.7rem;font-weight:500;opacity:0.8}
+#quiz-result h3{font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+#quiz-result p{color:var(--gray-600);margin-bottom:16px}
+
+/* BACK TO TOP */
+#back-top{position:fixed;bottom:24px;right:24px;width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;border:none;cursor:pointer;font-size:1rem;box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:all 0.3s;z-index:200}
+#back-top.show{opacity:1;transform:translateY(0)}
+#back-top:hover{background:#2a4f80}
+
+.divider{border:none;border-top:1px solid var(--gray-200);margin:16px 0}
+
+/* CLINICAL PEARL */
+.pearl{background:#f0fdfa;border-left:4px solid #14b8a6;border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.pearl-label{font-weight:700;color:#0f766e;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px}
+.pearl p{font-size:0.85rem;color:#134e4a;margin:0;line-height:1.55}
+
+/* NCLEX FOCUS */
+.nclex-focus{background:#eff6ff;border-left:4px solid #3b82f6;border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.nclex-label{font-weight:700;color:#1d4ed8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px}
+.nclex-focus p,.nclex-focus li{font-size:0.85rem;color:#1e3a5f;line-height:1.55}
+.nclex-focus ul{padding-left:16px;margin:4px 0}
+
+/* FLOW CHART */
+.flow-chart{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow-sm);margin:16px 0}
+.flow-title{font-weight:700;color:var(--navy);font-size:0.85rem;margin-bottom:10px;text-align:center}
+
+/* GUIDELINE LINK */
+.guideline-link{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:10px 14px;margin:12px 0;display:flex;align-items:center;gap:10px}
+.gl-label{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--gray-600);margin-bottom:2px}
+.guideline-link a{font-size:0.82rem;color:var(--blue);text-decoration:none;font-weight:500}
+.guideline-link a:hover{text-decoration:underline}
+
+/* QUICK CHECK */
+.quick-check{background:var(--green-light);border:1px solid #a7f3d0;border-radius:var(--radius);padding:14px 16px;margin:14px 0}
+.qc-label{font-weight:700;color:#047857;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px}
+.qc-question{margin-bottom:12px}
+.qc-question:last-child{margin-bottom:0}
+.qc-text{font-size:0.87rem;font-weight:600;color:var(--gray-800);margin-bottom:8px}
+.qc-choices{display:flex;flex-direction:column;gap:5px;margin-bottom:6px}
+.qc-choice{background:#fff;border:1.5px solid #d1fae5;border-radius:6px;padding:7px 12px;font-size:0.82rem;cursor:pointer;font-family:inherit;font-weight:500;color:var(--gray-700);text-align:left;transition:all 0.15s}
+.qc-choice:hover:not(:disabled){border-color:#10b981;background:#ecfdf5}
+.qc-choice.qc-correct{background:#dcfce7;border-color:#10b981;color:#047857;font-weight:600}
+.qc-choice.qc-wrong{background:#fee2e2;border-color:#ef4444;color:#b91c1c}
+.qc-choice:disabled{cursor:default;opacity:0.7}
+.qc-feedback{display:none;font-size:0.82rem;color:#047857;background:#dcfce7;border-radius:6px;padding:8px 12px;margin-top:6px;line-height:1.5}
+.qc-feedback.show{display:block}
+
+@media(max-width:768px){
+  .tab-list{justify-content:flex-start;padding:0 4px}
+  .tab-btn{font-size:0.72rem;padding:10px 10px}
+  main{padding:16px 12px 50px}
+  .content-card,.scenario{padding:14px 16px}
+  .flip-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+
+/* SITE FOOTER */
+#site-footer{background:#0a1c35;color:rgba(255,255,255,0.65);text-align:center;padding:18px 20px;font-size:0.78rem;line-height:1.6}
+#site-footer a{color:#60a5fa;text-decoration:none;font-weight:600}
+#site-footer a:hover{text-decoration:underline}
+
+/* COMPARE GRID */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.compare-col{border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow-sm)}
+.compare-col h4{font-size:0.9rem;font-weight:800;margin-bottom:8px}
+.compare-col ul{padding-left:16px;margin:0}
+.compare-col li{font-size:0.82rem;margin-bottom:4px;line-height:1.45}
+.cc-blue{background:var(--blue-light);border-left:4px solid var(--blue)}
+.cc-blue h4{color:#1d4ed8}
+.cc-blue li{color:#1e3a5f}
+.cc-teal{background:var(--teal-light);border-left:4px solid var(--teal)}
+.cc-teal h4{color:#0f766e}
+.cc-teal li{color:#134e4a}
+@media(max-width:768px){.compare-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="header-inner">
+    <div class="header-logo">Patho W6 | <span>Interactive Study Guide</span></div>
+  </div>
+</header>
+
+<!-- TAB NAV -->
+<nav id="tab-nav">
+  <div class="tab-list">
+    <button class="tab-btn active" data-tab="endocrine">Vitals &amp; Endocrine</button>
+    <button class="tab-btn" data-tab="diabetes">Diabetes Mellitus</button>
+    <button class="tab-btn" data-tab="neuro">Neurologic</button>
+    <button class="tab-btn" data-tab="renal">Renal &amp; Urinary</button>
+    <button class="tab-btn" data-tab="quiz">Practice Quiz</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <h1>Week 6: <span>Endocrine, Neurologic &amp; Renal</span></h1>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+<!-- ===================== TAB 1: VITALS & ENDOCRINE ===================== -->
+<div class="section-wrap active" id="sec-endocrine">
+  <div class="section-header">
+    <h2>Vital Signs &amp; Endocrine Disorders</h2>
+    <p class="sec-intro">Start with the normal values you must know cold, then work through the hormone disorders -- too little ADH, too much ADH, and too much cortisol.</p>
+  </div>
+
+  <!-- Vital Signs -->
+  <div class="content-card">
+    <h3>Normal Vital Sign Ranges</h3>
+    <p>These are baseline values. Every abnormal finding in this module is judged against them.</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Vital Sign</th><th>Normal Range</th></tr>
+        <tr><td><strong>Temperature</strong></td><td>97-99&deg;F</td></tr>
+        <tr><td><strong>Pulse</strong></td><td>60-100 beats/minute</td></tr>
+        <tr><td><strong>Respirations</strong></td><td>12-20 breaths/minute</td></tr>
+        <tr><td><strong>Blood Pressure</strong></td><td>120/80 mmHg</td></tr>
+      </table>
+    </div>
+    <div class="key-point">
+      <p><strong>Why this matters:</strong> Cushing's triad (later in this guide) is defined entirely by vital signs going the "wrong" direction -- a slow pulse, a high blood pressure, and a slow/irregular respiratory rate. You cannot recognize it unless you know normal first.</p>
+    </div>
+  </div>
+
+  <!-- Diabetes Insipidus -->
+  <div class="content-card">
+    <h3>Diabetes Insipidus (DI)</h3>
+    <ul>
+      <li><strong>What it is:</strong> A deficiency in -- or resistance to -- <strong>antidiuretic hormone (ADH)</strong>.</li>
+      <li><strong>Result:</strong> The kidney cannot reabsorb water, so the patient excretes <strong>large amounts of dilute urine</strong>.</li>
+      <li><strong>Signs &amp; symptoms:</strong> Frequent urination (polyuria), intense thirst (polydipsia), dry skin, dehydration.</li>
+      <li>Despite the name, DI has <strong>nothing to do with blood sugar</strong> -- it is a water problem, not a glucose problem.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Think: "Always Drinking, Always Dry."</strong> No ADH means water pours straight out. The patient drinks constantly and still runs dry.</p>
+    </div>
+  </div>
+
+  <!-- DI Flow Chart -->
+  <div class="flow-chart">
+    <div class="flow-title">Diabetes Insipidus Pathway</div>
+    <svg viewBox="0 0 760 70" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <rect x="0" y="14" width="130" height="42" rx="10" fill="#1e3a5f"/>
+      <text x="65" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">&#8595;ADH or</text>
+      <text x="65" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">ADH Resistance</text>
+      <line x1="130" y1="35" x2="148" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrowA)"/>
+      <rect x="153" y="14" width="130" height="42" rx="10" fill="#3b82f6"/>
+      <text x="218" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">&#8595;Water Reabsorption</text>
+      <text x="218" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">in the Kidney</text>
+      <line x1="283" y1="35" x2="301" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrowA)"/>
+      <rect x="306" y="14" width="130" height="42" rx="10" fill="#8b5cf6"/>
+      <text x="371" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Large Volume of</text>
+      <text x="371" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Dilute Urine</text>
+      <line x1="436" y1="35" x2="454" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrowA)"/>
+      <rect x="459" y="14" width="125" height="42" rx="10" fill="#f59e0b"/>
+      <text x="521" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Dehydration &amp;</text>
+      <text x="521" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">&#8593;Serum Osmolarity</text>
+      <line x1="584" y1="35" x2="602" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrowA)"/>
+      <rect x="607" y="14" width="130" height="42" rx="10" fill="#ef4444"/>
+      <text x="672" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Intense Thirst</text>
+      <text x="672" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">(Polydipsia)</text>
+      <defs><marker id="arrowA" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
+  </div>
+
+  <!-- SIADH -->
+  <div class="content-card border-teal">
+    <h3>Syndrome of Inappropriate Antidiuretic Hormone (SIADH)</h3>
+    <ul>
+      <li><strong>Pathology:</strong> <strong>Excessive ADH</strong> released despite a low plasma osmolarity -- the body holds onto water it does not need.</li>
+      <li><strong>Common triggers:</strong> Lung conditions (especially <strong>lung cancer</strong>), CNS disorders, and medications such as SSRIs.</li>
+      <li><strong>Signs &amp; symptoms:</strong> Fluid retention, <strong>hyponatremia</strong> (dilutional low sodium), headache, nausea, confusion.</li>
+      <li><strong>Treatment:</strong> Fluid restriction, salt supplementation, and careful diuretic use to correct the hyponatremia.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Remember: "Swollen with Water, Salt Washed Away."</strong> Water is retained, so sodium is diluted -- the patient looks puffy and the serum sodium falls.</p>
+    </div>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>The confusion, headache, and nausea in SIADH are not from the ADH itself -- they are from <strong>hyponatremia</strong>. Low sodium pulls water into brain cells, causing cerebral edema. That is why treatment centers on fluid restriction rather than "fixing" the hormone.</p>
+    </div>
+  </div>
+
+  <!-- DI vs SIADH -->
+  <div class="content-card border-purple">
+    <h3>DI vs. SIADH -- Mirror Images</h3>
+    <p>These two conditions are opposites. If you learn one, you get the other for free.</p>
+    <div class="compare-grid">
+      <div class="compare-col cc-blue">
+        <h4>Diabetes Insipidus (too little ADH)</h4>
+        <ul>
+          <li>Urine output: <strong>high</strong>, very dilute</li>
+          <li>Fluid status: <strong>dehydrated</strong></li>
+          <li>Serum sodium: <strong>high</strong> (concentrated)</li>
+          <li>Patient looks: dry skin, thirsty</li>
+          <li>Motto: "Always Drinking, Always Dry"</li>
+        </ul>
+      </div>
+      <div class="compare-col cc-teal">
+        <h4>SIADH (too much ADH)</h4>
+        <ul>
+          <li>Urine output: <strong>low</strong>, concentrated</li>
+          <li>Fluid status: <strong>fluid overloaded</strong></li>
+          <li>Serum sodium: <strong>low</strong> (hyponatremia)</li>
+          <li>Patient looks: swollen, confused</li>
+          <li>Motto: "Swollen with Water, Salt Washed Away"</li>
+        </ul>
+      </div>
+    </div>
+    <div class="nclex-focus">
+      <div class="nclex-label">NCLEX Focus</div>
+      <p>Anchor on ADH. ADH = "anti-diuretic" = <em>hold water</em>. Not enough ADH (DI) means you dump water and dry out. Too much ADH (SIADH) means you hoard water and dilute your sodium. Every other finding follows from that one sentence.</p>
+    </div>
+  </div>
+
+  <!-- Cushing Syndrome -->
+  <div class="content-card border-amber">
+    <h3>Cushing Syndrome</h3>
+    <ul>
+      <li><strong>Pathology:</strong> <strong>Excessive cortisol.</strong></li>
+      <li><strong>Causes:</strong> Pituitary adenomas (when a pituitary adenoma is the cause it is called <strong>Cushing's disease</strong>), adrenal tumors, or ectopic ACTH production.</li>
+      <li><strong>Signs &amp; symptoms:</strong> Weight gain with <strong>moon face</strong> and <strong>buffalo hump</strong>, hirsutism, skin changes (thin skin, striae, easy bruising), high blood sugar, anxiety and agitation.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Motto: "Excess is the Norm."</strong> Too much of everything -- too much fat centrally, too much hair, too much glucose, too much anxiety.</p>
+      <p style="margin-top:6px"><strong>Shortcut: TOO MANY STEROIDS!</strong> Cortisol is the body's own steroid. Picture a patient on long-term high-dose prednisone -- that is exactly what Cushing syndrome looks like.</p>
+    </div>
+    <div class="key-point">
+      <p><strong>Do not mix these up:</strong> <em>Cushing <strong>syndrome</strong></em> = excess cortisol (endocrine). <em>Cushing's <strong>triad</strong></em> = bradycardia + hypertension + irregular respirations (a neurologic sign of increased intracranial pressure). Same name, completely different topic -- see the Neurologic tab.</p>
+    </div>
+  </div>
+
+  <!-- Mnemonic flip cards -->
+  <div class="content-card border-purple">
+    <h3>Mnemonic Flip Cards</h3>
+    <p>Click each card to reveal the condition it belongs to:</p>
+    <div class="flip-grid">
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="meaning" style="font-size:0.85rem;font-weight:700">"Always Drinking, Always Dry"</div><div class="hint">Click to reveal</div></div>
+          <div class="flip-back"><div class="meaning">Diabetes Insipidus</div><div class="sub">Too little ADH &rarr; dilute urine, dehydration</div></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="meaning" style="font-size:0.85rem;font-weight:700">"Swollen with Water, Salt Washed Away"</div><div class="hint">Click to reveal</div></div>
+          <div class="flip-back"><div class="meaning">SIADH</div><div class="sub">Too much ADH &rarr; fluid retention, hyponatremia</div></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="meaning" style="font-size:0.85rem;font-weight:700">"Excess is the Norm"</div><div class="hint">Click to reveal</div></div>
+          <div class="flip-back"><div class="meaning">Cushing Syndrome</div><div class="sub">Excess cortisol &rarr; moon face, buffalo hump</div></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="meaning" style="font-size:0.85rem;font-weight:700">"Sudden Storm"</div><div class="hint">Click to reveal</div></div>
+          <div class="flip-back"><div class="meaning">Type 1 Diabetes</div><div class="sub">Abrupt autoimmune onset in youth</div></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="meaning" style="font-size:0.85rem;font-weight:700">"Creeping Concerns"</div><div class="hint">Click to reveal</div></div>
+          <div class="flip-back"><div class="meaning">Type 2 Diabetes</div><div class="sub">Gradual onset from insulin resistance</div></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-front"><div class="meaning" style="font-size:0.85rem;font-weight:700">Brady + HTN + Bradypnea</div><div class="hint">Click to reveal</div></div>
+          <div class="flip-back"><div class="meaning">Cushing's Triad</div><div class="sub">Sign of increased intracranial pressure</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">A patient with small cell lung cancer develops confusion, nausea, and a serum sodium of 118 mEq/L. Urine output is low and concentrated. Which condition is most likely?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Diabetes insipidus</button>
+        <button class="qc-choice" data-val="B">B) SIADH</button>
+        <button class="qc-choice" data-val="C">C) Cushing syndrome</button>
+        <button class="qc-choice" data-val="D">D) Type 1 diabetes mellitus</button>
+      </div>
+      <div class="qc-feedback">SIADH. Lung cancer is a classic trigger for excessive ADH. Water retention dilutes sodium (hyponatremia), producing confusion and nausea with low, concentrated urine output.</div>
+    </div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">Which hormone abnormality causes the excretion of large amounts of dilute urine?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Excess cortisol</button>
+        <button class="qc-choice" data-val="B">B) Excess ADH</button>
+        <button class="qc-choice" data-val="C">C) Deficiency of or resistance to ADH</button>
+        <button class="qc-choice" data-val="D">D) Deficiency of insulin</button>
+      </div>
+      <div class="qc-feedback">Diabetes insipidus results from a deficiency in -- or resistance to -- ADH. Without ADH the kidney cannot reabsorb water, so large volumes of dilute urine are excreted.</div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Think It Through</div>
+    <p>A 45-year-old presents with central weight gain, a rounded "moon" face, a fat pad between the shoulders, new facial hair, thin bruised skin, and a fasting glucose of 168 mg/dL. Which hormone is in excess, and what are three possible sources?</p>
+    <div class="scenario-reveal">
+      <div class="tap-text">Tap to reveal answer</div>
+      <div class="answer-text"><strong>Cortisol is in excess -- this is Cushing syndrome.</strong> Three possible sources: (1) a pituitary adenoma secreting ACTH (called Cushing's <em>disease</em>), (2) an adrenal tumor producing cortisol directly, or (3) ectopic ACTH production from a tumor elsewhere, often in the lung.</div>
+    </div>
+  </div>
+
+  <div class="guideline-link">
+    <div><div class="gl-label">Clinical Guideline</div><a href="https://www.endocrine.org/clinical-practice-guidelines" target="_blank" rel="noopener">Endocrine Society Clinical Practice Guidelines</a></div>
+  </div>
+
+  <div class="acc-card">
+    <div class="acc-header">
+      <span class="acc-title">Dig Deeper: What ADH Actually Does</span>
+      <span class="acc-chevron">&#9660;</span>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <ul>
+          <li>ADH (also called vasopressin) is made in the hypothalamus and released from the posterior pituitary.</li>
+          <li>It acts on the collecting ducts of the kidney, making them permeable to water so water is pulled back into the bloodstream.</li>
+          <li>Normal trigger for release: rising serum osmolarity (blood too concentrated) or falling blood volume.</li>
+          <li>In SIADH the release is "inappropriate" because it continues even when serum osmolarity is already low.</li>
+          <li>Central DI = the pituitary does not make enough ADH. Nephrogenic DI = the kidney does not respond to the ADH that is present.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 2: DIABETES MELLITUS ===================== -->
+<div class="section-wrap" id="sec-diabetes">
+  <div class="section-header">
+    <h2>Diabetes Mellitus</h2>
+    <p class="sec-intro">Type 1, Type 2, and gestational diabetes -- plus the classic symptom triad and the numbers used to diagnose them.</p>
+  </div>
+
+  <!-- Type 1 -->
+  <div class="content-card border-red">
+    <h3>Type 1 Diabetes Mellitus</h3>
+    <ul>
+      <li><strong>Pathology:</strong> An <strong>autoimmune disorder</strong> in which the immune system attacks the pancreatic <strong>beta cells</strong>, leading to <strong>no insulin production</strong>.</li>
+      <li><strong>Typical onset:</strong> Childhood or adolescence.</li>
+      <li><strong>Signs &amp; symptoms (sudden onset):</strong> Frequent urination, increased thirst, extreme hunger, unexplained weight loss, fatigue, irritability.</li>
+      <li><strong>Diagnosis:</strong> Blood tests showing high glucose with low to no insulin production. <strong>Autoantibodies</strong> may be present, confirming the autoimmune cause.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Think: "Sudden Storm."</strong> Type 1 arrives fast and hits hard -- often a young patient who was fine last month.</p>
+    </div>
+  </div>
+
+  <!-- Type 2 -->
+  <div class="content-card border-amber">
+    <h3>Type 2 Diabetes Mellitus</h3>
+    <ul>
+      <li><strong>Pathology:</strong> <strong>Insulin resistance</strong> first, and eventually insufficient insulin production.</li>
+      <li><strong>Associated with:</strong> Obesity, poor diet, and lack of exercise.</li>
+      <li><strong>Signs &amp; symptoms (gradual onset):</strong> Similar to Type 1 but milder at first, often with <strong>slow-healing wounds</strong>, <strong>frequent infections</strong>, and <strong>areas of darkened skin</strong> (acanthosis nigricans).</li>
+      <li><strong>Diagnosis:</strong> Elevated blood glucose on multiple occasions, <strong>HbA1c &ge; 6.5%</strong>, and often features of metabolic syndrome.</li>
+      <li><strong>Treatment:</strong> Lifestyle interventions (diet and exercise), oral medications (<strong>metformin</strong> initially), and possibly insulin therapy as the disease progresses.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Think: "Creeping Concerns."</strong> Type 2 sneaks up over years. Many patients are diagnosed only after a wound will not heal or a routine lab comes back high.</p>
+    </div>
+  </div>
+
+  <!-- Type 1 vs Type 2 table -->
+  <div class="content-card border-purple">
+    <h3>Type 1 vs. Type 2 at a Glance</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Type 1</th><th>Type 2</th></tr>
+        <tr><td><strong>Underlying problem</strong></td><td>Autoimmune destruction of beta cells &rarr; no insulin</td><td>Insulin resistance &rarr; later, insufficient insulin</td></tr>
+        <tr><td><strong>Onset</strong></td><td>Sudden ("Sudden Storm")</td><td>Gradual ("Creeping Concerns")</td></tr>
+        <tr><td><strong>Typical age</strong></td><td>Childhood / adolescence</td><td>Adulthood, increasingly younger</td></tr>
+        <tr><td><strong>Body habitus</strong></td><td>Often thin; unexplained weight loss</td><td>Commonly associated with obesity</td></tr>
+        <tr><td><strong>Distinctive findings</strong></td><td>Autoantibodies present; low/absent insulin</td><td>Slow-healing wounds, frequent infections, darkened skin</td></tr>
+        <tr><td><strong>Treatment</strong></td><td>Insulin -- required from diagnosis</td><td>Lifestyle, metformin, insulin later if needed</td></tr>
+      </table>
+    </div>
+    <div class="key-point">
+      <p><strong>Exam Tip:</strong> The single cleanest distinguisher is the <em>mechanism</em>. Type 1 = the pancreas cannot make insulin. Type 2 = the body cannot use the insulin it makes. Age and weight are supporting clues, not the definition.</p>
+    </div>
+  </div>
+
+  <!-- Diagnostic criteria -->
+  <div class="content-card border-green">
+    <h3>Diagnostic Criteria for Prediabetes and Diabetes</h3>
+    <p>Four different tests can establish the diagnosis. Know the cutoffs.</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Test</th><th>Prediabetes</th><th>Diabetes</th></tr>
+        <tr>
+          <td><strong>A1C</strong></td>
+          <td>5.7-6.4% (39-47 mmol/mol)</td>
+          <td>&ge; 6.5% (&ge; 48 mmol/mol)</td>
+        </tr>
+        <tr>
+          <td><strong>Fasting plasma glucose</strong></td>
+          <td>100-125 mg/dL (5.6-6.9 mmol/L)</td>
+          <td>&ge; 126 mg/dL (&ge; 7.0 mmol/L)</td>
+        </tr>
+        <tr>
+          <td><strong>2-hour glucose during a 75-g oral glucose tolerance test</strong></td>
+          <td>140-199 mg/dL (7.8-11.0 mmol/L)</td>
+          <td>&ge; 200 mg/dL (&ge; 11.1 mmol/L)</td>
+        </tr>
+        <tr>
+          <td><strong>Random glucose with classic hyperglycemia symptoms / hyperglycemic crisis</strong></td>
+          <td>&mdash;</td>
+          <td>&ge; 200 mg/dL (&ge; 11.1 mmol/L)</td>
+        </tr>
+      </table>
+    </div>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>Notice that <strong>200 mg/dL</strong> appears twice -- as the 2-hour OGTT cutoff and as the random glucose cutoff. And <strong>126 mg/dL</strong> is the fasting number. If you only memorize three numbers, memorize <strong>6.5% &mdash; 126 &mdash; 200</strong>.</p>
+    </div>
+  </div>
+
+  <!-- Polydipsia / classic triad -->
+  <div class="content-card border-teal">
+    <h3>Polydipsia and the Classic Triad</h3>
+    <ul>
+      <li><strong>Polydipsia</strong> = excessive thirst and fluid intake. It is a hallmark symptom of diabetes mellitus in <strong>both Type 1 and Type 2</strong>.</li>
+      <li><strong>Polyuria</strong> (frequent urination) is closely tied to polydipsia -- increased fluid intake leads to more frequent urination.</li>
+      <li><strong>Polyphagia</strong> = increased appetite.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>The classic triad -- the "3 P's":</strong></p>
+      <ul>
+        <li><strong>Polydipsia</strong> -- excessive thirst</li>
+        <li><strong>Polyuria</strong> -- excessive urination</li>
+        <li><strong>Polyphagia</strong> -- excessive hunger</li>
+      </ul>
+    </div>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>Polydipsia, polyuria, and polyphagia together form the classic triad of diabetes symptoms. Recognizing them early leads to prompt diagnosis and management, preventing complications.</p>
+    </div>
+  </div>
+
+  <!-- Triad flow chart -->
+  <div class="flow-chart">
+    <div class="flow-title">Why the 3 P's Happen</div>
+    <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <rect x="10" y="45" width="125" height="42" rx="10" fill="#1e3a5f"/>
+      <text x="72" y="63" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Insulin Lacking</text>
+      <text x="72" y="75" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">or Ineffective</text>
+      <line x1="135" y1="66" x2="153" y2="66" stroke="#475569" stroke-width="2" marker-end="url(#arrowB)"/>
+      <rect x="158" y="45" width="125" height="42" rx="10" fill="#3b82f6"/>
+      <text x="220" y="63" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Glucose Stays in</text>
+      <text x="220" y="75" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Blood (Hyperglycemia)</text>
+      <line x1="283" y1="66" x2="301" y2="66" stroke="#475569" stroke-width="2" marker-end="url(#arrowB)"/>
+      <rect x="306" y="45" width="130" height="42" rx="10" fill="#8b5cf6"/>
+      <text x="371" y="63" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Glucose Spills into</text>
+      <text x="371" y="75" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Urine, Pulls Water</text>
+      <line x1="436" y1="66" x2="454" y2="66" stroke="#475569" stroke-width="2" marker-end="url(#arrowB)"/>
+      <rect x="459" y="8" width="125" height="34" rx="9" fill="#14b8a6"/>
+      <text x="521" y="29" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">POLYURIA</text>
+      <rect x="459" y="49" width="125" height="34" rx="9" fill="#f59e0b"/>
+      <text x="521" y="70" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">POLYDIPSIA</text>
+      <rect x="459" y="90" width="125" height="34" rx="9" fill="#ef4444"/>
+      <text x="521" y="111" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">POLYPHAGIA</text>
+      <path d="M454 66 L456 66 L456 25 L459 25" fill="none" stroke="#475569" stroke-width="1.5"/>
+      <path d="M456 66 L456 107 L459 107" fill="none" stroke="#475569" stroke-width="1.5"/>
+      <rect x="605" y="45" width="145" height="42" rx="10" fill="#0f2444"/>
+      <text x="677" y="63" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Cells Starve Despite</text>
+      <text x="677" y="75" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">High Blood Sugar</text>
+      <line x1="584" y1="107" x2="677" y2="107" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <path d="M677 107 L677 89" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#arrowB)"/>
+      <defs><marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
+  </div>
+
+  <!-- GDM -->
+  <div class="content-card border-purple">
+    <h3>Gestational Diabetes Mellitus (GDM)</h3>
+    <ul>
+      <li><strong>What it is:</strong> Impaired glucose tolerance during pregnancy that most commonly develops during the <strong>second and third trimesters</strong>.</li>
+      <li><strong>Possible consequences:</strong>
+        <ul>
+          <li><strong>Hypoglycemia in the newborn</strong></li>
+          <li><strong>Large-for-gestational-age infants</strong> (macrosomia)</li>
+          <li><strong>Fetal defects</strong></li>
+          <li><strong>Premature delivery</strong></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Why newborn hypoglycemia?</strong> The mother's high glucose crosses the placenta, so the fetus makes extra insulin to handle it. At delivery the maternal glucose supply is cut off, but the newborn's insulin level is still high -- so blood sugar crashes.</p>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="A">
+      <div class="qc-text">A 12-year-old presents over three weeks with intense thirst, frequent urination, constant hunger, and a 12-pound unintentional weight loss. Which mechanism best explains this presentation?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Autoimmune destruction of pancreatic beta cells</button>
+        <button class="qc-choice" data-val="B">B) Peripheral insulin resistance from obesity</button>
+        <button class="qc-choice" data-val="C">C) Excessive ADH secretion</button>
+        <button class="qc-choice" data-val="D">D) Excess cortisol production</button>
+      </div>
+      <div class="qc-feedback">Type 1 diabetes. The sudden onset in a child with the classic 3 P's plus weight loss reflects autoimmune destruction of beta cells and absent insulin production ("Sudden Storm").</div>
+    </div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">Which HbA1c value meets the criterion for diagnosing diabetes mellitus?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) 5.2%</button>
+        <button class="qc-choice" data-val="B">B) 5.9%</button>
+        <button class="qc-choice" data-val="C">C) 6.8%</button>
+        <button class="qc-choice" data-val="D">D) 4.9%</button>
+      </div>
+      <div class="qc-feedback">An A1C of 6.5% or higher diagnoses diabetes. The 5.7-6.4% range indicates prediabetes, and below 5.7% is normal.</div>
+    </div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">A newborn of a mother with gestational diabetes is at greatest immediate risk for which complication?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Hyperglycemia</button>
+        <button class="qc-choice" data-val="B">B) Hypoglycemia</button>
+        <button class="qc-choice" data-val="C">C) Hypernatremia</button>
+        <button class="qc-choice" data-val="D">D) Polycythemia from dehydration</button>
+      </div>
+      <div class="qc-feedback">Newborn hypoglycemia is a hallmark consequence of GDM. The fetus produced extra insulin in response to maternal hyperglycemia; once the cord is cut, that insulin drives the newborn's glucose down.</div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Think It Through</div>
+    <p>A 54-year-old with a BMI of 34 comes in for a foot ulcer that has not healed in six weeks. He also mentions recurrent skin infections and dark, velvety patches on the back of his neck. Fasting glucose is 141 mg/dL and A1C is 7.8%. What is the diagnosis and what is the first-line pharmacologic treatment?</p>
+    <div class="scenario-reveal">
+      <div class="tap-text">Tap to reveal answer</div>
+      <div class="answer-text"><strong>Type 2 diabetes mellitus.</strong> Slow-healing wounds, frequent infections, and darkened skin are the distinctive Type 2 findings. A fasting glucose &ge; 126 mg/dL and an A1C &ge; 6.5% both meet diagnostic criteria. First-line management is lifestyle intervention plus <strong>metformin</strong>; insulin may be added as the disease progresses.</div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Think It Through</div>
+    <p>Two patients both report drinking water constantly and urinating large volumes. Patient A has a serum glucose of 385 mg/dL. Patient B has a serum glucose of 92 mg/dL but very dilute urine. What condition does each patient most likely have?</p>
+    <div class="scenario-reveal">
+      <div class="tap-text">Tap to reveal answer</div>
+      <div class="answer-text"><strong>Patient A has diabetes mellitus</strong> -- the glucose is far above the 200 mg/dL random threshold, and osmotic diuresis from glucose in the urine is driving the polyuria and polydipsia. <strong>Patient B has diabetes insipidus</strong> -- normal glucose with polyuria and dilute urine points to an ADH problem, not a sugar problem. The two share the "always thirsty, always urinating" picture but have completely different causes.</div>
+    </div>
+  </div>
+
+  <div class="guideline-link">
+    <div><div class="gl-label">Clinical Guideline</div><a href="https://diabetesjournals.org/care/issue/standards-of-care" target="_blank" rel="noopener">ADA Standards of Care in Diabetes</a></div>
+  </div>
+
+  <div class="acc-card">
+    <div class="acc-header">
+      <span class="acc-title">Dig Deeper: What the A1C Actually Measures</span>
+      <span class="acc-chevron">&#9660;</span>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <ul>
+          <li>Glucose in the blood attaches to hemoglobin inside red blood cells. The higher the glucose, the more hemoglobin gets coated.</li>
+          <li>Red blood cells live about 120 days, so the A1C reflects the average blood glucose over roughly the past 2-3 months.</li>
+          <li>This is why A1C cannot be "fixed" by fasting the morning of the test -- unlike a fasting glucose.</li>
+          <li>It is used both to diagnose diabetes (&ge; 6.5%) and to monitor how well treatment is working over time.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 3: NEUROLOGIC ===================== -->
+<div class="section-wrap" id="sec-neuro">
+  <div class="section-header">
+    <h2>Neurologic Conditions</h2>
+    <p class="sec-intro">Increased intracranial pressure, strokes and TIAs, demyelination, headaches, and Parkinson's disease.</p>
+  </div>
+
+  <!-- Cushing's Triad -->
+  <div class="content-card border-red">
+    <h3>Cushing's Triad</h3>
+    <p>Cushing's triad is a clinical constellation of signs that indicates <strong>increased intracranial pressure (ICP)</strong>. The three signs are:</p>
+    <ol style="padding-left:20px;margin:6px 0 10px">
+      <li style="font-size:0.87rem;color:var(--gray-700);margin-bottom:3px"><strong>Bradycardia</strong> -- slow heart rate</li>
+      <li style="font-size:0.87rem;color:var(--gray-700);margin-bottom:3px"><strong>Hypertension</strong> -- specifically a rising systolic pressure with a widening pulse pressure</li>
+      <li style="font-size:0.87rem;color:var(--gray-700);margin-bottom:3px"><strong>Bradypnea or irregular respirations</strong></li>
+    </ol>
+    <div class="key-point">
+      <p><strong>Compare to normal vitals:</strong> Pulse 60-100, BP 120/80, respirations 12-20. In Cushing's triad the pulse and respiratory rate fall <em>below</em> normal while the blood pressure climbs <em>above</em> it. Two down, one up.</p>
+    </div>
+    <div class="nclex-focus">
+      <div class="nclex-label">NCLEX Focus</div>
+      <p>Cushing's triad is a <strong>late and ominous</strong> sign of increased ICP -- it signals impending brain herniation. Do not confuse it with Cushing <em>syndrome</em> (excess cortisol). If a question gives you a head-injured patient whose heart rate is dropping while blood pressure rises, that is Cushing's triad, and it is an emergency.</p>
+    </div>
+  </div>
+
+  <!-- Cushing's triad flow -->
+  <div class="flow-chart">
+    <div class="flow-title">Cushing's Triad: Two Down, One Up</div>
+    <svg viewBox="0 0 760 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <rect x="20" y="30" width="150" height="44" rx="10" fill="#0f2444"/>
+      <text x="95" y="49" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">&#8593; Intracranial</text>
+      <text x="95" y="63" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Pressure (ICP)</text>
+      <line x1="170" y1="52" x2="200" y2="52" stroke="#475569" stroke-width="2" marker-end="url(#arrowC)"/>
+      <rect x="210" y="6" width="165" height="30" rx="9" fill="#3b82f6"/>
+      <text x="292" y="26" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="700" font-family="Inter,sans-serif">&#8595; BRADYCARDIA</text>
+      <rect x="210" y="40" width="165" height="30" rx="9" fill="#ef4444"/>
+      <text x="292" y="60" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="700" font-family="Inter,sans-serif">&#8593; HYPERTENSION</text>
+      <rect x="210" y="74" width="165" height="30" rx="9" fill="#8b5cf6"/>
+      <text x="292" y="94" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="700" font-family="Inter,sans-serif">&#8595; BRADYPNEA</text>
+      <line x1="375" y1="52" x2="405" y2="52" stroke="#475569" stroke-width="2" marker-end="url(#arrowC)"/>
+      <rect x="415" y="30" width="180" height="44" rx="10" fill="#b91c1c"/>
+      <text x="505" y="49" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">LATE SIGN &mdash; IMPENDING</text>
+      <text x="505" y="63" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">BRAIN HERNIATION</text>
+      <text x="676" y="47" text-anchor="middle" fill="#475569" font-size="10" font-weight="600" font-family="Inter,sans-serif">Two vitals down,</text>
+      <text x="676" y="61" text-anchor="middle" fill="#475569" font-size="10" font-weight="600" font-family="Inter,sans-serif">one vital up</text>
+      <defs><marker id="arrowC" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
+  </div>
+
+  <!-- TIA -->
+  <div class="content-card border-amber">
+    <h3>Transient Ischemic Attack (TIA)</h3>
+    <ul>
+      <li><strong>Definition:</strong> <strong>Temporary</strong>, focal cerebral ischemia producing <strong>reversible</strong> neurological deficits <strong>without acute infarction</strong> -- imaging shows no signs of infarction.</li>
+      <li>Often called a <strong>"mini-stroke."</strong></li>
+      <li><strong>Cause:</strong> A temporary blockage of blood flow to the brain, typically from a blood clot or narrowing of the arteries.</li>
+      <li><strong>Symptoms:</strong> Similar to a stroke, but transient -- usually lasting only a few minutes and <strong>resolving within 24 hours</strong>.</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>The defining feature of a TIA is not how long it lasts -- it is that <strong>imaging shows no infarction</strong>. The tissue was starved but never died. A TIA is a warning shot: it identifies a patient at high risk for a full stroke soon.</p>
+    </div>
+  </div>
+
+  <!-- Ischemic Penumbra -->
+  <div class="content-card border-teal">
+    <h3>Ischemic Penumbra</h3>
+    <ul>
+      <li>The <strong>perimeter around the core ischemic area</strong> is called the <strong>ischemic penumbra</strong>.</li>
+      <li>In the penumbra, brain cells are <strong>still alive but at risk of dying</strong> if blood flow is not restored quickly.</li>
+      <li>The <strong>core</strong> is tissue that is already destined to die; the <strong>penumbra</strong> is the salvageable zone.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Why "time is brain":</strong> Every treatment for acute ischemic stroke exists to rescue the penumbra. Restore perfusion fast and that tissue survives; delay and the penumbra is absorbed into the infarct core.</p>
+    </div>
+  </div>
+
+  <!-- Penumbra SVG -->
+  <div class="flow-chart">
+    <div class="flow-title">Ischemic Core vs. Penumbra</div>
+    <svg viewBox="0 0 760 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <ellipse cx="200" cy="95" rx="150" ry="80" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+      <ellipse cx="185" cy="95" rx="82" ry="55" fill="#fcd34d" opacity="0.85"/>
+      <ellipse cx="185" cy="95" rx="42" ry="30" fill="#7f1d1d"/>
+      <text x="185" y="92" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="Inter,sans-serif">CORE</text>
+      <text x="185" y="105" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">dead tissue</text>
+      <text x="185" y="42" text-anchor="middle" fill="#78350f" font-size="10.5" font-weight="700" font-family="Inter,sans-serif">PENUMBRA</text>
+      <text x="200" y="172" text-anchor="middle" fill="#475569" font-size="9.5" font-family="Inter,sans-serif">Brain tissue</text>
+      <line x1="352" y1="95" x2="392" y2="95" stroke="#475569" stroke-width="2" marker-end="url(#arrowD)"/>
+      <rect x="405" y="18" width="330" height="60" rx="10" fill="#f59e0b"/>
+      <text x="570" y="40" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="700" font-family="Inter,sans-serif">PENUMBRA = SALVAGEABLE</text>
+      <text x="570" y="56" text-anchor="middle" fill="#fff" font-size="9.5" font-family="Inter,sans-serif">Cells still alive but at risk of dying</text>
+      <text x="570" y="70" text-anchor="middle" fill="#fff" font-size="9.5" font-family="Inter,sans-serif">Restore blood flow quickly to save it</text>
+      <rect x="405" y="110" width="330" height="60" rx="10" fill="#7f1d1d"/>
+      <text x="570" y="132" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="700" font-family="Inter,sans-serif">CORE = ALREADY LOST</text>
+      <text x="570" y="148" text-anchor="middle" fill="#fff" font-size="9.5" font-family="Inter,sans-serif">Tissue destined to die regardless</text>
+      <text x="570" y="162" text-anchor="middle" fill="#fff" font-size="9.5" font-family="Inter,sans-serif">Grows larger the longer flow is blocked</text>
+      <defs><marker id="arrowD" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
+  </div>
+
+  <!-- Hemorrhagic Stroke -->
+  <div class="content-card border-red">
+    <h3>Hemorrhagic Stroke</h3>
+    <ul>
+      <li><strong>What it is:</strong> A blood vessel in the brain <strong>ruptures and bleeds</strong>, leading to the formation of a <strong>hematoma</strong>.</li>
+      <li><strong>Risk factors:</strong> Uncontrolled hypertension, age, previous brain aneurysm.</li>
+      <li><strong>Symptoms:</strong> Left-sided paralysis (hemiplegia), slurred speech (dysarthria), loss of gag reflex, and facial droop -- classic signs of a stroke affecting the <strong>right side of the brain</strong>.</li>
+      <li><strong>CT scan:</strong> The <strong>presence of a hematoma</strong> on CT confirms that the stroke is hemorrhagic in nature.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Remember the crossover:</strong> Motor pathways cross in the brainstem, so a <strong>right</strong>-brain stroke causes <strong>left</strong>-sided deficits, and vice versa. The side of the body that is weak is the opposite of the side of the brain that is damaged.</p>
+    </div>
+    <div class="nclex-focus">
+      <div class="nclex-label">NCLEX Focus</div>
+      <p>The CT scan is what separates the two stroke types, and that distinction changes everything about treatment. <strong>Ischemic</strong> = blockage of an artery; clot-dissolving therapy may be appropriate. <strong>Hemorrhagic</strong> = artery leaks into brain tissue and a hematoma is visible on CT; clot-dissolving therapy would be catastrophic.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-purple">
+    <h3>Ischemic vs. Hemorrhagic Stroke</h3>
+    <div class="compare-grid">
+      <div class="compare-col cc-blue">
+        <h4>Ischemic Stroke</h4>
+        <ul>
+          <li><strong>Blockage</strong> of an artery</li>
+          <li>Brain tissue deprived of oxygen-rich blood</li>
+          <li>Produces a core plus a salvageable penumbra</li>
+          <li>CT: no hematoma</li>
+          <li>Related: TIA is the temporary, reversible version</li>
+        </ul>
+      </div>
+      <div class="compare-col cc-teal">
+        <h4>Hemorrhagic Stroke</h4>
+        <ul>
+          <li>Artery <strong>ruptures and leaks</strong> into brain tissue</li>
+          <li>Forms a <strong>hematoma</strong></li>
+          <li>Risk factors: uncontrolled HTN, age, prior aneurysm</li>
+          <li>CT: hematoma present -- confirms the diagnosis</li>
+          <li>Bleeding raises ICP; watch for Cushing's triad</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MS -->
+  <div class="content-card border-purple">
+    <h3>Multiple Sclerosis (MS)</h3>
+    <ul>
+      <li><strong>What it is:</strong> An <strong>autoimmune disease</strong> in which the body's <strong>T cells</strong> mistakenly attack the <strong>myelin sheath</strong> -- the protective covering around nerve fibers.</li>
+      <li><strong>Location:</strong> The <strong>central nervous system</strong> only -- brain and spinal cord.</li>
+      <li>Damaged myelin slows or blocks nerve signal conduction, which is why symptoms are so varied (vision changes, weakness, numbness, coordination problems, fatigue).</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Three things to lock in for MS:</strong> (1) It is <strong>autoimmune</strong>. (2) <strong>T cells</strong> are the attackers. (3) The target is the <strong>myelin sheath in the CNS</strong> -- not the peripheral nerves.</p>
+    </div>
+  </div>
+
+  <!-- TAC / Headaches -->
+  <div class="content-card border-teal">
+    <h3>Trigeminal Autonomic Cephalgia (TAC)</h3>
+    <p>TACs are a group of headache disorders characterized by:</p>
+    <ul>
+      <li>Excruciating <strong>unilateral (one-sided) pain</strong></li>
+      <li><strong>Restlessness</strong></li>
+      <li><strong>Bloodshot eyes</strong></li>
+      <li>Pupil constriction</li>
+      <li><strong>Tearing</strong> (lacrimation)</li>
+      <li><strong>Nasal discharge</strong> (rhinorrhea)</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>The word "autonomic" is the key. The red eye, tearing, runny nose, and constricted pupil are all <strong>autonomic nervous system</strong> symptoms on the same side as the pain. <strong>Cluster headache</strong> is the classic TAC -- and autonomic symptoms are exactly what tension headaches lack.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Headache Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th></th><th>Migraine</th><th>Tension</th><th>Cluster</th></tr>
+        <tr>
+          <td><strong>Character</strong></td>
+          <td>Unilateral; throbbing, hammering</td>
+          <td>Bilateral; dull, "band-like" compression</td>
+          <td>Unilateral; piercing, stabbing, burning</td>
+        </tr>
+        <tr>
+          <td><strong>Course</strong></td>
+          <td>Slowly progressing; may last up to 72 hours</td>
+          <td>Initially episodic; may progress to chronic daily headaches</td>
+          <td>Clustering of attacks over weeks followed by remission (75% of cases)</td>
+        </tr>
+        <tr>
+          <td><strong>Additional symptoms</strong></td>
+          <td>Nausea/vomiting, photophobia/phonophobia, aura may occur</td>
+          <td>Photophobia/phonophobia may occur; <strong>no</strong> nausea, <strong>no</strong> vomiting</td>
+          <td><strong>Autonomic symptoms</strong> (lacrimation, rhinorrhea, sweating)</td>
+        </tr>
+        <tr>
+          <td><strong>Demographics</strong></td>
+          <td>Women &gt; men; onset 15-25 years; exercise exacerbates</td>
+          <td>Women &gt; men; onset 30-40 years; exertion does <strong>not</strong> exacerbate</td>
+          <td>Men &gt; women; onset 20-40 years; attacks often at night; short attacks (30-40 min)</td>
+        </tr>
+        <tr>
+          <td><strong>Remember</strong></td>
+          <td>High risk of medication-overuse headache</td>
+          <td>Autonomic symptoms are <strong>absent</strong></td>
+          <td>The classic trigeminal autonomic cephalgia</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Parkinson's -->
+  <div class="content-card border-green">
+    <h3>Parkinson's Disease</h3>
+    <ul>
+      <li><strong>What it is:</strong> A chronic, progressive <strong>neurodegenerative disorder</strong> resulting from the gradual degeneration and <strong>death of dopaminergic neurons</strong> in the <strong>substantia nigra</strong>.</li>
+      <li>The substantia nigra produces <strong>dopamine</strong>, the neurotransmitter that regulates <strong>movement, coordination, and balance</strong>.</li>
+      <li>Losing those neurons means losing dopamine -- and with it, smooth controlled movement.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>One sentence to remember:</strong> Parkinson's = <strong>dopamine</strong> down, because the <strong>substantia nigra</strong> is dying.</p>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">A patient with a traumatic head injury has a heart rate of 48, blood pressure of 186/78, and irregular respirations. What does this indicate?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Cushing syndrome</button>
+        <button class="qc-choice" data-val="B">B) Cushing's triad from increased intracranial pressure</button>
+        <button class="qc-choice" data-val="C">C) Transient ischemic attack</button>
+        <button class="qc-choice" data-val="D">D) Early septic shock</button>
+      </div>
+      <div class="qc-feedback">Bradycardia + hypertension + irregular respirations = Cushing's triad, a late sign of increased ICP. Cushing syndrome is an entirely different condition caused by excess cortisol.</div>
+    </div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">Which cells are responsible for the myelin damage seen in multiple sclerosis?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Mast cells</button>
+        <button class="qc-choice" data-val="B">B) B cells producing IgE</button>
+        <button class="qc-choice" data-val="C">C) T cells</button>
+        <button class="qc-choice" data-val="D">D) Neutrophils</button>
+      </div>
+      <div class="qc-feedback">In MS, the body's T cells mistakenly attack the myelin sheath surrounding nerve fibers in the central nervous system.</div>
+    </div>
+    <div class="qc-question" data-answer="A">
+      <div class="qc-text">A patient reports 40-minute attacks of excruciating one-sided pain around the right eye that wake him at night, with a bloodshot right eye, tearing, and a runny nose on that side. Which headache type is this?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Cluster headache (a trigeminal autonomic cephalgia)</button>
+        <button class="qc-choice" data-val="B">B) Tension headache</button>
+        <button class="qc-choice" data-val="C">C) Migraine with aura</button>
+        <button class="qc-choice" data-val="D">D) Medication-overuse headache</button>
+      </div>
+      <div class="qc-feedback">The unilateral excruciating pain with autonomic features (bloodshot eye, tearing, rhinorrhea), short attack duration, and nighttime timing are classic for cluster headache -- the prototypical TAC. Tension headaches have no autonomic symptoms.</div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Think It Through</div>
+    <p>A 68-year-old with uncontrolled hypertension suddenly develops left-sided paralysis, slurred speech, loss of gag reflex, and facial droop. CT shows a hematoma. Which side of the brain is affected, and what type of stroke is this?</p>
+    <div class="scenario-reveal">
+      <div class="tap-text">Tap to reveal answer</div>
+      <div class="answer-text"><strong>The right side of the brain, and this is a hemorrhagic stroke.</strong> Motor pathways cross, so left-sided deficits point to right-brain damage. The hematoma on CT confirms hemorrhage rather than ischemia, and uncontrolled hypertension is the leading risk factor.</div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Think It Through</div>
+    <p>A patient has 20 minutes of right arm weakness and slurred speech that fully resolves. She arrives at the ER two hours later with a completely normal neurologic exam, and imaging shows no infarction. What happened, and why does it still matter?</p>
+    <div class="scenario-reveal">
+      <div class="tap-text">Tap to reveal answer</div>
+      <div class="answer-text"><strong>A transient ischemic attack (TIA).</strong> The deficits were focal, temporary, and fully reversible, and imaging shows no acute infarction -- that is the definition. It matters because a TIA is caused by the same clot or arterial narrowing that causes strokes. It is a warning sign that identifies a patient at high risk for a completed stroke.</div>
+    </div>
+  </div>
+
+  <div class="guideline-link">
+    <div><div class="gl-label">Clinical Guideline</div><a href="https://www.stroke.org/en/about-stroke" target="_blank" rel="noopener">American Stroke Association -- About Stroke</a></div>
+  </div>
+
+  <div class="acc-card">
+    <div class="acc-header">
+      <span class="acc-title">Dig Deeper: Why Increased ICP Produces Cushing's Triad</span>
+      <span class="acc-chevron">&#9660;</span>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <ul>
+          <li>The skull is a closed box. Bleeding or swelling inside it raises pressure with nowhere to expand.</li>
+          <li>Rising ICP squeezes cerebral arteries, so the body raises systemic blood pressure to keep pushing blood into the brain -- that is the <strong>hypertension</strong>.</li>
+          <li>Baroreceptors sense the high pressure and reflexively slow the heart -- that is the <strong>bradycardia</strong>.</li>
+          <li>As pressure compresses the brainstem, the respiratory center falters -- that is the <strong>bradypnea or irregular respirations</strong>.</li>
+          <li>Because the brainstem is already being compressed by the time all three appear, Cushing's triad is a <strong>late</strong> finding and signals impending herniation.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 4: RENAL & URINARY ===================== -->
+<div class="section-wrap" id="sec-renal">
+  <div class="section-header">
+    <h2>Renal &amp; Urinary Disorders</h2>
+    <p class="sec-intro">Glomerular damage, kidney infection, stones, obstruction, and incontinence -- organized from the glomerulus outward.</p>
+  </div>
+
+  <!-- Nephrotic Syndrome -->
+  <div class="content-card border-purple">
+    <h3>Nephrotic Syndrome</h3>
+    <ul>
+      <li><strong>What it is:</strong> A condition where the <strong>glomerulus is damaged</strong> and proteins leak out of the bloodstream into the urine.</li>
+      <li>The protein that leaks out is mostly <strong>albumin</strong>, which leads to <strong>hypoalbuminemia</strong> and <strong>decreased colloid oncotic pressure</strong> -- which in turn causes <strong>edema</strong>.</li>
+      <li><strong>The three symptoms:</strong> hypoalbuminemia, <strong>proteinuria</strong>, and edema.</li>
+      <li><strong>Recovery is indicated by a reduction or disappearance of proteinuria.</strong></li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Why albumin causes swelling:</strong> Albumin is the protein that holds fluid inside blood vessels by generating colloid oncotic pressure -- think of it as the sponge that keeps water in the bloodstream. Lose albumin into the urine and fluid leaks into the tissues. That is the edema.</p>
+    </div>
+    <div class="nclex-focus">
+      <div class="nclex-label">NCLEX Focus</div>
+      <p>If a question asks how to tell whether a patient with nephrotic syndrome is <strong>recovering</strong>, the answer is a <strong>reduction or disappearance of proteinuria</strong>. The protein in the urine is the direct marker of glomerular leakage -- when it falls, the glomerulus is healing.</p>
+    </div>
+  </div>
+
+  <!-- Nephrotic flow -->
+  <div class="flow-chart">
+    <div class="flow-title">Nephrotic Syndrome Pathway</div>
+    <svg viewBox="0 0 760 70" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <rect x="0" y="14" width="120" height="42" rx="10" fill="#1e3a5f"/>
+      <text x="60" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Glomerulus</text>
+      <text x="60" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Damaged</text>
+      <line x1="120" y1="35" x2="138" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrowE)"/>
+      <rect x="143" y="14" width="125" height="42" rx="10" fill="#8b5cf6"/>
+      <text x="205" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Albumin Leaks</text>
+      <text x="205" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">into Urine (Proteinuria)</text>
+      <line x1="268" y1="35" x2="286" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrowE)"/>
+      <rect x="291" y="14" width="120" height="42" rx="10" fill="#3b82f6"/>
+      <text x="351" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Hypoalbuminemia</text>
+      <text x="351" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">(&#8595; Blood Albumin)</text>
+      <line x1="411" y1="35" x2="429" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrowE)"/>
+      <rect x="434" y="14" width="140" height="42" rx="10" fill="#14b8a6"/>
+      <text x="504" y="32" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">&#8595; Colloid Oncotic</text>
+      <text x="504" y="44" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Pressure</text>
+      <line x1="574" y1="35" x2="592" y2="35" stroke="#475569" stroke-width="2" marker-end="url(#arrowE)"/>
+      <rect x="597" y="14" width="120" height="42" rx="10" fill="#f59e0b"/>
+      <text x="657" y="40" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="Inter,sans-serif">EDEMA</text>
+      <defs><marker id="arrowE" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
+  </div>
+
+  <!-- Glomerulonephritis -->
+  <div class="content-card border-red">
+    <h3>Glomerulonephritis</h3>
+    <ul>
+      <li><strong>What it is:</strong> <strong>Inflammation of the glomeruli</strong> that affects <strong>both kidneys</strong>; can be acute or chronic.</li>
+      <li><strong>Post-streptococcal glomerulonephritis (PSGN)</strong> is the most common type of acute glomerulonephritis.
+        <ul>
+          <li>It occurs as a complication of a <strong>streptococcal infection</strong>, typically <strong>strep throat</strong>.</li>
+          <li>The immune system's response to the bacteria leads to inflammation and damage of the glomeruli.</li>
+        </ul>
+      </li>
+    </ul>
+    <h4>Classic Presentation</h4>
+    <ul>
+      <li><strong>Puffiness of the eyelids (periorbital area) and facial edema</strong></li>
+      <li><strong>Dark, cola-colored urine</strong> because it contains RBCs</li>
+      <li><strong>Elevated blood pressure</strong></li>
+      <li><strong>CVA tenderness</strong> (costovertebral angle tenderness) on exam</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>PSGN is not the strep bacteria attacking the kidney directly -- it is the <strong>immune complexes</strong> formed against strep that deposit in the glomeruli and trigger inflammation. That is why it shows up a week or two <em>after</em> the sore throat, not during it.</p>
+    </div>
+  </div>
+
+  <!-- Nephrotic vs Nephritic -->
+  <div class="content-card border-teal">
+    <h3>Nephrotic Syndrome vs. Glomerulonephritis</h3>
+    <p>Both involve the glomerulus. What leaks through is what separates them.</p>
+    <div class="compare-grid">
+      <div class="compare-col cc-blue">
+        <h4>Nephrotic Syndrome</h4>
+        <ul>
+          <li>Glomerulus is <strong>damaged</strong> and leaky</li>
+          <li>What leaks: <strong>protein (albumin)</strong></li>
+          <li>Urine: frothy, heavy <strong>proteinuria</strong></li>
+          <li>Hallmarks: hypoalbuminemia, proteinuria, <strong>edema</strong></li>
+          <li>Recovery marker: proteinuria decreases or disappears</li>
+        </ul>
+      </div>
+      <div class="compare-col cc-teal">
+        <h4>Glomerulonephritis (PSGN)</h4>
+        <ul>
+          <li>Glomerulus is <strong>inflamed</strong></li>
+          <li>What leaks: <strong>red blood cells</strong></li>
+          <li>Urine: dark, <strong>cola-colored</strong> (hematuria)</li>
+          <li>Hallmarks: periorbital/facial edema, <strong>elevated BP</strong>, CVA tenderness</li>
+          <li>Trigger: recent streptococcal infection (strep throat)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pyelonephritis -->
+  <div class="content-card border-amber">
+    <h3>Pyelonephritis (Kidney Infection)</h3>
+    <ul>
+      <li><strong>What it is:</strong> An <strong>infection of the kidney</strong>.</li>
+      <li><strong>Classic manifestations:</strong> <strong>Flank pain, chills, and fever.</strong></li>
+      <li><strong>Urinalysis shows:</strong> <strong>pyuria</strong> (elevated white blood cell count in the urine) and <strong>bacteriuria</strong> (bacteria in the urine).</li>
+    </ul>
+    <h4>How Bacteria Reach the Kidney (Ascending Infection)</h4>
+    <ol style="padding-left:20px;margin:6px 0 10px">
+      <li style="font-size:0.87rem;color:var(--gray-700);margin-bottom:3px"><strong>Colonization</strong> -- bacterial colonization in the periurethral area allows ascension via the urethra</li>
+      <li style="font-size:0.87rem;color:var(--gray-700);margin-bottom:3px"><strong>Uroepithelium penetration</strong> -- bacterial fimbriae allow attachment to and penetration of bladder epithelial cells</li>
+      <li style="font-size:0.87rem;color:var(--gray-700);margin-bottom:3px"><strong>Ascension</strong> -- sufficient bacterial colonization leads to ascension through the ureters</li>
+      <li style="font-size:0.87rem;color:var(--gray-700);margin-bottom:3px"><strong>Pyelonephritis</strong> -- bacterial ascension or hematogenous spread infects the renal parenchyma</li>
+      <li style="font-size:0.87rem;color:var(--gray-700);margin-bottom:3px"><strong>Acute kidney injury (AKI)</strong> -- continuous inflammation results in interstitial edema, interstitial nephritis, and ultimately AKI</li>
+    </ol>
+    <div class="key-point">
+      <p><strong>Location tells you the name:</strong> Urethra = urethritis. Bladder = cystitis. Kidney = pyelonephritis. Same ascending bacteria, different level of the tract -- and flank pain plus fever means it has reached the kidney.</p>
+    </div>
+  </div>
+
+  <!-- Pyelo flow chart -->
+  <div class="flow-chart">
+    <div class="flow-title">Ascending Urinary Tract Infection</div>
+    <svg viewBox="0 0 760 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+      <rect x="0" y="20" width="118" height="42" rx="10" fill="#14b8a6"/>
+      <text x="59" y="39" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Colonization</text>
+      <text x="59" y="51" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">(periurethral)</text>
+      <line x1="118" y1="41" x2="134" y2="41" stroke="#475569" stroke-width="2" marker-end="url(#arrowF)"/>
+      <rect x="139" y="20" width="130" height="42" rx="10" fill="#3b82f6"/>
+      <text x="204" y="39" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Uroepithelium</text>
+      <text x="204" y="51" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">Penetration (bladder)</text>
+      <line x1="269" y1="41" x2="285" y2="41" stroke="#475569" stroke-width="2" marker-end="url(#arrowF)"/>
+      <rect x="290" y="20" width="118" height="42" rx="10" fill="#8b5cf6"/>
+      <text x="349" y="39" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Ascension</text>
+      <text x="349" y="51" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">(through ureters)</text>
+      <line x1="408" y1="41" x2="424" y2="41" stroke="#475569" stroke-width="2" marker-end="url(#arrowF)"/>
+      <rect x="429" y="20" width="140" height="42" rx="10" fill="#f59e0b"/>
+      <text x="499" y="39" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Pyelonephritis</text>
+      <text x="499" y="51" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">flank pain, chills, fever</text>
+      <line x1="569" y1="41" x2="585" y2="41" stroke="#475569" stroke-width="2" marker-end="url(#arrowF)"/>
+      <rect x="590" y="20" width="150" height="42" rx="10" fill="#ef4444"/>
+      <text x="665" y="39" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="700" font-family="Inter,sans-serif">Acute Kidney Injury</text>
+      <text x="665" y="51" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">interstitial nephritis/edema</text>
+      <defs><marker id="arrowF" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#475569"/></marker></defs>
+    </svg>
+  </div>
+
+  <!-- Renal Calculi -->
+  <div class="content-card border-green">
+    <h3>Renal Calculi (Kidney Stones)</h3>
+    <h4>Risk Factors</h4>
+    <ul>
+      <li><strong>Dehydration:</strong> Not drinking enough fluids, especially water, leads to <strong>concentrated urine</strong>, increasing the risk of minerals crystallizing and forming stones.</li>
+      <li><strong>Dietary factors -- high protein intake:</strong> A diet high in <strong>animal protein</strong> can raise <strong>uric acid</strong> levels, contributing to <strong>uric acid stones</strong>.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>The single best prevention message:</strong> increase fluid intake. Dilute urine keeps minerals dissolved; concentrated urine lets them crystallize.</p>
+    </div>
+  </div>
+
+  <!-- Uropathy -->
+  <div class="content-card border-purple">
+    <h3>Uropathy and Obstruction</h3>
+    <ul>
+      <li><strong>Uropathy</strong> is a broad term for <strong>any disease or dysfunction of the urinary tract</strong>.</li>
+      <li><strong>Obstructive uropathy</strong> is a specific type where the <strong>flow of urine is obstructed</strong>, leading to a <strong>backup of urine and potential damage to the kidneys</strong>.</li>
+    </ul>
+    <h4>Hydronephrosis (Swelling of the Renal Pelvis)</h4>
+    <ul>
+      <li>Hydronephrosis is characterized by <strong>dilation of the renal pelvis</strong>.</li>
+      <li>It is frequently caused by an <strong>obstruction within the urinary tract</strong>.</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>Think of it as a chain: an obstruction (often a <strong>stone</strong>) blocks outflow &rarr; urine backs up &rarr; the renal pelvis dilates (<strong>hydronephrosis</strong>) &rarr; sustained back-pressure damages kidney tissue. This is exactly the mechanism behind <strong>post-renal</strong> dysfunction below.</p>
+    </div>
+  </div>
+
+  <!-- Renal Dysfunction -->
+  <div class="content-card border-red">
+    <h3>Renal Dysfunction: Pre-renal vs. Post-renal</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Problem</th><th>Common Causes</th></tr>
+        <tr>
+          <td><strong>Pre-renal</strong></td>
+          <td><strong>Decreased blood flow to the kidneys</strong> (reduced renal perfusion)</td>
+          <td><strong>Hypovolemia</strong> (low blood volume) and <strong>heart failure</strong> (inadequate pumping of blood by the heart)</td>
+        </tr>
+        <tr>
+          <td><strong>Post-renal</strong></td>
+          <td><strong>Obstruction of urine flow after it leaves the kidneys</strong></td>
+          <td>A <strong>kidney stone</strong> or a <strong>tumor</strong> blocking the ureters</td>
+        </tr>
+      </table>
+    </div>
+    <div class="mnemonic-box">
+      <p><strong>Follow the plumbing:</strong></p>
+      <ul>
+        <li><strong>PRE</strong>-renal = the problem is <em>before</em> the kidney -- not enough blood is arriving.</li>
+        <li><strong>POST</strong>-renal = the problem is <em>after</em> the kidney -- urine cannot get out.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Incontinence -->
+  <div class="content-card border-teal">
+    <h3>Incontinence</h3>
+    <ul>
+      <li><strong>Functional incontinence:</strong> Occurs due to <strong>physical or cognitive impairments</strong> -- the urinary tract works, but the person cannot reach the toilet in time or does not recognize the need.</li>
+      <li><strong>Stress incontinence:</strong> Involuntary urine leakage during activities that <strong>increase intra-abdominal pressure</strong> -- such as <strong>squatting, coughing, or lifting</strong> -- due to <strong>weakened pelvic floor muscles or urethral sphincter</strong>.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>What Triggers the Leak</th><th>Underlying Problem</th></tr>
+        <tr><td><strong>Stress</strong></td><td>Coughing, squatting, lifting, sneezing, laughing</td><td>Weak pelvic floor muscles or urethral sphincter</td></tr>
+        <tr><td><strong>Functional</strong></td><td>Cannot reach or use the toilet in time</td><td>Physical or cognitive impairment (not a urinary tract problem)</td></tr>
+        <tr><td><strong>Urge</strong></td><td>Sudden, intense need to void</td><td>Overactive bladder contractions</td></tr>
+        <tr><td><strong>Overflow</strong></td><td>Constant dribbling; bladder never fully empties</td><td>Bladder outlet obstruction or poor bladder contraction</td></tr>
+      </table>
+    </div>
+    <div class="nclex-focus">
+      <div class="nclex-label">NCLEX Focus</div>
+      <p>The word in the stem tells you the type. "Leaks when she coughs or lifts her grandchild" = <strong>stress</strong>. "Has arthritis and a walker and cannot get to the bathroom in time" = <strong>functional</strong>. Functional incontinence is the one where the bladder itself is fine.</p>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">A patient with nephrotic syndrome is being monitored for recovery. Which finding best indicates improvement?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Increased serum creatinine</button>
+        <button class="qc-choice" data-val="B">B) Increased urine output</button>
+        <button class="qc-choice" data-val="C">C) Reduction or disappearance of proteinuria</button>
+        <button class="qc-choice" data-val="D">D) Decreased serum albumin</button>
+      </div>
+      <div class="qc-feedback">Recovery from nephrotic syndrome is indicated by a reduction or disappearance of proteinuria -- the direct marker that the damaged glomerulus is no longer leaking protein.</div>
+    </div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">A 7-year-old presents with puffy eyelids, facial edema, cola-colored urine, and elevated blood pressure two weeks after a sore throat. What is the most likely diagnosis?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Nephrotic syndrome</button>
+        <button class="qc-choice" data-val="B">B) Post-streptococcal glomerulonephritis</button>
+        <button class="qc-choice" data-val="C">C) Pyelonephritis</button>
+        <button class="qc-choice" data-val="D">D) Obstructive uropathy</button>
+      </div>
+      <div class="qc-feedback">PSGN. Periorbital and facial edema, dark cola-colored urine from RBCs, elevated blood pressure, and a recent strep throat are the classic combination.</div>
+    </div>
+    <div class="qc-question" data-answer="A">
+      <div class="qc-text">A patient in decompensated heart failure develops rising BUN and creatinine. Which type of renal dysfunction is this?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A) Pre-renal</button>
+        <button class="qc-choice" data-val="B">B) Post-renal</button>
+        <button class="qc-choice" data-val="C">C) Obstructive uropathy</button>
+        <button class="qc-choice" data-val="D">D) Nephrotic syndrome</button>
+      </div>
+      <div class="qc-feedback">Pre-renal. Heart failure means the heart cannot pump adequately, so renal perfusion falls. Hypovolemia causes pre-renal dysfunction the same way -- the problem is upstream of the kidney.</div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Think It Through</div>
+    <p>A patient arrives with severe right flank pain, fever of 101.8&deg;F, and chills. Urinalysis shows pyuria and bacteriuria. What is the diagnosis, and how did the bacteria get to the kidney?</p>
+    <div class="scenario-reveal">
+      <div class="tap-text">Tap to reveal answer</div>
+      <div class="answer-text"><strong>Pyelonephritis -- an infection of the kidney.</strong> Flank pain, chills, and fever with pyuria and bacteriuria on urinalysis are the classic picture. Bacteria typically colonize the periurethral area, penetrate the bladder uroepithelium using fimbriae, then ascend through the ureters into the renal parenchyma. Sustained inflammation can progress to acute kidney injury.</div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Think It Through</div>
+    <p>A patient with a stone lodged in the right ureter has an ultrasound showing dilation of the right renal pelvis. Name this finding, classify the renal dysfunction, and explain the risk to the kidney.</p>
+    <div class="scenario-reveal">
+      <div class="tap-text">Tap to reveal answer</div>
+      <div class="answer-text"><strong>Hydronephrosis</strong> -- dilation of the renal pelvis caused by obstruction within the urinary tract. Because the blockage is <em>after</em> urine leaves the kidney, this is <strong>post-renal</strong> dysfunction, a form of <strong>obstructive uropathy</strong>. Urine backs up behind the stone, and sustained back-pressure on the renal tissue can cause permanent kidney damage if the obstruction is not relieved.</div>
+    </div>
+  </div>
+
+  <div class="guideline-link">
+    <div><div class="gl-label">Clinical Guideline</div><a href="https://www.kidney.org/kidney-topics" target="_blank" rel="noopener">National Kidney Foundation -- Kidney Topics</a></div>
+  </div>
+
+  <div class="acc-card">
+    <div class="acc-header">
+      <span class="acc-title">Dig Deeper: Colloid Oncotic Pressure in One Minute</span>
+      <span class="acc-chevron">&#9660;</span>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <ul>
+          <li>Blood vessels constantly push fluid out into tissue (hydrostatic pressure) and pull it back in (oncotic pressure).</li>
+          <li>The "pull back in" force comes almost entirely from <strong>albumin</strong> dissolved in the plasma.</li>
+          <li>In nephrotic syndrome, albumin escapes through the damaged glomerulus into the urine.</li>
+          <li>With less albumin in the blood, the pull-back force drops -- fluid stays in the tissue.</li>
+          <li>That trapped fluid is the <strong>edema</strong> you see in the face, legs, and abdomen.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="acc-card">
+    <div class="acc-header">
+      <span class="acc-title">Dig Deeper: Where Each Renal Condition Sits in the Tract</span>
+      <span class="acc-chevron">&#9660;</span>
+    </div>
+    <div class="acc-body">
+      <div class="acc-content">
+        <ul>
+          <li><strong>Glomerulus:</strong> nephrotic syndrome (protein leaks out), glomerulonephritis/PSGN (inflammation, RBCs leak out).</li>
+          <li><strong>Renal parenchyma:</strong> pyelonephritis (infection), acute kidney injury.</li>
+          <li><strong>Renal pelvis:</strong> hydronephrosis (dilation from backed-up urine).</li>
+          <li><strong>Ureters:</strong> renal calculi lodging and obstructing; tumors compressing.</li>
+          <li><strong>Bladder:</strong> cystitis; urge and overflow incontinence.</li>
+          <li><strong>Urethra / outside the tract entirely:</strong> urethritis; stress and functional incontinence.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 5: PRACTICE QUIZ ===================== -->
+<div class="section-wrap" id="sec-quiz">
+  <div id="quiz-section">
+    <h2>Practice Quiz</h2>
+    <p class="quiz-meta">15 questions -- Test your understanding of Week 6 concepts</p>
+    <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-bar" style="width:6.67%"></div></div>
+
+    <!-- Q1: Nephrotic syndrome recovery -->
+    <div class="quiz-q active" data-correct="2">
+      <div class="quiz-q-num">Question 1 of 15</div>
+      <div class="quiz-q-text">A client is being treated for nephrotic syndrome. Which finding indicates that the client is recovering?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">A rise in serum creatinine</button>
+        <button class="quiz-choice" data-idx="1">Worsening peripheral edema</button>
+        <button class="quiz-choice" data-idx="2">A reduction or disappearance of proteinuria</button>
+        <button class="quiz-choice" data-idx="3">A falling serum albumin level</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Recovery from nephrotic syndrome is indicated by a reduction or disappearance of proteinuria. Protein in the urine is the direct marker of glomerular leakage -- when it decreases, the glomerulus is healing, albumin is retained, and edema resolves.</div>
+    </div>
+
+    <!-- Q2: Nephrotic edema mechanism -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 2 of 15</div>
+      <div class="quiz-q-text">In nephrotic syndrome, what is the direct mechanism that produces edema?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Sodium retention caused by excess aldosterone</button>
+        <button class="quiz-choice" data-idx="1">Loss of albumin lowers colloid oncotic pressure, so fluid leaks into tissues</button>
+        <button class="quiz-choice" data-idx="2">Obstruction of the ureters backs urine up into the tissues</button>
+        <button class="quiz-choice" data-idx="3">Increased ADH secretion causes water retention</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> The damaged glomerulus leaks albumin into the urine, causing hypoalbuminemia. Albumin generates colloid oncotic pressure -- the force that holds fluid inside blood vessels. Less albumin means less pull, so fluid escapes into the tissues as edema.</div>
+    </div>
+
+    <!-- Q3: DI -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 3 of 15</div>
+      <div class="quiz-q-text">A client excretes large volumes of very dilute urine, reports intense thirst, and has dry skin. Serum glucose is 94 mg/dL. What is the underlying problem?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">A deficiency in -- or resistance to -- antidiuretic hormone</button>
+        <button class="quiz-choice" data-idx="1">Excessive antidiuretic hormone secretion</button>
+        <button class="quiz-choice" data-idx="2">Autoimmune destruction of pancreatic beta cells</button>
+        <button class="quiz-choice" data-idx="3">Excessive cortisol production</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> This is diabetes insipidus -- "Always Drinking, Always Dry." Without effective ADH the kidney cannot reabsorb water, so large amounts of dilute urine are excreted. The normal glucose rules out diabetes mellitus.</div>
+    </div>
+
+    <!-- Q4: SIADH -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 4 of 15</div>
+      <div class="quiz-q-text">A client with lung cancer develops fluid retention, headache, nausea, and confusion. Serum sodium is 119 mEq/L. Which treatment approach is appropriate?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Aggressive IV fluid resuscitation</button>
+        <button class="quiz-choice" data-idx="1">High-dose insulin therapy</button>
+        <button class="quiz-choice" data-idx="2">Increased free water intake</button>
+        <button class="quiz-choice" data-idx="3">Fluid restriction, salt supplementation, and careful diuretic use</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> This is SIADH -- "Swollen with Water, Salt Washed Away." Lung cancer is a classic trigger for excessive ADH. Because the problem is retained water diluting sodium, treatment is fluid restriction, salt supplementation, and careful diuretic use. Giving more fluid would worsen the hyponatremia.</div>
+    </div>
+
+    <!-- Q5: Cushing syndrome -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 5 of 15</div>
+      <div class="quiz-q-text">A client presents with a moon face, buffalo hump, hirsutism, thin bruised skin, elevated blood glucose, and anxiety. Which hormone is in excess?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Antidiuretic hormone</button>
+        <button class="quiz-choice" data-idx="1">Cortisol</button>
+        <button class="quiz-choice" data-idx="2">Insulin</button>
+        <button class="quiz-choice" data-idx="3">Dopamine</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> This is Cushing syndrome -- excessive cortisol, from a pituitary adenoma (Cushing's disease), an adrenal tumor, or ectopic ACTH production. Motto: "Excess is the Norm." Think of a patient on too many steroids, because cortisol is the body's own steroid.</div>
+    </div>
+
+    <!-- Q6: Type 1 DM -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 6 of 15</div>
+      <div class="quiz-q-text">A 10-year-old develops frequent urination, extreme thirst, constant hunger, and unexplained weight loss over two weeks. Labs show high glucose, minimal insulin, and positive autoantibodies. What is the underlying pathology?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Peripheral insulin resistance from obesity</button>
+        <button class="quiz-choice" data-idx="1">Impaired glucose tolerance triggered by pregnancy hormones</button>
+        <button class="quiz-choice" data-idx="2">Autoimmune destruction of pancreatic beta cells with no insulin production</button>
+        <button class="quiz-choice" data-idx="3">Excess cortisol raising blood glucose</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Type 1 diabetes mellitus -- "Sudden Storm." The immune system attacks pancreatic beta cells, so no insulin is produced. The sudden onset in a child, the classic symptoms, and the presence of autoantibodies confirming an autoimmune etiology all point to Type 1.</div>
+    </div>
+
+    <!-- Q7: Type 2 DM findings -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 7 of 15</div>
+      <div class="quiz-q-text">Which cluster of findings is most characteristic of Type 2 diabetes mellitus rather than Type 1?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Gradual onset with slow-healing wounds, frequent infections, and darkened skin patches</button>
+        <button class="quiz-choice" data-idx="1">Abrupt onset with rapid weight loss and positive autoantibodies</button>
+        <button class="quiz-choice" data-idx="2">Large volumes of dilute urine with normal blood glucose</button>
+        <button class="quiz-choice" data-idx="3">Hyponatremia with fluid retention and confusion</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Type 2 diabetes -- "Creeping Concerns." It arises from insulin resistance and eventually insufficient insulin production, and is commonly associated with obesity, poor diet, and lack of exercise. Slow-healing wounds, frequent infections, and areas of darkened skin are its distinguishing features.</div>
+    </div>
+
+    <!-- Q8: Diagnostic criteria -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 8 of 15</div>
+      <div class="quiz-q-text">Which result meets the diagnostic criterion for diabetes mellitus?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Fasting plasma glucose of 112 mg/dL</button>
+        <button class="quiz-choice" data-idx="1">A1C of 6.1%</button>
+        <button class="quiz-choice" data-idx="2">2-hour OGTT glucose of 168 mg/dL</button>
+        <button class="quiz-choice" data-idx="3">A1C of 7.2%</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> An A1C of 6.5% or higher diagnoses diabetes. The other options fall in the prediabetes ranges: fasting 100-125 mg/dL, A1C 5.7-6.4%, and 2-hour OGTT 140-199 mg/dL. Key numbers to memorize: A1C 6.5%, fasting 126 mg/dL, and 2-hour or random glucose 200 mg/dL.</div>
+    </div>
+
+    <!-- Q9: 3 P's -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 9 of 15</div>
+      <div class="quiz-q-text">Polydipsia, polyuria, and polyphagia together form the classic triad of diabetes symptoms. What does polyphagia refer to?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Excessive thirst and fluid intake</button>
+        <button class="quiz-choice" data-idx="1">Increased appetite</button>
+        <button class="quiz-choice" data-idx="2">Excessive urination</button>
+        <button class="quiz-choice" data-idx="3">Difficulty swallowing</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Polyphagia is increased appetite. Polydipsia is excessive thirst and fluid intake, and polyuria is frequent urination. Recognizing all three early leads to prompt diagnosis and management, preventing complications.</div>
+    </div>
+
+    <!-- Q10: GDM -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 10 of 15</div>
+      <div class="quiz-q-text">A client is diagnosed with gestational diabetes mellitus in her third trimester. Which set of complications should the nurse anticipate?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Newborn hyperglycemia and small-for-gestational-age infant</button>
+        <button class="quiz-choice" data-idx="1">Post-term delivery and low birth weight</button>
+        <button class="quiz-choice" data-idx="2">Newborn hypoglycemia, large-for-gestational-age infant, fetal defects, and premature delivery</button>
+        <button class="quiz-choice" data-idx="3">Maternal hyponatremia and newborn seizures from low ADH</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> GDM is impaired glucose tolerance developing most commonly in the second and third trimesters. Possible consequences include hypoglycemia in the newborn, large-for-gestational-age infants, fetal defects, and premature delivery.</div>
+    </div>
+
+    <!-- Q11: Cushing's triad -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 11 of 15</div>
+      <div class="quiz-q-text">A client with a traumatic brain injury has a pulse of 46, blood pressure of 192/76, and slow irregular respirations. What does this constellation indicate?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Cushing's triad, indicating increased intracranial pressure</button>
+        <button class="quiz-choice" data-idx="1">Cushing syndrome from excess cortisol</button>
+        <button class="quiz-choice" data-idx="2">A transient ischemic attack in progress</button>
+        <button class="quiz-choice" data-idx="3">Compensated hypovolemic shock</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Cushing's triad is bradycardia, hypertension, and bradypnea or irregular respirations -- a clinical constellation indicating increased intracranial pressure. Compare each value to normal (pulse 60-100, BP 120/80, respirations 12-20): two are down and one is up. Do not confuse this with Cushing syndrome, which is excess cortisol.</div>
+    </div>
+
+    <!-- Q12: TIA -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 12 of 15</div>
+      <div class="quiz-q-text">A client had 15 minutes of slurred speech and right arm weakness that completely resolved. Imaging shows no signs of infarction. Which statement best describes this event?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">A hemorrhagic stroke with a small hematoma that reabsorbed</button>
+        <button class="quiz-choice" data-idx="1">A completed ischemic stroke with an unusually good outcome</button>
+        <button class="quiz-choice" data-idx="2">A migraine with aura mimicking neurologic deficits</button>
+        <button class="quiz-choice" data-idx="3">A transient ischemic attack -- temporary focal cerebral ischemia with reversible deficits and no acute infarction</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> A TIA is temporary, focal cerebral ischemia producing reversible neurological deficits without acute infarction -- imaging shows no signs of infarction. Often called a "mini-stroke," symptoms usually last only minutes and resolve within 24 hours. It is a serious warning sign for future stroke.</div>
+    </div>
+
+    <!-- Q13: Penumbra -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 13 of 15</div>
+      <div class="quiz-q-text">During an ischemic stroke, what is the significance of the ischemic penumbra?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">It is the core of dead tissue that cannot be recovered</button>
+        <button class="quiz-choice" data-idx="1">It is the perimeter around the core where cells are still alive but will die if blood flow is not restored quickly</button>
+        <button class="quiz-choice" data-idx="2">It is the hematoma that forms when a vessel ruptures</button>
+        <button class="quiz-choice" data-idx="3">It is the region of the brain that controls speech</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> The penumbra is the perimeter around the core ischemic area. Those brain cells are still alive but at risk of dying if blood flow is not restored quickly. This salvageable zone is the reason "time is brain" -- every acute stroke treatment exists to rescue it.</div>
+    </div>
+
+    <!-- Q14: Hemorrhagic stroke -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 14 of 15</div>
+      <div class="quiz-q-text">A client with uncontrolled hypertension develops left-sided hemiplegia, dysarthria, loss of gag reflex, and facial droop. CT shows a hematoma. Which conclusion is correct?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Ischemic stroke affecting the left side of the brain</button>
+        <button class="quiz-choice" data-idx="1">Ischemic stroke affecting the right side of the brain</button>
+        <button class="quiz-choice" data-idx="2">Hemorrhagic stroke affecting the right side of the brain</button>
+        <button class="quiz-choice" data-idx="3">Hemorrhagic stroke affecting the left side of the brain</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> The presence of a hematoma on CT confirms the stroke is hemorrhagic -- a vessel ruptured and bled. Because motor pathways cross, left-sided deficits indicate right-brain damage. Uncontrolled hypertension is a leading risk factor, along with age and previous brain aneurysm.</div>
+    </div>
+
+    <!-- Q15: Pyelonephritis -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 15 of 15</div>
+      <div class="quiz-q-text">A client presents with flank pain, chills, and fever. Urinalysis shows pyuria and bacteriuria. What is the most likely diagnosis?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Pyelonephritis</button>
+        <button class="quiz-choice" data-idx="1">Nephrotic syndrome</button>
+        <button class="quiz-choice" data-idx="2">Hydronephrosis from a ureteral tumor</button>
+        <button class="quiz-choice" data-idx="3">Stress incontinence</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Pyelonephritis is an infection of the kidney that typically manifests with flank pain, chills, and fever. Urinalysis shows pyuria (elevated white blood cell count) and bacteriuria. Untreated, continuous inflammation can progress to interstitial nephritis and acute kidney injury.</div>
+    </div>
+
+    <!-- Quiz Nav -->
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="btn btn-secondary" id="quiz-prev" onclick="quizNav(-1)" disabled>Previous</button>
+      <button class="btn btn-primary" id="quiz-next" onclick="quizNav(1)">Next</button>
+    </div>
+
+    <!-- Quiz Result -->
+    <div id="quiz-result">
+      <div class="score-circle"><span id="score-num">0</span><span class="score-lbl">/ 15</span></div>
+      <h3 id="score-msg"></h3>
+      <p id="score-detail"></p>
+      <button class="btn btn-success" onclick="resetQuiz()">Retake Quiz</button>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#9650;</button>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div><a href="https://tehranilabs.org" target="_blank" rel="noopener">Tehrani Labs</a></div>
+  <div>&copy; Tehrani Labs &middot; HCR 240 Human Pathophysiology &middot; Arizona College of Nursing</div>
+</footer>
+<script>
+/* -- TABS -- */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('.section-wrap');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const t = btn.dataset.tab;
+    sections.forEach(s => {
+      s.classList.toggle('active', s.id === 'sec-' + t);
+    });
+    window.scrollTo({ top: document.getElementById('main-content').offsetTop - 80, behavior: 'smooth' });
+  });
+});
+
+/* -- ACCORDIONS -- */
+document.querySelectorAll('.acc-header').forEach(h => {
+  h.addEventListener('click', () => {
+    h.closest('.acc-card').classList.toggle('open');
+  });
+});
+
+/* -- FLIP CARDS -- */
+document.querySelectorAll('.flip-card').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('flipped'));
+});
+
+/* -- SCENARIO REVEALS -- */
+document.querySelectorAll('.scenario-reveal').forEach(box => {
+  box.addEventListener('click', () => box.classList.add('reveal'));
+});
+
+/* -- SCROLL / BACK TO TOP -- */
+window.addEventListener('scroll', () => {
+  document.getElementById('back-top').classList.toggle('show', document.documentElement.scrollTop > 300);
+});
+
+/* -- QUIZ ENGINE -- */
+const quizQs = document.querySelectorAll('.quiz-q');
+let currentQ = 0, score = 0, answered = new Array(quizQs.length).fill(false);
+
+function showQuestion(idx) {
+  quizQs.forEach((q, i) => q.classList.toggle('active', i === idx));
+  document.getElementById('quiz-prev').disabled = idx === 0;
+  const nextBtn = document.getElementById('quiz-next');
+  nextBtn.textContent = idx === quizQs.length - 1 ? 'Finish Quiz' : 'Next';
+  document.getElementById('quiz-bar').style.width = ((idx + 1) / quizQs.length * 100) + '%';
+}
+
+quizQs.forEach((q, qi) => {
+  const correct = parseInt(q.dataset.correct);
+  const choices = q.querySelectorAll('.quiz-choice');
+  const fb = q.querySelector('.quiz-feedback');
+  choices.forEach(ch => {
+    ch.addEventListener('click', () => {
+      if (answered[qi]) return;
+      answered[qi] = true;
+      const pick = parseInt(ch.dataset.idx);
+      choices.forEach(c => c.disabled = true);
+      if (pick === correct) {
+        ch.classList.add('correct');
+        fb.classList.add('show', 'correct-fb');
+        score++;
+      } else {
+        ch.classList.add('wrong');
+        choices[correct].classList.add('correct');
+        fb.classList.add('show', 'wrong-fb');
+        fb.innerHTML = '<strong>Not quite.</strong> ' + fb.innerHTML.replace(/<strong>Correct!<\/strong>\s*/, '');
+      }
+    });
+  });
+});
+
+function quizNav(dir) {
+  const next = currentQ + dir;
+  if (next < 0) return;
+  if (next >= quizQs.length) {
+    quizQs.forEach(q => q.classList.remove('active'));
+    document.getElementById('quiz-nav').style.display = 'none';
+    const result = document.getElementById('quiz-result');
+    result.style.display = 'block';
+    document.getElementById('score-num').textContent = score;
+    const pct = score / quizQs.length * 100;
+    let msg, detail;
+    if (pct >= 90) { msg = 'Outstanding!'; detail = 'You have excellent mastery of this material.'; }
+    else if (pct >= 70) { msg = 'Great Work!'; detail = 'Solid understanding -- review the topics you missed.'; }
+    else if (pct >= 50) { msg = 'Good Effort!'; detail = 'Review the study content for topics you missed and try again.'; }
+    else { msg = 'Keep Studying!'; detail = 'Go back through each tab and focus on the key concepts before retaking.'; }
+    document.getElementById('score-msg').textContent = msg;
+    document.getElementById('score-detail').textContent = detail;
+    return;
+  }
+  currentQ = next;
+  showQuestion(currentQ);
+}
+
+function resetQuiz() {
+  score = 0; currentQ = 0;
+  answered = new Array(quizQs.length).fill(false);
+  quizQs.forEach(q => {
+    q.querySelectorAll('.quiz-choice').forEach(c => { c.disabled = false; c.classList.remove('correct', 'wrong'); });
+    q.querySelector('.quiz-feedback').classList.remove('show', 'correct-fb', 'wrong-fb');
+  });
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-nav').style.display = 'flex';
+  showQuestion(0);
+}
+
+/* ── QUICK CHECK INLINE QUESTIONS ── */
+document.querySelectorAll('.qc-question').forEach(q=>{
+  const correct=q.dataset.answer;
+  const choices=q.querySelectorAll('.qc-choice');
+  const fb=q.querySelector('.qc-feedback');
+  let answered=false;
+  choices.forEach(ch=>{
+    ch.addEventListener('click',()=>{
+      if(answered) return;
+      answered=true;
+      choices.forEach(c=>c.disabled=true);
+      if(ch.dataset.val===correct){
+        ch.classList.add('qc-correct');
+      } else {
+        ch.classList.add('qc-wrong');
+        choices.forEach(c=>{if(c.dataset.val===correct) c.classList.add('qc-correct');});
+      }
+      if(fb) fb.classList.add('show');
+    });
+  });
+});
+</script>
+</body>
+</html>
