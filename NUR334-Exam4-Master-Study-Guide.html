@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NUR 334 Exam 4 — Master Study Guide | Tehrani Labs</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #0b2545;
+    --secondary: #13315c;
+    --accent: #d4af37;
+    --accent-light: #f4d03f;
+    --success: #10a37f;
+    --danger: #c0392b;
+    --warning: #e67e22;
+    --info: #2980b9;
+    --light: #f8f9fa;
+    --bg: #eef2f7;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --muted: #5a6c7d;
+    --border: #d1d9e0;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    padding-bottom: 60px;
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    padding: 40px 20px 30px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .brand {
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  header.hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  header.hero .subtitle {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    opacity: 0.9;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    font-size: 0.9rem;
+  }
+  .stat {
+    background: rgba(255,255,255,0.12);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .stat strong { color: var(--accent-light); }
+
+  .container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Sticky nav */
+  nav.tabs {
+    position: sticky;
+    top: 0;
+    background: var(--primary);
+    z-index: 100;
+    display: flex;
+    overflow-x: auto;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    scrollbar-width: thin;
+  }
+  nav.tabs button {
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    border: none;
+    padding: 14px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  nav.tabs button:hover { background: rgba(255,255,255,0.08); color: white; }
+  nav.tabs button.active {
+    color: var(--accent-light);
+    border-bottom-color: var(--accent);
+    background: rgba(0,0,0,0.2);
+  }
+
+  .tab-content { display: none; animation: fadeIn 0.35s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from {opacity: 0; transform: translateY(6px);} to {opacity: 1; transform: translateY(0);} }
+
+  h2.section-title {
+    font-size: 1.7rem;
+    color: var(--primary);
+    margin: 25px 0 15px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2.section-title::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 26px;
+    background: var(--accent);
+    border-radius: 3px;
+  }
+  h3 { color: var(--secondary); margin: 20px 0 10px; font-size: 1.2rem; }
+  p { margin-bottom: 10px; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 5px solid var(--accent);
+  }
+  .card.info { border-left-color: var(--info); }
+  .card.success { border-left-color: var(--success); }
+  .card.warning { border-left-color: var(--warning); background: #fef9f3; }
+  .card.danger { border-left-color: var(--danger); background: #fdf3f2; }
+
+  /* Collapsibles */
+  details.topic {
+    background: var(--card);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  details.topic summary {
+    padding: 16px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    background: linear-gradient(90deg, #f8fafc 0%, #ffffff 100%);
+    color: var(--primary);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    transition: background 0.2s;
+    font-size: 1.02rem;
+  }
+  details.topic summary:hover { background: #eef4fa; }
+  details.topic summary::-webkit-details-marker { display: none; }
+  details.topic summary::after {
+    content: "▶";
+    color: var(--accent);
+    font-size: 0.8rem;
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  details.topic[open] summary::after { transform: rotate(90deg); }
+  details.topic .content { padding: 18px 22px 22px; border-top: 1px solid var(--border); }
+  .topic-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Key facts styling */
+  .key-facts { background: #f0f8ff; border-left: 4px solid var(--info); padding: 12px 16px; margin: 10px 0; border-radius: 6px; }
+  .key-facts strong { color: var(--info); }
+  .must-know { background: #fff8e1; border-left: 4px solid var(--warning); padding: 12px 16px; margin: 10px 0; border-radius: 6px; }
+  .must-know strong { color: var(--warning); }
+  .contraindication { background: #fdecea; border-left: 4px solid var(--danger); padding: 12px 16px; margin: 10px 0; border-radius: 6px; }
+  .contraindication strong { color: var(--danger); }
+  .teaching { background: #e8f5e9; border-left: 4px solid var(--success); padding: 12px 16px; margin: 10px 0; border-radius: 6px; }
+  .teaching strong { color: var(--success); }
+
+  ul.bullet, ol.bullet { margin: 8px 0 12px 22px; }
+  ul.bullet li, ol.bullet li { margin-bottom: 6px; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 15px 0; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+  table { width: 100%; border-collapse: collapse; background: white; min-width: 520px; }
+  th { background: var(--primary); color: white; padding: 12px 10px; text-align: left; font-size: 0.9rem; }
+  td { padding: 10px 10px; border-bottom: 1px solid var(--border); font-size: 0.92rem; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr:hover td { background: #fff9e6; }
+
+  /* Quiz */
+  .quiz {
+    background: linear-gradient(135deg, #fff9e6 0%, #fef5d3 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+    border: 2px solid var(--accent);
+  }
+  .quiz h4 { color: var(--primary); margin-bottom: 12px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+  .quiz h4::before { content: "❓"; }
+  .quiz .options { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+  .quiz .option {
+    background: white;
+    padding: 11px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    transition: all 0.2s;
+    font-size: 0.94rem;
+  }
+  .quiz .option:hover { border-color: var(--accent); background: #fffdf5; }
+  .quiz .option.correct { background: #d4edda; border-color: var(--success); color: #155724; }
+  .quiz .option.wrong { background: #f8d7da; border-color: var(--danger); color: #721c24; }
+  .quiz .feedback {
+    display: none;
+    background: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    border-left: 4px solid var(--success);
+  }
+  .quiz .feedback.show { display: block; }
+
+  /* Mnemonic */
+  .mnemonic {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin: 12px 0;
+    font-weight: 500;
+  }
+  .mnemonic .title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; margin-bottom: 6px; }
+  .mnemonic .body { font-size: 1.05rem; }
+  .mnemonic ul { margin: 8px 0 0 20px; }
+
+  /* Day plan */
+  .day-plan {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .day-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border-top: 5px solid var(--accent);
+  }
+  .day-card .day-num {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .day-card h3 { color: var(--primary); margin: 4px 0 10px; font-size: 1.15rem; border-bottom: 0; padding: 0; }
+  .day-card ul { list-style: none; margin: 10px 0; }
+  .day-card ul li {
+    padding: 6px 0;
+    border-bottom: 1px dashed #e0e0e0;
+    font-size: 0.92rem;
+    display: flex;
+    gap: 8px;
+  }
+  .day-card ul li::before { content: "▸"; color: var(--accent); font-weight: bold; }
+  .time-badge {
+    background: var(--info);
+    color: white;
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-weight: 600;
+  }
+
+  /* Progress */
+  .progress-tracker {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 15px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .progress-tracker label { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.95rem; }
+  .progress-tracker input[type="checkbox"] {
+    width: 20px; height: 20px; accent-color: var(--success); cursor: pointer;
+  }
+  .progress-tracker label.done { text-decoration: line-through; color: var(--muted); }
+
+  /* Formula box */
+  .formula {
+    background: #1a1a1a;
+    color: #e8e8e8;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 12px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    border-left: 4px solid var(--accent);
+    overflow-x: auto;
+  }
+  .formula strong { color: var(--accent-light); }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 30px;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--info); text-decoration: none; }
+
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin: 15px 0; }
+  .mini-card {
+    background: white;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--info);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .mini-card h4 { color: var(--primary); font-size: 1rem; margin-bottom: 6px; }
+  .mini-card p { font-size: 0.9rem; margin: 0; }
+
+  /* Highlight */
+  .hi { background: #fff3b8; padding: 2px 5px; border-radius: 3px; font-weight: 600; }
+  .hi-red { background: #ffdada; padding: 2px 5px; border-radius: 3px; color: #a00; font-weight: 600; }
+  .hi-green { background: #d4f5dd; padding: 2px 5px; border-radius: 3px; color: #056b3d; font-weight: 600; }
+
+  /* Print */
+  @media print {
+    nav.tabs { display: none; }
+    .tab-content { display: block !important; page-break-after: always; }
+    details.topic { border: 1px solid #ccc; page-break-inside: avoid; }
+    details.topic .content { display: block !important; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="brand">Tehrani Labs · Nursing Pharmacology</div>
+  <h1>NUR 334 Exam 4 — Master Study Guide</h1>
+  <div class="subtitle">Your complete 3-day roadmap to <strong>95%+</strong> on the pharmacology exam covering Fluids & Electrolytes, GI, Nutrition, Reproductive Pharmacology, and Med Math.</div>
+  <div class="stats-bar">
+    <span class="stat">📚 <strong>3</strong> Modules</span>
+    <span class="stat">🎯 <strong>75</strong> Learning Objectives</span>
+    <span class="stat">💊 <strong>40+</strong> Medications</span>
+    <span class="stat">🧮 <strong>5</strong> Med Math Types</span>
+  </div>
+</header>
+
+<nav class="tabs" id="tabnav">
+  <button class="active" data-tab="plan">📅 Study Plan</button>
+  <button data-tab="fluids">💧 Fluids & Electrolytes</button>
+  <button data-tab="gi">🍽️ GI & Nutrition</button>
+  <button data-tab="repro">⚕️ Reproductive</button>
+  <button data-tab="ob">🤰 OB/Labor</button>
+  <button data-tab="medmath">🧮 Med Math</button>
+  <button data-tab="quiz">📝 Practice Quiz</button>
+  <button data-tab="cheatsheet">⚡ Cheat Sheet</button>
+</nav>
+
+<div class="container">
+
+<!-- ============ STUDY PLAN TAB ============ -->
+<div class="tab-content active" id="plan">
+  <h2 class="section-title">Your 3-Day Battle Plan to 95%+</h2>
+  <div class="card info">
+    <p><strong>The exam covers three big areas:</strong> Module 7 (Fluid & Electrolytes — 20 items), Module 8 (GI, Nutrition, & Reproductive — 50 items), and Med Math (5 items). That's 75 parent items you must master. Follow this plan and you'll walk in with confidence.</p>
+    <p>⏱️ Budget <strong>4–6 focused hours per day</strong>. Use the Pomodoro technique: 50 min study, 10 min break. Sleep and hydration are non-negotiable.</p>
+  </div>
+
+  <div class="day-plan">
+    <div class="day-card">
+      <div class="day-num">Day 1 · Foundation</div>
+      <h3>Fluids, Electrolytes & Med Math</h3>
+      <ul>
+        <li>Read the Fluids & Electrolytes tab in full <span class="time-badge">90 min</span></li>
+        <li>Memorize the IV fluid tonicity chart <span class="time-badge">30 min</span></li>
+        <li>Master Med Math — all 4 formulas <span class="time-badge">60 min</span></li>
+        <li>Complete 20 practice math problems <span class="time-badge">45 min</span></li>
+        <li>Review electrolyte imbalances (K⁺, Na⁺) <span class="time-badge">45 min</span></li>
+        <li>End-of-day quiz section <span class="time-badge">30 min</span></li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-num">Day 2 · GI Deep Dive</div>
+      <h3>GI Meds & Nutrition</h3>
+      <ul>
+        <li>PPIs, H2 blockers, antacids, sucralfate <span class="time-badge">60 min</span></li>
+        <li>Laxatives (psyllium), stool softeners, methylnaltrexone <span class="time-badge">45 min</span></li>
+        <li>Antiemetics (ondansetron), misoprostol, bismuth <span class="time-badge">45 min</span></li>
+        <li>TPN & Enteral feedings <span class="time-badge">45 min</span></li>
+        <li>Vitamin A, folic acid, sulfasalazine, IBD <span class="time-badge">45 min</span></li>
+        <li>Quick review + flashcards <span class="time-badge">30 min</span></li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-num">Day 3 · Reproductive + Final Review</div>
+      <h3>Hormones, OB, and Full Review</h3>
+      <ul>
+        <li>Estrogen, estradiol, HRT, contraceptives <span class="time-badge">60 min</span></li>
+        <li>Progestins: medroxyprogesterone, norethindrone <span class="time-badge">45 min</span></li>
+        <li>Male: testosterone, finasteride, sildenafil <span class="time-badge">45 min</span></li>
+        <li>OB: oxytocin, magnesium sulfate, tocolytics, terbutaline <span class="time-badge">45 min</span></li>
+        <li>Full practice quiz — all sections <span class="time-badge">60 min</span></li>
+        <li>Cheat sheet review before bed <span class="time-badge">30 min</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Progress Tracker</h2>
+  <p>Check off each item as you complete it. Your browser will remember your progress.</p>
+  <div class="progress-tracker" id="progress">
+    <label><input type="checkbox" data-pt="1"> Day 1 — Fluids & Electrolytes read</label>
+    <label><input type="checkbox" data-pt="2"> Day 1 — Med Math mastered</label>
+    <label><input type="checkbox" data-pt="3"> Day 1 — Electrolyte quiz done</label>
+    <label><input type="checkbox" data-pt="4"> Day 2 — All GI meds reviewed</label>
+    <label><input type="checkbox" data-pt="5"> Day 2 — TPN + nutrition complete</label>
+    <label><input type="checkbox" data-pt="6"> Day 2 — GI practice quiz done</label>
+    <label><input type="checkbox" data-pt="7"> Day 3 — Hormone therapy reviewed</label>
+    <label><input type="checkbox" data-pt="8"> Day 3 — OB/Labor meds reviewed</label>
+    <label><input type="checkbox" data-pt="9"> Day 3 — Full practice quiz completed</label>
+    <label><input type="checkbox" data-pt="10"> Day 3 — Cheat sheet final review</label>
+  </div>
+
+  <div class="card success">
+    <h3>🏆 The 5 Golden Rules to Ace This Exam</h3>
+    <ol class="bullet">
+      <li><strong>Know the "why"</strong> — Rationale beats memorization. If you understand the mechanism, distractors fall away.</li>
+      <li><strong>Master the tonicity chart</strong> — Isotonic, hypotonic, hypertonic. This alone unlocks 8+ items.</li>
+      <li><strong>Estrogen = Clots</strong> — Any estrogen product (estradiol, conjugated, contraceptives) → DVT, PE, stroke risk. Smoking multiplies it.</li>
+      <li><strong>Read carefully for QUESTION vs QUESTION MOST</strong> — "which should the nurse <em>question</em>" = which is inappropriate/unsafe.</li>
+      <li><strong>Med Math: slow is smooth, smooth is fast</strong> — Write the formula, plug in, double-check units, then compute.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ FLUIDS & ELECTROLYTES TAB ============ -->
+<div class="tab-content" id="fluids">
+  <h2 class="section-title">Module 7 — Fluids, Electrolytes & Acid-Base</h2>
+
+  <div class="card warning">
+    <strong>🔥 High-yield reality check:</strong> This module alone = 20 exam items. If you own IV fluid tonicity, potassium, and sodium — you own the module.
+  </div>
+
+  <h3>The IV Fluid Tonicity Master Chart (MEMORIZE)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Examples</th><th>Fluid Movement</th><th>When to Use</th><th>Monitor For</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Isotonic</strong></td>
+          <td>0.9% NS (Normal Saline)<br>Lactated Ringer's (LR)<br>D5W (in the bag)</td>
+          <td>No net shift — stays in vascular space</td>
+          <td>Blood loss, vomiting/diarrhea, dehydration, hypovolemic shock, surgical fluid loss</td>
+          <td class="hi-red">Fluid overload — <strong>listen to lungs!</strong> (crackles = pulmonary edema)</td>
+        </tr>
+        <tr>
+          <td><strong>Hypotonic</strong></td>
+          <td>0.45% NS (½ NS)<br>0.225% NS<br>D5W (once metabolized)</td>
+          <td>Shifts OUT of vessel INTO cells (hydrates cells)</td>
+          <td>Hypernatremia, cellular dehydration, DKA (after initial NS), SIADH-like states</td>
+          <td class="hi-red">Cerebral edema, ↓BP, worsening intracranial pressure. <strong>Never in head injury.</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Hypertonic</strong></td>
+          <td class="hi">3% NaCl<br>5% NaCl<br>D5NS, D5LR, D10W<br>D5 ½NS</td>
+          <td>Pulls fluid OUT of cells INTO vascular space</td>
+          <td>Severe hyponatremia, cerebral edema/↑ICP, brain swelling</td>
+          <td class="hi-red">Fluid overload, pulmonary edema, phlebitis. Give via <strong>central line</strong>, slow, monitor neuro q1–2h.</td>
+        </tr>
+        <tr>
+          <td><strong>Colloid</strong></td>
+          <td>Albumin<br>Dextran 40<br>Hetastarch</td>
+          <td>Large proteins pull fluid INTO vascular space (stays there)</td>
+          <td>Hypovolemic shock, burns, hypoalbuminemia, cirrhosis with ascites, trauma with blood loss</td>
+          <td class="hi-red">Fluid overload → pulmonary edema (tachycardia, dyspnea, cough, frothy sputum), allergic reaction</td>
+        </tr>
+        <tr>
+          <td><strong>Crystalloid</strong></td>
+          <td>Isotonic, hypo, & hypertonic saline/dextrose</td>
+          <td>Contain electrolytes/small molecules mimicking ECF</td>
+          <td>Hydration, resuscitation, electrolyte correction</td>
+          <td>Depends on tonicity</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mnemonic">
+    <div class="title">Mnemonic — Tonicity</div>
+    <div class="body">
+      <strong>"Hyper Hydrates the Highway, Hypo Hydrates the House"</strong><br>
+      <ul>
+        <li><strong>Hyper</strong>tonic = pulls fluid into the "highway" (vascular)</li>
+        <li><strong>Hypo</strong>tonic = pushes fluid into the "house" (cells)</li>
+        <li><strong>Iso</strong>tonic = stays put, just refills the tank</li>
+      </ul>
+    </div>
+  </div>
+
+  <details class="topic" open>
+    <summary>💧 Isotonic Solutions — Fluid Replacement Powerhouse</summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Objective:</strong> Recognize when isotonic fluids are indicated and what to assess before/during infusion.
+      </div>
+      <p><strong>Prime indications:</strong> Blood loss, GI fluid loss (vomiting/diarrhea), dehydration, hypovolemic shock, post-surgical fluid replacement, maintenance hydration.</p>
+      <p><strong>Assessment before/after bolus:</strong> <span class="hi">Auscultate lung sounds</span> — this is the #1 answer. Rapid infusion can cause pulmonary edema.</p>
+      <div class="must-know">
+        <strong>Assessment BEFORE isotonic bolus:</strong> Breath sounds & respiratory effort (detect fluid overload risk). Also check IV site patency.
+      </div>
+      <div class="contraindication">
+        <strong>Red flag during infusion:</strong> Crackles auscultated in lung bases = <strong>fluid overload</strong> → slow the rate & notify provider.
+      </div>
+      <p><strong>Safety checks before IV push medication with isotonic maintenance:</strong></p>
+      <ul class="bullet">
+        <li>Verify the 6 rights of medication administration</li>
+        <li>Ask about allergies</li>
+        <li>Verify IV compatibility with the maintenance solution</li>
+        <li>Assess IV site for patency & signs of infiltration</li>
+        <li>Confirm dose, rate, and order</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>🩸 Hypertonic Solutions — Pull Fluid Out of Cells</summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Objective:</strong> Identify hypertonic solutions, indications (cerebral edema, severe hyponatremia), and critical monitoring priorities.
+      </div>
+      <p><strong>Classic hypertonic solutions:</strong></p>
+      <ul class="bullet">
+        <li><span class="hi">3% Sodium Chloride</span> — the exam favorite</li>
+        <li>5% NaCl</li>
+        <li>D5NS (5% dextrose in 0.9% NS)</li>
+        <li>D5LR</li>
+        <li>D10W</li>
+      </ul>
+      <div class="must-know">
+        <strong>Cerebral edema / ↑ICP:</strong> Hang <strong>3% hypertonic saline</strong> — draws fluid out of brain cells into vessels, reducing swelling. Assess neuro & pupillary response frequently. Ideally give via central line.
+      </div>
+      <div class="must-know">
+        <strong>Severe hyponatremia (Na⁺ &lt; 120):</strong> 3% NaCl is best. But correct <strong>slowly</strong> — monitor sodium <strong>q 2 hours</strong>. Rapid correction = central pontine myelinolysis (brain damage).
+      </div>
+      <div class="contraindication">
+        <strong>PRIORITY during hypertonic infusion:</strong> Assess for signs of fluid volume overload — <strong>crackles in the lungs</strong>. Also monitor for hypernatremia, phlebitis, ↑BP.
+      </div>
+      <p><strong>Dextran 40 (colloid, acts hypertonic-like):</strong> Watch closely for <strong>fluid overload</strong> — tachycardia, dyspnea, cough, frothy sputum, edema.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💦 Hypotonic Solutions — Hydrate the Cells</summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Objective:</strong> Identify who needs hypotonic fluids and who must never receive them.
+      </div>
+      <p><strong>Examples:</strong> 0.45% NaCl (½ NS), 0.225% NaCl, D5W (in the body after dextrose is metabolized)</p>
+      <div class="must-know">
+        <strong>Best for:</strong> Clients with <strong>hypernatremia</strong> (sodium &gt; 145) or cellular dehydration. Example: Na⁺ 155 mEq/L → hang 0.45% NaCl.
+      </div>
+      <div class="contraindication">
+        <strong>NEVER give hypotonic fluids to:</strong> Head injury / ↑ICP (worsens cerebral edema), burn patients, third-spacing, or hypotensive patients.
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>🧪 Crystalloid Solutions — The Basics</summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Definition:</strong> Fluid replacement drugs that contain electrolytes and other substances that closely mimic the body's extracellular fluid.
+      </div>
+      <p>Crystalloids include isotonic, hypotonic, and hypertonic solutions. They move freely between intravascular and interstitial spaces (as opposed to colloids, which stay in vessels).</p>
+      <p><strong>Common uses:</strong> Hydration, fluid resuscitation, correcting electrolyte imbalances.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>🧫 Colloid Solutions — When Blood Volume Is the Problem</summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Objective:</strong> Recognize appropriate indications for colloid therapy and the #1 complication.
+      </div>
+      <p><strong>Examples:</strong> Albumin, Dextran 40, Hetastarch, blood products.</p>
+      <p><strong>Mechanism:</strong> Large molecules (like albumin) increase oncotic pressure inside vessels, pulling fluid IN and keeping it there.</p>
+      <div class="must-know">
+        <strong>Best used for:</strong>
+        <ul>
+          <li><strong>Hypovolemic shock</strong> (especially trauma with acute blood loss)</li>
+          <li><strong>Hypoalbuminemia + ascites</strong> (cirrhosis)</li>
+          <li>Burns with plasma loss</li>
+        </ul>
+      </div>
+      <div class="contraindication">
+        <strong>#1 Complication of colloids (e.g., Dextran 40):</strong> <span class="hi-red">Fluid Overload</span> → tachycardia, dyspnea, cough, frothy sputum, pulmonary edema. <strong>Priority nursing action = monitor for fluid overload.</strong>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>⚗️ Acid-Base Imbalances — Sodium Bicarb Pitfalls</summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Scenario:</strong> Client with acidosis is given sodium bicarbonate. A few hours later: slowing respirations, irritability, muscle twitching, confusion.
+        <br><strong>Answer:</strong> <span class="hi">Metabolic alkalosis</span> — sodium bicarb overshot and raised the pH too much.
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Imbalance</th><th>Key Signs</th><th>Compensation</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Metabolic acidosis</strong></td><td>Weakness, confusion, <strong>Kussmaul respirations</strong> (deep, rapid), ↓pH, ↓HCO3</td><td>Lungs blow off CO₂ (fast, deep breathing)</td></tr>
+            <tr><td><strong>Metabolic alkalosis</strong></td><td>Slow shallow breathing, irritability, muscle twitching, ↑pH, ↑HCO3</td><td>Lungs retain CO₂ (slow breathing)</td></tr>
+            <tr><td><strong>Respiratory acidosis</strong></td><td>Hypoventilation, confusion, ↑CO₂, ↓pH</td><td>Kidneys retain HCO3</td></tr>
+            <tr><td><strong>Respiratory alkalosis</strong></td><td>Hyperventilation, tingling, anxiety, ↓CO₂, ↑pH</td><td>Kidneys excrete HCO3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mnemonic">
+        <div class="title">ROME Mnemonic</div>
+        <div class="body"><strong>R</strong>espiratory <strong>O</strong>pposite (pH & CO2 opposite directions) · <strong>M</strong>etabolic <strong>E</strong>qual (pH & HCO3 same direction)</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>⚡ Electrolyte Imbalances — Potassium (K⁺) is Life or Death</summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>Hyperkalemia (K⁺ > 5.0) — LIFE THREATENING</strong>
+        <p>Immediate treatment: <span class="hi">IV insulin + IV dextrose</span> shifts K⁺ into cells rapidly. Add calcium gluconate to stabilize the heart. Kayexalate (polystyrene sulfonate) is slower. If severe & renal failure → <strong>emergency hemodialysis</strong>.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Scenario</th><th>Value</th><th>Anticipated Action</th></tr></thead>
+          <tbody>
+            <tr><td>K⁺ 6.5 mEq/L (no renal failure)</td><td>Hyperkalemia</td><td>IV insulin + IV dextrose (fastest shift)</td></tr>
+            <tr><td>K⁺ 7.0 + acute kidney injury</td><td>Critical + AKI</td><td>Emergency <strong>hemodialysis</strong></td></tr>
+            <tr><td>K⁺ 5.9 mild elevation</td><td>Mild hyperkalemia</td><td>IV dextrose + insulin</td></tr>
+            <tr><td>Sodium 143 + K⁺ 6.5</td><td>Hyperkalemia isolated</td><td>Anticipate polystyrene sulfonate (Kayexalate)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="must-know">
+        <strong>Hyperkalemia — MEDICATIONS TO QUESTION:</strong> <span class="hi-red">0.9% Normal Saline</span> (contains sodium that can shift K⁺ out of cells and worsen levels). Also question <strong>Lactated Ringer's</strong> (contains K⁺) and any IV KCl.
+      </div>
+      <div class="must-know">
+        <strong>Hypokalemia treatment:</strong> IV Potassium Chloride (KCl) — never IV push! Always dilute, use pump, watch site closely for infiltration/burning.
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💉 Electrolyte Replacement — Potassium Chloride (KCl) Safety</summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>🚨 KCl DEATH TRAP — memorize this:</strong>
+        <ul>
+          <li><span class="hi-red">NEVER IV push potassium chloride</span> — causes cardiac arrest.</li>
+          <li>Always dilute and infuse via <strong>pump</strong> at safe rate (usually ≤10 mEq/hr peripheral, ≤20 mEq/hr central).</li>
+          <li>Question KCl in <strong>acute renal failure</strong> — kidneys can't excrete K⁺.</li>
+          <li>Question KCl if client's ECG shows <strong>abnormal conduction</strong> (prolonged PR, wide QRS).</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Priority nursing action during KCl infusion:</strong> Monitor IV site for <span class="hi">burning and infiltration q30 min</span>. K⁺ is irritating to veins — infiltration = tissue damage. Also continuous cardiac monitoring in CKD clients.
+      </div>
+      <p><strong>3% NaCl for severe hyponatremia (Na⁺ 114):</strong> Monitor sodium level q 2 hours during infusion. Correction should be gradual over several days to prevent central pontine myelinolysis.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>🌊 Fluid Overload — Dextran and Colloid Complication</summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Classic scenario:</strong> Client on Dextran 40 begins experiencing <strong>tachycardia, dyspnea, cough</strong>, edema, or frothy sputum → <span class="hi-red">Fluid Overload / Pulmonary Edema</span>.
+      </div>
+      <p>Colloids draw water into vascular space. When too much or too fast, the vasculature overflows → lungs fill → respiratory distress. Priority: notify provider, slow/stop infusion, elevate HOB, prepare for diuretic (furosemide).</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>🥗 Low-Sodium Diet Teaching</summary>
+    <div class="content">
+      <p><strong>OK on a low-sodium diet:</strong></p>
+      <ul class="bullet">
+        <li><span class="hi-green">Broiled chicken</span> (lean, unprocessed protein)</li>
+        <li>Fresh fruits (apple with peanut butter)</li>
+        <li>Grilled salmon, steamed broccoli</li>
+        <li>Fresh vegetables, oatmeal with fresh berries</li>
+        <li>Plain baked potato</li>
+      </ul>
+      <p><strong>AVOID (high sodium):</strong></p>
+      <ul class="bullet">
+        <li>Pickled vegetables, sausage, deli meats, ham</li>
+        <li>Canned soups, frozen dinners</li>
+        <li>Cheese pizza, turkey sandwich with pickles</li>
+        <li>Ham and cheese sandwich (major offender!)</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="quiz">
+    <h4>Quick Check — Fluid & Electrolytes</h4>
+    <p><strong>Q:</strong> A client is admitted with brain swelling. Which IV fluid does the nurse anticipate?</p>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">0.45% Sodium Chloride</div>
+      <div class="option" onclick="quizPick(this, false)">Lactated Ringer's</div>
+      <div class="option" onclick="quizPick(this, true)">3% Hypertonic Saline</div>
+      <div class="option" onclick="quizPick(this, false)">0.9% Normal Saline</div>
+    </div>
+    <div class="feedback">✅ Hypertonic saline (3% NaCl) draws fluid OUT of swollen brain cells INTO vessels, reducing intracranial pressure. Never give hypotonic solutions in cerebral edema.</div>
+  </div>
+
+</div>
+
+<!-- ============ GI & NUTRITION TAB ============ -->
+<div class="tab-content" id="gi">
+  <h2 class="section-title">Module 8 — GI Medications & Nutrition</h2>
+
+  <div class="card info">
+    This section covers the largest chunk of your exam. Focus on <strong>mechanism</strong> and <strong>teaching points</strong> — most questions test understanding, not memorization.
+  </div>
+
+  <details class="topic" open>
+    <summary>💊 Proton Pump Inhibitors (PPIs) — Omeprazole & friends <span class="topic-tag">3 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Mechanism:</strong> PPIs inhibit the H⁺/K⁺-ATPase (proton pump) enzyme in gastric parietal cells → decrease gastric acid production.
+      </div>
+      <p><strong>Uses:</strong> GERD, peptic ulcer disease, Zollinger-Ellison syndrome, H. pylori (in triple therapy).</p>
+      <div class="must-know">
+        <strong>Healing timeframes:</strong>
+        <ul>
+          <li>Gastric ulcer: 4–8 weeks</li>
+          <li>Esophagus (GERD): 4–8 weeks</li>
+          <li>Zollinger-Ellison: long-term/months</li>
+        </ul>
+      </div>
+      <div class="contraindication">
+        <strong>Long-term risks (KNOW THESE):</strong>
+        <ul>
+          <li><span class="hi">Increased fracture risk</span> (↓ calcium absorption → osteoporosis)</li>
+          <li><span class="hi">Vitamin B12 deficiency</span> (long-term use)</li>
+          <li>Increased C. diff infection risk</li>
+          <li>Hypomagnesemia</li>
+        </ul>
+      </div>
+      <p><strong>Distinguish:</strong> PPIs ≠ H2 blockers ≠ antacids ≠ sucralfate. PPIs = <strong>inhibit enzyme that makes acid</strong>. H2 blockers = block histamine receptors. Antacids = neutralize existing acid. Sucralfate = coats the ulcer.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 H2 Receptor Antagonists — Famotidine, Ranitidine <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Mechanism:</strong> Block histamine H2 receptors on parietal cells → decrease acid secretion.
+      </div>
+      <div class="teaching">
+        <strong>Client teaching wins:</strong>
+        <ul>
+          <li>✅ Avoid taking with alcohol</li>
+          <li>✅ Take 30 min before eating</li>
+          <li>✅ Continue even if symptoms improve</li>
+          <li>✅ Take at bedtime to prevent nighttime reflux</li>
+          <li>✅ Report jaundice or unusual drowsiness</li>
+        </ul>
+      </div>
+      <div class="contraindication">
+        <strong>Statement indicating NEED FOR MORE TEACHING:</strong>
+        <ul>
+          <li>❌ "I'll take my antacid and H2 blocker at the same time" — antacids interfere with H2 absorption. Space them 1–2 hours apart.</li>
+          <li>❌ "I can use herbal remedies without asking my provider."</li>
+        </ul>
+      </div>
+      <p><strong>Signs treatment is working:</strong> Relief of heartburn, decreased indigestion frequency, no acid-related pain.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Antacids — Over-the-Counter Relief <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <p><strong>Key teaching:</strong></p>
+      <ul class="bullet">
+        <li>Antacids <span class="hi">temporarily neutralize</span> stomach acid — do NOT reduce production.</li>
+        <li>Take <span class="hi">AFTER meals</span> — but <strong>NOT</strong> at the same time as other medications (they interfere with absorption). Space by 1–2 hours.</li>
+        <li>Do NOT take with milk (milk stimulates acid production).</li>
+        <li>Antacids alone won't heal peptic ulcer disease — client may need PPI or H2 blocker.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Sucralfate — The Ulcer "Coating" <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Mechanism:</strong> Binds selectively to proteins at the ulcer site in acidic environment → forms a <strong>protective barrier</strong> over the ulcer. Does NOT alter acid secretion.
+      </div>
+      <div class="teaching">
+        <strong>Take on an <span class="hi">EMPTY stomach</span></strong> — 1 hour BEFORE meals. Do not take with antacids or food (interferes with binding). Minimally absorbed → local action, few systemic effects.
+      </div>
+      <p><strong>Correct teaching statement:</strong> "This will help my ulcer by coating it and reducing irritation."</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Misoprostol — Prostaglandin Analog <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Mechanism:</strong> Synthetic prostaglandin — <strong>inhibits gastric acid production AND stimulates mucus + bicarbonate</strong>. Protects the stomach lining from NSAID-induced ulcers and helps in H. pylori therapy.
+      </div>
+      <div class="contraindication">
+        <strong>⚠️ Contraindicated in pregnancy</strong> — causes uterine contractions (used off-label for labor induction or medical abortion).
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Bismuth Subsalicylate (Pepto-Bismol) <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <p><strong>Uses:</strong> Diarrhea, upset stomach — binds to and absorbs toxins.</p>
+      <div class="teaching">
+        <strong>KEY teaching points:</strong>
+        <ul>
+          <li><span class="hi">Stool may turn black</span> — harmless, expected side effect.</li>
+          <li><span class="hi-red">Avoid if allergic to aspirin</span> — contains salicylate.</li>
+          <li>Also may cause dark/black tongue.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Stool Softeners — Docusate Sodium <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <p><strong>Mechanism:</strong> <span class="hi">Increases water absorption INTO the stool</span> — makes stool softer and easier to pass. Does NOT stimulate peristalsis, does not lubricate, does not affect nutrient absorption.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Psyllium Mucilloid — Bulk-Forming Laxative <span class="topic-tag">3 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>First-line pharmaceutical treatment for constipation</strong> in otherwise healthy individuals. Absorbs water → bulks stool → promotes peristalsis.
+      </div>
+      <div class="teaching">
+        <strong>Teaching points:</strong>
+        <ul>
+          <li><span class="hi">Increase fluid intake</span> (never limit fluids!) — take with a full glass of water to avoid choking.</li>
+          <li>Takes 12–72 hours — not immediate relief.</li>
+          <li>Do NOT take at bedtime (delayed action, unpredictable).</li>
+          <li>Increase fiber intake through diet also.</li>
+          <li>Space from other meds by 1–2 hours (can reduce their absorption).</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Signs it's working:</strong> Increased bowel movements; regular, soft bowel movements without straining.
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Methylnaltrexone — Opioid-Induced Constipation <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <p><strong>Specific use:</strong> Opioid-induced constipation (OIC) in clients who haven't responded to conventional laxatives.</p>
+      <p><strong>Best candidate on exam:</strong> Client on <span class="hi">chronic/high-dose opioids</span> (end-stage cancer, chronic pain) who has NOT had a BM despite laxatives.</p>
+      <p><strong>NOT for:</strong> Post-op constipation from immobility, dietary constipation, suspected bowel obstruction.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Ondansetron (Zofran) — Antiemetic <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Best action:</strong> Give ondansetron <span class="hi">BEFORE</span> the chemotherapy, antibiotic, or analgesic that causes nausea — prevention beats treatment.
+      </div>
+      <div class="contraindication">
+        <strong>⚠️ Contraindication — QUESTION the order if:</strong>
+        <ul>
+          <li>Client has <span class="hi-red">cardiac electrical abnormalities</span> or <span class="hi-red">QT prolongation on ECG</span> — ondansetron prolongs QT → arrhythmia risk.</li>
+          <li>Client has known hypersensitivity/allergy to ondansetron.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Sulfasalazine — For Ulcerative Colitis / RA <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>Question the order in:</strong>
+        <ul>
+          <li><span class="hi-red">Liver failure</span> or recent hepatitis (metabolized in liver, hepatotoxic)</li>
+          <li>Client with sulfa allergy</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Hold medication if lab shows:</strong> <span class="hi">WBC 4,000/mm³</span> or lower (bone marrow suppression / leukopenia risk).
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>🧠 Inflammatory Bowel Disease (IBD) — Acute Exacerbation <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Immediate goal in acute IBD flare:</strong> <span class="hi">Reduce acute symptoms of active disease</span> (pain, diarrhea, bleeding). Long-term goal = remission.
+      </div>
+      <div class="must-know">
+        <strong>Priority interventions:</strong>
+        <ul>
+          <li><span class="hi">IV fluids and electrolytes</span> — priority when client has dehydration signs, weight loss, fever, diarrhea.</li>
+          <li><span class="hi">Initiate bowel rest protocol</span> — Crohn's flare with severe cramping, vomiting → first priority.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>🥄 TPN (Total Parenteral Nutrition) <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Administration essentials:</strong>
+        <ul>
+          <li>Remove TPN solution from the refrigerator <span class="hi">30 minutes prior</span> to infusing (warm to room temp).</li>
+          <li>Change the TPN bag and tubing <span class="hi">every 24 hours</span> (high glucose = bacterial growth risk).</li>
+          <li>Give via <span class="hi">central line only</span> (never PEG tube, never peripheral IV due to high osmolarity).</li>
+          <li>Never discontinue abruptly → wean gradually to prevent hypoglycemia.</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>#1 monitoring priority:</strong> <span class="hi">Blood glucose</span> — hyperglycemia is the most frequent complication because TPN has high dextrose content. Anticipate insulin therapy if glucose 285 mg/dL.
+      </div>
+      <div class="contraindication">
+        <strong>Suspect air embolism during central-line TPN:</strong> Sudden lightheadedness + shortness of breath →
+        <ol>
+          <li><span class="hi-red">Clamp the catheter</span></li>
+          <li>Place client in <span class="hi-red">Trendelenburg (left lateral)</span> — traps air in right atrium</li>
+          <li>Notify provider, give O₂</li>
+        </ol>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>🍜 Enteral Feedings <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>Concerning findings — NOTIFY PROVIDER:</strong>
+        <ul>
+          <li><span class="hi-red">Abdominal distension + hypoactive bowel sounds</span> (delayed emptying/ileus, aspiration risk)</li>
+          <li><span class="hi-red">Increased respiratory rate + labored breathing</span> (possible aspiration)</li>
+          <li><span class="hi-red">Dry mucous membranes</span> (dehydration — enteral feeds may not provide adequate free water)</li>
+        </ul>
+      </div>
+      <p><strong>Normal findings:</strong> Occasional loose stools, mild nausea with repositioning, gastric residual ≤ 15 mL (usually within limits per facility policy).</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Vitamin A — Fat-Soluble Vitamin <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <p><strong>Uses:</strong> Night blindness, dermatological conditions (retinoids).</p>
+      <div class="contraindication">
+        <strong>🚨 TERATOGEN:</strong> High-dose Vitamin A is <span class="hi-red">contraindicated in pregnancy</span> — causes birth defects. If the lab shows <span class="hi">positive hCG</span>, question the prescription immediately.
+      </div>
+      <div class="contraindication">
+        <strong>Also question high-dose Vitamin A if:</strong> Elevated <span class="hi-red">ALT and AST</span> (hepatotoxic risk).
+      </div>
+      <div class="teaching">
+        <strong>Client teaching that shows understanding:</strong>
+        <ul>
+          <li>✅ "I will increase carrots, spinach, sweet potatoes" (beta-carotene)</li>
+          <li>✅ "This vitamin can cause fetal harm if taken in excessive quantities while pregnant"</li>
+          <li>❌ "More is better for my baby" → needs teaching (excess Vit A = teratogenic)</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Folic Acid — For Anemia <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <p><strong>Prescribed for:</strong> Folate deficiency anemia — especially in clients with:</p>
+      <ul class="bullet">
+        <li><span class="hi">Alcohol abuse</span> (alcohol impairs folate absorption)</li>
+        <li><span class="hi">Macrocytic anemia</span> (high MCV — the classic megaloblastic anemia)</li>
+        <li>Pregnancy (prevent neural tube defects)</li>
+      </ul>
+      <p><strong>Recognition clues:</strong> Low hemoglobin + <strong>high MCV</strong> (>100 fL) + low serum folate + alcohol history = folate deficiency anemia.</p>
+    </div>
+  </details>
+
+</div>
+
+<!-- ============ REPRODUCTIVE TAB ============ -->
+<div class="tab-content" id="repro">
+  <h2 class="section-title">Reproductive Pharmacology — Hormones</h2>
+
+  <div class="card warning">
+    <strong>🔑 The estrogen unifying principle:</strong> <span class="hi">All estrogen-containing meds increase clotting.</span> That means DVT, PE, stroke, MI. Smoking multiplies this risk. Age >35 or history of migraines with aura or previous thromboembolic event = contraindication.
+  </div>
+
+  <details class="topic" open>
+    <summary>👩 Estrogen / Conjugated Estrogen <span class="topic-tag">3 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Used for:</strong> Menopausal symptoms, HRT.
+      </div>
+      <div class="contraindication">
+        <strong>🚨 CONTRAINDICATIONS — Client should NOT take estrogen if:</strong>
+        <ul>
+          <li><span class="hi-red">Previous pulmonary embolism</span> or DVT / thromboembolic history</li>
+          <li><span class="hi-red">Abnormal uterine bleeding</span> (undiagnosed)</li>
+          <li>History of estrogen-dependent cancer</li>
+          <li>Pregnancy</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Increased risks with estrogen:</strong>
+        <ul>
+          <li><span class="hi">Deep vein thrombosis (DVT)</span></li>
+          <li><span class="hi">Pulmonary embolism</span></li>
+          <li><span class="hi">Stroke</span></li>
+          <li>Breast cancer (with prolonged use)</li>
+          <li>Gallbladder disease</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Risk factors that INCREASE side effects of estrogen therapy:</strong>
+        <ul>
+          <li><span class="hi">Age 50+</span> (vascular aging + cumulative exposure)</li>
+          <li><span class="hi">Hypothyroidism</span> (estrogen affects thyroid binding globulin)</li>
+          <li><span class="hi">History of migraines with aura</span> (↑ stroke risk)</li>
+          <li>Smoking</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>👩 Estradiol — Estrogen for HRT <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>Client should AVOID:</strong>
+        <ul>
+          <li><span class="hi-red">Smoking</span> (dramatically ↑ blood clot risk)</li>
+          <li><span class="hi-red">Grapefruit juice</span> (inhibits metabolism → higher drug levels → more adverse effects)</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Drug interactions:</strong> <span class="hi">Antibiotics (especially rifampin)</span> decrease efficacy of estradiol-containing contraceptives → unintended pregnancy risk.
+      </div>
+      <div class="contraindication">
+        <strong>Serious cardiovascular warning signs → seek immediate care:</strong>
+        <ul>
+          <li><span class="hi-red">Sudden shortness of breath + chest pain</span> = possible pulmonary embolism</li>
+          <li>Sudden severe headache, one-sided weakness = stroke</li>
+          <li>Unilateral leg pain/swelling = DVT</li>
+        </ul>
+      </div>
+      <p><strong>Most serious risk of hormonal contraceptives:</strong> Hypertension → thromboembolic events (stroke, MI, DVT).</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Hormone Replacement Therapy (Estrogen-Progestin HRT) <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Best nurse response when client asks about HRT:</strong> "There are risks as well as benefits to hormone replacement therapy and the decision is individual for each client." Balanced, patient-centered, encourages provider discussion.
+      </div>
+      <div class="must-know">
+        <strong>Increased risks with estrogen-progestin HRT (SATA answer):</strong>
+        <ul>
+          <li><span class="hi">Myocardial infarction (MI)</span></li>
+          <li><span class="hi">Dementia</span> (esp. in women over 65)</li>
+          <li><span class="hi">Venous thromboembolism</span> (DVT/PE)</li>
+          <li><span class="hi">Stroke</span></li>
+          <li><span class="hi">Breast cancer</span></li>
+          <li><span class="hi">Endometrial hyperplasia</span></li>
+        </ul>
+        <em>NOT increased:</em> Hip fractures (HRT protects bones), colorectal cancer, cataracts, hypotension, renal failure.
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Oral Contraceptives (Combined) <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>Concerning client factors for oral contraceptive appropriateness:</strong>
+        <ul>
+          <li><span class="hi-red">History of epilepsy</span> — anticonvulsants (phenytoin, carbamazepine) induce liver enzymes → ↓ contraceptive efficacy</li>
+          <li><span class="hi-red">Current smoker + hypothyroid</span> — smoking ↑ CV risk</li>
+          <li><span class="hi-red">Currently taking antibiotics</span> — reduces effectiveness</li>
+          <li>Migraines with aura, history of DVT, breast cancer</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Medroxyprogesterone (Depo-Provera) <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>QUESTION the prescription if client has:</strong>
+        <ul>
+          <li><span class="hi-red">History of thromboembolic disease / DVT</span></li>
+          <li><span class="hi-red">History of depression</span> (may exacerbate — monitor carefully)</li>
+          <li>Suspected breast cancer, pregnancy</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Question this home medication:</strong> <span class="hi">St. John's Wort</span> — induces CYP450 → decreases medroxyprogesterone effectiveness.
+      </div>
+      <div class="contraindication">
+        <strong>New assessment findings to report to provider:</strong> <span class="hi-red">Unilateral leg pain and swelling</span> = possible DVT — emergent.
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Norethindrone — Progestin-Only Contraceptive <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="teaching">
+        <strong>Client teaching:</strong>
+        <ul>
+          <li><span class="hi">Take at the same time daily</span> — critical for effectiveness (missed/late doses = pregnancy risk).</li>
+          <li>Do NOT crush.</li>
+          <li>Not during pregnancy.</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Side effects to teach about:</strong>
+        <ul>
+          <li><span class="hi">Photosensitivity</span> (sunburn/rash — wear sunscreen)</li>
+          <li><span class="hi">Acne flare-ups</span> (especially in sensitive skin/rosacea clients)</li>
+        </ul>
+      </div>
+      <p><strong>Consequence of inconsistent dosing:</strong> Increased chance of pregnancy / contraceptive failure.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>⏰ Emergency Contraception <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Priority question to ask:</strong> <span class="hi">"How long ago did you have unprotected sex?"</span> Effectiveness depends on timing:
+        <ul>
+          <li>Levonorgestrel (Plan B) → most effective within 72 hours</li>
+          <li>Ulipristal acetate → up to 5 days</li>
+        </ul>
+      </div>
+      <p><strong>Also important:</strong> Ask about medications that decrease effectiveness — enzyme inducers (anticonvulsants, rifampin, St. John's Wort).</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Sildenafil (Viagra) — PDE-5 Inhibitor <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>🚨 CONTRAINDICATED WITH NITRATES</strong> — combining causes life-threatening hypotension.
+        <ul>
+          <li>Nitroglycerin</li>
+          <li>Isosorbide</li>
+          <li>All nitrates for angina</li>
+        </ul>
+      </div>
+      <p><strong>Mechanism:</strong> PDE-5 inhibitor — relaxes blood vessels; with nitrates, vasodilation is compounded → severe hypotension → potentially fatal.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Testosterone Therapy <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="teaching">
+        <strong>Transdermal patch administration:</strong> Apply a new patch <span class="hi">daily at the same time</span> (some sources say every 2-3 days per facility; the exam key states "every day/daily" for consistent hormone levels).
+      </div>
+      <div class="must-know">
+        <strong>Signs of EFFECTIVE testosterone therapy:</strong>
+        <ul>
+          <li>✅ Increased muscle mass, energy, libido</li>
+          <li>✅ Reduction in fatigue, improved mood</li>
+          <li>✅ Increased hematocrit within normal limits</li>
+          <li>✅ Decreased breast tumor size (in hormone-sensitive breast cancer patients)</li>
+        </ul>
+      </div>
+      <p><strong>Adverse effects (NOT signs of effectiveness):</strong> Fluid retention, amenorrhea, hair loss, acne, oily skin, gynecomastia (in men — indicates excess estrogen conversion), unexplained weight gain with edema.</p>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Finasteride — 5-alpha Reductase Inhibitor <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Use:</strong> Benign prostatic hyperplasia (BPH). Blocks conversion of testosterone → dihydrotestosterone (DHT), shrinking the prostate.
+      </div>
+      <p><strong>Ask during medication reconciliation:</strong> <span class="hi">"Do you wake up frequently at night to void?"</span> (Assesses nocturia — symptom of BPH the drug treats.)</p>
+      <div class="contraindication">
+        <strong>🚨 TERATOGENIC — critical questions to ask male clients on finasteride:</strong>
+        <ul>
+          <li><span class="hi-red">"Is there a possibility that your partner could be pregnant?"</span> (Semen exposure = fetal harm.)</li>
+          <li><span class="hi-red">"Are you currently donating blood or planning to?"</span> — Contraindicated; blood recipient could be pregnant → fetal harm.</li>
+        </ul>
+      </div>
+      <div class="teaching">
+        <strong>Teaching points (SATA):</strong>
+        <ul>
+          <li>✅ May experience sexual dysfunction (↓ libido, ED)</li>
+          <li>✅ Do NOT donate blood while on this medication</li>
+          <li>✅ May experience headaches, dizziness</li>
+          <li>✅ Unsafe for women to handle (especially pregnant women)</li>
+          <li>❌ Does NOT increase libido</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 5-alpha Reductase Inhibitors — Mechanism <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <p><strong>Correct explanation of MOA:</strong> "It promotes shrinkage of an enlarged prostate" / "Blocks the enzyme that converts testosterone to its active form (DHT)."</p>
+      <p><strong>NOT:</strong> Relaxes bladder neck, blocks alpha-1 receptors, causes orthostatic hypotension — those describe alpha blockers (tamsulosin), not 5-ARIs.</p>
+      <p><strong>Onset:</strong> Slow — takes months to see effects, unlike alpha blockers which work immediately.</p>
+    </div>
+  </details>
+
+  <div class="quiz">
+    <h4>Quick Check — Reproductive</h4>
+    <p><strong>Q:</strong> A client on sildenafil for ED is now prescribed nitroglycerin for angina. What is the nurse's priority action?</p>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">Teach the client to take sildenafil in the morning and nitro at night</div>
+      <div class="option" onclick="quizPick(this, true)">Notify the provider — this combination is contraindicated</div>
+      <div class="option" onclick="quizPick(this, false)">Monitor blood pressure daily and continue both</div>
+      <div class="option" onclick="quizPick(this, false)">Advise the client to reduce sildenafil dose</div>
+    </div>
+    <div class="feedback">✅ Combining sildenafil with any nitrate causes potentially fatal hypotension. This is a hard contraindication.</div>
+  </div>
+</div>
+
+<!-- ============ OB TAB ============ -->
+<div class="tab-content" id="ob">
+  <h2 class="section-title">OB / Labor & Delivery Medications</h2>
+
+  <details class="topic" open>
+    <summary>🤰 Oxytocin (Pitocin) <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Two main uses:</strong>
+        <ul>
+          <li><strong>Induce/augment labor</strong> (antepartum)</li>
+          <li><span class="hi">Reduce bleeding after childbirth</span> (postpartum — promotes uterine contraction → prevents hemorrhage)</li>
+        </ul>
+      </div>
+      <div class="contraindication">
+        <strong>Adverse effects to know:</strong>
+        <ul>
+          <li><span class="hi-red">Rapid painful contractions (tetanic contractions)</span> — hyperstimulation → fetal distress</li>
+          <li><span class="hi-red">Uterine rupture</span> — life-threatening emergency</li>
+          <li>Water intoxication (with prolonged infusion)</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>Increased risk of uterine rupture with:</strong> <span class="hi">History of multiple vaginal births</span> (grand multiparity). Uterus may not contract effectively.
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Magnesium Sulfate <span class="topic-tag">2 items</span></summary>
+    <div class="content">
+      <div class="key-facts">
+        <strong>Off-label uses:</strong>
+        <ul>
+          <li><span class="hi">Delay preterm labor</span> (tocolytic — relaxes uterine smooth muscle)</li>
+          <li><span class="hi">Acute asthma exacerbation</span> (relaxes bronchial smooth muscle)</li>
+        </ul>
+        Also: Seizure prevention in preeclampsia (approved use).
+      </div>
+      <div class="contraindication">
+        <strong>🚨 Magnesium Sulfate TOXICITY / OVERDOSE — signs:</strong>
+        <ul>
+          <li><span class="hi-red">Flushing skin</span></li>
+          <li><span class="hi-red">Drowsiness, muscle weakness, respiratory depression</span></li>
+          <li><span class="hi-red">Absent/hypoactive deep tendon reflexes</span></li>
+          <li><span class="hi-red">Hypotension, bradycardia</span></li>
+          <li>Intense hunger, nervousness (early)</li>
+        </ul>
+      </div>
+      <div class="must-know">
+        <strong>🚨 ANTIDOTE:</strong> <span class="hi">Calcium Gluconate</span> IV. If HR 48, DTRs absent, respirations 8 → administer calcium gluconate as prescribed.
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Tocolytics (Delay Preterm Labor) <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="must-know">
+        <strong>Drugs classified as tocolytics (SATA):</strong>
+        <ul>
+          <li>✅ <span class="hi">Terbutaline</span> (beta-agonist)</li>
+          <li>✅ <span class="hi">Nifedipine</span> (calcium channel blocker)</li>
+          <li>✅ <span class="hi">Magnesium Sulfate</span></li>
+          <li>✅ <span class="hi">Indomethacin</span> (prostaglandin inhibitor)</li>
+          <li>✅ <span class="hi">Ritodrine</span> (beta-agonist)</li>
+        </ul>
+        <strong>NOT tocolytics (they contract the uterus):</strong> Oxytocin, methylergonovine, misoprostol, carboprost, estradiol.
+      </div>
+    </div>
+  </details>
+
+  <details class="topic">
+    <summary>💊 Terbutaline — Beta-Agonist Tocolytic <span class="topic-tag">1 item</span></summary>
+    <div class="content">
+      <div class="contraindication">
+        <strong>🚨 BLACK BOX WARNING:</strong> When used more than <span class="hi-red">48-72 hours</span>, terbutaline carries a black box warning for <span class="hi-red">fetal death</span>.
+      </div>
+      <div class="must-know">
+        <strong>Adverse effects — teach client to REPORT:</strong>
+        <ul>
+          <li><span class="hi">Tachycardia, chest pain, palpitations</span> (beta-agonist stimulates heart)</li>
+          <li><span class="hi-red">Shortness of breath</span> — could signal maternal pulmonary edema (serious complication)</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <div class="card success">
+    <h3>🎯 OB Med Summary Table</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Drug</th><th>Effect on Uterus</th><th>Key Point</th></tr></thead>
+        <tbody>
+          <tr><td>Oxytocin</td><td>Contracts</td><td>Postpartum hemorrhage prevention; watch for hyperstimulation</td></tr>
+          <tr><td>Magnesium sulfate</td><td>Relaxes</td><td>Antidote: Calcium gluconate</td></tr>
+          <tr><td>Terbutaline</td><td>Relaxes</td><td>Black box: fetal death if >48-72 hrs</td></tr>
+          <tr><td>Nifedipine</td><td>Relaxes</td><td>CCB tocolytic; ↓BP</td></tr>
+          <tr><td>Indomethacin</td><td>Relaxes</td><td>Prostaglandin inhibitor</td></tr>
+          <tr><td>Misoprostol</td><td>Contracts</td><td>Also protects gastric mucosa</td></tr>
+          <tr><td>Methylergonovine</td><td>Contracts</td><td>Postpartum hemorrhage</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MED MATH TAB ============ -->
+<div class="tab-content" id="medmath">
+  <h2 class="section-title">Med Math — 5 Guaranteed Points</h2>
+  <div class="card success">
+    <strong>Good news:</strong> Only 4 formulas cover all 5 med math items. Practice each one until it's automatic. These are the highest ROI questions on the exam.
+  </div>
+
+  <h3>Formula #1: Infusion Time (Hours)</h3>
+  <div class="formula">
+    <strong>Time (hr) = Total Volume (mL) ÷ Rate (mL/hr)</strong>
+  </div>
+  <div class="card">
+    <p><strong>Example:</strong> 750 mL NS at 75 mL/hr → 750 ÷ 75 = <span class="hi">10 hours</span></p>
+    <p><strong>Practice:</strong></p>
+    <ul class="bullet">
+      <li>960 mL NS at 80 mL/hr → 960 ÷ 80 = <span class="hi">12 hours</span></li>
+      <li>1,300 mL LR at 100 mL/hr → 1300 ÷ 100 = <span class="hi">13 hours</span></li>
+    </ul>
+  </div>
+
+  <h3>Formula #2: Drip Rate (gtt/min from Total Volume)</h3>
+  <div class="formula">
+    <strong>Drip Rate (gtt/min) = (Volume in mL × Drop Factor) ÷ Time in minutes</strong>
+  </div>
+  <div class="card">
+    <p><strong>Example:</strong> 500 mL over 7 hours with 15 gtt/mL tubing</p>
+    <p>Convert: 7 hr × 60 min = 420 min<br>
+    (500 × 15) ÷ 420 = 7,500 ÷ 420 = 17.86 → <span class="hi">18 gtt/min</span></p>
+    <p><strong>Practice:</strong></p>
+    <ul class="bullet">
+      <li>750 mL over 6 hr, 20 gtt/mL → (750 × 20) ÷ 360 = <span class="hi">42 gtt/min</span></li>
+      <li>1000 mL over 8 hr, 10 gtt/mL → (1000 × 10) ÷ 480 = <span class="hi">21 gtt/min</span></li>
+    </ul>
+  </div>
+
+  <h3>Formula #3: IV Pump Rate (mL/hr from Bolus)</h3>
+  <div class="formula">
+    <strong>Rate (mL/hr) = Volume (mL) ÷ Time (hr)</strong><br>
+    <em>(Convert minutes to hours first!)</em>
+  </div>
+  <div class="card">
+    <p><strong>Example:</strong> Ceftriaxone 1 g in 100 mL over 30 min</p>
+    <p>Convert: 30 min = 0.5 hr<br>
+    100 ÷ 0.5 = <span class="hi">200 mL/hr</span></p>
+    <p><strong>Practice:</strong></p>
+    <ul class="bullet">
+      <li>Vancomycin 1.25 g in 250 mL over 90 min → 250 ÷ 1.5 = <span class="hi">167 mL/hr</span></li>
+      <li>Piperacillin-tazobactam 3.375 g in 150 mL over 45 min → 150 ÷ 0.75 = <span class="hi">200 mL/hr</span></li>
+    </ul>
+  </div>
+
+  <h3>Formula #4: Dose Volume Calculation</h3>
+  <div class="formula">
+    <strong>Volume (mL) = Dose Ordered (mg) ÷ Concentration (mg/mL)</strong>
+  </div>
+  <div class="card">
+    <p><strong>Example:</strong> Olanzapine 1.25 mg IM per day; available 10 mg/mL</p>
+    <p>1.25 ÷ 10 = 0.125 mL → round to <span class="hi">0.1 mL</span></p>
+    <p><strong>Practice:</strong></p>
+    <ul class="bullet">
+      <li>Haloperidol 2.5 mg IM; available 5 mg/mL → 2.5 ÷ 5 = <span class="hi">0.5 mL</span></li>
+      <li>Lorazepam 1.75 mg IM; available 4 mg/mL → 1.75 ÷ 4 = 0.4375 → <span class="hi">0.4 mL</span></li>
+    </ul>
+  </div>
+
+  <h3>Formula #5: Drip Rate (gtt/min from mL/hr)</h3>
+  <div class="formula">
+    <strong>Drip Rate (gtt/min) = (Rate mL/hr × Drop Factor) ÷ 60</strong>
+  </div>
+  <div class="card">
+    <p><strong>Example:</strong> 170 mL/hr with 10 gtt/mL tubing</p>
+    <p>(170 × 10) ÷ 60 = 1700 ÷ 60 = 28.33 → <span class="hi">28 gtt/min</span></p>
+    <p><strong>Practice:</strong></p>
+    <ul class="bullet">
+      <li>220 mL/hr, 15 gtt/mL → (220 × 15) ÷ 60 = <span class="hi">55 gtt/min</span></li>
+      <li>150 mL/hr, 10 gtt/mL → (150 × 10) ÷ 60 = <span class="hi">25 gtt/min</span></li>
+    </ul>
+  </div>
+
+  <div class="card warning">
+    <h3>🎯 Test-Day Med Math Strategy</h3>
+    <ol class="bullet">
+      <li><strong>Write out the formula on your scratch paper first</strong> — before you look at the numbers.</li>
+      <li><strong>Convert units before plugging in</strong> — minutes to hours, grams to mg, mcg to mg. This is where errors happen.</li>
+      <li><strong>Estimate the answer roughly</strong> — if the ordered dose looks tiny compared to the concentration, expect a small mL number.</li>
+      <li><strong>Read the rounding instructions</strong> — "nearest whole" vs "nearest tenth" is a common trap.</li>
+      <li><strong>Double-check with your calculator</strong> — every single time.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ PRACTICE QUIZ TAB ============ -->
+<div class="tab-content" id="quiz">
+  <h2 class="section-title">Full Practice Quiz — Mixed Topics</h2>
+  <p>Complete every question. Read the rationale carefully. If you miss a question, revisit that section.</p>
+
+  <div class="quiz">
+    <h4>1. Client on TPN through central line reports lightheadedness and shortness of breath. First action?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">Check the client's capillary blood glucose</div>
+      <div class="option" onclick="quizPick(this, false)">Slow the infusion and notify provider</div>
+      <div class="option" onclick="quizPick(this, true)">Clamp the catheter and place client in Trendelenburg position</div>
+      <div class="option" onclick="quizPick(this, false)">Flush the central line with sterile saline</div>
+    </div>
+    <div class="feedback">✅ Symptoms indicate air embolism. Clamp catheter + Trendelenburg (left lateral) traps air in right atrium.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>2. Client with GERD taking omeprazole for one year asks about long-term risks. Best response?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, true)">"Long-term use can increase risk of osteoporosis and fractures."</div>
+      <div class="option" onclick="quizPick(this, false)">"This medication has no significant long-term effects."</div>
+      <div class="option" onclick="quizPick(this, false)">"You may develop resistance to the medication."</div>
+      <div class="option" onclick="quizPick(this, false)">"PPIs increase stomach acid production over time."</div>
+    </div>
+    <div class="feedback">✅ PPIs decrease calcium absorption → increased fracture risk. Also B12 deficiency, C. diff risk.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>3. Client receiving continuous enteral tube feedings. Which finding should the nurse report?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, true)">Abdominal distension and hypoactive bowel sounds</div>
+      <div class="option" onclick="quizPick(this, false)">Occasional loose stools</div>
+      <div class="option" onclick="quizPick(this, false)">Client reports mild nausea during repositioning</div>
+      <div class="option" onclick="quizPick(this, false)">Gastric residual volume of 15 mL</div>
+    </div>
+    <div class="feedback">✅ Distension + hypoactive sounds suggests delayed emptying/ileus — aspiration risk.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>4. Client on estrogen therapy. Which risk factor MOST increases risk of adverse effects?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">Never having been pregnant</div>
+      <div class="option" onclick="quizPick(this, true)">Age 50 or history of migraines with aura</div>
+      <div class="option" onclick="quizPick(this, false)">Caucasian ethnicity</div>
+      <div class="option" onclick="quizPick(this, false)">Family history of osteoporosis</div>
+    </div>
+    <div class="feedback">✅ Age ≥50, migraines with aura, hypothyroidism, and smoking all significantly increase adverse effects.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>5. Client with brain swelling — which IV fluid is anticipated?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, true)">3% hypertonic saline</div>
+      <div class="option" onclick="quizPick(this, false)">Lactated Ringer's</div>
+      <div class="option" onclick="quizPick(this, false)">0.45% sodium chloride</div>
+      <div class="option" onclick="quizPick(this, false)">0.9% normal saline</div>
+    </div>
+    <div class="feedback">✅ Hypertonic saline draws fluid out of swollen brain cells into vasculature.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>6. Client with K⁺ 6.5 mEq/L, normal kidneys. Anticipated intervention?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, true)">Administer IV dextrose and IV regular insulin</div>
+      <div class="option" onclick="quizPick(this, false)">Administer 3% hypertonic saline</div>
+      <div class="option" onclick="quizPick(this, false)">Administer IV magnesium sulfate</div>
+      <div class="option" onclick="quizPick(this, false)">Encourage potassium-rich foods</div>
+    </div>
+    <div class="feedback">✅ Insulin drives K⁺ into cells fast; dextrose prevents hypoglycemia. Kayexalate is slower; hemodialysis is for severe + renal failure.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>7. Client on Dextran 40 develops tachycardia, dyspnea, cough. What is this?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">Allergic reaction</div>
+      <div class="option" onclick="quizPick(this, false)">Renal failure</div>
+      <div class="option" onclick="quizPick(this, true)">Fluid overload</div>
+      <div class="option" onclick="quizPick(this, false)">Liver toxicity</div>
+    </div>
+    <div class="feedback">✅ Colloids pull water into vessels → can cause pulmonary edema. Classic fluid overload triad.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>8. Client on IV magnesium sulfate: HR 48, DTRs absent, RR 8. Priority action?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">Monitor urinary output</div>
+      <div class="option" onclick="quizPick(this, false)">Assess for neuromuscular excitability</div>
+      <div class="option" onclick="quizPick(this, true)">Administer calcium gluconate as prescribed</div>
+      <div class="option" onclick="quizPick(this, false)">Increase the magnesium sulfate infusion rate</div>
+    </div>
+    <div class="feedback">✅ Classic Mg toxicity → antidote is calcium gluconate.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>9. 750 mL NS is prescribed to run at 75 mL/hr. How long will it take?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">7.5 hours</div>
+      <div class="option" onclick="quizPick(this, true)">10 hours</div>
+      <div class="option" onclick="quizPick(this, false)">12 hours</div>
+      <div class="option" onclick="quizPick(this, false)">15 hours</div>
+    </div>
+    <div class="feedback">✅ 750 ÷ 75 = 10 hours.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>10. Male client on finasteride for BPH. Most important question to ask before surgery?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">"Have you noticed changes in urinary patterns?"</div>
+      <div class="option" onclick="quizPick(this, false)">"Are you experiencing sexual dysfunction?"</div>
+      <div class="option" onclick="quizPick(this, false)">"Do you have a history of prostate cancer?"</div>
+      <div class="option" onclick="quizPick(this, true)">"Is there a possibility your partner could be pregnant?"</div>
+    </div>
+    <div class="feedback">✅ Finasteride is teratogenic. Secondary exposure via semen or crushed tablets can harm a fetus.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>11. Client with acidosis on sodium bicarb develops slowed respirations and irritability. Cause?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, true)">Metabolic alkalosis</div>
+      <div class="option" onclick="quizPick(this, false)">Fluid volume overload</div>
+      <div class="option" onclick="quizPick(this, false)">Hyponatremia</div>
+      <div class="option" onclick="quizPick(this, false)">Hyperkalemia</div>
+    </div>
+    <div class="feedback">✅ Sodium bicarb overcorrected → metabolic alkalosis. Lungs slow breathing to retain CO₂.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>12. Client with peptic ulcer on H. pylori therapy asks about misoprostol. Best explanation?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">"It reduces bacterial load"</div>
+      <div class="option" onclick="quizPick(this, true)">"It protects the stomach lining by increasing mucus production"</div>
+      <div class="option" onclick="quizPick(this, false)">"It reduces heartburn from the infection"</div>
+      <div class="option" onclick="quizPick(this, false)">"It reduces acid production directly"</div>
+    </div>
+    <div class="feedback">✅ Misoprostol = prostaglandin analog. Increases mucus + bicarbonate, protects stomach lining.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>13. Which IV fluid has 20 gtt/mL and needs to run 750 mL over 6 hours. Drip rate?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, false)">21 gtt/min</div>
+      <div class="option" onclick="quizPick(this, false)">36 gtt/min</div>
+      <div class="option" onclick="quizPick(this, true)">42 gtt/min</div>
+      <div class="option" onclick="quizPick(this, false)">50 gtt/min</div>
+    </div>
+    <div class="feedback">✅ (750 × 20) ÷ (6 × 60) = 15000 ÷ 360 = 42 gtt/min.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>14. Client on norethindrone for contraception. Priority teaching?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, true)">Take at the same time daily</div>
+      <div class="option" onclick="quizPick(this, false)">Crush the pill for easier swallowing</div>
+      <div class="option" onclick="quizPick(this, false)">Take with food only</div>
+      <div class="option" onclick="quizPick(this, false)">Take during pregnancy</div>
+    </div>
+    <div class="feedback">✅ Progestin-only pills require strict daily timing — missed/late doses = pregnancy risk.</div>
+  </div>
+
+  <div class="quiz">
+    <h4>15. Which client should the nurse ANTICIPATE administering methylnaltrexone?</h4>
+    <div class="options">
+      <div class="option" onclick="quizPick(this, true)">65-year-old with end-stage lung cancer on large doses of morphine</div>
+      <div class="option" onclick="quizPick(this, false)">32-year-old postpartum with hemorrhoids</div>
+      <div class="option" onclick="quizPick(this, false)">28-year-old with suspected appendicitis</div>
+      <div class="option" onclick="quizPick(this, false)">72-year-old newly diagnosed with gastroparesis</div>
+    </div>
+    <div class="feedback">✅ Methylnaltrexone is for opioid-induced constipation, especially when standard laxatives have failed.</div>
+  </div>
+</div>
+
+<!-- ============ CHEAT SHEET TAB ============ -->
+<div class="tab-content" id="cheatsheet">
+  <h2 class="section-title">⚡ The Night-Before Cheat Sheet</h2>
+  <div class="card danger">
+    Review this the night before AND the morning of the exam. Do not try to learn new material — reinforce what you know.
+  </div>
+
+  <h3>💧 IV Fluids at a Glance</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Solution</th><th>Type</th><th>Use For</th></tr></thead>
+      <tbody>
+        <tr><td>0.9% NaCl (NS)</td><td>Isotonic</td><td>Dehydration, hypovolemia, blood loss</td></tr>
+        <tr><td>Lactated Ringer's</td><td>Isotonic</td><td>Fluid loss, burns, surgery</td></tr>
+        <tr><td>D5W (in bag)</td><td>Isotonic → Hypotonic in body</td><td>Free water; caution in ↑ICP</td></tr>
+        <tr><td>0.45% NaCl</td><td>Hypotonic</td><td>Hypernatremia, cellular dehydration</td></tr>
+        <tr><td class="hi">3% NaCl</td><td class="hi">Hypertonic</td><td class="hi">Severe hyponatremia, cerebral edema</td></tr>
+        <tr><td>D5NS, D5LR, D10W</td><td>Hypertonic</td><td>Provides calories + fluid</td></tr>
+        <tr><td>Albumin, Dextran</td><td>Colloid</td><td>Hypovolemic shock, hypoalbuminemia</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>🚨 One-Line Red Flags</h3>
+  <div class="grid-2">
+    <div class="mini-card"><h4>TPN</h4><p>Central line only · monitor glucose · change bag q24h · never abrupt stop · warm 30 min before</p></div>
+    <div class="mini-card"><h4>Estrogen</h4><p>Clots! DVT, PE, stroke, MI. Contraindicated if prior thromboembolism, abnormal bleeding, smoking + age >35</p></div>
+    <div class="mini-card"><h4>Sildenafil</h4><p>NEVER with nitrates (isosorbide, nitroglycerin) → life-threatening hypotension</p></div>
+    <div class="mini-card"><h4>Finasteride</h4><p>Teratogen. No blood donation. Pregnant partner risk. Avoid crushing.</p></div>
+    <div class="mini-card"><h4>PPIs long-term</h4><p>Fractures, B12 deficiency, C. diff</p></div>
+    <div class="mini-card"><h4>Sucralfate</h4><p>Empty stomach, 1 hr before meals, don't take with antacid</p></div>
+    <div class="mini-card"><h4>Psyllium</h4><p>Plenty of fluids! Takes 12-72 hrs. Don't limit water.</p></div>
+    <div class="mini-card"><h4>Mag Sulfate toxicity</h4><p>Flushing, ↓RR, ↓DTRs, ↓HR, ↓BP → antidote = <span class="hi">calcium gluconate</span></p></div>
+    <div class="mini-card"><h4>Oxytocin</h4><p>Postpartum: prevents hemorrhage. Adverse: rapid painful contractions, uterine rupture</p></div>
+    <div class="mini-card"><h4>Terbutaline</h4><p>Black box warning: fetal death if >48-72 hrs. Report SOB, tachycardia</p></div>
+    <div class="mini-card"><h4>Ondansetron</h4><p>QT prolongation risk. Question if cardiac electrical abnormality on ECG</p></div>
+    <div class="mini-card"><h4>KCl (potassium)</h4><p>NEVER IV push. Watch site for burning/infiltration. Question in AKI.</p></div>
+    <div class="mini-card"><h4>Bismuth (Pepto)</h4><p>Black stool = harmless. Avoid if aspirin allergy (contains salicylate).</p></div>
+    <div class="mini-card"><h4>Vitamin A</h4><p>Teratogen. Question if hCG positive. Question if ↑ALT/AST.</p></div>
+    <div class="mini-card"><h4>Sulfasalazine</h4><p>Question in liver failure/hepatitis. Hold if WBC ≤4000.</p></div>
+    <div class="mini-card"><h4>Methylnaltrexone</h4><p>Opioid-induced constipation only (fails on other laxatives)</p></div>
+  </div>
+
+  <h3>🔢 Med Math Formula Sheet</h3>
+  <div class="formula">
+1. <strong>Time (hr)</strong> = Volume (mL) ÷ Rate (mL/hr)
+
+2. <strong>gtt/min from total</strong> = (mL × drop factor) ÷ minutes
+
+3. <strong>mL/hr from bolus</strong> = mL ÷ hours
+
+4. <strong>Volume (mL)</strong> = Dose ÷ Concentration
+
+5. <strong>gtt/min from mL/hr</strong> = (mL/hr × drop factor) ÷ 60
+  </div>
+
+  <h3>📌 5 Answers You Can Almost Always Trust</h3>
+  <ol class="bullet">
+    <li>Ondansetron before chemo/antibiotic/analgesic (not after)</li>
+    <li>3% NaCl for cerebral edema / severe hyponatremia</li>
+    <li>Insulin + Dextrose for hyperkalemia (fastest)</li>
+    <li>Calcium gluconate for magnesium toxicity</li>
+    <li>Trendelenburg + clamp catheter for suspected air embolism</li>
+  </ol>
+
+  <h3>🌟 Day of Exam</h3>
+  <div class="card success">
+    <ul class="bullet">
+      <li>Sleep 7+ hours the night before. Cramming past midnight backfires.</li>
+      <li>Eat breakfast — protein + complex carbs. No new caffeine dose.</li>
+      <li>Arrive early. Take 3 deep breaths before starting.</li>
+      <li>Read every question TWICE. Watch for "except," "question," "further teaching."</li>
+      <li>If you don't know it — <strong>use process of elimination.</strong> Eliminate two, then narrow down.</li>
+      <li>Trust your first instinct. Don't second-guess unless you find a fact you missed.</li>
+      <li>You've got this. Dr. Tehrani believes in you.</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <p><strong>Tehrani Labs</strong> · NUR 334 Pharmacology · Arizona College of Nursing</p>
+  <p>Built with care for future nurses · <a href="https://tehranilabs.org" target="_blank">tehranilabs.org</a></p>
+  <p style="margin-top: 8px; font-size: 0.78rem; opacity: 0.7;">© Tehrani Labs · NUR 334 · Arizona College of Nursing</p>
+</footer>
+
+<script>
+  // Tab switching
+  const tabButtons = document.querySelectorAll('nav.tabs button');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabButtons.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Quiz logic
+  function quizPick(el, isCorrect) {
+    const parent = el.parentElement;
+    const feedback = parent.parentElement.querySelector('.feedback');
+    // Reset all options in this quiz
+    parent.querySelectorAll('.option').forEach(o => o.classList.remove('correct', 'wrong'));
+    if (isCorrect) {
+      el.classList.add('correct');
+    } else {
+      el.classList.add('wrong');
+      // Highlight the correct one
+      parent.querySelectorAll('.option').forEach(o => {
+        if (o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+      });
+    }
+    feedback.classList.add('show');
+  }
+
+  // Progress tracker with localStorage
+  const checkboxes = document.querySelectorAll('#progress input[type="checkbox"]');
+  checkboxes.forEach(cb => {
+    const key = 'nur334_pt_' + cb.dataset.pt;
+    if (localStorage.getItem(key) === 'true') {
+      cb.checked = true;
+      cb.parentElement.classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      localStorage.setItem(key, cb.checked);
+      cb.parentElement.classList.toggle('done', cb.checked);
+    });
+  });
+</script>
+
+</body>
+</html>
