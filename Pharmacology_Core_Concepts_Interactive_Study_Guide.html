@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmacology Essentials | Interactive Study Guide</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1e3a5f;--navy-dark:#0f2444;
+  --white:#fff;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;
+  --gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;
+  --blue:#3b82f6;--blue-light:#eff6ff;
+  --purple:#8b5cf6;--purple-light:#f5f3ff;
+  --green:#10b981;--green-light:#ecfdf5;
+  --amber:#f59e0b;--amber-light:#fffbeb;
+  --red:#ef4444;--red-light:#fef2f2;
+  --teal:#14b8a6;--teal-light:#f0fdfa;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.08);
+  --shadow:0 4px 6px -1px rgba(0,0,0,0.08);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1);
+  --radius:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--gray-100);color:var(--gray-800);line-height:1.6;font-size:15px}
+
+/* HEADER */
+#site-header{position:sticky;top:0;z-index:100;background:#0f2444;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.header-logo{color:#fff;font-weight:800;font-size:1rem;letter-spacing:-0.3px}
+.header-logo span{color:#60a5fa}
+
+/* TAB NAV */
+#tab-nav{position:sticky;top:52px;z-index:99;background:#0a1c35;border-bottom:2px solid rgba(255,255,255,0.07);overflow-x:auto}
+#tab-nav::-webkit-scrollbar{height:3px}
+#tab-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:3px}
+.tab-list{display:flex;gap:0;padding:0 12px;white-space:nowrap;justify-content:center}
+.tab-btn{background:none;border:none;border-bottom:3px solid transparent;color:rgba(255,255,255,0.6);font-family:inherit;font-size:0.8rem;font-weight:500;padding:11px 16px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.tab-btn:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.tab-btn.active{color:#60a5fa;border-bottom-color:#60a5fa;background:rgba(96,165,250,0.08);font-weight:700}
+
+/* HERO */
+#hero{background:linear-gradient(135deg,#0a1c35,#1e3a5f);padding:14px 24px;text-align:center}
+#hero h1{color:#fff;font-size:1.15rem;font-weight:700;letter-spacing:-0.3px}
+#hero h1 span{color:#60a5fa}
+
+/* MAIN */
+main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+.section-wrap{display:none}
+.section-wrap.active{display:block}
+
+/* SECTION HEADER */
+.section-header{margin-bottom:22px}
+.section-header h2{font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:4px}
+.section-header .sec-intro{color:var(--gray-600);font-size:0.9rem;border-left:3px solid #60a5fa;padding-left:12px;margin-top:8px}
+
+/* CONTENT CARD */
+.content-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);border-left:4px solid var(--blue);padding:18px 20px;margin-bottom:16px}
+.content-card h3{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:10px}
+.content-card h4{font-size:0.9rem;font-weight:700;color:var(--gray-700);margin:10px 0 6px}
+.content-card ul{padding-left:18px;margin:4px 0 8px}
+.content-card li{font-size:0.87rem;margin-bottom:3px;color:var(--gray-700)}
+.content-card p{font-size:0.87rem;color:var(--gray-700);margin-bottom:6px}
+.content-card strong{color:var(--gray-800)}
+.border-purple{border-left-color:var(--purple)}
+.border-green{border-left-color:var(--green)}
+.border-amber{border-left-color:var(--amber)}
+.border-red{border-left-color:var(--red)}
+.border-teal{border-left-color:var(--teal)}
+
+/* ACCORDION */
+.acc-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:12px}
+.acc-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.acc-title{font-size:0.92rem;font-weight:600;color:var(--navy)}
+.acc-chevron{color:var(--gray-600);font-size:0.8rem;transition:transform 0.3s}
+.acc-card.open .acc-chevron{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.acc-card.open .acc-body{max-height:2000px}
+.acc-content{padding:4px 18px 16px;border-top:1px solid var(--gray-100)}
+.acc-content ul{padding-left:18px;margin:4px 0 6px}
+.acc-content li{font-size:0.85rem;margin-bottom:3px;color:var(--gray-700)}
+.acc-content p{font-size:0.85rem;color:var(--gray-700);margin-bottom:6px}
+
+/* CLINICAL SCENARIO */
+.scenario{background:#0f2444;border-radius:var(--radius);padding:16px 18px;margin:14px 0;color:#fff}
+.scenario-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#60a5fa;margin-bottom:8px}
+.scenario p{font-size:0.87rem;line-height:1.6;margin-bottom:10px}
+.scenario-reveal{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 14px;cursor:pointer;transition:background 0.2s}
+.scenario-reveal:hover{background:rgba(255,255,255,0.13)}
+.tap-text{font-size:0.78rem;color:#93c5fd;font-weight:600}
+.answer-text{display:none;font-size:0.85rem;color:#e2e8f0;margin-top:8px;line-height:1.6}
+.scenario-reveal.reveal .tap-text{display:none}
+.scenario-reveal.reveal .answer-text{display:block}
+
+/* KEY POINT BOX */
+.key-point{background:var(--amber-light);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.key-point p{font-size:0.85rem;color:#78350f;margin:0;line-height:1.55}
+.key-point strong{color:#92400e}
+
+/* MNEMONIC BOX */
+.mnemonic-box{background:var(--purple-light);border-left:4px solid var(--purple);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.mnemonic-box p,.mnemonic-box li{font-size:0.85rem;color:#3b0764}
+.mnemonic-box ul{padding-left:16px;margin:4px 0}
+.mnemonic-box li{margin-bottom:4px}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin:14px 0}
+.flip-card{height:130px;perspective:1000px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.5s}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;backface-visibility:hidden;text-align:center}
+.flip-front{background:linear-gradient(135deg,#0f2444,#1e3a5f);color:#fff}
+.flip-back{background:linear-gradient(135deg,#5b2d8e,#8b5cf6);color:#fff;transform:rotateY(180deg)}
+.flip-front .big-letter{font-size:2.2rem;font-weight:800;line-height:1}
+.flip-front .hint{font-size:0.68rem;opacity:0.6;margin-top:6px}
+.flip-back .meaning{font-size:0.82rem;font-weight:700;line-height:1.35}
+.flip-back .sub{font-size:0.68rem;opacity:0.8;margin-top:6px;line-height:1.3}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;margin:12px 0;border-radius:8px;box-shadow:var(--shadow-sm)}
+table{width:100%;border-collapse:collapse;font-size:0.85rem}
+th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-weight:700;font-size:0.78rem}
+td{padding:8px 12px;border-bottom:1px solid var(--gray-200)}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:var(--gray-50)}
+
+/* QUIZ */
+#quiz-section{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:28px;margin-top:12px}
+#quiz-section h2{font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:4px}
+.quiz-meta{color:var(--gray-600);font-size:0.85rem;margin-bottom:20px}
+.quiz-progress-wrap{background:var(--gray-200);border-radius:4px;height:5px;margin-bottom:24px}
+.quiz-progress-bar{height:5px;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:4px;transition:width 0.3s}
+.quiz-q{display:none}
+.quiz-q.active{display:block}
+.quiz-q-num{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:6px}
+.quiz-q-text{font-size:0.95rem;font-weight:600;color:var(--gray-800);margin-bottom:16px;line-height:1.5}
+.quiz-choices{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.quiz-choice{background:var(--gray-50);border:2px solid var(--gray-200);border-radius:8px;padding:10px 16px;font-size:0.87rem;cursor:pointer;transition:all 0.2s;text-align:left;font-family:inherit;font-weight:500;color:var(--gray-800)}
+.quiz-choice:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light)}
+.quiz-choice.correct{background:#dcfce7;border-color:var(--green);color:#047857;font-weight:600}
+.quiz-choice.wrong{background:#fee2e2;border-color:var(--red);color:#b91c1c}
+.quiz-choice:disabled{cursor:default}
+.quiz-feedback{display:none;padding:10px 14px;border-radius:8px;font-size:0.85rem;margin-bottom:14px;font-weight:500;line-height:1.5}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct-fb{background:#dcfce7;color:#047857;border-left:4px solid var(--green)}
+.quiz-feedback.wrong-fb{background:#fee2e2;color:#b91c1c;border-left:4px solid var(--red)}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:8px;border:none;font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#1d4ed8}
+.btn-secondary{background:var(--gray-200);color:var(--gray-700)}
+.btn-secondary:hover{background:#cbd5e1}
+.btn-success{background:var(--green);color:#fff}
+.btn-success:hover{background:#047857}
+#quiz-result{display:none;text-align:center;padding:20px 0}
+.score-circle{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.8rem;font-weight:800;box-shadow:0 8px 24px rgba(99,102,241,0.35)}
+.score-circle .score-lbl{font-size:0.7rem;font-weight:500;opacity:0.8}
+#quiz-result h3{font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+#quiz-result p{color:var(--gray-600);margin-bottom:16px}
+
+/* BACK TO TOP */
+#back-top{position:fixed;bottom:24px;right:24px;width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;border:none;cursor:pointer;font-size:1rem;box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:all 0.3s;z-index:200}
+#back-top.show{opacity:1;transform:translateY(0)}
+#back-top:hover{background:#2a4f80}
+
+.divider{border:none;border-top:1px solid var(--gray-200);margin:16px 0}
+
+/* CLINICAL PEARL */
+.pearl{background:#f0fdfa;border-left:4px solid #14b8a6;border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.pearl-label{font-weight:700;color:#0f766e;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px}
+.pearl p{font-size:0.85rem;color:#134e4a;margin:0;line-height:1.55}
+
+/* NCLEX FOCUS */
+.nclex-focus{background:#eff6ff;border-left:4px solid #3b82f6;border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.nclex-label{font-weight:700;color:#1d4ed8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px}
+.nclex-focus p,.nclex-focus li{font-size:0.85rem;color:#1e3a5f;line-height:1.55}
+.nclex-focus ul{padding-left:16px;margin:4px 0}
+
+/* CRITICAL ALERT */
+.critical-alert{background:var(--red-light);border-left:4px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0}
+.critical-alert .ca-label{font-weight:700;color:#b91c1c;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px}
+.critical-alert p,.critical-alert li{font-size:0.85rem;color:#7f1d1d;line-height:1.55}
+.critical-alert ul{padding-left:16px;margin:4px 0}
+
+/* FLOW CHART */
+.flow-chart{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow-sm);margin:16px 0}
+.flow-title{font-weight:700;color:var(--navy);font-size:0.85rem;margin-bottom:10px;text-align:center}
+
+/* GUIDELINE LINK */
+.guideline-link{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:10px 14px;margin:12px 0;display:flex;align-items:center;gap:10px}
+.gl-label{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--gray-600);margin-bottom:2px}
+.guideline-link a{font-size:0.82rem;color:var(--blue);text-decoration:none;font-weight:500}
+.guideline-link a:hover{text-decoration:underline}
+
+/* QUICK CHECK */
+.quick-check{background:var(--green-light);border:1px solid #a7f3d0;border-radius:var(--radius);padding:14px 16px;margin:14px 0}
+.qc-label{font-weight:700;color:#047857;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px}
+.qc-question{margin-bottom:12px}
+.qc-question:last-child{margin-bottom:0}
+.qc-text{font-size:0.87rem;font-weight:600;color:var(--gray-800);margin-bottom:8px}
+.qc-choices{display:flex;flex-direction:column;gap:5px;margin-bottom:6px}
+.qc-choice{background:#fff;border:1.5px solid #d1fae5;border-radius:6px;padding:7px 12px;font-size:0.82rem;cursor:pointer;font-family:inherit;font-weight:500;color:var(--gray-700);text-align:left;transition:all 0.15s}
+.qc-choice:hover:not(:disabled){border-color:#10b981;background:#ecfdf5}
+.qc-choice.qc-correct{background:#dcfce7;border-color:#10b981;color:#047857;font-weight:600}
+.qc-choice.qc-wrong{background:#fee2e2;border-color:#ef4444;color:#b91c1c}
+.qc-choice:disabled{cursor:default;opacity:0.7}
+.qc-feedback{display:none;font-size:0.82rem;color:#047857;background:#dcfce7;border-radius:6px;padding:8px 12px;margin-top:6px;line-height:1.5}
+.qc-feedback.show{display:block}
+
+/* MASTERY CHECKLIST */
+.mastery-list{list-style:none;padding:0;margin:8px 0}
+.mastery-list li{display:flex;align-items:flex-start;gap:10px;padding:7px 8px;border-radius:6px;font-size:0.86rem;color:var(--gray-700);cursor:pointer}
+.mastery-list li:hover{background:var(--gray-50)}
+.mastery-list input{margin-top:3px;width:16px;height:16px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+.mastery-list li.done{color:var(--gray-600)}
+.mastery-list li.done span{text-decoration:line-through}
+.mastery-progress{background:var(--gray-200);border-radius:4px;height:8px;margin:10px 0 4px;overflow:hidden}
+.mastery-bar{height:8px;background:linear-gradient(90deg,var(--green),var(--teal));border-radius:4px;transition:width 0.4s;width:0}
+.mastery-count{font-size:0.78rem;color:var(--gray-600);text-align:right}
+
+/* FORMULA */
+.formula{background:var(--navy-dark);color:#e2e8f0;border-radius:8px;padding:12px 16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.9rem;margin:10px 0;overflow-x:auto;white-space:nowrap}
+.formula b{color:#60a5fa}
+
+@media(max-width:768px){
+  .tab-list{justify-content:flex-start;padding:0 4px}
+  .tab-btn{font-size:0.72rem;padding:10px 10px}
+  main{padding:16px 12px 50px}
+  .content-card,.scenario{padding:14px 16px}
+  .flip-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="header-inner">
+    <div class="header-logo">Pharmacology | <span>Core Concepts &amp; Medication Safety</span></div>
+  </div>
+</header>
+
+<!-- TAB NAV -->
+<nav id="tab-nav">
+  <div class="tab-list">
+    <button class="tab-btn active" data-tab="start">Start Here</button>
+    <button class="tab-btn" data-tab="analgesics">Analgesics &amp; Opioids</button>
+    <button class="tab-btn" data-tab="antiinfectives">Anti-Infectives</button>
+    <button class="tab-btn" data-tab="gi">GI &amp; Antiemetics</button>
+    <button class="tab-btn" data-tab="respiratory">Respiratory</button>
+    <button class="tab-btn" data-tab="neuropsych">Neuro &amp; Psych</button>
+    <button class="tab-btn" data-tab="hormones">Hormones</button>
+    <button class="tab-btn" data-tab="fluids">Fluids &amp; TPN</button>
+    <button class="tab-btn" data-tab="kinetics">Med Safety</button>
+    <button class="tab-btn" data-tab="quiz">Mastery Quiz</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <h1>Pharmacology: <span>Core Concepts, Safety &amp; Priority</span></h1>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+<!-- ===================== TAB 1: START HERE ===================== -->
+<div class="section-wrap active" id="sec-start">
+  <div class="section-header">
+    <h2>Start Here</h2>
+    <p class="sec-intro">A high-yield walkthrough of the medication classes, mechanisms, safety rules, and priority actions that show up again and again in nursing pharmacology.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>How to Use This Guide</h3>
+    <ul>
+      <li>Each tab groups related drug classes so you can compare them side-by-side (e.g., H2 blockers vs. PPIs).</li>
+      <li><strong>Tap any flip card</strong> to reveal its meaning; <strong>tap any scenario</strong> to reveal the answer; <strong>tap accordion headers</strong> to expand.</li>
+      <li><strong>Quick Checks</strong> (green boxes) let you self-test inline; the <strong>Mastery Quiz</strong> tab is a full run-through.</li>
+      <li>Track your progress with the checklist below &mdash; it saves automatically in your browser.</li>
+    </ul>
+    <div class="nclex-focus">
+      <div class="nclex-label">The one rule to rule them all</div>
+      <p>In pharmacology, the most-tested question is not "what drug?" but <strong>"what do I do first?"</strong> When a patient is unstable &mdash; respiratory depression, anaphylaxis, severe hypotension, uterine rupture, QT prolongation &mdash; the answer is almost always <strong>stop the drug / reverse it, then call for help</strong>.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-green">
+    <h3>Three-Day Study Plan</h3>
+    <ul>
+      <li><strong>Day 1:</strong> Analgesics &amp; Opioids &rarr; Anti-Infectives. Focus on the MOA &times; safety pairs (e.g., opioid &harr; naloxone, warfarin &harr; metronidazole).</li>
+      <li><strong>Day 2:</strong> GI &amp; Antiemetics &rarr; Respiratory &rarr; Neuro &amp; Psych. Drill the "never stop abruptly" list and the narrow-window drugs.</li>
+      <li><strong>Day 3:</strong> Hormones &rarr; Fluids &amp; TPN &rarr; Med Safety (pharmacokinetics + administration). Finish with the Mastery Quiz; target <strong>90%+</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-purple">
+    <h3>Mastery Checklist</h3>
+    <p>Check off each objective as you master it. Progress saves automatically in this browser.</p>
+    <div class="mastery-progress"><div class="mastery-bar" id="masteryBar"></div></div>
+    <div class="mastery-count" id="masteryCount">0 / 0 mastered (0%)</div>
+    <ul class="mastery-list" id="masteryList">
+      <li data-k="nsaid"><input type="checkbox"><span>NSAIDs &mdash; COX inhibition, GI/renal risks, acetaminophen as the safer alternative</span></li>
+      <li data-k="apap"><input type="checkbox"><span>Acetaminophen &mdash; hepatotoxicity, max dose, acetylcysteine antidote</span></li>
+      <li data-k="opioid"><input type="checkbox"><span>Opioids &mdash; RR check, constipation, taper, toxicity triad + naloxone</span></li>
+      <li data-k="gout"><input type="checkbox"><span>Gout &mdash; allopurinol for prevention vs. NSAIDs/colchicine for acute attacks</span></li>
+      <li data-k="abxprinc"><input type="checkbox"><span>Antibiotic principles &mdash; C. diff, birth-control interaction, anaphylaxis, side effect vs. allergy</span></li>
+      <li data-k="cidalstatic"><input type="checkbox"><span>Bactericidal vs. bacteriostatic + class examples</span></li>
+      <li data-k="sulfa"><input type="checkbox"><span>Sulfonamides (TMP-SMX) &mdash; UTI use, pregnancy avoidance</span></li>
+      <li data-k="abxrisks"><input type="checkbox"><span>Macrolides / fluoroquinolones / aminoglycosides / glycopeptides &mdash; key risks</span></li>
+      <li data-k="miscabx"><input type="checkbox"><span>Metronidazole (metallic taste, warfarin), antiretrovirals (adherence), nystatin (swish &amp; swallow)</span></li>
+      <li data-k="acid"><input type="checkbox"><span>H2 blockers vs. PPIs vs. sucralfate; loperamide contraindications</span></li>
+      <li data-k="antiemetic"><input type="checkbox"><span>Antiemetics &mdash; metoclopramide (tardive dyskinesia) &amp; ondansetron (QT)</span></li>
+      <li data-k="laxative"><input type="checkbox"><span>Bulk-forming laxatives (psyllium) &mdash; must be taken with water</span></li>
+      <li data-k="albuterol"><input type="checkbox"><span>Albuterol (rescue) vs. fluticasone (controller) + correct inhaler technique</span></li>
+      <li data-k="respmisc"><input type="checkbox"><span>Ipratropium (soy allergy), montelukast (black box), theophylline (narrow window)</span></li>
+      <li data-k="lithium"><input type="checkbox"><span>Lithium &mdash; narrow therapeutic window, kidney excretion, toxicity triggers</span></li>
+      <li data-k="psych"><input type="checkbox"><span>Antipsychotics (EPS), TCAs (2nd line), benzodiazepines (flumazenil), diphenhydramine (anticholinergic)</span></li>
+      <li data-k="steroid"><input type="checkbox"><span>Corticosteroids &mdash; taper (adrenal crisis), long-term effects</span></li>
+      <li data-k="hormones"><input type="checkbox"><span>Oxytocin, testosterone, estradiol, finasteride, sildenafil safety points</span></li>
+      <li data-k="fluids"><input type="checkbox"><span>IV potassium (never push), IV fluid tonicity, TPN hyperglycemia &amp; infection</span></li>
+      <li data-k="kinetics"><input type="checkbox"><span>ADME, first-pass effect, loading doses, routes, crush rules, 6 rights</span></li>
+      <li data-k="antidotes"><input type="checkbox"><span>Antidote pairs + drugs you must never stop abruptly</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===================== TAB 2: ANALGESICS & OPIOIDS ===================== -->
+<div class="section-wrap" id="sec-analgesics">
+  <div class="section-header">
+    <h2>Analgesics &amp; Opioids</h2>
+    <p class="sec-intro">NSAIDs, acetaminophen, opioids, their antidotes, and gout therapy &mdash; the pain-management cornerstones and their biggest dangers.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>NSAIDs (ibuprofen, naproxen, ketorolac)</h3>
+    <ul>
+      <li><strong>MOA:</strong> inhibit the <strong>COX-1 and COX-2 enzymes</strong>, reducing <strong>prostaglandin</strong> synthesis &rarr; less pain, fever, and inflammation.</li>
+      <li><strong>Contraindications:</strong> peptic ulcer disease (PUD) and chronic kidney disease &mdash; NSAIDs irritate the GI lining and reduce renal perfusion.</li>
+      <li><strong>Adverse effects:</strong> gastric ulcers, <strong>GI bleeding</strong> (watch for positive fecal occult blood), and kidney injury.</li>
+      <li><strong>Key teaching:</strong> for a patient with gastric or renal problems, <strong>acetaminophen</strong> is the safer analgesic because it does not disrupt the stomach lining or kidneys.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Think "COX blocks the aches":</strong> NSAIDs block <strong>C</strong>yclo<strong>OX</strong>ygenase &rarr; fewer prostaglandins &rarr; less pain &amp; swelling. Same enzyme that protects the stomach (COX-1), which is why ulcers are the trade-off.</p>
+    </div>
+    <div class="critical-alert">
+      <div class="ca-label">Critical Safety</div>
+      <p><strong>Ketorolac is an NSAID</strong> &mdash; it is <em>not</em> a "gentle" option. Avoid in CKD and PUD just like any other NSAID. Question the order rather than "giving a smaller dose."</p>
+    </div>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>Acetaminophen (Tylenol)</h3>
+    <ul>
+      <li><strong>Mechanism:</strong> central analgesic/antipyretic &mdash; <strong>no GI or renal effects</strong>, making it first choice in PUD and kidney disease.</li>
+      <li><strong>Toxic metabolite:</strong> overdose depletes glutathione, allowing <strong>NAPQI</strong> to damage the liver &rarr; hepatotoxicity.</li>
+      <li><strong>Antidote:</strong> <strong>acetylcysteine</strong> (replenishes glutathione, neutralizes NAPQI).</li>
+      <li><strong>Dosing limits:</strong> 4 g/day in healthy adults; <strong>2 g/day</strong> in at-risk patients (liver disease, chronic alcohol use, malnutrition).</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>High-Yield:</strong> acetaminophen is hidden in many combination products (cold remedies, opioid-combo pills). Teach patients to read every label to avoid accidental overdose.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Opioids (morphine, codeine, hydromorphone)</h3>
+    <ul>
+      <li><strong>Priority assessment:</strong> <strong>respiratory rate</strong> before, during, and after administration. Hold if <strong>RR &lt; 12/min</strong> and notify the provider.</li>
+      <li><strong>Most common side effect:</strong> <strong>constipation</strong> &mdash; it does <em>not</em> diminish with time. Manage with fluids, fiber, and a stool softener/laxative.</li>
+      <li><strong>Other effects:</strong> orthostatic hypotension (change positions slowly), sedation (avoid driving), and suppression of the cough reflex.</li>
+      <li><strong>Discontinuation:</strong> never stop abruptly &mdash; taper gradually to avoid withdrawal (muscle aches, sweating, insomnia, GI upset).</li>
+      <li><strong>COPD caution:</strong> opioids further depress an already-compromised respiratory drive &mdash; assess carefully and question the order if needed.</li>
+      <li><strong>Never combine:</strong> two opioids (or any CNS depressants) cause <strong>additive</strong> respiratory depression and overdose risk.</li>
+    </ul>
+    <div class="critical-alert">
+      <div class="ca-label">Toxicity Triad</div>
+      <p>Overdose = <strong>respiratory depression + pinpoint pupils (miosis) + decreased LOC</strong>. Give <strong>naloxone</strong> immediately. Naloxone is shorter-acting than most opioids &mdash; the patient may need <strong>repeat doses</strong>.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-purple">
+    <h3>Gout: Allopurinol</h3>
+    <ul>
+      <li><strong>MOA:</strong> inhibits <strong>xanthine oxidase</strong>, lowering uric acid production.</li>
+      <li><strong>Role:</strong> <strong>long-term prevention</strong>, NOT acute attack treatment (acute flares use NSAIDs or colchicine). Continue even when asymptomatic.</li>
+      <li><strong>Teaching:</strong> drink plenty of water (prevents kidney stones); avoid purine-rich foods (shellfish, red meat, organ meats, alcohol).</li>
+      <li><strong>Report immediately:</strong> fever, sore throat, or rash &mdash; possible <strong>Stevens-Johnson Syndrome</strong>, a life-threatening hypersensitivity reaction.</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">Do Not Confuse</div>
+      <p>Allopurinol <strong>prevents</strong> gout by lowering uric acid; it does <strong>not</strong> relieve the pain of an active flare. A patient mid-flare needs an anti-inflammatory (NSAID/colchicine), not just their allopurinol.</p>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Clinical Scenario</div>
+    <p>A patient who received IV morphine is found somnolent with a respiratory rate of 7 and pinpoint pupils.</p>
+    <div class="scenario-reveal">
+      <span class="tap-text">Tap to reveal the priority action</span>
+      <div class="answer-text"><strong>Administer naloxone</strong> to reverse the opioid, then notify the provider. This is the classic opioid-toxicity triad. Expect improved breathing, alertness, and pupil dilation &mdash; and stay ready to redose, since naloxone wears off before many opioids do.</div>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">Which patient should NOT receive ibuprofen for a headache?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A young adult with no medical history</button>
+        <button class="qc-choice" data-val="B">A patient with active peptic ulcer disease</button>
+        <button class="qc-choice" data-val="C">A patient with seasonal allergies</button>
+        <button class="qc-choice" data-val="D">A patient who is 2 days post-op</button>
+      </div>
+      <div class="qc-feedback">Ibuprofen is contraindicated in PUD &mdash; it worsens ulcers and can cause GI bleeding. Acetaminophen is the safer choice.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 3: ANTI-INFECTIVES ===================== -->
+<div class="section-wrap" id="sec-antiinfectives">
+  <div class="section-header">
+    <h2>Anti-Infectives</h2>
+    <p class="sec-intro">General antibiotic principles plus the major classes &mdash; their mechanisms, side effects, and the safety flags each one is famous for.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>Antibiotic Principles (Apply to Every Class)</h3>
+    <ul>
+      <li><strong>C. difficile:</strong> antibiotics wipe out normal gut flora, allowing C. diff to overgrow &rarr; severe watery diarrhea. Report new diarrhea during therapy.</li>
+      <li><strong>Contraception interaction:</strong> antibiotics can reduce hormonal-contraceptive effectiveness &mdash; teach a <strong>backup method</strong> (e.g., condoms) during treatment.</li>
+      <li><strong>Anaphylaxis:</strong> wheezing, hives, hypotension &rarr; <strong>stop the infusion, call the provider, give epinephrine</strong>.</li>
+      <li><strong>Side effect vs. allergy:</strong> side effects are <strong>expected and predictable</strong>; allergic reactions are <strong>immune-mediated, unexpected, and potentially life-threatening</strong>.</li>
+      <li><strong>Finish the full course</strong> &mdash; stopping early breeds resistance.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-purple">
+    <h3>Bactericidal vs. Bacteriostatic</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Action</th><th>Meaning</th><th>Examples</th></tr>
+        <tr><td><strong>Bactericidal</strong></td><td>Kills bacteria directly</td><td>Penicillins, vancomycin, fluoroquinolones, gentamicin</td></tr>
+        <tr><td><strong>Bacteriostatic</strong></td><td>Stops growth; immune system clears the rest</td><td>Macrolides, tetracyclines, sulfonamides</td></tr>
+      </table>
+    </div>
+    <div class="mnemonic-box">
+      <p><strong>"CIDAL = kill"</strong> (think <em>homi-CIDAL</em>). Bacteriostatic drugs <em>stall</em> the bacteria so your own immune system can finish the job.</p>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>Sulfonamides &mdash; Sulfamethoxazole / TMP-SMX (Bactrim)</h3>
+    <ul>
+      <li><strong>Use:</strong> most commonly prescribed for <strong>urinary tract infections</strong> (also respiratory infections and PCP prophylaxis).</li>
+      <li><strong>Safety:</strong> avoid in the <strong>first trimester of pregnancy</strong> (birth-defect risk); use caution in kidney disease (higher toxicity risk).</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>Macrolides (azithromycin, erythromycin, clarithromycin)</h3>
+    <ul>
+      <li><strong>Recognition:</strong> end in <strong>"-mycin"</strong>.</li>
+      <li><strong>MOA:</strong> <strong>bacteriostatic</strong> &mdash; bind the <strong>50S ribosomal subunit</strong> to block bacterial protein synthesis.</li>
+      <li><strong>Use:</strong> respiratory infections; a common penicillin alternative.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Careful:</strong> gentamicin is an aminoglycoside (also ends in "-mycin") but is <strong>bactericidal at the 30S subunit</strong> &mdash; don't lump all "-mycin" drugs as macrolides.</p>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>Fluoroquinolones (ciprofloxacin, levofloxacin, moxifloxacin)</h3>
+    <ul>
+      <li><strong>Recognition:</strong> end in <strong>"-oxacin"</strong>; bactericidal (inhibit DNA replication).</li>
+      <li><strong>Absorption trap:</strong> antacids with calcium/magnesium/aluminum, and iron, <strong>chelate</strong> the drug. Space doses &mdash; take the antibiotic <strong>2 hours before or 6 hours after</strong> antacids/iron. Avoid dairy close to the dose.</li>
+      <li><strong>Adverse effect:</strong> <strong>tendonitis and tendon rupture</strong> (especially the Achilles) &mdash; higher risk in older adults and those on corticosteroids.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Aminoglycosides &mdash; Gentamicin</h3>
+    <ul>
+      <li><strong>MOA:</strong> bactericidal &mdash; binds the <strong>30S ribosomal subunit</strong>.</li>
+      <li><strong>Two critical toxicities:</strong> <strong>nephrotoxicity</strong> (rising BUN/creatinine, falling urine output) and <strong>ototoxicity</strong> (tinnitus, hearing loss, vertigo).</li>
+      <li><strong>Monitoring:</strong> <strong>peak and trough</strong> drug levels.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Vancomycin (glycopeptide)</h3>
+    <ul>
+      <li><strong>Red Man Syndrome:</strong> rapid infusion &rarr; histamine release &rarr; red flushing of face/neck/chest + itching. <strong>Not a true allergy.</strong> Slow or stop the infusion; give diphenhydramine if ordered.</li>
+      <li><strong>Prevention:</strong> infuse over <strong>at least 60 minutes</strong>.</li>
+      <li><strong>Toxicities:</strong> <strong>nephrotoxicity</strong> (oliguria, rising creatinine) and <strong>ototoxicity</strong> &mdash; monitor peak/trough levels and renal function.</li>
+    </ul>
+  </div>
+
+  <div class="content-card">
+    <h3>Metronidazole (antiprotozoal / anaerobic)</h3>
+    <ul>
+      <li><strong>Expected side effects:</strong> GI upset, <strong>metallic taste</strong>, and dry mouth &mdash; reassure the patient these are normal and resolve after treatment.</li>
+      <li><strong>Key interaction:</strong> metronidazole <strong>increases warfarin's effect</strong> &rarr; higher bleeding risk &mdash; monitor INR and expect a warfarin dose adjustment.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-green">
+    <h3>Antiretrovirals (ART for HIV) &amp; Nystatin</h3>
+    <ul>
+      <li><strong>ART #1 priority:</strong> <strong>adherence</strong>. Regimens use 2&ndash;3 medications; missed doses &rarr; viral resistance &rarr; treatment failure. Take with food to improve absorption; monitor liver enzymes and CD4 count.</li>
+      <li><strong>Nystatin (antifungal):</strong> binds <strong>ergosterol</strong> in the fungal membrane &rarr; cell death. For oral thrush: <strong>swish and swallow</strong>, then nothing by mouth for 30 minutes. Never given IV (too toxic).</li>
+    </ul>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Clinical Scenario</div>
+    <p>Ten minutes into a rapid IV vancomycin infusion, the patient's face, neck, and upper chest turn red and blotchy, and they report itching.</p>
+    <div class="scenario-reveal">
+      <span class="tap-text">Tap to reveal the first action</span>
+      <div class="answer-text">This is <strong>Red Man Syndrome</strong> from too-rapid infusion &mdash; not anaphylaxis. <strong>Slow or stop the infusion</strong>, notify the provider, and give diphenhydramine if ordered. Prevent it next time by infusing over at least 60 minutes.</div>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">A patient on ciprofloxacin wants to take a calcium antacid for heartburn. Best instruction?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">Take them together for stomach protection</button>
+        <button class="qc-choice" data-val="B">Antacids are fine; only iron is a problem</button>
+        <button class="qc-choice" data-val="C">Space them &mdash; ciprofloxacin 2 hours before or 6 hours after the antacid</button>
+        <button class="qc-choice" data-val="D">Skip the antacid only on dose days</button>
+      </div>
+      <div class="qc-feedback">Calcium/magnesium/aluminum antacids and iron chelate fluoroquinolones, cutting absorption. Space the doses apart.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 4: GI & ANTIEMETICS ===================== -->
+<div class="section-wrap" id="sec-gi">
+  <div class="section-header">
+    <h2>GI &amp; Antiemetics</h2>
+    <p class="sec-intro">Acid control, mucosal protection, diarrhea management, nausea drugs, and laxatives &mdash; plus the toxicities each is known for.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>Acid Control: H2 Blockers vs. PPIs vs. Sucralfate</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Drug</th><th>Class</th><th>MOA</th><th>Notes</th></tr>
+        <tr><td><strong>Famotidine</strong> (-tidine)</td><td>H2 receptor antagonist</td><td>Blocks H2 receptors on parietal cells &rarr; less acid</td><td>Milder GERD; less potent than PPIs</td></tr>
+        <tr><td><strong>Omeprazole</strong> (-prazole)</td><td>Proton pump inhibitor</td><td>Irreversibly blocks the H+/K+ ATPase proton pump</td><td>More potent; GERD, ulcers, Zollinger-Ellison</td></tr>
+        <tr><td><strong>Sucralfate</strong></td><td>Mucosal protectant</td><td>Coats the ulcer against acid/pepsin</td><td>Does NOT lower acid; empty stomach (1 hr before meals)</td></tr>
+      </table>
+    </div>
+    <div class="mnemonic-box">
+      <p><strong>Endings tell the class:</strong> <strong>-tidine</strong> = H2 blocker &middot; <strong>-prazole</strong> = PPI. A PPI shuts down the "pump" itself, which is why it is the stronger acid suppressant.</p>
+    </div>
+    <div class="pearl">
+      <div class="pearl-label">Do Not Confuse</div>
+      <p>Sucralfate does <strong>not</strong> neutralize or reduce acid &mdash; it only <strong>protects</strong> the ulcer surface. It needs an empty stomach so the coating can adhere where the ulcer is.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Antidiarrheals &mdash; Loperamide</h3>
+    <ul>
+      <li><strong>MOA:</strong> slows bowel motility.</li>
+      <li><strong>Contraindicated in:</strong> <strong>infectious diarrhea</strong>, <strong>bloody stools</strong>, and <strong>C. diff</strong> &mdash; slowing motility traps the pathogen longer and prevents the body from clearing it.</li>
+      <li><strong>Concept:</strong> with an infection, diarrhea is the body's <em>defense</em> &mdash; don't shut it off.</li>
+    </ul>
+  </div>
+
+  <div class="content-card">
+    <h3>Antiemetics &mdash; Metoclopramide &amp; Ondansetron</h3>
+    <ul>
+      <li><strong>Metoclopramide</strong> (prokinetic/dopamine blocker): the most serious adverse effect is <strong>tardive dyskinesia</strong> &mdash; repetitive involuntary lip-smacking and tongue movements that can be <strong>irreversible</strong>. Report immediately.</li>
+      <li><strong>Ondansetron</strong> (5-HT3 antagonist): used for chemotherapy-induced, post-op, and pregnancy-related nausea. IV use can cause <strong>QT prolongation</strong> &rarr; life-threatening arrhythmias &mdash; stop the infusion if QT lengthens.</li>
+    </ul>
+    <div class="critical-alert">
+      <div class="ca-label">Critical Safety</div>
+      <p>If a patient on IV ondansetron develops QT prolongation with lightheadedness/dizziness, <strong>stop the infusion immediately</strong> and notify the provider. Never continue an infusion through a serious cardiac adverse effect.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-green">
+    <h3>Bulk-Forming Laxatives &mdash; Psyllium</h3>
+    <ul>
+      <li><strong>Critical teaching:</strong> take with <strong>at least 8 oz of water per dose</strong>. Without enough fluid, psyllium swells in the GI tract and can <strong>worsen constipation or cause obstruction</strong>.</li>
+      <li><strong>IBS caution:</strong> reintroduce gradually to limit gas and bloating.</li>
+    </ul>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">A patient with infectious diarrhea and bloody stools is ordered loperamide. The nurse should:</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">Give it and monitor stool output</button>
+        <button class="qc-choice" data-val="B">Hold it &mdash; loperamide is contraindicated in infectious/bloody diarrhea</button>
+        <button class="qc-choice" data-val="C">Give half the dose</button>
+        <button class="qc-choice" data-val="D">Give it with a full glass of water</button>
+      </div>
+      <div class="qc-feedback">Slowing motility in infectious or bloody diarrhea traps the pathogen and prolongs the illness. Hold and clarify.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 5: RESPIRATORY ===================== -->
+<div class="section-wrap" id="sec-respiratory">
+  <div class="section-header">
+    <h2>Respiratory</h2>
+    <p class="sec-intro">Rescue vs. controller inhalers, bronchodilators, and the asthma/COPD medications &mdash; plus proper inhaler technique.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>Albuterol &mdash; Short-Acting Beta-2 Agonist (SABA)</h3>
+    <ul>
+      <li><strong>MOA:</strong> stimulates <strong>beta-2 receptors</strong> in bronchial smooth muscle &rarr; <strong>bronchodilation</strong>. Onset 5&ndash;15 minutes.</li>
+      <li><strong>Use:</strong> <strong>acute</strong> asthma attacks and exercise-induced bronchospasm (take 15&ndash;30 minutes <em>before</em> exercise). PRN only &mdash; <strong>not</strong> a scheduled daily med.</li>
+      <li><strong>Expected side effects:</strong> <strong>tachycardia, palpitations, tremors</strong> (beta-2 receptors also live in the heart).</li>
+      <li><strong>Red flag:</strong> needing it <strong>more than 2&times;/week</strong> &rarr; poorly controlled asthma &rarr; notify provider.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>Fluticasone &mdash; Inhaled Corticosteroid (ICS)</h3>
+    <ul>
+      <li><strong>Role:</strong> <strong>controller</strong> &mdash; daily prevention, <strong>not</strong> for acute attacks. (Use albuterol for acute bronchospasm.)</li>
+      <li><strong>Side effect:</strong> <strong>oral candidiasis (thrush)</strong> &mdash; white patches in the mouth. <strong>Prevent by rinsing the mouth with water after every use.</strong></li>
+      <li><strong>Order matters:</strong> when using both, take the <strong>bronchodilator (albuterol) first</strong> to open airways, then the steroid so it penetrates deeper.</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">Rescue vs. Controller</div>
+      <p><strong>Albuterol = fire extinguisher</strong> (fast, for the emergency). <strong>Fluticasone = smoke detector battery</strong> (daily, prevents the emergency). Know which is which &mdash; it is one of the most-tested distinctions.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Ipratropium &mdash; Anticholinergic Bronchodilator</h3>
+    <ul>
+      <li><strong>MOA:</strong> blocks <strong>muscarinic receptors</strong> in the airways &rarr; reduces bronchospasm and mucus secretion. Primarily for COPD.</li>
+      <li><strong>High-yield safety:</strong> inhaler formulations contain <strong>soy lecithin</strong> &mdash; ask about <strong>soy or peanut allergy</strong> before giving.</li>
+    </ul>
+  </div>
+
+  <div class="content-card">
+    <h3>Montelukast &mdash; Leukotriene Receptor Antagonist</h3>
+    <ul>
+      <li><strong>MOA:</strong> blocks <strong>leukotrienes</strong> &rarr; less bronchoconstriction and airway inflammation. Used for <strong>prevention</strong> (asthma, allergic rhinitis) &mdash; not for acute attacks.</li>
+      <li><strong>Black box warning:</strong> serious psychiatric effects &mdash; mood changes, agitation, depression, <strong>suicidal thoughts</strong>. <strong>Report any mood change to the provider immediately.</strong></li>
+    </ul>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Theophylline &mdash; Methylxanthine Bronchodilator</h3>
+    <ul>
+      <li><strong>Narrow therapeutic window</strong> &mdash; requires blood-level monitoring.</li>
+      <li><strong>Expected side effects:</strong> tachycardia, palpitations, arrhythmias.</li>
+      <li><strong>Toxicity:</strong> nausea, vomiting, restlessness, irritability, <strong>tremors, and seizures</strong> (resembles caffeine overdose).</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Methylxanthine = "liquid caffeine."</strong> Picture the toxicity as a caffeine OD: jittery, tachycardic, and (at the extreme) seizing.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-green">
+    <h3>Inhaler Technique (Metered-Dose Inhaler)</h3>
+    <ol>
+      <li><strong>Shake</strong> the canister; remain <strong>upright</strong>.</li>
+      <li>Exhale gently, then <strong>inhale slowly and deeply</strong>.</li>
+      <li><strong>Hold your breath 5&ndash;10 seconds.</strong></li>
+      <li>Wait <strong>1&ndash;2 minutes</strong> before a second puff.</li>
+    </ol>
+    <div class="pearl">
+      <div class="pearl-label">Spacers</div>
+      <p>A <strong>spacer</strong> holds the aerosol so particles slow down &mdash; giving the patient more time to inhale and getting <strong>more medication into the lungs</strong> (less in the mouth/throat). Great for kids, older adults, and anyone with poor technique.</p>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="A">
+      <div class="qc-text">A patient has both albuterol and fluticasone inhalers. Correct order during an acute attack?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">Albuterol first, then fluticasone</button>
+        <button class="qc-choice" data-val="B">Fluticasone first, then albuterol</button>
+        <button class="qc-choice" data-val="C">Either order works equally well</button>
+        <button class="qc-choice" data-val="D">Use both at the exact same time</button>
+      </div>
+      <div class="qc-feedback">Bronchodilator first opens the airways, then the steroid penetrates deeper. Reversing the order wastes the steroid.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 6: NEURO & PSYCH ===================== -->
+<div class="section-wrap" id="sec-neuropsych">
+  <div class="section-header">
+    <h2>Neuro &amp; Psych</h2>
+    <p class="sec-intro">Mood stabilizers, antipsychotics, antidepressants, antihistamines, and benzodiazepines &mdash; the CNS drugs and their monitoring.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>Lithium &mdash; Mood Stabilizer</h3>
+    <ul>
+      <li><strong>Therapeutic range:</strong> <strong>0.6&ndash;1.2 mEq/L</strong> (narrow window &mdash; needs monitoring).</li>
+      <li><strong>Excretion:</strong> by the <strong>kidneys</strong>. Rising creatinine &rarr; reduced clearance &rarr; accumulation and toxicity &rarr; <strong>hold and notify the provider</strong>.</li>
+      <li><strong>Toxicity triggers:</strong> <strong>dehydration, low-sodium diet, and NSAIDs</strong> all raise lithium levels. Encourage consistent fluid and sodium intake.</li>
+      <li><strong>Onset:</strong> takes <strong>days to weeks</strong> for full effect &mdash; stay consistent.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Antipsychotics &mdash; Risperidone (2nd-gen / atypical)</h3>
+    <ul>
+      <li><strong>EPS symptoms to report:</strong> abnormal face/arm/leg movements, muscle stiffness, tremors, restlessness (akathisia), and spasms (dystonia).</li>
+      <li><strong>Discontinuation:</strong> never stop abruptly &rarr; withdrawal symptoms and <strong>rebound psychosis</strong>.</li>
+      <li><strong>Side effect:</strong> weight gain and metabolic changes &mdash; address concerns with the provider rather than stopping on their own.</li>
+    </ul>
+  </div>
+
+  <div class="content-card">
+    <h3>Tricyclic Antidepressants (TCAs) &mdash; amitriptyline, nortriptyline</h3>
+    <ul>
+      <li><strong>Place in therapy:</strong> <strong>second-line</strong> &mdash; used when SSRIs (first-line) fail or aren't tolerated.</li>
+      <li><strong>Profile:</strong> more anticholinergic effects and sedation than SSRIs; <strong>dangerous in overdose</strong> (cardiac arrhythmias).</li>
+      <li><strong>Off-label:</strong> chronic pain, neuropathy, migraine prevention.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>Diphenhydramine &mdash; First-Generation Antihistamine</h3>
+    <ul>
+      <li><strong>Dual action:</strong> blocks <strong>H1 histamine</strong> receptors (allergy) <em>and</em> has <strong>anticholinergic</strong> effects.</li>
+      <li><strong>Anticholinergic side effects:</strong> <strong>urinary retention, dry mouth, constipation</strong>, tachycardia, blurred vision.</li>
+      <li><strong>Caution:</strong> worsening asthma; glaucoma (raises intraocular pressure); <strong>high fall/confusion risk in older adults</strong> (Beers Criteria).</li>
+      <li><strong>Bonus use:</strong> its anticholinergic action can reduce <strong>Parkinson's tremors</strong> by countering the acetylcholine excess from dopamine loss.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Benzodiazepines &mdash; Diazepam</h3>
+    <ul>
+      <li><strong>Overdose antidote:</strong> <strong>flumazenil</strong> &mdash; competitively blocks benzodiazepine receptors and reverses CNS depression.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Antidote pairs (know cold):</strong> opioids &rarr; naloxone &middot; acetaminophen &rarr; acetylcysteine &middot; benzodiazepines &rarr; flumazenil.</p>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="C">
+      <div class="qc-text">Which factor increases a patient's lithium toxicity risk?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">A high-sodium diet</button>
+        <button class="qc-choice" data-val="B">Increased fluid intake</button>
+        <button class="qc-choice" data-val="C">Dehydration + NSAID use</button>
+        <button class="qc-choice" data-val="D">A high-protein diet</button>
+      </div>
+      <div class="qc-feedback">Dehydration and NSAIDs reduce renal lithium clearance, raising levels toward toxicity. Encourage consistent fluids and sodium.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 7: HORMONES ===================== -->
+<div class="section-wrap" id="sec-hormones">
+  <div class="section-header">
+    <h2>Hormones</h2>
+    <p class="sec-intro">Corticosteroids, reproductive hormones, and the smooth-muscle and prostate drugs &mdash; each with a signature safety point.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>Corticosteroids &mdash; Prednisone (systemic)</h3>
+    <ul>
+      <li><strong>Never stop abruptly:</strong> long-term use suppresses the adrenal glands &rarr; abrupt stop = <strong>adrenal crisis</strong> (severe hypotension, cardiovascular collapse). <strong>Taper gradually.</strong></li>
+      <li><strong>Long-term effects:</strong> hyperglycemia, weight gain, moon face, <strong>osteoporosis</strong> (supplement calcium/vitamin D), GI irritation (take with food), and increased infection risk (immunosuppression).</li>
+      <li><strong>Mindset:</strong> steroids <strong>manage</strong> symptoms &mdash; they don't cure the underlying disease.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Oxytocin &mdash; Labor &amp; Delivery</h3>
+    <ul>
+      <li><strong>Effect:</strong> stimulates uterine smooth muscle &rarr; strong, regular contractions (also used postpartum for hemorrhage control).</li>
+      <li><strong>Emergency:</strong> <strong>severe, constant abdominal pain + rigid abdomen</strong> during infusion = possible <strong>uterine rupture</strong> &rarr; <strong>stop the infusion immediately</strong> and notify the provider.</li>
+    </ul>
+    <div class="critical-alert">
+      <div class="ca-label">Critical Safety</div>
+      <p>During oxytocin, <strong>severe abdominal pain is never "normal labor pain."</strong> Stop the drip, call for help, and assess maternal vitals and fetal status. Do not increase the rate.</p>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>Testosterone &amp; Estradiol</h3>
+    <ul>
+      <li><strong>Testosterone (androgen):</strong> in female patients, watch for <strong>virilization</strong> &mdash; deepening voice, increased body hair, clitoral enlargement, menstrual changes. <strong>Report to the provider</strong> (dose may need adjusting).</li>
+      <li><strong>Estradiol (estrogen):</strong> <strong>contraindicated</strong> with a history of <strong>thromboembolic events</strong> (DVT, PE, stroke). <strong>No smoking</strong> &mdash; smoking sharply raises clot, stroke, and MI risk on estrogen.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Finasteride &mdash; 5-Alpha Reductase Inhibitor (BPH)</h3>
+    <ul>
+      <li><strong>MOA:</strong> reduces DHT &rarr; <strong>shrinks the prostate</strong>. Takes <strong>weeks to months</strong> for full effect.</li>
+      <li><strong>If unable to empty the bladder:</strong> refer to the provider for lab work and a <strong>prostate exam</strong> &mdash; don't just reassure or double the dose.</li>
+      <li><strong>Teratogenic</strong> &mdash; no handling by pregnant people; no blood donation while taking it.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Sildenafil &mdash; PDE-5 Inhibitor (erectile dysfunction)</h3>
+    <ul>
+      <li><strong>Absolute contraindication:</strong> <strong>nitrates</strong> (nitroglycerin, isosorbide). Both cause vasodilation; together &rarr; <strong>severe, life-threatening hypotension</strong>. No dose adjustment makes it safe.</li>
+    </ul>
+    <div class="critical-alert">
+      <div class="ca-label">Critical Safety</div>
+      <p>Sildenafil + nitroglycerin is a "never" combination. Always ask about nitrate use before giving a PDE-5 inhibitor, and hold + notify the provider if there is any overlap.</p>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-label">Clinical Scenario</div>
+    <p>A patient on long-term prednisone tells you they stopped taking it three days ago "because they feel fine now."</p>
+    <div class="scenario-reveal">
+      <span class="tap-text">Tap to reveal the priority action</span>
+      <div class="answer-text"><strong>Notify the provider immediately.</strong> Abrupt corticosteroid withdrawal can trigger adrenal crisis &mdash; life-threatening hypotension. Prednisone must be tapered gradually; feeling better is not a reason to stop cold.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 8: FLUIDS & TPN ===================== -->
+<div class="section-wrap" id="sec-fluids">
+  <div class="section-header">
+    <h2>Fluids &amp; TPN</h2>
+    <p class="sec-intro">Electrolyte safety, IV fluid tonicity, and total parenteral nutrition &mdash; the "small mistakes, big consequences" corner of nursing.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>IV Potassium &mdash; The Safety Classic</h3>
+    <ul>
+      <li><strong>Rule:</strong> <strong>never IV push or bolus</strong>. Infuse slowly (about <strong>10&ndash;20 mEq/hour</strong>) and always diluted.</li>
+      <li><strong>Why:</strong> rapid potassium &rarr; <strong>cardiac arrest</strong> and fatal arrhythmias. Monitor with continuous cardiac monitoring.</li>
+    </ul>
+    <div class="critical-alert">
+      <div class="ca-label">Critical Safety</div>
+      <p>Potassium chloride given IV push = cardiac arrest. This is one of the single most-tested medication-safety rules in nursing. Also question potassium in anyone with <strong>renal failure</strong>.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>IV Fluid Tonicity</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Example</th><th>Purpose</th></tr>
+        <tr><td><strong>Isotonic</strong></td><td>0.9% NaCl, Lactated Ringer's</td><td>Fluid resuscitation without shifting compartments</td></tr>
+        <tr><td><strong>Hypotonic</strong></td><td>0.45% NaCl</td><td>Lowers elevated sodium (hypernatremia) by shifting water into cells</td></tr>
+        <tr><td><strong>Hypertonic</strong></td><td>3% NaCl</td><td>Treats severe hyponatremia / cerebral edema (pulls water out of cells)</td></tr>
+      </table>
+    </div>
+    <div class="pearl">
+      <div class="pearl-label">Memory Hook</div>
+      <p>Hypotonic = <strong>"hypo" pulls water INTO cells</strong> (treats hypernatremia). Hypertonic = <strong>pulls water OUT of cells</strong> (treats cerebral edema). Isotonic = <strong>stays put</strong> (resuscitation).</p>
+    </div>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Total Parenteral Nutrition (TPN)</h3>
+    <ul>
+      <li><strong>Most frequent complication:</strong> <strong>hyperglycemia</strong> &mdash; TPN's high dextrose content. Monitor glucose frequently; sliding-scale insulin may be needed.</li>
+      <li><strong>Infection risk:</strong> the high glucose is an ideal medium for bacteria/fungi. Fever, chills, or redness at the line site = <strong>line infection</strong> &rarr; strict <strong>aseptic technique</strong> for all line care.</li>
+    </ul>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="D">
+      <div class="qc-text">Which IV-fluid choice is correct for a patient with hypernatremia?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">0.9% normal saline</button>
+        <button class="qc-choice" data-val="B">3% hypertonic saline</button>
+        <button class="qc-choice" data-val="C">Lactated Ringer's</button>
+        <button class="qc-choice" data-val="D">0.45% NaCl (hypotonic)</button>
+      </div>
+      <div class="qc-feedback">Hypotonic fluid dilutes the extracellular space and shifts water into cells, lowering serum sodium. Hypertonic saline would make it worse.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 9: MED SAFETY (PHARMACOKINETICS & ADMIN) ===================== -->
+<div class="section-wrap" id="sec-kinetics">
+  <div class="section-header">
+    <h2>Med Safety: Pharmacokinetics &amp; Administration</h2>
+    <p class="sec-intro">How drugs move through the body (ADME) and how to give them safely &mdash; the fundamentals behind every other tab.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>Pharmacokinetics &mdash; ADME</h3>
+    <div class="formula">A &rarr; D &rarr; M &rarr; E &nbsp;=&nbsp; <b>Absorption &rarr; Distribution &rarr; Metabolism &rarr; Excretion</b></div>
+    <ul>
+      <li><strong>Absorption:</strong> drug enters the bloodstream from the administration site (first step).</li>
+      <li><strong>Distribution:</strong> drug travels via blood to target tissues.</li>
+      <li><strong>Metabolism:</strong> breakdown, primarily in the <strong>liver</strong>.</li>
+      <li><strong>Excretion:</strong> elimination, primarily by the <strong>kidneys</strong> (urine).</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-purple">
+    <h3>First-Pass Effect</h3>
+    <ul>
+      <li><strong>Definition:</strong> an oral drug is absorbed from the gut &rarr; travels to the <strong>liver</strong> via the portal vein &rarr; the liver metabolizes part of it <strong>before</strong> it reaches the systemic circulation &rarr; reduced bioavailability.</li>
+      <li><strong>Liver disease:</strong> less metabolism &rarr; more drug reaches the blood &rarr; <strong>higher toxicity risk</strong>.</li>
+      <li><strong>IV route:</strong> <strong>bypasses</strong> first-pass metabolism (100% bioavailability). Sublingual also largely bypasses it (e.g., nitroglycerin for chest pain).</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-green">
+    <h3>Routes, Loading Doses, and Names</h3>
+    <ul>
+      <li><strong>Speed of onset (fastest &rarr; slowest):</strong> <strong>IV &gt; IM &gt; subcutaneous &gt; oral</strong>. IV = immediate, 100% bioavailability.</li>
+      <li><strong>Loading dose:</strong> a high initial dose to <strong>rapidly reach therapeutic levels</strong> (for long-half-life drugs or when speed is critical); maintenance doses follow.</li>
+      <li><strong>Generic vs. trade name:</strong> the generic name is the <strong>same active ingredient</strong> regardless of manufacturer; a trade name belongs to one maker. Both are FDA-approved and equally effective.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Safe Administration Rules</h3>
+    <ul>
+      <li><strong>6 Rights:</strong> right patient (2 identifiers), drug, dose, route, time, documentation &mdash; verify against the MAR and check allergies/contraindications first.</li>
+      <li><strong>Never crush:</strong> <strong>enteric-coated (EC), sustained-release (SR), and extended-release (ER/XR)</strong> forms &mdash; crushing causes <strong>dose dumping</strong> (entire dose released at once).</li>
+      <li><strong>Pediatric liquids:</strong> use an <strong>oral syringe</strong> for accuracy &mdash; never a kitchen spoon.</li>
+      <li><strong>Sublingual:</strong> bypasses first-pass metabolism for fast action (nitroglycerin under the tongue).</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Antidotes &amp; "Never Stop Abruptly"</h3>
+    <div class="flip-grid">
+      <div class="flip-card"><div class="flip-inner"><div class="flip-front"><div class="big-letter">Opioids</div><div class="hint">Tap</div></div><div class="flip-back"><div class="meaning">Naloxone</div><div class="sub">Reverses respiratory depression &amp; sedation</div></div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-front"><div class="big-letter">Acetaminophen</div><div class="hint">Tap</div></div><div class="flip-back"><div class="meaning">Acetylcysteine</div><div class="sub">Replenishes glutathione, neutralizes NAPQI</div></div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-front"><div class="big-letter">Benzodiazepines</div><div class="hint">Tap</div></div><div class="flip-back"><div class="meaning">Flumazenil</div><div class="sub">Reverses CNS depression</div></div></div></div>
+    </div>
+    <div class="key-point">
+      <p><strong>Never stop abruptly:</strong> corticosteroids (adrenal crisis) &middot; opioids (withdrawal) &middot; antipsychotics (rebound psychosis). Always taper under supervision.</p>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label">Quick Check</div>
+    <div class="qc-question" data-answer="B">
+      <div class="qc-text">Which medication must NOT be crushed before administration?</div>
+      <div class="qc-choices">
+        <button class="qc-choice" data-val="A">Chewable antacid tablet</button>
+        <button class="qc-choice" data-val="B">An extended-release (ER) opioid tablet</button>
+        <button class="qc-choice" data-val="C">Immediate-release acetaminophen</button>
+        <button class="qc-choice" data-val="D">A regular-release ibuprofen capsule</button>
+      </div>
+      <div class="qc-feedback">Crushing extended/sustained-release forms dumps the whole dose at once, risking overdose. EC coatings also must not be crushed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 10: MASTERY QUIZ ===================== -->
+<div class="section-wrap" id="sec-quiz">
+  <div class="section-header">
+    <h2>Mastery Quiz</h2>
+    <p class="sec-intro">A concept-based check across every tab. Aim for 90%+ before you call it mastered.</p>
+  </div>
+
+  <div id="quiz-section">
+    <h2>Pharmacology Core Concepts</h2>
+    <p class="quiz-meta">Answer each question, then advance. Your score appears at the end.</p>
+    <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-bar"></div></div>
+
+    <!-- Q1 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 1</div>
+      <div class="quiz-q-text">Which mechanism explains how ibuprofen and other NSAIDs reduce pain, fever, and inflammation?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">They bind opioid receptors to block pain signals centrally</button>
+        <button class="quiz-choice" data-idx="1">They inhibit COX enzymes, reducing prostaglandin synthesis</button>
+        <button class="quiz-choice" data-idx="2">They stimulate cortisol release to suppress immunity</button>
+        <button class="quiz-choice" data-idx="3">They block histamine receptors on mast cells</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> NSAIDs block COX-1/COX-2, lowering prostaglandins &mdash; the mediators of pain, fever, and swelling. This is the shared MOA of ibuprofen, naproxen, ketorolac, and aspirin at anti-inflammatory doses.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 2</div>
+      <div class="quiz-q-text">A patient with a history of peptic ulcer disease asks for an OTC pain reliever. Which is the safest choice?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Ibuprofen</button>
+        <button class="quiz-choice" data-idx="1">Naproxen</button>
+        <button class="quiz-choice" data-idx="2">Acetaminophen</button>
+        <button class="quiz-choice" data-idx="3">Ketorolac</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Acetaminophen does not disrupt the gastric lining or kidneys, unlike NSAIDs. It is the preferred analgesic for patients with PUD or renal impairment.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 3</div>
+      <div class="quiz-q-text">Which patient is at highest risk for acetaminophen-induced liver injury?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">A patient with chronic alcohol use and liver disease</button>
+        <button class="quiz-choice" data-idx="1">A healthy young adult</button>
+        <button class="quiz-choice" data-idx="2">A patient with seasonal allergies</button>
+        <button class="quiz-choice" data-idx="3">A patient with mild hypertension</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Chronic alcohol use, liver disease, and malnutrition increase the risk of acetaminophen hepatotoxicity (via the toxic metabolite NAPQI). Max daily dose is lower (2 g/day) for at-risk patients; the antidote is acetylcysteine.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 4</div>
+      <div class="quiz-q-text">A patient is unresponsive with pinpoint pupils and a respiratory rate of 6 after receiving an opioid. What should the nurse give first?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Flumazenil</button>
+        <button class="quiz-choice" data-idx="1">Acetylcysteine</button>
+        <button class="quiz-choice" data-idx="2">Atropine</button>
+        <button class="quiz-choice" data-idx="3">Naloxone</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Respiratory depression + pinpoint pupils + decreased LOC is the opioid-toxicity triad. Naloxone is the opioid antagonist. Remember it is shorter-acting than many opioids, so the patient may need repeat doses.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 5</div>
+      <div class="quiz-q-text">Which side effect of morphine never fully resolves with continued use and requires a proactive bowel regimen?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Sedation</button>
+        <button class="quiz-choice" data-idx="1">Constipation</button>
+        <button class="quiz-choice" data-idx="2">Orthostatic hypotension</button>
+        <button class="quiz-choice" data-idx="3">Miosis</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Constipation is the most common opioid side effect and does NOT diminish over time. Prevent it with fluids, fiber, and a stool softener or stimulant laxative.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 6</div>
+      <div class="quiz-q-text">A patient on combined oral contraceptives starts a broad-spectrum antibiotic. What teaching is essential?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">"Stop the contraceptive during treatment"</button>
+        <button class="quiz-choice" data-idx="1">"Antibiotics never affect contraception"</button>
+        <button class="quiz-choice" data-idx="2">"Use a backup method such as condoms during therapy"</button>
+        <button class="quiz-choice" data-idx="3">"Only injected contraceptives are affected"</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Antibiotics can reduce hormonal-contraceptive effectiveness. Teach a backup method during treatment to prevent unintended pregnancy.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 7</div>
+      <div class="quiz-q-text">Severe, watery diarrhea that begins during antibiotic therapy most likely indicates which problem?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">C. difficile overgrowth from disrupted gut flora</button>
+        <button class="quiz-choice" data-idx="1">Antibiotic-induced constipation</button>
+        <button class="quiz-choice" data-idx="2">An allergic reaction</button>
+        <button class="quiz-choice" data-idx="3">Normal antibiotic response</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Antibiotics disrupt normal flora, allowing C. diff to overgrow and cause severe diarrhea/colitis. Report new or worsening diarrhea during therapy.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 8</div>
+      <div class="quiz-q-text">A patient develops hives, wheezing, and hypotension minutes after an IV antibiotic is started. Priority action?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Slow the infusion and reassess in 15 minutes</button>
+        <button class="quiz-choice" data-idx="1">Stop the infusion and prepare epinephrine</button>
+        <button class="quiz-choice" data-idx="2">Give oral diphenhydramine and continue the infusion</button>
+        <button class="quiz-choice" data-idx="3">Document the findings and continue monitoring</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Wheezing, hives, and hypotension are anaphylaxis &mdash; stop the drug immediately, call for help, and give epinephrine. Allergic reactions are immune-mediated and life-threatening, unlike expected side effects.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 9</div>
+      <div class="quiz-q-text">Which statement correctly classifies antibiotic action?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Macrolides are bactericidal; vancomycin is bacteriostatic</button>
+        <button class="quiz-choice" data-idx="1">Gentamicin is bacteriostatic at the 50S subunit</button>
+        <button class="quiz-choice" data-idx="2">Sulfonamides kill bacteria by lysing the cell wall</button>
+        <button class="quiz-choice" data-idx="3">Vancomycin is bactericidal; macrolides are bacteriostatic</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Bactericidal agents kill directly (vancomycin, penicillins, fluoroquinolones, gentamicin). Bacteriostatic agents stop growth so the immune system can clear the rest (macrolides, tetracyclines, sulfonamides).</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 10</div>
+      <div class="quiz-q-text">A patient on ciprofloxacin should avoid taking which of these within 2 hours of the antibiotic dose?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">A calcium-containing antacid</button>
+        <button class="quiz-choice" data-idx="1">A glass of water</button>
+        <button class="quiz-choice" data-idx="2">A soft, low-fat meal</button>
+        <button class="quiz-choice" data-idx="3">A piece of whole fruit</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Calcium/magnesium/aluminum antacids and iron chelate fluoroquinolones, reducing absorption. Space them &mdash; antibiotic 2 hours before or 6 hours after.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 11</div>
+      <div class="quiz-q-text">A patient develops red flushing of the face and neck during a rapid IV vancomycin infusion. What is the best action?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Give epinephrine for anaphylaxis</button>
+        <button class="quiz-choice" data-idx="1">Document it as a true allergy and switch antibiotics</button>
+        <button class="quiz-choice" data-idx="2">Slow or stop the infusion; this is Red Man Syndrome</button>
+        <button class="quiz-choice" data-idx="3">Continue the infusion and apply cool compresses</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Red Man Syndrome is histamine release from rapid infusion &mdash; not a true allergy. Slow/stop the infusion and consider diphenhydramine. Prevent by infusing over at least 60 minutes.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 12</div>
+      <div class="quiz-q-text">Which finding should the nurse report promptly during gentamicin therapy?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Mild nausea</button>
+        <button class="quiz-choice" data-idx="1">New tinnitus and rising creatinine</button>
+        <button class="quiz-choice" data-idx="2">Occasional headache</button>
+        <button class="quiz-choice" data-idx="3">Dry mouth</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Aminoglycosides cause ototoxicity (tinnitus, hearing loss, vertigo) and nephrotoxicity (rising BUN/creatinine). Monitor peak/trough levels and renal function.</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 13</div>
+      <div class="quiz-q-text">Sulfamethoxazole should be avoided in which patient?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">A non-pregnant adult with a UTI</button>
+        <button class="quiz-choice" data-idx="1">A patient with seasonal allergies</button>
+        <button class="quiz-choice" data-idx="2">A patient with mild hypertension</button>
+        <button class="quiz-choice" data-idx="3">A patient in the first trimester of pregnancy</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Sulfamethoxazole can increase birth-defect risk and is avoided in pregnancy, especially the first trimester. It remains a go-to for UTIs in non-pregnant patients.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 14</div>
+      <div class="quiz-q-text">A patient needs rapid relief of acute bronchospasm. Which inhaler should they use?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Albuterol (SABA)</button>
+        <button class="quiz-choice" data-idx="1">Fluticasone (ICS)</button>
+        <button class="quiz-choice" data-idx="2">Montelukast</button>
+        <button class="quiz-choice" data-idx="3">Ipratropium as a lone agent</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Albuterol is the rescue bronchodilator with onset in 5&ndash;15 minutes. Fluticasone and montelukast are controllers for prevention, not acute relief.</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 15</div>
+      <div class="quiz-q-text">A patient on inhaled fluticasone develops white patches in the mouth. What prevents this?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Taking the inhaler on an empty stomach</button>
+        <button class="quiz-choice" data-idx="1">Using a higher dose</button>
+        <button class="quiz-choice" data-idx="2">Rinsing the mouth with water after every use</button>
+        <button class="quiz-choice" data-idx="3">Holding the breath longer after each puff</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> White patches = oral candidiasis (thrush) from local immunosuppression. Rinsing the mouth after each use washes residual steroid off the mucosa.</div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 16</div>
+      <div class="quiz-q-text">A patient on montelukast reports new, persistent low mood and thoughts of self-harm. What should the nurse do?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Reassure them this is a minor, expected side effect</button>
+        <button class="quiz-choice" data-idx="1">Report to the provider immediately</button>
+        <button class="quiz-choice" data-idx="2">Tell them to stop it on their own</button>
+        <button class="quiz-choice" data-idx="3">Suggest taking it with food</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Montelukast carries a black-box warning for serious psychiatric effects including suicidal thoughts. Any mood change must be reported to the provider immediately.</div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 17</div>
+      <div class="quiz-q-text">Which finding most suggests theophylline toxicity?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Bradycardia and lethargy</button>
+        <button class="quiz-choice" data-idx="1">Urinary retention and dry mouth</button>
+        <button class="quiz-choice" data-idx="2">Orthostatic hypotension</button>
+        <button class="quiz-choice" data-idx="3">Tremors and seizures</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Theophylline has a narrow window. Toxicity looks like caffeine overdose: nausea, vomiting, restlessness, tremors, and seizures. Tachycardia/palpitations are expected side effects, not necessarily toxicity.</div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 18</div>
+      <div class="quiz-q-text">A patient on lithium has a creatinine of 2.8 mg/dL. What is the priority action?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Continue lithium and encourage fluids</button>
+        <button class="quiz-choice" data-idx="1">Halve the dose without notifying anyone</button>
+        <button class="quiz-choice" data-idx="2">Hold lithium and notify the provider</button>
+        <button class="quiz-choice" data-idx="3">Recheck creatinine in one week</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Lithium is cleared by the kidneys. Rising creatinine means reduced clearance and lithium accumulation &rarr; toxicity. Hold and notify immediately (therapeutic range 0.6&ndash;1.2 mEq/L).</div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 19</div>
+      <div class="quiz-q-text">A patient on long-term prednisone says they plan to stop it now that they feel better. Best response?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">"That's fine once symptoms resolve"</button>
+        <button class="quiz-choice" data-idx="1">"It must be tapered gradually to avoid adrenal crisis"</button>
+        <button class="quiz-choice" data-idx="2">"Stop immediately and monitor for inflammation"</button>
+        <button class="quiz-choice" data-idx="3">"Cut the dose in half for three days, then stop"</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Abrupt corticosteroid withdrawal can cause adrenal crisis &mdash; life-threatening hypotension. Prednisone suppresses the adrenal glands and must be tapered slowly.</div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 20</div>
+      <div class="quiz-q-text">Which drug combination is an absolute contraindication?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Famotidine and omeprazole</button>
+        <button class="quiz-choice" data-idx="1">Albuterol and fluticasone</button>
+        <button class="quiz-choice" data-idx="2">Diphenhydramine and acetaminophen</button>
+        <button class="quiz-choice" data-idx="3">Sildenafil and nitroglycerin</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Sildenafil + nitrates causes severe, life-threatening hypotension (both are vasodilators). This is an absolute contraindication &mdash; no dose adjustment makes it safe.</div>
+    </div>
+
+    <!-- Q21 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Question 21</div>
+      <div class="quiz-q-text">A patient in labor on IV oxytocin reports severe, constant abdominal pain and the abdomen feels rigid. Priority action?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Stop the oxytocin infusion immediately</button>
+        <button class="quiz-choice" data-idx="1">Increase the rate to complete delivery faster</button>
+        <button class="quiz-choice" data-idx="2">Document and reassess in 10 minutes</button>
+        <button class="quiz-choice" data-idx="3">Administer an epidural for pain</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Severe constant pain + rigid abdomen suggests uterine rupture &mdash; a life-threatening emergency. Stop the infusion immediately, call for help, and assess maternal vitals and fetal status.</div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Question 22</div>
+      <div class="quiz-q-text">Which statement about IV potassium is correct?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Rapid IV push is the fastest and safest correction</button>
+        <button class="quiz-choice" data-idx="1">It may be given undiluted via bolus</button>
+        <button class="quiz-choice" data-idx="2">It must be diluted and infused slowly (10&ndash;20 mEq/hour)</button>
+        <button class="quiz-choice" data-idx="3">It requires no cardiac monitoring</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> IV potassium is never pushed. Rapid administration causes cardiac arrest and fatal arrhythmias. Dilute it, infuse slowly, and monitor the rhythm.</div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Question 23</div>
+      <div class="quiz-q-text">Which route bypasses first-pass metabolism?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Oral tablet</button>
+        <button class="quiz-choice" data-idx="1">Intravenous (IV)</button>
+        <button class="quiz-choice" data-idx="2">Subcutaneous injection only</button>
+        <button class="quiz-choice" data-idx="3">Rectal suppository only</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> IV drugs enter the bloodstream directly with 100% bioavailability, bypassing the liver's first-pass metabolism that oral drugs undergo. Sublingual administration also largely bypasses it.</div>
+    </div>
+
+    <!-- Q24 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Question 24</div>
+      <div class="quiz-q-text">Which set of antidote pairs is correct?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Opioids &rarr; flumazenil; acetaminophen &rarr; naloxone</button>
+        <button class="quiz-choice" data-idx="1">Opioids &rarr; acetylcysteine; benzodiazepines &rarr; naloxone</button>
+        <button class="quiz-choice" data-idx="2">Acetaminophen &rarr; flumazenil; benzodiazepines &rarr; acetylcysteine</button>
+        <button class="quiz-choice" data-idx="3">Opioids &rarr; naloxone; acetaminophen &rarr; acetylcysteine; benzodiazepines &rarr; flumazenil</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> The three high-yield antidote pairs: naloxone for opioids, acetylcysteine for acetaminophen, and flumazenil for benzodiazepines.</div>
+    </div>
+
+    <!-- Quiz Nav -->
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="btn btn-secondary" id="quiz-prev" onclick="quizNav(-1)" disabled>Previous</button>
+      <button class="btn btn-primary" id="quiz-next" onclick="quizNav(1)">Next</button>
+    </div>
+
+    <!-- Quiz Result -->
+    <div id="quiz-result">
+      <div class="score-circle"><span id="score-num">0</span><span class="score-lbl">/ 24</span></div>
+      <h3 id="score-msg"></h3>
+      <p id="score-detail"></p>
+      <button class="btn btn-success" onclick="resetQuiz()">Retake Quiz</button>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#9650;</button>
+
+<footer style="text-align:center;padding:30px 20px 50px;color:#94a3b8;font-size:0.8rem;border-top:1px solid var(--gray-200);margin-top:20px">
+  &copy; Tehrani Labs &middot; tehranilabs.org<br>
+  Pharmacology &mdash; Core Concepts, Safety &amp; Priority &middot; Interactive Study Guide
+</footer>
+
+<script>
+/* -- TABS -- */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('.section-wrap');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const t = btn.dataset.tab;
+    sections.forEach(s => {
+      s.classList.toggle('active', s.id === 'sec-' + t);
+    });
+    window.scrollTo({ top: document.getElementById('main-content').offsetTop - 80, behavior: 'smooth' });
+  });
+});
+
+/* -- ACCORDIONS -- */
+document.querySelectorAll('.acc-header').forEach(h => {
+  h.addEventListener('click', () => {
+    h.closest('.acc-card').classList.toggle('open');
+  });
+});
+
+/* -- FLIP CARDS -- */
+document.querySelectorAll('.flip-card').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('flipped'));
+});
+
+/* -- SCENARIO REVEALS -- */
+document.querySelectorAll('.scenario-reveal').forEach(box => {
+  box.addEventListener('click', () => box.classList.add('reveal'));
+});
+
+/* -- SCROLL / BACK TO TOP -- */
+window.addEventListener('scroll', () => {
+  document.getElementById('back-top').classList.toggle('show', document.documentElement.scrollTop > 300);
+});
+
+/* -- QUIZ ENGINE -- */
+const quizQs = document.querySelectorAll('.quiz-q');
+let currentQ = 0, score = 0, answered = new Array(quizQs.length).fill(false);
+
+function showQuestion(idx) {
+  quizQs.forEach((q, i) => q.classList.toggle('active', i === idx));
+  document.getElementById('quiz-prev').disabled = idx === 0;
+  const nextBtn = document.getElementById('quiz-next');
+  nextBtn.textContent = idx === quizQs.length - 1 ? 'Finish Quiz' : 'Next';
+  document.getElementById('quiz-bar').style.width = ((idx + 1) / quizQs.length * 100) + '%';
+}
+
+quizQs.forEach((q, qi) => {
+  const correct = parseInt(q.dataset.correct);
+  const choices = q.querySelectorAll('.quiz-choice');
+  const fb = q.querySelector('.quiz-feedback');
+  choices.forEach(ch => {
+    ch.addEventListener('click', () => {
+      if (answered[qi]) return;
+      answered[qi] = true;
+      const pick = parseInt(ch.dataset.idx);
+      choices.forEach(c => c.disabled = true);
+      if (pick === correct) {
+        ch.classList.add('correct');
+        fb.classList.add('show', 'correct-fb');
+        score++;
+      } else {
+        ch.classList.add('wrong');
+        choices[correct].classList.add('correct');
+        fb.classList.add('show', 'wrong-fb');
+        fb.innerHTML = '<strong>Not quite.</strong> ' + fb.innerHTML.replace(/<strong>Correct!<\/strong>\s*/, '');
+      }
+    });
+  });
+});
+
+function quizNav(dir) {
+  const next = currentQ + dir;
+  if (next < 0) return;
+  if (next >= quizQs.length) {
+    quizQs.forEach(q => q.classList.remove('active'));
+    document.getElementById('quiz-nav').style.display = 'none';
+    const result = document.getElementById('quiz-result');
+    result.style.display = 'block';
+    document.getElementById('score-num').textContent = score;
+    const pct = score / quizQs.length * 100;
+    let msg, detail;
+    if (pct >= 90) { msg = 'Outstanding!'; detail = 'You have excellent mastery of this material.'; }
+    else if (pct >= 70) { msg = 'Great Work!'; detail = 'Solid understanding -- review the topics you missed.'; }
+    else if (pct >= 50) { msg = 'Good Effort!'; detail = 'Review the study content for topics you missed and try again.'; }
+    else { msg = 'Keep Studying!'; detail = 'Go back through each tab and focus on the key concepts before retaking.'; }
+    document.getElementById('score-msg').textContent = msg;
+    document.getElementById('score-detail').textContent = detail;
+    return;
+  }
+  currentQ = next;
+  showQuestion(currentQ);
+}
+
+function resetQuiz() {
+  score = 0; currentQ = 0;
+  answered = new Array(quizQs.length).fill(false);
+  quizQs.forEach(q => {
+    q.querySelectorAll('.quiz-choice').forEach(c => { c.disabled = false; c.classList.remove('correct', 'wrong'); });
+    const fb = q.querySelector('.quiz-feedback');
+    fb.classList.remove('show', 'correct-fb', 'wrong-fb');
+    fb.innerHTML = fb.innerHTML.replace(/^<strong>Not quite\.<\/strong>\s*/, '');
+  });
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-nav').style.display = 'flex';
+  showQuestion(0);
+}
+
+/* -- QUICK CHECK INLINE QUESTIONS -- */
+document.querySelectorAll('.qc-question').forEach(q=>{
+  const correct=q.dataset.answer;
+  const choices=q.querySelectorAll('.qc-choice');
+  const fb=q.querySelector('.qc-feedback');
+  let answered=false;
+  choices.forEach(ch=>{
+    ch.addEventListener('click',()=>{
+      if(answered) return;
+      answered=true;
+      choices.forEach(c=>c.disabled=true);
+      if(ch.dataset.val===correct){
+        ch.classList.add('qc-correct');
+      } else {
+        ch.classList.add('qc-wrong');
+        choices.forEach(c=>{if(c.dataset.val===correct) c.classList.add('qc-correct');});
+      }
+      if(fb) fb.classList.add('show');
+    });
+  });
+});
+
+/* -- MASTERY CHECKLIST (localStorage) -- */
+(function(){
+  const list = document.getElementById('masteryList');
+  if(!list) return;
+  const items = list.querySelectorAll('li');
+  const KEY = 'pharm_core_mastery_v1';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { saved = {}; }
+  function update(){
+    let done = 0;
+    items.forEach(li => {
+      const k = li.dataset.k;
+      const cb = li.querySelector('input');
+      if (cb.checked) { li.classList.add('done'); done++; }
+      else li.classList.remove('done');
+      if (k) saved[k] = cb.checked;
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e) {}
+    const bar = document.getElementById('masteryBar');
+    const count = document.getElementById('masteryCount');
+    const pct = Math.round((done / items.length) * 100);
+    bar.style.width = pct + '%';
+    count.textContent = done + ' / ' + items.length + ' mastered (' + pct + '%)';
+  }
+  items.forEach(li => {
+    const cb = li.querySelector('input');
+    if (cb && li.dataset.k && saved[li.dataset.k]) cb.checked = true;
+    cb.addEventListener('change', update);
+    li.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'INPUT') { cb.checked = !cb.checked; update(); }
+    });
+  });
+  update();
+})();
+
+/* initialize quiz view */
+showQuestion(0);
+</script>
+</body>
+</html>
