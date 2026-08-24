@@ -18,6 +18,25 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-08-06T16:47:11.759216"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-08-23T23:58:00",
+      "error_message": "Hero section (kicker, H1, lede, chips, example) rendered completely blank on page 1 when the guide was printed or exported to PDF",
+      "file": "CHM125_Workshop1_FactorLabeling_Guide.html",
+      "root_cause": "Entrance animation .fade sets opacity:0 and relies on a CSS @keyframes to fade in. Print and headless PDF rendering snapshot the page before animations complete, so the elements stayed at opacity:0 and printed blank. Screen rendering was fine, which is why it was missed until page 1 of a PDF export was actually inspected.",
+      "fix": "Added @media print{.fade{opacity:1!important;transform:none!important;animation:none!important}} so animated-in content is forced visible on paper. Verified by re-rendering page 1 via headless Chrome.",
+      "tags": [
+        "css",
+        "animation",
+        "print",
+        "pdf",
+        "opacity",
+        "study-guide"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-23T23:58:00"
     }
   ]
 }

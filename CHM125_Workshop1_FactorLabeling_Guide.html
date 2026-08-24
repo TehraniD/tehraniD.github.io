@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM125 Workshop 1 — The Railroad Track Method (Factor Labeling)</title>
+<meta name="description" content="CHM125 Workshop 1: the factor labeling method. Converting-to on top, converting-from on the bottom, the 1000-staircase of metric prefixes, four formula triangles, and a verified key to all 25 practice problems.">
+<style>
+:root{
+  --paper:#eef1f4; --surface:#ffffff; --surface-2:#f6f8fa;
+  --ink:#182a32; --ink-soft:#4a5b64; --ink-faint:#7c8b93;
+  --line:#d7dee3; --line-strong:#c2ccd2;
+  --rail:#0e7c86; --rail-deep:#0a5e66; --rail-wash:#e2f1f2;
+  --signal:#c2740f; --signal-wash:#fbf0dd;
+  --cancel:#d1434e; --good:#1f9155; --good-wash:#e2f4ea;
+  --from:#8a4b9c; --to:#d9781d;
+  --shadow:0 1px 2px rgba(24,42,50,.06),0 8px 24px rgba(24,42,50,.06);
+  --radius:14px;
+  --mono:"SF Mono",ui-monospace,"Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0d1418; --surface:#151f25; --surface-2:#1a262d;
+  --ink:#e7eef1; --ink-soft:#a9b8bf; --ink-faint:#78888f;
+  --line:#26343b; --line-strong:#33444c;
+  --rail:#3bb6bf; --rail-deep:#2a9aa3; --rail-wash:#123336;
+  --signal:#e2a44c; --signal-wash:#2a220f;
+  --cancel:#f0666f; --good:#49bd80; --good-wash:#122a1e;
+  --from:#c58fd8; --to:#f0a24e;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --paper:#0d1418; --surface:#151f25; --surface-2:#1a262d;
+  --ink:#e7eef1; --ink-soft:#a9b8bf; --ink-faint:#78888f;
+  --line:#26343b; --line-strong:#33444c;
+  --rail:#3bb6bf; --rail-deep:#2a9aa3; --rail-wash:#123336;
+  --signal:#e2a44c; --signal-wash:#2a220f;
+  --cancel:#f0666f; --good:#49bd80; --good-wash:#122a1e;
+  --from:#c58fd8; --to:#f0a24e;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+h1,h2,h3{line-height:1.12;text-wrap:balance;letter-spacing:-.02em;font-weight:800}
+p{margin:0 0 1rem}
+.eyebrow{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--rail);display:inline-flex;align-items:center;gap:.55em;margin:0 0 .5rem}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--rail);display:inline-block;border-radius:2px}
+header.hero{padding:76px 0 30px;border-bottom:1px solid var(--line);background:radial-gradient(120% 90% at 100% 0%, var(--rail-wash) 0%, transparent 55%)}
+.hero .kicker{font-family:var(--mono);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--signal);font-weight:600;margin-bottom:16px}
+.hero h1{font-size:clamp(2.5rem,7vw,4rem);margin:0 0 .35em}
+.hero h1 .accent{color:var(--rail)}
+.hero .lede{font-size:clamp(1.1rem,2.4vw,1.32rem);color:var(--ink-soft);max-width:40ch;margin-bottom:26px}
+.can-do{display:flex;flex-wrap:wrap;gap:8px}
+.can-do span{font-family:var(--mono);font-size:.78rem;background:var(--surface);border:1px solid var(--line);padding:7px 13px;border-radius:999px;color:var(--ink-soft);box-shadow:var(--shadow)}
+.trackbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;box-shadow:var(--shadow);margin:20px 0;overflow-x:auto}
+.trackbox .cap{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;display:block}
+.track{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;font-family:var(--mono);font-size:1.06rem;line-height:1.25}
+.start{font-weight:700;padding:2px 4px}
+.factor{display:inline-flex;flex-direction:column;text-align:center}
+.factor .num,.factor .den{padding:3px 12px;white-space:nowrap}
+.factor .den{border-top:2px solid var(--ink)}
+.op,.eq{color:var(--ink-faint);font-weight:700;padding:0 4px}
+.result{font-weight:800;color:var(--good);background:var(--good-wash);padding:6px 12px;border-radius:8px;white-space:nowrap}
+u.x{color:var(--cancel);text-decoration:line-through;text-decoration-thickness:2px;font-weight:700;opacity:.85}
+b.keep{color:var(--rail)}
+.legend{margin-top:14px;font-family:var(--mono);font-size:.72rem;color:var(--ink-faint);display:flex;gap:18px;flex-wrap:wrap}
+.legend i{font-style:normal}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+section{padding:46px 0;border-bottom:1px solid var(--line)}
+section h2{font-size:clamp(1.6rem,4vw,2.1rem);margin:0 0 .5em}
+.step-n{font-family:var(--mono);color:var(--rail);font-weight:700;font-size:.9rem;border:1.5px solid var(--rail);border-radius:8px;padding:2px 9px;margin-right:2px}
+.big-idea{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:700;line-height:1.4;border-left:4px solid var(--rail);padding:4px 0 4px 20px;margin:8px 0 4px}
+.big-idea b{color:var(--rail)}
+.moves{display:grid;gap:14px;margin-top:22px}
+@media(min-width:620px){.moves{grid-template-columns:repeat(3,1fr)}}
+.move{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.move .mn{font-family:var(--mono);font-size:.75rem;color:var(--signal);font-weight:700;letter-spacing:.1em}
+.move h3{font-size:1.12rem;margin:.35em 0 .3em}
+.move p{margin:0;font-size:.95rem;color:var(--ink-soft)}
+.call{border-radius:var(--radius);padding:16px 18px;margin:20px 0;border:1px solid}
+.call .tag{font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px}
+.call p{margin:0}.call p+p{margin-top:.6em}
+.call.trick{background:var(--signal-wash);border-color:var(--signal)} .call.trick .tag{color:var(--signal)}
+.call.watch{background:color-mix(in srgb,var(--cancel) 9%,transparent);border-color:var(--cancel)} .call.watch .tag{color:var(--cancel)}
+.call.sanity{background:var(--rail-wash);border-color:var(--rail)} .call.sanity .tag{color:var(--rail-deep)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .call.sanity .tag{color:var(--rail)}}
+:root[data-theme="dark"] .call.sanity .tag{color:var(--rail)}
+/* FROM->TO diagram */
+.ftwrap{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:22px;margin:22px 0;overflow-x:auto}
+.ftsvg{width:100%;min-width:520px;height:auto;display:block}
+.fs-box{font-family:var(--sans);font-weight:800;font-size:30px;fill:#fff;text-anchor:middle}
+.fs-sub{font-family:var(--mono);font-weight:700;font-size:15px;fill:#fff;opacity:.92;text-anchor:middle;letter-spacing:.1em}
+.fs-fr{font-family:var(--mono);font-weight:800;font-size:38px;text-anchor:middle}
+.fs-cap{font-family:var(--sans);font-size:19px;fill:var(--ink);}
+.fs-bar{stroke:var(--ink);stroke-width:3.5;stroke-linecap:round}
+.fs-conn{fill:none;stroke:var(--ink-soft);stroke-width:2.5}
+/* staircase */
+.stair{display:grid;gap:0;margin:20px 0;font-family:var(--mono)}
+.srow{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-bottom:none;background:var(--surface);padding:11px 16px}
+.srow:first-child{border-radius:10px 10px 0 0}
+.srow:last-child{border-bottom:1px solid var(--line);border-radius:0 0 10px 10px}
+.srow.base{background:var(--rail-wash)}
+.srow.mid{background:var(--signal-wash)}
+.srow .nm{font-weight:700}.srow .nm small{color:var(--ink-faint);font-weight:400;margin-left:8px}
+.srow .val{color:var(--rail);font-weight:700;text-align:right;font-size:.92rem}
+.srow.mid .val{color:var(--signal)}
+.stepgap{font-family:var(--mono);font-size:.74rem;color:var(--ink-faint);text-align:center;padding:3px 0;letter-spacing:.08em}
+/* triangles */
+.tri-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:26px;margin:20px 0}
+.tri-card .tt{font-family:var(--mono);font-size:.75rem;letter-spacing:.13em;text-transform:uppercase;color:var(--signal);font-weight:700;margin-bottom:2px}
+.tri-card .tf{font-family:var(--mono);font-size:.92rem;color:var(--ink-faint);margin-bottom:20px}
+.tri-card .tf b{color:var(--rail)}
+.tri-grid{display:grid;gap:26px;align-items:center}
+@media(min-width:600px){.tri-grid{grid-template-columns:300px 1fr}}
+.tri{width:100%;max-width:300px;height:auto;margin:0 auto;display:block}
+.tri-fill{fill:var(--rail-wash);stroke:var(--rail);stroke-width:3;stroke-linejoin:round}
+.tri-div{stroke:var(--rail);stroke-width:2.5;opacity:.55}
+.tri-var{font-family:var(--mono);font-weight:800;font-size:56px;fill:var(--ink);text-anchor:middle;dominant-baseline:middle}
+.tri-sub{font-family:var(--mono);font-size:15px;fill:var(--ink-faint);text-anchor:middle;dominant-baseline:middle;letter-spacing:.04em}
+.tri-opc{fill:var(--surface)}
+.tri-op{font-family:var(--mono);font-weight:800;font-size:26px;fill:var(--signal);text-anchor:middle;dominant-baseline:middle}
+.readoffs{display:grid;gap:11px}
+.ro{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:1rem;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px 15px}
+.ro .cv{background:var(--ink);color:var(--surface);border-radius:7px;padding:3px 10px;font-size:.82rem;font-weight:700;white-space:nowrap}
+.ro .arw{color:var(--ink-faint)}
+.ro b{color:var(--good);font-weight:800;font-size:1.05rem}
+.ro b em{color:var(--ink-faint);font-style:normal;font-weight:500;font-size:.85rem}
+.tri-eg{margin-top:18px;font-family:var(--mono);font-size:.9rem;color:var(--ink-soft);background:var(--good-wash);border:1px solid color-mix(in srgb,var(--good) 30%,transparent);border-radius:10px;padding:12px 15px}
+.tri-eg b{color:var(--good)}
+/* exponent */
+.expo{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:26px;margin:20px 0}
+.expo .tt{font-family:var(--mono);font-size:.75rem;letter-spacing:.13em;text-transform:uppercase;color:var(--signal);font-weight:700;margin-bottom:10px}
+.rule2{display:grid;gap:12px;margin:18px 0}
+@media(min-width:520px){.rule2{grid-template-columns:1fr 1fr}}
+.dchip{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface-2)}
+.dchip .dir{font-family:var(--mono);font-weight:800;font-size:1.05rem;color:var(--rail);margin-bottom:4px}
+.dchip .eff{font-size:.92rem;color:var(--ink-soft)}
+.dchip .eff b{color:var(--signal)}
+.expo-demo{font-family:var(--mono);border:1px dashed var(--line-strong);border-radius:12px;padding:18px;margin-top:16px;overflow-x:auto}
+.expo-demo .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:1.05rem;margin:6px 0}
+.expo-demo .lbl{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);width:100%;margin-top:8px}
+.expo-demo .slide{color:var(--signal);font-weight:700;font-size:.9rem}
+.expo-demo .match{color:var(--rail);font-weight:800}
+.expo-demo .fin{color:var(--good);font-weight:800}
+/* tables */
+.tbl-wrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;font-size:.95rem;background:var(--surface);min-width:440px}
+caption{caption-side:top;text-align:left;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);padding:14px 16px 4px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+tbody tr:last-child td{border-bottom:none}
+td.mono,th.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td .fac{font-family:var(--mono);color:var(--rail);font-weight:600}
+td.ansv{font-family:var(--mono);font-weight:800;color:var(--good);white-space:nowrap}
+td.setup{font-family:var(--mono);font-size:.86rem;color:var(--ink-soft)}
+td.qn{font-family:var(--mono);color:var(--rail);font-weight:700}
+tbody tr.grp td{background:var(--surface-2);font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);font-weight:700}
+/* hooks */
+.hooks{display:grid;gap:12px;margin-top:20px}
+.hook{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 17px;box-shadow:var(--shadow)}
+.hook .num{font-family:var(--mono);font-weight:800;color:var(--signal);font-size:1.05rem;flex:none;width:30px;height:30px;display:grid;place-items:center;border:1.5px solid var(--signal);border-radius:8px}
+.hook h3{font-size:1rem;margin:.1em 0 .25em}
+.hook p{margin:0;font-size:.93rem;color:var(--ink-soft)}
+.must{counter-reset:m;list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px}
+.must li{counter-increment:m;position:relative;padding:14px 16px 14px 58px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.must li::before{content:counter(m);position:absolute;left:14px;top:13px;font-family:var(--mono);font-weight:800;color:var(--surface);background:var(--rail);width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:.95rem}
+footer{padding:40px 0 60px;color:var(--ink-faint);font-family:var(--mono);font-size:.8rem;text-align:center}
+@media (prefers-reduced-motion:no-preference){.fade{opacity:0;transform:translateY(14px);animation:rise .6s ease forwards}@keyframes rise{to{opacity:1;transform:none}}}
+/* Animations never complete in print/PDF — force the entrance state visible so the hero is not blank on paper. */
+@media print{.fade{opacity:1 !important;transform:none !important;animation:none !important}}
+:focus-visible{outline:2.5px solid var(--rail);outline-offset:2px;border-radius:4px}
+</style>
+
+<style>
+.sitebar{position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+  padding:10px 22px;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.sitebar a{font-family:var(--mono);font-size:.8rem;text-decoration:none;color:var(--ink-soft);
+  border:1px solid var(--line);padding:7px 13px;border-radius:999px;transition:.15s}
+.sitebar a:hover{color:var(--rail);border-color:var(--rail)}
+.sitebar a.dl{color:var(--rail);border-color:var(--rail);font-weight:700}
+.sitebar .grp{display:flex;gap:8px;flex-wrap:wrap}
+@media print{.sitebar{display:none}}
+</style>
+</head>
+<body>
+
+<nav class="sitebar">
+  <div class="grp">
+    <a href="chemistry-workshops/">&larr; Chemistry Workshops</a>
+    <a href="/">Tehrani Labs Home</a>
+  </div>
+  <div class="grp">
+    <a class="dl" href="CHM125_Factor_Labeling_Reference.pdf">&#128196; Reference Sheet (PDF)</a>
+  </div>
+</nav>
+
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker fade">CHEM 125 · Workshop 1 · Life Chemistry Lab</div>
+    <h1 class="fade">The <span class="accent">Railroad Track</span> Method</h1>
+    <p class="lede fade">One rule runs every calculation in Workshop 1: the unit you're converting <em>to</em> goes on top, the unit you're converting <em>from</em> goes on the bottom. The "from" cancels — done.</p>
+    <div class="can-do fade">
+      <span>cm → in</span><span>lb → g</span><span>mL → L</span><span>cm³ → mm³</span><span>g → mol</span><span>mol → atoms</span>
+    </div>
+    <div class="trackbox fade" style="margin-top:28px">
+      <span class="cap">The whole idea, in one line — convert 14.5 cm to inches</span>
+      <div class="track">
+        <span class="start">14.5&nbsp;<u class="x">cm</u></span><span class="op">×</span>
+        <span class="factor"><span class="num">1.00&nbsp;<b class="keep">in</b></span><span class="den">2.54&nbsp;<u class="x">cm</u></span></span>
+        <span class="eq">=</span><span class="result">5.71 in</span>
+      </div>
+      <div class="legend">
+        <i><span class="sw" style="background:var(--cancel)"></span>the "from" unit cancels</i>
+        <i><span class="sw" style="background:var(--rail)"></span>the "to" unit survives</i>
+        <i><span class="sw" style="background:var(--good)"></span>answer</i>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <div class="eyebrow">The one big idea</div>
+  <h2><span class="step-n">01</span> Units are just algebra</h2>
+  <p>In algebra, when the same thing sits on the top and the bottom of a fraction, it cancels:</p>
+  <div class="trackbox"><div class="track" style="justify-content:center">
+    <span class="factor"><span class="num">x · y</span><span class="den">x</span></span><span class="eq">=</span><span class="result">y</span>
+  </div></div>
+  <p class="big-idea">Units do the <b>exact</b> same thing. If <b>cm</b> is on top and <b>cm</b> is on the bottom, they cancel — the same way an <i>x</i> cancels an <i>x</i>.</p>
+  <p style="margin-top:16px">Your workshop says it directly: <em>"one may treat the unit like an algebraic variable."</em> That's the entire method. You're not memorizing formulas — you're stacking fractions so the unit you don't want cancels itself out, leaving the unit you <em>do</em> want.</p>
+</section>
+
+<section>
+  <div class="eyebrow">The one rule</div>
+  <h2><span class="step-n">02</span> "To" on top, "from" on the bottom</h2>
+  <p>Here is the whole method in one sentence. When you write a conversion factor as a fraction:</p>
+  <p class="big-idea">The unit you are converting <b>TO</b> goes on the <b>top</b>.<br>The unit you are converting <b>FROM</b> goes on the <b>bottom</b>.</p>
+  <p style="margin-top:16px">Because your starting amount already carries the "from" unit on top, putting "from" on the <em>bottom</em> of the factor makes it cancel automatically — and the "to" unit is what's left standing. You never have to guess which way up the fraction goes.</p>
+
+  <div class="ftwrap">
+    <svg class="ftsvg" viewBox="0 0 920 450" role="img" aria-label="Diagram: converting meters to centimeters. The unit you are converting to (cm) goes on the top of the fraction; the unit you are converting from (m) goes on the bottom.">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/>
+        </marker>
+        <linearGradient id="bigarrow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--ink-faint)" stop-opacity=".25"/>
+          <stop offset="100%" stop-color="var(--ink-faint)" stop-opacity=".85"/>
+        </linearGradient>
+      </defs>
+      <rect x="45" y="22" width="310" height="106" rx="16" fill="var(--from)"/>
+      <text class="fs-box" x="200" y="68">Meters (m)</text>
+      <text class="fs-sub" x="200" y="99">CONVERTING FROM</text>
+      <path d="M378,60 L505,60 L505,45 L548,75 L505,105 L505,90 L378,90 Z" fill="url(#bigarrow)"/>
+      <rect x="565" y="22" width="310" height="106" rx="16" fill="var(--to)"/>
+      <text class="fs-box" x="720" y="68">Centimeters (cm)</text>
+      <text class="fs-sub" x="720" y="99">CONVERTING TO</text>
+      <text class="fs-fr" x="460" y="252" fill="var(--to)">100 cm</text>
+      <line class="fs-bar" x1="378" y1="272" x2="542" y2="272"/>
+      <text class="fs-fr" x="460" y="316" fill="var(--from)">1 m</text>
+      <path class="fs-conn" d="M716,134 C716,196 634,238 556,247" marker-end="url(#ah)"/>
+      <path class="fs-conn" d="M204,134 C204,238 292,300 364,310" marker-end="url(#ah)"/>
+      <text class="fs-cap" x="596" y="304">The unit you are</text>
+      <text class="fs-cap" x="596" y="330">converting <tspan font-weight="800" fill="var(--to)">to</tspan> is on the <tspan font-weight="800" fill="var(--to)">top</tspan>.</text>
+      <text class="fs-cap" x="48" y="366">The unit you are converting</text>
+      <text class="fs-cap" x="48" y="392"><tspan font-weight="800" fill="var(--from)">from</tspan> is on the <tspan font-weight="800" fill="var(--from)">bottom</tspan>.</text>
+    </svg>
+  </div>
+
+  <div class="trackbox">
+    <span class="cap">Put it to work — convert 3.00 m to cm</span>
+    <div class="track">
+      <span class="start">3.00&nbsp;<u class="x">m</u></span><span class="op">×</span>
+      <span class="factor"><span class="num">100&nbsp;<b class="keep">cm</b></span><span class="den">1&nbsp;<u class="x">m</u></span></span>
+      <span class="eq">=</span><span class="result">3.00 × 10² cm</span>
+    </div>
+  </div>
+
+  <div class="moves">
+    <div class="move"><div class="mn">STEP 1</div><h3>Name your FROM and TO</h3><p>What unit do you have (from)? What unit do you want (to)? Write the starting amount — it carries the "from" unit.</p></div>
+    <div class="move"><div class="mn">STEP 2</div><h3>Build the factor</h3><p>Write the conversion fraction with the <em>to</em> unit on top and the <em>from</em> unit on the bottom.</p></div>
+    <div class="move"><div class="mn">STEP 3</div><h3>Cancel &amp; solve</h3><p>The "from" units cancel top-and-bottom. Multiply by the top number, divide by the bottom number.</p></div>
+  </div>
+
+  <div class="call trick"><span class="tag">⚡ Why you never guess "multiply or divide"</span>
+    <p>The rule decides for you. Put <strong>to</strong> on top and <strong>from</strong> on the bottom, and the setup is automatically correct. Multiplying by the top and dividing by the bottom just falls out of the fraction.</p></div>
+  <div class="call watch"><span class="tag">⚠ Watch out</span>
+    <p>If the unit didn't cancel, the factor went in upside down — you have <strong>from</strong> on top by mistake. Flip it so <strong>from</strong> sits on the bottom, underneath your starting amount.</p></div>
+</section>
+
+<section>
+  <div class="eyebrow">Metric prefixes</div>
+  <h2><span class="step-n">03</span> The 1000-staircase</h2>
+  <p>Your workshop's prefix table looks like seven things to memorize. It isn't — it's <strong>one staircase plus two in-between steps</strong>. Five of the seven prefixes sit exactly <strong>1000 apart</strong>, in a row:</p>
+  <div class="stair">
+    <div class="srow"><span class="nm">Mega <small>M</small></span><span class="val">1.0 × 10⁶ &nbsp;·&nbsp; 1.00 Mg = 1,000,000 g</span></div>
+    <div class="stepgap">▲ × 1000 ▼</div>
+    <div class="srow"><span class="nm">kilo <small>k</small></span><span class="val">1.0 × 10³ &nbsp;·&nbsp; 1.00 kg = 1000 g</span></div>
+    <div class="stepgap">▲ × 1000 ▼</div>
+    <div class="srow base"><span class="nm">BASE <small>gram · liter · meter</small></span><span class="val">10⁰ = 1</span></div>
+    <div class="stepgap">▲ × 1000 ▼</div>
+    <div class="srow"><span class="nm">milli <small>m</small></span><span class="val">1.0 × 10⁻³ &nbsp;·&nbsp; 1000 mg = 1.0 g</span></div>
+    <div class="stepgap">▲ × 1000 ▼</div>
+    <div class="srow"><span class="nm">micro <small>mc</small></span><span class="val">1.0 × 10⁻⁶ &nbsp;·&nbsp; 1,000,000 mcg = 1.0 g</span></div>
+    <div class="stepgap">▲ × 1000 ▼</div>
+    <div class="srow"><span class="nm">nano <small>n</small></span><span class="val">1.0 × 10⁻⁹ &nbsp;·&nbsp; 1,000,000,000 ng = 1.0 g</span></div>
+  </div>
+  <p>Then just <strong>two extras</strong> squeeze between the base unit and milli — these are the only ones that break the 1000 pattern:</p>
+  <div class="stair">
+    <div class="srow mid"><span class="nm">deci <small>d</small></span><span class="val">1.0 × 10⁻¹ &nbsp;·&nbsp; 10.0 dL = 1.0 L</span></div>
+    <div class="srow mid"><span class="nm">centi <small>c</small></span><span class="val">1.0 × 10⁻² &nbsp;·&nbsp; 100 cm = 1.0 m</span></div>
+  </div>
+  <div class="trackbox"><span class="cap">Convert 0.653 L to mL &nbsp;— "to" is mL, so mL goes on top</span>
+    <div class="track"><span class="start">0.653&nbsp;<u class="x">L</u></span><span class="op">×</span>
+      <span class="factor"><span class="num">1000&nbsp;<b class="keep">mL</b></span><span class="den">1&nbsp;<u class="x">L</u></span></span>
+      <span class="eq">=</span><span class="result">653 mL</span></div></div>
+  <div class="call sanity"><span class="tag">✓ Sanity check</span>
+    <p>Milliliters are <em>smaller</em> pieces, so you need <em>more</em> of them → the number should get <strong>bigger</strong>. 0.653 → 653. ✔ If your answer shrank instead, you built the factor upside down.</p></div>
+</section>
+
+<section>
+  <div class="eyebrow">Multi-step</div>
+  <h2><span class="step-n">04</span> Chaining &amp; powered units</h2>
+  <p>No single conversion factor? <strong>Add another fraction</strong> — one per step. Each one follows the same rule, so each unit cancels the next until only your target survives. Your workshop calls this doing it "serially."</p>
+  <div class="trackbox"><span class="cap">Convert 4.53 kg to lbs &nbsp;(1 kg = 1000 g · 454 g = 1.00 lb)</span>
+    <div class="track"><span class="start">4.53&nbsp;<u class="x">kg</u></span><span class="op">×</span>
+      <span class="factor"><span class="num">1000&nbsp;<u class="x">g</u></span><span class="den">1&nbsp;<u class="x">kg</u></span></span><span class="op">×</span>
+      <span class="factor"><span class="num">1.00&nbsp;<b class="keep">lb</b></span><span class="den">454&nbsp;<u class="x">g</u></span></span>
+      <span class="eq">=</span><span class="result">9.98 lb</span></div></div>
+  <p><b style="color:var(--cancel)">kg</b> cancels <b style="color:var(--cancel)">kg</b>, then <b style="color:var(--cancel)">g</b> cancels <b style="color:var(--cancel)">g</b>. The only unit left standing is <b class="keep">lb</b> — proof the chain is built correctly.</p>
+
+  <div class="call trick"><span class="tag">⚡ Squared and cubed units</span>
+    <p><strong>cm² means cm × cm, so the conversion happens twice. cm³ means cm × cm × cm, so it happens three times</strong> — and you square or cube the <em>number</em> too, not just the unit.</p>
+    <p style="font-family:var(--mono);font-size:.92rem;margin-top:.7em">98.4 in² × (2.54 cm / 1.00 in)² = 98.4 × 6.4516 = <b style="color:var(--good)">635 cm²</b></p>
+    <p style="font-family:var(--mono);font-size:.92rem">26.2 cm³ × (10 mm / 1 cm)³ = 26.2 × 1000 = <b style="color:var(--good)">2.62 × 10⁴ mm³</b></p></div>
+</section>
+
+<section>
+  <div class="eyebrow">Getting the answer right, not just close</div>
+  <h2><span class="step-n">05</span> Exact vs. measured factors</h2>
+  <p>This is the part that costs points in Lab 1, and almost nobody teaches it. <strong>Not all conversion factors limit your significant figures.</strong> There are two kinds:</p>
+  <div class="tbl-wrap"><table>
+    <caption>Which factors count toward sig figs?</caption>
+    <thead><tr><th>Kind of factor</th><th>Examples</th><th>Effect on sig figs</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Exact</strong> — a definition, infinitely precise</td><td class="mono">1 kg = 1000 g<br>100 cm = 1 m<br>1 cm³ = 1 mL<br>10 mm = 1 cm</td><td><strong>None.</strong> Never limits your answer. Sig figs come only from the measured value.</td></tr>
+      <tr><td><strong>Measured / rounded</strong> — a lab value someone determined</td><td class="mono">454 g = 1.00 lb <em>(3 sf)</em><br>29.5 mL = 1.00 fl oz <em>(3 sf)</em><br>55.85 g/mol <em>(4 sf)</em><br>6.02 × 10²³ <em>(3 sf)</em></td><td><strong>Yes.</strong> Counts like any other measurement — it can limit your answer.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call sanity"><span class="tag">✓ See the difference</span>
+    <p><strong>2348 mL → L.</strong> The factor (1 L = 1000 mL) is <em>exact</em>, so it doesn't limit anything. 2348 has <strong>4</strong> sig figs, so the answer keeps 4: <strong style="font-family:var(--mono);color:var(--good)">2.348 L</strong> — not 2.35 L.</p>
+    <p><strong>36.8 lb → g.</strong> Here the factor (454 g) is <em>measured</em> with 3 sig figs, and 36.8 also has 3, so the answer gets 3: <strong style="font-family:var(--mono);color:var(--good)">1.67 × 10⁴ g</strong> — not 16,707 g.</p></div>
+  <div class="call watch"><span class="tag">⚠ Write it so the sig figs are visible</span>
+    <p>985 in × 2.54 cm/in = 2501.9, which rounds to 3 sig figs. Writing "2500 cm" is ambiguous — a reader can't tell if those zeros count. Write <strong style="font-family:var(--mono)">2.50 × 10³ cm</strong>. Scientific notation is the only way to show trailing zeros that are significant.</p></div>
+</section>
+
+<section>
+  <div class="eyebrow">Same rule, real chemistry</div>
+  <h2><span class="step-n">06</span> The three power-ups</h2>
+  <p><strong>Density, the periodic table, and Avogadro's number are all just conversion factors in disguise.</strong> Each one links two quantities, so each one can be written either way up — and you pick the way that cancels what you're holding.</p>
+  <div class="trackbox"><span class="cap">Density as a factor · 30.6 g of a metal, d = 11.3 g/cm³ → find volume</span>
+    <div class="track"><span class="start">30.6&nbsp;<u class="x">g</u></span><span class="op">×</span>
+      <span class="factor"><span class="num">1.0&nbsp;<b class="keep">cm³</b></span><span class="den">11.3&nbsp;<u class="x">g</u></span></span>
+      <span class="eq">=</span><span class="result">2.71 cm³</span></div></div>
+  <div class="trackbox"><span class="cap">Molar mass as a factor · moles in 36.6 g of Al &nbsp;(26.98 g/mol)</span>
+    <div class="track"><span class="start">36.6&nbsp;<u class="x">g&nbsp;Al</u></span><span class="op">×</span>
+      <span class="factor"><span class="num">1&nbsp;<b class="keep">mol&nbsp;Al</b></span><span class="den">26.98&nbsp;<u class="x">g&nbsp;Al</u></span></span>
+      <span class="eq">=</span><span class="result">1.36 mol</span></div></div>
+  <div class="trackbox"><span class="cap">All three chained · atoms in 56.3 g of K &nbsp;(39.10 g/mol) — Workshop problem 25</span>
+    <div class="track"><span class="start">56.3&nbsp;<u class="x">g&nbsp;K</u></span><span class="op">×</span>
+      <span class="factor"><span class="num">1&nbsp;<u class="x">mol</u></span><span class="den">39.10&nbsp;<u class="x">g&nbsp;K</u></span></span><span class="op">×</span>
+      <span class="factor"><span class="num">6.02×10²³&nbsp;<b class="keep">atoms</b></span><span class="den">1&nbsp;<u class="x">mol</u></span></span>
+      <span class="eq">=</span><span class="result">8.67 × 10²³ atoms</span></div></div>
+  <div class="call trick"><span class="tag">⚡ Write the element in the unit</span>
+    <p>Your workshop insists on this, and it matters: write <span style="font-family:var(--mono)">g&nbsp;K</span> and <span style="font-family:var(--mono)">mol&nbsp;K</span>, not just "g" and "mol." Every element has a different molar mass, so "grams of K" and "grams of Fe" are genuinely <em>different units</em> that must not cancel each other.</p></div>
+</section>
+
+<section>
+  <div class="eyebrow">Cover it with your thumb</div>
+  <h2><span class="step-n">07</span> The Triangle Toolkit</h2>
+  <p>Every relationship in Workshop 1 with <strong>three quantities</strong> fits in a triangle. Cover the one you want, and the triangle hands you the formula: letters <em>side-by-side</em> = multiply, letters <em>stacked</em> = divide.</p>
+
+  <div class="tri-card">
+    <div class="tt">Triangle 1 · Any unit conversion</div>
+    <div class="tf"><b>WANT</b> = HAVE × FACTOR &nbsp;·&nbsp; length, mass, volume &amp; prefixes</div>
+    <div class="tri-grid">
+      <svg class="tri" viewBox="0 0 300 264" role="img" aria-label="Conversion triangle: want on top, have times factor on the bottom">
+        <polygon class="tri-fill" points="150,20 282,244 18,244"/><line class="tri-div" x1="79" y1="140" x2="221" y2="140"/><line class="tri-div" x1="150" y1="140" x2="150" y2="244"/>
+        <text class="tri-var" x="150" y="86">W</text><text class="tri-sub" x="150" y="123">want</text>
+        <text class="tri-var" x="99" y="180">H</text><text class="tri-sub" x="99" y="212">have</text>
+        <text class="tri-var" x="201" y="180">F</text><text class="tri-sub" x="201" y="212">factor</text>
+        <circle class="tri-opc" cx="150" cy="182" r="16"/><text class="tri-op" x="150" y="183">×</text>
+      </svg>
+      <div class="readoffs">
+        <div class="ro"><span class="cv">cover W</span><span class="arw">→</span><b>W = H × F</b></div>
+        <div class="ro"><span class="cv">cover H</span><span class="arw">→</span><b>H = W ÷ F</b></div>
+        <div class="ro"><span class="cv">cover F</span><span class="arw">→</span><b>F = W ÷ H</b></div>
+      </div>
+    </div>
+    <div class="tri-eg">Workshop #5: 16.2 cm → in. FACTOR = <b>1.00 in / 2.54 cm</b> &nbsp;→&nbsp; 16.2 ÷ 2.54 = <b>6.38 in</b>.</div>
+  </div>
+
+  <div class="tri-card">
+    <div class="tt">Triangle 2 · Density</div>
+    <div class="tf"><b>m</b> = d × V &nbsp;·&nbsp; mass, density, volume</div>
+    <div class="tri-grid">
+      <svg class="tri" viewBox="0 0 300 264" role="img" aria-label="Density triangle: mass on top, density times volume on the bottom">
+        <polygon class="tri-fill" points="150,20 282,244 18,244"/><line class="tri-div" x1="79" y1="140" x2="221" y2="140"/><line class="tri-div" x1="150" y1="140" x2="150" y2="244"/>
+        <text class="tri-var" x="150" y="86">m</text><text class="tri-sub" x="150" y="123">mass g</text>
+        <text class="tri-var" x="99" y="180">d</text><text class="tri-sub" x="99" y="212">g/cm³</text>
+        <text class="tri-var" x="201" y="180">V</text><text class="tri-sub" x="201" y="212">cm³</text>
+        <circle class="tri-opc" cx="150" cy="182" r="16"/><text class="tri-op" x="150" y="183">×</text>
+      </svg>
+      <div class="readoffs">
+        <div class="ro"><span class="cv">cover m</span><span class="arw">→</span><b>m = d × V</b></div>
+        <div class="ro"><span class="cv">cover d</span><span class="arw">→</span><b>d = m ÷ V</b></div>
+        <div class="ro"><span class="cv">cover V</span><span class="arw">→</span><b>V = m ÷ d</b></div>
+      </div>
+    </div>
+    <div class="tri-eg">Workshop #18: m = 15.6 g, d = 10.6 g/cm³. Cover V → 15.6 ÷ 10.6 = <b>1.47 cm³</b>.</div>
+  </div>
+
+  <div class="tri-card">
+    <div class="tt">Triangle 3 · Grams ↔ Moles</div>
+    <div class="tf"><b>g</b> = n × M &nbsp;·&nbsp; grams, moles, molar mass (periodic table)</div>
+    <div class="tri-grid">
+      <svg class="tri" viewBox="0 0 300 264" role="img" aria-label="Mole triangle: grams on top, moles times molar mass on the bottom">
+        <polygon class="tri-fill" points="150,20 282,244 18,244"/><line class="tri-div" x1="79" y1="140" x2="221" y2="140"/><line class="tri-div" x1="150" y1="140" x2="150" y2="244"/>
+        <text class="tri-var" x="150" y="86">g</text><text class="tri-sub" x="150" y="127">grams</text>
+        <text class="tri-var" x="99" y="180">n</text><text class="tri-sub" x="99" y="212">moles</text>
+        <text class="tri-var" x="201" y="180">M</text><text class="tri-sub" x="201" y="212">g/mol</text>
+        <circle class="tri-opc" cx="150" cy="182" r="16"/><text class="tri-op" x="150" y="183">×</text>
+      </svg>
+      <div class="readoffs">
+        <div class="ro"><span class="cv">cover g</span><span class="arw">→</span><b>g = n × M</b></div>
+        <div class="ro"><span class="cv">cover n</span><span class="arw">→</span><b>n = g ÷ M &nbsp;<em>(moles!)</em></b></div>
+        <div class="ro"><span class="cv">cover M</span><span class="arw">→</span><b>M = g ÷ n</b></div>
+      </div>
+    </div>
+    <div class="tri-eg">Workshop #21: 0.698 mol Co, M = 58.93 g/mol. Cover g → 0.698 × 58.93 = <b>41.1 g</b>.</div>
+  </div>
+
+  <div class="tri-card">
+    <div class="tt">Triangle 4 · Moles ↔ Particles</div>
+    <div class="tf"><b>P</b> = n × Nₐ &nbsp;·&nbsp; particles, moles, Avogadro's number (6.02 × 10²³)</div>
+    <div class="tri-grid">
+      <svg class="tri" viewBox="0 0 300 264" role="img" aria-label="Avogadro triangle: particles on top, moles times Avogadro number on the bottom">
+        <polygon class="tri-fill" points="150,20 282,244 18,244"/><line class="tri-div" x1="79" y1="140" x2="221" y2="140"/><line class="tri-div" x1="150" y1="140" x2="150" y2="244"/>
+        <text class="tri-var" x="150" y="86">P</text><text class="tri-sub" x="150" y="123">particles</text>
+        <text class="tri-var" x="99" y="180">n</text><text class="tri-sub" x="99" y="212">moles</text>
+        <text class="tri-var" x="201" y="180" font-size="46">Nₐ</text><text class="tri-sub" x="201" y="212">6.02×10²³</text>
+        <circle class="tri-opc" cx="150" cy="182" r="16"/><text class="tri-op" x="150" y="183">×</text>
+      </svg>
+      <div class="readoffs">
+        <div class="ro"><span class="cv">cover P</span><span class="arw">→</span><b>P = n × Nₐ</b></div>
+        <div class="ro"><span class="cv">cover n</span><span class="arw">→</span><b>n = P ÷ Nₐ</b></div>
+        <div class="ro"><span class="cv">cover Nₐ</span><span class="arw">→</span><b>Nₐ = P ÷ n</b></div>
+      </div>
+    </div>
+    <div class="tri-eg">Workshop #23: 0.250 mol Na. Cover P → 0.250 × (6.02 × 10²³) = <b>1.51 × 10²³ atoms</b>.</div>
+  </div>
+
+  <div class="expo">
+    <div class="tt">⚡ The decimal trick — make the ×10²³ cancel like a unit</div>
+    <p>Going <strong>atoms → moles</strong> means dividing by 6.02 × 10²³, and the powers of ten scare people. They shouldn't. Rewrite <em>your</em> number so it also carries <strong>×10²³</strong> — then the <span class="match">10²³</span> on top and bottom <strong>cancels exactly like a unit</strong>, and you just divide the front numbers.</p>
+    <div class="rule2">
+      <div class="dchip"><div class="dir">◀ Move decimal LEFT</div><div class="eff">exponent goes <b>UP</b> (+1 per hop)<br><span style="font-family:var(--mono);font-size:.86rem">3.05 × 10²⁰ → 0.305 × 10²¹</span></div></div>
+      <div class="dchip"><div class="dir">Move decimal RIGHT ▶</div><div class="eff">exponent goes <b>DOWN</b> (−1 per hop)<br><span style="font-family:var(--mono);font-size:.86rem">3.05 × 10²⁰ → 30.5 × 10¹⁹</span></div></div>
+    </div>
+    <p style="font-family:var(--mono);font-size:.88rem;color:var(--signal);font-weight:700;margin:.2em 0 0">Memory hook: “Left = Larger exponent.”</p>
+    <p style="font-size:.95rem;color:var(--ink-soft);margin-top:.8em">Why it works: sliding the decimal one place left divides the front number by 10, so the exponent must go up by 1 to keep the value the same. You're not changing the number — only how it's dressed.</p>
+    <div class="expo-demo">
+      <span class="lbl">Workshop problem 24 — moles in 3.05 × 10²⁰ atoms of He?</span>
+      <div class="row"><span>n = (3.05 × 10²⁰ atoms) ÷ (6.02 × 10²³ atoms/mol)</span></div>
+      <span class="lbl">Step 1 — match the exponent: move the decimal 3 places LEFT, so 20 → 23</span>
+      <div class="row"><span>3.05 × 10²⁰</span> <span class="slide">◀ 3 hops left, +3</span> <span>=</span> <span class="match">0.00305 × 10²³</span></div>
+      <span class="lbl">Step 2 — now the 10²³ cancels top &amp; bottom, exactly like a unit</span>
+      <div class="row"><span>0.00305 × <u class="x">10²³</u></span><span>÷</span><span>6.02 × <u class="x">10²³</u></span><span>=</span><span>0.00305 ÷ 6.02</span></div>
+      <span class="lbl">Answer (3 sig figs)</span>
+      <div class="row"><span class="fin">= 5.07 × 10⁻⁴ mol</span></div>
+    </div>
+  </div>
+
+  <div class="call sanity"><span class="tag">✓ Triangle vs. tracks — when to use which</span>
+    <p>The <strong>triangle</strong> is fast recall for a single three-quantity relationship. The <strong>railroad tracks</strong> win whenever you chain steps or cross units (g → mol → atoms, or in² → cm²) — a triangle holds only three boxes, but the tracks take as many fractions as you need. Triangle for speed, tracks for everything.</p></div>
+</section>
+
+<section>
+  <div class="eyebrow">Keep these in your pocket</div>
+  <h2><span class="step-n">08</span> Tricks &amp; memory hooks</h2>
+  <div class="hooks">
+    <div class="hook"><div class="num">1</div><div><h3>“To” on top, “from” on the bottom</h3><p>The one rule. The "from" unit cancels automatically, so you never guess multiply vs. divide.</p></div></div>
+    <div class="hook"><div class="num">2</div><div><h3>Unit didn't cancel? Flip it.</h3><p>A wrong leftover unit means the fraction went in upside down. Flip that one factor and run it again.</p></div></div>
+    <div class="hook"><div class="num">3</div><div><h3>The 1000-staircase</h3><p>M · k · base · m · mc · n are each ×1000 apart. Only deci and centi break the pattern, and they live between base and milli.</p></div></div>
+    <div class="hook"><div class="num">4</div><div><h3>Smaller unit = bigger number</h3><p>Converting to a smaller unit? The count grows. To a bigger unit? It shrinks. Catches flipped factors instantly.</p></div></div>
+    <div class="hook"><div class="num">5</div><div><h3>Cover it with your thumb</h3><p>Density, moles, atoms: draw the triangle, cover what you want. Side-by-side = ×, stacked = ÷.</p></div></div>
+    <div class="hook"><div class="num">6</div><div><h3>“Left = Larger” for exponents</h3><p>Decimal left raises the power of ten; right lowers it. Use it to match 10²³ so Avogadro's number cancels.</p></div></div>
+    <div class="hook"><div class="num">7</div><div><h3>Exact factors don't cost sig figs</h3><p>Prefix conversions (1 kg = 1000 g) are definitions — infinitely precise. Only measured factors (454 g/lb) can limit your answer.</p></div></div>
+    <div class="hook"><div class="num">8</div><div><h3>Squared once, cubed three times</h3><p>cm² converts twice, cm³ converts three times — and you square or cube the number, not just the unit.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Cheat sheet</div>
+  <h2><span class="step-n">09</span> Every factor you need</h2>
+  <div class="tbl-wrap"><table>
+    <caption>Metric ↔ English — exactly as your workshop table gives them</caption>
+    <thead><tr><th>Physical property</th><th class="mono">Metric</th><th class="mono">English</th><th class="mono">Conversion factor</th></tr></thead>
+    <tbody>
+      <tr><td>Mass</td><td class="mono">gram (g)</td><td class="mono">pound (lb)</td><td class="mono"><span class="fac">454 g = 1.00 lb</span></td></tr>
+      <tr><td>Volume</td><td class="mono">mL</td><td class="mono">fluid ounce</td><td class="mono"><span class="fac">29.5 mL = 1.00 fl oz</span></td></tr>
+      <tr><td>Length</td><td class="mono">cm</td><td class="mono">inch (in)</td><td class="mono"><span class="fac">2.54 cm = 1.00 in</span></td></tr>
+      <tr><td>Volume <em>(exact)</em></td><td class="mono">cm³</td><td class="mono">mL</td><td class="mono"><span class="fac">1 cm³ = 1 mL</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="tbl-wrap"><table>
+    <caption>Molar masses used in Workshop 1 (g/mol)</caption>
+    <thead><tr><th class="mono">Al</th><th class="mono">Fe</th><th class="mono">Cu</th><th class="mono">Co</th><th class="mono">Au</th><th class="mono">K</th><th class="mono">Na</th><th class="mono">He</th></tr></thead>
+    <tbody><tr><td class="mono">26.98</td><td class="mono">55.85</td><td class="mono">63.55</td><td class="mono">58.93</td><td class="mono">196.97</td><td class="mono">39.10</td><td class="mono">22.99</td><td class="mono">4.003</td></tr></tbody>
+  </table></div>
+  <div class="call trick"><span class="tag">📄 Printable version</span><p>A one-page PDF of this entire cheat sheet — factors, the prefix staircase, all four triangles, and the decimal trick — is provided alongside this guide.</p></div>
+</section>
+
+<section>
+  <div class="eyebrow">All 25 problems, worked</div>
+  <h2><span class="step-n">10</span> Verified answer key</h2>
+  <p>Every practice problem from Workshop 1, with the setup written the way you should write it. Answers use <strong>your workshop's own factors</strong> (454 g/lb, 29.5 mL/fl oz, 2.54 cm/in) and correct significant figures.</p>
+  <div class="tbl-wrap"><table>
+    <caption>Workshop 1 · complete answer key</caption>
+    <thead><tr><th>#</th><th>Problem</th><th>Setup — "to" on top, "from" on bottom</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="4">Metric ↔ English conversions</td></tr>
+      <tr><td class="qn">1</td><td>36.8 lb → g</td><td class="setup">36.8 lb × (454 g / 1.00 lb)</td><td class="ansv">1.67 × 10⁴ g</td></tr>
+      <tr><td class="qn">2</td><td>956 g → lb</td><td class="setup">956 g × (1.00 lb / 454 g)</td><td class="ansv">2.11 lb</td></tr>
+      <tr><td class="qn">3</td><td>156.0 fl oz → mL</td><td class="setup">156.0 fl oz × (29.5 mL / 1.00 fl oz)</td><td class="ansv">4.60 × 10³ mL</td></tr>
+      <tr><td class="qn">4</td><td>356.0 mL → fl oz</td><td class="setup">356.0 mL × (1.00 fl oz / 29.5 mL)</td><td class="ansv">12.1 fl oz</td></tr>
+      <tr><td class="qn">5</td><td>16.2 cm → in</td><td class="setup">16.2 cm × (1.00 in / 2.54 cm)</td><td class="ansv">6.38 in</td></tr>
+      <tr><td class="qn">6</td><td>985 in → cm</td><td class="setup">985 in × (2.54 cm / 1.00 in)</td><td class="ansv">2.50 × 10³ cm</td></tr>
+      <tr><td class="qn">7</td><td>1450 g → lb</td><td class="setup">1450 g × (1.00 lb / 454 g)</td><td class="ansv">3.19 lb</td></tr>
+      <tr class="grp"><td colspan="4">Metric prefixes — factors are exact, so sig figs come from the measurement</td></tr>
+      <tr><td class="qn">8</td><td>2348 mL → L</td><td class="setup">2348 mL × (1 L / 1000 mL)</td><td class="ansv">2.348 L</td></tr>
+      <tr><td class="qn">9</td><td>55.6 cm → m</td><td class="setup">55.6 cm × (1 m / 100 cm)</td><td class="ansv">0.556 m</td></tr>
+      <tr><td class="qn">10</td><td>895 g → kg</td><td class="setup">895 g × (1 kg / 1000 g)</td><td class="ansv">0.895 kg</td></tr>
+      <tr><td class="qn">11</td><td>0.000056 g → mcg</td><td class="setup">0.000056 g × (1,000,000 mcg / 1 g)</td><td class="ansv">56 mcg</td></tr>
+      <tr><td class="qn">12</td><td>0.0296 L → mL</td><td class="setup">0.0296 L × (1000 mL / 1 L)</td><td class="ansv">29.6 mL</td></tr>
+      <tr class="grp"><td colspan="4">Multi-step chains &amp; powered units</td></tr>
+      <tr><td class="qn">13</td><td>63.5 lb → kg</td><td class="setup">63.5 lb × (454 g / 1.00 lb) × (1 kg / 1000 g)</td><td class="ansv">28.8 kg</td></tr>
+      <tr><td class="qn">14</td><td>32.0 fl oz → L</td><td class="setup">32.0 fl oz × (29.5 mL / 1.00 fl oz) × (1 L / 1000 mL)</td><td class="ansv">0.944 L</td></tr>
+      <tr><td class="qn">15</td><td>26.2 cm³ → mm³</td><td class="setup">26.2 cm³ × (10 mm / 1 cm)³ &nbsp;→ ×1000</td><td class="ansv">2.62 × 10⁴ mm³</td></tr>
+      <tr><td class="qn">16</td><td>568 mcg → mg</td><td class="setup">568 mcg × (1 g / 10⁶ mcg) × (1000 mg / 1 g)</td><td class="ansv">0.568 mg</td></tr>
+      <tr class="grp"><td colspan="4">Density — Triangle 2</td></tr>
+      <tr><td class="qn">17</td><td>d = 10.6 g/cm³, V = 25 cm³ → mass</td><td class="setup">25 cm³ × (10.6 g / 1 cm³) &nbsp;·&nbsp; cover m → m = d × V</td><td class="ansv">265 g<br><span style="font-weight:400;font-size:.82rem;color:var(--ink-faint)">2.7 × 10² g at 2 s.f.</span></td></tr>
+      <tr><td class="qn">18</td><td>m = 15.6 g, d = 10.6 g/cm³ → volume</td><td class="setup">15.6 g × (1 cm³ / 10.6 g) &nbsp;·&nbsp; cover V → V = m ÷ d</td><td class="ansv">1.47 cm³</td></tr>
+      <tr class="grp"><td colspan="4">Molar mass — Triangle 3</td></tr>
+      <tr><td class="qn">19</td><td>18.3 g Fe → mol</td><td class="setup">18.3 g Fe × (1 mol Fe / 55.85 g Fe)</td><td class="ansv">0.328 mol</td></tr>
+      <tr><td class="qn">20</td><td>26.9 g Cu → mol</td><td class="setup">26.9 g Cu × (1 mol Cu / 63.55 g Cu)</td><td class="ansv">0.423 mol</td></tr>
+      <tr><td class="qn">21</td><td>0.698 mol Co → g</td><td class="setup">0.698 mol Co × (58.93 g Co / 1 mol Co)</td><td class="ansv">41.1 g</td></tr>
+      <tr><td class="qn">22</td><td>25.9 mol Au → g</td><td class="setup">25.9 mol Au × (196.97 g Au / 1 mol Au)</td><td class="ansv">5.10 × 10³ g</td></tr>
+      <tr class="grp"><td colspan="4">Avogadro's number — Triangle 4</td></tr>
+      <tr><td class="qn">23</td><td>0.250 mol Na → atoms</td><td class="setup">0.250 mol × (6.02 × 10²³ atoms / 1 mol)</td><td class="ansv">1.51 × 10²³ atoms</td></tr>
+      <tr><td class="qn">24</td><td>3.05 × 10²⁰ atoms He → mol</td><td class="setup">3.05 × 10²⁰ atoms × (1 mol / 6.02 × 10²³ atoms)</td><td class="ansv">5.07 × 10⁻⁴ mol</td></tr>
+      <tr><td class="qn">25</td><td>56.3 g K → atoms</td><td class="setup">56.3 g K × (1 mol / 39.10 g K) × (6.02 × 10²³ atoms / 1 mol)</td><td class="ansv">8.67 × 10²³ atoms</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call watch"><span class="tag">⚠ Note on problem 17</span>
+    <p>10.6 × 25 = 265 exactly. If you treat "25 cm³" as two significant figures, the reported answer is <strong style="font-family:var(--mono)">2.7 × 10² g</strong>. If your instructor treats 25 as an exact count, 265 g stands. Ask which convention applies — this is the single most common place students and graders disagree.</p></div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="eyebrow">Lock it in</div>
+  <h2><span class="step-n">11</span> The 5 things you must know</h2>
+  <ol class="must">
+    <li><b>Units are variables</b> — the same unit on top and bottom cancels.</li>
+    <li><b>"To" on top, "from" on the bottom</b> — the "from" unit cancels, so you never guess multiply or divide.</li>
+    <li><b>The leftover unit is your answer's unit</b> — and your built-in error check.</li>
+    <li><b>Three quantities? Use a triangle</b> — cover what you want; conversions, density, moles, and atoms all fit.</li>
+    <li><b>Exact factors don't limit sig figs</b> — prefixes are definitions; measured factors like 454 g/lb do limit.</li>
+  </ol>
+  <div class="call trick" style="margin-top:24px"><span class="tag">⚡ The one line to remember</span>
+    <p style="font-size:1.15rem;font-weight:700">"Converting TO goes on top, converting FROM goes on the bottom. The 'from' cancels — whatever's left is your answer."</p></div>
+</section>
+
+</main>
+<footer class="wrap">CHEM 125 · Workshop 1 · Factor Labeling Method</footer>
+
+</body>
+</html>

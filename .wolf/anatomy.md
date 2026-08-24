@@ -13,6 +13,8 @@
 - `bio205-module3.html` — BIO 205 Module 3 — Microbial Growth | Interactive Study Guide (~12093 tok)
 - `chem-review.html` — Week 2 Practice Quiz — Answers & Walkthrough (~10326 tok)
 - `CHM125_Workshop3_Guide.html` — CHM125 Workshop 3 — Interactive Learning Guide (~10896 tok)
+- `CHM125_Workshop1_FactorLabeling_Guide.html` — CHM125 Workshop 1: The Railroad Track Method (factor labeling); to-on-top/from-on-bottom rule, metric prefix staircase, 4 formula triangles, verified key to all 25 practice problems (~13000 tok)
+- `CHM125_Factor_Labeling_Reference.pdf` — One-page printable Workshop 1 reference: conversion factors, prefix table, 4 triangles, decimal trick (binary)
 - `CHM130_Week1_Interactive_Guide.html` — CHM-130 Week 1 — The Molecule Manifesto (~18677 tok)
 - `CHM130_Week2_Interactive_Guide.html` — CHM-130 Week 2 Interactive Study Guide | Pro: Tehrani (~20228 tok)
 - `CHM130_Weeks4_5_Interactive_Guide.html` — CHM-130 Weeks 4 &amp; 5 Interactive Study Guide | Prof. Tehrani (~14524 tok)
