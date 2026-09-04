@@ -15,6 +15,7 @@
 - `CHM125_Workshop3_Guide.html` — CHM125 Workshop 3 — Interactive Learning Guide (~10896 tok)
 - `CHM125_Workshop1_FactorLabeling_Guide.html` — CHM125 Workshop 1: The Railroad Track Method (factor labeling); to-on-top/from-on-bottom rule, metric prefix staircase, 4 formula triangles, verified key to all 25 practice problems (~13000 tok)
 - `CHM125_Factor_Labeling_Reference.pdf` — One-page printable Workshop 1 reference: conversion factors, prefix table, 4 triangles, decimal trick (binary)
+- `College_Math_Skills_Interactive_Guide.html` — College Math Skills interactive gym: units, dosage, percents (~12k tok)
 - `CHM130_Week1_Interactive_Guide.html` — CHM-130 Week 1 — The Molecule Manifesto (~18677 tok)
 - `CHM130_Week2_Interactive_Guide.html` — CHM-130 Week 2 Interactive Study Guide | Pro: Tehrani (~20228 tok)
 - `CHM130_Weeks4_5_Interactive_Guide.html` — CHM-130 Weeks 4 &amp; 5 Interactive Study Guide | Prof. Tehrani (~14524 tok)
@@ -92,7 +93,10 @@
 - `MH_opioids.html` — Opioids, Substances & Assessment — Mental Health Nursing (~11991 tok)
 - `MH_schizoaffective.html` — Schizoaffective Disorder — Mental Health Nursing (~6706 tok)
 - `MH_schizophrenia.html` — Schizophrenia — Mental Health Nursing (~10571 tok)
+- `NUR334-Exam4-Master-Study-Guide.html` — NUR 334 Exam 4 pharmacology guide, 8 tabs, 75 objectives (fluids, GI, reproductive, OB, med math), linked from index.html (~22000 tok)
 - `NUR356_Exam3_Part2_Study_Guide.html` — Mental Health Nursing — Interactive Study Guide (~28489 tok)
+- `Pharmacology_Core_Concepts_Interactive_Study_Guide.html` — Pharmacology | Core Concepts & Medication Safety; 10 tabs (Start, Analgesics & Opioids, Anti-Infectives, GI & Antiemetics, Respiratory, Neuro & Psych, Hormones, Fluids & TPN, Med Safety, 24-Q Mastery Quiz), mastery checklist, 3 antidote flip cards (~24000 tok)
+- `Pharmacology_FluidTherapy_Interactive_Study_Guide.html` — Pharmacology & Fluid Therapy interactive guide; 7 tabs (Start Here 3-day plan, IV Fluids & Electrolytes, GI/Nutrition/Bowel, Reproductive & Hormones, OB & Labor Meds, Med Math, Mastery Quiz); flip cards, tap scenarios, quick checks; linked from index.html (~27000 tok)
 - `Patho_Week2_Interactive_Guide.html` — Patho W2 | Interactive Study Guide (~21913 tok)
 - `Patho_Week2_Study_Guide_Enhanced.html` — Patho W2 Enhanced | analogies, memory hooks, labs, nursing considerations, 10 NCLEX Qs (~9500 tok)
 - `Patho_Week6_Interactive_Guide.html` — Patho W6 | Interactive Study Guide; 5 tabs (Vitals & Endocrine, Diabetes, Neuro, Renal, 15-Q Quiz), 6 SVG flow diagrams, flip cards, quick checks (~30000 tok)
@@ -184,3 +188,4 @@
 ## rn-comprehensive-predictor-part-2/
 
 - `index.html` — Redirecting to ATI Comprehensive Predictor Part 2 (~195 tok)
+- `AP2_Midterm_Interactive_Guide.html` — AP2 Midterm study guide: blood, cardio, lymph/immune, quiz (~20k tok)
