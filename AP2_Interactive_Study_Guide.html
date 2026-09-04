@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomy &amp; Physiology II | Interactive Study Guide</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&family=Righteous&family=Karla:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#f6efdc;
+  --cream-2:#ece0c2;
+  --paper:#fbf6e8;
+  --ink:#3b2f1c;
+  --ink-soft:#6b5a3b;
+  --brown:#7a4a1f;
+  --brown-dark:#4a3728;
+  --orange:#c4502a;
+  --rust:#a33b24;
+  --gold:#e0a31b;
+  --mustard:#c98f07;
+  --avocado:#6b7d3a;
+  --teal:#2a7f7f;
+  --plum:#7d5a8a;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Karla',sans-serif;color:var(--ink);line-height:1.6;font-size:15px;
+  background-color:var(--cream);
+  background-image:radial-gradient(circle at 18% 12%, rgba(224,163,27,0.08), transparent 38%),
+                   radial-gradient(circle at 85% 82%, rgba(196,80,42,0.07), transparent 42%)}
+
+/* HEADER */
+#site-header{position:sticky;top:0;z-index:100;background:var(--orange);box-shadow:0 3px 0 rgba(74,55,40,0.25)}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.header-logo{color:var(--cream);font-family:'Shrikhand',cursive;font-size:1.12rem;letter-spacing:0.6px}
+.header-logo span{color:var(--gold)}
+
+/* TAB NAV */
+#tab-nav{position:sticky;top:56px;z-index:99;background:var(--brown-dark);border-bottom:3px solid var(--gold);overflow-x:auto}
+#tab-nav::-webkit-scrollbar{height:3px}
+#tab-nav::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+.tab-list{display:flex;gap:6px;padding:9px 14px;white-space:nowrap;justify-content:center}
+.tab-btn{background:none;border:none;color:var(--cream);font-family:'Righteous',sans-serif;font-size:0.82rem;padding:8px 15px;cursor:pointer;border-radius:20px;letter-spacing:0.4px;transition:all 0.2s;white-space:nowrap}
+.tab-btn:hover{background:rgba(255,255,255,0.12)}
+.tab-btn.active{background:var(--gold);color:var(--brown-dark)}
+
+/* HERO */
+#hero{background:repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0 12px, transparent 12px 24px), var(--orange);padding:26px 24px;text-align:center}
+#hero h1{color:var(--cream);font-family:'Shrikhand',cursive;font-size:1.6rem;letter-spacing:0.6px;text-shadow:2px 2px 0 rgba(74,55,40,0.4)}
+#hero h1 span{color:var(--gold)}
+
+/* MAIN */
+main{max-width:900px;margin:0 auto;padding:28px 20px 60px}
+.section-wrap{display:none}
+.section-wrap.active{display:block}
+
+/* SECTION HEADER */
+.section-header{margin-bottom:26px}
+.section-header h2{font-family:'Righteous',sans-serif;font-size:1.75rem;color:var(--brown-dark);letter-spacing:0.5px;margin-bottom:4px}
+.section-header h2::after{content:'';display:block;width:64px;height:6px;background:var(--orange);border-radius:3px;margin-top:8px}
+.sec-intro{color:var(--ink-soft);font-size:0.95rem;margin-top:10px;font-style:italic}
+
+/* CONTENT CARD — flat, no box */
+.content-card{padding:0;margin-bottom:36px}
+.content-card h3{font-family:'Righteous',sans-serif;font-size:1.14rem;color:var(--orange);letter-spacing:0.4px;margin-bottom:12px}
+.content-card h3::after{content:'';display:block;width:46px;height:5px;background:var(--orange);border-radius:3px;margin-top:7px}
+.content-card h4{font-family:'Righteous',sans-serif;font-size:0.98rem;color:var(--brown);margin:14px 0 6px}
+.content-card ul{padding-left:20px;margin:6px 0 10px}
+.content-card li{font-size:0.92rem;margin-bottom:5px;color:var(--ink)}
+.content-card li::marker{color:var(--orange)}
+.content-card p{font-size:0.92rem;color:var(--ink);margin-bottom:8px}
+.content-card strong{color:var(--brown-dark)}
+.content-card ol{padding-left:22px;margin:6px 0}
+.content-card ol li{margin-bottom:4px}
+.content-card em{color:var(--brown)}
+
+/* per-section accent colors (repurposed from border-* classes) */
+.content-card.border-purple h3{color:var(--plum)}
+.content-card.border-purple h3::after{background:var(--plum)}
+.content-card.border-green h3{color:var(--avocado)}
+.content-card.border-green h3::after{background:var(--avocado)}
+.content-card.border-amber h3{color:var(--mustard)}
+.content-card.border-amber h3::after{background:var(--mustard)}
+.content-card.border-red h3{color:var(--rust)}
+.content-card.border-red h3::after{background:var(--rust)}
+.content-card.border-teal h3{color:var(--teal)}
+.content-card.border-teal h3::after{background:var(--teal)}
+
+/* ACCORDION */
+.acc-card{background:var(--paper);border-radius:12px;overflow:hidden;margin-bottom:12px;border:2px solid var(--cream-2)}
+.acc-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.acc-title{font-family:'Righteous',sans-serif;font-size:0.95rem;color:var(--brown-dark)}
+.acc-chevron{color:var(--orange);font-size:0.8rem;transition:transform 0.3s}
+.acc-card.open .acc-chevron{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
+.acc-card.open .acc-body{max-height:2000px}
+.acc-content{padding:4px 18px 16px;border-top:2px solid var(--cream-2)}
+.acc-content ul{padding-left:18px;margin:4px 0 6px}
+.acc-content li{font-size:0.9rem;margin-bottom:3px;color:var(--ink)}
+.acc-content ol{padding-left:20px;margin:4px 0}
+.acc-content ol li{font-size:0.9rem;margin-bottom:3px;color:var(--ink)}
+.acc-content p{font-size:0.9rem;color:var(--ink);margin-bottom:6px}
+
+/* CLINICAL SCENARIO — warm dark panel */
+.scenario{background:var(--brown-dark);border-radius:14px;padding:18px 20px;margin:16px 0;color:var(--cream);border:2px solid var(--gold)}
+.scenario-label{font-family:'Righteous',sans-serif;font-size:0.74rem;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.scenario p{font-size:0.92rem;line-height:1.6;margin-bottom:10px;color:var(--cream)}
+.scenario-reveal{background:rgba(255,255,255,0.08);border:1px dashed var(--gold);border-radius:10px;padding:10px 14px;cursor:pointer;transition:background 0.2s}
+.scenario-reveal:hover{background:rgba(255,255,255,0.14)}
+.tap-text{font-size:0.8rem;color:var(--gold);font-family:'Righteous',sans-serif}
+.answer-text{display:none;font-size:0.9rem;color:var(--cream);margin-top:8px;line-height:1.6}
+.scenario-reveal.reveal .tap-text{display:none}
+.scenario-reveal.reveal .answer-text{display:block}
+
+/* CALLOUTS — flat left bars, no boxes */
+.key-point{border-left:6px solid var(--gold);padding:2px 0 2px 16px;margin:16px 0}
+.key-point p{font-size:0.9rem;color:var(--ink);line-height:1.55;margin:0}
+.key-point strong{color:var(--brown)}
+
+.mnemonic-box{border-left:6px solid var(--plum);padding:2px 0 2px 16px;margin:16px 0}
+.mnemonic-box p,.mnemonic-box li{font-size:0.9rem;color:var(--ink)}
+.mnemonic-box strong{color:var(--plum)}
+.mnemonic-box ul{padding-left:16px;margin:4px 0}
+.mnemonic-box li{margin-bottom:4px}
+
+.pearl{border-left:6px solid var(--teal);padding:2px 0 2px 16px;margin:16px 0}
+.pearl-label{font-family:'Righteous',sans-serif;color:var(--teal);font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.pearl p{font-size:0.9rem;color:var(--ink);line-height:1.55;margin:0}
+
+.nclex-focus{border-left:6px solid var(--avocado);padding:2px 0 2px 16px;margin:16px 0}
+.nclex-label{font-family:'Righteous',sans-serif;color:var(--avocado);font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.nclex-focus p,.nclex-focus li{font-size:0.9rem;color:var(--ink);line-height:1.55}
+.nclex-focus ul{padding-left:16px;margin:4px 0}
+
+/* FLIP CARDS */
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin:16px 0}
+.flip-card{height:140px;perspective:1000px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.5s}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;backface-visibility:hidden;text-align:center}
+.flip-front{background:linear-gradient(135deg,var(--brown-dark),var(--brown));color:var(--cream);border:2px solid var(--gold)}
+.flip-back{background:linear-gradient(135deg,var(--plum),var(--orange));color:var(--cream);transform:rotateY(180deg)}
+.flip-front .big-letter{font-family:'Righteous',sans-serif;font-size:2.1rem;line-height:1;color:var(--gold)}
+.flip-front .hint{font-size:0.68rem;opacity:0.75;margin-top:6px}
+.flip-back .meaning{font-family:'Righteous',sans-serif;font-size:0.88rem;line-height:1.35;color:#fff}
+.flip-back .sub{font-size:0.7rem;opacity:0.9;margin-top:6px;line-height:1.3}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:12px;border:2px solid var(--cream-2);background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:0.9rem}
+th{background:var(--brown-dark);color:var(--cream);padding:10px 12px;text-align:left;font-family:'Righteous',sans-serif;font-weight:400;font-size:0.8rem;letter-spacing:0.4px}
+td{padding:9px 12px;border-top:1px solid var(--cream-2)}
+tr:nth-child(even) td{background:var(--cream-2)}
+table strong{color:var(--brown)}
+
+/* FLOW CHART */
+.flow-chart{background:var(--paper);border-radius:12px;padding:16px;margin:16px 0;border:2px solid var(--cream-2)}
+.flow-title{font-family:'Righteous',sans-serif;color:var(--brown-dark);font-size:0.9rem;margin-bottom:10px;text-align:center}
+svg text{font-family:'Karla',sans-serif}
+
+/* QUICK CHECK */
+.quick-check{background:var(--cream-2);border-radius:12px;padding:14px 16px;margin:16px 0}
+.qc-label{font-family:'Righteous',sans-serif;color:var(--avocado);font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.qc-question{margin-bottom:12px}
+.qc-question:last-child{margin-bottom:0}
+.qc-text{font-size:0.9rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.qc-choices{display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
+.qc-choice{background:var(--paper);border:2px solid var(--cream-2);border-radius:10px;padding:8px 12px;font-size:0.85rem;cursor:pointer;font-family:'Karla',sans-serif;font-weight:600;color:var(--ink);text-align:left;transition:all 0.15s}
+.qc-choice:hover:not(:disabled){border-color:var(--avocado);background:var(--cream)}
+.qc-choice.qc-correct{background:#e6edd2;border-color:var(--avocado);color:#3a4a1f}
+.qc-choice.qc-wrong{background:#f3d9cf;border-color:var(--rust);color:var(--rust)}
+.qc-choice:disabled{cursor:default;opacity:0.7}
+.qc-feedback{display:none;font-size:0.85rem;color:#3a4a1f;background:#e6edd2;border-radius:8px;padding:8px 12px;margin-top:6px;line-height:1.5}
+.qc-feedback.show{display:block}
+
+/* QUIZ */
+#quiz-section{padding:4px 0 20px;margin-top:4px}
+#quiz-section h2{font-family:'Righteous',sans-serif;font-size:1.5rem;color:var(--brown-dark);margin-bottom:4px}
+.quiz-meta{color:var(--ink-soft);font-size:0.9rem;margin-bottom:20px}
+.quiz-progress-wrap{background:var(--cream-2);border-radius:4px;height:8px;margin-bottom:24px}
+.quiz-progress-bar{height:8px;background:linear-gradient(90deg,var(--orange),var(--gold));border-radius:4px;transition:width 0.3s}
+.quiz-q{display:none}
+.quiz-q.active{display:block}
+.quiz-q-num{font-family:'Righteous',sans-serif;font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--orange);margin-bottom:6px}
+.quiz-q-text{font-size:1rem;font-weight:700;color:var(--brown-dark);margin-bottom:16px;line-height:1.5}
+.quiz-choices{display:flex;flex-direction:column;gap:9px;margin-bottom:16px}
+.quiz-choice{background:var(--paper);border:2px solid var(--cream-2);border-radius:12px;padding:11px 16px;font-size:0.9rem;cursor:pointer;transition:all 0.2s;text-align:left;font-family:'Karla',sans-serif;font-weight:600;color:var(--ink)}
+.quiz-choice:hover:not(:disabled){border-color:var(--orange);background:var(--cream)}
+.quiz-choice.correct{background:#e6edd2;border-color:var(--avocado);color:#3a4a1f}
+.quiz-choice.wrong{background:#f3d9cf;border-color:var(--rust);color:var(--rust)}
+.quiz-choice:disabled{cursor:default}
+.quiz-feedback{display:none;padding:10px 14px;border-radius:10px;font-size:0.9rem;margin-bottom:14px;font-weight:500;line-height:1.5}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct-fb{background:#e6edd2;color:#3a4a1f;border-left:5px solid var(--avocado)}
+.quiz-feedback.wrong-fb{background:#f3d9cf;color:var(--rust);border-left:5px solid var(--rust)}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:22px;border:none;font-family:'Righteous',sans-serif;font-size:0.85rem;letter-spacing:0.4px;cursor:pointer;transition:all 0.2s}
+.btn-primary{background:var(--orange);color:var(--cream)}
+.btn-primary:hover{background:var(--rust)}
+.btn-secondary{background:var(--cream-2);color:var(--brown-dark)}
+.btn-secondary:hover{background:#dfd0ac}
+.btn-success{background:var(--avocado);color:var(--cream)}
+.btn-success:hover{background:#56682c}
+#quiz-result{display:none;text-align:center;padding:20px 0}
+.score-circle{width:112px;height:112px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--gold));color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;font-family:'Righteous',sans-serif;font-size:1.9rem;box-shadow:0 8px 24px rgba(196,80,42,0.35)}
+.score-circle .score-lbl{font-family:'Karla',sans-serif;font-size:0.7rem;font-weight:600;opacity:0.9}
+#quiz-result h3{font-family:'Righteous',sans-serif;font-size:1.25rem;color:var(--brown-dark);margin-bottom:6px}
+#quiz-result p{color:var(--ink-soft);margin-bottom:16px}
+
+/* BACK TO TOP */
+#back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--brown-dark);color:var(--gold);border:2px solid var(--gold);cursor:pointer;font-size:1rem;box-shadow:0 4px 12px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:all 0.3s;z-index:200}
+#back-top.show{opacity:1;transform:translateY(0)}
+#back-top:hover{background:var(--orange)}
+
+/* MASTERY CHECKLIST */
+.mastery-list{background:var(--paper);border-radius:12px;border:2px solid var(--cream-2);padding:16px 18px;margin:16px 0}
+.mastery-list ul{list-style:none;padding:0;margin:10px 0 0}
+.mastery-list li{margin-bottom:10px}
+.mastery-list label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.9rem;color:var(--ink);line-height:1.45}
+.mastery-list input[type=checkbox]{width:18px;height:18px;accent-color:var(--avocado);cursor:pointer;margin-top:2px;flex-shrink:0}
+.mastery-list label.done{text-decoration:line-through;color:var(--ink-soft)}
+.mastery-progress{background:var(--cream-2);border-radius:6px;height:12px;margin-bottom:8px;overflow:hidden}
+.mastery-bar{height:100%;background:linear-gradient(90deg,var(--orange),var(--gold));border-radius:6px;width:0;transition:width 0.3s}
+.mastery-count{font-family:'Righteous',sans-serif;font-size:0.8rem;color:var(--brown);margin-bottom:4px}
+
+@media(max-width:768px){
+  .tab-list{justify-content:flex-start;padding:0 8px}
+  .tab-btn{font-size:0.72rem;padding:7px 11px}
+  main{padding:20px 14px 50px}
+  .flip-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="header-inner">
+    <div class="header-logo">Anatomy &amp; Physiology II | <span>Interactive Study Guide</span></div>
+  </div>
+</header>
+
+<!-- TAB NAV -->
+<nav id="tab-nav">
+  <div class="tab-list">
+    <button class="tab-btn active" data-tab="start">Start Here</button>
+    <button class="tab-btn" data-tab="blood">Blood</button>
+    <button class="tab-btn" data-tab="cardio">Heart &amp; Vessels</button>
+    <button class="tab-btn" data-tab="immune">Lymph &amp; Immunity</button>
+    <button class="tab-btn" data-tab="quiz">Check Yourself</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <h1>Anatomy &amp; Physiology II: <span>Blood, Heart &amp; Immunity</span></h1>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+
+<!-- ===================== TAB 1: START HERE ===================== -->
+<div class="section-wrap active" id="sec-start">
+  <div class="section-header">
+    <h2>Start Here</h2>
+    <p class="sec-intro">Three systems. One mission. Blood carries it, the heart pumps it, and the lymphatic system defends it. Master the map before you memorize the street names.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>What You'll Learn Here</h3>
+    <p>Three systems, one connected story. Everything fits under one of these three umbrellas — if you can name the umbrella, you're already halfway to understanding it.</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>System</th><th>The One-Line Job</th><th>What to Learn</th></tr>
+        <tr><td><strong>Blood</strong></td><td>The river itself</td><td>What's in plasma, what each formed element does, how it clots, and who can donate to whom</td></tr>
+        <tr><td><strong>Heart &amp; Vessels</strong></td><td>The pump and the pipes</td><td>The exact route blood takes, the electrical wiring, and what pressure means</td></tr>
+        <tr><td><strong>Lymph &amp; Immunity</strong></td><td>The drainage and the defense</td><td>Where lymph goes, who makes antibodies, and how memory keeps you safe</td></tr>
+      </table>
+    </div>
+    <div class="key-point">
+      <p><strong>How to use this:</strong> learn the <em>concepts</em> — the "why" behind every fact. If you understand the why, you can explain any of it in your own words. Nobody memorizes their way through physiology.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>Mastery Checklist</h3>
+    <p>Check these off as you go. They save to your browser — come back tomorrow and your progress is still here.</p>
+    <div class="mastery-list">
+      <div class="mastery-progress"><div class="mastery-bar" id="mastery-bar"></div></div>
+      <div class="mastery-count" id="mastery-count">0 of 15 mastered</div>
+      <ul>
+        <li data-k="k1"><label><input type="checkbox" onchange="updateMastery()"> I can list what plasma is made of vs. the formed elements</label></li>
+        <li data-k="k2"><label><input type="checkbox" onchange="updateMastery()"> I can name the 3 plasma proteins and what each does</label></li>
+        <li data-k="k3"><label><input type="checkbox" onchange="updateMastery()"> I can list every formed element and its lifespan/job</label></li>
+        <li data-k="k4"><label><input type="checkbox" onchange="updateMastery()"> I can explain hemostasis (clotting) and fibrinolysis (cleanup)</label></li>
+        <li data-k="k5"><label><input type="checkbox" onchange="updateMastery()"> I can work the blood-typing grid (A, B, AB, O, Rh)</label></li>
+        <li data-k="k6"><label><input type="checkbox" onchange="updateMastery()"> I know each WBC by its specialty (first responder, allergy, etc.)</label></li>
+        <li data-k="k7"><label><input type="checkbox" onchange="updateMastery()"> I can trace blood through the heart chambers, valves, and lungs in order</label></li>
+        <li data-k="k8"><label><input type="checkbox" onchange="updateMastery()"> I can order the conduction system (SA → AV → bundle → branches → Purkinje)</label></li>
+        <li data-k="k9"><label><input type="checkbox" onchange="updateMastery()"> I know stroke volume vs. cardiac output, and the CO formula</label></li>
+        <li data-k="k10"><label><input type="checkbox" onchange="updateMastery()"> I know systolic vs. diastolic and hypo vs. hypertension</label></li>
+        <li data-k="k11"><label><input type="checkbox" onchange="updateMastery()"> I can tell pulmonary artery from pulmonary vein by what each carries</label></li>
+        <li data-k="k12"><label><input type="checkbox" onchange="updateMastery()"> I know the lymph drainage route (lacteals → thoracic duct → subclavian)</label></li>
+        <li data-k="k13"><label><input type="checkbox" onchange="updateMastery()"> I know MALT locations and every lymphoid organ</label></li>
+        <li data-k="k14"><label><input type="checkbox" onchange="updateMastery()"> I know the antibody classes and which one means allergy</label></li>
+        <li data-k="k15"><label><input type="checkbox" onchange="updateMastery()"> I can distinguish humoral vs. cell-mediated and active vs. passive immunity</label></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 2: BLOOD ===================== -->
+<div class="section-wrap" id="sec-blood">
+  <div class="section-header">
+    <h2>Blood — The River</h2>
+    <p class="sec-intro">Blood is a tissue with a liquid job. It's mostly water, carrying cargo and soldiers and cement. Learn the mix before you learn the mission.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>Plasma vs. Formed Elements — Know Which Is Which</h3>
+    <p>Spin a tube of blood and it separates. The clear golden layer on top is <strong>plasma</strong> — the liquid matrix. The bottom is the <strong>formed elements</strong> — the cells and cell fragments. Never confuse the two.</p>
+    <div class="flip-grid">
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">H₂O</div><div class="hint">~92% of plasma</div></div>
+        <div class="flip-back"><div class="meaning">Water</div><div class="sub">The solvent. Carries heat and everything dissolved in it.</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">P</div><div class="hint">Plasma solute</div></div>
+        <div class="flip-back"><div class="meaning">Plasma Proteins</div><div class="sub">Albumin, globulins, fibrinogen — the big three.</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">E</div><div class="hint">Plasma solute</div></div>
+        <div class="flip-back"><div class="meaning">Electrolytes</div><div class="sub">Na⁺, K⁺, Ca²⁺, Cl⁻ — ions in solution.</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">RBC</div><div class="hint">Formed element</div></div>
+        <div class="flip-back"><div class="meaning">Erythrocytes</div><div class="sub">Red cells. Formed elements, NOT plasma.</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">PLT</div><div class="hint">Formed element</div></div>
+        <div class="flip-back"><div class="meaning">Platelets</div><div class="sub">Cell fragments for clotting. Formed element.</div></div>
+      </div></div>
+    </div>
+    <div class="key-point">
+      <p><strong>The trap:</strong> water, proteins, and electrolytes live in plasma. Erythrocytes and platelets are <em>formed elements</em>. "What's in plasma" and "what blood does" are two different ideas — don't blur them.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-purple">
+    <h3>What Blood Actually Does</h3>
+    <ul>
+      <li><strong>Transport:</strong> oxygen, nutrients, hormones, and waste — the courier service.</li>
+      <li><strong>Hemostasis:</strong> plugs leaks at injury sites so you don't bleed out.</li>
+      <li><strong>Defense:</strong> white cells and antibodies ride along to fight invaders.</li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Remember:</strong> blood <em>carries</em>, blood <em>plugs</em>, blood <em>defends</em>. It does not digest food and it does not make red cells — the bone marrow does that. Don't give blood a job it doesn't have.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>The Three Plasma Proteins — A Cast of Specialists</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Protein</th><th>Its One Job</th><th>Memory Hook</th></tr>
+        <tr><td><strong>Albumin</strong></td><td>Maintains osmotic pressure — holds water in the blood</td><td>"<em>Al</em>bumin = <em>al</em>l about pulling water"</td></tr>
+        <tr><td><strong>Globulins</strong></td><td>Antibodies (immune) + transport proteins</td><td>"<em>Glob</em>ulins = <em>glob</em> of defense"</td></tr>
+        <tr><td><strong>Fibrinogen</strong></td><td>Clotting — becomes fibrin threads</td><td>"<em>Fib</em>rinogen = the <em>fib</em>ers of a clot"</td></tr>
+      </table>
+    </div>
+    <div class="key-point">
+      <p><strong>Remember:</strong> what keeps fluid in your vessels? <strong>Albumin</strong>. What turns into the clot? <strong>Fibrinogen</strong>. Osmotic pressure = albumin; the scab = fibrin.</p>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>Formed Elements — The Full Roster</h3>
+    <p>Blood has three kinds of "solid" cargo. Learn each one's count, lifespan, and job — all three matter.</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Element</th><th>What It Is</th><th>Lifespan</th><th>One-Line Job</th></tr>
+        <tr><td><strong>Erythrocytes (RBC)</strong></td><td>Biconcave discs, no nucleus, packed with hemoglobin</td><td>~120 days</td><td>Carry O₂ and CO₂</td></tr>
+        <tr><td><strong>Leukocytes (WBC)</strong></td><td>Complete cells with nuclei — 5 types</td><td>Hours to years</td><td>Defend against infection</td></tr>
+        <tr><td><strong>Thrombocytes (platelets)</strong></td><td>Cell <em>fragments</em> (not whole cells)</td><td>~8–10 days</td><td>Plug leaks — blood clotting</td></tr>
+      </table>
+    </div>
+    <div class="pearl">
+      <div class="pearl-label">The Click</div>
+      <p>Platelets aren't cells — they're shards of a bigger cell (the megakaryocyte) that broke apart. That's why the CBC counts them as <strong>thrombocytes</strong>. A "thrombus" is a clot; thrombocytes are the clot-building fragments.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Red Blood Cells — The Oxygen Barges</h3>
+    <ul>
+      <li><strong>Lifespan:</strong> about <strong>120 days</strong>. Then the spleen and liver recycle them. (Not 30, not 60, not 180 — a barge lasts about four months.)</li>
+      <li><strong>Hemoglobin:</strong> the iron-based protein inside the RBC. Its entire job is to <strong>bind and transport oxygen and carbon dioxide</strong>. Four heme groups, each holding an iron atom, each iron grabbing one O₂.</li>
+      <li><strong>Where RBCs are born:</strong> <strong>red bone marrow</strong> — not the spleen, not the liver. Those two only <em>recycle</em> old red cells.</li>
+      <li><strong>Erythropoietin (EPO):</strong> the hormone the kidney releases when oxygen is low. It tells the bone marrow to make more RBCs.</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p>When do you see EPO cranked up? When there aren't enough red cells carrying oxygen — <strong>anemia</strong>. Low oxygen → kidney releases EPO → marrow makes more RBCs. It's a supply-and-demand loop, not a random hormone.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Hemostasis — Plug the Leak, Then Clean Up</h3>
+    <p>When a vessel breaks, the body works in three quick steps to stop the bleeding:</p>
+    <ul>
+      <li><strong>1. Vascular spasm:</strong> the vessel squeezes itself to slow the leak.</li>
+      <li><strong>2. Platelet plug:</strong> platelets stick to the damage and pile up.</li>
+      <li><strong>3. Coagulation:</strong> the plasma protein <strong>fibrinogen</strong> converts to <strong>fibrin</strong> threads that weave through the plug and cement it into a real clot.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Pair the words:</strong> <strong>hemorrhage</strong> = bleeding; <strong>coagulation</strong> = clot formation. And once the vessel heals, the body dissolves the finished clot — that's <strong>fibrinolysis</strong>. Build it with fibrin, break it with fibrino<em>lysis</em>.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Blood Types — The ID Card on Every Red Cell</h3>
+    <p>Your red cells wear antigens on their surface like name tags: <strong>A</strong> and/or <strong>B</strong>, plus the <strong>Rh factor</strong> (positive or negative). Your plasma carries the <em>antibodies against whatever you don't have</em>.</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Antigen on RBC</th><th>Antibody in plasma</th><th>Can receive from</th></tr>
+        <tr><td><strong>A</strong></td><td>A</td><td>Anti-B</td><td>A, O</td></tr>
+        <tr><td><strong>B</strong></td><td>B</td><td>Anti-A</td><td>B, O</td></tr>
+        <tr><td><strong>AB</strong></td><td>A and B</td><td>Neither</td><td>Everyone (universal recipient)</td></tr>
+        <tr><td><strong>O</strong></td><td>Neither</td><td>Anti-A and Anti-B</td><td>O only (universal donor)</td></tr>
+      </table>
+    </div>
+    <div class="key-point">
+      <p><strong>The logic to remember:</strong> AB is the universal <em>recipient</em> because its plasma has <em>no</em> anti-A or anti-B antibodies — so it won't attack incoming blood. O is the universal <em>donor</em> because its red cells have <em>no</em> antigens to be attacked. Recipient cares about antibodies; donor cares about antigens.</p>
+    </div>
+    <ul>
+      <li><strong>Type B cells carry the B antigen</strong> — read the name tag right off the cell.</li>
+      <li><strong>Rh factor:</strong> separate from ABO. Rh-negative means no Rh antigen.</li>
+      <li><strong>Safest transfusion:</strong> match type AND Rh. For a Rh-negative recipient, a Rh-negative unit (especially O−) is the least likely to cause trouble.</li>
+    </ul>
+    <div class="quick-check">
+      <div class="qc-label">Quick Check</div>
+      <div class="qc-question" data-answer="C">
+        <div class="qc-text">Which cells have NO A or B antigens on their surface?</div>
+        <div class="qc-choices">
+          <button class="qc-choice" data-val="A">A) Type AB</button>
+          <button class="qc-choice" data-val="B">B) Type A</button>
+          <button class="qc-choice" data-val="C">C) Type O</button>
+          <button class="qc-choice" data-val="D">D) Type B</button>
+        </div>
+        <div class="qc-feedback">Type O has neither A nor B antigen — that's why O is the universal donor: there's nothing on the cell for a recipient's antibodies to attack.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Rh Incompatibility — A Story in Two Pregnancies</h3>
+    <div class="scenario">
+      <div class="scenario-label">Clinical Scenario</div>
+      <p>An Rh-negative mother carries an Rh-positive baby. Nothing happens the first time. But during delivery, some of the baby's Rh-positive cells leak into Mom's bloodstream, and her immune system learns to build <strong>anti-Rh antibodies</strong>.</p>
+      <div class="scenario-reveal">
+        <span class="tap-text">Tap to see what happens in the NEXT pregnancy →</span>
+        <div class="answer-text">In a second Rh-positive pregnancy, Mom's anti-Rh antibodies cross the placenta and destroy the new baby's red cells — hemolytic disease of the newborn. The danger is <strong>Mom Rh-negative + baby Rh-positive</strong>, and it's preventable with RhoGAM.</div>
+      </div>
+    </div>
+    <div class="pearl">
+      <div class="pearl-label">Why It Matters</div>
+      <p>The first exposure <em>sensitizes</em>; the second exposure <em>attacks</em>. That's the same "memory" logic you'll meet again in the immune tab — the body always fights harder the second time it sees an enemy.</p>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>The White Cells — A Cast of First Responders</h3>
+    <p>Never memorize WBCs as a list. Memorize each one's <em>specialty</em>, then the answer names itself. (Rough order of abundance: <strong>Neutrophils &gt; Lymphocytes &gt; Monocytes &gt; Eosinophils &gt; Basophils</strong> — "Never Let Monkeys Eat Bananas.")</p>
+    <div class="flip-grid">
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">N</div><div class="hint">Most abundant</div></div>
+        <div class="flip-back"><div class="meaning">Neutrophil</div><div class="sub">First to arrive at a bacterial infection. The rapid-response infantry.</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">E</div><div class="hint">Allergy &amp; parasites</div></div>
+        <div class="flip-back"><div class="meaning">Eosinophil</div><div class="sub">Spikes in allergies and parasitic worms. "E for allErgy."</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">B</div><div class="hint">Rarest</div></div>
+        <div class="flip-back"><div class="meaning">Basophil</div><div class="sub">Releases histamine in inflammation. "B for histamine Bomb."</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">M</div><div class="hint">Becomes a big eater</div></div>
+        <div class="flip-back"><div class="meaning">Monocyte</div><div class="sub">Leaves blood, becomes a macrophage in tissues.</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">L</div><div class="hint">Adaptive immunity</div></div>
+        <div class="flip-back"><div class="meaning">Lymphocyte</div><div class="sub">B cells and T cells — the targeted, remember-you defense.</div></div>
+      </div></div>
+    </div>
+    <div class="key-point">
+      <p><strong>Order of arrival at an acute bacterial infection:</strong> <strong>neutrophils first</strong>. Not eosinophils (that's allergy), not lymphocytes (that's the slower adaptive response). The infantry gets there before the specialists.</p>
+    </div>
+    <div class="quick-check">
+      <div class="qc-label">Quick Check</div>
+      <div class="qc-question" data-answer="B">
+        <div class="qc-text">A CBC on a client with severe allergies would most likely show elevated levels of which cell?</div>
+        <div class="qc-choices">
+          <button class="qc-choice" data-val="A">A) Neutrophils</button>
+          <button class="qc-choice" data-val="B">B) Eosinophils</button>
+          <button class="qc-choice" data-val="C">C) Erythrocytes</button>
+          <button class="qc-choice" data-val="D">D) Monocytes</button>
+        </div>
+        <div class="qc-feedback">Eosinophils climb in allergic reactions and parasitic infections — "E for allErgy." Neutrophils answer bacterial infections instead.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card border-green">
+    <h3>The CBC — What the Machine Counts</h3>
+    <ul>
+      <li>A <strong>complete blood count</strong> counts the <em>cells</em>: red cells, white cells (by type), and platelets.</li>
+      <li><strong>Leukocytes</strong> = white cells. <strong>Thrombocytes</strong> = platelets. <strong>Erythrocytes</strong> = red cells.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>The trap:</strong> glucose and sodium are <em>chemistry panel</em> values, not CBC values. The CBC is a census of cells — it doesn't measure dissolved solutes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 3: HEART & VESSELS ===================== -->
+<div class="section-wrap" id="sec-cardio">
+  <div class="section-header">
+    <h2>Heart &amp; Vessels — The Pump and the Pipes</h2>
+    <p class="sec-intro">The heart is a four-room pump with its own electrical wiring. The vessels are one-way streets with strict lane rules. Trace the route once, out loud, and you own it.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>Blood's Journey — Trace It Forward</h3>
+    <div class="flow-chart">
+      <div class="flow-title">The Full Circuit (start where blood ENTERS the heart)</div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <rect x="5" y="15" width="95" height="46" rx="10" fill="#4a3728"/><text x="52" y="33" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Vena Cavae</text><text x="52" y="47" text-anchor="middle" fill="#fff" font-size="9" font-family="Inter,sans-serif">(deoxy in)</text>
+        <line x1="100" y1="38" x2="118" y2="38" stroke="#7a4a1f" stroke-width="2" marker-end="url(#arr2)"/>
+        <rect x="123" y="15" width="95" height="46" rx="10" fill="#7a4a1f"/><text x="170" y="33" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Right Atrium</text><text x="170" y="47" text-anchor="middle" fill="#fff" font-size="9" font-family="Inter,sans-serif">→ tricuspid</text>
+        <line x1="218" y1="38" x2="236" y2="38" stroke="#7a4a1f" stroke-width="2" marker-end="url(#arr2)"/>
+        <rect x="241" y="15" width="100" height="46" rx="10" fill="#c4502a"/><text x="291" y="33" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Right Ventricle</text><text x="291" y="47" text-anchor="middle" fill="#fff" font-size="9" font-family="Inter,sans-serif">→ pulmonary valve</text>
+        <line x1="341" y1="38" x2="359" y2="38" stroke="#c4502a" stroke-width="2" marker-end="url(#arr2)"/>
+        <rect x="364" y="15" width="105" height="46" rx="10" fill="#7d5a8a"/><text x="416" y="33" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Pulmonary Artery</text><text x="416" y="47" text-anchor="middle" fill="#fff" font-size="9" font-family="Inter,sans-serif">(deoxy → lungs)</text>
+        <line x1="469" y1="38" x2="487" y2="38" stroke="#7d5a8a" stroke-width="2" marker-end="url(#arr2)"/>
+        <rect x="492" y="15" width="90" height="46" rx="10" fill="#6b7d3a"/><text x="537" y="38" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">LUNGS</text>
+        <line x1="582" y1="38" x2="600" y2="38" stroke="#6b7d3a" stroke-width="2" marker-end="url(#arr2)"/>
+        <rect x="605" y="15" width="105" height="46" rx="10" fill="#d9a404"/><text x="657" y="33" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Pulmonary Vein</text><text x="657" y="47" text-anchor="middle" fill="#fff" font-size="9" font-family="Inter,sans-serif">(oxy → heart)</text>
+        <rect x="123" y="95" width="95" height="46" rx="10" fill="#7a4a1f"/><text x="170" y="113" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Left Atrium</text><text x="170" y="127" text-anchor="middle" fill="#fff" font-size="9" font-family="Inter,sans-serif">→ bicuspid</text>
+        <line x1="218" y1="118" x2="236" y2="118" stroke="#7a4a1f" stroke-width="2" marker-end="url(#arr2)"/>
+        <rect x="241" y="95" width="100" height="46" rx="10" fill="#c4502a"/><text x="291" y="113" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Left Ventricle</text><text x="291" y="127" text-anchor="middle" fill="#fff" font-size="9" font-family="Inter,sans-serif">→ aortic valve</text>
+        <line x1="341" y1="118" x2="359" y2="118" stroke="#c4502a" stroke-width="2" marker-end="url(#arr2)"/>
+        <rect x="364" y="95" width="90" height="46" rx="10" fill="#a33b24"/><text x="409" y="118" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">AORTA</text>
+        <path d="M710 38 L710 118 L454 118" fill="none" stroke="#6b5a3b" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arr2)"/>
+        <defs><marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6b5a3b"/></marker></defs>
+      </svg>
+    </div>
+    <div class="acc-card">
+      <div class="acc-header"><span class="acc-title">Tap to see the exact 10-step order (say it out loud)</span><span class="acc-chevron">▼</span></div>
+      <div class="acc-body"><div class="acc-content">
+        <ol>
+          <li>Vena cavae → <strong>right atrium</strong></li>
+          <li>Right atrium → <strong>tricuspid valve</strong> → right ventricle</li>
+          <li>Right ventricle → <strong>pulmonary semilunar valve</strong> → pulmonary arteries</li>
+          <li>Pulmonary arteries → <strong>lungs</strong> (drop CO₂, pick up O₂)</li>
+          <li>Lungs → <strong>pulmonary veins</strong> → left atrium</li>
+          <li>Left atrium → <strong>bicuspid (mitral) valve</strong> → left ventricle</li>
+          <li>Left ventricle → <strong>aortic semilunar valve</strong> → aorta</li>
+          <li>Aorta → body</li>
+        </ol>
+      </div></div>
+    </div>
+    <div class="key-point">
+      <p><strong>The one rule to remember:</strong> <em>arteries</em> leave the heart, <em>veins</em> return to it — EXCEPT the <strong>pulmonary artery</strong> (leaves, but carries <em>deoxygenated</em> blood to the lungs) and the <strong>pulmonary vein</strong> (returns, but carries <em>oxygenated</em> blood). Oxygen content follows the lungs, not the vessel name.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>Heart Anatomy — The Walls and the Valves</h3>
+    <ul>
+      <li><strong>Layers (superficial → deep):</strong> parietal pericardium → visceral pericardium (epicardium) → myocardium → endocardium.</li>
+      <li><strong>The epicardium IS the visceral pericardium.</strong> Same structure, two names. The outer sac's inner lining folds back onto the heart itself.</li>
+      <li><strong>Thickest myocardium:</strong> the <strong>left ventricle</strong> — it has to push blood all the way around the body, so it built the biggest muscle.</li>
+      <li><strong>The septum:</strong> the <strong>interventricular septum</strong> divides right ventricle from left.</li>
+      <li><strong>Chordae tendineae:</strong> the "heart strings" anchoring the AV valve cusps to the papillary muscles so the valves don't blow backward.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Valve</th><th>Between</th><th>AKA</th></tr>
+        <tr><td><strong>Tricuspid</strong></td><td>Right atrium → right ventricle</td><td>Right AV valve (3 cusps)</td></tr>
+        <tr><td><strong>Pulmonary</strong></td><td>Right ventricle → pulmonary artery</td><td>Right semilunar valve</td></tr>
+        <tr><td><strong>Bicuspid / Mitral</strong></td><td>Left atrium → left ventricle</td><td>Left AV valve (2 cusps)</td></tr>
+        <tr><td><strong>Aortic</strong></td><td>Left ventricle → aorta</td><td>Left semilunar valve</td></tr>
+      </table>
+    </div>
+    <div class="mnemonic-box">
+      <p><strong>"Try Pulling My Aorta"</strong> — Tricuspid, Pulmonary, Mitral, Aortic — in the order blood flows through them. Right side first (tricuspid, pulmonary), then left (mitral, aortic).</p>
+    </div>
+    <ul>
+      <li><strong>Right atrium</strong> receives deoxygenated blood from the <strong>vena cavae</strong> (SVC from the upper body, IVC from the lower).</li>
+      <li><strong>Coronary sinus:</strong> the vein that drains deoxygenated blood from the heart's <em>own walls</em> back into the right atrium.</li>
+      <li><strong>Aorta:</strong> the artery that carries oxygenated blood <em>away</em> from the heart to the body.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-purple">
+    <h3>The Electrical Wiring — Who Sets the Pace</h3>
+    <div class="flow-chart">
+      <div class="flow-title">Conduction System (in order)</div>
+      <svg viewBox="0 0 760 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <rect x="5" y="22" width="100" height="46" rx="10" fill="#a33b24"/><text x="55" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">SA Node</text><text x="55" y="54" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">pacemaker</text>
+        <line x1="105" y1="45" x2="125" y2="45" stroke="#a33b24" stroke-width="2" marker-end="url(#arr3)"/>
+        <rect x="130" y="22" width="100" height="46" rx="10" fill="#d9a404"/><text x="180" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">AV Node</text><text x="180" y="54" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">gatekeeper</text>
+        <line x1="230" y1="45" x2="250" y2="45" stroke="#d9a404" stroke-width="2" marker-end="url(#arr3)"/>
+        <rect x="255" y="22" width="115" height="46" rx="10" fill="#c4502a"/><text x="312" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">AV Bundle</text><text x="312" y="54" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">(bundle of His)</text>
+        <line x1="370" y1="45" x2="390" y2="45" stroke="#c4502a" stroke-width="2" marker-end="url(#arr3)"/>
+        <rect x="395" y="22" width="135" height="46" rx="10" fill="#7d5a8a"/><text x="462" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Bundle Branches</text><text x="462" y="54" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">left &amp; right</text>
+        <line x1="530" y1="45" x2="550" y2="45" stroke="#7d5a8a" stroke-width="2" marker-end="url(#arr3)"/>
+        <rect x="555" y="22" width="120" height="46" rx="10" fill="#6b7d3a"/><text x="615" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="Inter,sans-serif">Purkinje Fibers</text><text x="615" y="54" text-anchor="middle" fill="#fff" font-size="8.5" font-family="Inter,sans-serif">contract!</text>
+        <defs><marker id="arr3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6b5a3b"/></marker></defs>
+      </svg>
+    </div>
+    <ul>
+      <li><strong>SA node</strong> initiates every heartbeat and sets the rate — it's the natural pacemaker.</li>
+      <li><strong>Intercalated discs</strong> are the special junctions in cardiac muscle that let the electrical signal leap from cell to cell, so the whole myocardium squeezes as one.</li>
+      <li><strong>Systole</strong> = contraction. <strong>Diastole</strong> = relaxation. Pressure peaks during systole.</li>
+      <li><strong>S1</strong> ("lub") = the AV valves (mitral + tricuspid) slamming shut. <strong>S2</strong> ("dub") = the semilunar valves (aortic + pulmonary) closing.</li>
+      <li><strong>Normal resting rate</strong> is about <strong>75 beats per minute</strong>. Slower than 60 is <strong>bradycardia</strong>; fast is <strong>tachycardia</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="content-card border-green">
+    <h3>Cardiac Output — How Much Work the Pump Does</h3>
+    <ul>
+      <li><strong>Stroke volume (SV):</strong> the volume ejected from the left ventricle in <em>one beat</em>.</li>
+      <li><strong>Cardiac output (CO):</strong> the volume pumped by the heart in <em>one minute</em> = <strong>heart rate × stroke volume</strong>.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Don't confuse them:</strong> per-beat = stroke volume, per-minute = cardiac output. One is a single squeeze, the other is the whole minute's worth. <strong>CO = HR × SV</strong> — the formula is the shortcut to both.</p>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>Vessels — Arteries, Veins, and the One-Way Rules</h3>
+    <ul>
+      <li><strong>Veins have valves</strong> to keep low-pressure blood moving one way toward the heart. Arteries don't need them — they run at high pressure.</li>
+      <li><strong>Tunica media</strong> is the smooth-muscle layer. When it <em>relaxes</em>, the vessel widens = <strong>vasodilation</strong>. When it contracts, the vessel narrows = vasoconstriction.</li>
+      <li><strong>Hepatic portal circulation:</strong> blood from the digestive organs goes to the <strong>liver</strong> first, so the liver can filter wastes and store nutrients before the blood returns to general circulation.</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">Clinical Pearl</div>
+      <p><strong>Median cubital vein</strong> — that visible one in the crook of the elbow — is the phlebotomist's favorite: it's large, superficial, and steady. The go-to vein for drawing blood.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Major Vessel</th><th>What It Does</th></tr>
+        <tr><td><strong>Brachiocephalic trunk</strong></td><td>Splits into the <strong>right common carotid</strong> and <strong>right subclavian</strong> arteries</td></tr>
+        <tr><td><strong>Common iliac artery</strong></td><td>Branches off the <strong>abdominal aorta</strong> to feed the pelvis and legs</td></tr>
+        <tr><td><strong>Superior vena cava</strong></td><td>Returns deoxygenated blood from the upper body (arms, head) to the right atrium</td></tr>
+        <tr><td><strong>Upper-extremity veins</strong></td><td>Median cubital → basilic → axillary → subclavian → SVC (returning to the heart)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Blood Pressure — The Numbers Mean Something</h3>
+    <ul>
+      <li><strong>Systolic pressure</strong> = the highest pressure, when the ventricles contract and slam blood into the arteries.</li>
+      <li><strong>Diastolic pressure</strong> = the lowest pressure, when the heart relaxes between beats.</li>
+      <li><strong>Hypotension</strong> = low BP. <strong>Hypertension</strong> = high BP.</li>
+      <li>A reading of <strong>130/80 mmHg or higher</strong> flags <strong>hypertension</strong>.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Read it like a heartbeat:</strong> systole = squeeze = the top (higher) number. Diastole = relax = the bottom (lower) number. "S" for squeeze comes first.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>When the Pump Fails — A Clinical Lineup</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Condition</th><th>What It Is</th></tr>
+        <tr><td><strong>Myocardial infarction</strong></td><td>Heart attack — blockage of the <strong>coronary arteries</strong> that feed the heart muscle oxygen</td></tr>
+        <tr><td><strong>Pericarditis</strong></td><td>Inflammation of the sac around the heart (the pericardial cavity)</td></tr>
+        <tr><td><strong>Heart murmur</strong></td><td>Turbulent flow from a valve not working properly</td></tr>
+        <tr><td><strong>Bradycardia</strong></td><td>Heart rate below 60 bpm (e.g., 49)</td></tr>
+      </table>
+    </div>
+    <div class="scenario">
+      <div class="scenario-label">Clinical Scenario — DVT</div>
+      <p>A client develops a deep vein thrombosis in the left leg. Why should anyone care about a clot in a leg vein?</p>
+      <div class="scenario-reveal">
+        <span class="tap-text">Tap for the danger →</span>
+        <div class="answer-text">The leg clot can break loose and travel with venous return to the lungs, lodging there as a <strong>pulmonary embolism</strong>. Veins return blood to the heart — and a clot riding a vein is on a one-way trip toward the lungs.</div>
+      </div>
+    </div>
+    <div class="nclex-focus">
+      <div class="nclex-label">Why It Matters</div>
+      <p>The cardiovascular system's headline job is <strong>maintaining blood pressure</strong> — that's the system's whole point in one phrase. Think pressure and circulation, not red cell production (that's bone marrow's job).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 4: LYMPH & IMMUNITY ===================== -->
+<div class="section-wrap" id="sec-immune">
+  <div class="section-header">
+    <h2>Lymph &amp; Immunity — Drainage and Defense</h2>
+    <p class="sec-intro">Your blood leaks a little fluid into every tissue, and the lymphatic system is the drainage crew that collects it, filters it, and returns it. On top of that, it's your standing army. Two jobs, one quiet system.</p>
+  </div>
+
+  <div class="content-card">
+    <h3>The Lymphatic System — The Sewer That Saves You</h3>
+    <ul>
+      <li><strong>Primary function:</strong> <strong>defense</strong> — protecting the body against internal and external threats (and returning leaked fluid to the blood).</li>
+      <li><strong>The fluid:</strong> <strong>lymph</strong> is interstitial fluid that has entered the lymphatic capillaries.</li>
+      <li><strong>The route home:</strong> lymphatic capillaries → larger vessels → <strong>thoracic duct</strong> → empties into the <strong>left subclavian vein</strong>, where lymph rejoins the blood.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>The return address:</strong> lymph from most of the body drains through the <strong>thoracic duct</strong> into the <strong>left subclavian vein</strong>. That's where the drainage system hands everything back to circulation.</p>
+    </div>
+    <div class="scenario">
+      <div class="scenario-label">Clinical Scenario — Swollen Ankle</div>
+      <p>A client sprains an ankle and it swells (edema). What has to happen for that swelling to go down?</p>
+      <div class="scenario-reveal">
+        <span class="tap-text">Tap for the answer →</span>
+        <div class="answer-text"><strong>Interstitial fluid must move from the tissues into the lymphatic capillaries</strong>, which carry it away and drain it back into the blood. Swelling resolves when the lymphatics can keep up with the leak.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>The Organs and Special Vessels — Name Every Player</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Structure</th><th>What It Is / Does</th></tr>
+        <tr><td><strong>Spleen</strong></td><td>The <strong>largest</strong> lymphoid organ, upper left quadrant — filters blood, recycles old RBCs</td></tr>
+        <tr><td><strong>Thymus</strong></td><td>Large in fetus and infant, <strong>shrinks with age</strong> — where T cells mature</td></tr>
+        <tr><td><strong>MALT</strong></td><td>Mucosa-associated lymphoid tissue — nodules guarding mucous membranes (see below)</td></tr>
+        <tr><td><strong>Lacteals</strong></td><td>Specialized lymphatic capillaries in the <strong>small intestine villi</strong> that absorb fats</td></tr>
+        <tr><td><strong>Lymph nodes</strong></td><td>Filters along the vessels — named by region (see below)</td></tr>
+      </table>
+    </div>
+    <h4>MALT — Where It Hides</h4>
+    <p>Mucosa-associated lymphoid tissue stations sentries at every wet opening where invaders march in:</p>
+    <ul>
+      <li><strong>Tonsils</strong> — throat</li>
+      <li><strong>Peyer's patches</strong> — small intestine</li>
+      <li><strong>Appendix</strong> — gut</li>
+      <li>Nodules throughout the <strong>gastrointestinal tract</strong> and <strong>lungs</strong></li>
+    </ul>
+    <div class="mnemonic-box">
+      <p><strong>Lymph node locations:</strong> <strong>Cervical</strong> = neck, <strong>Axillary</strong> = armpit, <strong>Inguinal</strong> = groin, <strong>Intestinal</strong> = abdomen. Touch the body part, and the name is already there — cervical is the neck, axillary is the armpit, inguinal is the groin.</p>
+    </div>
+    <div class="key-point">
+      <p><strong>Lacteals = fat absorption.</strong> They're lymphatics, but their claim to fame is grabbing digested fats from the gut. "Lacteals" → "lact-", milky — the lymph inside looks milky after a fatty meal.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-red">
+    <h3>Two Lymph Diseases — Don't Mix Them Up</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Condition</th><th>What It Is</th><th>Key Sign</th></tr>
+        <tr><td><strong>Lymphangitis</strong></td><td>Inflammation of the <strong>lymphatic vessels</strong></td><td>A red, painful streak along the limb, fever</td></tr>
+        <tr><td><strong>Lymphedema</strong></td><td>Accumulation of lymph where <strong>drainage is blocked</strong></td><td>Persistent swelling (no red streak)</td></tr>
+      </table>
+    </div>
+    <div class="key-point">
+      <p><strong>The difference in one word:</strong> <em>-angitis</em> = inflammation (of vessels); <em>-edema</em> = swelling (from backup). Infection causes lymph<em>ang</em>itis; blockage causes lymph<em>edema</em>.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-purple">
+    <h3>Immunity — The Two Branches</h3>
+    <ul>
+      <li><strong>Innate (nonspecific):</strong> fast, always ready, no memory — skin, mucous membranes, phagocytes, inflammation, fever.</li>
+      <li><strong>Adaptive (specific):</strong> slower to start, but it <em>remembers</em> — B cells and T cells.</li>
+      <li><strong>Humoral immunity</strong> = antibodies (made by B cells) floating in the "humors"/fluids — the missile defense against extracellular threats.</li>
+      <li><strong>Cell-mediated immunity</strong> = T cells attacking infected cells directly — the ground troops.</li>
+    </ul>
+    <div class="key-point">
+      <p><strong>Humoral = antibodies (B cells). Cell-mediated = cells (T cells).</strong> If we're talking about gamma globulins/antibodies attacking a pathogen in the blood, that's <em>humoral</em>. If it's T cells destroying a virus-infected body cell, that's <em>cell-mediated</em>.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-teal">
+    <h3>The Cell Cast — Who Does What</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Cell</th><th>Its Job</th></tr>
+        <tr><td><strong>B cells</strong></td><td>Produce <strong>antibodies</strong> (plasma cells are the antibody factories) — the lymph node medulla is the "antibody zone"</td></tr>
+        <tr><td><strong>T cells</strong></td><td><strong>Activate and direct</strong> other immune cells via cell-to-cell contact and cytokines; also kill infected cells directly</td></tr>
+        <tr><td><strong>Macrophages</strong></td><td><strong>Phagocytize</strong> pathogens, <strong>present antigens</strong> to T cells, and <strong>release cytokines</strong> to signal others</td></tr>
+        <tr><td><strong>Memory cells</strong></td><td>Provide <strong>long-term immunity</strong> and a rapid response on re-exposure</td></tr>
+      </table>
+    </div>
+    <div class="key-point">
+      <p><strong>The trap:</strong> B cells make antibodies; T cells do NOT. T cells direct and destroy. And macrophages eat and present — they don't make antibodies either. Only the B-cell family (plasma cells) manufactures antibodies.</p>
+    </div>
+    <div class="pearl">
+      <div class="pearl-label">The Click</div>
+      <p>This is why the <strong>secondary response</strong> is faster and stronger than the first: after your first infection, <strong>memory cells</strong> are left standing guard. The second time the same pathogen shows up, they recognize it instantly and fire — often so fast you never even feel sick. <em>That's</em> why a second exposure can pass without symptoms.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-amber">
+    <h3>Antibodies — Five Classes, Five Jobs</h3>
+    <div class="flip-grid">
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">IgG</div><div class="hint">Most abundant</div></div>
+        <div class="flip-back"><div class="meaning">The General</div><div class="sub">Long-term defense vs. viruses, bacteria, toxins. Crosses the placenta.</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">IgE</div><div class="hint">The troublemaker</div></div>
+        <div class="flip-back"><div class="meaning">The Allergy Antibody</div><div class="sub">Binds mast cells, triggers allergic reactions. "E for allErgy."</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">IgA</div><div class="hint">The bouncer</div></div>
+        <div class="flip-back"><div class="meaning">The Surface Guard</div><div class="sub">In secretions — saliva, tears, breast milk, mucus.</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">IgM</div><div class="hint">First responder</div></div>
+        <div class="flip-back"><div class="meaning">The First Alarm</div><div class="sub">First antibody made in a new infection. "M for iMMediate."</div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="big-letter">IgD</div><div class="hint">The helper</div></div>
+        <div class="flip-back"><div class="meaning">The Activator</div><div class="sub">Sits on B-cell surfaces, helps activate them. Least abundant.</div></div>
+      </div></div>
+    </div>
+    <div class="key-point">
+      <p><strong>Remember:</strong> <strong>IgE = allergies</strong>. <strong>IgG = the main defender</strong> against viruses, bacteria, and toxins. An allergic reaction? Think IgE. The antibody defending against most pathogens? Think IgG.</p>
+    </div>
+  </div>
+
+  <div class="content-card border-green">
+    <h3>How You Get Immune — The Four-Box Grid</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th></th><th>Active (you make it yourself)</th><th>Passive (given to you)</th></tr>
+        <tr><td><strong>Naturally acquired</strong></td><td>You catch the pathogen, you make antibodies + memory (e.g., recovering from the flu)</td><td>Antibodies passed from mother to baby (placenta, breast milk)</td></tr>
+        <tr><td><strong>Artificially acquired</strong></td><td>Vaccine — your body makes the antibodies</td><td>Injection of ready-made antibodies (gamma globulin)</td></tr>
+      </table>
+    </div>
+    <div class="key-point">
+      <p><strong>Read the two axes separately:</strong> <em>active</em> = you built the memory yourself (lasts long). <em>passive</em> = borrowed antibodies (temporary). <em>Natural</em> = no medical intervention. <em>Artificial</em> = a shot. "Recovering from an infection" = <strong>naturally acquired active</strong>.</p>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <h3>Chemical Signals — Interferon and Pyrogens</h3>
+    <ul>
+      <li><strong>Interferon:</strong> released by <strong>virus-infected cells</strong> to warn neighboring cells to armor up against the virus.</li>
+      <li><strong>Pyrogens:</strong> substances that act on the hypothalamus to raise body temperature — <strong>fever</strong>. A high pyrogen level means the thermostat is being pushed up.</li>
+    </ul>
+    <div class="pearl">
+      <div class="pearl-label">The Click</div>
+      <p>Fever isn't the disease — it's the body turning up the heat on purpose, because many invaders don't like the warm. Interferon isn't a weapon; it's a <em>warning flare</em> one infected cell fires so its neighbors can prepare. The immune system talks. Learn its vocabulary and it stops looking like chaos.</p>
+    </div>
+    <div class="quick-check">
+      <div class="qc-label">Quick Check</div>
+      <div class="qc-question" data-answer="A">
+        <div class="qc-text">Which antibody is the most abundant and provides the main long-term defense against viruses and bacteria?</div>
+        <div class="qc-choices">
+          <button class="qc-choice" data-val="A">A) IgG</button>
+          <button class="qc-choice" data-val="B">B) IgE</button>
+          <button class="qc-choice" data-val="C">C) IgM</button>
+          <button class="qc-choice" data-val="D">D) IgA</button>
+        </div>
+        <div class="qc-feedback">IgG is the general defender — most abundant, crosses the placenta, long-term protection. IgE is allergy, IgM is the first responder, IgA guards surfaces.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB 5: CHECK YOURSELF ===================== -->
+<div class="section-wrap" id="sec-quiz">
+  <div id="quiz-section">
+    <h2>Check Yourself</h2>
+    <p class="quiz-meta">15 quick checks to see what's sticking — Blood, Heart &amp; Vessels, and Lymph &amp; Immunity</p>
+    <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-bar" style="width:6.67%"></div></div>
+
+    <!-- Q1 -->
+    <div class="quiz-q active" data-correct="1">
+      <div class="quiz-q-num">Check 1 of 15</div>
+      <div class="quiz-q-text">A lab spins a sample of whole blood. Which of the following would be found in the plasma layer, not the formed-element layer?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Erythrocytes</button>
+        <button class="quiz-choice" data-idx="1">Albumin</button>
+        <button class="quiz-choice" data-idx="2">Platelets</button>
+        <button class="quiz-choice" data-idx="3">Leukocytes</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Albumin is a plasma protein dissolved in the liquid matrix. Red cells, white cells, and platelets are all formed elements that settle to the bottom.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Check 2 of 15</div>
+      <div class="quiz-q-text">Which plasma protein is chiefly responsible for holding fluid inside the blood vessels via osmotic pressure?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Fibrinogen</button>
+        <button class="quiz-choice" data-idx="1">Globulin</button>
+        <button class="quiz-choice" data-idx="2">Albumin</button>
+        <button class="quiz-choice" data-idx="3">Hemoglobin</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Albumin is the main osmotic-pressure protein. Fibrinogen is for clotting and globulins include antibodies — neither primarily holds water in the vessels.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Check 3 of 15</div>
+      <div class="quiz-q-text">After a vessel wall heals, the body must break down the clot that sealed it. Which process dissolves the fibrin mesh?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Fibrinolysis</button>
+        <button class="quiz-choice" data-idx="1">Hemostasis</button>
+        <button class="quiz-choice" data-idx="2">Coagulation</button>
+        <button class="quiz-choice" data-idx="3">Erythropoiesis</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Fibrinolysis dissolves the clot once healing is complete. Coagulation builds it, and hemostasis is the overall stop-bleeding process — fibrinolysis is the cleanup.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Check 4 of 15</div>
+      <div class="quiz-q-text">Why is a person with type AB blood called the universal recipient?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Their red cells lack A and B antigens</button>
+        <button class="quiz-choice" data-idx="1">Their plasma is rich in anti-A and anti-B antibodies</button>
+        <button class="quiz-choice" data-idx="2">They produce the strongest immune response</button>
+        <button class="quiz-choice" data-idx="3">Their plasma has neither anti-A nor anti-B antibodies</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> AB plasma lacks both anti-A and anti-B antibodies, so it won't attack incoming red cells from any donor. Their cells have both antigens, but it's the absent antibodies that make them a universal recipient.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Check 5 of 15</div>
+      <div class="quiz-q-text">Which white blood cell is the first to arrive at the site of an acute bacterial infection?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Eosinophil</button>
+        <button class="quiz-choice" data-idx="1">Neutrophil</button>
+        <button class="quiz-choice" data-idx="2">Basophil</button>
+        <button class="quiz-choice" data-idx="3">Lymphocyte</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Neutrophils are the rapid-response infantry — first on the scene for acute bacterial infections. Eosinophils handle allergies/parasites, and lymphocytes mount the slower adaptive response.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Check 6 of 15</div>
+      <div class="quiz-q-text">Which blood vessels carry deoxygenated blood from the right ventricle to the lungs?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Pulmonary veins</button>
+        <button class="quiz-choice" data-idx="1">Coronary arteries</button>
+        <button class="quiz-choice" data-idx="2">Pulmonary arteries</button>
+        <button class="quiz-choice" data-idx="3">Superior vena cava</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> The pulmonary arteries are the exception to the rule — they're arteries that carry deoxygenated blood, taking it from the right ventricle to the lungs to pick up oxygen.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Check 7 of 15</div>
+      <div class="quiz-q-text">Which structure sets the pace of the heart by initiating each cardiac cycle?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">SA node</button>
+        <button class="quiz-choice" data-idx="1">AV node</button>
+        <button class="quiz-choice" data-idx="2">Purkinje fibers</button>
+        <button class="quiz-choice" data-idx="3">Bundle of His</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> The SA (sinoatrial) node is the natural pacemaker. The AV node, bundle of His, and Purkinje fibers carry and distribute the signal, but the SA node starts it.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Check 8 of 15</div>
+      <div class="quiz-q-text">The "lub" (S1) heart sound is produced by the closure of which valves?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Aortic and pulmonary valves</button>
+        <button class="quiz-choice" data-idx="1">The coronary sinus</button>
+        <button class="quiz-choice" data-idx="2">The chordae tendineae</button>
+        <button class="quiz-choice" data-idx="3">The mitral and tricuspid valves</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> S1 is the AV valves (mitral and tricuspid) snapping shut as the ventricles begin to contract. The semilunar valves (aortic and pulmonary) closing make the "dub" (S2).</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Check 9 of 15</div>
+      <div class="quiz-q-text">A client has a heart rate of 49 beats per minute. What is the correct term for this?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Tachycardia</button>
+        <button class="quiz-choice" data-idx="1">Bradycardia</button>
+        <button class="quiz-choice" data-idx="2">Normal sinus rhythm</button>
+        <button class="quiz-choice" data-idx="3">Asystole</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Bradycardia is a heart rate below 60 bpm. Tachycardia is fast, normal sinus rhythm is 60–100, and asystole is no electrical activity at all.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Check 10 of 15</div>
+      <div class="quiz-q-text">A client with a deep vein thrombosis in the leg is at risk for which complication?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Pulmonary embolism</button>
+        <button class="quiz-choice" data-idx="1">Hyperglycemia</button>
+        <button class="quiz-choice" data-idx="2">Increased urine output</button>
+        <button class="quiz-choice" data-idx="3">Hypotension only</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> A leg clot can break loose and travel with venous return to lodge in the lungs — a pulmonary embolism. That's the feared complication of a DVT.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="quiz-q" data-correct="2">
+      <div class="quiz-q-num">Check 11 of 15</div>
+      <div class="quiz-q-text">Lymph from most of the body returns to the venous circulation by emptying into which vessel?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Right subclavian vein</button>
+        <button class="quiz-choice" data-idx="1">Inferior vena cava</button>
+        <button class="quiz-choice" data-idx="2">Left subclavian vein</button>
+        <button class="quiz-choice" data-idx="3">Pulmonary vein</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> The thoracic duct drains most of the body's lymph into the left subclavian vein, where it rejoins the blood. Only the upper right quadrant drains to the right side.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Check 12 of 15</div>
+      <div class="quiz-q-text">Which antibody class is primarily responsible for allergic (hypersensitivity) reactions?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">IgG</button>
+        <button class="quiz-choice" data-idx="1">IgE</button>
+        <button class="quiz-choice" data-idx="2">IgM</button>
+        <button class="quiz-choice" data-idx="3">IgA</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> IgE binds mast cells and triggers allergic reactions. "E for allErgy" — IgG is the general defender, IgM is the first responder, and IgA guards surfaces.</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="quiz-q" data-correct="3">
+      <div class="quiz-q-num">Check 13 of 15</div>
+      <div class="quiz-q-text">Which cells are responsible for producing antibodies?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">T cells</button>
+        <button class="quiz-choice" data-idx="1">Macrophages</button>
+        <button class="quiz-choice" data-idx="2">Neutrophils</button>
+        <button class="quiz-choice" data-idx="3">B cells (plasma cells)</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> B cells (and their mature plasma-cell form) are the antibody factories. T cells direct and kill but don't make antibodies; macrophages eat and present but don't manufacture them either.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="quiz-q" data-correct="0">
+      <div class="quiz-q-num">Check 14 of 15</div>
+      <div class="quiz-q-text">A client recovered from the flu three months ago and is exposed to the same strain again but shows no symptoms. What best explains this?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">The secondary (memory) response neutralized the pathogen quickly</button>
+        <button class="quiz-choice" data-idx="1">The innate response was slower this time</button>
+        <button class="quiz-choice" data-idx="2">The client has no adaptive immunity</button>
+        <button class="quiz-choice" data-idx="3">Pyrogens prevented the infection</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Memory cells from the first infection recognize the pathogen and mount a rapid secondary response, often clearing it before symptoms appear. This is the whole point of immune memory.</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="quiz-q" data-correct="1">
+      <div class="quiz-q-num">Check 15 of 15</div>
+      <div class="quiz-q-text">Which type of immunity develops after a person is naturally exposed to an antigen in the environment and makes their own antibodies and memory cells?</div>
+      <div class="quiz-choices">
+        <button class="quiz-choice" data-idx="0">Naturally acquired passive immunity</button>
+        <button class="quiz-choice" data-idx="1">Naturally acquired active immunity</button>
+        <button class="quiz-choice" data-idx="2">Artificially acquired passive immunity</button>
+        <button class="quiz-choice" data-idx="3">Artificially acquired active immunity</button>
+      </div>
+      <div class="quiz-feedback"><strong>Correct!</strong> Natural exposure that makes you build your own antibodies and memory = naturally acquired active immunity. "Active" means you made it yourself; "natural" means no shot was involved.</div>
+    </div>
+
+    <!-- Quiz Nav -->
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="btn btn-secondary" id="quiz-prev" onclick="quizNav(-1)" disabled>Previous</button>
+      <button class="btn btn-primary" id="quiz-next" onclick="quizNav(1)">Next</button>
+    </div>
+
+    <!-- Quiz Result -->
+    <div id="quiz-result">
+      <div class="score-circle"><span id="score-num">0</span><span class="score-lbl">/ 15</span></div>
+      <h3 id="score-msg"></h3>
+      <p id="score-detail"></p>
+      <button class="btn btn-success" onclick="resetQuiz()">Try Again</button>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#9650;</button>
+
+
+<script>
+/* -- TABS -- */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('.section-wrap');
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const t = btn.dataset.tab;
+    sections.forEach(s => {
+      s.classList.toggle('active', s.id === 'sec-' + t);
+    });
+    window.scrollTo({ top: document.getElementById('main-content').offsetTop - 80, behavior: 'smooth' });
+  });
+});
+
+/* -- ACCORDIONS -- */
+document.querySelectorAll('.acc-header').forEach(h => {
+  h.addEventListener('click', () => {
+    h.closest('.acc-card').classList.toggle('open');
+  });
+});
+
+/* -- FLIP CARDS -- */
+document.querySelectorAll('.flip-card').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('flipped'));
+});
+
+/* -- SCENARIO REVEALS -- */
+document.querySelectorAll('.scenario-reveal').forEach(box => {
+  box.addEventListener('click', () => box.classList.add('reveal'));
+});
+
+/* -- SCROLL / BACK TO TOP -- */
+window.addEventListener('scroll', () => {
+  document.getElementById('back-top').classList.toggle('show', document.documentElement.scrollTop > 300);
+});
+
+/* -- QUIZ ENGINE -- */
+const quizQs = document.querySelectorAll('.quiz-q');
+let currentQ = 0, score = 0, answered = new Array(quizQs.length).fill(false);
+
+function showQuestion(idx) {
+  quizQs.forEach((q, i) => q.classList.toggle('active', i === idx));
+  document.getElementById('quiz-prev').disabled = idx === 0;
+  const nextBtn = document.getElementById('quiz-next');
+  nextBtn.textContent = idx === quizQs.length - 1 ? 'See Results' : 'Next';
+  document.getElementById('quiz-bar').style.width = ((idx + 1) / quizQs.length * 100) + '%';
+}
+
+quizQs.forEach((q, qi) => {
+  const correct = parseInt(q.dataset.correct);
+  const choices = q.querySelectorAll('.quiz-choice');
+  const fb = q.querySelector('.quiz-feedback');
+  choices.forEach(ch => {
+    ch.addEventListener('click', () => {
+      if (answered[qi]) return;
+      answered[qi] = true;
+      const pick = parseInt(ch.dataset.idx);
+      choices.forEach(c => c.disabled = true);
+      if (pick === correct) {
+        ch.classList.add('correct');
+        fb.classList.add('show', 'correct-fb');
+        score++;
+      } else {
+        ch.classList.add('wrong');
+        choices[correct].classList.add('correct');
+        fb.classList.add('show', 'wrong-fb');
+        fb.innerHTML = '<strong>Not quite.</strong> ' + fb.innerHTML.replace(/<strong>Correct!<\/strong>\s*/, '');
+      }
+    });
+  });
+});
+
+function quizNav(dir) {
+  const next = currentQ + dir;
+  if (next < 0) return;
+  if (next >= quizQs.length) {
+    quizQs.forEach(q => q.classList.remove('active'));
+    document.getElementById('quiz-nav').style.display = 'none';
+    const result = document.getElementById('quiz-result');
+    result.style.display = 'block';
+    document.getElementById('score-num').textContent = score;
+    const pct = score / quizQs.length * 100;
+    let msg, detail;
+    if (pct >= 90) { msg = 'Outstanding!'; detail = 'You have excellent mastery of this material.'; }
+    else if (pct >= 70) { msg = 'Great Work!'; detail = 'Solid understanding -- review the topics you missed.'; }
+    else if (pct >= 50) { msg = 'Good Effort!'; detail = 'Review the study content for topics you missed and try again.'; }
+    else { msg = 'Keep Learning!'; detail = 'Go back through each tab and focus on the key concepts before trying again.'; }
+    document.getElementById('score-msg').textContent = msg;
+    document.getElementById('score-detail').textContent = detail;
+    return;
+  }
+  currentQ = next;
+  showQuestion(currentQ);
+}
+
+function resetQuiz() {
+  score = 0; currentQ = 0;
+  answered = new Array(quizQs.length).fill(false);
+  quizQs.forEach(q => {
+    q.querySelectorAll('.quiz-choice').forEach(c => { c.disabled = false; c.classList.remove('correct', 'wrong'); });
+    q.querySelector('.quiz-feedback').classList.remove('show', 'correct-fb', 'wrong-fb');
+  });
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-nav').style.display = 'flex';
+  showQuestion(0);
+}
+
+/* ── QUICK CHECK INLINE QUESTIONS ── */
+document.querySelectorAll('.qc-question').forEach(q=>{
+  const correct=q.dataset.answer;
+  const choices=q.querySelectorAll('.qc-choice');
+  const fb=q.querySelector('.qc-feedback');
+  let answered=false;
+  choices.forEach(ch=>{
+    ch.addEventListener('click',()=>{
+      if(answered) return;
+      answered=true;
+      choices.forEach(c=>c.disabled=true);
+      if(ch.dataset.val===correct){
+        ch.classList.add('qc-correct');
+      } else {
+        ch.classList.add('qc-wrong');
+        choices.forEach(c=>{if(c.dataset.val===correct) c.classList.add('qc-correct');});
+      }
+      if(fb) fb.classList.add('show');
+    });
+  });
+});
+</script>
+<script>
+/* -- MASTERY CHECKLIST (localStorage) -- */
+function updateMastery(){
+  var items = document.querySelectorAll('.mastery-list li');
+  var done = 0;
+  var keys = [];
+  items.forEach(function(li){
+    var cb = li.querySelector('input');
+    var checked = cb.checked;
+    if (checked) { done++; li.querySelector('label').classList.add('done'); }
+    else { li.querySelector('label').classList.remove('done'); }
+    keys.push([li.dataset.k, checked]);
+  });
+  var pct = items.length ? Math.round(done / items.length * 100) : 0;
+  document.getElementById('mastery-bar').style.width = pct + '%';
+  document.getElementById('mastery-count').textContent = done + ' of ' + items.length + ' mastered';
+  try { localStorage.setItem('ap2_mastery_v1', JSON.stringify(keys)); } catch(e) {}
+}
+(function(){
+  var items = document.querySelectorAll('.mastery-list li');
+  try {
+    var saved = JSON.parse(localStorage.getItem('ap2_mastery_v1') || '[]');
+    saved.forEach(function(s){
+      var li = document.querySelector('.mastery-list li[data-k="' + s[0] + '"]');
+      if (li && s[1]) li.querySelector('input').checked = true;
+    });
+  } catch(e) {}
+  updateMastery();
+})();
+</script>
+</body>
+</html>
