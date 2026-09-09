@@ -14,18 +14,9 @@
     <div class="course-tag">HCR-240 &middot; Arizona College of Nursing</div>
   </header>
   <div class="scoreboard">
-    <div class="score-display">
-      <div class="label">Score</div>
-      <div class="amount" id="scoreDisplay">$0</div>
-    </div>
-    <div class="score-display">
-      <div class="label">Correct</div>
-      <div class="amount" id="correctDisplay" style="color: var(--correct-green);">0</div>
-    </div>
-    <div class="score-display">
-      <div class="label">Wrong</div>
-      <div class="amount" id="wrongDisplay" style="color: var(--wrong-red);">0</div>
-    </div>
+    <div class="score-display"><div class="label">Score</div><div class="amount" id="scoreDisplay">$0</div></div>
+    <div class="score-display"><div class="label">Correct</div><div class="amount" id="correctDisplay" style="color: var(--correct-green);">0</div></div>
+    <div class="score-display"><div class="label">Wrong</div><div class="amount" id="wrongDisplay" style="color: var(--wrong-red);">0</div></div>
   </div>
   <div class="round-tabs">
     <button class="round-tab active" onclick="showRound(1)">Round 1: Week 1</button>
@@ -56,19 +47,28 @@
     <div class="modal-clue" id="modalClue"></div>
     <div class="modal-choices" id="modalChoices"></div>
     <div class="modal-result" id="modalResult"></div>
-    <button class="modal-close" id="modalClose" onclick="closeModal()">Back to Board</button>
+    <button class="modal-close" onclick="closeModal()">Back to Board</button>
   </div>
 </div>
-<div class="daily-double-flash" id="ddFlash">
-  <h2>Daily Double!</h2>
-</div>
+<div class="daily-double-flash" id="ddFlash"><h2>Daily Double!</h2></div>
 <div id="refMount"></div>
 <script src="HCR240-Patho-Jeopardy-Weeks1-2.js"></script>
 <script>
-fetch('HCR240-Patho-Jeopardy-Weeks1-2-ref.html')
-  .then(r => r.text())
-  .then(html => { document.getElementById('refMount').innerHTML = html; })
-  .catch(() => {});
+Promise.all([
+  fetch('HCR240-Patho-Jeopardy-Weeks1-2-ref.html').then(r => r.ok ? r.text() : ''),
+  fetch('HCR240-Patho-Jeopardy-Weeks1-2-ref-b.html').then(r => r.ok ? r.text() : ''),
+  fetch('HCR240-Patho-Jeopardy-Weeks1-2-ref-c.html').then(r => r.ok ? r.text() : '')
+]).then(([a,b,c]) => {
+  const mount = document.getElementById('refMount');
+  // Insert extra cards before the first footer so they stay in the reference section
+  const extra = (b||'') + (c||'');
+  if (a && extra) {
+    const cut = a.indexOf('<footer');
+    mount.innerHTML = cut >= 0 ? a.slice(0, cut) + extra + a.slice(cut) : a + extra;
+  } else {
+    mount.innerHTML = (a||'') + extra;
+  }
+}).catch(() => {});
 </script>
 </body>
 </html>
