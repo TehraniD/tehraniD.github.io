@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tehrani Labs • The Unified Mole Triangle</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Shrikhand&amp;family=Righteous&amp;family=Karla:wght@400;700&amp;display=swap');
+        
+        body {
+            font-family: 'Karla', sans-serif;
+            background: #f4e9d8;
+            color: #3c2f2f;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border: 12px solid #6b5a3b;
+            box-shadow: 0 10px 0 #3c2f2f;
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(#d9a404, #c4502a);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            font-family: 'Shrikhand', cursive;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            text-shadow: 4px 4px 0 #3c2f2f;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-family: 'Righteous', sans-serif;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin: 10px 0 0;
+        }
+        
+        .diagram-container {
+            padding: 40px;
+            background: #f4e9d8;
+            position: relative;
+        }
+        
+        svg {
+            width: 100%;
+            max-width: 720px;
+            height: auto;
+            display: block;
+            margin: 0 auto 40px;
+            filter: drop-shadow(8px 8px 0 #3c2f2f);
+        }
+        
+        .explanation {
+            padding: 0 40px 50px;
+            columns: 2;
+            column-gap: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .explanation p {
+            margin-bottom: 1.4em;
+            break-inside: avoid;
+        }
+        
+        .click {
+            background: #7d5a8a;
+            color: white;
+            padding: 20px;
+            margin: 30px 40px;
+            font-family: 'Righteous', sans-serif;
+            font-size: 1.35rem;
+            border: 6px solid #3c2f2f;
+            text-align: center;
+        }
+        
+        .label {
+            font-weight: 700;
+            font-family: 'Righteous', sans-serif;
+        }
+        
+        .retro-button {
+            background: #6b7d3a;
+            color: white;
+            border: 6px solid #3c2f2f;
+            padding: 12px 24px;
+            font-family: 'Shrikhand', cursive;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: inline-block;
+            margin: 20px 40px;
+            box-shadow: 4px 4px 0 #3c2f2f;
+        }
+        
+        .retro-button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #3c2f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>THE BIG TRIANGLE</h1>
+            <div class="subtitle">now with every traveler on board</div>
+        </header>
+        
+        <div class="diagram-container">
+            <svg viewBox="0 0 800 620" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title desc" role="img">
+                <title id="title">Unified Mole Concept Triangle - Tehrani Labs</title>
+                <desc id="desc">A large retro-styled triangle integrating mass, moles, particles via Avogadro, volume, concentration, molar mass.</desc>
+                
+                <!-- Main large triangle - earthy avocado green fill -->
+                <polygon points="400,40 100,560 700,560" fill="#a8b56e" stroke="#3c2f2f" stroke-width="28"/>
+                
+                <!-- Horizontal dividers -->
+                <!-- Top small triangle for Mass -->
+                <polygon points="400,40 265,220 535,220" fill="#e8b923" stroke="#3c2f2f" stroke-width="14"/>
+                
+                <!-- Middle band -->
+                <polygon points="265,220 170,380 400,380 535,220" fill="#d97c4a" stroke="#3c2f2f" stroke-width="14"/>
+                
+                <!-- Lower left for Volume/Conc -->
+                <polygon points="170,380 130,520 310,520 400,380" fill="#6b7d3a" stroke="#3c2f2f" stroke-width="14"/>
+                
+                <!-- Lower right for Particles -->
+                <polygon points="400,380 490,520 670,520 630,380" fill="#7d5a8a" stroke="#3c2f2f" stroke-width="14"/>
+                
+                <!-- Central Moles box area -->
+                <rect x="310" y="260" width="180" height="105" rx="8" fill="#f4e9d8" stroke="#3c2f2f" stroke-width="12"/>
+                
+                <!-- Labels -->
+                <!-- Top: Mass -->
+                <text x="400" y="130" text-anchor="middle" fill="#3c2f2f" font-family="Shrikhand, cursive" font-size="42" font-weight="700">MASS</text>
+                <text x="400" y="165" text-anchor="middle" fill="#3c2f2f" font-family="Righteous, sans-serif" font-size="21">grams</text>
+                
+                <!-- Molar/Atomic Mass (top right of middle) -->
+                <text x="590" y="165" text-anchor="middle" fill="#3c2f2f" font-family="Righteous, sans-serif" font-size="23" transform="rotate(-35 590 165)">MOLAR MASS</text>
+                <text x="615" y="190" text-anchor="middle" fill="#3c2f2f" font-family="Karla, sans-serif" font-size="17">g/mol</text>
+                
+                <!-- Central MOLES -->
+                <text x="400" y="310" text-anchor="middle" fill="#3c2f2f" font-family="Shrikhand, cursive" font-size="46" font-weight="700">MOLES</text>
+                <text x="400" y="345" text-anchor="middle" fill="#3c2f2f" font-family="Karla, sans-serif" font-size="19">(n)</text>
+                
+                <!-- Bottom left: VOLUME + CONCENTRATION -->
+                <text x="225" y="460" text-anchor="middle" fill="#f4e9d8" font-family="Righteous, sans-serif" font-size="26">VOLUME</text>
+                <text x="225" y="490" text-anchor="middle" fill="#f4e9d8" font-family="Righteous, sans-serif" font-size="21">CONCENTRATION</text>
+                <text x="225" y="515" text-anchor="middle" fill="#f4e9d8" font-family="Karla, sans-serif" font-size="15">(L or M)</text>
+                
+                <!-- Bottom right: PARTICLES + AVOGADRO -->
+                <text x="575" y="445" text-anchor="middle" fill="#f4e9d8" font-family="Righteous, sans-serif" font-size="26">NO. OF</text>
+                <text x="575" y="475" text-anchor="middle" fill="#f4e9d8" font-family="Righteous, sans-serif" font-size="26">PARTICLES</text>
+                <text x="575" y="505" text-anchor="middle" fill="#f4e9d8" font-family="Shrikhand, cursive" font-size="21">6.02 × 10²³</text>
+                <text x="575" y="530" text-anchor="middle" fill="#f4e9d8" font-family="Karla, sans-serif" font-size="15">AVOGADRO</text>
+                
+                <!-- Conversion labels on edges (the real magic) -->
+                <!-- Left edge: Mass → Moles -->
+                <text x="210" y="185" text-anchor="middle" fill="#3c2f2f" font-family="Karla, sans-serif" font-size="15" transform="rotate(-52 210 185)">÷ MOLAR MASS</text>
+                
+                <!-- Right edge topish: Moles → Particles -->
+                <text x="590" y="280" text-anchor="middle" fill="#3c2f2f" font-family="Karla, sans-serif" font-size="15" transform="rotate(38 590 280)">× AVOGADRO</text>
+                
+                <!-- Bottom connections -->
+                <text x="110" y="555" text-anchor="middle" fill="#3c2f2f" font-family="Karla, sans-serif" font-size="13" transform="rotate(-38 110 555)">MOLAR VOLUME or</text>
+                <text x="125" y="572" text-anchor="middle" fill="#3c2f2f" font-family="Karla, sans-serif" font-size="13">CONCENTRATION × VOLUME</text>
+                
+                <text x="680" y="555" text-anchor="middle" fill="#3c2f2f" font-family="Karla, sans-serif" font-size="13" transform="rotate(38 680 555)">PARTICLES ÷ AVOGADRO</text>
+                
+                <!-- Small arrows to show flow -->
+                <path d="M 340 95 L 355 115" fill="none" stroke="#3c2f2f" stroke-width="6" marker-end="url(#arrow)"/>
+                <path d="M 460 95 L 445 115" fill="none" stroke="#3c2f2f" stroke-width="6" marker-end="url(#arrow)"/>
+                <defs>
+                    <marker id="arrow" viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="6" markerHeight="10" orient="auto">
+                        <path d="M0,-5 L10,0 L0,5" fill="#3c2f2f"/>
+                    </marker>
+                </defs>
+            </svg>
+        </div>
+        
+        <div class="explanation">
+            <p>The cell doesn't count atoms one by one. It works in moles — that quiet, steady crowd of 6.02 × 10²³ particles that lets chemistry scale from the invisible to the measurable. Your original big triangle already held mass, volume, concentration, and molar mass in elegant balance. The smaller green one showed how particles dance with Avogadro's number around the mole.</p>
+            
+            <p><span class="label">Yes. They belong together.</span> I have woven them into one unified triangle. Moles sits at the calm center. From there you reach in every direction: divide by molar mass to get from grams, multiply by Avogadro when you need to speak the language of individual molecules. Volume and concentration live on the solution side; the particle count claims its rightful place on the other without crowding anyone.</p>
+            
+            <p>The lines are the same paths you've always walked in lab — only now the map is whole. No more switching between two cards. One glance shows every conversion your nursing students will need when they calculate dosages, understand IV concentrations, or finally see why a micromole of insulin matters.</p>
+        </div>
+        
+        <div class="click">
+            Oh. That's why we never counted molecules one by one.<br>
+            The mole was always the bridge. Now the map shows the entire bridge.
+        </div>
+        
+        <div style="text-align:center; padding: 20px 40px 50px; background:#3c2f2f; color:#f4e9d8; font-family:'Righteous',sans-serif;">
+            <div onclick="window.print()" class="retro-button">Print this for your students</div>
+            <div style="font-size:0.9rem; opacity:0.7; margin-top:15px;">Tehrani Labs • Flat '70s style • One complete map</div>
+        </div>
+    </div>
+    
+    <script>
+        console.log('%cUnified Mole Triangle ready for Tehrani Labs', 'color:#c4502a; font-family:monospace');
+    </script>
+</body>
+</html>
