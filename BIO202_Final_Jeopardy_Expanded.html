@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO 202 Final Jeopardy • Tehrani Labs</title>
+    <style>
+        body {
+            background-color: #2a3698;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .header h1 {
+            color: #ffff5f;
+            font-size: 2.8em;
+            text-shadow: 3px 3px 0 #000;
+            margin: 0;
+        }
+        .header p {
+            color: #fff;
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+        .grid-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .category-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        .category {
+            background-color: #151b4b;
+            color: #ffff5f;
+            font-weight: bold;
+            font-size: 1.0em;
+            padding: 16px 6px;
+            text-align: center;
+            border: 2px solid #ffff00;
+            min-height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+        .questions-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        .cell {
+            background-color: #151b4b;
+            border: 3px solid #ffff00;
+            color: #ffff5f;
+            font-size: 1.85em;
+            font-weight: bold;
+            padding: 18px 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cell:hover {
+            background-color: #1f2a6b;
+            transform: scale(1.03);
+        }
+        .cell.answered {
+            background-color: #0d1435;
+            color: #555;
+            cursor: not-allowed;
+            border-color: #444;
+        }
+        #teams {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+        }
+        #teams .team {
+            background: white;
+            border: 2px solid #fff;
+            padding: 5px 12px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            min-width: 130px;
+            text-align: center;
+        }
+        #teams .team.active-team {
+            background: #ffff5f;
+        }
+        #teams .name {
+            color: #000;
+            font-weight: bold;
+            font-size: 1.05em;
+            border-bottom: 2px solid #000;
+            padding-bottom: 2px;
+        }
+        #teams .points {
+            background: #2a3698;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.35em;
+            padding: 3px;
+            margin-top: 3px;
+        }
+        .modal-wrapper {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        #question-modal {
+            background: #2a3698;
+            border: 4px solid #ffff00;
+            max-width: 820px;
+            width: 93%;
+            color: #fff;
+            position: relative;
+        }
+        #modal-header {
+            background: #151b4b;
+            padding: 10px 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.4em;
+            color: #ffff5f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-body {
+            padding: 25px 20px;
+            text-align: center;
+            min-height: 160px;
+        }
+        #question-text {
+            font-size: 1.3em;
+            line-height: 1.45;
+            margin-bottom: 18px;
+        }
+        #answer-text {
+            display: none;
+            font-size: 1.4em;
+            color: #ffff5f;
+            background: #0d1435;
+            padding: 18px;
+            border: 2px dashed #ffff5f;
+            margin-top: 12px;
+        }
+        .btn {
+            background: #ffff5f;
+            color: #000;
+            border: none;
+            padding: 9px 22px;
+            font-size: 1.05em;
+            font-weight: bold;
+            margin: 6px;
+            cursor: pointer;
+        }
+        .btn:hover { background: #fff; }
+        .team-btn {
+            background: #2a3698;
+            color: #fff;
+            border: 2px solid #ffff5f;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 55px;
+            margin-bottom: 75px;
+            color: #99aaff;
+            font-size: 0.9em;
+        }
+        .footer a { color: #ffff5f; text-decoration: none; }
+        .dd-badge {
+            background: #ff00aa;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 22px;
+            font-size: 1.2em;
+            display: inline-block;
+            margin-bottom: 12px;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%,100%{transform:scale(1)}50%{transform:scale(1.1)}
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>JEOPARDY!</h1>
+        <p style="color:#ffff5f; font-weight:bold;">BIO 202 Final Exam Review • Modules 4–7</p>
+        <p style="font-size:0.95em;">Tehrani Labs • Arizona College of Nursing</p>
+    </div>
+
+    <div class="grid-container">
+        <div class="category-row">
+            <div class="category">Respiratory<br>Roadmap</div>
+            <div class="category">Digestive<br>Dynamics</div>
+            <div class="category">Urinary &amp;<br>Acid-Base</div>
+            <div class="category">Reproductive<br>Realms</div>
+            <div class="category">Homeostasis<br>Heroes</div>
+        </div>
+
+        <!-- 8 rows of questions -->
+        <div class="questions-row"><div class="cell" onclick="selectQuestion(0,0,200)">$200</div><div class="cell" onclick="selectQuestion(1,0,200)">$200</div><div class="cell" onclick="selectQuestion(2,0,200)">$200</div><div class="cell" onclick="selectQuestion(3,0,200)">$200</div><div class="cell" onclick="selectQuestion(4,0,200)">$200</div></div>
+        <div class="questions-row"><div class="cell" onclick="selectQuestion(0,1,400)">$400</div><div class="cell" onclick="selectQuestion(1,1,400)">$400</div><div class="cell" onclick="selectQuestion(2,1,400)">$400</div><div class="cell" onclick="selectQuestion(3,1,400)">$400</div><div class="cell" onclick="selectQuestion(4,1,400)">$400</div></div>
+        <div class="questions-row"><div class="cell" onclick="selectQuestion(0,2,600)">$600</div><div class="cell" onclick="selectQuestion(1,2,600)">$600</div><div class="cell" onclick="selectQuestion(2,2,600)">$600</div><div class="cell" onclick="selectQuestion(3,2,600)">$600</div><div class="cell" onclick="selectQuestion(4,2,600)">$600</div></div>
+        <div class="questions-row"><div class="cell" onclick="selectQuestion(0,3,800)">$800</div><div class="cell" onclick="selectQuestion(1,3,800)">$800</div><div class="cell" onclick="selectQuestion(2,3,800)">$800</div><div class="cell" onclick="selectQuestion(3,3,800)">$800</div><div class="cell" onclick="selectQuestion(4,3,800)">$800</div></div>
+        <div class="questions-row"><div class="cell" onclick="selectQuestion(0,4,1000)">$1000</div><div class="cell" onclick="selectQuestion(1,4,1000)">$1000</div><div class="cell" onclick="selectQuestion(2,4,1000)">$1000</div><div class="cell" onclick="selectQuestion(3,4,1000)">$1000</div><div class="cell" onclick="selectQuestion(4,4,1000)">$1000</div></div>
+        <div class="questions-row"><div class="cell" onclick="selectQuestion(0,5,1200)">$1200</div><div class="cell" onclick="selectQuestion(1,5,1200)">$1200</div><div class="cell" onclick="selectQuestion(2,5,1200)">$1200</div><div class="cell" onclick="selectQuestion(3,5,1200)">$1200</div><div class="cell" onclick="selectQuestion(4,5,1200)">$1200</div></div>
+        <div class="questions-row"><div class="cell" onclick="selectQuestion(0,6,1400)">$1400</div><div class="cell" onclick="selectQuestion(1,6,1400)">$1400</div><div class="cell" onclick="selectQuestion(2,6,1400)">$1400</div><div class="cell" onclick="selectQuestion(3,6,1400)">$1400</div><div class="cell" onclick="selectQuestion(4,6,1400)">$1400</div></div>
+        <div class="questions-row"><div class="cell" onclick="selectQuestion(0,7,1600)">$1600</div><div class="cell" onclick="selectQuestion(1,7,1600)">$1600</div><div class="cell" onclick="selectQuestion(2,7,1600)">$1600</div><div class="cell" onclick="selectQuestion(3,7,1600)">$1600</div><div class="cell" onclick="selectQuestion(4,7,1600)">$1600</div></div>
+    </div>
+
+    <div id="teams">
+        <div class="team" id="team1" onclick="setActiveTeam(1)"><div class="name">Team 1</div><div class="points" id="score1">$0</div></div>
+        <div class="team" id="team2" onclick="setActiveTeam(2)"><div class="name">Team 2</div><div class="points" id="score2">$0</div></div>
+        <div class="team" id="team3" onclick="setActiveTeam(3)"><div class="name">Team 3</div><div class="points" id="score3">$0</div></div>
+        <div class="team" id="team4" onclick="setActiveTeam(4)"><div class="name">Team 4</div><div class="points" id="score4">$0</div></div>
+    </div>
+
+    <div id="modal-wrapper" class="modal-wrapper">
+        <div id="question-modal">
+            <div id="modal-header">
+                <div style="flex:1; text-align:left; padding-left:12px;" id="modal-value">$200</div>
+                <div style="flex:2;" id="modal-category"></div>
+                <div style="flex:1; text-align:right; padding-right:12px;"><span onclick="closeModal()" style="cursor:pointer; font-size:1.7em;">×</span></div>
+            </div>
+            <div class="modal-body">
+                <div style="width:100%;">
+                    <div id="dd-badge"></div>
+                    <div id="question-text"></div>
+                    <div id="answer-text"></div>
+                    <div style="margin-top:20px;">
+                        <button class="btn" id="reveal-btn" onclick="revealAnswer()">Show Answer</button>
+                    </div>
+                    <div id="scoring-buttons" style="display:none; margin-top:15px;">
+                        <button class="btn team-btn" onclick="awardPoints(1)">Team 1 ✓</button>
+                        <button class="btn team-btn" onclick="awardPoints(2)">Team 2 ✓</button>
+                        <button class="btn team-btn" onclick="awardPoints(3)">Team 3 ✓</button>
+                        <button class="btn team-btn" onclick="awardPoints(4)">Team 4 ✓</button>
+                        <br>
+                        <button class="btn" style="background:#c00; color:#fff; border:2px solid #fff;" onclick="deductPoints()">Wrong (−½ pts)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © Tehrani Labs · BIO 202 Final Review · Arizona College of Nursing<br>
+        <a href="https://tehranilabs.org" target="_blank">tehranilabs.org</a> • All clues in classic Jeopardy format
+    </div>
+
+    <script>
+        const clues = [
+            // Respiratory Roadmap (8 clues)
+            [
+                {q: "This cartilage structure keeps the trachea open during breathing.", a: "What is the C-ring (tracheal cartilage)?", v: 200},
+                {q: "The major brain center that controls pulmonary ventilation is located here.", a: "What is the medulla oblongata?", v: 400},
+                {q: "Normal, unlabored breathing at a regular rate is called this.", a: "What is eupnea?", v: 600},
+                {q: "This process moves oxygen from the blood into body cells and carbon dioxide from cells into the blood.", a: "What is internal respiration?", v: 800},
+                {q: "The maximum volume of air that can be expelled from the lungs after maximum inspiration.", a: "What is vital capacity?", v: 1000},
+                {q: "This term describes difficult or labored breathing.", a: "What is dyspnea?", v: 1200},
+                {q: "The respiratory membrane is composed of fused basement membranes and these cells.", a: "What are Type I pneumocytes?", v: 1400},
+                {q: "Gas diffuses across the alveolar-capillary membrane from areas of high partial pressure to areas of this.", a: "What is low partial pressure?", v: 1600}
+            ],
+            // Digestive Dynamics (8 clues)
+            [
+                {q: "The mechanical process of breaking down food begins with these structures in the mouth.", a: "What are teeth?", v: 200},
+                {q: "These folds allow the stomach to expand up to eighty times its empty volume.", a: "What are rugae?", v: 400},
+                {q: "This enzyme, produced by the salivary glands, begins the digestion of carbohydrates.", a: "What is salivary amylase?", v: 600},
+                {q: "The process by which bile breaks large lipid globules into smaller ones in the small intestine.", a: "What is emulsification?", v: 800},
+                {q: "This layer of the GI tract wall contains the capillaries and lymphatics that absorb nutrients.", a: "What is the lamina propria?", v: 1000},
+                {q: "The gastric cells that secrete hydrochloric acid and intrinsic factor are these.", a: "What are parietal cells?", v: 1200},
+                {q: "This structure connects the stomach to the small intestine and is one of the four regions of the stomach.", a: "What is the pylorus?", v: 1400},
+                {q: "The four layers of the alimentary canal wall, from most visceral to most superficial, are these.", a: "What are mucosa, submucosa, muscularis externa, and serosa?", v: 1600}
+            ],
+            // Urinary & Acid-Base (8 clues)
+            [
+                {q: "This hormone produced by the kidney prevents anemia by stimulating red blood cell production.", a: "What is erythropoietin?", v: 200},
+                {q: "This structure in the nephron is primarily responsible for reabsorption of water and nutrients.", a: "What is the proximal convoluted tubule?", v: 400},
+                {q: "Activation of this system increases water reabsorption and promotes vasoconstriction.", a: "What is the RAAS (Renin-Angiotensin-Aldosterone System)?", v: 600},
+                {q: "Children must learn to control this voluntary sphincter to avoid urinating on themselves.", a: "What is the external urethral sphincter?", v: 800},
+                {q: "This condition results from excessive ketone production in uncontrolled diabetes.", a: "What is ketoacidosis (metabolic acidosis)?", v: 1000},
+                {q: "This structure in the nephron is primarily responsible for reabsorption of water and nutrients under the influence of ADH and aldosterone.", a: "What are the DCT and collecting duct?", v: 1200},
+                {q: "Blood leaves the glomerulus through this vessel after filtration has occurred.", a: "What is the efferent arteriole?", v: 1400},
+                {q: "The process of moving toxins and drugs from the peritubular capillaries into the DCT for removal as urine is called this.", a: "What is tubular secretion?", v: 1600}
+            ],
+            // Reproductive Realms (8 clues)
+            [
+                {q: "This anterior pituitary hormone regulates spermatogenesis in males and follicle development in females.", a: "What is FSH (Follicle Stimulating Hormone)?", v: 200},
+                {q: "The primary purpose of both spermatogenesis and oogenesis.", a: "What is formation of gametes?", v: 400},
+                {q: "This male reproductive gland secretes a milky fluid that nourishes sperm and neutralizes the female tract.", a: "What is the prostate gland?", v: 600},
+                {q: "This layer of the uterus contracts powerfully during parturition to expel the baby.", a: "What is the myometrium?", v: 800},
+                {q: "The labia minora and labia majora are part of this external female structure.", a: "What is the vulva?", v: 1000},
+                {q: "Luteinizing Hormone (LH) is responsible for triggering ovulation in females. In males, its primary role is this.", a: "What is stimulating testosterone production?", v: 1200},
+                {q: "Unless fertilization occurs, the corpus luteum becomes this scar tissue.", a: "What is the corpus albicans?", v: 1400},
+                {q: "The process of oogenesis begins during this period in the female and is only completed if the oocyte is fertilized.", a: "What is fetal development?", v: 1600}
+            ],
+            // Homeostasis Heroes (8 clues)
+            [
+                {q: "The average adult's water percent body mass is in this range.", a: "What is 70-80%?", v: 200},
+                {q: "This electrolyte, regulated by the kidneys, is crucial for nerve function and muscle contractions.", a: "What is potassium?", v: 400},
+                {q: "This hormone increases water reabsorption in the collecting ducts of the nephron.", a: "What is ADH (antidiuretic hormone)?", v: 600},
+                {q: "This test helps in the early detection of cervical cancer.", a: "What is a Pap smear?", v: 800},
+                {q: "Unless fertilization occurs, the corpus luteum becomes this scar tissue.", a: "What is the corpus albicans?", v: 1000},
+                {q: "This anterior pituitary hormone is responsible for regulating the process of spermatogenesis.", a: "What is FSH (Follicle Stimulating Hormone)?", v: 1200},
+                {q: "The effects of RAAS activation on the urinary system include these three actions.", a: "What are increased water reabsorption, vasoconstriction, and stimulation of thirst?", v: 1400},
+                {q: "The three mechanisms by which carbon dioxide is transported through the blood are these.", a: "What are dissolved in plasma, converted to bicarbonate ions, and bound to hemoglobin?", v: 1600}
+            ]
+        ];
+
+        let scores = [0, 0, 0, 0];
+        let activeTeam = 1;
+        let currentQ = null;
+
+        function updateScores() {
+            for (let i = 1; i <= 4; i++) {
+                const el = document.getElementById('score' + i);
+                if (el) el.textContent = '$' + scores[i-1];
+            }
+        }
+
+        function setActiveTeam(team) {
+            document.querySelectorAll('#teams .team').forEach(t => t.classList.remove('active-team'));
+            document.getElementById('team' + team).classList.add('active-team');
+            activeTeam = team;
+        }
+
+        function selectQuestion(cat, row, value) {
+            const cell = event.currentTarget;
+            if (cell.classList.contains('answered')) return;
+
+            currentQ = {cat, row, value, cell};
+
+            const isDD = (value >= 1000 && Math.random() > 0.5);
+            if (isDD) value = value * 2;
+
+            document.getElementById('modal-value').innerHTML = '$' + value + (isDD ? ' <span style="color:#ff00aa">(DD!)</span>' : '');
+            document.getElementById('modal-category').textContent = ['Respiratory','Digestive','Urinary','Reproductive','Homeostasis'][cat];
+            document.getElementById('question-text').innerHTML = '<strong>' + clues[cat][row].q + '</strong>';
+            document.getElementById('answer-text').innerHTML = '<strong>' + clues[cat][row].a + '</strong>';
+            document.getElementById('answer-text').style.display = 'none';
+            document.getElementById('reveal-btn').style.display = 'inline-block';
+            document.getElementById('scoring-buttons').style.display = 'none';
+            document.getElementById('dd-badge').innerHTML = isDD ? '<div class="dd-badge">⚡ DAILY DOUBLE ⚡</div>' : '';
+
+            currentQ.finalValue = value;
+            currentQ.isDD = isDD;
+
+            document.getElementById('modal-wrapper').style.display = 'flex';
+        }
+
+        function revealAnswer() {
+            document.getElementById('answer-text').style.display = 'block';
+            document.getElementById('reveal-btn').style.display = 'none';
+            document.getElementById('scoring-buttons').style.display = 'block';
+        }
+
+        function awardPoints(team) {
+            const pts = currentQ.finalValue;
+            scores[team-1] += pts;
+            updateScores();
+            markAnswered();
+            closeModal();
+        }
+
+        function deductPoints() {
+            const pts = currentQ.isDD ? currentQ.finalValue : Math.floor(currentQ.finalValue / 2);
+            scores[activeTeam-1] -= pts;
+            if (scores[activeTeam-1] < 0) scores[activeTeam-1] = 0;
+            updateScores();
+            markAnswered();
+            closeModal();
+        }
+
+        function markAnswered() {
+            if (currentQ && currentQ.cell) {
+                currentQ.cell.classList.add('answered');
+                currentQ.cell.innerHTML = '✓';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal-wrapper').style.display = 'none';
+        }
+
+        function resetGame() {
+            if (!confirm('Reset the entire game and clear all scores?')) return;
+            scores = [0,0,0,0];
+            updateScores();
+            document.querySelectorAll('.cell').forEach(c => {
+                if (c.classList.contains('answered')) {
+                    c.classList.remove('answered');
+                    const val = c.getAttribute('data-value') || c.textContent.replace('$','');
+                    c.innerHTML = '$' + val;
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+            if (e.key.toLowerCase() === 'r' && document.getElementById('modal-wrapper').style.display === 'none') resetGame();
+        });
+
+        window.onload = function() {
+            updateScores();
+            setActiveTeam(1);
+            document.querySelectorAll('.cell').forEach(c => {
+                const val = c.textContent.replace('$','');
+                c.setAttribute('data-value', val);
+            });
+            console.log('%c[BIO 202 Jeopardy Expanded] 40 traditional Jeopardy clues ready.', 'color:#ffff5f');
+        };
+    </script>
+</body>
+</html>
