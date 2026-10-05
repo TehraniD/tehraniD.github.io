@@ -212,17 +212,17 @@
 <body>
     <div class="header">
         <h1>JEOPARDY!</h1>
-        <p style="color:#ffff5f; font-weight:bold;">BIO 202 Final Exam Review • Modules 4–7</p>
+        <p style="color:#ffff5f; font-weight:bold;">BIO 202 Final Exam Review • keyed to the current final</p>
         <p style="font-size:0.95em;">Tehrani Labs • Arizona College of Nursing</p>
     </div>
 
     <div class="grid-container">
         <div class="category-row">
-            <div class="category">Respiratory<br>Roadmap</div>
-            <div class="category">Digestive<br>Dynamics</div>
+            <div class="category">Airway<br>Audit</div>
+            <div class="category">Gut<br>Check</div>
             <div class="category">Urinary &amp;<br>Acid-Base</div>
-            <div class="category">Reproductive<br>Realms</div>
-            <div class="category">Homeostasis<br>Heroes</div>
+            <div class="category">Reproductive<br>Receipts</div>
+            <div class="category">Balance<br>the Books</div>
         </div>
 
         <!-- 8 rows of questions -->
@@ -278,62 +278,63 @@
 
     <script>
         const clues = [
-            // Respiratory Roadmap (8 clues)
+            // Airway Audit — respiratory items from the current final
             [
-                {q: "This cartilage structure keeps the trachea open during breathing.", a: "What is the C-ring (tracheal cartilage)?", v: 200},
-                {q: "The major brain center that controls pulmonary ventilation is located here.", a: "What is the medulla oblongata?", v: 400},
-                {q: "Normal, unlabored breathing at a regular rate is called this.", a: "What is eupnea?", v: 600},
-                {q: "This process moves oxygen from the blood into body cells and carbon dioxide from cells into the blood.", a: "What is internal respiration?", v: 800},
-                {q: "The maximum volume of air that can be expelled from the lungs after maximum inspiration.", a: "What is vital capacity?", v: 1000},
-                {q: "This term describes difficult or labored breathing.", a: "What is dyspnea?", v: 1200},
-                {q: "The respiratory membrane is composed of fused basement membranes and these cells.", a: "What are Type I pneumocytes?", v: 1400},
-                {q: "Gas diffuses across the alveolar-capillary membrane from areas of high partial pressure to areas of this.", a: "What is low partial pressure?", v: 1600}
+                {q: "These incomplete cartilage rings keep the trachea from collapsing mid-breath. They are tracheal, not laryngeal.", a: "What are the C-rings (tracheal cartilages)?", v: 200},
+                {q: "The brainstem neighborhood that sets the rhythm of pulmonary ventilation. Not the cerebellum, not the thalamus.", a: "What is the medulla oblongata?", v: 400},
+                {q: "Normal, quiet, on-schedule breathing. The exam's name for unbothered ventilation.", a: "What is eupnea?", v: 600},
+                {q: "The breath that clocks out. Temporary cessation of breathing.", a: "What is apnea?", v: 800},
+                {q: "Difficult or labored breathing. Not eupnea, not apnea, not hyperpnea.", a: "What is dyspnea?", v: 1000},
+                {q: "The biggest volume you can force out after the biggest breath in.", a: "What is vital capacity?", v: 1200},
+                {q: "These two muscles clock in for a normal inspiration. The abdominals stay on the bench.", a: "What are the diaphragm and external intercostals?", v: 1400},
+                {q: "Quiet expiration is this kind of process, because the inspiratory muscles simply let go.", a: "What is a passive process?", v: 1600}
             ],
-            // Digestive Dynamics (8 clues)
+            // Gut Check — digestive items from the current final
             [
-                {q: "The mechanical process of breaking down food begins with these structures in the mouth.", a: "What are teeth?", v: 200},
-                {q: "These folds allow the stomach to expand up to eighty times its empty volume.", a: "What are rugae?", v: 400},
-                {q: "This enzyme, produced by the salivary glands, begins the digestion of carbohydrates.", a: "What is salivary amylase?", v: 600},
-                {q: "The process by which bile breaks large lipid globules into smaller ones in the small intestine.", a: "What is emulsification?", v: 800},
-                {q: "This layer of the GI tract wall contains the capillaries and lymphatics that absorb nutrients.", a: "What is the lamina propria?", v: 1000},
-                {q: "The gastric cells that secrete hydrochloric acid and intrinsic factor are these.", a: "What are parietal cells?", v: 1200},
-                {q: "This structure connects the stomach to the small intestine and is one of the four regions of the stomach.", a: "What is the pylorus?", v: 1400},
-                {q: "The four layers of the alimentary canal wall, from most visceral to most superficial, are these.", a: "What are mucosa, submucosa, muscularis externa, and serosa?", v: 1600}
+                {q: "Mechanical breakdown opens with these. Not the esophagus, not the stomach, not the gallbladder.", a: "What are teeth?", v: 200},
+                {q: "Stomach origami. These folds let it expand up to about eighty times its empty volume.", a: "What are rugae?", v: 400},
+                {q: "The salivary enzyme that starts carbohydrate digestion. Lactase and sucrase were the decoys.", a: "What is salivary amylase?", v: 600},
+                {q: "Bile does not chemically digest fat. It does this to large lipid globules in the small intestine.", a: "What is emulsification?", v: 800},
+                {q: "The salivary gland over the masseter. The hotspot gland, not the submandibular.", a: "What is the parotid gland?", v: 1000},
+                {q: "The gastric cells that bring both hydrochloric acid and intrinsic factor.", a: "What are parietal cells?", v: 1200},
+                {q: "The stomach region that hands chyme to the small intestine. Not the cardia, fundus, or body.", a: "What is the pylorus?", v: 1400},
+                {q: "Pancreatic juice's real guest list: amylase, lipase, sodium bicarbonate, and nuclease. Pepsin was not invited.", a: "What is pancreatic juice?", v: 1600}
             ],
-            // Urinary & Acid-Base (8 clues)
+            // Nephron & pH — urinary and acid-base items from the current final
             [
-                {q: "This hormone produced by the kidney prevents anemia by stimulating red blood cell production.", a: "What is erythropoietin?", v: 200},
-                {q: "This structure in the nephron is primarily responsible for reabsorption of water and nutrients.", a: "What is the proximal convoluted tubule?", v: 400},
-                {q: "Activation of this system increases water reabsorption and promotes vasoconstriction.", a: "What is the RAAS (Renin-Angiotensin-Aldosterone System)?", v: 600},
-                {q: "Children must learn to control this voluntary sphincter to avoid urinating on themselves.", a: "What is the external urethral sphincter?", v: 800},
-                {q: "This condition results from excessive ketone production in uncontrolled diabetes.", a: "What is ketoacidosis (metabolic acidosis)?", v: 1000},
-                {q: "This structure in the nephron is primarily responsible for reabsorption of water and nutrients under the influence of ADH and aldosterone.", a: "What are the DCT and collecting duct?", v: 1200},
-                {q: "Blood leaves the glomerulus through this vessel after filtration has occurred.", a: "What is the efferent arteriole?", v: 1400},
-                {q: "The process of moving toxins and drugs from the peritubular capillaries into the DCT for removal as urine is called this.", a: "What is tubular secretion?", v: 1600}
+                {q: "The kidney hormone that keeps anemia away by driving red-cell production.", a: "What is erythropoietin?", v: 200},
+                {q: "The nephron segment that does the bulk of reabsorption, no hormone invitation required.", a: "What is the proximal convoluted tubule?", v: 400},
+                {q: "The sphincter children have to consciously befriend so they stop urinating on themselves.", a: "What is the external urethral sphincter?", v: 600},
+                {q: "Blood's exit ramp from the glomerulus after filtration. Not the afferent arteriole.", a: "What is the efferent arteriole?", v: 800},
+                {q: "Two urine findings that should make you think diabetes, not a normal day.", a: "What are glucose and ketones?", v: 1000},
+                {q: "The nephron neighborhoods that actually listen to ADH and aldosterone.", a: "What are the DCT and collecting duct?", v: 1200},
+                {q: "Moving toxins and drugs from peritubular capillaries into the tubule for disposal.", a: "What is tubular secretion?", v: 1400},
+                {q: "Urine's commute from formation to exit: nephron, collecting duct, calyx, renal pelvis, ureter, bladder, and this last tube.", a: "What is the urethra?", v: 1600}
             ],
-            // Reproductive Realms (8 clues)
+            // Reproductive Receipts — reproductive items from the current final
             [
-                {q: "This anterior pituitary hormone regulates spermatogenesis in males and follicle development in females.", a: "What is FSH (Follicle Stimulating Hormone)?", v: 200},
-                {q: "The primary purpose of both spermatogenesis and oogenesis.", a: "What is formation of gametes?", v: 400},
-                {q: "This male reproductive gland secretes a milky fluid that nourishes sperm and neutralizes the female tract.", a: "What is the prostate gland?", v: 600},
-                {q: "This layer of the uterus contracts powerfully during parturition to expel the baby.", a: "What is the myometrium?", v: 800},
-                {q: "The labia minora and labia majora are part of this external female structure.", a: "What is the vulva?", v: 1000},
-                {q: "Luteinizing Hormone (LH) is responsible for triggering ovulation in females. In males, its primary role is this.", a: "What is stimulating testosterone production?", v: 1200},
-                {q: "Unless fertilization occurs, the corpus luteum becomes this scar tissue.", a: "What is the corpus albicans?", v: 1400},
-                {q: "The process of oogenesis begins during this period in the female and is only completed if the oocyte is fertilized.", a: "What is fetal development?", v: 1600}
+                {q: "The anterior pituitary hormone on spermatogenesis duty. LH has a different job in males.", a: "What is FSH (follicle-stimulating hormone)?", v: 200},
+                {q: "The shared purpose of spermatogenesis and oogenesis. Not hormone production, not building gonads.", a: "What is formation of gametes?", v: 400},
+                {q: "The gland whose milky secretion feeds sperm and takes the edge off the acidic female tract.", a: "What is the prostate gland?", v: 600},
+                {q: "The uterine layer that does the heavy lifting to expel the baby. Not the endometrium.", a: "What is the myometrium?", v: 800},
+                {q: "The screening test this exam wanted for early detection of cervical cancer. Not a mammogram.", a: "What is a Pap smear?", v: 1000},
+                {q: "LH triggers ovulation in females. In males its primary job is this.", a: "What is stimulating testosterone production?", v: 1200},
+                {q: "If fertilization does not RSVP, the corpus luteum becomes this scar.", a: "What is the corpus albicans?", v: 1400},
+                {q: "Oogenesis begins during this life stage and finishes only if the oocyte is fertilized.", a: "What is fetal development?", v: 1600}
             ],
-            // Homeostasis Heroes (8 clues)
+            // Balance the Books — fluids, buffers, and the acid-base matching set
             [
-                {q: "The average adult's total body water, as a percent of body mass, is in this range.", a: "What is 50–60%?", v: 200},
-                {q: "This electrolyte, regulated by the kidneys, is crucial for nerve function and muscle contractions.", a: "What is potassium?", v: 400},
-                {q: "This hormone increases water reabsorption in the collecting ducts of the nephron.", a: "What is ADH (antidiuretic hormone)?", v: 600},
-                {q: "This test helps in the early detection of cervical cancer.", a: "What is a Pap smear?", v: 800},
-                {q: "These are the two major fluid compartments of the body.", a: "What are intracellular fluid and extracellular fluid?", v: 1000},
-                {q: "This is the principal extracellular buffer system, and it is regulated by both the lungs and the kidneys.", a: "What is the bicarbonate buffer system?", v: 1200},
-                {q: "The effects of RAAS activation on the urinary system include these three actions.", a: "What are increased water reabsorption, vasoconstriction, and stimulation of thirst?", v: 1400},
-                {q: "The three mechanisms by which carbon dioxide is transported through the blood are these.", a: "What are dissolved in plasma, converted to bicarbonate ions, and bound to hemoglobin?", v: 1600}
+                {q: "Adult total body water as a percent of body mass. The 70–80% option is the infant trap.", a: "What is 50–60%?", v: 200},
+                {q: "The kidney-regulated electrolyte nerves and muscles will not negotiate on.", a: "What is potassium?", v: 400},
+                {q: "The hormone that pulls water back in the collecting duct. Thirst and sodium are not its direct nephron effect.", a: "What is ADH (antidiuretic hormone)?", v: 600},
+                {q: "Three legal ways carbon dioxide rides in blood. Carbon monoxide and myoglobin are not on the list.", a: "What are dissolved in plasma, converted to bicarbonate, and bound to hemoglobin?", v: 800},
+                {q: "Acid-base label for the drowning victim who cannot blow off CO2.", a: "What is respiratory acidosis?", v: 1000},
+                {q: "Acid-base label for the panic attack that blows off CO2.", a: "What is respiratory alkalosis?", v: 1200},
+                {q: "Acid-base label for severe vomiting from a stomach flu. Acid leaves by the wrong exit.", a: "What is metabolic alkalosis?", v: 1400},
+                {q: "What RAAS activation actually does: more renal water reabsorption, vasoconstriction, and thirst. It does not lower blood pressure.", a: "What are increased water reabsorption, vasoconstriction, and stimulation of thirst?", v: 1600}
             ]
         ];
+
 
         let scores = [0, 0, 0, 0];
         let activeTeam = 1;
@@ -362,7 +363,7 @@
             if (isDD) value = value * 2;
 
             document.getElementById('modal-value').innerHTML = '$' + value + (isDD ? ' <span style="color:#ff00aa">(DD!)</span>' : '');
-            document.getElementById('modal-category').textContent = ['Respiratory','Digestive','Urinary','Reproductive','Homeostasis'][cat];
+            document.getElementById('modal-category').textContent = ['Airway Audit','Gut Check','Nephron & pH','Reproductive Receipts','Balance the Books'][cat];
             document.getElementById('question-text').innerHTML = '<strong>' + clues[cat][row].q + '</strong>';
             document.getElementById('answer-text').innerHTML = '<strong>' + clues[cat][row].a + '</strong>';
             document.getElementById('answer-text').style.display = 'none';
