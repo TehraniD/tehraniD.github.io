@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Town of pH: A Western Buffer Story</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0 auto;padding:34px 30px 46px;font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--foreground,#1c1c1c);background:var(--background,#faf8f4);max-width:1020px}
+  .kicker{font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-foreground,#6f6a62)}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:40px;line-height:1.05;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px}
+  .sub{font-size:15.5px;line-height:1.55;max-width:760px;margin:0 0 4px}
+  .sub b{font-weight:800}
+  .rule{height:3px;background:var(--foreground,#1c1c1c);margin:20px 0 18px;border-radius:2px}
+  .tale{font-family:Georgia,"Times New Roman",serif;font-size:16px;line-height:1.7;font-style:italic;border:2.5px solid var(--foreground,#1c1c1c);border-radius:14px;padding:18px 22px;margin:0 0 22px}
+  .tale b{font-style:normal;font-weight:800}
+  .cast{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+  .citem{display:flex;align-items:center;gap:9px;border:2px solid var(--foreground,#1c1c1c);border-radius:10px;padding:6px 12px 6px 8px;flex:1 1 170px}
+  .citem svg{flex:0 0 auto}
+  .cn{font-weight:800;font-size:13px;line-height:1.25}
+  .cr{font-size:11.5px;font-weight:600;color:var(--muted-foreground,#6f6a62);line-height:1.25}
+  .chap{display:flex;gap:18px;align-items:flex-start;border:2.5px solid var(--foreground,#1c1c1c);border-radius:14px;padding:18px 20px 16px;margin-bottom:18px}
+  .num{flex:0 0 46px;height:46px;border:3px solid var(--foreground,#1c1c1c);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;margin-top:2px}
+  .body{flex:1;min-width:0}
+  h2{font-family:Georgia,"Times New Roman",serif;font-size:23px;margin:0 0 2px;font-weight:800}
+  .lede{font-size:13.5px;font-weight:700;color:var(--muted-foreground,#6f6a62);margin:0 0 10px;letter-spacing:.01em}
+  .cap{font-size:14.5px;line-height:1.62;margin:10px 0 0}
+  .cap b{font-weight:800}
+  .eq{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700;background:color-mix(in srgb,var(--accent,#8a6a45) 14%,transparent);border-radius:6px;padding:1px 6px}
+  svg{display:block;max-width:100%;height:auto}
+  .art{width:100%}
+  /* the chemist's notebook: the formal layer hung on each story hook */
+  .note{margin-top:14px;border-left:5px solid var(--accent,#8a6a45);background:color-mix(in srgb,var(--accent,#8a6a45) 8%,transparent);border-radius:0 12px 12px 0;padding:12px 16px}
+  .note .nt{font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent,#8a6a45);margin:0 0 8px}
+  .note p{font-size:13.5px;line-height:1.58;margin:0 0 8px}
+  .note p:last-child{margin-bottom:0}
+  .note b{font-weight:800}
+  .eqb{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700;font-size:14.5px;background:color-mix(in srgb,var(--accent,#8a6a45) 14%,transparent);border-radius:8px;padding:7px 10px;display:inline-block;margin:2px 0 8px}
+  .grid{display:flex;gap:16px;flex-wrap:wrap;margin:22px 0 6px}
+  .box{flex:1 1 300px;border:2px solid var(--foreground,#1c1c1c);border-radius:12px;padding:14px 16px}
+  .box.ink{background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4)}
+  .box.ink .bt{color:var(--background,#faf8f4)}
+  .bt{font-weight:800;font-size:14.5px;margin:0 0 8px;letter-spacing:.02em}
+  .bb{font-size:13.5px;line-height:1.58;margin:0}
+  .bb b{font-weight:800}
+  ol.bb{padding-left:20px;margin:0}
+  ol.bb li{margin-bottom:7px}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
+  th,td{border:1.6px solid var(--border,#cfc8bd);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.45}
+  th{background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  td b{font-weight:800}
+  .tw{overflow-x:auto}
+  details{border:2px solid var(--foreground,#1c1c1c);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  summary{font-weight:800;cursor:pointer;font-size:14px;line-height:1.5}
+  details p{font-size:13.5px;line-height:1.58;margin:8px 0 0}
+  .foot{margin-top:26px;padding-top:14px;border-top:3px solid var(--foreground,#1c1c1c);font-size:12.5px;color:var(--muted-foreground,#6f6a62);line-height:1.5}
+  .s{fill:none;stroke:var(--foreground,#1c1c1c);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .sf{fill:var(--foreground,#1c1c1c);stroke:var(--foreground,#1c1c1c);stroke-width:1.5}
+  .th{fill:none;stroke:var(--muted-foreground,#9a938a);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .mut{fill:var(--muted-foreground,#6f6a62);stroke:none}
+  .ink{fill:var(--foreground,#1c1c1c);stroke:none}
+  .ar{fill:none;stroke:var(--accent,#8a6a45);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+  .ah{fill:var(--accent,#8a6a45);stroke:none}
+  .band{fill:color-mix(in srgb,var(--accent,#8a6a45) 22%,transparent);stroke:var(--accent,#8a6a45);stroke-width:2}
+  .t13{font-size:13px;font-weight:700}
+  .t12{font-size:12px;font-weight:600}
+  .t11{font-size:11px;font-weight:600}
+  .t10{font-size:10.5px;font-weight:600}
+  @media (max-width:640px){
+    body{padding:22px 16px 36px}
+    h1{font-size:32px}
+    .chap{flex-direction:column;gap:10px;padding:16px 14px}
+  }
+  @media print{
+    .chap,.box,details,.note{break-inside:avoid}
+    details > *{display:block}
+  }
+</style>
+</head>
+<body>
+
+<a href="index.html" style="display:inline-block;font-size:13px;font-weight:700;color:var(--muted-foreground,#6f6a62);text-decoration:none;margin-bottom:14px">&larr; Tehrani Labs</a>
+<div class="kicker">A buffer story in ten chapters, told the old way</div>
+<h1>The Town of pH</h1>
+<p class="sub">Every buffer is a <b>weak</b> acid standing next to its conjugate base, and the two of them differ by <b>exactly one proton</b>. In this town, the proton wears a hat. Same outlaws, same deputies, but this telling has a head count, a home turf, a posse, a railroad, and a rumor that needs killing.</p>
+<div class="rule"></div>
+
+<div class="tale">
+Pull up a chair. You've got the buffer exam coming, and the textbook keeps saying "conjugate" like you're supposed to already know what it means. I know. I sat right where you're sitting. So let me tell it to you the way it finally made sense to me, as a story about a little town out West.<br><br>
+But here's the deal I'm making with you. Every picture in this story is a hook, and on every hook I've hung a real piece of chemistry. You'll find it in the boxes marked <b>What the chemists write down</b>. Don't you skip those. The story is the trail. The chemistry is where the trail takes you. Remember one, and you'll pull the other right up along with it.
+</div>
+
+<div class="cast">
+  <div class="citem">
+    <svg viewBox="0 0 80 100" width="52" height="65"><use href="#outlaw" transform="translate(40,88) scale(0.72)"/></svg>
+    <div><div class="cn">The Outlaw</div><div class="cr">H⁺ · acid arriving in town</div></div>
+  </div>
+  <div class="citem">
+    <svg viewBox="0 0 80 100" width="52" height="65"><use href="#twinH" transform="translate(40,88) scale(0.72)"/></svg>
+    <div><div class="cn">Sheriff H.A.</div><div class="cr">the weak acid · wears the hat</div></div>
+  </div>
+  <div class="citem">
+    <svg viewBox="0 0 80 100" width="52" height="65"><use href="#twin" transform="translate(40,88) scale(0.72)"/></svg>
+    <div><div class="cn">Deputy A⁻</div><div class="cr">the conjugate base · no hat</div></div>
+  </div>
+  <div class="citem">
+    <svg viewBox="0 0 80 100" width="52" height="65"><use href="#thief" transform="translate(40,88) scale(0.72)"/></svg>
+    <div><div class="cn">Ollie the Hat Thief</div><div class="cr">OH⁻ · base arriving in town</div></div>
+  </div>
+  <div class="citem">
+    <svg viewBox="0 0 80 100" width="52" height="65"><use href="#thiefHat" transform="translate(40,88) scale(0.72)"/></svg>
+    <div><div class="cn">Ollie, Satisfied</div><div class="cr">H₂O · leaves town with the hat</div></div>
+  </div>
+</div>
+
+<!-- GLOBAL FIGURE DEFS -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="twin">
+      <path class="s" d="M0,-18 L-9,2 M0,-18 L9,2"/>
+      <path class="s" d="M-9,2 L-14,4 M9,2 L14,4"/>
+      <path class="s" d="M0,-39 L0,-18"/>
+      <path class="s" d="M-7,-26 L7,-26"/>
+      <path class="s" d="M0,-34 L-13,-24 M0,-34 L13,-24"/>
+      <circle class="s" cx="0" cy="-50" r="11"/>
+      <polygon class="ink" points="0,-37 2,-33.5 5.5,-33.5 3,-31 4,-27.5 0,-29 -4,-27.5 -3,-31 -5.5,-33.5 -2,-33.5"/>
+      <circle class="ink" cx="-13" cy="-24" r="2.4"/>
+      <circle class="ink" cx="13" cy="-24" r="2.4"/>
+    </g>
+    <g id="twinH">
+      <use href="#twin"/>
+      <path class="s" stroke-width="3.4" d="M-17,-57 Q0,-65 17,-57"/>
+      <path class="sf" d="M-9,-59 L-10,-72 Q0,-77 10,-72 L9,-59 Z"/>
+    </g>
+    <g id="outlaw">
+      <use href="#twin"/>
+      <path class="s" d="M-8,-51 Q0,-47 8,-51"/>
+      <path class="s" stroke-width="3.4" d="M-18,-56 Q0,-65 18,-56"/>
+      <path class="sf" d="M-10,-58 L-14,-73 Q-1,-79 10,-73 L11,-58 Z"/>
+    </g>
+    <g id="outlawBare">
+      <use href="#twin"/>
+      <path class="s" d="M-8,-51 Q0,-47 8,-51"/>
+    </g>
+    <g id="thiefBody">
+      <path class="s" d="M0,-18 L-7,2 M0,-18 L7,2"/>
+      <path class="s" d="M-7,2 L-12,4 M7,2 L12,4"/>
+      <path class="s" d="M0,-34 L0,-18"/>
+      <path class="s" d="M0,-30 L-16,-42 M0,-30 L10,-22"/>
+      <circle class="s" cx="0" cy="-44" r="10"/>
+      <path class="s" d="M-7,-45 Q0,-42 7,-45"/>
+      <ellipse class="sf" cx="12" cy="-14" rx="7" ry="5"/>
+    </g>
+    <g id="thief">
+      <use href="#thiefBody"/>
+      <path class="sf" d="M-10,-52 Q0,-62 10,-52 Z"/>
+      <path class="s" stroke-width="3" d="M-14,-52 L14,-51"/>
+    </g>
+    <g id="thiefHat">
+      <use href="#thiefBody"/>
+      <path class="s" stroke-width="3.4" d="M-16,-55 Q0,-62 16,-55"/>
+      <path class="sf" d="M-9,-56 L-10,-68 Q0,-73 10,-68 L9,-56 Z"/>
+    </g>
+    <g id="townie">
+      <path class="s" d="M0,-18 L-9,2 M0,-18 L9,2"/>
+      <path class="s" d="M-9,2 L-14,4 M9,2 L14,4"/>
+      <path class="s" d="M0,-39 L0,-18"/>
+      <path class="s" d="M-7,-26 L7,-26"/>
+      <path class="s" d="M0,-34 L-13,-24 M0,-34 L13,-24"/>
+      <circle class="s" cx="0" cy="-50" r="11"/>
+      <ellipse class="sf" cx="0" cy="-60" rx="16" ry="4"/>
+      <path class="sf" d="M-9,-60 Q0,-76 9,-60 Z"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- CH 1: THE TOWN -->
+<div class="chap">
+  <div class="num">1</div>
+  <div class="body">
+    <h2>The Town</h2>
+    <p class="lede">The solution, where acid shows up whether you asked for it or not</p>
+    <svg class="art" viewBox="0 0 640 300" role="img" aria-label="Outlaws riding into the Town of pH while the twin lawmen stand watch">
+      <path class="th" d="M14,250 H626"/>
+      <path class="th" d="M14,258 H626" stroke-dasharray="3 7"/>
+      <path class="th" d="M170,196 V250 M250,196 V250 M170,250 H250 M170,196 L210,180 L250,196"/>
+      <text class="mut t11" x="210" y="228" text-anchor="middle">SALOON</text>
+      <path class="th" d="M266,202 V250 M346,202 V250 M266,250 H346 M266,202 L306,190 L346,202"/>
+      <text class="mut t10" x="306" y="228" text-anchor="middle">GENERAL STORE</text>
+      <path class="th" d="M362,188 V250 M458,188 V250 M362,250 H458 M362,188 L410,172 L458,188"/>
+      <path class="th" d="M380,206 v22 M396,206 v22 M424,206 v22 M440,206 v22"/>
+      <text class="mut t11" x="410" y="240" text-anchor="middle">BANK</text>
+      <path class="th" d="M474,176 V250 M566,176 V250 M474,250 H566 M474,176 L520,164 L566,176"/>
+      <path class="th" d="M490,190 h12 v12 h-12 z M514,190 h12 v12 h-12 z M538,190 h12 v12 h-12 z"/>
+      <path class="th" d="M490,214 h12 v12 h-12 z M514,214 h12 v12 h-12 z M538,214 h12 v12 h-12 z"/>
+      <text class="mut t11" x="520" y="244" text-anchor="middle">HOTEL</text>
+      <path class="th" d="M596,250 V206 M626,250 V206 M598,206 H624 M596,206 L611,190 L626,206"/>
+      <path class="th" d="M300,250 V150 M360,250 V150"/>
+      <rect class="th" x="284" y="118" width="92" height="36" rx="4"/>
+      <text class="ink t13" x="330" y="141" text-anchor="middle">TOWN of pH</text>
+      <use href="#outlaw" transform="translate(58,250) scale(0.95)"/>
+      <use href="#outlaw" transform="translate(112,250) scale(0.95)"/>
+      <path class="ar" d="M6,150 H42"/>
+      <polygon class="ah" points="42,150 33,145 33,155"/>
+      <text class="mut t12" x="40" y="164" text-anchor="middle">constant</text>
+      <text class="mut t12" x="40" y="132" text-anchor="middle">inflow</text>
+      <path class="ar" d="M70,150 H106"/>
+      <polygon class="ah" points="106,150 97,145 97,155"/>
+      <use href="#twin" transform="translate(480,250) scale(0.98)"/>
+      <use href="#twinH" transform="translate(548,250) scale(0.98)"/>
+      <text class="mut t11" x="480" y="278" text-anchor="middle">Deputy A⁻</text>
+      <text class="mut t11" x="548" y="278" text-anchor="middle">Sheriff H.A.</text>
+    </svg>
+    <p class="cap">Outlaws. Hydrogen ions, H⁺. They ride into town all day and all night, and nobody ever sent them an invitation. Your cells make acid just by staying alive. Every bite of food you burn, every flight of stairs, every quiet hour your metabolism keeps ticking, more of them show up at the edge of town.<br><br>Here's one that surprises people. Much of the CO₂ your cells make gets turned into carbonic acid in your blood, with an enzyme called carbonic anhydrase doing the work, and it rides around that way until your lungs take it back out. So the town isn't really a place. It's <b>the solution</b>. Your beaker, or your blood. And without law standing ready at every hour, it falls apart.</p>
+    <div class="note">
+      <p class="nt">What the chemists write down</p>
+      <span class="eqb">pH = −log [H⁺]</span>
+      <p>pH is the town's <b>lawlessness meter, read upside down</b>. More outlaws, lower number. And the scale is logarithmic, so every step of 1 means <b>ten times</b> as many outlaws.</p>
+      <p>Your blood sits at pH 7.40, which works out to about <b>40 nanomoles</b> of H⁺ per liter. At pH 7.10 it's about 80. That 0.3 drop looks like nothing on paper. In a patient, it means the outlaws have <b>doubled</b>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CH 2: THE BROTHERS -->
+<div class="chap">
+  <div class="num">2</div>
+  <div class="body">
+    <h2>The Brothers</h2>
+    <p class="lede">Two requirements, two twins. Weak, and one proton apart.</p>
+    <svg class="art" viewBox="0 0 640 330" role="img" aria-label="The twin brothers: the Sheriff wears the hat, the Deputy does not">
+      <path class="th" d="M20,266 H620"/>
+      <use href="#twinH" transform="translate(170,266) scale(1.9)"/>
+      <use href="#twin" transform="translate(470,266) scale(1.9)"/>
+      <path class="th" stroke-dasharray="4 4" d="M170,114 V92"/>
+      <text class="ink t13" x="170" y="84" text-anchor="middle">the PROTON (H⁺)</text>
+      <text class="mut t12" x="170" y="68" text-anchor="middle">weak = hat on, not glued</text>
+      <path class="ar" d="M262,180 L378,180"/>
+      <polygon class="ah" points="262,180 270,175.5 270,184.5"/>
+      <polygon class="ah" points="378,180 370,175.5 370,184.5"/>
+      <text class="mut t12" x="320" y="168" text-anchor="middle">one proton apart</text>
+      <rect class="th" x="258" y="196" width="124" height="26" rx="5"/>
+      <text class="ink t12" x="320" y="213" text-anchor="middle">CONJUGATE</text>
+      <text class="ink t13" x="170" y="296" text-anchor="middle">weak acid (HA)</text>
+      <text class="mut t11" x="170" y="312" text-anchor="middle">wears the hat</text>
+      <text class="ink t13" x="470" y="296" text-anchor="middle">conjugate base (A⁻)</text>
+      <text class="mut t11" x="470" y="312" text-anchor="middle">same twin, hat off</text>
+    </svg>
+    <p class="cap">The buffer is run by <b>twins</b>. Sheriff H.A. wears the hat. Deputy A⁻ is the very same brother with the hat off. The hat <b>is</b> the proton. One hat is the whole difference between them, and that's all "conjugate" means: two species that differ by exactly one proton.<br><br>Now, about that word <b>weak</b>. People get this one backwards, so let me be careful with you. A weak acid isn't sloppy with his hat. He keeps it on his head most of the time. But it isn't glued on. He'll hand it over when somebody needs it, and his brother will take one back whenever there's one to be had. That back and forth is the whole trick.<br><br>Compare a strong acid, like hydrochloric acid. HCl doesn't wear his hat. He throws it in the dirt the second he rides into town and never looks at it again. His leftover twin, chloride (Cl⁻), will not pick a hat up. Not ever. So HCl and Cl⁻ can't run a buffer, because there's no deputy willing to do the job. That's why the acid has to be weak. It's the only way both brothers stay on the force.</p>
+    <div class="note">
+      <p class="nt">What the chemists write down</p>
+      <span class="eqb">HA ⇌ H⁺ + A⁻ &nbsp;&nbsp; Ka = [H⁺][A⁻] / [HA] &nbsp;&nbsp; pKa = −log Ka</span>
+      <p><b>Ka</b> measures how readily the Sheriff gives up his hat. A small Ka means he mostly keeps it, and that's exactly what "weak" means. <b>pKa</b> flips it into a friendlier number: the smaller the Ka, the bigger the pKa.</p>
+      <p>Acetic acid: Ka ≈ 1.75 × 10⁻⁵, so pKa ≈ 4.76. The carbonic acid / bicarbonate pair in plasma behaves as if its pKa were <b>6.1</b> (that number counts dissolved CO₂ on the Sheriff's side of the ledger). Hydrochloric acid gives its hat up so completely that it never comes back, which is exactly why it can't buffer.</p>
+      <p>Real twin pairs, one hat apart: CH₃COOH / CH₃COO⁻ · H₂CO₃ / HCO₃⁻ · H₂PO₄⁻ / HPO₄²⁻. Count the H's. Always one apart.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CH 3: AN OUTLAW RIDES IN -->
+<div class="chap">
+  <div class="num">3</div>
+  <div class="body">
+    <h2>An Outlaw Rides In</h2>
+    <p class="lede">Add acid, and the base half of the buffer absorbs it</p>
+    <svg class="art" viewBox="0 0 640 340" role="img" aria-label="The Deputy takes the outlaw's hat and becomes the Sheriff">
+      <path class="th" d="M20,232 H620"/>
+      <text class="ink t13" x="120" y="84" text-anchor="middle">BEFORE</text>
+      <text class="ink t13" x="360" y="84" text-anchor="middle">AFTER</text>
+      <use href="#twin" transform="translate(105,232) scale(0.95)"/>
+      <use href="#outlaw" transform="translate(180,232) scale(0.95)"/>
+      <text class="mut t11" x="105" y="254" text-anchor="middle">A⁻</text>
+      <text class="mut t11" x="180" y="254" text-anchor="middle">H⁺</text>
+      <path class="ar" d="M174,166 Q136,150 110,192"/>
+      <polygon class="ah" points="110,192 100,190 108,183"/>
+      <text class="mut t10" x="142" y="140" text-anchor="middle">the hat changes hands</text>
+      <path class="ar" d="M216,192 L266,192"/>
+      <polygon class="ah" points="266,192 257,187 257,197"/>
+      <use href="#twinH" transform="translate(320,232) scale(0.95)"/>
+      <use href="#outlawBare" transform="translate(395,232) scale(0.95)"/>
+      <text class="mut t11" x="320" y="254" text-anchor="middle">HA</text>
+      <text class="mut t11" x="395" y="254" text-anchor="middle">disarmed</text>
+      <text class="ink t13" x="320" y="290" text-anchor="middle">A⁻ + H⁺ → HA</text>
+      <text class="mut t12" x="320" y="308" text-anchor="middle">one outlaw in · one deputy spent · one sheriff made</text>
+      <text class="mut t11" x="320" y="326" text-anchor="middle">added acid creates more of the buffer's acid</text>
+    </svg>
+    <p class="cap">An outlaw rides in. You just added acid. Now watch what the Deputy does, because it's not what you'd expect. He doesn't shoot the man. He <b>takes his hat</b>. That's all. And once the Deputy has a hat on his head, guess who he is? He's the Sheriff now.<br><br>Look at the ledger. One outlaw came in. One deputy got used up. One new sheriff appeared. The loose H⁺ count barely moves, and that's why <b>pH holds</b>. The proton didn't vanish. It didn't get destroyed. It just changed hands.</p>
+    <div class="note">
+      <p class="nt">What the chemists write down</p>
+      <span class="eqb">A⁻ + H⁺ → HA</span>
+      <p>This runs nearly to completion. <b>One for one</b>: one outlaw in, one deputy spent, one sheriff made. That strict bookkeeping is the first step of every buffer calculation you'll ever do, so get comfortable with it now.</p>
+      <p>In blood: <b>HCO₃⁻ + H⁺ → H₂CO₃ → CO₂ + H₂O</b>. Look at that last step. The new Sheriff turns into CO₂, and CO₂ can leave town. Keep that in your pocket until Chapter 9.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CH 4: THE HAT THIEF -->
+<div class="chap">
+  <div class="num">4</div>
+  <div class="body">
+    <h2>The Hat Thief</h2>
+    <p class="lede">Add base, and the acid half of the buffer absorbs it</p>
+    <svg class="art" viewBox="0 0 640 340" role="img" aria-label="Ollie the hat thief takes the Sheriff's hat and leaves as water">
+      <path class="th" d="M20,232 H620"/>
+      <text class="ink t13" x="120" y="84" text-anchor="middle">BEFORE</text>
+      <text class="ink t13" x="360" y="84" text-anchor="middle">AFTER</text>
+      <use href="#twinH" transform="translate(95,232) scale(0.95)"/>
+      <use href="#thief" transform="translate(170,232) scale(0.95)"/>
+      <text class="mut t11" x="95" y="254" text-anchor="middle">HA</text>
+      <text class="mut t11" x="170" y="254" text-anchor="middle">OH⁻</text>
+      <path class="ar" d="M100,166 Q132,152 162,190"/>
+      <polygon class="ah" points="162,190 152,190 159,182"/>
+      <text class="mut t10" x="130" y="140" text-anchor="middle">Ollie comes for hats</text>
+      <path class="ar" d="M206,192 L256,192"/>
+      <polygon class="ah" points="256,192 247,187 247,197"/>
+      <use href="#twin" transform="translate(310,232) scale(0.95)"/>
+      <use href="#thiefHat" transform="translate(385,232) scale(0.95)"/>
+      <text class="mut t11" x="310" y="254" text-anchor="middle">A⁻</text>
+      <text class="mut t11" x="385" y="254" text-anchor="middle">H₂O</text>
+      <text class="ink t13" x="320" y="290" text-anchor="middle">HA + OH⁻ → A⁻ + H₂O</text>
+      <text class="mut t12" x="320" y="308" text-anchor="middle">one thief in · one sheriff spent · one deputy made</text>
+      <text class="mut t11" x="320" y="326" text-anchor="middle">added base creates more of the buffer's base</text>
+    </svg>
+    <p class="cap">Now base rides in. This here is Ollie the Hat Thief, <b>hydroxide (OH⁻)</b>, and Ollie is death on hats. The Sheriff hands his over without a fight. Ollie rides out of town <b>satisfied, wearing the hat, as water (H₂O)</b>, and the Sheriff is left bare-headed. He's the Deputy now.<br><br>Here's the step most students miss, so stay with me. The proton is <b>not destroyed</b>. It leaves town on Ollie's head. H⁺ and OH⁻ together make water. That's neutralization, plain and simple. The proton went somewhere. It did not just disappear.</p>
+    <div class="note">
+      <p class="nt">What the chemists write down</p>
+      <span class="eqb">HA + OH⁻ → A⁻ + H₂O</span>
+      <p>One for one again: one thief in, one sheriff spent, one deputy made. Chapters 3 and 4 are mirror images. Acid uses up deputies. Base uses up sheriffs. That's why a buffer needs <b>both</b> brothers on duty.</p>
+      <p>In blood: <b>H₂CO₃ + OH⁻ → HCO₃⁻ + H₂O</b>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CH 5: THE HEAD COUNT -->
+<div class="chap">
+  <div class="num">5</div>
+  <div class="body">
+    <h2>The Head Count</h2>
+    <p class="lede">Henderson-Hasselbalch, or how far the pH actually moves</p>
+    <svg class="art" viewBox="0 0 640 300" role="img" aria-label="A balance beam with hats on one side and bareheads on the other">
+      <path class="th" d="M60,248 H580"/>
+      <text class="ink t13" x="320" y="112" text-anchor="middle">pH = pKa + log ( [A⁻] / [HA] )</text>
+      <text class="mut t11" x="320" y="138" text-anchor="middle">the town's mood is set by the head count: bareheads to hats</text>
+      <path class="s" stroke-width="4.5" d="M150,192 L492,178"/>
+      <path class="s" d="M176,190 V202"/>
+      <path class="s" d="M156,202 H196 Q190,214 176,214 Q162,214 156,202 Z"/>
+      <text class="ink t12" x="176" y="228" text-anchor="middle">HA · hats</text>
+      <path class="s" d="M470,179 V191"/>
+      <path class="s" d="M450,191 H490 Q484,203 470,203 Q456,203 450,191 Z"/>
+      <text class="ink t12" x="470" y="226" text-anchor="middle">A⁻ · bareheads</text>
+      <path class="sf" d="M320,192 L306,248 L334,248 Z"/>
+      <use href="#outlaw" transform="translate(570,248) scale(0.9)"/>
+      <path class="s" stroke-width="3.4" d="M556,226 L494,190"/>
+      <path class="th" stroke-dasharray="4 4" d="M498,168 Q512,182 502,196"/>
+      <polygon class="ah" points="502,196 494,194 500,187"/>
+      <text class="mut t11" x="500" y="160" text-anchor="middle">ten outlaws push…</text>
+      <text class="mut t11" x="500" y="270" text-anchor="middle">…it leans, but only a little</text>
+    </svg>
+    <p class="cap">An old sheriff told me something once that I never forgot. "The mood of this town," he said, "isn't set by how many lawmen we've got. It's set by the <b>head count</b>. Bareheads to hats." He was right, and that might be the most important sentence in this whole story.<br><br>Say the town has 100 deputies and 100 sheriffs. Ten outlaws ride in. Ten deputies take ten hats. Now you've got 90 bareheads and 110 hats. The head count went from 100 to 100, to 90 to 110. That's a change, sure. But look how small it is next to the size of the posse. That's why the pH barely moves.<br><br>And Le Chatelier? He's still on the job. Push that swap one way, and it settles back into balance. Here's how to keep the two straight: <b>Le Chatelier tells you which way</b> the town leans. <b>The head count tells you how far.</b></p>
+    <div class="note">
+      <p class="nt">What the chemists write down</p>
+      <span class="eqb">pH = pKa + log ( [A⁻] / [HA] )</span>
+      <p>Bareheads on top, hats on the bottom. This is the <b>Henderson-Hasselbalch equation</b>, and it's nothing more than the head count written in math.</p>
+      <p><b>Worked example.</b> One liter of acetate buffer, 0.100 M of each twin, pKa 4.76. At the start: pH = 4.76 + log(0.100 / 0.100) = 4.76 + 0 = <b>4.76</b>. Add 0.010 mol of HCl. Deputies drop to 0.090, sheriffs rise to 0.110. New pH = 4.76 + log(0.090 / 0.110) = 4.76 − 0.09 = <b>4.67</b>.</p>
+      <p>Now pour that same 0.010 mol of HCl into a liter of plain water with no buffer at all. The pH falls from 7.00 to <b>2.00</b>. Five whole units. That's 100,000 times more outlaws. Same acid. One town had a posse, and the other didn't.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CH 6: THE SALOON RUMOR -->
+<div class="chap">
+  <div class="num">6</div>
+  <div class="body">
+    <h2>The Saloon Rumor</h2>
+    <p class="lede">No, a buffer does not hold things at pH 7</p>
+    <svg class="art" viewBox="0 0 640 330" role="img" aria-label="Townsfolk in a saloon spreading a rumor, and the real law posted outside">
+      <path class="th" d="M14,250 H626"/>
+      <path class="th" d="M40,186 H300 M40,250 H300 M40,186 V250 M300,186 V250"/>
+      <path class="th" d="M46,186 V250 M60,196 V186 M74,196 V186"/>
+      <rect class="th" x="96" y="186" width="150" height="10"/>
+      <path class="th" d="M112,196 V186 M118,186 V176 M126,186 V176 M140,186 V176 M148,186 V176"/>
+      <use href="#townie" transform="translate(180,250) scale(0.95)"/>
+      <use href="#townie" transform="translate(120,250) scale(0.95)"/>
+      <text class="mut t11" x="180" y="278" text-anchor="middle">townsfolk</text>
+      <rect class="th" x="196" y="96" width="216" height="56" rx="10"/>
+      <path class="th" d="M232,152 L226,172 M246,152 L242,170"/>
+      <text class="ink t12" x="304" y="118" text-anchor="middle">"A buffer holds things</text>
+      <text class="ink t12" x="304" y="136" text-anchor="middle">at pH 7, they say…"</text>
+      <path class="ar" stroke-width="4" d="M212,112 L400,136"/>
+      <text class="mut t11" x="306" y="176" text-anchor="middle">…rumor, dead on arrival</text>
+      <path class="th" d="M452,250 V216 M528,250 V216"/>
+      <rect class="s" stroke-width="3.4" x="420" y="150" width="140" height="66" rx="6"/>
+      <text class="ink t13" x="490" y="172" text-anchor="middle">THE REAL LAW</text>
+      <text class="ink t12" x="490" y="192" text-anchor="middle">WEAK + CONJUGATE</text>
+      <text class="mut t11" x="490" y="208" text-anchor="middle">pH set by pKa + ratio</text>
+      <use href="#twin" transform="translate(462,250) scale(0.9)"/>
+      <use href="#twinH" transform="translate(518,250) scale(0.9)"/>
+      <text class="mut t11" x="490" y="278" text-anchor="middle">on duty near their own pKa</text>
+    </svg>
+    <p class="cap">Every saloon has a fella at the end of the bar who knows everything and is wrong about half of it. His favorite: "A buffer keeps things neutral. pH 7. That's the whole point of a buffer." I hear some version of that every single semester.<br><br>It's dead wrong. A buffer doesn't drag the town to 7. It holds the town wherever its <b>own twins</b> set it. An acetate posse holds near 4.76. The phosphate posse inside your cells holds near 7.2. Your blood holds at 7.40. A buffer's job is to resist <b>change</b>. It has nothing to do with neutral.</p>
+    <div class="grid" style="margin-top:14px">
+      <div class="box ink">
+        <p class="bt">THE PROOF THAT KILLS THE RUMOR</p>
+        <p class="bb">Look at the head count equation again: pH = pKa + log(ratio). There's no 7 in it anywhere. The pH a buffer holds comes from exactly two things: <b>how readily that Sheriff gives up his hat (pKa)</b> and <b>the head count (the ratio)</b>. An acetate buffer at a 1:1 ratio sits at pH 4.76, which is good and acidic, and it buffers beautifully right there. The rumor dies at the saloon door.</p>
+      </div>
+    </div>
+    <p class="cap">So here's the real law, the one nailed to the jailhouse wall: <b>weak, conjugate, and working near your own pKa.</b> That last part brings us to the next chapter.</p>
+  </div>
+</div>
+
+<!-- CH 7: HOME TURF -->
+<div class="chap">
+  <div class="num">7</div>
+  <div class="body">
+    <h2>Home Turf</h2>
+    <p class="lede">Every buffer works best within one pH unit of its own pKa</p>
+    <svg class="art" viewBox="0 0 640 250" role="img" aria-label="A pH ruler showing the working range of acetate, bicarbonate and phosphate buffers, with blood at pH 7.40 outside bicarbonate's range">
+      <text class="mut t11" x="233" y="42" text-anchor="middle">home turf = pKa ± 1</text>
+      <rect class="band" x="163" y="52" width="140" height="24" rx="6"/>
+      <path class="s" d="M233,48 V80"/>
+      <text class="ink t12" x="154" y="69" text-anchor="end">acetate · pKa 4.76</text>
+      <rect class="band" x="257" y="96" width="140" height="24" rx="6"/>
+      <path class="s" d="M327,92 V124"/>
+      <text class="ink t12" x="248" y="113" text-anchor="end">bicarbonate · pKa 6.1</text>
+      <rect class="band" x="334" y="140" width="140" height="24" rx="6"/>
+      <path class="s" d="M404,136 V168"/>
+      <text class="ink t12" x="325" y="157" text-anchor="end">phosphate · pKa 7.2</text>
+      <path class="th" stroke-dasharray="3 5" d="M327,124 V189"/>
+      <path class="ar" stroke-dasharray="6 5" d="M418,30 V204"/>
+      <text class="ink t12" x="418" y="20" text-anchor="middle">your blood · pH 7.40</text>
+      <path class="th" d="M327,189 V199 M327,194 H418 M418,189 V199"/>
+      <text class="mut t11" x="428" y="198" text-anchor="start">1.3 units past bicarbonate's pKa</text>
+      <path class="s" d="M40,210 H600"/>
+      <path class="s" d="M40,204 V216 M110,204 V216 M180,204 V216 M250,204 V216 M320,204 V216 M390,204 V216 M460,204 V216 M530,204 V216 M600,204 V216"/>
+      <text class="mut t11" x="40" y="232" text-anchor="middle">2</text>
+      <text class="mut t11" x="110" y="232" text-anchor="middle">3</text>
+      <text class="mut t11" x="180" y="232" text-anchor="middle">4</text>
+      <text class="mut t11" x="250" y="232" text-anchor="middle">5</text>
+      <text class="mut t11" x="320" y="232" text-anchor="middle">6</text>
+      <text class="mut t11" x="390" y="232" text-anchor="middle">7</text>
+      <text class="mut t11" x="460" y="232" text-anchor="middle">8</text>
+      <text class="mut t11" x="530" y="232" text-anchor="middle">9</text>
+      <text class="mut t11" x="600" y="232" text-anchor="middle">10</text>
+      <text class="ink t12" x="320" y="248" text-anchor="middle">pH</text>
+    </svg>
+    <p class="cap">Every sheriff has home turf. Inside it, he's hard to beat. Wander too far outside it, and he's a stranger in a strange town.<br><br>When the head count is even, as many bareheads as hats, the town is ready for trouble from either direction. That's the sweet spot, and it sits right at <b>pH = pKa</b>. Go one unit either way and the head count is ten to one. Past that, one brother has nearly disappeared, and the town can only defend one side. Too few deputies, and the outlaws take the town. Too few sheriffs, and Ollie cleans you out.<br><br>Now look at that ruler, and look hard at your blood. Bicarbonate's pKa is 6.1. Your blood runs at 7.40. That's 1.3 units away, <b>outside the home turf</b>. By the book, that ought to be a so-so buffer. Keep that in your pocket too. It's the best twist in the whole story, and Chapter 9 pays it off.</p>
+    <div class="note">
+      <p class="nt">What the chemists write down</p>
+      <span class="eqb">[A⁻] = [HA] &nbsp;→&nbsp; log(1) = 0 &nbsp;→&nbsp; pH = pKa</span>
+      <p><b>Useful range: pKa ± 1</b>, meaning a head count anywhere between 10:1 and 1:10.</p>
+      <p>To build a buffer for a target pH, pick a pair whose pKa sits close to that target. That's how chemists choose. Phosphate (pKa 7.2) is a favorite for work near neutral for exactly this reason.</p>
+      <p>Blood: the ratio of HCO₃⁻ to dissolved CO₂ is about <b>20:1</b>. log 20 = 1.30, and 6.1 + 1.30 = <b>7.40</b>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CH 8: THE SIZE OF THE POSSE -->
+<div class="chap">
+  <div class="num">8</div>
+  <div class="body">
+    <h2>The Size of the Posse</h2>
+    <p class="lede">Buffer capacity, and what happens when it runs out</p>
+    <svg class="art" viewBox="0 0 640 350" role="img" aria-label="A full jail, deputies out of hands, and a beaker with no railroad where the pH crashes">
+      <path class="th" d="M14,250 H626"/>
+      <path class="th" d="M40,122 V250 M180,122 V250 M40,250 H180"/>
+      <path class="th" d="M58,130 V242 M76,130 V242 M94,130 V242 M112,130 V242 M130,130 V242 M148,130 V242 M166,130 V242"/>
+      <path class="th" d="M34,112 L110,92 L186,112 Z"/>
+      <text class="mut t11" x="110" y="108" text-anchor="middle">JAIL</text>
+      <use href="#outlaw" transform="translate(76,250) scale(0.8)"/>
+      <use href="#outlaw" transform="translate(110,250) scale(0.8)"/>
+      <use href="#outlaw" transform="translate(144,250) scale(0.8)"/>
+      <text class="mut t11" x="110" y="272" text-anchor="middle">FULL</text>
+      <use href="#twin" transform="translate(232,250) scale(0.9)"/>
+      <use href="#twin" transform="translate(280,250) scale(0.9)"/>
+      <rect class="th" x="200" y="140" width="118" height="30" rx="8"/>
+      <path class="th" d="M240,170 L232,190 M278,170 L284,190"/>
+      <text class="ink t11" x="259" y="160" text-anchor="middle">out of hands</text>
+      <use href="#outlaw" transform="translate(340,250) scale(0.85)"/>
+      <use href="#outlaw" transform="translate(382,250) scale(0.85)"/>
+      <path class="th" stroke-dasharray="3 6" d="M404,214 H444"/>
+      <text class="ink t12" x="531" y="112" text-anchor="middle">a beaker</text>
+      <text class="mut t11" x="531" y="128" text-anchor="middle">no railroad, no backup</text>
+      <path class="s" d="M454,140 H470 M592,140 H608"/>
+      <path class="s" stroke-width="3.4" d="M462,140 V232 Q462,248 478,248 H584 Q600,248 600,232 V140"/>
+      <path class="th" d="M462,180 H600"/>
+      <use href="#outlaw" transform="translate(495,246) scale(0.5)"/>
+      <use href="#outlaw" transform="translate(531,246) scale(0.5)"/>
+      <use href="#outlaw" transform="translate(567,246) scale(0.5)"/>
+      <text class="ink t12" x="624" y="146" text-anchor="middle">pH</text>
+      <path class="ar" d="M624,154 V232"/>
+      <polygon class="ah" points="624,242 619,232 629,232"/>
+      <path class="th" d="M240,300 V336 M400,300 V336"/>
+      <rect class="th" x="172" y="292" width="296" height="26" rx="4"/>
+      <text class="ink t11" x="320" y="309" text-anchor="middle">CAPACITY = THE SIZE OF THE POSSE</text>
+    </svg>
+    <p class="cap">Two towns. Same head count, same pH. One has ten lawmen. The other has ten thousand. Which one would you rather live in when a gang of fifty rides in?<br><br>That's <b>buffer capacity</b>. The head count sets the pH. The <b>size of the posse</b> sets how much trouble the town can take before it falls. Once the deputies are all spent, the next outlaw walks right in, and the pH drops like a stone.<br><br>And here's the hard truth about a beaker. <b>It has no railroad.</b> No backup is coming. Whatever posse you mixed in is all you'll ever have. Run through it, and that's the end of the town.</p>
+    <div class="note">
+      <p class="nt">What the chemists write down</p>
+      <span class="eqb">capacity grows with [HA] + [A⁻], and peaks when the ratio is near 1:1</span>
+      <p><b>Same pH, different capacity.</b> A 0.010 M / 0.010 M acetate buffer and a 1.0 M / 1.0 M acetate buffer both sit at pH 4.76. Add 0.010 mol of HCl to a liter of each.</p>
+      <p>The big posse barely notices: 0.99 / 1.01 gives pH <b>4.75</b>. The small posse loses every last deputy. With nothing but sheriffs left, the pH falls to about <b>3.2</b>, and the very next drop of acid meets no resistance at all.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CH 9: THE RAILROAD -->
+<div class="chap">
+  <div class="num">9</div>
+  <div class="body">
+    <h2>The Railroad</h2>
+    <p class="lede">Why your blood is no beaker: the open system</p>
+    <svg class="art" viewBox="0 0 640 330" role="img" aria-label="The lungs station removes CO2 and the kidney station manages bicarbonate, controlling the twins from both sides">
+      <path class="th" d="M14,236 H626"/>
+      <path class="th" d="M30,150 V236 M150,150 V236 M30,236 H150 M24,150 L90,128 L156,150 Z"/>
+      <text class="ink t12" x="90" y="182" text-anchor="middle">LUNGS</text>
+      <text class="mut t11" x="90" y="200" text-anchor="middle">every breath</text>
+      <circle class="sf" cx="62" cy="112" r="8"/>
+      <circle class="sf" cx="46" cy="92" r="11"/>
+      <circle class="sf" cx="28" cy="66" r="14"/>
+      <path class="th" d="M490,150 V236 M610,150 V236 M490,236 H610 M484,150 L550,128 L616,150 Z"/>
+      <text class="ink t12" x="550" y="182" text-anchor="middle">KIDNEYS</text>
+      <text class="mut t11" x="550" y="200" text-anchor="middle">slow and thorough</text>
+      <use href="#twinH" transform="translate(270,236) scale(1.1)"/>
+      <use href="#twin" transform="translate(370,236) scale(1.1)"/>
+      <path class="ar" d="M238,176 Q200,154 162,176"/>
+      <polygon class="ah" points="160,178 168,168 171,179"/>
+      <text class="mut t11" x="200" y="122" text-anchor="middle">CO₂ leaves · minutes</text>
+      <path class="ar" d="M480,176 Q442,154 404,176"/>
+      <polygon class="ah" points="402,178 410,168 413,179"/>
+      <text class="mut t11" x="430" y="122" text-anchor="middle">keeps HCO₃⁻, dumps H⁺ · days</text>
+      <text class="ink t12" x="270" y="258" text-anchor="middle">H₂CO₃ / CO₂</text>
+      <text class="mut t11" x="270" y="274" text-anchor="middle">set by the lungs</text>
+      <text class="ink t12" x="370" y="258" text-anchor="middle">HCO₃⁻</text>
+      <text class="mut t11" x="370" y="274" text-anchor="middle">set by the kidneys</text>
+      <text class="ink t13" x="320" y="302" text-anchor="middle">pH = 6.1 + log ( 24 ÷ (0.03 × 40) ) = 6.1 + log 20 = 7.40</text>
+      <text class="mut t11" x="320" y="322" text-anchor="middle">kidneys set the top number · lungs set the bottom number</text>
+    </svg>
+    <p class="cap">Now here is where your body does something no glassware ever could. Pay attention to this one, because I've watched this exact idea separate the students who understand blood gases from the ones who memorize and pray.<br><br>The bicarbonate town has a railroad, and it runs <b>every minute of every day</b>. Not just when the jail fills up. All the time. The <b>lungs</b> control how many Sheriffs are in town. Remember Chapter 3? Every time a deputy takes an outlaw's hat, the new Sheriff turns into CO₂, and CO₂ can board the train. Every breath you let out carries Sheriffs out of town. Breathe faster, more of them leave. Breathe slower, they pile up.<br><br>The <b>kidneys</b> run the other line. They control the deputies, holding on to HCO₃⁻ or letting it go, and shipping H⁺ out in the urine. The lungs work in minutes. The kidneys take days, but they're thorough.<br><br>So here's the twist I promised you. In a closed beaker, a 20 to 1 head count sitting 1.3 units off home turf would make a so-so buffer. But this town never lets its Sheriffs pile up. Every outlaw that gets disarmed turns into CO₂ and gets put on a train. <b>That's</b> what makes bicarbonate the master buffer of your blood. Not the chemistry alone. The chemistry plus the railroad.<br><br>And notice who the town hired. Twenty deputies for every Sheriff. That's no accident. Your body makes acid all day long, so it hired for the trouble it actually gets.</p>
+    <div class="note">
+      <p class="nt">What the chemists write down</p>
+      <span class="eqb">CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻</span>
+      <p>The first step is sped up enormously by <b>carbonic anhydrase</b>, mostly inside red blood cells.</p>
+      <span class="eqb">pH = 6.1 + log ( [HCO₃⁻] / (0.03 × PaCO₂) )</span>
+      <p>The same head count equation, with the Sheriff's side written as dissolved CO₂. The <b>0.03</b> converts CO₂ pressure in mmHg into mmol/L.</p>
+      <p><b>Normal:</b> HCO₃⁻ 24 mmol/L, PaCO₂ 40 mmHg. 0.03 × 40 = 1.2. 24 ÷ 1.2 = 20. log 20 = 1.30. pH = 6.1 + 1.30 = <b>7.40</b>. Every blood gas you will ever read lives inside this one line.</p>
+      <p>Other posses help too: <b>hemoglobin</b> inside red cells, <b>plasma proteins</b>, and <b>phosphate</b> inside cells and in urine. Bicarbonate gets top billing because it's the only one with a railroad.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CH 10: WHEN THE RAILROAD BREAKS -->
+<div class="chap">
+  <div class="num">10</div>
+  <div class="body">
+    <h2>When the Railroad Breaks</h2>
+    <p class="lede">Acidosis, alkalosis, and the town that fixes itself</p>
+    <p class="cap">I'll leave you with the part that matters at the bedside. Let me tell you about two towns. Both are sitting at pH 7.10. Both are in trouble. And they're in completely different kinds of trouble.<br><br>In the first town, something has been killing off the deputies. Maybe it's diabetic ketoacidosis pouring acid in. Maybe it's a gut losing bicarbonate. HCO₃⁻ has fallen from 24 to 12. The railroad is running just fine. That's a <b>metabolic</b> problem.<br><br>In the second town, the deputies are all present and accounted for, 24 strong. But the train has broken down. The lungs aren't moving air, and Sheriffs are piling up. PaCO₂ has climbed from 40 to 80. That's a <b>respiratory</b> problem.<br><br>Same pH. Different crime. Different fix. And here's the part that makes me love this town: when one line breaks, the other line picks up the slack. That's <b>compensation</b>.</p>
+    <div class="grid" style="margin-top:14px">
+      <div class="box">
+        <p class="bt">TOWN ONE · THE DEPUTIES ARE GONE</p>
+        <p class="bb"><span class="eq">6.1 + log(12 ÷ 1.2)</span><br>= 6.1 + log 10 = <b>7.10</b><br>Metabolic acidosis. The lungs answer by blowing off CO₂.</p>
+      </div>
+      <div class="box">
+        <p class="bt">TOWN TWO · THE TRAIN BROKE DOWN</p>
+        <p class="bb"><span class="eq">6.1 + log(24 ÷ 2.4)</span><br>= 6.1 + log 10 = <b>7.10</b><br>Respiratory acidosis. The kidneys answer by keeping HCO₃⁻.</p>
+      </div>
+    </div>
+    <p class="cap" style="font-size:12.5px">These two towns are simplified to make the point. In a real patient, compensation starts right away, and a sudden rise in CO₂ nudges HCO₃⁻ up a little on its own.</p>
+    <div class="tw">
+    <table>
+      <tr><th>Disorder</th><th>What went wrong in town</th><th>Blood gas</th><th>Who comes to help</th></tr>
+      <tr><td><b>Respiratory acidosis</b></td><td>The train breaks down and Sheriffs pile up. Hypoventilation: COPD, opioid overdose, weak breathing muscles.</td><td>PaCO₂ ↑ · pH ↓</td><td>Kidneys keep more HCO₃⁻, over days</td></tr>
+      <tr><td><b>Respiratory alkalosis</b></td><td>The train runs too fast and too many Sheriffs leave. Hyperventilation: anxiety, pain, high altitude.</td><td>PaCO₂ ↓ · pH ↑</td><td>Kidneys let HCO₃⁻ go, over days</td></tr>
+      <tr><td><b>Metabolic acidosis</b></td><td>Deputies used up or lost. DKA, lactic acidosis, severe diarrhea.</td><td>HCO₃⁻ ↓ · pH ↓</td><td>Lungs blow off CO₂ with deep, fast (Kussmaul) breathing, within minutes to hours</td></tr>
+      <tr><td><b>Metabolic alkalosis</b></td><td>Too many deputies, or outlaws lost. Vomiting stomach acid, some diuretics.</td><td>HCO₃⁻ ↑ · pH ↑</td><td>Lungs slow down to hold CO₂, but only so far, because you still need oxygen</td></tr>
+    </table>
+    </div>
+    <div class="note">
+      <p class="nt">What the clinicians write down</p>
+      <span class="eqb">ROME: Respiratory Opposite, Metabolic Equal</span>
+      <p>In a <b>respiratory</b> problem, pH and PaCO₂ move in <b>opposite</b> directions. In a <b>metabolic</b> problem, pH and HCO₃⁻ move in the <b>same</b> direction.</p>
+      <p>Normal ranges: pH 7.35 to 7.45 · PaCO₂ 35 to 45 mmHg · HCO₃⁻ 22 to 26 mmol/L.</p>
+      <p><b>Story check:</b> Is it the train (lungs, CO₂) or the deputies (kidneys, HCO₃⁻)? Find what's abnormal, note which way it moved, and the town will tell you which line broke.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LEDGER -->
+<div class="chap">
+  <div class="num">✦</div>
+  <div class="body">
+    <h2>The Town Ledger</h2>
+    <p class="lede">Story to chemistry to what it means in a patient</p>
+    <div class="tw">
+    <table>
+      <tr><th>Story</th><th>Chemistry</th><th>In your blood</th></tr>
+      <tr><td><b>The town</b></td><td>The solution; pH = −log[H⁺]</td><td>Metabolism makes acid nonstop. 7.40 to 7.10 doubles the H⁺.</td></tr>
+      <tr><td><b>The twins</b></td><td>Weak acid + conjugate base, one proton apart</td><td>H₂CO₃ / HCO₃⁻, the master pair in plasma</td></tr>
+      <tr><td><b>Hat on, not glued</b></td><td>Weak acid: small Ka, reversible proton transfer</td><td>Apparent pKa 6.1</td></tr>
+      <tr><td><b>Outlaw rides in</b></td><td>A⁻ + H⁺ → HA, one for one</td><td>HCO₃⁻ absorbs metabolic acid and becomes CO₂</td></tr>
+      <tr><td><b>Hat thief</b></td><td>HA + OH⁻ → A⁻ + H₂O, one for one</td><td>H₂CO₃ neutralizes base; the proton leaves as water</td></tr>
+      <tr><td><b>The head count</b></td><td>pH = pKa + log([A⁻]/[HA])</td><td>HCO₃⁻ to dissolved CO₂ = 20:1, so pH 7.40</td></tr>
+      <tr><td><b>The saloon rumor</b></td><td>No pH 7 rule; pKa and ratio set the pH</td><td>Blood buffers at 7.40, acetate at 4.76</td></tr>
+      <tr><td><b>Home turf</b></td><td>Best within pKa ± 1</td><td>Blood is 1.3 units off bicarbonate's pKa</td></tr>
+      <tr><td><b>Size of the posse</b></td><td>Capacity depends on total concentration</td><td>A beaker runs out; the body doesn't, while the railroad runs</td></tr>
+      <tr><td><b>The railroad</b></td><td>Open system: CO₂ removed continuously</td><td>Lungs set PaCO₂ in minutes; kidneys set HCO₃⁻ over days</td></tr>
+      <tr><td><b>The railroad breaks</b></td><td>Respiratory vs. metabolic disturbances</td><td>ROME; the working line compensates</td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- PRACTICE -->
+<div class="chap">
+  <div class="num">?</div>
+  <div class="body">
+    <h2>Problems at the Saloon Table</h2>
+    <p class="lede">Try each one before you open it. The story will get you started; the math will finish it.</p>
+    <details>
+      <summary>1. A liter of buffer has 0.50 M acetic acid and 0.50 M acetate (pKa 4.76). What's the pH?</summary>
+      <p><b>Story:</b> equal head count, so the town sits right at the Sheriff's pKa.<br><b>Math:</b> pH = 4.76 + log(0.50 / 0.50) = 4.76 + 0 = <b>4.76</b>.</p>
+    </details>
+    <details>
+      <summary>2. Add 0.050 mol of HCl to that liter. What's the new pH? Then compare it to the same HCl in a liter of pure water.</summary>
+      <p><b>Story:</b> 0.050 mol of outlaws take 0.050 mol of hats. Deputies fall to 0.45, sheriffs rise to 0.55.<br><b>Math:</b> pH = 4.76 + log(0.45 / 0.55) = 4.76 − 0.09 = <b>4.67</b>. In pure water, [H⁺] = 0.050 M, so pH = <b>1.30</b>. The posse saved more than three whole pH units.</p>
+    </details>
+    <details>
+      <summary>3. You need to hold a solution at pH 7.0. Acetate (pKa 4.76) or phosphate (pKa 7.2)? Why?</summary>
+      <p><b>Story:</b> phosphate is on home turf. Acetate is more than two units away.<br><b>Math:</b> at pH 7.0, acetate's head count would be about 170 deputies for every sheriff (10<sup>2.24</sup>). Almost no sheriffs means almost no defense against base. Pick <b>phosphate</b>.</p>
+    </details>
+    <details>
+      <summary>4. Blood gas: HCO₃⁻ 12 mmol/L, PaCO₂ 40 mmHg. What's the pH, and which line broke?</summary>
+      <p><b>Math:</b> pH = 6.1 + log(12 ÷ 1.2) = 6.1 + 1 = <b>7.10</b>.<br><b>Story:</b> the deputies are half gone and the train is normal. <b>Metabolic acidosis.</b> ROME check: pH down, HCO₃⁻ down, same direction, metabolic. Expect the lungs to start blowing off CO₂.</p>
+    </details>
+    <details>
+      <summary>5. A patient in a panic attack: PaCO₂ 20 mmHg, HCO₃⁻ 24 mmol/L. What's the pH, and what's happening in town?</summary>
+      <p><b>Math:</b> 0.03 × 20 = 0.6. pH = 6.1 + log(24 ÷ 0.6) = 6.1 + log 40 = 6.1 + 1.60 = <b>7.70</b> (simplified, before any compensation).<br><b>Story:</b> the train is running too fast and the Sheriffs are leaving in droves. <b>Respiratory alkalosis.</b> ROME check: pH up, PaCO₂ down, opposite directions, respiratory.</p>
+    </details>
+  </div>
+</div>
+
+<!-- TAKEAWAYS -->
+<div class="grid">
+  <div class="box">
+    <p class="bt">THE 7 THINGS YOU MUST KNOW</p>
+    <ol class="bb">
+      <li><b>Two requirements:</b> a weak acid and its conjugate base, one proton apart.</li>
+      <li><b>Weak means "hat on, not glued."</b> The acid mostly keeps its proton but trades it back and forth. A strong acid throws it away for good, so its partner can't buffer.</li>
+      <li><b>Acid uses up the base; base uses up the acid.</b> A⁻ + H⁺ → HA and HA + OH⁻ → A⁻ + H₂O, one for one.</li>
+      <li><b>The head count sets the pH:</b> pH = pKa + log([A⁻]/[HA]).</li>
+      <li><b>Home turf is pKa ± 1.</b> Pick a buffer whose pKa is near the pH you want. There is no pH 7 rule.</li>
+      <li><b>The size of the posse sets the capacity.</b> More of both twins, more trouble the town can absorb.</li>
+      <li><b>Blood is an open system.</b> Lungs set PaCO₂ in minutes, kidneys set HCO₃⁻ over days, and that railroad is why bicarbonate works at 7.40.</li>
+    </ol>
+  </div>
+  <div class="box">
+    <p class="bt">THE COMMON MISTAKES</p>
+    <p class="bb"><b>"The buffer cancels acid into nothing."</b> No. The proton changes hands, or leaves on Ollie's head as water. And the pH still moves. It just moves very little.<br><br><b>"Weak means it holds the proton loosely."</b> Backwards. A weak acid keeps its proton most of the time. What makes it useful is that the grip is <b>reversible</b>.<br><br><b>"Buffers hold things at pH 7."</b> No. pKa and the ratio decide where the town sits.<br><br><b>"The lungs only kick in when the buffer is overwhelmed."</b> No. They set PaCO₂ with every breath, all day long.<br><br><b>"Conjugate means opposite."</b> No. It means one proton apart. Same twin, hat on or hat off.</p>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="box ink">
+    <p class="bt">MEMORY HOOK</p>
+    <p class="bb"><b>"The hat is the proton. The Sheriff wears it but won't glue it. The head count sets the pH. The posse sets the capacity. And the railroad is your lungs and kidneys."</b><br><br>Hat on means acid (HA). Hat off means base (A⁻). An outlaw brings a hat, and the deputy takes it. Ollie steals a hat, and the sheriff goes bare.</p>
+  </div>
+  <div class="box">
+    <p class="bt">ONE-LINE ANSWER TO "WHAT IS A BUFFER?"</p>
+    <p class="bb">A weak acid and its conjugate base, twins one proton apart, trading a hat back and forth so that any acid or base riding into town gets absorbed, while the pH, set by the pKa and the head count, barely flinches.</p>
+  </div>
+</div>
+
+<div class="tale" style="margin-top:22px">
+One last thing before you go. When you sit down for that exam and your mind goes blank, and it might, close your eyes and walk back into town. Count the hats. Check the head count. Ask yourself whether the train's still running. The chemistry will be standing right there behind the story, exactly where I hung it for you.
+</div>
+
+<div class="foot">Figures: outlaw = H⁺ · Sheriff H.A. = weak acid (HA) · Deputy A⁻ = conjugate base · Ollie = OH⁻ · the hat = the proton · the head count = [A⁻]/[HA] · home turf = pKa ± 1 · the posse = buffer capacity · the railroad = the open system (lungs and kidneys). Self-contained page with inline styles only, no scripts or external assets.</div>
+
+</body>
+</html>

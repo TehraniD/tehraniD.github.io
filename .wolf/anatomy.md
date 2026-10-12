@@ -65,6 +65,7 @@
 - `Lab3_Interactive_Learning_Guide.html` — Lab 3: Stoichiometry - Interactive Learning Guide (~19893 tok)
 - `Lab3_Student_Quick_Start.md` — 🚀 Heat of Fusion Lab - Student Quick Start Guide (~1803 tok)
 - `Lab3_TEACHING_GUIDE.html` — Lab 3: Heat of Fusion - Teaching Guide (~4111 tok)
+- `Buffer_Story_Town_of_pH.html` — The Town of pH: buffer story in 10 chapters (western allegory: H+ outlaws, HA/A- twin lawmen, OH- hat thief) with chemist's-notebook boxes, H-H, capacity, open bicarbonate system, ABG disorders, 5 reveal problems; linked from index.html (~14000 tok)
 - `Lab4_AcidsBasesBuffers_Interactive_Guide.html` — Lab 4: Acids, Bases & Buffers — Interactive Learning Guide (~24913 tok)
 - `Lab4_Kinetics_FINAL_Interactive_Guide.html` — Lab 4 — Interactive Learning Guide (~12060 tok)
 - `Lab4_Kinetics_FINAL_STUDENT_Template.html` — Lab 4 — Student Template (~5965 tok)

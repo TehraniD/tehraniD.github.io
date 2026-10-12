@@ -18,3 +18,4 @@
 | 21:40 | Revised AP2 guide: fixed flow-chart colors for readability, added coverage (formed-element roster, hemostasis steps, MALT, CO formula, quick-checks), removed time-frame battle plan | AP2_Midterm_Interactive_Guide.html | verify_guide.py ALL PASS | ~22k |
 | 21:49 | Full retro 70s restyle of AP2 guide: removed box/card style, flat cards, warm palette (cream/brown/orange/gold/avocado/plum), Shrikhand+Righteous+Karla fonts, recolored flow charts (0 residual blue) | AP2_Midterm_Interactive_Guide.html | verify_guide.py ALL PASS | ~23k |
 | 21:55 | Published AP2 Midterm guide to main + linked from index.html; saved retro template to skill | AP2_Midterm_Interactive_Guide.html, index.html | pushed to main | ~1k |
+| 11:07 | Published Town of pH buffer story (v2: 10 chapters, H-H, capacity, open system, ABGs; numbers verified, 0 dashes) + index.html card after Lab 4 Ballroom card | Buffer_Story_Town_of_pH.html, index.html | pushed to main | ~2k |
