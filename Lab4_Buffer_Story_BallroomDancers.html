@@ -3,119 +3,74 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lab 4: Acids, Bases &amp; Buffers - The Ballroom Buffer Dancers</title>
+<title>Lab 4: Acids, Bases &amp; Buffers - Overview</title>
 <style>
-  *{box-sizing:border-box}
-  body{margin:0;padding:34px 30px 46px;font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--foreground,#1c1c1c);max-width:1020px}
-  .kicker{font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-foreground,#6f6a62)}
-  h1{font-family:Georgia,"Times New Roman",serif;font-size:40px;line-height:1.05;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px}
-  .sub{font-size:15.5px;line-height:1.55;color:var(--foreground,#1c1c1c);max-width:760px;margin:0 0 4px}
-  .sub b{font-weight:800}
-  .rule{height:3px;background:var(--foreground,#1c1c1c);margin:20px 0 18px;border-radius:2px}
-  /* cast strip */
-  .cast{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
-  .citem{display:flex;align-items:center;gap:9px;border:2px solid var(--foreground,#1c1c1c);border-radius:10px;padding:6px 12px 6px 8px;flex:1 1 170px}
-  .citem svg{flex:0 0 auto}
-  .cn{font-weight:800;font-size:13px;line-height:1.25}
-  .cr{font-size:11.5px;font-weight:600;color:var(--muted-foreground,#6f6a62);line-height:1.25}
-  /* chapters */
-  .chap{display:flex;gap:18px;align-items:flex-start;border:2.5px solid var(--foreground,#1c1c1c);border-radius:14px;padding:18px 20px 16px;margin-bottom:18px;break-inside:avoid}
-  .num{flex:0 0 46px;height:46px;border:3px solid var(--foreground,#1c1c1c);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;margin-top:2px}
-  .body{flex:1;min-width:0}
-  h2{font-family:Georgia,"Times New Roman",serif;font-size:23px;margin:0 0 2px;font-weight:800}
-  .lede{font-size:13.5px;font-weight:700;color:var(--muted-foreground,#6f6a62);margin:0 0 10px;letter-spacing:.01em}
-  .cap{font-size:14.5px;line-height:1.58;margin:10px 0 0}
-  .cap b{font-weight:800}
-  .eq{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700;background:color-mix(in srgb,var(--accent,#8a6a45) 14%,transparent);border-radius:6px;padding:1px 6px}
-  svg{display:block;max-width:100%;height:auto}
-  .art{width:100%}
-  /* boxes */
-  .grid{display:flex;gap:16px;flex-wrap:wrap;margin:22px 0 6px}
-  .box{flex:1 1 300px;border:2px solid var(--foreground,#1c1c1c);border-radius:12px;padding:14px 16px}
-  .box.ink{background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4)}
-  .box.ink .bt{color:var(--background,#faf8f4)}
-  .bt{font-weight:800;font-size:14.5px;margin:0 0 8px;letter-spacing:.02em}
-  .bb{font-size:13.5px;line-height:1.55;margin:0}
-  .bb b{font-weight:800}
-  ol.bb{padding-left:20px;margin:0}
-  ol.bb li{margin-bottom:7px}
-  /* table */
-  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
-  th,td{border:1.6px solid var(--border,#cfc8bd);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.45}
-  th{background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
-  td b{font-weight:800}
-  .foot{margin-top:26px;padding-top:14px;border-top:3px solid var(--foreground,#1c1c1c);font-size:12.5px;color:var(--muted-foreground,#6f6a62);line-height:1.5}
-  /* svg classes */
-  .s{fill:none;stroke:var(--foreground,#1c1c1c);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-  .sf{fill:var(--foreground,#1c1c1c);stroke:var(--foreground,#1c1c1c);stroke-width:1.5}
-  .th{fill:none;stroke:var(--muted-foreground,#9a938a);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .mut{fill:var(--muted-foreground,#6f6a62);stroke:none}
-  .ink{fill:var(--foreground,#1c1c1c);stroke:none}
-  .ar{fill:none;stroke:var(--accent,#8a6a45);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
-  .ah{fill:var(--accent,#8a6a45);stroke:none}
-  .t13{font-size:13px;font-weight:700}
-  .t12{font-size:12px;font-weight:600}
-  .t11{font-size:11px;font-weight:600}
-  .t10{font-size:10.5px;font-weight:600}
-
-  /* ---- Lab 4 additions ---- */
-  .labbar{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 20px}
-  .labcard{flex:1 1 200px;border:2px solid var(--foreground,#1c1c1c);border-radius:10px;padding:10px 13px}
-  .lt{font-weight:800;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground,#6f6a62);margin-bottom:4px}
-  .lb{font-size:14.5px;line-height:1.45;font-weight:700}
-  .lb span{font-weight:600;color:var(--muted-foreground,#6f6a62)}
-  .bk{border:2px solid var(--foreground,#1c1c1c);border-radius:10px;padding:10px 12px;margin:9px 0;background:color-mix(in srgb,var(--accent,#8a6a45) 9%,transparent)}
-  .bkh{font-weight:800;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
-  .bkb{font-size:13.5px;line-height:1.52;margin:0 0 6px}
-  .bkb:last-child{margin-bottom:0}
-  .bkb b{font-weight:800}
-  .rx{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700;font-size:13px;background:color-mix(in srgb,var(--accent,#8a6a45) 16%,transparent);border-radius:6px;padding:2px 7px;white-space:nowrap}
-  .eqline{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;font-weight:700;line-height:2}
-  .stmt{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:var(--muted-foreground,#6f6a62);white-space:pre-wrap;margin-top:6px}
-  table.mix{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
-  table.mix th,table.mix td{border:1.6px solid var(--border,#cfc8bd);padding:8px 10px;text-align:left;vertical-align:top;line-height:1.45}
-  table.mix th{background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
-  table.mix td b{font-weight:800}
-  table.mix td:nth-child(1){white-space:nowrap}
-  table.mix td:nth-child(2){background:color-mix(in srgb,var(--accent,#8a6a45) 10%,transparent)}
-  @media (max-width:640px){
-    table.mix th{display:none}
-    table.mix,table.mix tbody,table.mix tr,table.mix td{display:block;width:100%}
-    table.mix{border:none}
-    table.mix tr{border:1.6px solid var(--foreground,#1c1c1c);border-radius:9px;margin-bottom:11px;overflow:hidden}
-    table.mix td{border:none;border-bottom:1px solid var(--border,#cfc8bd)}
-    table.mix tr td:last-child{border-bottom:none}
-    table.mix td:nth-child(1){background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4);font-size:14px}
-    table.mix td:nth-child(1)::before{content:"BEAKER ";font-size:10.5px;letter-spacing:.1em;opacity:.72}
-    table.mix td:nth-child(2)::before{content:"In it - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
-    table.mix td:nth-child(3)::before{content:"You add - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
-    table.mix td:nth-child(4)::before{content:"Reaction - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
-    table.mix td:nth-child(5)::before{content:"ΔpH - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
-  }
+*{box-sizing:border-box}
+body{margin:0;padding:28px 26px 40px;font-family:Georgia,"Times New Roman",serif;color:var(--foreground,#1c1c1c);max-width:820px;line-height:1.45}
+.kicker{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-foreground,#6f6a62)}
+h1{font-size:32px;line-height:1.08;margin:8px 0 6px;font-weight:800;letter-spacing:-.4px}
+.sub{font-size:16px;line-height:1.5;margin:0 0 14px;max-width:680px}
+.rule{height:3px;background:var(--foreground,#1c1c1c);margin:0 0 22px;border-radius:2px}
+h2{font-size:20px;margin:22px 0 8px;font-weight:800}
+p{font-size:15.5px;margin:0 0 10px}
+b{font-weight:800}
+.cast{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 18px}
+.citem{display:flex;align-items:center;gap:8px;border:2px solid var(--foreground,#1c1c1c);border-radius:10px;padding:6px 12px 6px 8px;flex:1 1 160px}
+.cn{font-family:Arial,Helvetica,sans-serif;font-weight:800;font-size:13px;line-height:1.2}
+.cr{font-family:Arial,Helvetica,sans-serif;font-size:11.5px;font-weight:600;color:var(--muted-foreground,#6f6a62);line-height:1.2}
+svg{display:block;max-width:100%;height:auto}
+.citem svg{flex:0 0 auto}
+.s{fill:none;stroke:var(--foreground,#1c1c1c);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.sf{fill:var(--foreground,#1c1c1c);stroke:var(--foreground,#1c1c1c);stroke-width:1.5}
+.ink{fill:var(--foreground,#1c1c1c);stroke:none}
+.mut{fill:var(--muted-foreground,#6f6a62);stroke:none}
+.ar{fill:none;stroke:var(--accent,#8a6a45);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.ah{fill:var(--accent,#8a6a45);stroke:none}
+.th{fill:none;stroke:var(--muted-foreground,#9a938a);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.t13{font-size:13px;font-weight:700}
+.t12{font-size:12px;font-weight:600}
+.t11{font-size:11px;font-weight:600}
+.art{width:100%;margin:6px 0 12px}
+.kc{border-top:2px solid var(--foreground,#1c1c1c);padding:12px 0 4px;margin:0}
+.kc h3{font-family:Arial,Helvetica,sans-serif;font-size:15.5px;margin:0 0 3px;font-weight:800}
+.kc .key{font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:var(--muted-foreground,#6f6a62);margin:0 0 8px}
+.kc ul{margin:0 0 8px 18px;padding:0}
+.kc li{font-size:14.5px;margin:0 0 4px}
+.rx{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700;background:color-mix(in srgb,var(--accent,#8a6a45) 14%,transparent);border-radius:5px;padding:1px 6px;white-space:nowrap}
+table{width:100%;border-collapse:collapse;margin:8px 0 14px;font-size:14px;font-family:Arial,Helvetica,sans-serif}
+th,td{border:1.6px solid var(--border,#cfc8bd);padding:8px 10px;text-align:left;vertical-align:top;line-height:1.4}
+th{background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+td b{font-weight:800}
+.note{font-size:13.5px;color:var(--muted-foreground,#6f6a62);margin:0 0 16px}
+.hook{border:2.5px solid var(--foreground,#1c1c1c);border-radius:12px;padding:14px 16px;margin:18px 0 8px;background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4)}
+.hook .bt{font-family:Arial,Helvetica,sans-serif;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 6px}
+.hook p{margin:0;font-size:15px;color:var(--background,#faf8f4)}
+.foot{margin-top:22px;padding-top:12px;border-top:3px solid var(--foreground,#1c1c1c);font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:var(--muted-foreground,#6f6a62);line-height:1.55}
+@media (max-width:640px){
+  table th{display:none}
+  table,table tbody,table tr,table td{display:block;width:100%}
+  table{border:none}
+  table tr{border:1.6px solid var(--foreground,#1c1c1c);border-radius:9px;margin-bottom:10px;overflow:hidden}
+  table td{border:none;border-bottom:1px solid var(--border,#cfc8bd)}
+  table tr td:last-child{border-bottom:none}
+  table td:nth-child(1){background:var(--foreground,#1c1c1c);color:var(--background,#faf8f4);font-size:14px}
+  table.who td:nth-child(1)::before{content:"BUFFER ";font-size:10.5px;letter-spacing:.1em;opacity:.72}
+  table.who td:nth-child(2)::before{content:"Catches acid - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
+  table.who td:nth-child(3)::before{content:"Catches base - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
+  table.mix td:nth-child(1)::before{content:"BEAKER ";font-size:10.5px;letter-spacing:.1em;opacity:.72}
+  table.mix td:nth-child(2)::before{content:"In it - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
+  table.mix td:nth-child(3)::before{content:"You add - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
+  table.mix td:nth-child(4)::before{content:"Who works - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
+  table.mix td:nth-child(5)::before{content:"ΔpH - ";font-weight:800;color:var(--muted-foreground,#6f6a62)}
+}
 </style>
 </head>
 <body>
 
-<div class="kicker">The Lab 4 companion · read this before you touch a beaker</div>
-<h1>The Town of pH</h1>
-<p class="sub">On lab day you will mix six beakers and watch a town hold its nerve - or fail to. Four of them are towns with two brothers on duty. <b>Two of them are towns with nobody home.</b><br><br>This is the same town you already know: outlaws (H⁺), deputies, and a hat that <b>is</b> the proton. The only difference is that today the brothers have real names - <b>acetic acid and acetate</b>, <b>ammonium and ammonia</b> - and the hats being passed around are the ones printed in your Table 2.</p>
+<div class="kicker">Lab 4 overview - acids, bases, and buffers</div>
+<h1>The Ballroom Buffer Dancers</h1>
+<p class="sub">Two partners. One trophy. That trophy is the proton (H⁺). They pass it back and forth so the dance floor never floods and never goes empty.</p>
 <div class="rule"></div>
-
-<div class="labbar">
-  <div class="labcard"><div class="lt">You will mix</div><div class="lb">6 beakers <span>- 1-2 water · 3-4 acetate · 5-6 ammonia</span></div></div>
-  <div class="labcard"><div class="lt">You will add</div><div class="lb">5 drops 0.1 M HCl <span>→ beakers 1, 3, 5</span></div></div>
-  <div class="labcard"><div class="lt">&nbsp;</div><div class="lb">5 drops 0.1 M NaOH <span>→ beakers 2, 4, 6</span></div></div>
-  <div class="labcard"><div class="lt">You will measure</div><div class="lb">Initial pH → Final pH → <span>ΔpH = Final − Initial</span></div></div>
-</div>
-
-<p class="lede" style="margin:0 0 8px;font-size:14px">The cast - and who they are wearing lab coats today</p>
-<div class="cast">
-  <div class="citem"><svg viewBox="0 0 80 100" width="52" height="65"><use href="#outlaw" transform="translate(40,88) scale(0.72)"/></svg><div><div class="cn">The Outlaw</div><div class="cr">H⁺ - acid, from your HCl dropper</div></div></div>
-  <div class="citem"><svg viewBox="0 0 80 100" width="52" height="65"><use href="#twinH" transform="translate(40,88) scale(0.72)"/></svg><div><div class="cn">Sheriff CH₃COOH</div><div class="cr">weak acid - wears the hat</div></div></div>
-  <div class="citem"><svg viewBox="0 0 80 100" width="52" height="65"><use href="#twin" transform="translate(40,88) scale(0.72)"/></svg><div><div class="cn">Deputy CH₃COO⁻</div><div class="cr">conjugate base - no hat</div></div></div>
-  <div class="citem"><svg viewBox="0 0 80 100" width="52" height="65"><use href="#thief" transform="translate(40,88) scale(0.72)"/></svg><div><div class="cn">Ollie the Hat Thief</div><div class="cr">OH⁻ - base, from your NaOH dropper</div></div></div>
-  <div class="citem"><svg viewBox="0 0 80 100" width="52" height="65"><use href="#thiefHat" transform="translate(40,88) scale(0.72)"/></svg><div><div class="cn">Ollie, Satisfied</div><div class="cr">H₂O - leaves wearing the hat</div></div></div>
-</div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -126,9 +81,6 @@
       <path class="s" d="M-7,-26 L7,-26"/>
       <path class="s" d="M0,-34 L-13,-24 M0,-34 L13,-24"/>
       <circle class="s" cx="0" cy="-50" r="11"/>
-      <polygon class="ink" points="0,-37 2,-33.5 5.5,-33.5 3,-31 4,-27.5 0,-29 -4,-27.5 -3,-31 -5.5,-33.5 -2,-33.5"/>
-      <circle class="ink" cx="-13" cy="-24" r="2.4"/>
-      <circle class="ink" cx="13" cy="-24" r="2.4"/>
     </g>
     <g id="twinH">
       <use href="#twin"/>
@@ -164,411 +116,113 @@
       <path class="s" stroke-width="3.4" d="M-16,-55 Q0,-62 16,-55"/>
       <path class="sf" d="M-9,-56 L-10,-68 Q0,-73 10,-68 L9,-56 Z"/>
     </g>
-    <g id="townie">
-      <path class="s" d="M0,-18 L-9,2 M0,-18 L9,2"/>
-      <path class="s" d="M-9,2 L-14,4 M9,2 L14,4"/>
-      <path class="s" d="M0,-39 L0,-18"/>
-      <path class="s" d="M-7,-26 L7,-26"/>
-      <path class="s" d="M0,-34 L-13,-24 M0,-34 L13,-24"/>
-      <circle class="s" cx="0" cy="-50" r="11"/>
-      <ellipse class="sf" cx="0" cy="-60" rx="16" ry="4"/>
-      <path class="sf" d="M-9,-60 Q0,-76 9,-60 Z"/>
-    </g>
   </defs>
 </svg>
 
-<!-- ==================== CH 1 ==================== -->
-<div class="chap">
-  <div class="num">1</div>
-  <div class="body">
-    <h2>The Town That Acid Never Leaves</h2>
-    <p class="lede">The solution - under siege the moment it exists</p>
-    <svg class="art" viewBox="0 0 640 300">
-      <path class="th" d="M14,250 H626"/>
-      <path class="th" d="M14,258 H626" stroke-dasharray="3 7"/>
-      <!-- skyline -->
-      <path class="th" d="M170,196 V250 M250,196 V250 M170,250 H250 M170,196 L210,180 L250,196"/>
-      <text class="mut t11" x="210" y="228" text-anchor="middle">SALOON</text>
-      <path class="th" d="M266,202 V250 M346,202 V250 M266,250 H346 M266,202 L306,190 L346,202"/>
-      <text class="mut t10" x="306" y="228" text-anchor="middle">GENERAL STORE</text>
-      <path class="th" d="M362,188 V250 M458,188 V250 M362,250 H458 M362,188 L410,172 L458,188"/>
-      <path class="th" d="M380,206 v22 M396,206 v22 M424,206 v22 M440,206 v22"/>
-      <text class="mut t11" x="410" y="240" text-anchor="middle">BANK</text>
-      <path class="th" d="M474,176 V250 M566,176 V250 M474,250 H566 M474,176 L520,164 L566,176"/>
-      <path class="th" d="M490,190 h12 v12 h-12 z M514,190 h12 v12 h-12 z M538,190 h12 v12 h-12 z"/>
-      <path class="th" d="M490,214 h12 v12 h-12 z M514,214 h12 v12 h-12 z M538,214 h12 v12 h-12 z"/>
-      <text class="mut t11" x="520" y="244" text-anchor="middle">HOTEL</text>
-      <!-- water tower -->
-      <path class="th" d="M596,250 V206 M626,250 V206 M598,206 H624 M596,206 L611,190 L626,206"/>
-      <!-- town sign -->
-      <path class="th" d="M300,250 V150 M360,250 V150"/>
-      <rect class="th" x="284" y="118" width="92" height="36" rx="4"/>
-      <text class="ink t13" x="330" y="141" text-anchor="middle">TOWN of pH</text>
-      <!-- outlaws riding in -->
-      <use href="#outlaw" transform="translate(58,250) scale(0.95)"/>
-      <use href="#outlaw" transform="translate(112,250) scale(0.95)"/>
-      <path class="ar" d="M6,150 H42"/>
-      <polygon class="ah" points="42,150 33,145 33,155"/>
-      <text class="mut t12" x="52" y="164" text-anchor="middle">constant</text>
-      <text class="mut t12" x="52" y="132" text-anchor="middle">inflow</text>
-      <path class="ar" d="M70,150 H106"/>
-      <polygon class="ah" points="106,150 97,145 97,155"/>
-      <!-- the pair standing watch -->
-      <use href="#twin" transform="translate(480,250) scale(0.98)"/>
-      <use href="#twinH" transform="translate(548,250) scale(0.98)"/>
-      <text class="mut t11" x="480" y="278" text-anchor="middle">Deputy A⁻</text>
-      <text class="mut t11" x="548" y="278" text-anchor="middle">Sheriff H.A.</text>
-    </svg>
-    <p class="cap"><b>Beakers 1 and 2 are towns with nobody home.</b> You put distilled water in them and nothing else - no brothers, no hats, no law. Every drop of 0.1 M HCl rides straight in and sits there, because there is no one to take its hat.<br><br>That is why the <b>ΔpH for beakers 1 and 2 will be enormous</b>, and it is the number everything else in this lab gets measured against. When you fill in Table 2, those two rows are your <b>baseline</b> - what a town does with <i>no</i> buffer.<br><br>Beakers 3 through 6 are towns with two brothers standing on the porch. Watch what changes.</p>
-  </div>
+<p class="kicker" style="margin:0 0 6px;letter-spacing:.12em">The cast</p>
+<div class="cast">
+  <div class="citem"><svg viewBox="0 0 80 100" width="46" height="58"><use href="#twinH" transform="translate(40,88) scale(0.68)"/></svg><div><div class="cn">Acid Antonio</div><div class="cr">HA - holds the trophy</div></div></div>
+  <div class="citem"><svg viewBox="0 0 80 100" width="46" height="58"><use href="#twin" transform="translate(40,88) scale(0.68)"/></svg><div><div class="cn">Base Bella</div><div class="cr">A⁻ - empty-handed</div></div></div>
+  <div class="citem"><svg viewBox="0 0 80 100" width="46" height="58"><use href="#outlaw" transform="translate(40,88) scale(0.68)"/></svg><div><div class="cn">The Intruder</div><div class="cr">H⁺ from HCl</div></div></div>
+  <div class="citem"><svg viewBox="0 0 80 100" width="46" height="58"><use href="#thief" transform="translate(40,88) scale(0.68)"/></svg><div><div class="cn">The Thief</div><div class="cr">OH⁻ from NaOH</div></div></div>
 </div>
 
-<!-- ==================== CH 2 ==================== -->
-<div class="chap">
-  <div class="num">2</div>
-  <div class="body">
-    <h2>Two Brothers, One Hat</h2>
-    <p class="lede">The two requirements - weak, and one proton apart</p>
-    <svg class="art" viewBox="0 0 640 330">
-      <path class="th" d="M20,266 H620"/>
-      <use href="#twinH" transform="translate(170,266) scale(1.9)"/>
-      <use href="#twin" transform="translate(470,266) scale(1.9)"/>
-      <!-- hat callout -->
-      <path class="th" stroke-dasharray="4 4" d="M170,114 V92"/>
-      <text class="ink t13" x="170" y="84" text-anchor="middle">the PROTON (H⁺)</text>
-      <text class="mut t12" x="170" y="68" text-anchor="middle">weak = holds it LOOSE</text>
-      <!-- one-proton-apart arrow -->
-      <path class="ar" d="M262,180 L378,180"/>
-      <polygon class="ah" points="262,180 270,175.5 270,184.5"/>
-      <polygon class="ah" points="378,180 370,175.5 370,184.5"/>
-      <text class="mut t12" x="320" y="168" text-anchor="middle">one proton apart</text>
-      <rect class="th" x="258" y="196" width="124" height="26" rx="5"/>
-      <text class="ink t12" x="320" y="213" text-anchor="middle">CONJUGATE</text>
-      <!-- labels -->
-      <text class="ink t13" x="170" y="296" text-anchor="middle">weak acid (HA)</text>
-      <text class="mut t11" x="170" y="312" text-anchor="middle">wears the hat</text>
-      <text class="ink t13" x="470" y="296" text-anchor="middle">conjugate base (A⁻)</text>
-      <text class="mut t11" x="470" y="312" text-anchor="middle">same twin, hat off</text>
-    </svg>
-    <p class="cap">Today the brothers wear two different uniforms, but the drawing is unchanged - <b>same build, same boots, same stance</b>. Sheriff <b>CH₃COOH</b> holds the hat; Deputy <b>CH₃COO⁻</b> is the same brother with the hat off. One hat. That hat <b>is</b> the proton, and it is the entire difference between them.<br><br>And the Sheriff is <b>weak</b> - he holds the hat <b>loose</b>, giving almost none of it away. Beaker 3 is that town: 5 mL of 0.1 M acetic acid plus 5 mL of 0.1 M sodium acetate. Same brother, hat on and hat off, standing in one beaker. <b>That is what "buffer" means on your bench.</b></p>
-    <div class="bk">
-      <div class="bkh">Why "weak" is doing your homework for you</div>
-      <p class="bkb">A <b>strong</b> acid hands out its hats immediately and completely - nothing is left over to catch the next outlaw. A <b>weak</b> acid keeps nearly all of them, so a large reserve is always on hand. <b>That reserve is the buffer.</b> Before lab, work it out for beaker 3: acetic acid has <span class="rx">K<sub>a</sub> = 1.8 × 10⁻⁵</span>, so at 0.1 M only about <b>1.3%</b> of its molecules have given up a hat - roughly <b>98.7% are still loaded</b> and waiting.</p>
-      <p class="stmt">K<sub>a</sub> = [H⁺][CH₃COO⁻] / [CH₃COOH] = 1.8 × 10⁻⁵
-let [H⁺] = [CH₃COO⁻] = x,  and [CH₃COOH] ≈ 0.1
-x² / 0.1 = 1.8 × 10⁻⁵  →  x² = 1.8 × 10⁻⁶
-x = 1.34 × 10⁻³ M
-% ionized = (1.34 × 10⁻³ / 0.1) × 100 ≈ <b>1.3%</b>
-check: pH = −log(1.34 × 10⁻³) ≈ <b>2.87</b> for the acid alone</p>
-      <p class="bkb"><i>Notice what that means: the acid is weak not because it is dilute, but because of that tiny K<sub>a</sub>. Diluting a strong acid does not make it weak. Weak is about how tightly the molecule holds the hat.</i><br><br><i>One caveat about your readings: at <b>0.1 M</b> the acid is 1.3% ionized and reads about <b>2.87</b>. If your lab manual works this from <b>1.0 M</b> instead, the same calculation gives <b>x = 4.2 × 10⁻³ M</b> and <b>pH ≈ 2.37</b>. Either way it is nowhere near the <b>1.07</b> a 0.1 M strong acid gives you.</i></p>
-    </div>
-  </div>
+<h2>Why they are "weak" (in a good way)</h2>
+<p>Strong acids dump every trophy on the floor and walk away. Antonio keeps almost all of his. That leftover stock <b>is</b> the buffer. Same concentration, very different pH:</p>
+<table>
+  <tr><th>0.1 M acid</th><th>What happens</th><th>Typical pH</th></tr>
+  <tr><td><b>HCl</b> (strong)</td><td>Every molecule breaks: <span class="rx">HCl → H⁺ + Cl⁻</span></td><td>~1</td></tr>
+  <tr><td><b>CH₃COOH</b> (weak)</td><td>Almost all stay intact: <span class="rx">CH₃COOH ⇌ CH₃COO⁻ + H⁺</span></td><td>~2.9</td></tr>
+</table>
+<p class="note">Same 0.1 M. The gap is strength, not concentration. Diluting HCl does not make it weak.</p>
+
+<h2>Two directions. One pair.</h2>
+
+<svg class="art" viewBox="0 0 640 230">
+  <text class="ink t13" x="150" y="22" text-anchor="middle">ADDING ACID (HCl)</text>
+  <text class="ink t13" x="490" y="22" text-anchor="middle">ADDING BASE (NaOH)</text>
+  <path class="th" d="M20,140 H300"/>
+  <path class="th" d="M340,140 H620"/>
+  <use href="#twin" transform="translate(70,140) scale(0.85)"/>
+  <use href="#outlaw" transform="translate(150,140) scale(0.85)"/>
+  <path class="ar" d="M196,100 L236,100"/>
+  <polygon class="ah" points="236,100 227,95 227,105"/>
+  <use href="#twinH" transform="translate(270,140) scale(0.85)"/>
+  <text class="mut t11" x="70" y="178" text-anchor="middle">Bella A⁻</text>
+  <text class="mut t11" x="150" y="178" text-anchor="middle">H⁺</text>
+  <text class="mut t11" x="270" y="178" text-anchor="middle">Antonio HA</text>
+  <text class="ink t12" x="160" y="208" text-anchor="middle">A⁻ + H⁺ → HA</text>
+  <use href="#twinH" transform="translate(390,140) scale(0.85)"/>
+  <use href="#thief" transform="translate(470,140) scale(0.85)"/>
+  <path class="ar" d="M516,100 L556,100"/>
+  <polygon class="ah" points="556,100 547,95 547,105"/>
+  <use href="#twin" transform="translate(590,140) scale(0.85)"/>
+  <text class="mut t11" x="390" y="178" text-anchor="middle">Antonio HA</text>
+  <text class="mut t11" x="470" y="178" text-anchor="middle">OH⁻</text>
+  <text class="mut t11" x="590" y="178" text-anchor="middle">Bella A⁻</text>
+  <text class="ink t12" x="490" y="208" text-anchor="middle">HA + OH⁻ → A⁻ + H₂O</text>
+</svg>
+
+<div class="kc">
+  <h3>1. Adding acid - Bella catches the trophy</h3>
+  <p class="key">Key concept: the conjugate base does the work</p>
+  <ul>
+    <li>A pushy guest (H⁺ from HCl) storms in waving extra trophies.</li>
+    <li>Bella takes the trophy and becomes Antonio.</li>
+    <li>The dance continues. Free H⁺ barely rises, so pH barely falls.</li>
+    <li>Net: <span class="rx">A⁻ + H⁺ → HA</span></li>
+  </ul>
 </div>
 
-<!-- ==================== CH 3 ==================== -->
-<div class="chap">
-  <div class="num">3</div>
-  <div class="body">
-    <h2>An Outlaw Rides In - Beakers 1, 3, 5</h2>
-    <p class="lede">Five drops of 0.1 M HCl, and the bare brother does the work</p>
-    <svg class="art" viewBox="0 0 640 340">
-      <path class="th" d="M20,232 H620"/>
-      <text class="ink t13" x="120" y="84" text-anchor="middle">BEFORE</text>
-      <text class="ink t13" x="360" y="84" text-anchor="middle">AFTER</text>
-      <use href="#twin" transform="translate(105,232) scale(0.95)"/>
-      <use href="#outlaw" transform="translate(180,232) scale(0.95)"/>
-      <text class="mut t11" x="105" y="254" text-anchor="middle">A⁻</text>
-      <text class="mut t11" x="180" y="254" text-anchor="middle">H⁺</text>
-      <!-- hat handoff -->
-      <path class="ar" d="M174,166 Q136,150 110,192"/>
-      <polygon class="ah" points="110,192 100,190 108,183"/>
-      <text class="mut t10" x="142" y="140" text-anchor="middle">the hat changes hands</text>
-      <!-- reaction arrow -->
-      <path class="ar" d="M216,192 L266,192"/>
-      <polygon class="ah" points="266,192 257,187 257,197"/>
-      <use href="#twinH" transform="translate(320,232) scale(0.95)"/>
-      <use href="#outlawBare" transform="translate(395,232) scale(0.95)"/>
-      <text class="mut t11" x="320" y="254" text-anchor="middle">HA</text>
-      <text class="mut t11" x="395" y="254" text-anchor="middle">disarmed</text>
-      <!-- ledger -->
-      <text class="ink t13" x="320" y="290" text-anchor="middle">A⁻ + H⁺ → HA</text>
-      <text class="mut t12" x="320" y="308" text-anchor="middle">free H⁺ locked up · A⁻ falls, HA rises · pH holds</text>
-      <text class="mut t11" x="320" y="326" text-anchor="middle">added acid creates more conjugate buffer acid</text>
-    </svg>
-    <p class="cap">The outlaw comes over the ridge. Deputy <b>CH₃COO⁻</b> does not shoot him - <b>he takes his hat.</b> The outlaw is disarmed, stays in town, and the Deputy becomes the Sheriff.<br><br>Read the ledger: <b>acetate falls, acetic acid rises, and the loose H⁺ count barely moves.</b> The proton did not vanish; it changed hands. That is your <b>small ΔpH in beaker 3</b> - and beaker 1, with nobody to take a hat, is your enormous one.</p>
-    <div class="bk">
-      <div class="bkh">Beaker 3 - the acetate buffer meets HCl &nbsp;·&nbsp; <span style="color:var(--muted-foreground,#6f6a62)">this is discussion Q4</span></div>
-      <div class="eqline">CH₃COO⁻(aq) + H⁺(aq) → CH₃COOH(aq)</div>
-      <p class="bkb"><i>The added H⁺ is consumed by the conjugate base to make more weak acid. Free H⁺ stays low, so the pH barely falls.</i></p>
-    </div>
-    <div class="bk">
-      <div class="bkh">Beaker 5 - the ammonia buffer, hats counted the other way &nbsp;·&nbsp; <span style="color:var(--muted-foreground,#6f6a62)">this is discussion Q6</span></div>
-      <div class="eqline">NH₃(aq) + H⁺(aq) → NH₄⁺(aq)</div>
-      <p class="bkb">Look at what just happened to the roles. In beaker 3 the <b>bare</b> brother took the hat. In beaker 5 the one who takes the hat is <b>NH₃</b>, and the brother who <i>wears</i> it is <b>NH₄⁺</b>. The ammonia buffer is the same story with the hats counted the other way, because its weak acid (NH₄⁺, <span class="rx">pK<sub>a</sub> = 9.25</span>) holds the hat far more tightly than acetic acid does.</p>
-    </div>
-  </div>
+<div class="kc">
+  <h3>2. Adding base - Antonio hands the trophy over</h3>
+  <p class="key">Key concept: the weak acid does the work</p>
+  <ul>
+    <li>A thief (OH⁻ from NaOH) tries to steal trophies.</li>
+    <li>Antonio hands his over. The thief leaves as water (H₂O).</li>
+    <li>The dance continues. Free OH⁻ is gone, so pH barely rises.</li>
+    <li>Net: <span class="rx">HA + OH⁻ → A⁻ + H₂O</span></li>
+  </ul>
 </div>
 
-<!-- ==================== CH 4 ==================== -->
-<div class="chap">
-  <div class="num">4</div>
-  <div class="body">
-    <h2>The Man Who Comes for Hats - Beakers 2, 4, 6</h2>
-    <p class="lede">Five drops of 0.1 M NaOH, and the hatted brother does the work</p>
-    <svg class="art" viewBox="0 0 640 340">
-      <path class="th" d="M20,232 H620"/>
-      <text class="ink t13" x="120" y="84" text-anchor="middle">BEFORE</text>
-      <text class="ink t13" x="360" y="84" text-anchor="middle">AFTER</text>
-      <use href="#twinH" transform="translate(95,232) scale(0.95)"/>
-      <use href="#thief" transform="translate(170,232) scale(0.95)"/>
-      <text class="mut t11" x="95" y="254" text-anchor="middle">HA</text>
-      <text class="mut t11" x="170" y="254" text-anchor="middle">OH⁻</text>
-      <!-- hat tip -->
-      <path class="ar" d="M100,166 Q132,152 162,190"/>
-      <polygon class="ah" points="162,190 152,190 159,182"/>
-      <text class="mut t10" x="130" y="140" text-anchor="middle">Ollie comes for hats</text>
-      <!-- reaction arrow -->
-      <path class="ar" d="M206,192 L256,192"/>
-      <polygon class="ah" points="256,192 247,187 247,197"/>
-      <use href="#twin" transform="translate(310,232) scale(0.95)"/>
-      <use href="#thiefHat" transform="translate(385,232) scale(0.95)"/>
-      <text class="mut t11" x="310" y="254" text-anchor="middle">A⁻</text>
-      <text class="mut t11" x="385" y="254" text-anchor="middle">H₂O</text>
-      <!-- ledger -->
-      <text class="ink t13" x="320" y="290" text-anchor="middle">HA + OH⁻ → A⁻ + H₂O</text>
-      <text class="mut t12" x="320" y="308" text-anchor="middle">free OH⁻ carried off · HA falls, A⁻ rises · pH holds</text>
-      <text class="mut t11" x="320" y="326" text-anchor="middle">added base creates more conjugate buffer base</text>
-    </svg>
-    <p class="cap">Ollie is not here to cause trouble. He is here <b>collecting</b>. Sheriff <b>CH₃COOH</b> tips his hat, Ollie rides out <b>satisfied and wearing it as H₂O</b>, and the Sheriff becomes the Deputy. Ledger: <b>acetic acid falls, acetate rises, free OH⁻ gone, ΔpH small.</b><br><br>And here is the line most students lose this lab on: <b>the proton was not destroyed.</b> It left town <b>on Ollie's head</b>. Nothing was cancelled. The hat is the same hat - it belongs to someone else now.</p>
-    <div class="bk">
-      <div class="bkh">Beaker 4 - the acetate buffer meets NaOH &nbsp;·&nbsp; <span style="color:var(--muted-foreground,#6f6a62)">this is discussion Q3</span></div>
-      <div class="eqline">CH₃COOH(aq) + OH⁻(aq) → CH₃COO⁻(aq) + H₂O(l)</div>
-      <p class="bkb"><i>OH⁻ takes the proton from the weak acid. The acid is used up to make more conjugate base, and the hydroxide leaves as water.</i></p>
-    </div>
-    <div class="bk">
-      <div class="bkh">Beaker 6 - the ammonia buffer meets NaOH &nbsp;·&nbsp; <span style="color:var(--muted-foreground,#6f6a62)">this is discussion Q5</span></div>
-      <div class="eqline">NH₄⁺(aq) + OH⁻(aq) → NH₃(aq) + H₂O(l)</div>
-      <p class="bkb">Same shape as beaker 4, hats counted the other way. Here the <b>hatted</b> brother (NH₄⁺) is the one who gives the hat up. <b>Four beakers, four reactions, one story</b> - that is the whole trick of this lab in a single sentence.</p>
-    </div>
-  </div>
+<h2>Who catches what - two buffers, same job</h2>
+<table class="who">
+  <tr><th>Buffer</th><th>Catches added acid</th><th>Catches added base</th></tr>
+  <tr>
+    <td><b>Acetate</b><br>CH₃COOH + CH₃COO⁻</td>
+    <td>CH₃COO⁻ (Bella)<br><span class="rx">CH₃COO⁻ + H⁺ → CH₃COOH</span></td>
+    <td>CH₃COOH (Antonio)<br><span class="rx">CH₃COOH + OH⁻ → CH₃COO⁻ + H₂O</span></td>
+  </tr>
+  <tr>
+    <td><b>Ammonia</b><br>NH₃ + NH₄⁺</td>
+    <td>NH₃ (Bella)<br><span class="rx">NH₃ + H⁺ → NH₄⁺</span></td>
+    <td>NH₄⁺ (Antonio)<br><span class="rx">NH₄⁺ + OH⁻ → NH₃ + H₂O</span></td>
+  </tr>
+</table>
+<p class="note">Same two columns either way. The hats are just counted from the other end on the ammonia pair.</p>
+
+<h2>Your six beakers</h2>
+<table class="mix">
+  <tr><th>Beaker</th><th>In it</th><th>You add</th><th>Who works</th><th>ΔpH</th></tr>
+  <tr><td><b>1</b></td><td>Distilled water</td><td>5 drops 0.1 M HCl</td><td>Nobody. H⁺ stays free.</td><td><b>large ↓</b></td></tr>
+  <tr><td><b>2</b></td><td>Distilled water</td><td>5 drops 0.1 M NaOH</td><td>Nobody. OH⁻ stays free.</td><td><b>large ↑</b></td></tr>
+  <tr><td><b>3</b></td><td>Acetate buffer</td><td>5 drops 0.1 M HCl</td><td>Bella: CH₃COO⁻</td><td><b>small ↓</b></td></tr>
+  <tr><td><b>4</b></td><td>Acetate buffer</td><td>5 drops 0.1 M NaOH</td><td>Antonio: CH₃COOH</td><td><b>small ↑</b></td></tr>
+  <tr><td><b>5</b></td><td>Ammonia buffer</td><td>5 drops 0.1 M HCl</td><td>Bella: NH₃</td><td><b>small ↓</b></td></tr>
+  <tr><td><b>6</b></td><td>Ammonia buffer</td><td>5 drops 0.1 M NaOH</td><td>Antonio: NH₄⁺</td><td><b>small ↑</b></td></tr>
+</table>
+<p class="note">Beakers 1 and 2 are the control. Every "small" number only means something compared with those two. Acetate defends ~4.7. Ammonia defends ~9.3. Both resist. There is no pH-7 rule.</p>
+
+<div class="hook">
+  <p class="bt">Memory Hook</p>
+  <p>A buffer is a dance pair, one trophy apart. Acid arrives - Bella takes it. Base arrives - Antonio gives it. The floor never floods and never goes empty, until the partners run out.</p>
 </div>
 
-<!-- ==================== CH 5 ==================== -->
-<div class="chap">
-  <div class="num">5</div>
-  <div class="body">
-    <h2>The Balance Beam Out Back</h2>
-    <p class="lede">Le Chatelier's principle - already running before you added a drop</p>
-    <svg class="art" viewBox="0 0 640 300">
-      <path class="th" d="M60,248 H580"/>
-      <!-- equilibrium double arrow -->
-      <path class="ar" d="M170,132 L470,132"/>
-      <polygon class="ah" points="170,132 178,127.5 178,136.5"/>
-      <polygon class="ah" points="470,132 462,127.5 462,136.5"/>
-      <text class="ink t13" x="320" y="120" text-anchor="middle">HA ⇌ A⁻ + H⁺</text>
-      <text class="mut t11" x="320" y="150" text-anchor="middle">one swap, over and over, forever</text>
-      <!-- beam, tilted -->
-      <path class="s" stroke-width="4.5" d="M150,192 L492,178"/>
-      <!-- left pan -->
-      <path class="s" d="M176,190 V202"/>
-      <path class="s" d="M156,202 H196 Q190,214 176,214 Q162,214 156,202 Z"/>
-      <text class="ink t12" x="176" y="228" text-anchor="middle">HA</text>
-      <!-- right pan -->
-      <path class="s" d="M470,179 V191"/>
-      <path class="s" d="M450,191 H490 Q484,203 470,203 Q456,203 450,191 Z"/>
-      <text class="ink t12" x="470" y="226" text-anchor="middle">A⁻ + H⁺</text>
-      <!-- pivot -->
-      <path class="sf" d="M320,192 L306,248 L334,248 Z"/>
-      <!-- outlaw pushing -->
-      <use href="#outlaw" transform="translate(570,248) scale(0.9)"/>
-      <path class="s" stroke-width="3.4" d="M556,226 L494,190"/>
-      <path class="th" stroke-dasharray="4 4" d="M498,168 Q512,182 502,196"/>
-      <polygon class="ah" points="502,196 494,194 500,187"/>
-      <text class="mut t11" x="500" y="160" text-anchor="middle">push it…</text>
-      <text class="mut t11" x="500" y="270" text-anchor="middle">…it leans, then swings back</text>
-    </svg>
-    <p class="cap">Behind the saloon the brothers keep a standing swap going. Hat on. Hat off. It never stops, and it was running <b>before your dropper ever touched the beaker</b>. So when the outlaw shoves, the beam leans - and then <b>swings back</b>, because a swap already in motion absorbs a shove by <b>rebalancing itself</b>.<br><br>That is <b>Le Chatelier's principle</b>. Beaker 3 was a shove from the left; beaker 4 was a shove from the right. Same beam. <b>Both directions give you a small ΔpH</b> - and beakers 1 and 2, with no beam at all, give you the big numbers that prove it.</p>
-    <div class="bk">
-      <div class="bkh">Reading your own ΔpH like a chemist</div>
-      <p class="bkb"><span class="rx">ΔpH = Final pH − Initial pH</span><br>
-      <b>Distilled water (1, 2):</b> ΔpH large - no conjugate base or acid is present to absorb the added ion, so it stays free.<br>
-      <b>Acetate buffer (3, 4):</b> ΔpH small - the acetate/acetic acid pair absorbs both H⁺ and OH⁻.<br>
-      <b>Ammonia buffer (5, 6):</b> ΔpH small - the NH₃/NH₄⁺ pair does the same job on the basic side.<br><br>
-      Then ask the better question: why does beaker 3 sit near <b>pH 4.7</b> while beaker 5 sits near <b>pH 9.3</b>, when both resist change equally well? Because a buffer does not fix a pH - it <b>defends the pH it was built around</b>, its own pK<sub>a</sub>. Same deputies, different neighborhoods.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== CH 6 ==================== -->
-<div class="chap">
-  <div class="num">6</div>
-  <div class="body">
-    <h2>When the Jail Fills Up</h2>
-    <p class="lede">Buffer capacity - and the four things your ΔpH column is telling you</p>
-    <svg class="art" viewBox="0 0 640 350">
-      <path class="th" d="M14,250 H626"/>
-      <!-- jail -->
-      <path class="th" d="M40,122 V250 M180,122 V250 M40,250 H180"/>
-      <path class="th" d="M58,130 V242 M76,130 V242 M94,130 V242 M112,130 V242 M130,130 V242 M148,130 V242 M166,130 V242"/>
-      <path class="th" d="M34,112 L110,92 L186,112 Z"/>
-      <text class="mut t11" x="110" y="108" text-anchor="middle">JAIL</text>
-      <use href="#outlaw" transform="translate(76,250) scale(0.8)"/>
-      <use href="#outlaw" transform="translate(110,250) scale(0.8)"/>
-      <use href="#outlaw" transform="translate(144,250) scale(0.8)"/>
-      <text class="mut t11" x="110" y="272" text-anchor="middle">FULL</text>
-      <!-- overwhelmed deputies -->
-      <use href="#twin" transform="translate(232,250) scale(0.9)"/>
-      <use href="#twin" transform="translate(280,250) scale(0.9)"/>
-      <rect class="th" x="200" y="140" width="118" height="30" rx="8"/>
-      <path class="th" d="M240,170 L232,190 M278,170 L284,190"/>
-      <text class="ink t11" x="259" y="160" text-anchor="middle">out of hands</text>
-      <!-- waiting outlaws -->
-      <use href="#outlaw" transform="translate(340,250) scale(0.85)"/>
-      <use href="#outlaw" transform="translate(382,250) scale(0.85)"/>
-      <path class="th" stroke-dasharray="3 6" d="M398,214 H428"/>
-      <!-- train -->
-      <path class="th" d="M448,250 H628"/>
-      <path class="s" stroke-width="4" d="M452,168 V240 H508 V168 Z"/>
-      <path class="s" stroke-width="4" d="M452,196 H508"/>
-      <circle class="s" stroke-width="3.4" cx="470" cy="240" r="9"/>
-      <circle class="s" stroke-width="3.4" cx="494" cy="240" r="9"/>
-      <path class="s" stroke-width="4" d="M514,180 V240 H620 V180 Z"/>
-      <path class="s" stroke-width="3" d="M524,190 V232 M538,190 V232 M552,190 V232 M566,190 V232 M580,190 V232 M594,190 V232 M608,190 V232"/>
-      <circle class="s" stroke-width="3.4" cx="536" cy="240" r="9"/>
-      <circle class="s" stroke-width="3.4" cx="598" cy="240" r="9"/>
-      <use href="#outlaw" transform="translate(545,240) scale(0.62)"/>
-      <use href="#outlaw" transform="translate(582,240) scale(0.62)"/>
-      <circle class="sf" cx="480" cy="150" r="9"/>
-      <circle class="sf" cx="462" cy="130" r="12"/>
-      <circle class="sf" cx="438" cy="106" r="16"/>
-      <path class="th" d="M560,150 H624 M548,164 H612"/>
-      <text class="ink t12" x="592" y="146" text-anchor="middle">federal prison</text>
-      <!-- signposts -->
-      <path class="th" d="M150,300 V336 M240,300 V336"/>
-      <rect class="th" x="112" y="292" width="166" height="26" rx="4"/>
-      <text class="ink t11" x="195" y="309" text-anchor="middle">LUNGS: exhale CO₂</text>
-      <path class="th" d="M430,300 V336 M520,300 V336"/>
-      <rect class="th" x="392" y="292" width="166" height="26" rx="4"/>
-      <text class="ink t11" x="475" y="309" text-anchor="middle">KIDNEYS: dump H⁺, keep HCO₃⁻</text>
-    </svg>
-    <p class="cap">Five drops fits. Five hundred might not. <b>Buffer capacity</b> is how much abuse a town can take before the cells fill, and it is finite - the brothers are <b>two</b>, not infinite. Flood beaker 4 with enough NaOH and you will convert nearly every acetic acid molecule into acetate. At that point the town has <b>no Sheriff left</b>, and Ollie's next raid has nothing to push against.<br><br>Your body has a depot - <b>lungs</b> blow off CO₂ within seconds, <b>kidneys</b> reclaim HCO₃⁻ over hours to days. Your beaker has <b>no depot at all.</b> That is why your blood survives a lemon and your beaker does not.</p>
-    <div class="bk">
-      <div class="bkh">Four things your ΔpH column is quietly telling you</div>
-      <p class="bkb"><b>1 · Beakers 1 and 2 are the control.</b> A large ΔpH means no buffer was present. Every "small" number in your table only means something <i>compared with these</i>.<br>
-      <b>2 · The pair works from both sides.</b> A small ΔpH on the HCl row <i>and</i> the NaOH row is the signature of a real buffer.<br>
-      <b>3 · Capacity is a stock, not a speed.</b> A buffer resists a slow drip of acid exactly as well as a sudden drop - until the stock runs out.<br>
-      <b>4 · Two buffers, same job, different pH.</b> Acetate defends ~4.7; ammonia defends ~9.3. Resistance is not a fixed pH - it is a <b>range around a pK<sub>a</sub></b>.</p>
-    </div>
-    <div class="bk">
-      <div class="bkh">Your buffer equations for the Conclusions section</div>
-      <div class="eqline">CH₃COOH(aq) + H₂O(l) ⇌ CH₃COO⁻(aq) + H₃O⁺(aq)<br>NH₄⁺(aq) + H₂O(l) ⇌ NH₃(aq) + H₃O⁺(aq)</div>
-      <p class="bkb">The <span class="rx">⇌</span> is the balance beam, drawn as an arrow. It is not decoration - it is the whole mechanism. <b>Strong acids and bases get a one-way arrow (→); a weak acid in water gets the double arrow (⇌).</b> If you write a single arrow for a buffer, you have drawn a town with no swap.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== CH 7 ==================== -->
-<div class="chap">
-  <div class="num">7</div>
-  <div class="body">
-    <h2>The Rumor at the Back of the Saloon</h2>
-    <p class="lede">The myth this lab disproves twice - with your own beakers</p>
-    <svg class="art" viewBox="0 0 640 330">
-      <path class="th" d="M14,250 H626"/>
-      <!-- saloon interior -->
-      <path class="th" d="M40,186 H300 M40,250 H300 M40,186 V250 M300,186 V250"/>
-      <path class="th" d="M46,186 V250 M60,196 V186 M74,196 V186"/>
-      <rect class="th" x="96" y="186" width="150" height="10"/>
-      <path class="th" d="M112,196 V186 M118,186 V176 M126,186 V176 M140,186 V176 M148,186 V176"/>
-      <use href="#townie" transform="translate(180,250) scale(0.95)"/>
-      <use href="#townie" transform="translate(120,250) scale(0.95)"/>
-      <text class="mut t11" x="180" y="278" text-anchor="middle">townsfolk</text>
-      <!-- rumor bubble -->
-      <rect class="th" x="196" y="96" width="216" height="56" rx="10"/>
-      <path class="th" d="M232,152 L226,172 M246,152 L242,170"/>
-      <text class="ink t12" x="304" y="118" text-anchor="middle">“The Sheriff can't work</text>
-      <text class="ink t12" x="304" y="136" text-anchor="middle">below pH 7, they say…”</text>
-      <path class="ar" stroke-width="4" d="M212,112 L400,136"/>
-      <text class="mut t11" x="306" y="176" text-anchor="middle">…rumor, dead on arrival</text>
-      <!-- posted law -->
-      <path class="th" d="M452,250 V216 M528,250 V216"/>
-      <rect class="s" stroke-width="3.4" x="420" y="150" width="140" height="66" rx="6"/>
-      <text class="ink t13" x="490" y="172" text-anchor="middle">THE WHOLE LAW</text>
-      <text class="ink t12" x="490" y="192" text-anchor="middle">WEAK + CONJUGATE</text>
-      <text class="mut t11" x="490" y="208" text-anchor="middle">no pH rule. that's it.</text>
-      <use href="#twin" transform="translate(462,250) scale(0.9)"/>
-      <use href="#twinH" transform="translate(518,250) scale(0.9)"/>
-      <text class="mut t11" x="490" y="278" text-anchor="middle">on duty at any pH</text>
-    </svg>
-    <p class="cap">Students walk in believing the acid half must run below pH 7 and the base half above 7. <b>Nobody posted that rule.</b> The only requirements are <b>weak</b> and <b>conjugate</b> - hats held loose, one hat apart.<br><br>Then look at your own bench. Beaker 3 defends a pH <b>near 4.7, well below 7</b>. Beaker 5 defends a pH <b>near 9.3, well above 7</b>. <b>Both of them resist pH change beautifully.</b> A buffer does not care which side of 7 it lives on. It only needs its pair.</p>
-    <div class="bk">
-      <div class="bkh">Where a conjugate base gets its basic side &nbsp;·&nbsp; <span style="color:var(--muted-foreground,#6f6a62)">this is discussion Q2</span></div>
-      <div class="eqline">CH₃COO⁻(aq) + H₂O(l) ⇌ CH₃COOH(aq) + OH⁻(aq)</div>
-      <p class="bkb"><b>Sodium acetate does not contain OH⁻.</b> Neither does sodium carbonate. What they contain is a <b>conjugate base</b> - and a conjugate base takes a proton <i>from water</i>, leaving <b>OH⁻ behind</b>. That is why the solution is basic even though you never added a base.<br><br>
-      Now test yourself on the strength question. Put a proton on that acetate ion. What do you get? Acetic acid - a <b>weak</b> acid. So acetate is a <b>weak base</b>: strong enough to raise the pH, too weak to be called strong. <b>The strong/weak of a conjugate pair are always opposite</b> - that is the rule hiding inside the equation.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== CH 8 ==================== -->
-<div class="chap">
-  <div class="num">8</div>
-  <div class="body">
-    <h2>The Bench Ledger</h2>
-    <p class="lede">Your six beakers, translated - scene, reaction, and what ΔpH to expect</p>
-    <table class="mix">
-      <tr><th>Beaker</th><th>What's in it</th><th>You add</th><th>The reaction that happens</th><th>ΔpH</th></tr>
-      <tr><td><b>1</b></td><td>Distilled water</td><td>5 drops 0.1 M <b>HCl</b></td><td><span class="rx">H⁺ + H₂O → H₃O⁺</span> - nothing present to absorb it</td><td><b>large ↓</b></td></tr>
-      <tr><td><b>2</b></td><td>Distilled water</td><td>5 drops 0.1 M <b>NaOH</b></td><td><span class="rx">OH⁻</span> stays free - nothing present to take its target</td><td><b>large ↑</b></td></tr>
-      <tr><td><b>3</b></td><td><b>Acetate buffer</b><br>CH₃COOH + CH₃COONa</td><td>5 drops 0.1 M <b>HCl</b></td><td><span class="rx">CH₃COO⁻ + H⁺ → CH₃COOH</span></td><td><b>small ↓</b></td></tr>
-      <tr><td><b>4</b></td><td><b>Acetate buffer</b><br>CH₃COOH + CH₃COONa</td><td>5 drops 0.1 M <b>NaOH</b></td><td><span class="rx">CH₃COOH + OH⁻ → CH₃COO⁻ + H₂O</span></td><td><b>small ↑</b></td></tr>
-      <tr><td><b>5</b></td><td><b>Ammonia buffer</b><br>NH₃ + NH₄Cl</td><td>5 drops 0.1 M <b>HCl</b></td><td><span class="rx">NH₃ + H⁺ → NH₄⁺</span></td><td><b>small ↓</b></td></tr>
-      <tr><td><b>6</b></td><td><b>Ammonia buffer</b><br>NH₃ + NH₄Cl</td><td>5 drops 0.1 M <b>NaOH</b></td><td><span class="rx">NH₄⁺ + OH⁻ → NH₃ + H₂O</span></td><td><b>small ↑</b></td></tr>
-    </table>
-    <div class="bk">
-      <div class="bkh">Before you write the Conclusions paragraph</div>
-      <p class="bkb">Compare <b>ΔpH across each row</b>, not just the pH values. Beakers 1, 3 and 5 all got the <i>same</i> five drops of HCl - and only two of them barely moved. Then compare beaker 3 to beaker 5: <b>both resisted, at very different pH.</b> That comparison <i>is</i> your conclusion. Do not just report the numbers - say what the numbers were competing with.<br><br>
-      <span class="rx">ΔpH = Final pH − Initial pH</span> &nbsp;·&nbsp; a negative ΔpH means acid was added; a positive ΔpH means base was added. Watch the signs in Table 2 and make sure they match your row.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== TAKEAWAYS ==================== -->
-<div class="grid">
-  <div class="box">
-    <p class="bt">THE 5 THINGS YOU MUST KNOW</p>
-    <ol class="bb">
-      <li><b>Two requirements, no more:</b> a weak acid and its conjugate base - <span class="rx">CH₃COOH / CH₃COO⁻</span> or <span class="rx">NH₄⁺ / NH₃</span>.</li>
-      <li><b>Acid in → the bare brother takes the hat</b> (<span class="rx">A⁻ + H⁺ → HA</span>). <b>Base in → the hatted brother gives it up</b> (<span class="rx">HA + OH⁻ → A⁻ + H₂O</span>).</li>
-      <li><b>Nothing is destroyed.</b> The proton changes hands or leaves as water - it never vanishes.</li>
-      <li><b>Weak acids use ⇌, strong ones use →</b>, and the strong/weak of a conjugate pair are always opposite.</li>
-      <li><b>No pH-7 rule.</b> Acetate defends ~4.7, ammonia defends ~9.3, and your ΔpH proves both resist.</li>
-    </ol>
-  </div>
-  <div class="box">
-    <p class="bt">THE COMMON MISTAKE</p>
-    <p class="bb">Three ways students lose this lab. <b>One:</b> believing the buffer <i>cancels</i> acid into nothing - it shifts an equilibrium, and the proton always goes somewhere. <b>Two:</b> assuming a buffer forces the pH to 7. It does not; it defends its own pK<sub>a</sub>, which is why beaker 3 sits at 4.7 and beaker 5 at 9.3. <b>Three:</b> writing <span class="rx">→</span> for a weak acid. A one-way arrow says the hat never comes back - and if the hat never comes back, there is no buffer, only a one-time cleanup.</p>
-  </div>
-</div>
-
-<div class="grid">
-  <div class="box ink">
-    <p class="bt">MEMORY HOOK</p>
-    <p class="bb"><b>"The hat is the proton. Weak hands hold it loose. Brothers share it."</b><br>
-    Beakers 1 and 2 have <b>no brothers</b> - that is your big ΔpH. Beakers 3-6 have two each - that is your small ΔpH. HCl rides in → the bare twin takes a hat. NaOH rides in → the hatted twin tips his. And <b>⇌ means the hat comes back.</b></p>
-  </div>
-  <div class="box">
-    <p class="bt">IF SOMEONE ASKS "WHAT IS A BUFFER?"</p>
-    <p class="bb">Two conjugate brothers - the same twin, one proton apart - sitting in the same beaker. One holds the proton loosely enough to give it up when base arrives, and one is bare enough to catch it when acid arrives. So whichever one rides in, <b>the pH barely flinches</b> - until the brothers run out.</p>
-  </div>
-</div>
-
-<div class="foot">Cast key - outlaw = H⁺ · Sheriff = the weak acid (HA) · Deputy = the conjugate base (A⁻) · Ollie = OH⁻ · <b>the hat = the proton</b> · the balance beam = <span class="rx">HA ⇌ A⁻ + H⁺</span> · the train = excretion (lungs, kidneys). On your bench today: beakers 3-4 run <b>acetate</b> (CH₃COOH/CH₃COO⁻, pK<sub>a</sub> 4.74) and beakers 5-6 run <b>ammonia</b> (NH₄⁺/NH₃, pK<sub>a</sub> 9.25); beakers 1-2 are water with no brothers at all.<br><br>The story scaffolds the chemistry and never replaces it - Chapter 8 is the translation back to your Table 2. Self-contained page: inline styles only, no scripts, no external assets.</div>
-
-<div style="margin-top:30px;padding-top:16px;border-top:3px solid var(--foreground,#1c1c1c);font-size:12.5px;line-height:1.6;color:var(--muted-foreground,#6f6a62)">
+<div class="foot">
   <strong style="color:var(--foreground,#1c1c1c)">&#129516; Tehrani Labs 2026</strong> &nbsp;-&nbsp; Interactive Learning Guide<br>
-  <em>"A 0.1 M strong acid reads pH 1.07. The 0.1 M weak acid reads pH 2.87. That gap is the whole reason a buffer exists."</em><br><br>
-  Companion to the Lab 4 acids, bases and buffers bench guide. Self-contained page: inline styles only, no scripts, no external assets.
+  <em>"Same 0.1 M. HCl reads ~1. Acetic acid reads ~2.9. That gap is why a buffer can exist."</em><br><br>
+  Cast: Antonio = weak acid (HA) · Bella = conjugate base (A⁻) · trophy = the proton. Companion to the Lab 4 acids, bases and buffers bench guide. Self-contained page: inline styles only, no scripts, no external assets.
 </div>
+
 </body>
 </html>
