@@ -1,0 +1,1542 @@
+<title>CHM-125L ASA Synthesis</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Lab-bench aesthetic: teal instruments, amber heat, precise type */
+:root {
+  --bg: #f0f2f5;
+  --surface: #ffffff;
+  --fg: #111827;
+  --fg-muted: #5f6b7a;
+  --accent: #0a7e8c;
+  --accent-hover: #086a76;
+  --accent-light: #e6f4f5;
+  --amber: #b8860b;
+  --amber-light: #fdf6e3;
+  --success: #0a8754;
+  --success-light: #ecfdf5;
+  --danger: #dc2626;
+  --danger-light: #fef2f2;
+  --border: #dce1e8;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,.1);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --fg: #c9d1d9;
+    --fg-muted: #8b949e;
+    --accent: #2dd4bf;
+    --accent-hover: #14b8a6;
+    --accent-light: #0d2d2d;
+    --amber: #fbbf24;
+    --amber-light: #1a1600;
+    --success: #34d399;
+    --success-light: #0d2818;
+    --danger: #f87171;
+    --danger-light: #2a0f0f;
+    --border: #30363d;
+    --shadow: 0 1px 3px rgba(0,0,0,.3);
+    --shadow-lg: 0 4px 12px rgba(0,0,0,.4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --fg: #c9d1d9;
+  --fg-muted: #8b949e;
+  --accent: #2dd4bf;
+  --accent-hover: #14b8a6;
+  --accent-light: #0d2d2d;
+  --amber: #fbbf24;
+  --amber-light: #1a1600;
+  --success: #34d399;
+  --success-light: #0d2818;
+  --danger: #f87171;
+  --danger-light: #2a0f0f;
+  --border: #30363d;
+  --shadow: 0 1px 3px rgba(0,0,0,.3);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,.4);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 5;
+}
+
+.sidebar-header {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.sidebar-header h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+
+.sidebar-header p {
+  font-size: 12px;
+  color: var(--fg-muted);
+  margin: 0;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover { background: var(--accent-light); color: var(--fg); }
+.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-light); font-weight: 500; }
+.nav-item.completed .nav-dot { background: var(--success); border-color: var(--success); }
+.nav-item.completed .nav-dot::after { content: '\2713'; color: #fff; font-size: 9px; }
+
+.nav-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.nav-item.active .nav-dot { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 32px 40px;
+}
+
+.section { display: none; }
+.section.active { display: block; animation: fadeIn .3s ease; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 32px 0 12px;
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 24px 0 8px;
+}
+
+.subtitle {
+  color: var(--fg-muted);
+  font-size: 15px;
+  margin: 0 0 32px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.card-accent {
+  border-left: 3px solid var(--accent);
+}
+
+.card-amber {
+  border-left: 3px solid var(--amber);
+  background: var(--amber-light);
+}
+
+.card-success {
+  border-left: 3px solid var(--success);
+  background: var(--success-light);
+}
+
+.card-danger {
+  border-left: 3px solid var(--danger);
+  background: var(--danger-light);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  transition: border-color .15s;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+
+.btn:active { transform: scale(.98); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--bg); }
+
+.btn-amber {
+  background: var(--amber);
+  color: #fff;
+}
+
+.btn-success {
+  background: var(--success);
+  color: #fff;
+}
+
+.btn-lg {
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.btn-block { width: 100%; justify-content: center; }
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.step-scene {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 24px;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  background: var(--accent-light);
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.observation-field {
+  background: var(--amber-light);
+  border: 1px dashed var(--amber);
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.observation-field label {
+  color: var(--amber);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 16px 0;
+}
+
+.data-table th, .data-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--fg-muted);
+  background: var(--bg);
+}
+
+.data-table td {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.calc-box {
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 20px;
+  margin: 16px 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.calc-result {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.quiz-option {
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s;
+  font-size: 14px;
+  background: var(--surface);
+}
+
+.quiz-option:hover { border-color: var(--accent); background: var(--accent-light); }
+.quiz-option.selected { border-color: var(--accent); background: var(--accent-light); font-weight: 500; }
+.quiz-option.correct { border-color: var(--success); background: var(--success-light); }
+.quiz-option.incorrect { border-color: var(--danger); background: var(--danger-light); }
+
+.quiz-feedback {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-top: 12px;
+  display: none;
+}
+
+.progress-bar-container {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+.progress-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width .3s ease;
+  border-radius: 2px;
+}
+
+.progress-text {
+  font-size: 11px;
+  color: var(--fg-muted);
+  margin-top: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.equation-box {
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.equation-box .formula {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+}
+
+.timer-display {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--accent);
+  text-align: center;
+  padding: 20px;
+}
+
+.timer-label {
+  text-align: center;
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.scale-display {
+  background: #000;
+  color: #00ff88;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 36px;
+  font-weight: 600;
+  padding: 16px 24px;
+  border-radius: 6px;
+  text-align: right;
+  margin: 16px auto;
+  max-width: 200px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,.5);
+}
+
+.scale-unit {
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 8px 16px calc(8px + env(safe-area-inset-bottom, 0px));
+  z-index: 20;
+  gap: 8px;
+}
+
+.hamburger {
+  display: none;
+  position: fixed;
+  top: env(safe-area-inset-top, 12px);
+  left: max(12px, env(safe-area-inset-left, 0px));
+  z-index: 30;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--fg);
+}
+
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 9; }
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    z-index: 15;
+    width: 280px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .overlay.open { display: block; }
+  .hamburger { display: block; }
+  .main { padding: 60px 16px 80px; }
+  .mobile-nav { display: flex; }
+  h1 { font-size: 22px; }
+  .nav-buttons { flex-direction: column; gap: 8px; }
+  .nav-buttons .btn { width: 100%; justify-content: center; }
+  .step-scene { min-height: 180px; }
+}
+
+@media print { .sidebar, .hamburger, .mobile-nav, .nav-buttons { display: none; } }
+
+.action-prompt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--accent-light);
+  border-radius: 6px;
+  margin: 16px 0;
+}
+
+.action-prompt .icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.step-complete-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.inline-input {
+  display: inline-block;
+  width: 80px;
+  padding: 4px 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: inherit;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-align: center;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+@keyframes bubbles {
+  0% { transform: translateY(0); opacity: .7; }
+  100% { transform: translateY(-30px); opacity: 0; }
+}
+
+@keyframes crystalForm {
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
+.animate-pulse { animation: pulse 2s infinite; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.tag-info { background: var(--accent-light); color: var(--accent); }
+.tag-chem { background: var(--success-light); color: var(--success); }
+</style>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+<button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>CHM-125L</h2>
+      <p>Synthesis of Acetylsalicylic Acid</p>
+    </div>
+    <ul class="nav-list" id="navList">
+      <li class="nav-item active" data-section="welcome" onclick="goToSection('welcome')">
+        <span class="nav-dot">1</span> Welcome
+      </li>
+      <li class="nav-item" data-section="background" onclick="goToSection('background')">
+        <span class="nav-dot">2</span> Background
+      </li>
+      <li class="nav-item" data-section="prelab" onclick="goToSection('prelab')">
+        <span class="nav-dot">3</span> Pre-Lab Check
+      </li>
+      <li class="nav-item" data-section="synthesis" onclick="goToSection('synthesis')">
+        <span class="nav-dot">4</span> Part 1: Synthesis
+      </li>
+      <li class="nav-item" data-section="recrystallization" onclick="goToSection('recrystallization')">
+        <span class="nav-dot">5</span> Part 2: Recrystallize
+      </li>
+      <li class="nav-item" data-section="data" onclick="goToSection('data')">
+        <span class="nav-dot">6</span> Data & Calculations
+      </li>
+      <li class="nav-item" data-section="discussion" onclick="goToSection('discussion')">
+        <span class="nav-dot">7</span> Discussion
+      </li>
+      <li class="nav-item" data-section="report" onclick="goToSection('report')">
+        <span class="nav-dot">8</span> Lab Report
+      </li>
+    </ul>
+    <div class="progress-bar-container">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-text" id="progressText">0% complete</div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- WELCOME -->
+    <section class="section active" id="welcome">
+      <h1>ASA Synthesis Virtual Lab</h1>
+      <p class="subtitle">Synthesis of Acetylsalicylic Acid (Aspirin) - CHM-125L Lab 6</p>
+
+      <div class="card card-accent">
+        <h3 style="margin-top:0">Purpose</h3>
+        <ul style="margin:0;padding-left:18px">
+          <li>Synthesize aspirin (acetylsalicylic acid) from salicylic acid and acetic anhydride</li>
+          <li>Purify the crude product by recrystallization</li>
+          <li>Calculate the percent yield of the aspirin produced</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Student Information</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="studentName">Full Name</label>
+            <input type="text" id="studentName" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-group">
+            <label for="labDate">Date</label>
+            <input type="date" id="labDate">
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <div></div>
+        <button class="btn btn-primary btn-lg" onclick="startLab()">Begin Virtual Lab &rarr;</button>
+      </div>
+    </section>
+
+    <!-- BACKGROUND -->
+    <section class="section" id="background">
+      <h1>Background</h1>
+      <p class="subtitle">The history and chemistry behind aspirin synthesis</p>
+
+      <div class="card">
+        <h3 style="margin-top:0">A Brief History</h3>
+        <p>As early as the 4th century B.C.E., a tea made from boiling the bark of the white willow tree (<em>Salix alba</em>) was used to reduce fever. The active compound, <strong>salicin</strong>, was eventually isolated and found to reduce fevers, pain, and inflammation.</p>
+        <p>The problem? Salicylic acid caused severe stomach irritation and bleeding. It wasn't until <strong>1899</strong> when Felix Hoffman, working for Bayer, developed a modern synthesis by <strong>acetylating</strong> salicylic acid - creating aspirin, which is far gentler on the stomach.</p>
+      </div>
+
+      <div class="card card-accent">
+        <h3 style="margin-top:0">How NSAIDs Work</h3>
+        <p>Aspirin and other <strong>nonsteroidal anti-inflammatory drugs (NSAIDs)</strong> block <strong>cyclooxygenase (COX) enzymes</strong>. COX enzymes catalyze the production of prostaglandins - hormone-like molecules that produce fever, swelling, and sensitize pain receptors.</p>
+        <p>By blocking COX, aspirin reduces pain, fever, and inflammation. It also inhibits platelet aggregation, which is why low-dose aspirin is used to prevent blood clots.</p>
+      </div>
+
+      <h2>The Reaction</h2>
+      <p>Aspirin is synthesized by reacting salicylic acid with acetic anhydride in the presence of a sulfuric acid catalyst. This is an <strong>esterification reaction</strong> - the hydroxyl group (-OH) on salicylic acid reacts with acetic anhydride to form an ester bond.</p>
+
+      <div class="equation-box">
+        <div style="margin-bottom:8px"><span class="tag tag-chem">Balanced Equation</span></div>
+        <span class="formula">C<sub>7</sub>H<sub>6</sub>O<sub>3</sub></span> + <span class="formula">C<sub>4</sub>H<sub>6</sub>O<sub>3</sub></span>
+        <span style="font-size:20px;margin:0 8px">&xrarr;</span>
+        <span class="formula">C<sub>9</sub>H<sub>8</sub>O<sub>4</sub></span> + <span class="formula">C<sub>2</sub>H<sub>4</sub>O<sub>2</sub></span>
+        <div style="margin-top:8px;font-size:13px;color:var(--fg-muted)">
+          Salicylic Acid (138.12 g/mol) + Acetic Anhydride (102.09 g/mol) &rarr; Aspirin (180.16 g/mol) + Acetic Acid (60.05 g/mol)
+        </div>
+        <div style="margin-top:4px;font-size:13px;color:var(--fg-muted)">
+          Catalyst: H<sub>2</sub>SO<sub>4</sub> (concentrated sulfuric acid)
+        </div>
+        <div style="margin-top:12px;font-size:14px;font-weight:600;color:var(--accent)">
+          Molar ratio - Salicylic acid : Aspirin = 1 : 1
+        </div>
+      </div>
+
+      <div class="card card-amber">
+        <h3 style="margin-top:0">Why Acetic Anhydride Instead of Acetic Acid?</h3>
+        <p style="margin:0">The reaction with acetic acid is reversible and slow. Using <strong>acetic anhydride</strong> drives the reaction forward - it reacts faster and produces a higher yield because the reaction is essentially irreversible.</p>
+      </div>
+
+      <h2>Key Molecular Masses</h2>
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead><tr><th>Compound</th><th>Formula</th><th>Molar Mass</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>Salicylic Acid</td><td style="font-weight:500">C<sub>7</sub>H<sub>6</sub>O<sub>3</sub></td><td>138.12 g/mol</td><td>Reactant (limiting)</td></tr>
+            <tr><td>Acetic Anhydride</td><td style="font-weight:500">C<sub>4</sub>H<sub>6</sub>O<sub>3</sub></td><td>102.09 g/mol</td><td>Reactant (excess)</td></tr>
+            <tr><td>Sulfuric Acid</td><td style="font-weight:500">H<sub>2</sub>SO<sub>4</sub></td><td>98.08 g/mol</td><td>Catalyst</td></tr>
+            <tr><td>Aspirin (ASA)</td><td style="font-weight:500">C<sub>9</sub>H<sub>8</sub>O<sub>4</sub></td><td>180.16 g/mol</td><td>Product</td></tr>
+            <tr><td>Acetic Acid</td><td style="font-weight:500">C<sub>2</sub>H<sub>4</sub>O<sub>2</sub></td><td>60.05 g/mol</td><td>Byproduct</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToSection('welcome')">&larr; Back</button>
+        <button class="btn btn-primary" onclick="completeAndNext('background','prelab')">Continue to Pre-Lab Check &rarr;</button>
+      </div>
+    </section>
+
+    <!-- PRE-LAB CHECK -->
+    <section class="section" id="prelab">
+      <h1>Pre-Lab Knowledge Check</h1>
+      <p class="subtitle">Test your understanding before starting the synthesis</p>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 1</h3>
+        <p>What type of reaction is the synthesis of aspirin? Explain your answer.</p>
+        <textarea id="prelab1" placeholder="Describe the type of reaction and why it is classified that way..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 2</h3>
+        <p>What is the role of concentrated sulfuric acid (H<sub>2</sub>SO<sub>4</sub>) in this reaction?</p>
+        <textarea id="prelab2" placeholder="Explain the function of sulfuric acid in this synthesis..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 3</h3>
+        <p>If a student forgot to dry the aspirin crystals during vacuum filtration and weighed them while still damp, how would this affect the calculated percent yield? Explain your reasoning.</p>
+        <textarea id="prelab3" placeholder="Describe how residual water would affect the mass measurement and calculated yield..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 4</h3>
+        <p>What is the molar ratio of salicylic acid to aspirin in the balanced equation? Explain how you determined this.</p>
+        <textarea id="prelab4" placeholder="State the molar ratio and explain how the balanced equation shows it..."></textarea>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToSection('background')">&larr; Back</button>
+        <button class="btn btn-primary" onclick="completeAndNext('prelab','synthesis')">Begin Synthesis &rarr;</button>
+      </div>
+    </section>
+
+    <!-- PART 1: SYNTHESIS -->
+    <section class="section" id="synthesis">
+      <h1>Part 1: Synthesis of Crude Aspirin</h1>
+      <p class="subtitle">Follow each step carefully. Record your observations.</p>
+
+      <div id="synthesisSteps">
+        <!-- Steps are rendered by JS -->
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToSection('prelab')">&larr; Back</button>
+        <button class="btn btn-primary" id="synthNextBtn" onclick="completeAndNext('synthesis','recrystallization')">Continue to Recrystallization &rarr;</button>
+      </div>
+    </section>
+
+    <!-- PART 2: RECRYSTALLIZATION -->
+    <section class="section" id="recrystallization">
+      <h1>Part 2: Recrystallization</h1>
+      <p class="subtitle">Purify your crude aspirin product</p>
+
+      <div id="recrystSteps">
+        <!-- Steps rendered by JS -->
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToSection('synthesis')">&larr; Back</button>
+        <button class="btn btn-primary" onclick="completeAndNext('recrystallization','data')">Continue to Data &rarr;</button>
+      </div>
+    </section>
+
+    <!-- DATA & CALCULATIONS -->
+    <section class="section" id="data">
+      <h1>Data &amp; Calculations</h1>
+      <p class="subtitle">Record your data and calculate percent yield</p>
+
+      <div class="card">
+        <h3 style="margin-top:0">Recorded Data</h3>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Measurement</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Mass of salicylic acid used</td><td>2.1 g</td></tr>
+              <tr><td>Volume of acetic anhydride</td><td>3.0 mL</td></tr>
+              <tr><td>Mass of crude product</td><td id="crudeDisplay">-- g</td></tr>
+              <tr><td>Mass of purified product</td><td id="pureDisplay">-- g</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h2>Percent Yield Calculation</h2>
+      <p>Follow each step to calculate the percent yield of your aspirin synthesis.</p>
+
+      <div class="card card-accent">
+        <h3 style="margin-top:0">Step 1: Calculate moles of salicylic acid</h3>
+        <div class="calc-box">
+          Moles = Mass &divide; Molar Mass<br>
+          Moles = 2.1 g &divide; 138.12 g/mol<br>
+          <span class="calc-result" id="molesResult">= 0.01521 mol</span>
+        </div>
+      </div>
+
+      <div class="card card-accent">
+        <h3 style="margin-top:0">Step 2: Calculate theoretical yield</h3>
+        <p>Since the molar ratio is 1:1, moles of aspirin = moles of salicylic acid</p>
+        <div class="calc-box">
+          Theoretical mass = Moles &times; Molar mass of aspirin<br>
+          Theoretical mass = 0.01521 mol &times; 180.16 g/mol<br>
+          <span class="calc-result" id="theoreticalResult">= 2.740 g</span>
+        </div>
+      </div>
+
+      <div class="card card-accent">
+        <h3 style="margin-top:0">Step 3: Calculate percent yield</h3>
+        <div class="calc-box">
+          Percent Yield = (Actual mass &divide; Theoretical mass) &times; 100%<br>
+          Percent Yield = (<span id="actualInCalc">--</span> g &divide; 2.740 g) &times; 100%<br>
+          <span class="calc-result" id="percentResult">= --%</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Enter Your Calculation Work</h3>
+        <p style="font-size:13px;color:var(--fg-muted)">Show your work step by step (this will appear on your lab report)</p>
+        <textarea id="calcWork" placeholder="Show your calculation work here...&#10;&#10;Step 1: Moles of salicylic acid = ...&#10;Step 2: Theoretical yield = ...&#10;Step 3: Percent yield = ..."></textarea>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToSection('recrystallization')">&larr; Back</button>
+        <button class="btn btn-primary" onclick="completeAndNext('data','discussion')">Continue to Discussion &rarr;</button>
+      </div>
+    </section>
+
+    <!-- DISCUSSION QUESTIONS -->
+    <section class="section" id="discussion">
+      <h1>Discussion Questions</h1>
+      <p class="subtitle">Answer each question thoroughly for full credit</p>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 1</h3>
+        <p>What functional groups are present in <strong>aspirin</strong> and <strong>salicylic acid</strong>? How do they differ?</p>
+        <textarea id="disc1" placeholder="Identify the functional groups in each molecule and explain the key structural difference..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 2</h3>
+        <p>What function does the sulfuric acid (H<sub>2</sub>SO<sub>4</sub>) play in this synthesis? What would happen if it were omitted?</p>
+        <textarea id="disc2" placeholder="Explain the catalytic role of sulfuric acid in the esterification reaction..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 3</h3>
+        <p>Suppose another student performed this experiment but forgot to air dry the aspirin during vacuum filtration. If they weigh the aspirin when it is still damp, how will this affect the percent yield? Explain your reasoning.</p>
+        <textarea id="disc3" placeholder="Consider how residual water affects the mass measurement and the calculated yield..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 4</h3>
+        <p>Calculate the percent yield of your aspirin synthesis. Show all steps of your calculation. (You may reference the Data &amp; Calculations section.)</p>
+        <textarea id="disc4" placeholder="Show your complete percent yield calculation with all steps..."></textarea>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Results &amp; Conclusions</h3>
+        <p>Discuss the success of your synthesis based on the percent yield. What factors may have affected your results?</p>
+        <textarea id="conclusions" placeholder="Discuss:&#10;- Was the percent yield acceptable? Why or why not?&#10;- What factors could have decreased the yield?&#10;- How could the procedure be improved?"></textarea>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToSection('data')">&larr; Back</button>
+        <button class="btn btn-primary" onclick="completeAndNext('discussion','report')">Generate Lab Report &rarr;</button>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section class="section" id="report">
+      <h1>Generate Lab Report</h1>
+      <p class="subtitle">Review and download your completed lab report as PDF</p>
+
+      <div class="card card-success">
+        <h3 style="margin-top:0">Lab Complete!</h3>
+        <p>You have completed all sections of the ASA Synthesis virtual lab. Review the summary below, then download your lab report to submit on Canvas.</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Report Summary</h3>
+        <div style="overflow-x:auto">
+          <table class="data-table" id="summaryTable">
+            <tbody>
+              <tr><td>Student</td><td id="sumName">--</td></tr>
+              <tr><td>Date</td><td id="sumDate">--</td></tr>
+              <tr><td>Mass of Crude Product</td><td id="sumCrude">--</td></tr>
+              <tr><td>Mass of Purified Product</td><td id="sumPure">--</td></tr>
+              <tr><td>Theoretical Yield</td><td>2.740 g</td></tr>
+              <tr><td>Percent Yield</td><td id="sumYield">--</td></tr>
+              <tr><td>Sections Completed</td><td id="sumSections">--</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card card-amber">
+        <h3 style="margin-top:0">Before You Download</h3>
+        <p style="margin:0">Make sure you have completed all discussion questions and the conclusions section. Incomplete sections will appear blank on your report. You can go back and add to any section before downloading.</p>
+      </div>
+
+      <div style="text-align:center;margin:32px 0">
+        <button class="btn btn-primary btn-lg" onclick="generatePDF()" style="font-size:18px;padding:16px 48px">
+          Download PDF Lab Report
+        </button>
+        <p style="font-size:13px;color:var(--fg-muted);margin-top:12px">Upload this PDF to Canvas for Lab Report 6</p>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToSection('discussion')">&larr; Back to Discussion</button>
+        <div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="btn btn-secondary" style="flex:1" id="mobilePrev" onclick="mobilePrevious()"> &larr; Prev</button>
+  <button class="btn btn-primary" style="flex:1" id="mobileNext" onclick="mobileNextSection()">Next &rarr;</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const sectionOrder = ['welcome','background','prelab','synthesis','recrystallization','data','discussion','report'];
+const completedSections = new Set();
+let currentSection = 'welcome';
+let synthStepIndex = 0;
+let recrystStepIndex = 0;
+let crudeProductMass = 0;
+let purifiedProductMass = 0;
+let timerInterval = null;
+
+const synthSteps = [
+  {
+    title: 'Prepare the Water Bath',
+    instruction: 'Add approximately <strong>100 mL of water</strong> to a <strong>250 mL beaker</strong> and place it on the hot plate in the fume hood. Turn on the hot plate and heat until the water begins to boil.',
+    action: 'Turn on the hot plate',
+    observation: 'What do you observe as the water heats up?',
+    scene: 'waterbath',
+    defaultObs: 'Water begins to bubble as it reaches boiling point. Steam rises from the beaker.'
+  },
+  {
+    title: 'Weigh Salicylic Acid',
+    instruction: 'Using the analytical balance, weigh <strong>2.1 g of salicylic acid</strong> into a clean, <strong>dry 125 mL Erlenmeyer flask</strong>.',
+    action: 'Weigh the salicylic acid',
+    observation: 'Describe the appearance of salicylic acid.',
+    scene: 'weighing',
+    defaultObs: 'Salicylic acid appears as a white, crystalline powder.'
+  },
+  {
+    title: 'Add Acetic Anhydride',
+    instruction: 'In the fume hood, add <strong>3.0 mL of acetic anhydride</strong> (C₄H₆O₃) to the flask containing salicylic acid. Swirl gently to mix.',
+    action: 'Add acetic anhydride and swirl',
+    observation: 'What happens when you add the acetic anhydride?',
+    scene: 'adding',
+    defaultObs: 'The acetic anhydride is a clear, colorless liquid with a strong vinegar-like odor. The salicylic acid does not fully dissolve yet.'
+  },
+  {
+    title: 'Add Sulfuric Acid Catalyst',
+    instruction: 'Carefully add <strong>3 drops of concentrated sulfuric acid</strong> (H₂SO₄) to the mixture. Swirl gently.',
+    action: 'Add 3 drops of H₂SO₄',
+    observation: 'What is the role of the sulfuric acid?',
+    scene: 'catalyst',
+    defaultObs: 'The sulfuric acid acts as a catalyst, helping to break the bond in acetic anhydride and free the acetyl group. No visible change yet.'
+  },
+  {
+    title: 'Heat the Mixture',
+    instruction: 'Place the Erlenmeyer flask in your boiling water bath. Heat until the solid dissolves completely, then <strong>continue heating for 5 more minutes</strong>.',
+    action: 'Start the 5-minute timer',
+    observation: 'What do you observe as the mixture heats?',
+    scene: 'heating',
+    hasTimer: true,
+    defaultObs: 'The white solid gradually dissolves as the mixture heats. The solution becomes clear and colorless. A slight vinegar odor may be detected.'
+  },
+  {
+    title: 'Add RO Water',
+    instruction: 'Remove the flask from the water bath. Carefully add <strong>2.0 mL of RO (reverse osmosis) water</strong> dropwise to the hot solution.',
+    action: 'Add 2.0 mL water dropwise',
+    observation: 'What do you observe when water is added?',
+    scene: 'crystals1',
+    defaultObs: 'The solution may become cloudy or hazy. Small white crystals of aspirin may begin to form as the excess acetic anhydride reacts with water.'
+  },
+  {
+    title: 'Add Crushed Ice',
+    instruction: 'Add <strong>10.0 g of crushed ice</strong> to the flask and swirl. This rapidly cools the solution and promotes crystallization.',
+    action: 'Add crushed ice and swirl',
+    observation: 'What do you observe as ice is added?',
+    scene: 'crystals2',
+    defaultObs: 'More white crystals of aspirin appear and the solution becomes a thick white slurry. The mixture cools rapidly as the ice melts.'
+  },
+  {
+    title: 'Cool in Ice Bath',
+    instruction: 'Place the flask in an <strong>ice water bath</strong> for several minutes to maximize crystal formation.',
+    action: 'Place in ice bath',
+    observation: 'Describe the appearance of the mixture after cooling.',
+    scene: 'icebath',
+    defaultObs: 'The mixture is now a thick, white suspension of fine aspirin crystals in the liquid. Maximum crystallization has occurred at this low temperature.'
+  },
+  {
+    title: 'Vacuum Filtration',
+    instruction: 'Set up a <strong>vacuum filtration system</strong> (Buchner funnel + filter flask + aspirator). Pour the crystal suspension onto the filter paper. Wash the crystals with <strong>2-3 mL of ice-cold water</strong>.',
+    action: 'Filter the crystals',
+    observation: 'Describe the crystals on the filter paper.',
+    scene: 'filtration',
+    defaultObs: 'White crystalline solid collected on the filter paper. The filtrate (liquid passing through) is clear. The crystals form a thin cake on the filter.'
+  },
+  {
+    title: 'Dry and Weigh Crude Product',
+    instruction: 'Keep the vacuum running for several minutes to air-dry the product. Then carefully transfer the crude aspirin to a pre-weighed watch glass and <strong>record the mass</strong>.',
+    action: 'Weigh the crude product',
+    observation: 'Record the mass of your crude aspirin product.',
+    scene: 'weighCrude',
+    defaultObs: ''
+  }
+];
+
+const recrystSteps = [
+  {
+    title: 'Transfer to Flask',
+    instruction: 'Transfer your crude aspirin product to a clean <strong>50 mL Erlenmeyer flask</strong>.',
+    action: 'Transfer the product',
+    observation: 'Describe the crude product before recrystallization.',
+    defaultObs: 'The crude product is a white solid that may contain some impurities, giving it a slightly off-white or grayish appearance.'
+  },
+  {
+    title: 'Dissolve in Ethanol',
+    instruction: 'Add <strong>6.0 mL of ethanol</strong> and heat the mixture in the water bath until the solid dissolves completely.',
+    action: 'Add ethanol and heat',
+    observation: 'What happens as the solid dissolves in ethanol?',
+    defaultObs: 'The crude aspirin dissolves in the warm ethanol, forming a clear, colorless solution. Impurities that do not dissolve in ethanol can be filtered out.'
+  },
+  {
+    title: 'Add Water',
+    instruction: 'Add <strong>10.0 mL of water</strong> to the ethanol solution and reheat until everything dissolves again.',
+    action: 'Add water and reheat',
+    observation: 'What do you observe when water is added?',
+    defaultObs: 'The solution may become temporarily cloudy when water is added, but clears upon reheating. The solution is now a mixture of ethanol and water.'
+  },
+  {
+    title: 'Slow Cooling',
+    instruction: 'Remove the flask from the heat and allow it to <strong>cool slowly to room temperature</strong>. Slow cooling promotes the formation of larger, purer crystals.',
+    action: 'Allow to cool slowly',
+    observation: 'What do you observe as the solution cools?',
+    defaultObs: 'As the solution cools, pure aspirin crystals slowly form. The crystals appear white and well-defined, often as needle-like structures. Slow cooling produces larger, purer crystals than rapid cooling.'
+  },
+  {
+    title: 'Ice Bath',
+    instruction: 'Once at room temperature, place the flask in an <strong>ice-water bath</strong> to complete crystallization.',
+    action: 'Place in ice bath',
+    observation: 'Describe the purified crystals.',
+    defaultObs: 'The ice bath drives more product out of solution. The purified crystals are white, well-formed, and appear more uniform than the crude product.'
+  },
+  {
+    title: 'Filter and Weigh Purified Product',
+    instruction: 'Filter the purified aspirin crystals using vacuum filtration. Dry thoroughly and <strong>record the mass</strong> of your purified product.',
+    action: 'Filter and weigh',
+    observation: 'Record the mass of your purified aspirin.',
+    defaultObs: ''
+  }
+];
+
+function initLab() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('labDate').value = today;
+  crudeProductMass = +(2.0 + Math.random() * 0.5).toFixed(2);
+  purifiedProductMass = +(crudeProductMass * (0.75 + Math.random() * 0.15)).toFixed(2);
+  renderSynthesisSteps();
+  renderRecrystSteps();
+}
+
+function renderSynthesisSteps() {
+  const container = document.getElementById('synthesisSteps');
+  container.innerHTML = synthSteps.map((step, i) => `
+    <div class="card" id="synthStep${i}" style="${i > 0 ? 'opacity:.5;pointer-events:none' : ''}">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span class="step-badge">Step ${i + 1} of ${synthSteps.length}</span>
+        <span class="step-complete-badge" id="synthComplete${i}" hidden>Done</span>
+      </div>
+      <h3>${step.title}</h3>
+      <p>${step.instruction}</p>
+      ${step.hasTimer ? `
+        <div id="timerContainer" style="text-align:center;margin:16px 0">
+          <div class="timer-display" id="timerDisplay">5:00</div>
+          <div class="timer-label">Heating time remaining</div>
+        </div>
+      ` : ''}
+      ${i === synthSteps.length - 1 ? `
+        <div style="text-align:center;margin:20px 0">
+          <div class="scale-display" id="crudeScaleDisplay">--.-<span class="scale-unit">g</span></div>
+          <p style="font-size:13px;color:var(--fg-muted)">Analytical Balance Reading</p>
+        </div>
+      ` : ''}
+      <div class="action-prompt" id="actionPrompt${i}">
+        <span class="icon">&#9881;</span>
+        <div style="flex:1">
+          <strong>${step.action}</strong>
+          <p style="margin:4px 0 0;font-size:13px;color:var(--fg-muted)">Click the button to perform this step</p>
+        </div>
+        <button class="btn btn-primary" onclick="performSynthStep(${i})">Perform</button>
+      </div>
+      <div class="observation-field" id="obsField${i}" hidden>
+        <label>${step.observation}</label>
+        <textarea id="synthObs${i}" placeholder="Record your observations here...">${step.defaultObs}</textarea>
+        ${i < synthSteps.length - 1 ? `<button class="btn btn-primary" style="margin-top:12px" onclick="advanceSynthStep(${i + 1})">Next Step &rarr;</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderRecrystSteps() {
+  const container = document.getElementById('recrystSteps');
+  container.innerHTML = recrystSteps.map((step, i) => `
+    <div class="card" id="recrystStep${i}" style="${i > 0 ? 'opacity:.5;pointer-events:none' : ''}">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span class="step-badge">Step ${i + 1} of ${recrystSteps.length}</span>
+        <span class="step-complete-badge" id="recrystComplete${i}" hidden>Done</span>
+      </div>
+      <h3>${step.title}</h3>
+      <p>${step.instruction}</p>
+      ${i === recrystSteps.length - 1 ? `
+        <div style="text-align:center;margin:20px 0">
+          <div class="scale-display" id="pureScaleDisplay">--.-<span class="scale-unit">g</span></div>
+          <p style="font-size:13px;color:var(--fg-muted)">Analytical Balance Reading</p>
+        </div>
+      ` : ''}
+      <div class="action-prompt" id="recrystActionPrompt${i}">
+        <span class="icon">&#9881;</span>
+        <div style="flex:1">
+          <strong>${step.action}</strong>
+        </div>
+        <button class="btn btn-primary" onclick="performRecrystStep(${i})">Perform</button>
+      </div>
+      <div class="observation-field" id="recrystObsField${i}" hidden>
+        <label>${step.observation}</label>
+        <textarea id="recrystObs${i}" placeholder="Record your observations here...">${step.defaultObs}</textarea>
+        ${i < recrystSteps.length - 1 ? `<button class="btn btn-primary" style="margin-top:12px" onclick="advanceRecrystStep(${i + 1})">Next Step &rarr;</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function performSynthStep(i) {
+  const prompt = document.getElementById(`actionPrompt${i}`);
+  const obs = document.getElementById(`obsField${i}`);
+  const badge = document.getElementById(`synthComplete${i}`);
+  prompt.hidden = true;
+  obs.hidden = false;
+  badge.hidden = false;
+
+  if (synthSteps[i].hasTimer) {
+    startTimer();
+  }
+
+  if (i === synthSteps.length - 1) {
+    animateScale('crudeScaleDisplay', crudeProductMass);
+  }
+
+  document.getElementById(`synthStep${i}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function advanceSynthStep(next) {
+  if (next < synthSteps.length) {
+    const el = document.getElementById(`synthStep${next}`);
+    el.style.opacity = '1';
+    el.style.pointerEvents = 'auto';
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function performRecrystStep(i) {
+  const prompt = document.getElementById(`recrystActionPrompt${i}`);
+  const obs = document.getElementById(`recrystObsField${i}`);
+  const badge = document.getElementById(`recrystComplete${i}`);
+  prompt.hidden = true;
+  obs.hidden = false;
+  badge.hidden = false;
+
+  if (i === recrystSteps.length - 1) {
+    animateScale('pureScaleDisplay', purifiedProductMass);
+  }
+
+  document.getElementById(`recrystStep${i}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function advanceRecrystStep(next) {
+  if (next < recrystSteps.length) {
+    const el = document.getElementById(`recrystStep${next}`);
+    el.style.opacity = '1';
+    el.style.pointerEvents = 'auto';
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function animateScale(id, target) {
+  const el = document.getElementById(id);
+  let current = 0;
+  const steps = 30;
+  const increment = target / steps;
+  let count = 0;
+  const iv = setInterval(() => {
+    count++;
+    current = count < steps ? +(increment * count + (Math.random() - 0.5) * 0.1).toFixed(2) : target;
+    el.innerHTML = current.toFixed(2) + '<span class="scale-unit">g</span>';
+    if (count >= steps) {
+      clearInterval(iv);
+      el.innerHTML = target.toFixed(2) + '<span class="scale-unit">g</span>';
+    }
+  }, 60);
+}
+
+function startTimer() {
+  let seconds = 300;
+  const display = document.getElementById('timerDisplay');
+  if (timerInterval) clearInterval(timerInterval);
+  display.textContent = '5:00';
+  seconds = 15;
+  timerInterval = setInterval(() => {
+    seconds--;
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    display.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+    if (seconds <= 0) {
+      clearInterval(timerInterval);
+      display.textContent = 'Done!';
+      display.style.color = 'var(--success)';
+    }
+  }, 200);
+}
+
+function goToSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector(`.nav-item[data-section="${id}"]`).classList.add('active');
+  currentSection = id;
+  updateProgress();
+  closeSidebar();
+  window.scrollTo(0, 0);
+
+  if (id === 'data') updateDataSection();
+  if (id === 'report') updateReportSection();
+}
+
+function startLab() {
+  const name = document.getElementById('studentName').value.trim();
+  if (!name) {
+    document.getElementById('studentName').style.borderColor = 'var(--danger)';
+    document.getElementById('studentName').focus();
+    return;
+  }
+  completeAndNext('welcome', 'background');
+}
+
+function completeAndNext(current, next) {
+  completedSections.add(current);
+  document.querySelector(`.nav-item[data-section="${current}"]`).classList.add('completed');
+  goToSection(next);
+}
+
+
+function updateDataSection() {
+  document.getElementById('crudeDisplay').textContent = crudeProductMass.toFixed(2) + ' g';
+  document.getElementById('pureDisplay').textContent = purifiedProductMass.toFixed(2) + ' g';
+
+  const moles = 2.1 / 138.12;
+  const theoretical = moles * 180.16;
+  const percentYield = (purifiedProductMass / theoretical) * 100;
+
+  document.getElementById('molesResult').textContent = `= ${moles.toFixed(5)} mol`;
+  document.getElementById('theoreticalResult').textContent = `= ${theoretical.toFixed(3)} g`;
+  document.getElementById('actualInCalc').textContent = purifiedProductMass.toFixed(2);
+  document.getElementById('percentResult').textContent = `= ${percentYield.toFixed(1)}%`;
+}
+
+function updateReportSection() {
+  const name = document.getElementById('studentName').value || '--';
+  const date = document.getElementById('labDate').value || '--';
+  const moles = 2.1 / 138.12;
+  const theoretical = moles * 180.16;
+  const percentYield = (purifiedProductMass / theoretical) * 100;
+
+  document.getElementById('sumName').textContent = name;
+  document.getElementById('sumDate').textContent = date;
+  document.getElementById('sumCrude').textContent = crudeProductMass.toFixed(2) + ' g';
+  document.getElementById('sumPure').textContent = purifiedProductMass.toFixed(2) + ' g';
+  document.getElementById('sumYield').textContent = percentYield.toFixed(1) + '%';
+  document.getElementById('sumSections').textContent = completedSections.size + '/' + sectionOrder.length;
+}
+
+function updateProgress() {
+  const pct = Math.round((completedSections.size / sectionOrder.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '% complete';
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function mobilePrevious() {
+  const idx = sectionOrder.indexOf(currentSection);
+  if (idx > 0) goToSection(sectionOrder[idx - 1]);
+}
+
+function mobileNextSection() {
+  const idx = sectionOrder.indexOf(currentSection);
+  if (idx < sectionOrder.length - 1) {
+    completedSections.add(currentSection);
+    document.querySelector(`.nav-item[data-section="${currentSection}"]`).classList.add('completed');
+    goToSection(sectionOrder[idx + 1]);
+  }
+}
+
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const name = document.getElementById('studentName').value || 'Not provided';
+  const date = document.getElementById('labDate').value || 'Not provided';
+  const moles = 2.1 / 138.12;
+  const theoretical = moles * 180.16;
+  const percentYield = (purifiedProductMass / theoretical) * 100;
+  let y = 20;
+  const lm = 20;
+  const pw = 170;
+
+  function addText(text, size, style, color) {
+    doc.setFontSize(size);
+    doc.setFont('helvetica', style || 'normal');
+    if (color) doc.setTextColor(...color);
+    else doc.setTextColor(30, 30, 30);
+    const lines = doc.splitTextToSize(text, pw);
+    lines.forEach(line => {
+      if (y > 275) { doc.addPage(); y = 20; }
+      doc.text(line, lm, y);
+      y += size * 0.45;
+    });
+    y += 2;
+  }
+
+  function addLine() {
+    doc.setDrawColor(200, 200, 200);
+    doc.line(lm, y, lm + pw, y);
+    y += 6;
+  }
+
+  doc.setFontSize(22);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(10, 126, 140);
+  doc.text('CHM-125L Lab Report', lm, y);
+  y += 10;
+  doc.setFontSize(16);
+  doc.setTextColor(30, 30, 30);
+  doc.text('Synthesis of Acetylsalicylic Acid (Aspirin)', lm, y);
+  y += 12;
+  addLine();
+
+  addText(`Student: ${name}`, 11, 'normal');
+  addText(`Date: ${date}`, 11, 'normal');
+  y += 4;
+  addLine();
+
+  addText('PURPOSE', 14, 'bold', [10, 126, 140]);
+  addText('To synthesize aspirin (acetylsalicylic acid) from salicylic acid and acetic anhydride, purify the product by recrystallization, and calculate the percent yield.', 10, 'normal');
+  y += 4;
+
+  addText('BALANCED EQUATION', 14, 'bold', [10, 126, 140]);
+  addText('C7H6O3 + C4H6O3 --> C9H8O4 + C2H4O2', 10, 'normal');
+  addText('Salicylic Acid + Acetic Anhydride --> Aspirin + Acetic Acid', 9, 'italic', [100, 100, 100]);
+  addText('Catalyst: H2SO4 (concentrated sulfuric acid)', 9, 'italic', [100, 100, 100]);
+  y += 4;
+
+  addText('PROCEDURE OBSERVATIONS', 14, 'bold', [10, 126, 140]);
+  addText('Part 1: Synthesis of Crude Aspirin', 11, 'bold');
+  synthSteps.forEach((step, i) => {
+    const obs = document.getElementById(`synthObs${i}`);
+    const obsText = obs ? obs.value.trim() : '';
+    if (obsText) {
+      addText(`Step ${i + 1} - ${step.title}: ${obsText}`, 9, 'normal');
+    }
+  });
+  y += 4;
+
+  addText('Part 2: Recrystallization', 11, 'bold');
+  recrystSteps.forEach((step, i) => {
+    const obs = document.getElementById(`recrystObs${i}`);
+    const obsText = obs ? obs.value.trim() : '';
+    if (obsText) {
+      addText(`Step ${i + 1} - ${step.title}: ${obsText}`, 9, 'normal');
+    }
+  });
+  y += 4;
+  addLine();
+
+  addText('DATA', 14, 'bold', [10, 126, 140]);
+  addText(`Mass of salicylic acid: 2.1 g`, 10, 'normal');
+  addText(`Volume of acetic anhydride: 3.0 mL`, 10, 'normal');
+  addText(`Mass of crude product: ${crudeProductMass.toFixed(2)} g`, 10, 'normal');
+  addText(`Mass of purified product: ${purifiedProductMass.toFixed(2)} g`, 10, 'normal');
+  y += 4;
+
+  addText('CALCULATIONS', 14, 'bold', [10, 126, 140]);
+  addText(`Step 1: Moles of salicylic acid = 2.1 g / 138.12 g/mol = ${moles.toFixed(5)} mol`, 10, 'normal');
+  addText(`Step 2: Theoretical yield = ${moles.toFixed(5)} mol x 180.16 g/mol = ${theoretical.toFixed(3)} g`, 10, 'normal');
+  addText(`Step 3: Percent yield = (${purifiedProductMass.toFixed(2)} g / ${theoretical.toFixed(3)} g) x 100% = ${percentYield.toFixed(1)}%`, 10, 'bold');
+  y += 2;
+
+  const calcWork = document.getElementById('calcWork').value.trim();
+  if (calcWork) {
+    addText('Student calculation work:', 10, 'italic', [100, 100, 100]);
+    addText(calcWork, 9, 'normal');
+  }
+  y += 4;
+  addLine();
+
+  addText('DISCUSSION QUESTIONS', 14, 'bold', [10, 126, 140]);
+  const questions = [
+    'What functional groups are present in aspirin and salicylic acid?',
+    'What function does the sulfuric acid play?',
+    'How would damp aspirin affect the percent yield?',
+    'Calculate percent yield (show steps).'
+  ];
+  const discIds = ['disc1', 'disc2', 'disc3', 'disc4'];
+  questions.forEach((q, i) => {
+    addText(`Q${i + 1}: ${q}`, 10, 'bold');
+    const ans = document.getElementById(discIds[i]).value.trim() || 'No answer provided.';
+    addText(ans, 9, 'normal');
+    y += 3;
+  });
+  addLine();
+
+  addText('RESULTS & CONCLUSIONS', 14, 'bold', [10, 126, 140]);
+  const conclusions = document.getElementById('conclusions').value.trim() || 'No conclusion provided.';
+  addText(conclusions, 10, 'normal');
+  y += 6;
+
+  addText('PRE-LAB QUESTIONS', 14, 'bold', [10, 126, 140]);
+  const prelabQs = [
+    'What type of reaction is the synthesis of aspirin?',
+    'What is the role of concentrated sulfuric acid in this reaction?',
+    'How would damp aspirin crystals affect the calculated percent yield?',
+    'What is the molar ratio of salicylic acid to aspirin?'
+  ];
+  const prelabIds = ['prelab1', 'prelab2', 'prelab3', 'prelab4'];
+  prelabQs.forEach((q, i) => {
+    addText(`Q${i + 1}: ${q}`, 10, 'bold');
+    const ans = document.getElementById(prelabIds[i]).value.trim() || 'No answer provided.';
+    addText(ans, 9, 'normal');
+    y += 3;
+  });
+  addLine();
+
+  addText(`Generated from CHM-125L Virtual ASA Synthesis Lab`, 8, 'italic', [150, 150, 150]);
+  addText(`TheranILabs.org | ${new Date().toLocaleDateString()}`, 8, 'italic', [150, 150, 150]);
+
+  doc.save(`Lab6_ASA_Synthesis_${name.replace(/\s+/g, '_')}.pdf`);
+}
+
+initLab();
+</script>
