@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crystal Growing Semester Project — CHM-130</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #1a5276;
+  --blue-light: #d4e6f1;
+  --blue-accent: #2980b9;
+  --green: #1e8449;
+  --green-light: #d5f5e3;
+  --green-accent: #27ae60;
+  --purple: #6c3483;
+  --purple-light: #e8daef;
+  --purple-accent: #8e44ad;
+  --clinical-yellow: #fef9e7;
+  --clinical-border: #f1c40f;
+  --warning-red: #e74c3c;
+  --warning-bg: #fdedec;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-600: #6c757d;
+  --gray-800: #343a40;
+  --white: #ffffff;
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Source Sans Pro', 'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--gray-800);
+  background: var(--gray-100);
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ── HEADER ── */
+.lab-header {
+  background: linear-gradient(135deg, var(--blue) 0%, #154360 100%);
+  color: var(--white);
+  padding: 2.5rem 2rem;
+  border-radius: 0 0 12px 12px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.lab-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 30px,
+    rgba(255,255,255,0.02) 30px,
+    rgba(255,255,255,0.02) 60px
+  );
+}
+.lab-header h1 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 0.25rem;
+  position: relative;
+}
+.lab-header .subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  position: relative;
+}
+.lab-header .course-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  position: relative;
+}
+
+/* ── CRYSTAL SVG DECORATION ── */
+.crystal-icon {
+  display: block;
+  margin: 0.75rem auto 0;
+  position: relative;
+}
+
+/* ── TAB NAVIGATION ── */
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  margin-top: 1.5rem;
+  background: var(--gray-200);
+  border-radius: 10px 10px 0 0;
+  padding: 4px 4px 0;
+  overflow-x: auto;
+}
+.tab-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.8rem 1rem;
+  border: none;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.2s;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tab-btn:hover { background: rgba(255,255,255,0.5); }
+.tab-btn.active-blue { background: var(--white); color: var(--blue); border-top: 3px solid var(--blue); }
+.tab-btn.active-green { background: var(--white); color: var(--green); border-top: 3px solid var(--green); }
+.tab-btn.active-purple { background: var(--white); color: var(--purple); border-top: 3px solid var(--purple); }
+
+/* ── TAB CONTENT ── */
+.tab-panel {
+  display: none;
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 1.5rem;
+}
+.tab-panel.active { display: block; }
+
+/* ── SECTION BANNERS ── */
+.section-banner {
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  margin: 1.5rem 0 1rem;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--white);
+}
+.section-banner:first-child { margin-top: 0; }
+.banner-blue { background: var(--blue); }
+.banner-green { background: var(--green); }
+.banner-purple { background: var(--purple); }
+
+/* ── CLINICAL CONNECTION BOX ── */
+.clinical-box {
+  background: var(--clinical-yellow);
+  border-left: 5px solid var(--clinical-border);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+}
+.clinical-box h4 {
+  font-family: var(--font-serif);
+  color: #7d6608;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+.clinical-box ul { margin-left: 1.25rem; }
+.clinical-box li { margin-bottom: 0.4rem; font-size: 0.95rem; }
+
+/* ── SAFETY BOX ── */
+.safety-box {
+  background: var(--warning-bg);
+  border-left: 5px solid var(--warning-red);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+}
+.safety-box h4 {
+  color: var(--warning-red);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-serif);
+}
+.safety-box li { margin-bottom: 0.3rem; font-size: 0.95rem; }
+.safety-box ul { margin-left: 1.25rem; }
+
+/* ── INFO BOX ── */
+.info-box {
+  background: var(--blue-light);
+  border-left: 5px solid var(--blue-accent);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+}
+.info-box h4 {
+  color: var(--blue);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-serif);
+}
+
+/* ── QUICK REFERENCE CARD ── */
+.quick-ref {
+  background: var(--white);
+  border: 2px solid var(--green-accent);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  page-break-inside: avoid;
+}
+.quick-ref h4 {
+  color: var(--green);
+  font-family: var(--font-serif);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px dashed var(--green-light);
+}
+.quick-ref table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.quick-ref th, .quick-ref td {
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-200);
+}
+.quick-ref th { font-weight: 700; color: var(--green); white-space: nowrap; }
+
+/* ── PROCEDURE STEPS ── */
+.week-block {
+  border: 1px solid var(--gray-300);
+  border-radius: 10px;
+  margin: 1.25rem 0;
+  overflow: hidden;
+}
+.week-header {
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.week-header .chevron {
+  transition: transform 0.2s;
+  font-size: 1.2rem;
+}
+.week-header.expanded .chevron { transform: rotate(90deg); }
+.week-body {
+  padding: 1rem 1.5rem 1.5rem;
+  display: none;
+  border-top: 1px solid var(--gray-300);
+}
+.week-body.show { display: block; }
+
+.week-1 .week-header { background: #d4efdf; color: var(--green); }
+.week-2 .week-header { background: #d6eaf8; color: var(--blue); }
+.week-3 .week-header { background: #e8daef; color: var(--purple); }
+.week-4 .week-header { background: #fdebd0; color: #b9770e; }
+.week-5 .week-header { background: #d5f5e3; color: var(--green); }
+.week-6 .week-header { background: #d4e6f1; color: var(--blue); }
+.week-7 .week-header { background: #fadbd8; color: #c0392b; }
+.week-8 .week-header { background: #f9e79f; color: #7d6608; }
+
+.step-list { counter-reset: step; margin: 0.75rem 0; padding: 0; list-style: none; }
+.step-list li {
+  counter-increment: step;
+  padding: 0.6rem 0 0.6rem 2.5rem;
+  position: relative;
+  border-bottom: 1px solid var(--gray-200);
+}
+.step-list li:last-child { border-bottom: none; }
+.step-list li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: var(--green-accent);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── FLOWCHART ── */
+.flowchart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--gray-100);
+  border-radius: 10px;
+}
+.flow-box {
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  max-width: 300px;
+  width: 100%;
+}
+.flow-start { background: var(--green-accent); color: var(--white); border-radius: 20px; }
+.flow-process { background: var(--blue-light); color: var(--blue); border: 2px solid var(--blue-accent); }
+.flow-decision {
+  background: #fef9e7;
+  color: #7d6608;
+  border: 2px solid var(--clinical-border);
+  transform: rotate(0deg);
+}
+.flow-end { background: var(--purple-accent); color: var(--white); border-radius: 20px; }
+.flow-arrow {
+  font-size: 1.4rem;
+  color: var(--gray-600);
+  line-height: 1;
+  padding: 0.15rem 0;
+}
+.flow-branch {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  max-width: 360px;
+  justify-content: center;
+}
+.flow-branch-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gray-600);
+  text-transform: uppercase;
+}
+
+/* ── FORMS (auto-save) ── */
+.obs-form {
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+.obs-form label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0.25rem;
+  color: var(--gray-800);
+}
+.obs-form label:first-child { margin-top: 0; }
+.obs-form input[type="text"],
+.obs-form input[type="number"],
+.obs-form input[type="date"],
+.obs-form textarea,
+.obs-form select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  background: var(--white);
+}
+.obs-form textarea { min-height: 80px; resize: vertical; }
+.obs-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.save-indicator {
+  font-size: 0.75rem;
+  color: var(--green-accent);
+  font-style: italic;
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+/* ── DATA TABLE ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.data-table th {
+  background: var(--purple);
+  color: var(--white);
+  padding: 0.6rem;
+  font-weight: 700;
+  text-align: center;
+  font-size: 0.8rem;
+}
+.data-table td {
+  padding: 0.5rem;
+  border: 1px solid var(--gray-300);
+  text-align: center;
+}
+.data-table input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  padding: 0.2rem;
+}
+.data-table input:focus {
+  background: var(--purple-light);
+  outline: 2px solid var(--purple-accent);
+  border-radius: 3px;
+}
+.data-table tr:nth-child(even) td { background: var(--gray-100); }
+
+/* ── MATERIALS LIST ── */
+.materials-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.mat-card {
+  background: var(--gray-100);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid var(--gray-300);
+}
+.mat-card h5 {
+  font-family: var(--font-serif);
+  color: var(--blue);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+.mat-card ul { margin-left: 1rem; font-size: 0.9rem; }
+.mat-card li { margin-bottom: 0.25rem; }
+
+/* ── SOLUBILITY TABLE ── */
+.sol-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.sol-table th {
+  background: var(--blue);
+  color: var(--white);
+  padding: 0.5rem;
+  font-size: 0.8rem;
+}
+.sol-table td {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--gray-300);
+  text-align: center;
+}
+.sol-table tr:nth-child(even) td { background: var(--blue-light); }
+.sol-highlight td { background: #abebc6 !important; font-weight: 700; }
+
+/* ── PRINT CSS ── */
+@media print {
+  body { background: white; max-width: 100%; padding: 0; font-size: 11pt; }
+  .tab-nav { display: none; }
+  .tab-panel { display: block !important; border: none; box-shadow: none; padding: 0; page-break-inside: avoid; }
+  .tab-panel + .tab-panel { margin-top: 1.5rem; border-top: 2px solid var(--gray-300); padding-top: 1rem; }
+  .week-body { display: block !important; }
+  .lab-header { border-radius: 0; padding: 1.5rem; }
+  .obs-form input, .obs-form textarea, .obs-form select { border: 1px solid #999; }
+  .no-print { display: none; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .tab-btn { font-size: 0.75rem; padding: 0.6rem 0.5rem; min-width: 90px; }
+  .tab-panel { padding: 1.25rem; }
+  .materials-grid { grid-template-columns: 1fr; }
+  .obs-form .form-row { grid-template-columns: 1fr; }
+  .lab-header h1 { font-size: 1.5rem; }
+  .flow-branch { flex-direction: column; align-items: center; }
+}
+
+/* ── FOOTER ── */
+.lab-footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--gray-600);
+  font-size: 0.8rem;
+  font-family: var(--font-serif);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="lab-header">
+  <h1>Crystal Growing Semester Project</h1>
+  <p class="subtitle">Monoammonium Phosphate (MAP) — From Solution to Structure</p>
+  <span class="course-badge">CHM-130 · Fundamentals of Chemistry</span>
+  <svg class="crystal-icon" width="80" height="70" viewBox="0 0 80 70">
+    <polygon points="40,5 55,22 52,50 28,50 25,22" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+    <polygon points="40,5 55,22 40,18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+    <polygon points="52,50 62,38 55,22" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+    <polygon points="28,50 18,38 25,22" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+    <line x1="32" y1="60" x2="48" y2="60" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text x="40" y="67" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7" font-family="Source Sans Pro">NH₄H₂PO₄</text>
+  </svg>
+</header>
+
+<!-- ═══════════════ TAB NAVIGATION ═══════════════ -->
+<nav class="tab-nav" role="tablist">
+  <button class="tab-btn active-blue" role="tab" onclick="switchTab('overview', this, 'blue')" aria-selected="true">Overview &amp; Theory</button>
+  <button class="tab-btn" role="tab" onclick="switchTab('procedures', this, 'green')">Procedures</button>
+  <button class="tab-btn" role="tab" onclick="switchTab('data', this, 'purple')">Data &amp; Analysis</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- TAB 1 — OVERVIEW & THEORY (Blue)               -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="tab-overview" class="tab-panel active" role="tabpanel">
+
+  <div class="section-banner banner-blue">Introduction</div>
+  <p>On your very first day of chemistry, you will prepare a supersaturated solution and set a crystal in motion. Over the next <strong>7–8 weeks</strong>, that crystal will grow — atom by atom, layer by layer — into a structure you can hold in your hand. Along the way, you will see <em>solubility</em>, <em>supersaturation</em>, <em>nucleation</em>, and <em>crystal habit</em> stop being vocabulary words and become things you can watch happen in real time.</p>
+  <p>The compound you will grow is <strong>monoammonium phosphate</strong> (MAP), chemical formula <strong>NH<sub>4</sub>H<sub>2</sub>PO<sub>4</sub></strong>. It is the same substance used in ABC fire extinguishers and in agricultural fertilizers. It dissolves readily in hot water and crystallizes into beautiful tetragonal prisms as the solution cools — exactly the same mechanism that forms kidney stones in the human body.</p>
+
+  <div class="clinical-box">
+    <h4>🏥 Clinical Connection — Why Nurses Should Understand Crystallization</h4>
+    <ul>
+      <li><strong>Kidney stones (nephrolithiasis):</strong> Calcium oxalate and calcium phosphate crystals form in urine when concentration exceeds solubility — the identical supersaturation mechanism you will observe in this lab.</li>
+      <li><strong>Gout:</strong> Monosodium urate crystallizes in synovial fluid of joints when serum uric acid exceeds ~6.8 mg/dL (its solubility limit at 37 °C).</li>
+      <li><strong>Gallstones:</strong> Cholesterol crystallization in bile — supersaturation plus nucleation on mucin glycoproteins.</li>
+      <li><strong>Drug polymorphism:</strong> The same drug molecule can form different crystal structures (polymorphs) with different dissolution rates. Ritonavir's market recall in 1998 happened because an unexpected polymorph formed during manufacturing, rendering the capsules therapeutically inactive.</li>
+      <li><strong>IV crystalloid fluids:</strong> The clinical term "crystalloid" (Normal Saline, Lactated Ringer's) literally derives from substances that can form crystals — contrasted with "colloids" that cannot.</li>
+    </ul>
+  </div>
+
+  <div class="section-banner banner-blue">Key Concepts</div>
+
+  <p><strong>Solubility</strong> describes the maximum amount of a solute that will dissolve in a given amount of solvent at a specific temperature. For MAP, solubility increases steeply with temperature:</p>
+
+  <table class="sol-table">
+    <thead>
+      <tr><th>Temperature (°C)</th><th>Solubility (g MAP per 100 g H₂O)</th><th>What It Means</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>10</td><td>29</td><td>Cold tap water</td></tr>
+      <tr class="sol-highlight"><td>20</td><td>37</td><td>Room temperature — your lab</td></tr>
+      <tr><td>25</td><td>41</td><td>Warm day</td></tr>
+      <tr><td>40</td><td>56</td><td>Warm bath</td></tr>
+      <tr><td>60</td><td>83</td><td>Hot but touchable</td></tr>
+      <tr><td>80</td><td>122</td><td>Near boiling — preparation temp</td></tr>
+      <tr><td>100</td><td>177</td><td>Boiling point of water</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Supersaturation</strong> occurs when a hot, concentrated solution cools: it now contains <em>more</em> dissolved solute than the solvent can hold at the lower temperature. The excess must come out of solution as solid crystals. The degree of supersaturation controls what happens next:</p>
+  <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+    <li><strong>High supersaturation → many tiny crystals</strong> (rapid nucleation, small crystal size)</li>
+    <li><strong>Low supersaturation → fewer, larger, higher-quality crystals</strong> (slow growth, better structure)</li>
+  </ul>
+  <p>In Week 1, you will use high supersaturation to generate many small <em>seed crystals</em>. In Week 2, you will select the best seed and move it into a low-supersaturation environment where it can grow slowly into a large, well-formed crystal over the remaining weeks.</p>
+
+  <p><strong>Nucleation</strong> is the event where dissolved molecules first organize into a tiny ordered cluster — the "birth" of a crystal. Nucleation can be <em>homogeneous</em> (spontaneous) or <em>heterogeneous</em> (triggered by a surface — a scratch on glass, a dust particle, or a seed crystal you deliberately introduce).</p>
+
+  <p><strong>Crystal system:</strong> MAP crystallizes in the <strong>tetragonal</strong> system (a = b ≠ c, all angles 90°). Expect elongated prisms or needle-like habits, especially if supersaturation is high.</p>
+
+  <div class="section-banner banner-blue">Materials</div>
+
+  <div class="materials-grid">
+    <div class="mat-card">
+      <h5>From Your 4M Kit</h5>
+      <ul>
+        <li>1 bag white crystal compound (MAP, ~40–60 g)</li>
+        <li>1 bag colored seeding mixture</li>
+        <li>Hexagonal display container with cover</li>
+        <li>Stirring bowl &amp; spoon</li>
+        <li>Detailed kit instructions (reference only)</li>
+      </ul>
+    </div>
+    <div class="mat-card">
+      <h5>Supplied by the Lab</h5>
+      <ul>
+        <li>Bulk monoammonium phosphate (food-grade or lab-grade, ~200 g per student)</li>
+        <li>250 mL glass beaker or clean mason jar</li>
+        <li>Glass stir rod</li>
+        <li>Thermometer (0–110 °C)</li>
+        <li>Hot plate or access to hot water (≥ 80 °C)</li>
+      </ul>
+    </div>
+    <div class="mat-card">
+      <h5>For Crystal Suspension</h5>
+      <ul>
+        <li>Monofilament fishing line or fine nylon thread</li>
+        <li>Pencil or wooden dowel (to bridge jar opening)</li>
+        <li>Plastic wrap or coffee filter + rubber band (jar cover)</li>
+        <li>Masking tape &amp; permanent marker (labeling)</li>
+      </ul>
+    </div>
+    <div class="mat-card">
+      <h5>For Measurement &amp; Safety</h5>
+      <ul>
+        <li>Ruler with mm divisions</li>
+        <li>Digital scale (± 0.1 g), shared</li>
+        <li>Safety goggles (required)</li>
+        <li>Lab apron or old clothes</li>
+        <li>Paper towels</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="safety-box">
+    <h4>⚠️ Safety Precautions</h4>
+    <ul>
+      <li><strong>Goggles required</strong> whenever handling MAP solution or hot water.</li>
+      <li>MAP solutions are mildly acidic (pH ≈ 3.8–4.4) — avoid eye contact. In case of splash, flush with water for 15 minutes and notify your instructor.</li>
+      <li><strong>Hot water hazard:</strong> Solutions are prepared at ≥ 80 °C. Handle beakers with heat-resistant gloves or beaker tongs. Never carry open beakers of hot solution.</li>
+      <li>MAP is low-toxicity (used in food-grade fertilizers), but <strong>do not ingest</strong>. Wash hands thoroughly after each session.</li>
+      <li><strong>Disposal:</strong> MAP solution can be poured down the drain with running water — it is not a hazardous waste. Leftover solid MAP can go in the regular trash.</li>
+      <li>If crystals break, the fragments are not sharp in the way glass is, but dispose of small pieces rather than leaving them loose.</li>
+    </ul>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- TAB 2 — PROCEDURES (Green)                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="tab-procedures" class="tab-panel" role="tabpanel">
+
+  <div class="section-banner banner-green">Week-by-Week Procedures</div>
+  <p>Click each week to expand its instructions. All weeks are shown when printed.</p>
+
+  <!-- WEEK 1 -->
+  <div class="week-block week-1">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span>Week 1 — Solution Preparation &amp; Nucleation (First Day of Class)</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="week-body">
+      <p><strong>Goal:</strong> Dissolve MAP in hot water to create a supersaturated solution. As it cools undisturbed, many small seed crystals will form over the next 2–5 days.</p>
+
+      <div class="info-box">
+        <h4>💡 The Chemistry</h4>
+        <p>At 80 °C, water can dissolve ~122 g of MAP per 100 g. At room temperature (~22 °C), it can only hold ~37 g. By dissolving ~55–60 g in 100 mL of hot water, then cooling, you force ~18–23 g to crystallize out. This mass becomes hundreds of tiny seed crystals coating the bottom and sides of your container.</p>
+      </div>
+
+      <ol class="step-list">
+        <li>Put on safety goggles. Label your beaker/jar with your name, section, and date using masking tape.</li>
+        <li>Using the digital scale, weigh out <strong>55 g</strong> of MAP powder (use your kit's bag first; supplement with bulk MAP if needed). Record the exact mass in your data table.</li>
+        <li>Measure <strong>100 mL</strong> of water in your beaker. Heat on a hot plate (or use pre-heated water from the instructor) until the temperature reaches <strong>80 °C ± 5 °C</strong>. Record the temperature.</li>
+        <li>Slowly add the 55 g of MAP to the hot water while stirring continuously with a glass rod. Stir for <strong>at least 2 minutes</strong> until all powder is completely dissolved. The solution should be <strong>perfectly clear</strong> — no visible grains. If any powder remains, continue heating gently and stirring.</li>
+        <li><em>Optional:</em> Add a small pinch of the colored seeding mixture from your 4M kit and stir to dissolve. This adds color to your crystals.</li>
+        <li>Remove from heat. <strong>Do not stir</strong> once you remove it. Allow the solution to cool undisturbed.</li>
+        <li>Cover the opening loosely with plastic wrap or a coffee filter secured with a rubber band (to keep out dust but allow slow evaporation).</li>
+        <li>Place the beaker in your assigned shelf location. <strong>Do not move it</strong> until Week 2.</li>
+        <li>In your observation log, sketch the solution and record: initial mass of MAP, volume of water, dissolution temperature, and the time you set it to cool.</li>
+      </ol>
+
+      <div class="quick-ref">
+        <h4>📋 Week 1 Quick Reference</h4>
+        <table>
+          <tr><th>MAP mass</th><td>55 g (weigh precisely)</td></tr>
+          <tr><th>Water volume</th><td>100 mL</td></tr>
+          <tr><th>Dissolution temp</th><td>80 °C ± 5 °C</td></tr>
+          <tr><th>Stir time</th><td>≥ 2 min until perfectly clear</td></tr>
+          <tr><th>Cooling</th><td>Undisturbed, loosely covered, on shelf</td></tr>
+          <tr><th>Expected result</th><td>Seed crystals visible in 24–72 hours</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-block week-2">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span>Week 2 — Seed Crystal Selection &amp; Growth Solution Setup</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="week-body">
+      <p><strong>Goal:</strong> Choose the best seed crystal from Week 1's crop. Prepare a fresh, mildly supersaturated growing solution. Suspend the seed crystal in the new solution to begin controlled growth.</p>
+
+      <ol class="step-list">
+        <li>Observe your beaker. You should see a mass of small crystals on the bottom and possibly the sides. Record your observations and sketch what you see.</li>
+        <li>Carefully pour the remaining liquid (the "mother liquor") into a separate container and set it aside — <strong>do not discard it</strong>. You will use it later.</li>
+        <li><strong>Select your seed crystal.</strong> Examine the crystal crop and choose the single best specimen:
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+            <li>Look for a crystal that is <strong>clear</strong> (not cloudy or milky)</li>
+            <li>Look for <strong>well-defined faces and edges</strong> (symmetrical shape)</li>
+            <li>Choose one that is approximately <strong>3–5 mm</strong> in its longest dimension</li>
+            <li>Avoid crystals that are fused together in clusters</li>
+          </ul>
+        </li>
+        <li>Tie or loop a piece of monofilament fishing line around your seed crystal. If it is too small to tie, use a tiny dab of clear nail polish to glue the line to the crystal and let it dry for 5 minutes.</li>
+        <li>Tie the other end of the line to the center of a pencil. Adjust the length so that when the pencil rests across the top of your beaker/jar, the crystal hangs in the <strong>center of the solution</strong> — not touching the bottom or sides.</li>
+        <li><strong>Prepare the growing solution:</strong> Weigh <strong>45 g</strong> of fresh bulk MAP. Heat <strong>100 mL</strong> of water to <strong>60 °C</strong>. Dissolve the MAP completely (all powder gone, clear solution).</li>
+        <li>Let the growing solution cool to approximately <strong>30–35 °C</strong> (still warm to the touch, but not hot). This is critical — if it is too hot, it will dissolve your seed crystal.</li>
+        <li>Gently lower your seed crystal into the warm solution. Rest the pencil across the rim. The crystal should be fully submerged and suspended freely.</li>
+        <li>Cover loosely. Return to your shelf location. Record seed crystal dimensions (length × width × height in mm) and mass if possible.</li>
+      </ol>
+
+      <div class="clinical-box">
+        <h4>🏥 Clinical Connection — Seeding &amp; Kidney Stones</h4>
+        <ul>
+          <li>In the kidney, a tiny crystal fragment or a cellular debris particle can serve as a <strong>nucleation site</strong> — exactly like your seed crystal. Once a small crystal exists, the supersaturated urine deposits more solute onto it, making it larger.</li>
+          <li>Clinical interventions like increased hydration and citrate supplementation work by <strong>reducing urinary supersaturation</strong> — the same concept you are exploiting by using a milder solution in Week 2 compared to Week 1.</li>
+        </ul>
+      </div>
+
+      <div class="quick-ref">
+        <h4>📋 Week 2 Quick Reference</h4>
+        <table>
+          <tr><th>Seed crystal size</th><td>~3–5 mm, clear, well-formed single crystal</td></tr>
+          <tr><th>Growing solution MAP</th><td>45 g in 100 mL water</td></tr>
+          <tr><th>Dissolution temp</th><td>60 °C</td></tr>
+          <tr><th>Cool to before adding seed</th><td>30–35 °C (warm, not hot)</td></tr>
+          <tr><th>Suspension</th><td>Fishing line → pencil bridge, crystal centered</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-block week-3">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span>Week 3 — First Growth Check &amp; Observation</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="week-body">
+      <p><strong>Goal:</strong> Measure crystal growth. Assess solution condition. Remove any parasitic crystals.</p>
+      <ol class="step-list">
+        <li>Without removing the crystal from the solution, observe it through the glass. Note any visible growth, changes in shape, or cloudiness in the solution.</li>
+        <li>Gently lift the pencil to raise the crystal just above the solution surface. <strong>Work quickly</strong> — the wet crystal surface can dissolve slightly in air if left exposed too long (> 30 seconds).</li>
+        <li>Measure the crystal dimensions (L × W × H) in millimeters using your ruler. Record in your data table.</li>
+        <li>If you can weigh the crystal without detaching it from the line, do so. Otherwise, estimate mass from dimensions.</li>
+        <li><strong>Check for parasitic crystals:</strong> Look for small unwanted crystals growing on the fishing line, on the pencil, or on the bottom of the jar. If present, carefully remove them — they steal dissolved MAP from your growing crystal. You can scrape them off with a clean spoon or fingertip.</li>
+        <li>Check solution clarity. If the solution is becoming cloudy or many tiny crystals are forming spontaneously, the supersaturation may be too high. Add 5–10 mL of warm water and stir gently to re-dissolve the extras.</li>
+        <li>Lower crystal back into solution. Re-cover. Return to shelf.</li>
+        <li>Sketch the crystal from two angles. Record all data in your observation log.</li>
+      </ol>
+
+      <div class="info-box">
+        <h4>💡 What If My Crystal Dissolved?</h4>
+        <p>This means your growing solution was <em>unsaturated</em> at room temperature — it could hold more MAP than was present, so it pulled MAP off your crystal. This happens if the solution was too warm when you added the seed, or if the room is warmer than expected. <strong>Fix:</strong> Dissolve an additional 5–10 g of MAP in a small amount of warm water, let it cool to room temperature, then add it to your growing jar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-block week-4">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span>Week 4 — Refeeding the Solution</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="week-body">
+      <p><strong>Goal:</strong> Replenish the supersaturation that your growing crystal has consumed. This is the most important maintenance step for continued growth.</p>
+
+      <ol class="step-list">
+        <li>Measure and record crystal dimensions and mass (same protocol as Week 3).</li>
+        <li><strong>Remove the crystal</strong> from the solution. Place it on a clean paper towel. Loosely cover it with plastic wrap to protect it.</li>
+        <li><strong>Prepare the refeed:</strong> In a separate container, dissolve <strong>15–20 g</strong> of fresh MAP in <strong>30 mL</strong> of water heated to <strong>60 °C</strong>. Stir until clear.</li>
+        <li>Let the refeed solution cool to <strong>30 °C</strong>.</li>
+        <li>Carefully pour the refeed into your growing jar. Stir gently to mix.</li>
+        <li>Check for any rogue crystals on the jar walls or bottom. Remove them — a clean jar with a single suspended crystal gives the best results.</li>
+        <li>Re-suspend your crystal in the refreshed solution. Cover. Return to shelf.</li>
+        <li>Record the amount of MAP added and all observations.</li>
+      </ol>
+
+      <div class="quick-ref">
+        <h4>📋 Refeeding Quick Reference (Use for Week 4 and Week 6)</h4>
+        <table>
+          <tr><th>Refeed MAP</th><td>15–20 g in 30 mL water</td></tr>
+          <tr><th>Dissolution temp</th><td>60 °C</td></tr>
+          <tr><th>Cool to before adding</th><td>~30 °C</td></tr>
+          <tr><th>Parasitic crystal removal</th><td>Every refeed — clean walls and line</td></tr>
+          <tr><th>Crystal out of solution</th><td>&lt; 2 minutes — work quickly</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="week-block week-5">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span>Week 5 — Growth Measurement &amp; Crystal Habit Analysis</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="week-body">
+      <p><strong>Goal:</strong> Measure growth. Analyze crystal shape (habit) and begin examining crystal quality. Remove parasitic crystals.</p>
+      <ol class="step-list">
+        <li>Measure and record crystal dimensions and mass (same protocol).</li>
+        <li><strong>Examine the crystal habit.</strong> MAP crystals are tetragonal — the ideal crystal has four equivalent prismatic faces along the long axis and flat termination faces on the ends. Sketch your crystal and label any faces you can identify.</li>
+        <li>Note any <strong>inclusions</strong> (bubbles, cloudiness, or trapped solution inside the crystal). These form when growth is too rapid or the crystal was disturbed during growth.</li>
+        <li>Check for and remove parasitic crystals on the thread and jar surfaces.</li>
+        <li>If growth has slowed noticeably since Week 4, this is normal — the supersaturation is getting consumed. You will refeed again in Week 6.</li>
+        <li>Lower crystal back. Cover. Return to shelf. Record all observations.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="week-block week-6">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span>Week 6 — Second Refeeding &amp; Color Band Experiment</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="week-body">
+      <p><strong>Goal:</strong> Refeed the solution for continued growth. Optionally, add food coloring to create a visible growth band inside the crystal — direct evidence that the crystal grew layer by layer.</p>
+
+      <ol class="step-list">
+        <li>Measure and record crystal dimensions and mass.</li>
+        <li>Remove crystal from solution (same careful protocol as Week 4).</li>
+        <li>Prepare and add a refeed solution (same recipe as Week 4: 15–20 g MAP in 30 mL water at 60 °C, cooled to 30 °C).</li>
+        <li><strong>Color band experiment (optional but recommended):</strong> Add <strong>2–3 drops of food coloring</strong> (any color) to the refreshed solution and stir to distribute evenly. The crystal will incorporate the dye into its new growth layers, creating a colored band visible inside the otherwise clear crystal. This is a dramatic demonstration that the crystal adds material to its outer surface, layer by layer.</li>
+        <li>Clean parasitic crystals. Re-suspend your crystal. Cover. Return to shelf.</li>
+        <li>Record the color used and all measurements.</li>
+      </ol>
+
+      <div class="clinical-box">
+        <h4>🏥 Clinical Connection — Growth Zones</h4>
+        <ul>
+          <li>The colored band in your crystal is analogous to <strong>growth lines in kidney stones</strong>. When urologists section a kidney stone, they can see concentric growth rings that record changes in urine composition over time — periods of dehydration, dietary changes, or medication adjustments.</li>
+          <li>In pharmacology, growth zones in drug crystals can trap different amounts of impurity, affecting drug purity and dissolution rate.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="week-block week-7">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span>Week 7 — Final Growth Measurement &amp; Crystal Harvest</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="week-body">
+      <p><strong>Goal:</strong> Take final measurements. Remove the crystal from solution permanently. Dry and preserve it.</p>
+      <ol class="step-list">
+        <li>Measure final crystal dimensions (L × W × H) in millimeters.</li>
+        <li>Carefully lift the crystal from the solution. Pat gently with a clean, dry paper towel. <strong>Do not rub</strong> — you may scratch the crystal faces.</li>
+        <li>Weigh the dry crystal on the digital scale. Record the final mass.</li>
+        <li>Carefully cut the fishing line, leaving a small tag if desired.</li>
+        <li><strong>Preservation:</strong> MAP crystals are stable at room temperature and humidity. If your lab is humid, a thin coat of clear nail polish or clear acrylic spray will protect the crystal from absorbing moisture. Apply a thin, even coat and let dry.</li>
+        <li>Place your crystal in the 4M kit display case for presentation.</li>
+        <li>Dispose of the remaining solution by pouring down the drain with running water.</li>
+        <li>Record final data and complete your observation log.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="week-block week-8">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span>Week 8 — Data Analysis &amp; Presentation</span>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="week-body">
+      <p><strong>Goal:</strong> Analyze your growth data. Calculate growth rate. Compare results across the class. Submit your final lab report.</p>
+      <ol class="step-list">
+        <li><strong>Calculate total mass gained:</strong> Final crystal mass − estimated seed crystal mass = mass deposited from solution.</li>
+        <li><strong>Calculate average growth rate:</strong> Divide total mass gained by the number of days in solution. Express as mg/day or g/week.</li>
+        <li><strong>Plot your growth curve:</strong> Create a graph with Week number on the x-axis and crystal mass (or longest dimension) on the y-axis. Connect data points to visualize the growth trajectory. Was it linear? Did it slow down between refeedings? Did it accelerate after a refeed?</li>
+        <li><strong>Class comparison:</strong> Record your final crystal mass and longest dimension on the class data board. Look for patterns:
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+            <li>Which shelf locations produced the largest crystals? (Temperature gradients in the room)</li>
+            <li>Did students who refeeded more frequently get larger crystals?</li>
+            <li>Did colored crystals grow at different rates than uncolored ones?</li>
+          </ul>
+        </li>
+        <li><strong>Reflection questions</strong> (answer in your lab notebook):
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+            <li>How does the mechanism of crystal growth in this lab mirror the formation of kidney stones in a patient?</li>
+            <li>What clinical interventions disrupt the crystallization process that leads to kidney stones, and which step of crystallization does each intervention target (supersaturation, nucleation, or growth)?</li>
+            <li>If you could repeat this experiment, what would you change and why?</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ── TROUBLESHOOTING FLOWCHART ── -->
+  <div class="section-banner banner-green">Troubleshooting Flowchart</div>
+  <div class="flowchart">
+    <div class="flow-box flow-start">Is your crystal growing?</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-box flow-decision">Check: Is the solution clear (no crystals on jar walls)?</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-branch">
+      <div style="text-align:center;">
+        <div class="flow-branch-label">YES — clear</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-box flow-process" style="font-size:0.82rem;">Solution may be unsaturated. Add 10 g MAP dissolved in 20 mL warm water. Cool before adding.</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="flow-branch-label">NO — rogue crystals</div>
+        <div class="flow-arrow">▼</div>
+        <div class="flow-box flow-process" style="font-size:0.82rem;">Remove parasitic crystals. They compete with your seed. Clean jar walls with a clean finger or spoon.</div>
+      </div>
+    </div>
+    <div class="flow-arrow" style="margin-top:0.5rem;">▼</div>
+    <div class="flow-box flow-decision">Is the crystal getting SMALLER?</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-box flow-process" style="font-size:0.85rem;">Solution is undersaturated — it's dissolving your crystal. Add 15 g MAP in 25 mL warm water immediately. Cool to 30 °C before combining.</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-box flow-decision">Crystal is cloudy or cracked?</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-box flow-process" style="font-size:0.85rem;">Growth was too fast or crystal experienced temperature shock. Reduce supersaturation. Keep jar away from direct sunlight, AC vents, or heaters. Ensure lid is on.</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-box flow-end">When in doubt — ask your instructor!</div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- TAB 3 — DATA & ANALYSIS (Purple)                -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="tab-data" class="tab-panel" role="tabpanel">
+
+  <div class="section-banner banner-purple">Student Information</div>
+  <div class="obs-form" id="studentInfoForm">
+    <div class="form-row">
+      <div>
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" data-save="studentName" placeholder="First Last">
+      </div>
+      <div>
+        <label for="section">Section</label>
+        <input type="text" id="section" data-save="section" placeholder="e.g., CHM-130-01">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="shelfLocation">Shelf / Bench Location</label>
+        <input type="text" id="shelfLocation" data-save="shelfLocation" placeholder="e.g., Shelf 3, Position B">
+      </div>
+      <div>
+        <label for="startDate">Project Start Date</label>
+        <input type="date" id="startDate" data-save="startDate">
+      </div>
+    </div>
+    <div class="save-indicator" id="saveStatus">Auto-saved ✓</div>
+  </div>
+
+  <div class="section-banner banner-purple">Weekly Growth Data Table</div>
+  <p>Record your crystal measurements each week. All dimensions in millimeters (mm); mass in grams (g).</p>
+
+  <div style="overflow-x: auto;">
+  <table class="data-table" id="growthTable">
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>Date</th>
+        <th>Length (mm)</th>
+        <th>Width (mm)</th>
+        <th>Height (mm)</th>
+        <th>Mass (g)</th>
+        <th>Solution Temp (°C)</th>
+        <th>Action Taken</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td><input type="text" data-save="w1date" placeholder="MM/DD"></td><td><input type="number" data-save="w1l" step="0.1"></td><td><input type="number" data-save="w1w" step="0.1"></td><td><input type="number" data-save="w1h" step="0.1"></td><td><input type="number" data-save="w1m" step="0.01"></td><td><input type="number" data-save="w1t" step="0.1"></td><td><input type="text" data-save="w1a" placeholder="Setup"></td></tr>
+      <tr><td>2</td><td><input type="text" data-save="w2date" placeholder="MM/DD"></td><td><input type="number" data-save="w2l" step="0.1"></td><td><input type="number" data-save="w2w" step="0.1"></td><td><input type="number" data-save="w2h" step="0.1"></td><td><input type="number" data-save="w2m" step="0.01"></td><td><input type="number" data-save="w2t" step="0.1"></td><td><input type="text" data-save="w2a" placeholder="Seed selected"></td></tr>
+      <tr><td>3</td><td><input type="text" data-save="w3date" placeholder="MM/DD"></td><td><input type="number" data-save="w3l" step="0.1"></td><td><input type="number" data-save="w3w" step="0.1"></td><td><input type="number" data-save="w3h" step="0.1"></td><td><input type="number" data-save="w3m" step="0.01"></td><td><input type="number" data-save="w3t" step="0.1"></td><td><input type="text" data-save="w3a" placeholder="Observation"></td></tr>
+      <tr><td>4</td><td><input type="text" data-save="w4date" placeholder="MM/DD"></td><td><input type="number" data-save="w4l" step="0.1"></td><td><input type="number" data-save="w4w" step="0.1"></td><td><input type="number" data-save="w4h" step="0.1"></td><td><input type="number" data-save="w4m" step="0.01"></td><td><input type="number" data-save="w4t" step="0.1"></td><td><input type="text" data-save="w4a" placeholder="Refeed #1"></td></tr>
+      <tr><td>5</td><td><input type="text" data-save="w5date" placeholder="MM/DD"></td><td><input type="number" data-save="w5l" step="0.1"></td><td><input type="number" data-save="w5w" step="0.1"></td><td><input type="number" data-save="w5h" step="0.1"></td><td><input type="number" data-save="w5m" step="0.01"></td><td><input type="number" data-save="w5t" step="0.1"></td><td><input type="text" data-save="w5a" placeholder="Habit analysis"></td></tr>
+      <tr><td>6</td><td><input type="text" data-save="w6date" placeholder="MM/DD"></td><td><input type="number" data-save="w6l" step="0.1"></td><td><input type="number" data-save="w6w" step="0.1"></td><td><input type="number" data-save="w6h" step="0.1"></td><td><input type="number" data-save="w6m" step="0.01"></td><td><input type="number" data-save="w6t" step="0.1"></td><td><input type="text" data-save="w6a" placeholder="Refeed #2 + color"></td></tr>
+      <tr><td>7</td><td><input type="text" data-save="w7date" placeholder="MM/DD"></td><td><input type="number" data-save="w7l" step="0.1"></td><td><input type="number" data-save="w7w" step="0.1"></td><td><input type="number" data-save="w7h" step="0.1"></td><td><input type="number" data-save="w7m" step="0.01"></td><td><input type="number" data-save="w7t" step="0.1"></td><td><input type="text" data-save="w7a" placeholder="Harvest"></td></tr>
+      <tr><td>8</td><td><input type="text" data-save="w8date" placeholder="MM/DD"></td><td><input type="number" data-save="w8l" step="0.1"></td><td><input type="number" data-save="w8w" step="0.1"></td><td><input type="number" data-save="w8h" step="0.1"></td><td><input type="number" data-save="w8m" step="0.01"></td><td><input type="number" data-save="w8t" step="0.1"></td><td><input type="text" data-save="w8a" placeholder="Final report"></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="save-indicator" id="tableStatus">Auto-saved ✓</div>
+
+  <div class="section-banner banner-purple">Weekly Observation Log</div>
+  <p>Select the week and record your detailed observations. Each entry auto-saves to your browser.</p>
+
+  <div class="obs-form">
+    <label for="obsWeek">Select Week</label>
+    <select id="obsWeek" onchange="loadObsWeek()">
+      <option value="1">Week 1</option>
+      <option value="2">Week 2</option>
+      <option value="3">Week 3</option>
+      <option value="4">Week 4</option>
+      <option value="5">Week 5</option>
+      <option value="6">Week 6</option>
+      <option value="7">Week 7</option>
+      <option value="8">Week 8</option>
+    </select>
+
+    <label for="obsAppearance">Crystal Appearance (color, clarity, shape, surface texture)</label>
+    <textarea id="obsAppearance" data-save-prefix="obs" placeholder="Describe what you see..."></textarea>
+
+    <label for="obsSolution">Solution Condition (clarity, color, parasitic crystals present?)</label>
+    <textarea id="obsSolution" data-save-prefix="obs" placeholder="Is the solution clear or cloudy? Any rogue crystals?"></textarea>
+
+    <label for="obsChanges">Changes Since Last Week</label>
+    <textarea id="obsChanges" data-save-prefix="obs" placeholder="What grew? What changed? Any problems?"></textarea>
+
+    <label for="obsSketch">Sketch Description (describe your sketch or note where the photo is)</label>
+    <textarea id="obsSketch" data-save-prefix="obs" placeholder="Describe your crystal drawing or photo reference..."></textarea>
+
+    <div class="save-indicator" id="obsStatus">Auto-saved ✓</div>
+  </div>
+
+  <div class="section-banner banner-purple">Growth Rate Calculations</div>
+  <div class="obs-form">
+    <div class="form-row">
+      <div>
+        <label for="calcSeedMass">Initial Seed Crystal Mass (g)</label>
+        <input type="number" id="calcSeedMass" data-save="calcSeedMass" step="0.01" placeholder="e.g., 0.15">
+      </div>
+      <div>
+        <label for="calcFinalMass">Final Crystal Mass (g)</label>
+        <input type="number" id="calcFinalMass" data-save="calcFinalMass" step="0.01" placeholder="e.g., 8.50">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="calcDays">Total Days in Growth Solution</label>
+        <input type="number" id="calcDays" data-save="calcDays" placeholder="e.g., 42">
+      </div>
+      <div>
+        <label for="calcTotalMAP">Total MAP Used (g) — all refeeds combined</label>
+        <input type="number" id="calcTotalMAP" data-save="calcTotalMAP" step="0.1" placeholder="e.g., 135">
+      </div>
+    </div>
+    <button onclick="calcGrowthRate()" style="margin-top:1rem; padding:0.6rem 1.5rem; background:var(--purple-accent); color:white; border:none; border-radius:6px; font-family:var(--font-sans); font-weight:700; font-size:0.95rem; cursor:pointer;">Calculate Growth Rate</button>
+    <div id="calcResults" style="margin-top:1rem; padding:1rem; background:var(--purple-light); border-radius:8px; display:none;">
+    </div>
+  </div>
+
+  <div class="section-banner banner-purple">Reflection Questions</div>
+  <div class="obs-form">
+    <label for="reflect1">1. How does the mechanism of crystal growth in this lab mirror the formation of kidney stones in a patient? Identify at least two parallels.</label>
+    <textarea id="reflect1" data-save="reflect1" style="min-height:100px;"></textarea>
+
+    <label for="reflect2">2. Name two clinical interventions for preventing kidney stones. For each, identify which step of the crystallization process it disrupts (supersaturation, nucleation, or growth).</label>
+    <textarea id="reflect2" data-save="reflect2" style="min-height:100px;"></textarea>
+
+    <label for="reflect3">3. Your crystal's growth rate slowed between Weeks 3 and 4 (before the refeed). Explain why, using the concept of supersaturation.</label>
+    <textarea id="reflect3" data-save="reflect3" style="min-height:100px;"></textarea>
+
+    <label for="reflect4">4. If two students started with the same seed crystal and same solution, but one stored their jar near an air conditioning vent and the other near a sunny window, predict how their crystals would differ and why.</label>
+    <textarea id="reflect4" data-save="reflect4" style="min-height:100px;"></textarea>
+
+    <label for="reflect5">5. If you could repeat this experiment, what would you change and what result would you expect?</label>
+    <textarea id="reflect5" data-save="reflect5" style="min-height:100px;"></textarea>
+
+    <div class="save-indicator" id="reflectStatus">Auto-saved ✓</div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="lab-footer">
+  <p>Crystal Growing Semester Project — CHM-130 · Fundamentals of Chemistry</p>
+  <p>Tehrani 2028</p>
+</footer>
+
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+// ── TAB SWITCHING ──
+function switchTab(tabId, btn, color) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active-blue','active-green','active-purple');
+    b.setAttribute('aria-selected','false');
+  });
+  document.getElementById('tab-' + tabId).classList.add('active');
+  btn.classList.add('active-' + color);
+  btn.setAttribute('aria-selected','true');
+}
+
+// ── WEEK ACCORDION ──
+function toggleWeek(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('show');
+  // Close all
+  document.querySelectorAll('.week-body').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.week-header').forEach(h => h.classList.remove('expanded'));
+  if (!isOpen) {
+    body.classList.add('show');
+    header.classList.add('expanded');
+  }
+}
+
+// ── AUTO-SAVE (localStorage) ──
+const STORAGE_KEY = 'chm130_crystal_lab_';
+
+function saveField(key, value) {
+  try { localStorage.setItem(STORAGE_KEY + key, value); } catch(e) {}
+}
+
+function loadField(key) {
+  try { return localStorage.getItem(STORAGE_KEY + key) || ''; } catch(e) { return ''; }
+}
+
+// Auto-save all [data-save] inputs
+document.querySelectorAll('[data-save]').forEach(el => {
+  const key = el.getAttribute('data-save');
+  el.value = loadField(key);
+  el.addEventListener('input', function() {
+    saveField(key, this.value);
+    showSaved(this);
+  });
+});
+
+// Observation log (week-specific)
+function getObsKey(fieldId, week) {
+  return 'obs_w' + week + '_' + fieldId;
+}
+
+function loadObsWeek() {
+  const week = document.getElementById('obsWeek').value;
+  ['obsAppearance','obsSolution','obsChanges','obsSketch'].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = loadField(getObsKey(id, week));
+  });
+}
+
+// Save observation fields on input
+['obsAppearance','obsSolution','obsChanges','obsSketch'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', function() {
+    const week = document.getElementById('obsWeek').value;
+    saveField(getObsKey(id, week), this.value);
+    const indicator = document.getElementById('obsStatus');
+    indicator.textContent = 'Auto-saved ✓ (Week ' + week + ')';
+    indicator.style.opacity = 1;
+    setTimeout(() => { indicator.style.opacity = 0.6; }, 1500);
+  });
+});
+
+// Load week 1 observations on page load
+loadObsWeek();
+
+function showSaved(el) {
+  const form = el.closest('.obs-form') || el.closest('.data-table');
+  if (!form) return;
+  const indicator = form.querySelector('.save-indicator') || document.getElementById('tableStatus');
+  if (indicator) {
+    indicator.textContent = 'Auto-saved ✓';
+    indicator.style.opacity = 1;
+    setTimeout(() => { indicator.style.opacity = 0.6; }, 1500);
+  }
+}
+
+// ── GROWTH RATE CALCULATOR ──
+function calcGrowthRate() {
+  const seedMass = parseFloat(document.getElementById('calcSeedMass').value);
+  const finalMass = parseFloat(document.getElementById('calcFinalMass').value);
+  const days = parseInt(document.getElementById('calcDays').value);
+  const totalMAP = parseFloat(document.getElementById('calcTotalMAP').value);
+
+  if (isNaN(seedMass) || isNaN(finalMass) || isNaN(days) || days === 0) {
+    document.getElementById('calcResults').innerHTML = '<p style="color:var(--warning-red);">Please fill in Seed Mass, Final Mass, and Days to calculate.</p>';
+    document.getElementById('calcResults').style.display = 'block';
+    return;
+  }
+
+  const massGained = finalMass - seedMass;
+  const ratePerDay = massGained / days;
+  const ratePerWeek = ratePerDay * 7;
+  const efficiency = !isNaN(totalMAP) && totalMAP > 0 ? ((massGained / totalMAP) * 100).toFixed(1) : 'N/A';
+
+  document.getElementById('calcResults').innerHTML = `
+    <p><strong>Mass gained:</strong> ${massGained.toFixed(2)} g</p>
+    <p><strong>Growth rate:</strong> ${(ratePerDay * 1000).toFixed(1)} mg/day = ${ratePerWeek.toFixed(2)} g/week</p>
+    <p><strong>Crystal yield:</strong> ${efficiency}% of total MAP used ended up in the crystal</p>
+    <p style="font-size:0.85rem; color:var(--gray-600); margin-top:0.5rem;">Note: Yield below 20% is typical — most MAP remains dissolved in the final solution or was lost to parasitic crystals and refeeding losses.</p>
+  `;
+  document.getElementById('calcResults').style.display = 'block';
+}
+
+// ── Open Week 1 by default ──
+document.querySelector('.week-1 .week-header').click();
+</script>
+
+</body>
+</html>
