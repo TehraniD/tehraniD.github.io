@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO 189 Module 1 Jeopardy!</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1f3c 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .splash-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, #1a2a4a 0%, #0a1628 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .splash-screen.hidden { opacity: 0; pointer-events: none; }
+
+        .splash-logo {
+            font-size: 5em;
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 3px 3px 6px rgba(0,0,0,0.8);
+            letter-spacing: 8px;
+            animation: pulseGlow 2s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .splash-subtitle {
+            font-size: 1.5em;
+            color: #8ab4f8;
+            margin-bottom: 10px;
+        }
+
+        .splash-course {
+            font-size: 1.1em;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .splash-btn {
+            padding: 18px 50px;
+            font-size: 1.4em;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .splash-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { text-shadow: 0 0 30px rgba(255,215,0,0.6), 3px 3px 6px rgba(0,0,0,0.8); }
+            50% { text-shadow: 0 0 50px rgba(255,215,0,0.9), 3px 3px 6px rgba(0,0,0,0.8); }
+        }
+
+        .game-container { display: none; padding: 15px; max-width: 1500px; margin: 0 auto; }
+        .game-container.active { display: block; }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .top-bar h1 {
+            font-size: 2.2em;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 4px;
+        }
+
+        .round-indicator {
+            font-size: 1.1em;
+            color: #8ab4f8;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(138, 180, 248, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .ctrl-btn {
+            padding: 8px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            background: rgba(255,255,255,0.1);
+            color: #ccc;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ctrl-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+        .ctrl-btn.gold {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+            border: none;
+            font-weight: bold;
+        }
+
+        .ctrl-btn.gold:hover { box-shadow: 0 0 15px rgba(255,215,0,0.5); }
+
+        .scoreboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .team {
+            background: linear-gradient(135deg, rgba(50,70,120,0.8), rgba(30,50,90,0.8));
+            padding: 12px 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(255,215,0,0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .team.active {
+            border-color: #00e676;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+        }
+
+        .team h3 { font-size: 1.1em; color: #ffd700; margin-bottom: 5px; }
+        .team .score { font-size: 1.8em; font-weight: bold; }
+
+        .team .score-controls {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .score-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .score-btn:hover { background: rgba(255,255,255,0.25); }
+
+        .board {
+            background: rgba(0,0,0,0.6);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,215,0,0.15);
+        }
+
+        .category-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .category-header {
+            background: linear-gradient(180deg, #0055aa, #003d7a);
+            padding: 15px 8px;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+            border-radius: 8px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .question-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .cell {
+            background: linear-gradient(180deg, #1a3a7a, #0d2555);
+            padding: 18px 8px;
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #ffd700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: 1px solid rgba(255,215,0,0.15);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .cell:hover:not(.used) {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.4);
+            border-color: #ffd700;
+        }
+
+        .cell.used {
+            background: rgba(20,30,50,0.6);
+            color: rgba(255,255,255,0.1);
+            cursor: default;
+            border-color: transparent;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: linear-gradient(135deg, #0d2555, #1a3a7a);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(255,215,0,0.3);
+            animation: modalIn 0.4s ease;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-category {
+            font-size: 0.9em;
+            color: #8ab4f8;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .modal-value {
+            font-size: 2.5em;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .modal-question {
+            font-size: 1.4em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e8e8e8;
+            padding: 0 10px;
+        }
+
+        .modal-question em { color: #8ab4f8; font-style: italic; }
+
+        .modal-answer {
+            background: rgba(0,230,118,0.1);
+            border: 2px solid #00e676;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: none;
+            animation: revealAnswer 0.5s ease;
+        }
+
+        .modal-answer.visible { display: block; }
+
+        @keyframes revealAnswer {
+            from { transform: translateY(15px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-answer h4 {
+            color: #00e676;
+            font-size: 1em;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .modal-answer p {
+            font-size: 1.3em;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .modal-answer .explanation {
+            font-size: 0.85em;
+            color: #aaa;
+            margin-top: 10px;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        .modal-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .modal-btn {
+            padding: 12px 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .btn-reveal {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+        }
+
+        .btn-reveal:hover { box-shadow: 0 0 20px rgba(255,215,0,0.5); }
+
+        .btn-correct {
+            background: linear-gradient(135deg, #00e676, #00c853);
+            color: #1a1a2e;
+        }
+
+        .btn-wrong {
+            background: linear-gradient(135deg, #ff5252, #d32f2f);
+            color: #fff;
+        }
+
+        .btn-close {
+            background: rgba(255,255,255,0.15);
+            color: #ccc;
+        }
+
+        .btn-close:hover { background: rgba(255,255,255,0.25); }
+
+        .daily-double-flash {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse, #ffd700, #ff8800);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            animation: ddFlash 1.5s ease-in-out forwards;
+        }
+
+        .daily-double-flash.active { display: flex; }
+
+        .daily-double-flash h1 {
+            font-size: 5em;
+            color: #1a1a2e;
+            text-shadow: 3px 3px 0 rgba(255,255,255,0.3);
+            letter-spacing: 8px;
+        }
+
+        @keyframes ddFlash {
+            0% { transform: scale(0.5); opacity: 0; }
+            30% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .final-container {
+            display: none;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .final-container.active { display: block; }
+
+        .final-container h1 {
+            font-size: 3em;
+            color: #ffd700;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+        }
+
+        .final-category {
+            font-size: 1.5em;
+            color: #8ab4f8;
+            margin-bottom: 30px;
+        }
+
+        .final-question {
+            font-size: 1.4em;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+            border: 2px solid rgba(255,215,0,0.2);
+        }
+
+        .final-answer-box {
+            background: rgba(0,230,118,0.1);
+            border: 2px solid #00e676;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .final-answer-box.visible { display: block; }
+
+        .final-answer-box h4 { color: #00e676; margin-bottom: 8px; letter-spacing: 2px; }
+        .final-answer-box p { font-size: 1.4em; font-weight: bold; }
+        .final-answer-box .explanation { font-size: 0.9em; color: #aaa; margin-top: 10px; line-height: 1.5; }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #555;
+            font-size: 0.85em;
+        }
+
+        .footer a { color: #8ab4f8; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .splash-logo { font-size: 3em; }
+            .top-bar h1 { font-size: 1.4em; }
+            .category-header { font-size: 0.65em; min-height: 55px; padding: 8px 4px; }
+            .cell { font-size: 1em; padding: 12px 4px; }
+            .modal { padding: 25px; }
+            .modal-question { font-size: 1.1em; }
+            .modal-value { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="splash-screen" id="splash">
+    <div class="splash-logo">JEOPARDY!</div>
+    <div class="splash-subtitle">BIO 189 &mdash; Module 1</div>
+    <div class="splash-course">Fundamentals of Biology &middot; Introduction to Biology</div>
+    <button class="splash-btn" onclick="startGame()">START GAME</button>
+</div>
+
+<div class="game-container" id="gameContainer">
+    <div class="top-bar">
+        <h1>JEOPARDY!</h1>
+        <div class="round-indicator" id="roundIndicator">Round 1 of 2</div>
+        <div class="controls">
+            <button class="ctrl-btn" onclick="resetGame()">Reset</button>
+            <button class="ctrl-btn gold" id="nextRoundBtn" onclick="nextRound()" style="display:none;">Round 2 &raquo;</button>
+            <button class="ctrl-btn gold" id="finalBtn" onclick="startFinalJeopardy()" style="display:none;">Final Jeopardy!</button>
+        </div>
+    </div>
+
+    <div class="scoreboard" id="scoreboard"></div>
+    <div class="board" id="board"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-category" id="modalCategory"></div>
+        <div class="modal-value" id="modalValue"></div>
+        <div class="modal-question" id="modalQuestion"></div>
+        <div class="modal-answer" id="modalAnswer">
+            <h4>ANSWER</h4>
+            <p id="modalAnswerText"></p>
+            <div class="explanation" id="modalExplanation"></div>
+        </div>
+        <div class="modal-buttons" id="modalButtons">
+            <button class="modal-btn btn-reveal" id="revealBtn" onclick="revealAnswer()">Show Answer</button>
+            <button class="modal-btn btn-correct" id="correctBtn" style="display:none;" onclick="markCorrect()">Correct &#10003;</button>
+            <button class="modal-btn btn-wrong" id="wrongBtn" style="display:none;" onclick="markWrong()">Wrong &#10007;</button>
+            <button class="modal-btn btn-close" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<div class="daily-double-flash" id="ddFlash">
+    <h1>DAILY DOUBLE!</h1>
+</div>
+
+<div class="final-container" id="finalContainer">
+    <h1>FINAL JEOPARDY!</h1>
+    <div class="final-category" id="finalCategory"></div>
+    <div class="final-question" id="finalQuestion"></div>
+    <div class="final-answer-box" id="finalAnswerBox">
+        <h4>ANSWER</h4>
+        <p id="finalAnswerText"></p>
+        <div class="explanation" id="finalExplanation"></div>
+    </div>
+    <div class="modal-buttons">
+        <button class="modal-btn btn-reveal" id="finalRevealBtn" onclick="revealFinalAnswer()">Show Answer</button>
+        <button class="modal-btn btn-close" onclick="backToBoard()">Back to Board</button>
+    </div>
+</div>
+
+<div class="footer" id="footerArea">
+    &copy; BIO 189 Fundamentals of Biology &middot; <a href="https://tehranilabs.org">TehraniLabs.org</a>
+</div>
+
+<script>
+const ROUND1 = {
+    categories: [
+        "Life Basics",
+        "Order Up!",
+        "Cell ID",
+        "Lab Rat",
+        "Molecule Menu"
+    ],
+    questions: [
+        // ---- LIFE BASICS ----
+        [
+            { q: "This field of study is defined simply as 'the study of life.'", a: "Biology", ex: "Not taxonomy (classification), not microbiology (microorganisms) — biology is the umbrella term for all living things." },
+            { q: "Your body sweats when you're hot and shivers when you're cold. This process of maintaining a stable internal environment is called ___.", a: "Homeostasis", ex: "Homeostasis keeps internal conditions (temperature, pH, blood sugar) stable despite external changes." },
+            { q: "This molecule carries genetic information, is required for reproduction, and is found in every living cell.", a: "DNA", ex: "Without DNA, organisms cannot pass traits to offspring or replicate their cells." },
+            { q: "A student says 'all living things are multicellular.' Explain why this is WRONG.", a: "Many living things (bacteria, protists) are single-celled", ex: "Being multicellular is NOT a universal property of life. Bacteria are alive and consist of a single cell." },
+            { q: "Name four properties that ALL living things share.", a: "Require energy, maintain homeostasis, contain DNA, and reproduce (also: grow, respond to stimuli, evolve)", ex: "These are the universal characteristics of life — miss one and you might confuse a crystal for a living thing." }
+        ],
+        // ---- ORDER UP! ----
+        [
+            { q: "This is the smallest unit of life — not the atom, not the molecule.", a: "The cell", ex: "Atoms and molecules are chemistry. The cell is where life begins." },
+            { q: "Put these in order from smallest to largest: organ, tissue, organism, cell, organ system.", a: "Cell → Tissue → Organ → Organ System → Organism", ex: "Cells group into tissues, tissues form organs, organs form organ systems, and together they make an organism." },
+            { q: "All the jackrabbits living in the same desert area make up a ___. All the different species in that same area make up a ___.", a: "Population; Community", ex: "Population = same species, same area. Community = different species, same area." },
+            { q: "Energy flows through an ecosystem in THIS kind of direction, while nutrients do something different — they get recycled.", a: "One-way", ex: "Energy flows one way: sun → producers → consumers → lost as heat. Nutrients cycle back through decomposition." },
+            { q: "This is the most inclusive level of biological organization — it encompasses ALL life on Earth.", a: "The biosphere", ex: "The biosphere includes every ecosystem on the planet — land, water, and atmosphere where life exists." }
+        ],
+        // ---- CELL ID ----
+        [
+            { q: "True or false: Prokaryotic cells contain a membrane-bound nucleus.", a: "False", ex: "Prokaryotes have NO nucleus. Their DNA floats freely in the cytoplasm in a region called the nucleoid." },
+            { q: "Name ONE structure found in BOTH prokaryotic and eukaryotic cells.", a: "DNA (also: ribosomes, plasma membrane)", ex: "Both cell types have DNA, ribosomes, and a plasma membrane. Only eukaryotes have a nucleus and membrane-bound organelles." },
+            { q: "Fungi, plants, and animals are all multicellular organisms with nuclei. They belong to Domain ___.", a: "Eukarya", ex: "Eukarya = 'true nucleus.' The other two domains — Bacteria and Archaea — are prokaryotic." },
+            { q: "Name the two domains of life that are composed entirely of prokaryotes.", a: "Bacteria and Archaea", ex: "Don't confuse Archaea with eukaryotes — despite some similarities, Archaea are prokaryotic." },
+            { q: "You look at a cell under a microscope. It has no nucleus and no mitochondria. What type of cell is it?", a: "Prokaryotic", ex: "No nucleus + no membrane-bound organelles = prokaryote. All eukaryotic cells have a nucleus." }
+        ],
+        // ---- LAB RAT ----
+        [
+            { q: "In an experiment, the variable that the researcher deliberately changes or manipulates is called the ___ variable.", a: "Independent", ex: "The independent variable is what YOU change. The dependent variable is what you MEASURE as a result." },
+            { q: "In a drug trial, one group receives the real pill and the other receives a sugar pill. The sugar-pill group is called the ___ group.", a: "Control", ex: "The control group gets the standard/unchanged condition so researchers have a baseline for comparison." },
+            { q: "A study tests a new drug on only 8 people. The problem with drawing conclusions from this study is called ___.", a: "Sampling error", ex: "Small sample sizes produce unreliable results that may not represent the larger population." },
+            { q: "This type of thinking may involve supernatural or mysterious phenomena and does NOT follow the scientific method.", a: "Pseudoscience", ex: "Science revises itself when proven wrong. Pseudoscience ignores contradicting evidence." },
+            { q: "A researcher tests whether cigarette smoke damages rat lungs. She gives 50 rats smoke and 50 rats clean air. The cigarette smoke is what kind of variable?", a: "Independent variable", ex: "The researcher chose to change/manipulate the air quality — that makes it the independent variable." }
+        ],
+        // ---- MOLECULE MENU ----
+        [
+            { q: "Simple sugars, amino acids, nucleotides, and fatty acids are all examples of these small building-block molecules.", a: "Monomers", ex: "Monomers link together through dehydration synthesis to form polymers (macromolecules)." },
+            { q: "This macromolecule provides the MOST energy per gram — 9 calories compared to 4 for carbs and proteins.", a: "Lipids (fats)", ex: "This is why fatty foods are so calorie-dense. Lipids = 9 cal/g, Carbs = 4 cal/g, Proteins = 4 cal/g." },
+            { q: "Amino acids are linked together by THIS type of bond to form proteins.", a: "Peptide bonds", ex: "Glycosidic bonds link sugars. Phosphodiester bonds link nucleotides. Peptide bonds link amino acids." },
+            { q: "This polysaccharide is stored in your muscles and liver and breaks down into glucose when blood sugar drops.", a: "Glycogen", ex: "Glycogen = animal storage. Starch = plant storage. Cellulose = plant structure. Chitin = exoskeletons." },
+            { q: "Saturated fats have only ___ bonds between carbons and are ___ at room temperature.", a: "Single bonds; solid", ex: "Think butter and lard = solid = saturated. Olive oil = liquid = unsaturated (has double bonds)." }
+        ]
+    ]
+};
+
+const ROUND2 = {
+    categories: [
+        "Taxonomy Smash",
+        "Carb Loading",
+        "Build a Protein",
+        "DNA Decoded",
+        "Fat Chance"
+    ],
+    questions: [
+        // ---- TAXONOMY SMASH ----
+        [
+            { q: "In the scientific name <em>Homo sapiens</em>, the word <em>Homo</em> represents this taxonomic level.", a: "Genus", ex: "Binomial nomenclature: first word = Genus (capitalized), second word = species (lowercase). Both italicized." },
+            { q: "List the 8 levels of taxonomy from BROADEST to most specific.", a: "Domain, Kingdom, Phylum, Class, Order, Family, Genus, Species", ex: "Memory hook: Dear King Philip Came Over For Good Spaghetti." },
+            { q: "Today, the MOST reliable method for classifying organisms into species is comparing these molecular sequences.", a: "DNA sequences", ex: "Physical appearance can be misleading (convergent evolution). DNA comparison is the gold standard." },
+            { q: "Humans belong to this domain because our cells contain a membrane-bound nucleus.", a: "Eukarya", ex: "The three domains: Bacteria (prokaryotic), Archaea (prokaryotic), Eukarya (eukaryotic — has a nucleus)." },
+            { q: "Carl Linnaeus developed this two-name system we still use today to name every species on Earth.", a: "Binomial nomenclature", ex: "Every organism gets a Genus name + species name. Example: Homo sapiens, Escherichia coli." }
+        ],
+        // ---- CARB LOADING ----
+        [
+            { q: "Glucose is this type of carbohydrate — simple, not complex.", a: "Monosaccharide", ex: "Mono = one sugar unit. Polysaccharides (glycogen, starch, cellulose) are complex carbohydrates made of many glucose units." },
+            { q: "This polysaccharide forms the rigid cell wall of plants and is indigestible by almost all animals.", a: "Cellulose", ex: "Humans lack the enzyme (cellulase) to break cellulose down. That's why fiber 'passes right through you.'" },
+            { q: "This is the storage form of glucose in PLANTS — found in potatoes, rice, and bread.", a: "Starch", ex: "Starch = plant storage. Glycogen = animal storage. Same function, different organisms." },
+            { q: "The bonds that link monosaccharides together into polysaccharides are called ___ bonds.", a: "Glycosidic bonds", ex: "Glycosidic bonds link sugars. Peptide bonds link amino acids. Phosphodiester bonds link nucleotides." },
+            { q: "Which is NOT a complex carbohydrate: glycogen, starch, glucose, or cellulose?", a: "Glucose", ex: "Glucose is a monosaccharide (simple sugar). The other three are polysaccharides (complex carbohydrates)." }
+        ],
+        // ---- BUILD A PROTEIN ----
+        [
+            { q: "Proteins are built from these monomers, which all contain a carboxyl group (-COOH) and an amino group (-NH&#8322;).", a: "Amino acids", ex: "There are 20 different amino acids. Their sequence determines the protein's shape and function." },
+            { q: "The type of covalent bond that links one amino acid to the next in a protein chain is called a ___ bond.", a: "Peptide bond", ex: "Peptide bonds form through dehydration synthesis — removing water to join amino acids." },
+            { q: "These small organic molecules are the monomers of DNA and RNA, and also function as enzyme helpers and energy currency (ATP).", a: "Nucleotides", ex: "Each nucleotide = sugar + phosphate group + nitrogenous base. ATP is a modified nucleotide." },
+            { q: "The two types of nucleic acids in your cells are ___ and ___.", a: "DNA and RNA", ex: "DNA stores genetic information. RNA helps translate that information into proteins." },
+            { q: "Amino acids contain a carboxyl group. Which functional group is the OTHER signature group on every amino acid?", a: "Amino group (-NH&#8322;)", ex: "Amino acids are named for their amino group. Carboxyl = acidic. Amino = basic." }
+        ],
+        // ---- DNA DECODED ----
+        [
+            { q: "Without this molecule, a species cannot reproduce and would eventually go extinct.", a: "DNA", ex: "DNA is the blueprint for building proteins and running the cell. No DNA = no reproduction = extinction." },
+            { q: "Nucleotides are the monomers of nucleic acids. Each nucleotide has three parts: a sugar, a phosphate group, and a ___.", a: "Nitrogenous base", ex: "The bases (A, T/U, G, C) encode genetic information. The sugar-phosphate makes the backbone." },
+            { q: "The bonds that link nucleotides together in a DNA strand are called ___ bonds.", a: "Phosphodiester bonds", ex: "Phosphodiester bonds connect the sugar of one nucleotide to the phosphate of the next." },
+            { q: "Nucleotides serve multiple roles beyond building DNA/RNA. Name one other function.", a: "Energy currency (ATP) or enzyme helpers (coenzymes) or chemical messengers (cAMP)", ex: "ATP = adenosine TRIphosphate — a nucleotide modified with extra phosphate groups to store energy." },
+            { q: "All living things share specific key features. Which property of life does DNA specifically make possible?", a: "Reproduction / heredity", ex: "DNA carries the instructions that get copied and passed to offspring during reproduction." }
+        ],
+        // ---- FAT CHANCE ----
+        [
+            { q: "Lipids provide ___ calories per gram, while carbohydrates and proteins each provide ___ calories per gram.", a: "9; 4", ex: "Lipids are more than twice as energy-dense as carbs or proteins. This is clinically important for nutrition counseling." },
+            { q: "Saturated fats have only single bonds and are solid at room temperature. Name a food source.", a: "Butter, lard, dairy, animal fat, or coconut oil", ex: "Saturated = fully loaded with hydrogen atoms = single bonds only = solid." },
+            { q: "Unsaturated fats have at least one ___ bond between carbon atoms and are typically ___ at room temperature.", a: "Double bond; liquid", ex: "The double bond creates a 'kink' in the fatty acid tail, preventing tight packing — so they stay liquid (oils)." },
+            { q: "The monomers of lipids are ___ and glycerol.", a: "Fatty acids", ex: "Three fatty acids attach to one glycerol molecule through ester bonds to form a triglyceride." },
+            { q: "The type of bond that links fatty acids to glycerol in a fat molecule is called an ___ bond.", a: "Ester bond", ex: "Ester bonds form between the carboxyl group of a fatty acid and a hydroxyl group of glycerol." }
+        ]
+    ]
+};
+
+const FINAL = {
+    category: "The Big Picture",
+    q: "A patient comes in with a high fever. Their body is sweating profusely to try to cool down. Meanwhile, their white blood cells — built from amino acids linked by peptide bonds — are fighting an infection caused by a prokaryotic organism that has no nucleus. Name the biological process the body uses to regulate temperature, the type of bond linking the amino acids in the white blood cells, AND the domain of life the infecting organism most likely belongs to.",
+    a: "Homeostasis; Peptide bonds; Domain Bacteria",
+    ex: "This question ties together three Module 1 concepts: homeostasis (temperature regulation), protein chemistry (peptide bonds link amino acids), and cell classification (prokaryotic pathogen = most likely Bacteria). This is how biology connects — the body, the molecules, and the microbes all follow the same fundamental rules."
+};
+
+let teams = [];
+let currentRound = 1;
+let currentValue = 0;
+let usedCells = { 1: new Set(), 2: new Set() };
+let dailyDoubles = { 1: null, 2: null };
+
+function initTeams() {
+    teams = [
+        { name: "Team 1", score: 0 },
+        { name: "Team 2", score: 0 },
+        { name: "Team 3", score: 0 },
+        { name: "Team 4", score: 0 }
+    ];
+}
+
+function renderScoreboard() {
+    const sb = document.getElementById('scoreboard');
+    sb.innerHTML = teams.map((t, i) => `
+        <div class="team ${i === 0 ? 'active' : ''}" onclick="selectTeam(${i})" id="team${i}">
+            <h3 contenteditable="true" onblur="renameTeam(${i}, this.textContent)">${t.name}</h3>
+            <div class="score" id="score${i}">$${t.score}</div>
+            <div class="score-controls">
+                <button class="score-btn" onclick="event.stopPropagation(); adjustScore(${i}, -100)">-</button>
+                <button class="score-btn" onclick="event.stopPropagation(); adjustScore(${i}, 100)">+</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function selectTeam(idx) {
+    document.querySelectorAll('.team').forEach(t => t.classList.remove('active'));
+    document.getElementById('team' + idx).classList.add('active');
+}
+
+function renameTeam(idx, name) {
+    teams[idx].name = name.trim() || `Team ${idx + 1}`;
+}
+
+function adjustScore(idx, amount) {
+    teams[idx].score += amount;
+    document.getElementById('score' + idx).textContent = '$' + teams[idx].score;
+}
+
+function getActiveTeam() {
+    const active = document.querySelector('.team.active');
+    if (!active) return 0;
+    return parseInt(active.id.replace('team', ''));
+}
+
+function pickDailyDoubles() {
+    dailyDoubles[1] = Math.floor(Math.random() * 25);
+    dailyDoubles[2] = Math.floor(Math.random() * 25);
+}
+
+function renderBoard(roundNum) {
+    const data = roundNum === 1 ? ROUND1 : ROUND2;
+    const values = [200, 400, 600, 800, 1000];
+    const board = document.getElementById('board');
+
+    let html = '<div class="category-row">';
+    data.categories.forEach(cat => {
+        html += `<div class="category-header">${cat}</div>`;
+    });
+    html += '</div>';
+
+    for (let row = 0; row < 5; row++) {
+        html += '<div class="question-row">';
+        for (let col = 0; col < 5; col++) {
+            const flatIdx = row * 5 + col;
+            const used = usedCells[roundNum].has(flatIdx);
+            html += `<div class="cell ${used ? 'used' : ''}" onclick="openQuestion(${roundNum}, ${col}, ${row}, ${values[row]}, ${flatIdx})">$${values[row]}</div>`;
+        }
+        html += '</div>';
+    }
+
+    board.innerHTML = html;
+}
+
+function startGame() {
+    document.getElementById('splash').classList.add('hidden');
+    document.getElementById('gameContainer').classList.add('active');
+    initTeams();
+    pickDailyDoubles();
+    renderScoreboard();
+    renderBoard(1);
+}
+
+function openQuestion(roundNum, catIdx, qIdx, value, flatIdx) {
+    if (usedCells[roundNum].has(flatIdx)) return;
+    usedCells[roundNum].add(flatIdx);
+    currentValue = value;
+    renderBoard(roundNum);
+
+    const data = roundNum === 1 ? ROUND1 : ROUND2;
+    const qData = data.questions[catIdx][qIdx];
+
+    if (flatIdx === dailyDoubles[roundNum]) {
+        showDailyDouble(data.categories[catIdx], value, qData);
+    } else {
+        showQuestionModal(data.categories[catIdx], value, qData, false);
+    }
+}
+
+function showDailyDouble(category, value, qData) {
+    const dd = document.getElementById('ddFlash');
+    dd.classList.add('active');
+    setTimeout(() => {
+        dd.classList.remove('active');
+        showQuestionModal(category, value, qData, true);
+    }, 2000);
+}
+
+function showQuestionModal(category, value, qData, isDD) {
+    document.getElementById('modalCategory').textContent = category;
+    document.getElementById('modalValue').textContent = isDD ? 'DAILY DOUBLE!' : '$' + value;
+    document.getElementById('modalQuestion').innerHTML = qData.q;
+    document.getElementById('modalAnswerText').textContent = qData.a;
+    document.getElementById('modalExplanation').textContent = qData.ex;
+    document.getElementById('modalAnswer').classList.remove('visible');
+    document.getElementById('revealBtn').style.display = '';
+    document.getElementById('correctBtn').style.display = 'none';
+    document.getElementById('wrongBtn').style.display = 'none';
+    document.getElementById('modalOverlay').classList.add('active');
+}
+
+function revealAnswer() {
+    document.getElementById('modalAnswer').classList.add('visible');
+    document.getElementById('revealBtn').style.display = 'none';
+    document.getElementById('correctBtn').style.display = '';
+    document.getElementById('wrongBtn').style.display = '';
+}
+
+function markCorrect() {
+    const idx = getActiveTeam();
+    teams[idx].score += currentValue;
+    document.getElementById('score' + idx).textContent = '$' + teams[idx].score;
+    closeModal();
+}
+
+function markWrong() {
+    const idx = getActiveTeam();
+    teams[idx].score -= currentValue;
+    document.getElementById('score' + idx).textContent = '$' + teams[idx].score;
+    closeModal();
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    checkRoundComplete();
+}
+
+function checkRoundComplete() {
+    if (currentRound === 1 && usedCells[1].size === 25) {
+        document.getElementById('nextRoundBtn').style.display = '';
+    }
+    if (currentRound === 2 && usedCells[2].size === 25) {
+        document.getElementById('finalBtn').style.display = '';
+    }
+}
+
+function nextRound() {
+    currentRound = 2;
+    document.getElementById('roundIndicator').textContent = 'Round 2 of 2';
+    document.getElementById('nextRoundBtn').style.display = 'none';
+    renderBoard(2);
+}
+
+function startFinalJeopardy() {
+    document.getElementById('gameContainer').classList.remove('active');
+    document.getElementById('finalContainer').classList.add('active');
+    document.getElementById('finalCategory').textContent = 'Category: ' + FINAL.category;
+    document.getElementById('finalQuestion').innerHTML = FINAL.q;
+    document.getElementById('finalAnswerText').textContent = FINAL.a;
+    document.getElementById('finalExplanation').textContent = FINAL.ex;
+    document.getElementById('finalAnswerBox').classList.remove('visible');
+    document.getElementById('finalRevealBtn').style.display = '';
+}
+
+function revealFinalAnswer() {
+    document.getElementById('finalAnswerBox').classList.add('visible');
+    document.getElementById('finalRevealBtn').style.display = 'none';
+}
+
+function backToBoard() {
+    document.getElementById('finalContainer').classList.remove('active');
+    document.getElementById('gameContainer').classList.add('active');
+}
+
+function resetGame() {
+    if (!confirm('Reset the entire game? All scores and progress will be lost.')) return;
+    currentRound = 1;
+    usedCells = { 1: new Set(), 2: new Set() };
+    pickDailyDoubles();
+    document.getElementById('roundIndicator').textContent = 'Round 1 of 2';
+    document.getElementById('nextRoundBtn').style.display = 'none';
+    document.getElementById('finalBtn').style.display = 'none';
+    initTeams();
+    renderScoreboard();
+    renderBoard(1);
+}
+</script>
+</body>
+</html>
