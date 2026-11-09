@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO 189 Module 2 Jeopardy!</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1f3c 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .splash-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, #1a2a4a 0%, #0a1628 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .splash-screen.hidden { opacity: 0; pointer-events: none; }
+
+        .splash-logo {
+            font-size: 5em;
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 3px 3px 6px rgba(0,0,0,0.8);
+            letter-spacing: 8px;
+            animation: pulseGlow 2s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .splash-subtitle {
+            font-size: 1.5em;
+            color: #8ab4f8;
+            margin-bottom: 10px;
+        }
+
+        .splash-course {
+            font-size: 1.1em;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .splash-btn {
+            padding: 18px 50px;
+            font-size: 1.4em;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .splash-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { text-shadow: 0 0 30px rgba(255,215,0,0.6), 3px 3px 6px rgba(0,0,0,0.8); }
+            50% { text-shadow: 0 0 50px rgba(255,215,0,0.9), 3px 3px 6px rgba(0,0,0,0.8); }
+        }
+
+        .game-container { display: none; padding: 15px; max-width: 1500px; margin: 0 auto; }
+        .game-container.active { display: block; }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .top-bar h1 {
+            font-size: 2.2em;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 4px;
+        }
+
+        .round-indicator {
+            font-size: 1.1em;
+            color: #8ab4f8;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(138, 180, 248, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .ctrl-btn {
+            padding: 8px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            background: rgba(255,255,255,0.1);
+            color: #ccc;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ctrl-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+        .ctrl-btn.gold {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+            border: none;
+            font-weight: bold;
+        }
+
+        .ctrl-btn.gold:hover { box-shadow: 0 0 15px rgba(255,215,0,0.5); }
+
+        .scoreboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .team {
+            background: linear-gradient(135deg, rgba(50,70,120,0.8), rgba(30,50,90,0.8));
+            padding: 12px 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(255,215,0,0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .team.active {
+            border-color: #00e676;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+        }
+
+        .team h3 { font-size: 1.1em; color: #ffd700; margin-bottom: 5px; }
+        .team .score { font-size: 1.8em; font-weight: bold; }
+
+        .team .score-controls {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .score-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .score-btn:hover { background: rgba(255,255,255,0.25); }
+
+        .board {
+            background: rgba(0,0,0,0.6);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,215,0,0.15);
+        }
+
+        .category-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .category-header {
+            background: linear-gradient(180deg, #0055aa, #003d7a);
+            padding: 15px 8px;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+            border-radius: 8px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .question-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .cell {
+            background: linear-gradient(180deg, #1a3a7a, #0d2555);
+            padding: 18px 8px;
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #ffd700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: 1px solid rgba(255,215,0,0.15);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .cell:hover:not(.used) {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.4);
+            border-color: #ffd700;
+        }
+
+        .cell.used {
+            background: rgba(20,30,50,0.6);
+            color: rgba(255,255,255,0.1);
+            cursor: default;
+            border-color: transparent;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: linear-gradient(135deg, #0d2555, #1a3a7a);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(255,215,0,0.3);
+            animation: modalIn 0.4s ease;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-category {
+            font-size: 0.9em;
+            color: #8ab4f8;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .modal-value {
+            font-size: 2.5em;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        .modal-question {
+            font-size: 1.4em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e8e8e8;
+            padding: 0 10px;
+        }
+
+        .modal-question em { color: #8ab4f8; font-style: italic; }
+
+        .modal-answer {
+            background: rgba(0,230,118,0.1);
+            border: 2px solid #00e676;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: none;
+            animation: revealAnswer 0.5s ease;
+        }
+
+        .modal-answer.visible { display: block; }
+
+        @keyframes revealAnswer {
+            from { transform: translateY(15px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-answer h4 {
+            color: #00e676;
+            font-size: 1em;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .modal-answer p {
+            font-size: 1.3em;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .modal-answer .explanation {
+            font-size: 0.85em;
+            color: #aaa;
+            margin-top: 10px;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        .modal-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .modal-btn {
+            padding: 12px 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .btn-reveal {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+        }
+
+        .btn-reveal:hover { box-shadow: 0 0 20px rgba(255,215,0,0.5); }
+
+        .btn-correct {
+            background: linear-gradient(135deg, #00e676, #00c853);
+            color: #1a1a2e;
+        }
+
+        .btn-wrong {
+            background: linear-gradient(135deg, #ff5252, #d32f2f);
+            color: #fff;
+        }
+
+        .btn-close {
+            background: rgba(255,255,255,0.15);
+            color: #ccc;
+        }
+
+        .btn-close:hover { background: rgba(255,255,255,0.25); }
+
+        .daily-double-flash {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse, #ffd700, #ff8800);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            animation: ddFlash 1.5s ease-in-out forwards;
+        }
+
+        .daily-double-flash.active { display: flex; }
+
+        .daily-double-flash h1 {
+            font-size: 5em;
+            color: #1a1a2e;
+            text-shadow: 3px 3px 0 rgba(255,255,255,0.3);
+            letter-spacing: 8px;
+        }
+
+        @keyframes ddFlash {
+            0% { transform: scale(0.5); opacity: 0; }
+            30% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .final-container {
+            display: none;
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .final-container.active { display: block; }
+
+        .final-container h1 {
+            font-size: 3em;
+            color: #ffd700;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+        }
+
+        .final-category {
+            font-size: 1.5em;
+            color: #8ab4f8;
+            margin-bottom: 30px;
+        }
+
+        .final-question {
+            font-size: 1.4em;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 15px;
+            border: 2px solid rgba(255,215,0,0.2);
+        }
+
+        .final-answer-box {
+            background: rgba(0,230,118,0.1);
+            border: 2px solid #00e676;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .final-answer-box.visible { display: block; }
+
+        .final-answer-box h4 { color: #00e676; margin-bottom: 8px; letter-spacing: 2px; }
+        .final-answer-box p { font-size: 1.4em; font-weight: bold; }
+        .final-answer-box .explanation { font-size: 0.9em; color: #aaa; margin-top: 10px; line-height: 1.5; }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #555;
+            font-size: 0.85em;
+        }
+
+        .footer a { color: #8ab4f8; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .splash-logo { font-size: 3em; }
+            .top-bar h1 { font-size: 1.4em; }
+            .category-header { font-size: 0.65em; min-height: 55px; padding: 8px 4px; }
+            .cell { font-size: 1em; padding: 12px 4px; }
+            .modal { padding: 25px; }
+            .modal-question { font-size: 1.1em; }
+            .modal-value { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="splash-screen" id="splash">
+    <div class="splash-logo">JEOPARDY!</div>
+    <div class="splash-subtitle">BIO 189 &mdash; Module 2</div>
+    <div class="splash-course">Fundamentals of Biology &middot; Molecules and Components of Life</div>
+    <button class="splash-btn" onclick="startGame()">START GAME</button>
+</div>
+
+<div class="game-container" id="gameContainer">
+    <div class="top-bar">
+        <h1>JEOPARDY!</h1>
+        <div class="round-indicator" id="roundIndicator">Round 1 of 2</div>
+        <div class="controls">
+            <button class="ctrl-btn" onclick="resetGame()">Reset</button>
+            <button class="ctrl-btn gold" id="nextRoundBtn" onclick="nextRound()" style="display:none;">Round 2 &raquo;</button>
+            <button class="ctrl-btn gold" id="finalBtn" onclick="startFinalJeopardy()" style="display:none;">Final Jeopardy!</button>
+        </div>
+    </div>
+
+    <div class="scoreboard" id="scoreboard"></div>
+    <div class="board" id="board"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-category" id="modalCategory"></div>
+        <div class="modal-value" id="modalValue"></div>
+        <div class="modal-question" id="modalQuestion"></div>
+        <div class="modal-answer" id="modalAnswer">
+            <h4>ANSWER</h4>
+            <p id="modalAnswerText"></p>
+            <div class="explanation" id="modalExplanation"></div>
+        </div>
+        <div class="modal-buttons" id="modalButtons">
+            <button class="modal-btn btn-reveal" id="revealBtn" onclick="revealAnswer()">Show Answer</button>
+            <button class="modal-btn btn-correct" id="correctBtn" style="display:none;" onclick="markCorrect()">Correct &#10003;</button>
+            <button class="modal-btn btn-wrong" id="wrongBtn" style="display:none;" onclick="markWrong()">Wrong &#10007;</button>
+            <button class="modal-btn btn-close" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<div class="daily-double-flash" id="ddFlash">
+    <h1>DAILY DOUBLE!</h1>
+</div>
+
+<div class="final-container" id="finalContainer">
+    <h1>FINAL JEOPARDY!</h1>
+    <div class="final-category" id="finalCategory"></div>
+    <div class="final-question" id="finalQuestion"></div>
+    <div class="final-answer-box" id="finalAnswerBox">
+        <h4>ANSWER</h4>
+        <p id="finalAnswerText"></p>
+        <div class="explanation" id="finalExplanation"></div>
+    </div>
+    <div class="modal-buttons">
+        <button class="modal-btn btn-reveal" id="finalRevealBtn" onclick="revealFinalAnswer()">Show Answer</button>
+        <button class="modal-btn btn-close" onclick="backToBoard()">Back to Board</button>
+    </div>
+</div>
+
+<div class="footer" id="footerArea">
+    &copy; BIO 189 Fundamentals of Biology &middot; <a href="https://tehranilabs.org">TehraniLabs.org</a>
+</div>
+
+<script>
+const ROUND1 = {
+    categories: [
+        "Water Works",
+        "Carbon Copy",
+        "Carb Central",
+        "Lipid Lounge",
+        "Proteins & Nucleic Acids"
+],
+    questions: [
+        [
+            { "q": "Substances that dissolve easily in water get this 'loving' label.", "a": "Hydrophilic", "ex": "Hydro = water, philic = loving. Nonpolar, isotonic, and unsaturated are decoys." },
+            { "q": "A solution with a pH of 4 is best described as this.", "a": "Acidic", "ex": "Below 7 = acidic, 7 = neutral, above 7 = basic. A pH of 4 is solidly acidic." },
+            { "q": "When hydrogen ion (H+) concentration in the blood INCREASES, blood pH moves in this direction.", "a": "Down toward 1", "ex": "More H+ = more acidic = LOWER pH. pH and H+ move in opposite directions." },
+            { "q": "This chemical defender keeps a system's pH stable by resisting change when acid or base is added.", "a": "A buffer", "ex": "Buffers absorb or release H+ to hold pH steady \u2014 they resist change rather than pushing pH one way." },
+            { "q": "This narrow range is the normal pH of human blood, defended by buffer systems.", "a": "7.35-7.45", "ex": "Drift outside this range and proteins denature \u2014 acidosis and alkalosis are medical emergencies." }
+        ],
+        [
+            { "q": "Carbon can form covalent bonds with up to THIS many other atoms.", "a": "4", "ex": "Four bonding 'hands' let carbon build chains, branches, and rings \u2014 the scaffold of life." },
+            { "q": "Carbon builds life's molecules using this type of bond, in which atoms SHARE electrons.", "a": "Covalent bonds", "ex": "Ionic bonds transfer electrons; covalent bonds share them." },
+            { "q": "True or false: only organic molecules contain carbon.", "a": "False", "ex": "Carbon dioxide (CO2) contains carbon and is inorganic." },
+            { "q": "This is the most abundant molecule in living things \u2014 and it is NOT organic.", "a": "Water (H2O)", "ex": "Organic molecules are carbon-based. Water has no carbon at all." },
+            { "q": "Carbon's four-bond versatility makes it the backbone of these four macromolecule families.", "a": "Carbohydrates, lipids, proteins, and nucleic acids", "ex": "Every macromolecule of life is built on a carbon skeleton." }
+        ],
+        [
+            { "q": "Glucose belongs to this class of carbohydrate \u2014 simple, not complex.", "a": "Monosaccharide (simple sugar)", "ex": "Mono = one sugar unit. Glycogen, starch, and cellulose are the complex polysaccharides." },
+            { "q": "When blood sugar drops, this polysaccharide stored in muscle and liver is broken down into glucose.", "a": "Glycogen", "ex": "Glycogen = animal storage. Starch = plant storage. Cellulose = plant structure." },
+            { "q": "This polysaccharide forms the plant cell wall and is indigestible for almost all animals.", "a": "Cellulose", "ex": "Humans lack cellulase \u2014 cellulose passes through as dietary fiber." },
+            { "q": "Plants store energy in this digestible polysaccharide found in potatoes, rice, and bread.", "a": "Starch", "ex": "Same storage job as glycogen, but the plant version." },
+            { "q": "Of glucose, glycogen, starch, and cellulose, the one that is NOT a complex carbohydrate.", "a": "Glucose", "ex": "Glucose is a monosaccharide. The other three are polysaccharides = complex carbohydrates." }
+        ],
+        [
+            { "q": "At about 9 calories per gram, this macromolecule family has the highest caloric value per gram.", "a": "Lipids (fats)", "ex": "Carbs and protein provide ~4 cal/g; fat provides ~9. Remember 4-4-9." },
+            { "q": "Saturated fats contain ONLY this type of bond between carbon atoms.", "a": "Single bonds", "ex": "Saturated = fully loaded with hydrogen = single bonds only." },
+            { "q": "Because of those single bonds, saturated fats are found in this physical state at room temperature.", "a": "Solid", "ex": "Butter and lard = solid = saturated. Oils = liquid = unsaturated." },
+            { "q": "Name TWO foods rich in saturated fats.", "a": "Dairy and animal fat (also coconut oil)", "ex": "Themidterm list: dairy, animal fat, coconut oil \u2014 plant-based exception included." },
+            { "q": "The double bonds in these fats create kinks that keep them liquid at room temperature.", "a": "Unsaturated fats", "ex": "The kink prevents tight packing, so they do not solidify." }
+        ],
+        [
+            { "q": "These bonds join amino acids together into protein chains.", "a": "Peptide bonds", "ex": "Glycosidic links sugars, phosphodiester links nucleotides, peptide links amino acids." },
+            { "q": "Every amino acid carries this acidic functional group \u2014 the reason for the word 'acid'.", "a": "The carboxyl group (-COOH)", "ex": "Carboxyl = acidic end; amino group = basic end. Both sit on every amino acid." },
+            { "q": "These small organic molecules are subunits of DNA and RNA and double as enzyme helpers and chemical messengers.", "a": "Nucleotides", "ex": "One nucleotide = sugar + phosphate + nitrogenous base. ATP is a modified nucleotide." },
+            { "q": "A nucleotide's three parts: a sugar, a phosphate group, and THIS.", "a": "A nitrogenous base", "ex": "The bases (A, T/U, G, C) encode information; sugar-phosphate forms the backbone." },
+            { "q": "These are the two nucleic acids that store and express genetic information in your cells.", "a": "DNA and RNA", "ex": "DNA stores the instructions; RNA helps translate them into proteins." }
+        ]
+    ]
+};
+
+const ROUND2 = {
+    categories: [
+        "Cell Theory",
+        "Organelle Warehouse",
+        "Cellular Scenery",
+        "Membrane Masters",
+        "Microbe Cities"
+],
+    questions: [
+        [
+            { "q": "Cell theory's three principles: all organisms are made of cells, the cell is the basic unit of life, and THIS.", "a": "All cells come from preexisting cells", "ex": "No spontaneous generation \u2014 every cell divides from a parent cell." },
+            { "q": "The FALSE claim sometimes slipped into cell theory: cells are only alive when part of a ___ organism.", "a": "Multicellular", "ex": "Single-celled bacteria are fully alive. Multicellularity is not a theoretical requirement." },
+            { "q": "These three features are found in EVERY cell, prokaryotic or eukaryotic.", "a": "Plasma membrane, cytosol, and DNA", "ex": "The nucleus is NOT universal \u2014 prokaryotes have DNA without one." },
+            { "q": "Material exchange is most efficient when a cell has MORE of this relative to its volume.", "a": "Surface area", "ex": "Surface area greater than volume = efficient import/export. Big volume outgrows the membrane." },
+            { "q": "This surface-area-to-volume math is why large organisms are built from many of THESE instead of one giant cell.", "a": "Small cells", "ex": "Many small cells keep the SA:V ratio high; one giant cell would starve at its own border." }
+        ],
+        [
+            { "q": "Ribosomes attached to THIS organelle make it look 'rough' and turn it into the protein production line.", "a": "The rough endoplasmic reticulum", "ex": "The roughness IS the ribosomes. Smooth ER lacks them and handles lipids/detox." },
+            { "q": "This organelle modifies, sorts, and packages proteins and lipids for their final destinations.", "a": "The Golgi apparatus", "ex": "The shipping department: receives from the ER, labels, and dispatches in vesicles." },
+            { "q": "Ribosomes perform this single, essential function.", "a": "Protein synthesis", "ex": "Free or ER-attached, ribosomes do one thing: read mRNA and chain amino acids." },
+            { "q": "In BOTH plant and animal cells, this organelle produces ATP through aerobic respiration.", "a": "The mitochondria", "ex": "Chloroplasts photosynthesize (plants only); mitochondria respire (everyone)." },
+            { "q": "This organelle runs photosynthesis and is found in plant cells but NEVER in animal cells.", "a": "The chloroplast", "ex": "If a question asks what is NOT found in an animal cell, chloroplast is the classic answer." }
+        ],
+        [
+            { "q": "This jelly-like mixture of water, sugars, proteins, and ions makes up the cell's interior fluid.", "a": "The cytosol", "ex": "Cytosol = the fluid. Cytoplasm = cytosol + all the organelles floating in it." },
+            { "q": "These short, broom-bristle structures move materials across a cell's surface.", "a": "Cilia", "ex": "Cilia sweep (like the lining of your airways); a flagellum is the long propeller tail." },
+            { "q": "This long, whip-like structure propels an entire cell forward.", "a": "The flagellum", "ex": "One long whip for swimming \u2014 think sperm cells and many bacteria." },
+            { "q": "This organelle houses and protects the eukaryotic cell's DNA and gates the nuclear envelope.", "a": "The nucleus", "ex": "Watch for the NOT-a-function: 'controls the function of the ribosomes' is the impostor answer." },
+            { "q": "This organelle handles intracellular digestion and breaks down cellular debris and invaders.", "a": "The lysosome", "ex": "The recycling center \u2014 acid-filled sacs that dismantle worn-out parts." }
+        ],
+        [
+            { "q": "The cell membrane's primary function is to control THIS.", "a": "What enters and exits the cell", "ex": "Selective permeability: the membrane is the border control, not a protein factory." },
+            { "q": "Phospholipid fatty-acid tails avoid water, so they are described as this.", "a": "Hydrophobic", "ex": "Tails fear water and hide inside the bilayer; heads face out to the water." },
+            { "q": "Phospholipid heads face the water inside and outside the cell because they are this.", "a": "Hydrophilic", "ex": "Hydrophilic heads out + hydrophobic tails in = the bilayer assembles itself." },
+            { "q": "This interconnected system's purpose is building, modifying, and transporting proteins and lipids throughout the cell.", "a": "The endomembrane system", "ex": "Rough ER, vesicles, Golgi, and the plasma membrane act as one shipping network." },
+            { "q": "Proteins built on the rough ER travel next to this packaging organelle.", "a": "The Golgi apparatus", "ex": "Same route as the membrane category \u2014 ER to vesicle to Golgi is the standard shipping lane." }
+        ],
+        [
+            { "q": "Bacteria living as a community that shares a slime layer excreted by their capsules form this.", "a": "A biofilm", "ex": "Not pili, not cilia, not a 'commune' \u2014 the slime-sharing city is a biofilm." },
+            { "q": "This slimy bacterial coating on your teeth is the most familiar biofilm of all.", "a": "Dental plaque", "ex": "Every brushing session is anti-biofilm warfare." },
+            { "q": "Biofilms on these medical devices make some infections famously stubborn.", "a": "Catheters, IV lines, and artificial joints", "ex": "The slime shield blocks antibiotics and immune cells, which is why line care matters." },
+            { "q": "Inside a biofilm's slime layer, bacteria are protected from these TWO attackers.", "a": "Antibiotics and the immune system", "ex": "Community living = shared defense, shared nutrients, shared resistance." },
+            { "q": "Unlike pili or cilia (single-cell structures), a biofilm is best described as THIS kind of organization.", "a": "A cooperative community of bacteria", "ex": "Many cells acting as one coordinated city \u2014 that is the whole point of the biofilm." }
+        ]
+    ]
+};
+
+const FINAL = {
+    "category": "The Cell Factory Grand Tour",
+    "q": "A liver cell pulls glucose out of the blood across its phospholipid bilayer, stores the surplus as a polysaccharide, builds new enzymes on ribosome-studded membranes, sends them to the organelle that modifies, sorts, and packages them, and powers the whole operation in the organelle that makes ATP by aerobic respiration. Name the storage polysaccharide, the protein-building organelle, the packaging organelle, AND the ATP-producing organelle.",
+    "a": "Glycogen; rough endoplasmic reticulum; Golgi apparatus; mitochondria",
+    "ex": "One cell, one tour: membrane chemistry lets glucose in, carbohydrate storage (glycogen) banks it, the ER builds enzyme proteins, the Golgi ships them, and mitochondria pay for everything with ATP."
+};
+
+let teams = [];
+let currentRound = 1;
+let currentValue = 0;
+let usedCells = { 1: new Set(), 2: new Set() };
+let dailyDoubles = { 1: null, 2: null };
+
+function initTeams() {
+    teams = [
+        { name: "Team 1", score: 0 },
+        { name: "Team 2", score: 0 },
+        { name: "Team 3", score: 0 },
+        { name: "Team 4", score: 0 }
+    ];
+}
+
+function renderScoreboard() {
+    const sb = document.getElementById('scoreboard');
+    sb.innerHTML = teams.map((t, i) => `
+        <div class="team ${i === 0 ? 'active' : ''}" onclick="selectTeam(${i})" id="team${i}">
+            <h3 contenteditable="true" onblur="renameTeam(${i}, this.textContent)">${t.name}</h3>
+            <div class="score" id="score${i}">$${t.score}</div>
+            <div class="score-controls">
+                <button class="score-btn" onclick="event.stopPropagation(); adjustScore(${i}, -100)">-</button>
+                <button class="score-btn" onclick="event.stopPropagation(); adjustScore(${i}, 100)">+</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function selectTeam(idx) {
+    document.querySelectorAll('.team').forEach(t => t.classList.remove('active'));
+    document.getElementById('team' + idx).classList.add('active');
+}
+
+function renameTeam(idx, name) {
+    teams[idx].name = name.trim() || `Team ${idx + 1}`;
+}
+
+function adjustScore(idx, amount) {
+    teams[idx].score += amount;
+    document.getElementById('score' + idx).textContent = '$' + teams[idx].score;
+}
+
+function getActiveTeam() {
+    const active = document.querySelector('.team.active');
+    if (!active) return 0;
+    return parseInt(active.id.replace('team', ''));
+}
+
+function pickDailyDoubles() {
+    dailyDoubles[1] = Math.floor(Math.random() * 25);
+    dailyDoubles[2] = Math.floor(Math.random() * 25);
+}
+
+function renderBoard(roundNum) {
+    const data = roundNum === 1 ? ROUND1 : ROUND2;
+    const values = [200, 400, 600, 800, 1000];
+    const board = document.getElementById('board');
+
+    let html = '<div class="category-row">';
+    data.categories.forEach(cat => {
+        html += `<div class="category-header">${cat}</div>`;
+    });
+    html += '</div>';
+
+    for (let row = 0; row < 5; row++) {
+        html += '<div class="question-row">';
+        for (let col = 0; col < 5; col++) {
+            const flatIdx = row * 5 + col;
+            const used = usedCells[roundNum].has(flatIdx);
+            html += `<div class="cell ${used ? 'used' : ''}" onclick="openQuestion(${roundNum}, ${col}, ${row}, ${values[row]}, ${flatIdx})">$${values[row]}</div>`;
+        }
+        html += '</div>';
+    }
+
+    board.innerHTML = html;
+}
+
+function startGame() {
+    document.getElementById('splash').classList.add('hidden');
+    document.getElementById('gameContainer').classList.add('active');
+    initTeams();
+    pickDailyDoubles();
+    renderScoreboard();
+    renderBoard(1);
+}
+
+function openQuestion(roundNum, catIdx, qIdx, value, flatIdx) {
+    if (usedCells[roundNum].has(flatIdx)) return;
+    usedCells[roundNum].add(flatIdx);
+    currentValue = value;
+    renderBoard(roundNum);
+
+    const data = roundNum === 1 ? ROUND1 : ROUND2;
+    const qData = data.questions[catIdx][qIdx];
+
+    if (flatIdx === dailyDoubles[roundNum]) {
+        showDailyDouble(data.categories[catIdx], value, qData);
+    } else {
+        showQuestionModal(data.categories[catIdx], value, qData, false);
+    }
+}
+
+function showDailyDouble(category, value, qData) {
+    const dd = document.getElementById('ddFlash');
+    dd.classList.add('active');
+    setTimeout(() => {
+        dd.classList.remove('active');
+        showQuestionModal(category, value, qData, true);
+    }, 2000);
+}
+
+function showQuestionModal(category, value, qData, isDD) {
+    document.getElementById('modalCategory').textContent = category;
+    document.getElementById('modalValue').textContent = isDD ? 'DAILY DOUBLE!' : '$' + value;
+    document.getElementById('modalQuestion').innerHTML = qData.q;
+    document.getElementById('modalAnswerText').textContent = qData.a;
+    document.getElementById('modalExplanation').textContent = qData.ex;
+    document.getElementById('modalAnswer').classList.remove('visible');
+    document.getElementById('revealBtn').style.display = '';
+    document.getElementById('correctBtn').style.display = 'none';
+    document.getElementById('wrongBtn').style.display = 'none';
+    document.getElementById('modalOverlay').classList.add('active');
+}
+
+function revealAnswer() {
+    document.getElementById('modalAnswer').classList.add('visible');
+    document.getElementById('revealBtn').style.display = 'none';
+    document.getElementById('correctBtn').style.display = '';
+    document.getElementById('wrongBtn').style.display = '';
+}
+
+function markCorrect() {
+    const idx = getActiveTeam();
+    teams[idx].score += currentValue;
+    document.getElementById('score' + idx).textContent = '$' + teams[idx].score;
+    closeModal();
+}
+
+function markWrong() {
+    const idx = getActiveTeam();
+    teams[idx].score -= currentValue;
+    document.getElementById('score' + idx).textContent = '$' + teams[idx].score;
+    closeModal();
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    checkRoundComplete();
+}
+
+function checkRoundComplete() {
+    if (currentRound === 1 && usedCells[1].size === 25) {
+        document.getElementById('nextRoundBtn').style.display = '';
+    }
+    if (currentRound === 2 && usedCells[2].size === 25) {
+        document.getElementById('finalBtn').style.display = '';
+    }
+}
+
+function nextRound() {
+    currentRound = 2;
+    document.getElementById('roundIndicator').textContent = 'Round 2 of 2';
+    document.getElementById('nextRoundBtn').style.display = 'none';
+    renderBoard(2);
+}
+
+function startFinalJeopardy() {
+    document.getElementById('gameContainer').classList.remove('active');
+    document.getElementById('finalContainer').classList.add('active');
+    document.getElementById('finalCategory').textContent = 'Category: ' + FINAL.category;
+    document.getElementById('finalQuestion').innerHTML = FINAL.q;
+    document.getElementById('finalAnswerText').textContent = FINAL.a;
+    document.getElementById('finalExplanation').textContent = FINAL.ex;
+    document.getElementById('finalAnswerBox').classList.remove('visible');
+    document.getElementById('finalRevealBtn').style.display = '';
+}
+
+function revealFinalAnswer() {
+    document.getElementById('finalAnswerBox').classList.add('visible');
+    document.getElementById('finalRevealBtn').style.display = 'none';
+}
+
+function backToBoard() {
+    document.getElementById('finalContainer').classList.remove('active');
+    document.getElementById('gameContainer').classList.add('active');
+}
+
+function resetGame() {
+    if (!confirm('Reset the entire game? All scores and progress will be lost.')) return;
+    currentRound = 1;
+    usedCells = { 1: new Set(), 2: new Set() };
+    pickDailyDoubles();
+    document.getElementById('roundIndicator').textContent = 'Round 1 of 2';
+    document.getElementById('nextRoundBtn').style.display = 'none';
+    document.getElementById('finalBtn').style.display = 'none';
+    initTeams();
+    renderScoreboard();
+    renderBoard(1);
+}
+</script>
+</body>
+</html>
