@@ -1,0 +1,943 @@
+<title>Module 3 Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+  /* Layout: single-column study guide with callout cards and sectioned hierarchy */
+  :root {
+    --bg: #fafaf8;
+    --fg: #1a1a1a;
+    --heading: #1b3a4b;
+    --accent: #2a7f62;
+    --accent-light: #e8f5ee;
+    --clinical-bg: #fff8e1;
+    --clinical-border: #f9a825;
+    --clinical-icon: #e65100;
+    --mnemonic-bg: #e8eaf6;
+    --mnemonic-border: #5c6bc0;
+    --mnemonic-icon: #283593;
+    --key-bg: #fce4ec;
+    --key-border: #e91e63;
+    --section-bg: #ffffff;
+    --section-border: #e0e0e0;
+    --divider: #d0d0d0;
+    --subtle: #5f6368;
+    --tag-bg: #e0f2f1;
+    --tag-fg: #00695c;
+    font-family: 'Source Sans 3', 'Source Sans Pro', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121516;
+      --fg: #e0e0e0;
+      --heading: #8ec8db;
+      --accent: #4caf86;
+      --accent-light: #1a2e24;
+      --clinical-bg: #2a2210;
+      --clinical-border: #c77c00;
+      --clinical-icon: #ffab40;
+      --mnemonic-bg: #1a1c2e;
+      --mnemonic-border: #7986cb;
+      --mnemonic-icon: #9fa8da;
+      --key-bg: #2a1520;
+      --key-border: #f06292;
+      --section-bg: #1a1d1e;
+      --section-border: #333;
+      --divider: #444;
+      --subtle: #9e9e9e;
+      --tag-bg: #1a2e2c;
+      --tag-fg: #80cbc4;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121516;
+    --fg: #e0e0e0;
+    --heading: #8ec8db;
+    --accent: #4caf86;
+    --accent-light: #1a2e24;
+    --clinical-bg: #2a2210;
+    --clinical-border: #c77c00;
+    --clinical-icon: #ffab40;
+    --mnemonic-bg: #1a1c2e;
+    --mnemonic-border: #7986cb;
+    --mnemonic-icon: #9fa8da;
+    --key-bg: #2a1520;
+    --key-border: #f06292;
+    --section-bg: #1a1d1e;
+    --section-border: #333;
+    --divider: #444;
+    --subtle: #9e9e9e;
+    --tag-bg: #1a2e2c;
+    --tag-fg: #80cbc4;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    margin: 0;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+  .wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+    padding-block: 2rem 3rem;
+  }
+  h1, h2, h3 {
+    font-family: 'Merriweather', Georgia, serif;
+    color: var(--heading);
+    text-wrap: balance;
+  }
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 900;
+    margin: 0 0 0.25rem;
+    line-height: 1.25;
+  }
+  .subtitle {
+    font-size: 1.05rem;
+    color: var(--subtle);
+    margin-bottom: 0.5rem;
+  }
+  .course-tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.2em 0.7em;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .intro-note {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 0.9rem 1rem;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+  .intro-note strong { color: var(--accent); }
+
+  /* Part headers */
+  .part-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+  }
+  .part-header .part-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 700;
+    font-family: 'Merriweather', serif;
+    font-size: 1rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  /* Topic sections */
+  .topic {
+    background: var(--section-bg);
+    border: 1px solid var(--section-border);
+    border-radius: 8px;
+    padding: 1.25rem 1.25rem 1rem;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  h3 .emoji { font-family: system-ui; }
+
+  ul {
+    margin: 0 0 0.75rem;
+    padding-left: 1.25rem;
+  }
+  ul li {
+    margin-bottom: 0.4rem;
+  }
+  ul li strong { color: var(--heading); }
+
+  /* Callout boxes */
+  .callout {
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+  .callout .callout-icon {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    margin-top: 0.1rem;
+  }
+  .callout-body { flex: 1; min-width: 0; }
+  .callout-body strong { display: block; margin-bottom: 0.15rem; }
+
+  .clinical {
+    background: var(--clinical-bg);
+    border-left: 4px solid var(--clinical-border);
+  }
+  .clinical .callout-icon { color: var(--clinical-icon); }
+  .clinical strong { color: var(--clinical-icon); }
+
+  .mnemonic {
+    background: var(--mnemonic-bg);
+    border-left: 4px solid var(--mnemonic-border);
+  }
+  .mnemonic .callout-icon { color: var(--mnemonic-icon); }
+  .mnemonic strong { color: var(--mnemonic-icon); }
+
+  .key-concept {
+    background: var(--key-bg);
+    border-left: 4px solid var(--key-border);
+  }
+  .key-concept .callout-icon { color: var(--key-border); }
+  .key-concept strong { color: var(--key-border); }
+
+  /* Equation box */
+  .equation {
+    background: var(--section-bg);
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    letter-spacing: 0.01em;
+    overflow-x: auto;
+  }
+  .equation .label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  /* Comparison table */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.75rem 0;
+    font-size: 0.93rem;
+  }
+  .compare-table th {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+  }
+  .compare-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--section-border);
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tbody tr:nth-child(odd) td {
+    background: var(--accent-light);
+  }
+
+  /* Flowchart */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.75rem 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .flow-step {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .flow-step.alt {
+    background: var(--mnemonic-border);
+  }
+  .flow-arrow {
+    color: var(--subtle);
+    font-size: 1.1rem;
+  }
+
+  /* Quick reference card */
+  .quick-ref {
+    border: 2px dashed var(--accent);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .quick-ref h3 {
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .quick-ref ul { margin-bottom: 0; }
+
+  .footer {
+    text-align: center;
+    padding: 1.5rem 0 0.5rem;
+    font-size: 0.8rem;
+    color: var(--subtle);
+    border-top: 1px solid var(--divider);
+    margin-top: 2rem;
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; color: #000; }
+    .topic { break-inside: avoid; border-color: #ccc; }
+    .callout { break-inside: avoid; }
+    .part-header { break-after: avoid; }
+    .footer { border-top-color: #ccc; }
+  }
+
+  @media (max-width: 500px) {
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.1rem; }
+    .topic { padding: 1rem; }
+    .flow { font-size: 0.8rem; }
+    .flow-step { padding: 0.3rem 0.5rem; }
+  }
+</style>
+
+<div class="wrapper">
+
+  <h1>Energy &amp; Metabolism: Module 3 Study Guide</h1>
+  <p class="subtitle">BIO 189 &mdash; General Biology &bull; Midterm Review</p>
+  <span class="course-tag">Chapters 4 &amp; 6</span>
+
+  <div class="intro-note">
+    <strong>How to use this guide:</strong> Every objective tested in Module 3 is covered below, organized into six thematic sections. Look for three types of callout boxes throughout: <em>Clinical Connections</em> tie the biology to real nursing scenarios, <em>Memory Hooks</em> give you mnemonics and mental shortcuts, and <em>Key Concepts</em> flag the ideas that tie everything together. Master the concepts &mdash; don't just memorize words.
+  </div>
+
+  <!-- ===== PART A ===== -->
+  <div class="part-header">
+    <div class="part-icon">A</div>
+    <h2>Energy Foundations</h2>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#9889;</span> What Is Energy?</h3>
+    <ul>
+      <li><strong>Energy is the capacity to do work</strong> &mdash; not the ability to <em>create</em> energy (you cannot create or destroy energy; that is the First Law of Thermodynamics)</li>
+      <li>Energy exists in two broad forms: <strong>kinetic</strong> (energy of motion) and <strong>potential</strong> (stored energy, like the energy locked inside a glucose molecule)</li>
+      <li>Every process in a living cell &mdash; pumping ions, contracting muscle, synthesizing proteins &mdash; draws on the same energy pool</li>
+    </ul>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        When patients are NPO before surgery, their body taps into stored energy (glycogen, then fat). Understanding that energy is <em>transformed</em>, never created from nothing, explains why caloric intake matters &mdash; you cannot run a body on zero fuel.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128257;</span> Chemical Reactions: Reactants &amp; Products</h3>
+    <ul>
+      <li><strong>Reactants</strong> are what you start with (left of the arrow). <strong>Products</strong> are what you end up with (right of the arrow).</li>
+      <li>Reactants go through a reaction and are <em>transformed</em> into products</li>
+    </ul>
+    <div class="equation">
+      <span class="label">Cellular Respiration Equation</span>
+      C&#8326;H&#8321;&#8322;O&#8326; + 6O&#8322; &#10230; 6CO&#8322; + 6H&#8322;O + ATP
+    </div>
+    <ul>
+      <li>In the equation above, <strong>glucose</strong> and <strong>oxygen</strong> are the reactants; <strong>CO&#8322;</strong>, <strong>water</strong>, and <strong>ATP</strong> are the products</li>
+      <li>If a question asks you to identify a specific molecule's role, look at <em>which side of the arrow</em> it sits on</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "Reactants REACT and transform into Products that are PRODUCED." Arrow points from start to finish, just like reading left to right.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        When you deliver supplemental O&#8322; to a patient, you are literally providing a <em>reactant</em> for cellular respiration &mdash; fueling every cell in their body.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128279;</span> Condensation (Dehydration Synthesis) Reactions</h3>
+    <ul>
+      <li>A <strong>condensation reaction</strong> forms a <strong>covalent bond</strong> between two monomers by removing a molecule of water</li>
+      <li>This is how the body <em>builds</em> polymers: linking amino acids into proteins, linking monosaccharides into polysaccharides, linking nucleotides into DNA</li>
+      <li>The reverse process is <strong>hydrolysis</strong> &mdash; breaking bonds <em>by adding</em> water</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "CONDENSation = CONDENSes water out." Think of condensation on a cold glass &mdash; water leaves the system. Hydro-LYSIS = water LYSES (breaks) the bond.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART B ===== -->
+  <div class="part-header">
+    <div class="part-icon">B</div>
+    <h2>Enzymes &mdash; Your Body's Chemical Workforce</h2>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#129528;</span> Enzyme Structure</h3>
+    <ul>
+      <li>Enzymes are almost always <strong>proteins</strong> (not fats, not steroids, not hormones)</li>
+      <li>Because they are proteins, they can be <em>denatured</em> (unfolded) by extreme heat or extreme pH, which destroys their function</li>
+    </ul>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        This is exactly why <strong>malignant hyperthermia</strong> is a medical emergency during surgery &mdash; body temperature skyrockets, enzymes denature, and metabolic processes collapse.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#9874;&#65039;</span> Enzyme Function</h3>
+    <ul>
+      <li>Enzymes are <strong>biological catalysts</strong> &mdash; they <strong>speed up</strong> specific chemical reactions <strong>without being changed or consumed</strong></li>
+      <li>They are <strong>reusable</strong>: one enzyme molecule can catalyze the same reaction thousands of times</li>
+      <li>They are <strong>specific</strong>: each enzyme acts only on particular substrates</li>
+      <li>Enzymes do <em>not</em> require inhibitors to function; they lower the activation energy barrier all on their own</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "Enzymes are like nurses on a unit &mdash; they HELP the reaction happen, they are SPECIFIC to their specialty, and they go home UNCHANGED at the end of the shift."
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128273;</span> The Active Site</h3>
+    <ul>
+      <li>The <strong>active site</strong> is the specific region on an enzyme where the substrate binds and the reaction occurs</li>
+      <li>Only the correct substrate fits into the active site (like a key fitting a specific lock)</li>
+      <li>The active site's shape is determined by the enzyme's 3D protein structure</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "<strong>Active Site = Action Site</strong>" &mdash; it is where the catalytic action happens. The substrate walks into the enzyme's office, sits in the right chair, and work gets done.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128200;</span> Factors That Affect Enzyme Activity</h3>
+    <ul>
+      <li><strong>Temperature</strong> &mdash; too high denatures the enzyme; too low slows the reaction</li>
+      <li><strong>pH</strong> &mdash; each enzyme has an optimal pH (pepsin works best in the acidic stomach; trypsin works best in the basic small intestine)</li>
+      <li><strong>Substrate concentration</strong> &mdash; more substrate means faster reaction, up to a saturation point where all active sites are occupied</li>
+    </ul>
+    <div class="callout key-concept">
+      <span class="callout-icon">&#10071;</span>
+      <div class="callout-body">
+        <strong>Key Concept</strong>
+        <strong>Atmospheric pressure does NOT directly affect enzyme activity.</strong> The three factors that matter are temperature, pH, and substrate concentration. Don't confuse the environment <em>around</em> the cell with the chemistry <em>inside</em> the active site.
+      </div>
+    </div>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook &mdash; "TPS"</strong>
+        <strong>T</strong>emperature, <strong>P</strong>H, <strong>S</strong>ubstrate concentration &mdash; The three things that actually move the needle on enzyme rate. If it's not in TPS, it doesn't belong on the report.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        When you see elevated liver enzymes (AST, ALT) on a lab panel, it means liver <em>cells</em> are damaged and leaking their enzymes into the blood. The enzymes themselves haven't changed &mdash; their unexpected location is the diagnostic signal.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128260;</span> Feedback Inhibition</h3>
+    <ul>
+      <li><strong>Feedback inhibition</strong> is a regulatory mechanism where the <strong>product of a metabolic pathway slows or stops the pathway that produces it</strong></li>
+      <li>This is the cell's built-in thermostat &mdash; it prevents wasteful overproduction</li>
+      <li>The product binds to a regulatory site on an early enzyme in the pathway, shutting it down</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "Too much product? <strong>SHUT IT DOWN.</strong>" Imagine eating at an all-you-can-eat buffet &mdash; once your plate is overflowing, you wave the chef off. The product (full plate) inhibits the pathway (the chef cooking more).
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        <strong>Statins</strong> work by inhibiting HMG-CoA reductase, a key enzyme in cholesterol synthesis. This is the same logic as feedback inhibition &mdash; block the enzyme, reduce the product. Understanding this mechanism is understanding how drugs work at the molecular level.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART C ===== -->
+  <div class="part-header">
+    <div class="part-icon">C</div>
+    <h2>Membrane Transport &mdash; The Cell's Border Control</h2>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128682;</span> Active vs. Passive Transport</h3>
+
+    <table class="compare-table">
+      <thead>
+        <tr><th>Feature</th><th>Active Transport</th><th>Passive Transport</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>ATP Required?</strong></td><td>YES</td><td>NO</td></tr>
+        <tr><td><strong>Direction</strong></td><td>Against the gradient (low &rarr; high)</td><td>Down the gradient (high &rarr; low)</td></tr>
+        <tr><td><strong>Analogy</strong></td><td>Pushing a boulder uphill</td><td>Ball rolling downhill</td></tr>
+        <tr><td><strong>Examples</strong></td><td>Na&#8314;/K&#8314; pump, endocytosis</td><td>Diffusion, osmosis, facilitated diffusion</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "<strong>ACTIVE = ATP</strong>" (both start with A). "<strong>PASSIVE = FREE PASS</strong>" &mdash; no energy ticket needed.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        The Na&#8314;/K&#8314; pump is essential for nerve impulse transmission and cardiac rhythm. <strong>Digoxin</strong> (a heart medication) works by inhibiting this pump. Understanding active transport = understanding cardiac pharmacology.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128230;</span> Protein Trafficking: The Endomembrane Assembly Line</h3>
+    <ul>
+      <li>Proteins are synthesized on <strong>ribosomes</strong> attached to the <strong>rough endoplasmic reticulum (rough ER)</strong></li>
+      <li>Once made, proteins are transported to the <strong>Golgi apparatus (Golgi body)</strong> for modification, sorting, and packaging</li>
+    </ul>
+    <div class="flow">
+      <span class="flow-step">Ribosome</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Rough ER</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step alt">Golgi Apparatus</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Final destination</span>
+    </div>
+    <ul>
+      <li>Think of the rough ER as the <strong>factory floor</strong> and the Golgi as <strong>quality control &amp; shipping</strong></li>
+    </ul>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        <strong>Cystic fibrosis</strong> is caused by a defective CFTR protein that misfolds and gets stuck in the ER &mdash; the protein is <em>made</em> but never gets to where it needs to go. Protein trafficking errors cause real disease.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128167;</span> Osmosis</h3>
+    <ul>
+      <li><strong>Osmosis</strong> is the diffusion of <strong>water</strong> across a <strong>semipermeable membrane</strong></li>
+      <li>Osmosis is a form of <strong>passive transport</strong> &mdash; it does NOT require ATP</li>
+      <li>Water moves from an area of <strong>low</strong> solute concentration toward <strong>high</strong> solute concentration (water chases solute)</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "<strong>Water follows the salt.</strong>" Wherever solute is more concentrated, water flows toward it to try to equalize. Think of it as water being pulled in by the crowd.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#129529;</span> Tonicity &amp; Its Effects on Cells</h3>
+    <table class="compare-table">
+      <thead>
+        <tr><th>Solution Type</th><th>Solute Comparison</th><th>Water Movement</th><th>Cell Result</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Hypertonic</strong></td>
+          <td>More solute <em>outside</em></td>
+          <td>Water leaves the cell</td>
+          <td>Cell <strong>shrinks</strong> (crenation)</td>
+        </tr>
+        <tr>
+          <td><strong>Hypotonic</strong></td>
+          <td>Less solute <em>outside</em></td>
+          <td>Water enters the cell</td>
+          <td>Cell <strong>swells</strong> &amp; may <strong>burst</strong> (lysis)</td>
+        </tr>
+        <tr>
+          <td><strong>Isotonic</strong></td>
+          <td>Equal solute</td>
+          <td>No net movement</td>
+          <td>Cell stays the <strong>same</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout key-concept">
+      <span class="callout-icon">&#10071;</span>
+      <div class="callout-body">
+        <strong>Key Concept</strong>
+        Tonicity is always described <em>relative to the cell</em>. A red blood cell containing 2% solute placed in a 1% solution is in a <strong>hypotonic</strong> environment (less solute outside than inside). Water rushes IN &rarr; cell <strong>expands and may burst</strong>.
+      </div>
+    </div>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "<strong>HYPER</strong> = the cell shrivels" (a hyper kid runs around so much they get dehydrated). "<strong>HYPO</strong> = the cell swells" (a <strong>hippo</strong> is BIG and bloated).
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        Giving a <strong>hypotonic IV</strong> (like D5W after dextrose is metabolized) to a patient with <strong>cerebral edema</strong> could worsen brain swelling &mdash; water rushes into already-swollen brain cells. Conversely, <strong>hypertonic saline (3% NaCl)</strong> pulls water OUT of swollen tissue. Tonicity literally saves or takes lives in nursing.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART D ===== -->
+  <div class="part-header">
+    <div class="part-icon">D</div>
+    <h2>ATP &mdash; The Universal Energy Currency</h2>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128176;</span> ATP Structure &amp; Energy Transfer</h3>
+    <ul>
+      <li><strong>ATP (adenosine triphosphate)</strong> is the energy "currency" of the cell &mdash; virtually every energy-requiring process in the body spends ATP</li>
+      <li>Energy is released when ATP transfers a <strong>phosphate group</strong> to another molecule:</li>
+    </ul>
+    <div class="equation">
+      <span class="label">Energy Release from ATP</span>
+      ATP &rarr; ADP + P&#7522; + Energy
+    </div>
+    <ul>
+      <li>The transfer mechanism is a <strong>phosphate group</strong> &mdash; not heat, not adenosine, not the whole molecule</li>
+      <li>ADP can be recycled back to ATP by adding a phosphate group (requires energy input)</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook &mdash; "A Tiny Paycheck"</strong>
+        ATP = A Tiny Paycheck. Cells spend it one phosphate at a time. Pop off a phosphate, release some cash (energy), and you're left with ADP (a depleted paycheck). Recharge it at the mitochondrial bank.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        Every muscle contraction, every nerve impulse, every active transport event costs ATP. In <strong>cyanide poisoning</strong>, the electron transport chain is blocked &rarr; ATP production halts &rarr; death within minutes. This is why understanding ATP is understanding survival.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART E ===== -->
+  <div class="part-header">
+    <div class="part-icon">E</div>
+    <h2>Cellular Respiration &mdash; From Glucose to ATP</h2>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#127981;</span> The Big Picture</h3>
+    <ul>
+      <li><strong>Cellular respiration</strong> is the multi-step process cells use to extract energy from glucose and store it as ATP</li>
+      <li>It occurs in three major stages, each in a specific cellular location:</li>
+    </ul>
+    <div class="flow">
+      <span class="flow-step">Glycolysis<br><small>Cytoplasm</small></span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step alt">Krebs Cycle<br><small>Mito. Matrix</small></span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">ETC / Ox Phos<br><small>Inner Mito. Membrane</small></span>
+    </div>
+    <ul>
+      <li>The <strong>mitochondria</strong> are the organelles responsible for aerobic respiration and ATP production in both plant and animal cells</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook &mdash; "Good Kings Eat"</strong>
+        <strong>G</strong>lycolysis &rarr; <strong>K</strong>rebs cycle &rarr; <strong>E</strong>lectron transport chain. Three stages, in order, every time.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        This is why we monitor both <strong>glucose</strong> AND <strong>oxygen</strong> in patients &mdash; they are the two essential inputs of the entire process. Without either one, cells cannot produce enough ATP to survive.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#9986;&#65039;</span> Glycolysis &mdash; Splitting Glucose</h3>
+    <ul>
+      <li>Occurs in the <strong>cytoplasm</strong> (does not require mitochondria)</li>
+      <li>Does <strong>NOT require oxygen</strong> &mdash; it can occur under both aerobic and anaerobic conditions</li>
+      <li><strong>Input:</strong> 1 glucose molecule (6 carbons)</li>
+      <li><strong>Outputs:</strong></li>
+    </ul>
+    <table class="compare-table">
+      <thead>
+        <tr><th>Product</th><th>Amount</th><th>Details</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Pyruvate</strong></td><td>2 molecules</td><td>3 carbons each (6 &divide; 2 = 3)</td></tr>
+        <tr><td><strong>NADH</strong></td><td>2 molecules</td><td>Electron carriers for the ETC</td></tr>
+        <tr><td><strong>ATP</strong></td><td>Net gain of 2</td><td>(4 produced, 2 invested)</td></tr>
+      </tbody>
+    </table>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "Glyco-<strong>LYSIS</strong> = glucose gets <strong>LYSED</strong> (split)." One 6-carbon sugar is cut in half into two 3-carbon pyruvates. The number 2 dominates: <strong>2</strong> pyruvate, <strong>2</strong> NADH, <strong>2</strong> net ATP.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        Cancer cells often rely heavily on glycolysis even when oxygen IS present (the <strong>Warburg effect</strong>). This is the principle behind <strong>PET scans</strong> &mdash; radioactive glucose is injected, and tumors light up because they devour glucose at abnormal rates.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128260;</span> Citric Acid Cycle (Krebs Cycle)</h3>
+    <ul>
+      <li>Occurs in the <strong>mitochondrial matrix</strong></li>
+      <li><strong>Input:</strong> Acetyl-CoA (formed from pyruvate after glycolysis)</li>
+      <li><strong>Outputs:</strong> NADH, FADH&#8322;, CO&#8322;, and a small amount of ATP</li>
+    </ul>
+    <div class="equation">
+      <span class="label">Krebs Cycle Summary</span>
+      Acetyl-CoA &rarr; NADH + FADH&#8322; + CO&#8322; + ATP
+    </div>
+    <ul>
+      <li>The CO&#8322; your patient exhales comes largely from this cycle &mdash; it is a metabolic waste product</li>
+      <li>The main purpose of the Krebs cycle is to generate <strong>electron carriers</strong> (NADH and FADH&#8322;) that feed the electron transport chain</li>
+    </ul>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook &mdash; "Krebs CRANKS out carriers"</strong>
+        The Krebs cycle is the <strong>electron carrier factory</strong>. Its real output isn't ATP (that's just a bonus) &mdash; it's NADH and FADH&#8322;, the loaded delivery trucks heading to the ETC.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        When you read <strong>PaCO&#8322;</strong> on an arterial blood gas panel, you are measuring a waste product of the Krebs cycle. Elevated CO&#8322; can mean hypermetabolism (the cycle is spinning too fast) or respiratory failure (the lungs aren't clearing it).
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#9889;</span> Oxidative Phosphorylation &amp; the Electron Transport Chain</h3>
+    <ul>
+      <li>Occurs at the <strong>inner mitochondrial membrane</strong></li>
+      <li>This is where the <strong>majority of ATP</strong> is produced</li>
+      <li>NADH and FADH&#8322; donate their electrons to a series of protein complexes (the "chain")</li>
+      <li>As electrons pass down the chain, energy is used to pump H&#8314; ions, creating a gradient that drives <strong>ATP synthase</strong></li>
+      <li>The <strong>final electron acceptor is oxygen (O&#8322;)</strong> &mdash; this is why you breathe</li>
+      <li>Oxygen combines with the spent electrons and H&#8314; ions to form <strong>water (H&#8322;O)</strong></li>
+    </ul>
+    <div class="callout key-concept">
+      <span class="callout-icon">&#10071;</span>
+      <div class="callout-body">
+        <strong>Key Concept</strong>
+        O&#8322; is used at the <strong>very end</strong> of the electron transport chain &mdash; not at the beginning, not during the Krebs cycle, and not during glycolysis. Without O&#8322; to accept electrons at the finish line, the entire chain backs up and ATP production stops.
+      </div>
+    </div>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook &mdash; "O&#8322; is the Final Destination"</strong>
+        Electrons travel down the chain like passengers on a train. O&#8322; is the last stop. No O&#8322; at the station? The train can't unload, everything backs up, and the whole system shuts down.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        <strong>Cyanide</strong> blocks Complex IV of the ETC &rarr; electrons cannot reach O&#8322; &rarr; ATP production collapses &rarr; rapid cellular death. Treatment: <strong>hydroxocobalamin (Cyanokit)</strong> binds cyanide and reopens the chain. <strong>Carbon monoxide</strong> poisoning impairs O&#8322; delivery to the same chain &mdash; different mechanism, same downstream crisis.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#128178;</span> Total ATP Yield</h3>
+    <ul>
+      <li>From <strong>one molecule of glucose</strong> through complete aerobic respiration: approximately <strong>36&ndash;38 ATP</strong></li>
+    </ul>
+    <table class="compare-table">
+      <thead>
+        <tr><th>Stage</th><th>ATP Contribution</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Glycolysis</td><td>2 ATP (net) + 2 NADH</td></tr>
+        <tr><td>Pyruvate oxidation</td><td>2 NADH</td></tr>
+        <tr><td>Krebs Cycle</td><td>2 ATP + 6 NADH + 2 FADH&#8322;</td></tr>
+        <tr><td>Electron Transport Chain</td><td>~30&ndash;32 ATP (from all the NADH &amp; FADH&#8322;)</td></tr>
+        <tr><td><strong>Grand Total</strong></td><td><strong>~36&ndash;38 ATP</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook &mdash; "About 3 Dozen"</strong>
+        One glucose &rarr; about <strong>3 dozen</strong> ATPs. If someone says 8&ndash;12, that's only glycolysis. If someone says 125+ or 300+, that's science fiction.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection</strong>
+        This is why <strong>aerobic exercise</strong> is more sustainable than sprinting &mdash; aerobic metabolism produces roughly <strong>18&times;</strong> more ATP per glucose than anaerobic glycolysis alone (36 vs. 2). Your muscles can keep working when they have oxygen.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PART F ===== -->
+  <div class="part-header">
+    <div class="part-icon">F</div>
+    <h2>Fermentation &mdash; When Oxygen Isn't Available</h2>
+  </div>
+
+  <div class="topic">
+    <h3><span class="emoji">&#127866;</span> Anaerobic Pathways</h3>
+    <ul>
+      <li><strong>Fermentation</strong> occurs when oxygen is <strong>NOT available</strong> &mdash; these are <strong>anaerobic</strong> reactions</li>
+      <li>Purpose: regenerate <strong>NAD&#8314;</strong> so that glycolysis can continue producing those 2 ATPs without the full aerobic pathway</li>
+      <li>There are two types:</li>
+    </ul>
+
+    <table class="compare-table">
+      <thead>
+        <tr><th>Feature</th><th>Alcoholic Fermentation</th><th>Lactate Fermentation</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>End product</strong></td><td>Ethanol + CO&#8322;</td><td>Lactate</td></tr>
+        <tr><td><strong>Organisms</strong></td><td>Yeast, some bacteria</td><td>Human muscle cells, some bacteria</td></tr>
+        <tr><td><strong>Real-world example</strong></td><td>Beer, wine, bread rising</td><td>Muscle burn during intense exercise</td></tr>
+        <tr><td><strong>Requires O&#8322;?</strong></td><td>NO</td><td>NO</td></tr>
+        <tr><td><strong>Starting molecule</strong></td><td>Pyruvate (from glycolysis)</td><td>Pyruvate (from glycolysis)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout key-concept">
+      <span class="callout-icon">&#10071;</span>
+      <div class="callout-body">
+        <strong>Key Concept</strong>
+        In <strong>humans</strong>, when oxygen is insufficient, the NADH produced during glycolysis is used to convert <strong>pyruvate into lactate</strong>. This is lactate fermentation &mdash; not alcoholic fermentation. Know which pathway humans use.
+      </div>
+    </div>
+
+    <div class="callout mnemonic">
+      <span class="callout-icon">&#129504;</span>
+      <div class="callout-body">
+        <strong>Memory Hook</strong>
+        "<strong>AL</strong>coholic fermentation = <strong>AL</strong>cohol (ethanol)." "<strong>L</strong>actic fermentation = <strong>L</strong>actate." The name literally gives you the product &mdash; the hardest part of biology is realizing the answer is in the name.
+      </div>
+    </div>
+    <div class="callout clinical">
+      <span class="callout-icon">&#127973;</span>
+      <div class="callout-body">
+        <strong>Clinical Connection &mdash; Lactic Acidosis</strong>
+        When tissues don't receive enough oxygen (shock, sepsis, cardiac arrest), cells switch to anaerobic metabolism &rarr; <strong>lactate builds up</strong> &rarr; blood pH drops &rarr; <strong>lactic acidosis</strong>. An elevated <strong>serum lactate level</strong> is one of nursing's most critical lab values &mdash; it is a red flag for tissue hypoperfusion and can guide treatment decisions in the ICU. <em>This is the biology behind the lab value.</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUICK REFERENCE ===== -->
+  <div class="quick-ref">
+    <h3>&#128203; Module 3 Rapid-Fire Review</h3>
+    <ul>
+      <li><strong>Energy</strong> = the capacity to do work</li>
+      <li><strong>Enzymes</strong> = protein catalysts that speed reactions without being consumed</li>
+      <li><strong>Active site</strong> = where the substrate binds on an enzyme</li>
+      <li>Enzyme rate affected by: <strong>T</strong>emperature, <strong>P</strong>H, <strong>S</strong>ubstrate concentration (NOT atmospheric pressure)</li>
+      <li><strong>Feedback inhibition</strong> = product shuts down its own pathway</li>
+      <li><strong>Condensation reaction</strong> = covalent bond formed between monomers (releases water)</li>
+      <li><strong>Active transport</strong> = uses ATP; <strong>Passive</strong> = no ATP</li>
+      <li><strong>Osmosis</strong> = passive diffusion of water across a semipermeable membrane</li>
+      <li><strong>Hypotonic</strong> &#8594; cell swells/bursts; <strong>Hypertonic</strong> &#8594; cell shrinks</li>
+      <li>Rough ER makes proteins &#8594; Golgi modifies and ships them</li>
+      <li><strong>ATP</strong> = energy currency; energy transferred via phosphate group</li>
+      <li><strong>Glycolysis</strong> (cytoplasm): 1 glucose &#8594; 2 pyruvate + 2 NADH + 2 ATP (net)</li>
+      <li><strong>Krebs cycle</strong> (mito matrix): Acetyl-CoA &#8594; NADH + FADH&#8322; + CO&#8322; + ATP</li>
+      <li><strong>ETC</strong> (inner mito membrane): most ATP made here; O&#8322; is the final electron acceptor &#8594; H&#8322;O</li>
+      <li><strong>Total ATP yield</strong> from 1 glucose (aerobic): ~36&ndash;38 ATP</li>
+      <li><strong>Fermentation</strong> = anaerobic (no O&#8322;); alcoholic &#8594; ethanol; lactic &#8594; lactate</li>
+      <li>In humans without O&#8322;: pyruvate &#8594; lactate</li>
+      <li><strong>Mitochondria</strong> = the organelle where aerobic respiration produces ATP</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    BIO 189 &bull; General Biology &bull; Module 3: Energy &amp; Metabolism Part I<br>
+    Tehrani 2026
+  </div>
+
+</div>
