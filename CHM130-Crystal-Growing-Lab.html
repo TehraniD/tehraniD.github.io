@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crystal Growing Semester Project — CHM-130</title>
+<title>Crystal Growing Project — CHM-130</title>
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -202,6 +202,22 @@ body {
   font-family: var(--font-serif);
 }
 
+/* ── CUSTOMIZE BOX ── */
+.custom-box {
+  background: var(--purple-light);
+  border-left: 5px solid var(--purple-accent);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+}
+.custom-box h4 {
+  color: var(--purple);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-serif);
+}
+.custom-box ul { margin-left: 1.25rem; }
+.custom-box li { margin-bottom: 0.4rem; font-size: 0.95rem; }
+
 /* ── QUICK REFERENCE CARD ── */
 .quick-ref {
   background: var(--white);
@@ -229,6 +245,41 @@ body {
   border-bottom: 1px solid var(--gray-200);
 }
 .quick-ref th { font-weight: 700; color: var(--green); white-space: nowrap; }
+
+/* ── INSTRUCTOR CARD ── */
+.instructor-card {
+  background: var(--gray-100);
+  border: 2px dashed var(--gray-600);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+}
+.instructor-card h4 { font-family: var(--font-serif); color: var(--gray-800); margin-bottom: 0.5rem; }
+.instructor-card table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+.instructor-card th, .instructor-card td { padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--gray-300); text-align: left; vertical-align: top; }
+.instructor-card th { white-space: nowrap; color: var(--gray-600); }
+
+/* ── TIMELINE ── */
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0 1.5rem;
+}
+.tl-card {
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--gray-300);
+  background: var(--white);
+}
+.tl-card .tl-date { font-family: var(--font-serif); font-weight: 900; font-size: 1.05rem; }
+.tl-card .tl-title { font-weight: 700; font-size: 0.9rem; margin: 0.2rem 0; }
+.tl-card .tl-gap { font-size: 0.78rem; color: var(--gray-600); }
+.tl-1 { border-top: 5px solid var(--green-accent); }
+.tl-2 { border-top: 5px solid var(--blue-accent); }
+.tl-3 { border-top: 5px solid #b9770e; }
+.tl-4 { border-top: 5px solid #c0392b; }
 
 /* ── PROCEDURE STEPS ── */
 .week-block {
@@ -261,19 +312,20 @@ body {
 
 .week-1 .week-header { background: #d4efdf; color: var(--green); }
 .week-2 .week-header { background: #d6eaf8; color: var(--blue); }
-.week-3 .week-header { background: #e8daef; color: var(--purple); }
-.week-4 .week-header { background: #fdebd0; color: #b9770e; }
-.week-5 .week-header { background: #fadbd8; color: #c0392b; }
+.week-3 .week-header { background: #fdebd0; color: #b9770e; }
+.week-4 .week-header { background: #fadbd8; color: #c0392b; }
 
 .step-list { counter-reset: step; margin: 0.75rem 0; padding: 0; list-style: none; }
-.step-list li {
+.step-list > li {
   counter-increment: step;
   padding: 0.6rem 0 0.6rem 2.5rem;
   position: relative;
   border-bottom: 1px solid var(--gray-200);
 }
-.step-list li:last-child { border-bottom: none; }
-.step-list li::before {
+.step-list > li:last-child { border-bottom: none; }
+.step-list li ul { list-style: disc; }
+.step-list li ul li { padding: 0.15rem 0; border: none; }
+.step-list > li::before {
   content: counter(step);
   position: absolute;
   left: 0;
@@ -316,7 +368,6 @@ body {
   background: #fef9e7;
   color: #7d6608;
   border: 2px solid var(--clinical-border);
-  transform: rotate(0deg);
 }
 .flow-end { background: var(--purple-accent); color: var(--white); border-radius: 20px; }
 .flow-arrow {
@@ -380,6 +431,10 @@ body {
   font-style: italic;
   text-align: right;
   margin-top: 0.25rem;
+}
+.btn-purple {
+  margin-top: 1rem; padding: 0.6rem 1.5rem; background: var(--purple-accent); color: white; border: none;
+  border-radius: 6px; font-family: var(--font-sans); font-weight: 700; font-size: 0.95rem; cursor: pointer;
 }
 
 /* ── DATA TABLE ── */
@@ -461,17 +516,39 @@ body {
 .sol-table tr:nth-child(even) td { background: var(--blue-light); }
 .sol-highlight td { background: #abebc6 !important; font-weight: 700; }
 
+/* ── CRYSTAL CARD (printable) ── */
+.crystal-card {
+  display: none;
+  margin: 1rem auto;
+  max-width: 420px;
+  border: 3px double var(--purple);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  background: var(--white);
+  text-align: center;
+  font-family: var(--font-serif);
+  page-break-inside: avoid;
+}
+.crystal-card.show { display: block; }
+.crystal-card h3 { font-size: 1.15rem; color: var(--purple); margin-bottom: 0.25rem; }
+.crystal-card .cc-name { font-size: 1.3rem; font-weight: 900; margin: 0.4rem 0; }
+.crystal-card .cc-row { font-family: var(--font-sans); font-size: 0.9rem; margin: 0.15rem 0; }
+.crystal-card .cc-formula { font-family: var(--font-sans); font-size: 0.85rem; color: var(--gray-600); margin-top: 0.6rem; }
+
 /* ── PRINT CSS ── */
 @media print {
   body { background: white; max-width: 100%; padding: 0; font-size: 11pt; }
-  .tab-nav { display: none; }
+  .tab-nav, .no-print { display: none; }
   .tab-panel { display: block !important; border: none; box-shadow: none; padding: 0; page-break-inside: avoid; }
   .tab-panel + .tab-panel { margin-top: 1.5rem; border-top: 2px solid var(--gray-300); padding-top: 1rem; }
   .week-body { display: block !important; }
   .lab-header { border-radius: 0; padding: 1.5rem; }
   .obs-form input, .obs-form textarea, .obs-form select { border: 1px solid #999; }
-  .no-print { display: none; }
+  .crystal-card.show { display: block; }
 }
+body.print-card-only .tab-panel, body.print-card-only .lab-header, body.print-card-only .tab-nav, body.print-card-only .lab-footer { display: none !important; }
+body.print-card-only #tab-data { display: block !important; }
+body.print-card-only #tab-data > *:not(#crystalCard) { display: none !important; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
@@ -481,6 +558,7 @@ body {
   .obs-form .form-row { grid-template-columns: 1fr; }
   .lab-header h1 { font-size: 1.5rem; }
   .flow-branch { flex-direction: column; align-items: center; }
+  .timeline { grid-template-columns: 1fr 1fr; }
 }
 
 /* ── FOOTER ── */
@@ -497,16 +575,16 @@ body {
 
 <!-- ═══════════════ HEADER ═══════════════ -->
 <header class="lab-header">
-  <h1>Crystal Growing Semester Project</h1>
-  <p class="subtitle">Monopotassium Phosphate (MKP) — From Solution to Structure</p>
-  <span class="course-badge">CHM-130 · Fundamentals of Chemistry · 5-Week Project</span>
+  <h1>Crystal Growing Project</h1>
+  <p class="subtitle">Monoammonium Phosphate (MAP) — From Solution to Structure</p>
+  <span class="course-badge">CHM-130 · Fundamentals of Chemistry · 3 Sessions + Harvest · Nov 19 – Dec 15, 2026</span>
   <svg class="crystal-icon" width="80" height="70" viewBox="0 0 80 70">
     <polygon points="40,5 55,22 52,50 28,50 25,22" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
     <polygon points="40,5 55,22 40,18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
     <polygon points="52,50 62,38 55,22" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
     <polygon points="28,50 18,38 25,22" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
     <line x1="32" y1="60" x2="48" y2="60" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-    <text x="40" y="67" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7" font-family="Source Sans Pro">KH₂PO₄</text>
+    <text x="40" y="67" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7" font-family="Source Sans Pro">NH₄H₂PO₄</text>
   </svg>
 </header>
 
@@ -514,7 +592,7 @@ body {
 <nav class="tab-nav" role="tablist">
   <button class="tab-btn active-blue" role="tab" onclick="switchTab('overview', this, 'blue')" aria-selected="true">Overview &amp; Theory</button>
   <button class="tab-btn" role="tab" onclick="switchTab('procedures', this, 'green')">Procedures</button>
-  <button class="tab-btn" role="tab" onclick="switchTab('data', this, 'purple')">Data &amp; Analysis</button>
+  <button class="tab-btn" role="tab" onclick="switchTab('data', this, 'purple')">Data &amp; Your Crystal</button>
 </nav>
 
 <!-- ═══════════════════════════════════════════════ -->
@@ -523,49 +601,74 @@ body {
 <section id="tab-overview" class="tab-panel active" role="tabpanel">
 
   <div class="section-banner banner-blue">Introduction</div>
-  <p>Today you will prepare a supersaturated solution and set a crystal in motion. Over the next <strong>5 weeks</strong>, that crystal will grow — atom by atom, layer by layer — into a structure you can hold in your hand. Along the way, you will see <em>solubility</em>, <em>supersaturation</em>, <em>nucleation</em>, and <em>crystal habit</em> stop being vocabulary words and become things you can watch happen in real time.</p>
-  <p>The compound you will grow is <strong>monopotassium phosphate</strong> (MKP), chemical formula <strong>KH<sub>2</sub>PO<sub>4</sub></strong>. It is a water-soluble fertilizer and — in its purest form, known as <em>KDP</em> — the same material used in high-power laser optics, chosen there precisely because it grows into exceptionally clear, well-ordered crystals. It dissolves readily in warm water and crystallizes into tetragonal prisms with pointed pyramidal ends as the solution cools — the same supersaturation mechanism that forms kidney stones in the human body.</p>
+  <p>Over the next four weeks you will grow a crystal you get to keep. On <strong>Thursday, November 19</strong> you will make a hot, overloaded solution and let it cool. By the following Tuesday it will have thrown out a crop of tiny crystals. You will choose the best one, pick a color, and hang it in a fresh solution — and from that moment, every day, dissolved molecules will find that seed and lock onto it, face by face, layer by layer. On <strong>Tuesday, December 15</strong>, right after your final exam, you lift it out: a single crystal, in the color you chose, that did not exist a month ago.</p>
+  <p>Along the way, <em>solubility</em>, <em>supersaturation</em>, <em>nucleation</em>, and <em>crystal habit</em> stop being vocabulary words and become things you can watch happen in a jar.</p>
+  <p>The compound is <strong>monoammonium phosphate</strong> (MAP), formula <strong>NH<sub>4</sub>H<sub>2</sub>PO<sub>4</sub></strong> — the same substance in ABC fire extinguishers and water-soluble fertilizers. It dissolves readily in hot water and crystallizes into tetragonal prisms as the solution cools, by exactly the same mechanism that forms kidney stones in a patient.</p>
+
+  <div class="section-banner banner-blue">Your Schedule</div>
+  <div class="timeline">
+    <div class="tl-card tl-1">
+      <div class="tl-date">Thu 11/19</div>
+      <div class="tl-title">Session 1 — Make the solution</div>
+      <div class="tl-gap">Then 5 days undisturbed → seed crystals form</div>
+    </div>
+    <div class="tl-card tl-2">
+      <div class="tl-date">Tue 11/24</div>
+      <div class="tl-title">Session 2 — Pick your seed, pick your color, hang it</div>
+      <div class="tl-gap">Then 16 days over Thanksgiving break → main growth</div>
+    </div>
+    <div class="tl-card tl-3">
+      <div class="tl-date">Thu 12/10</div>
+      <div class="tl-title">Session 3 — Measure, clean, refeed</div>
+      <div class="tl-gap">Then 5 days → final growth</div>
+    </div>
+    <div class="tl-card tl-4">
+      <div class="tl-date">Tue 12/15</div>
+      <div class="tl-title">Harvest — right after the final exam</div>
+      <div class="tl-gap">Lift, dry, weigh, take it home</div>
+    </div>
+  </div>
+  <p style="font-size:0.9rem; color:var(--gray-600);">Total growth time from seeding to harvest: <strong>21 days</strong>. Your crystal is unattended for most of that — which is exactly why Sessions 2 and 3 matter.</p>
 
   <div class="clinical-box">
     <h4>🏥 Clinical Connection — Why Nurses Should Understand Crystallization</h4>
     <ul>
-      <li><strong>Kidney stones (nephrolithiasis):</strong> Calcium oxalate and calcium phosphate crystals form in urine when concentration exceeds solubility — the identical supersaturation mechanism you will observe in this lab.</li>
-      <li><strong>Gout:</strong> Monosodium urate crystallizes in synovial fluid of joints when serum uric acid exceeds ~6.8 mg/dL (its solubility limit at 37 °C).</li>
+      <li><strong>Kidney stones (nephrolithiasis):</strong> Calcium oxalate and calcium phosphate crystals form in urine when concentration exceeds solubility — the identical supersaturation mechanism you will drive on purpose in this lab.</li>
+      <li><strong>Gout:</strong> Monosodium urate crystallizes in joint fluid when serum uric acid exceeds ~6.8 mg/dL, its solubility limit at 37 °C.</li>
       <li><strong>Gallstones:</strong> Cholesterol crystallization in bile — supersaturation plus nucleation on mucin glycoproteins.</li>
-      <li><strong>Drug polymorphism:</strong> The same drug molecule can form different crystal structures (polymorphs) with different dissolution rates. Ritonavir's market recall in 1998 happened because an unexpected polymorph formed during manufacturing, rendering the capsules therapeutically inactive.</li>
-      <li><strong>IV crystalloid fluids:</strong> The clinical term "crystalloid" (Normal Saline, Lactated Ringer's) literally derives from substances that can form crystals — contrasted with "colloids" that cannot.</li>
+      <li><strong>Drug polymorphism:</strong> The same drug molecule can crystallize into different structures with different dissolution rates. Ritonavir's 1998 market recall happened because an unexpected polymorph appeared during manufacturing and the capsules stopped working.</li>
+      <li><strong>IV crystalloid fluids:</strong> "Crystalloid" (Normal Saline, Lactated Ringer's) literally means solutions of substances that can form crystals — as opposed to colloids, which cannot.</li>
     </ul>
   </div>
 
   <div class="section-banner banner-blue">Key Concepts</div>
 
-  <p><strong>Solubility</strong> describes the maximum amount of a solute that will dissolve in a given amount of solvent at a specific temperature. For MKP, solubility increases steadily with temperature:</p>
+  <p><strong>Solubility</strong> is the maximum amount of solute that will dissolve in a given amount of solvent at a given temperature. For MAP it rises steeply with temperature — and that steepness is the whole trick:</p>
 
   <table class="sol-table">
     <thead>
-      <tr><th>Temperature (°C)</th><th>Solubility (g MKP per 100 g H₂O)</th><th>What It Means</th></tr>
+      <tr><th>Temperature (°C)</th><th>Solubility (g MAP per 100 g H₂O)</th><th>What It Means for You</th></tr>
     </thead>
     <tbody>
-      <tr><td>10</td><td>18</td><td>Cold tap water</td></tr>
-      <tr class="sol-highlight"><td>20</td><td>23</td><td>Room temperature — your lab</td></tr>
-      <tr><td>30</td><td>28</td><td>Warm (growing-solution target)</td></tr>
-      <tr><td>50</td><td>43</td><td>Warm water tap (refeed prep)</td></tr>
-      <tr><td>70</td><td>64</td><td>Hot (seed-solution prep)</td></tr>
-      <tr><td>80</td><td>77</td><td>Very hot — handle with care</td></tr>
-      <tr><td>100</td><td>106</td><td>Boiling point of water</td></tr>
+      <tr><td>10</td><td>29</td><td>Cold tap water</td></tr>
+      <tr class="sol-highlight"><td>20–25</td><td>37–40</td><td>Room temperature — where your crystal grows</td></tr>
+      <tr><td>30</td><td>46</td><td>Warm — <em>too warm to add a seed</em> to a 45% solution</td></tr>
+      <tr><td>40</td><td>57</td><td>Warm bath</td></tr>
+      <tr><td>60</td><td>83</td><td>Hot — Session 2 &amp; 3 dissolving temperature</td></tr>
+      <tr><td>80</td><td>118</td><td>Very hot — Session 1 dissolving temperature</td></tr>
+      <tr><td>100</td><td>173</td><td>Boiling water</td></tr>
     </tbody>
   </table>
 
-  <p><strong>Supersaturation</strong> occurs when a hot, concentrated solution cools: it now contains <em>more</em> dissolved solute than the solvent can hold at the lower temperature. The excess must come out of solution as solid crystals. The degree of supersaturation controls what happens next:</p>
+  <p><strong>Supersaturation</strong> is what you get when a hot, concentrated solution cools: it now holds <em>more</em> dissolved solute than it can at the new temperature. The excess has to come out as solid. <em>How much</em> excess decides what you get:</p>
   <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
-    <li><strong>High supersaturation → many tiny crystals</strong> (rapid nucleation, small crystal size)</li>
-    <li><strong>Low supersaturation → fewer, larger, higher-quality crystals</strong> (slow growth, better structure)</li>
+    <li><strong>High supersaturation → many tiny crystals</strong> (rapid nucleation everywhere). That is Session 1 — we want a crop of seeds to choose from.</li>
+    <li><strong>Low supersaturation → a few large, clear crystals</strong> (slow, orderly growth on an existing surface). That is Sessions 2 and 3 — we want one seed to win.</li>
   </ul>
-  <p>In Week 1 you will use high supersaturation to generate many small <em>seed crystals</em>. In Week 2 you will select the best seed and move it into a low-supersaturation environment where it can grow slowly into a large, well-formed crystal over the remaining three weeks.</p>
 
-  <p><strong>Nucleation</strong> is the event where dissolved molecules first organize into a tiny ordered cluster — the "birth" of a crystal. Nucleation can be <em>homogeneous</em> (spontaneous) or <em>heterogeneous</em> (triggered by a surface — a scratch on glass, a dust particle, or a seed crystal you deliberately introduce).</p>
+  <p><strong>Nucleation</strong> is the moment dissolved molecules first organize into a tiny ordered cluster — the birth of a crystal. It can be <em>homogeneous</em> (spontaneous, in the bulk liquid) or <em>heterogeneous</em> (on a surface: a scratch in the glass, a speck of dust, a fishing line — or the seed you deliberately hang). A mildly supersaturated solution would rather deposit onto your seed than start new crystals from scratch. That preference is what you exploit.</p>
 
-  <p><strong>Crystal system:</strong> MKP crystallizes in the <strong>tetragonal</strong> system (a = b ≠ c, all angles 90°). Expect elongated prismatic crystals with pointed pyramidal tips — the classic "little pencil" or "obelisk" shape. Because MKP grows cleanly, your final crystal should be optically clear enough to see straight through.</p>
+  <p><strong>Crystal habit:</strong> MAP crystallizes in the <strong>tetragonal</strong> system (a = b ≠ c, all angles 90°). Expect an elongated four-sided prism with pointed pyramidal ends. Habit tends to persist — a long, needle-like seed grows into a long crystal; a stubby seed grows into a chunkier one. That is one of your customization choices.</p>
 
   <div class="section-banner banner-blue">Materials</div>
 
@@ -573,36 +676,37 @@ body {
     <div class="mat-card">
       <h5>Chemical (From the Instructor)</h5>
       <ul>
-        <li>Monopotassium phosphate (MKP, KH<sub>2</sub>PO<sub>4</sub>, 0-52-34 fertilizer grade)</li>
-        <li>~90–100 g per student total across 5 weeks: 40 g for seed prep (Week 1), 30 g for growing solution (Week 2), two ~10 g refeeds (Weeks 3 &amp; 4)</li>
+        <li>Monoammonium phosphate (MAP, NH<sub>4</sub>H<sub>2</sub>PO<sub>4</sub>, 12-61-0 water-soluble fertilizer grade)</li>
+        <li>About <strong>77 g per student</strong> over the project: 30 g (Session 1) + 35 g (Session 2) + 12 g (Session 3)</li>
       </ul>
     </div>
     <div class="mat-card">
-      <h5>Glassware &amp; Heat</h5>
+      <h5>Your Jar &amp; Glassware</h5>
       <ul>
-        <li>16 oz wide-mouth mason jar (your personal growing vessel)</li>
-        <li>250 mL glass beaker (shared, for weighing &amp; dissolving)</li>
+        <li><strong>8 oz (half-pint) mason jar</strong> with metal ring — your personal growing vessel and, if you like, its display case</li>
+        <li>150–250 mL beaker (shared, for dissolving)</li>
         <li>Glass stir rod</li>
-        <li>Thermometer (0–110 °C) — shared</li>
-        <li>Hot plate or electric kettle — shared, ≥ 80 °C</li>
+        <li>Thermometer (shared)</li>
+        <li>Hot water from the electric kettle (no individual hot plates needed)</li>
       </ul>
     </div>
     <div class="mat-card">
-      <h5>For Crystal Suspension</h5>
+      <h5>For Suspension &amp; Customizing</h5>
       <ul>
         <li>Clear monofilament fishing line (2–4 lb test)</li>
-        <li>Wooden popsicle stick or pencil (to bridge jar opening)</li>
-        <li>Coffee filter + rubber band (jar cover)</li>
-        <li>Masking tape &amp; permanent marker (labeling)</li>
+        <li>Wooden popsicle stick (bridges the jar mouth)</li>
+        <li>Coffee filter, held on by the jar's own metal ring (dust cover that still allows slow evaporation)</li>
+        <li>Food coloring — your choice of color(s)</li>
+        <li>Clear nail polish (to glue the line to a tiny seed, and to seal the finished crystal)</li>
+        <li>Masking tape &amp; permanent marker</li>
       </ul>
     </div>
     <div class="mat-card">
       <h5>For Measurement &amp; Safety</h5>
       <ul>
         <li>Ruler with mm divisions</li>
-        <li>Digital scale (± 0.1 g) — shared</li>
+        <li>Digital scale (±0.1 g or kitchen scale ±1 g) — shared</li>
         <li>Safety goggles (required)</li>
-        <li>Lab apron or old clothes</li>
         <li>Paper towels</li>
       </ul>
     </div>
@@ -611,12 +715,12 @@ body {
   <div class="safety-box">
     <h4>⚠️ Safety Precautions</h4>
     <ul>
-      <li><strong>Goggles required</strong> whenever handling MKP solution or hot water.</li>
-      <li>MKP solutions are mildly acidic (pH ≈ 4.2–4.7) — avoid eye contact. In case of splash, flush with water for 15 minutes and notify your instructor.</li>
-      <li><strong>Hot water hazard:</strong> Seed solutions are prepared at ≥ 80 °C. Handle beakers with heat-resistant gloves or beaker tongs. Never carry open beakers of hot solution across the room.</li>
-      <li>MKP is low-toxicity (used as a food-grade fertilizer and hydroponic plant food), but <strong>do not ingest</strong>. Wash hands thoroughly after each session.</li>
-      <li><strong>Disposal:</strong> MKP solution can be poured down the drain with running water — it is not a hazardous waste. Leftover solid MKP can go in the regular trash.</li>
-      <li>If crystals break, the fragments are not sharp in the way glass is, but dispose of small pieces rather than leaving them loose.</li>
+      <li><strong>Goggles required</strong> whenever handling MAP solution or hot water.</li>
+      <li>MAP solutions are mildly acidic (pH ≈ 3.8–4.4) — avoid eye contact. In case of a splash, flush with water for 15 minutes and notify your instructor.</li>
+      <li><strong>Hot water hazard:</strong> Session 1 uses near-boiling kettle water. Pour slowly, keep the jar on the bench, and never carry a hot jar across the room.</li>
+      <li>MAP is low-toxicity (it is a food-grade fertilizer ingredient), but <strong>do not ingest</strong>. Wash hands after each session. Your finished crystal is a decoration, not candy — keep it away from small children and pets.</li>
+      <li><strong>Disposal:</strong> Leftover solution goes down the drain with running water; leftover solid in the regular trash. Not hazardous waste.</li>
+      <li>Food coloring stains clothing and countertops — use a few drops, cap the bottle.</li>
     </ul>
   </div>
 
@@ -628,231 +732,223 @@ body {
 <!-- ═══════════════════════════════════════════════ -->
 <section id="tab-procedures" class="tab-panel" role="tabpanel">
 
-  <div class="section-banner banner-green">Week-by-Week Procedures (5 Weeks)</div>
-  <p>Click each week to expand its instructions. All weeks are shown when printed.</p>
+  <div class="section-banner banner-green">Session-by-Session Procedures</div>
+  <p>Click each session to expand its instructions. All sessions are shown when printed.</p>
 
-  <!-- WEEK 1 -->
+  <div class="instructor-card">
+    <h4>🧑‍🏫 Instructor Prep (per session, 30 students)</h4>
+    <table>
+      <tr><th>Session 1 (11/19)</th><td>~1.5 L near-boiling water in kettle(s) (30 × 50 mL + spare) · 2–3 scales · weigh boats or small cups · tape &amp; markers · 30 coffee filters · one cabinet shelf, interior wall, labeled by student, <strong>off-limits until 11/24</strong></td></tr>
+      <tr><th>Session 2 (11/24)</th><td>~2.2 L hot water (30 × 70 mL) · fishing line pre-cut to 25 cm · popsicle sticks · food coloring (several colors) · clear nail polish (3–4 bottles to share) · a basin of cool tap water for cooling beakers · <em>backup seed crystals</em> grown by you from a spare jar started a few days earlier, for anyone whose crop failed</td></tr>
+      <tr><th>Session 3 (12/10)</th><td>~0.8 L hot water (30 × 25 mL) · scales · rulers · food coloring · spare line &amp; sticks for rescues</td></tr>
+      <tr><th>Harvest (12/15)</th><td>Paper towels · scales · rulers · nail polish · phone-camera "photo station" (dark cloth + window light). Budget ~10–15 min after the exam.</td></tr>
+      <tr><th>Over the break</th><td>Thanksgiving HVAC setback is the main risk: a cold snap raises supersaturation (fine), but the warm-up when the building reopens can partially re-dissolve crystals. Interior cabinet, door closed, no stacking. If Session 3 is lost, the crystals still grow by slow evaporation — just smaller.</td></tr>
+      <tr><th>MAP needed</th><td>~77 g × 30 = <strong>~2.3 kg ≈ 5.1 lb</strong> → three 2-lb bags gives a comfortable margin; two bags is the bare minimum with no waste.</td></tr>
+    </table>
+  </div>
+
+  <!-- SESSION 1 -->
   <div class="week-block week-1">
     <div class="week-header" onclick="toggleWeek(this)">
-      <span>Week 1 — Solution Preparation &amp; Nucleation (First Session)</span>
+      <span>Session 1 — Thu 11/19 — Make the Solution &amp; Let It Nucleate</span>
       <span class="chevron">▶</span>
     </div>
     <div class="week-body">
-      <p><strong>Goal:</strong> Dissolve MKP in hot water to create a strongly supersaturated solution. As it cools undisturbed over the next 2–5 days, many small seed crystals will form.</p>
+      <p><strong>Goal:</strong> Dissolve far more MAP in hot water than room-temperature water can hold. As it cools undisturbed over 5 days, the excess crystallizes into a crop of small seed crystals on the bottom of your jar. <strong>Time: ~20 minutes.</strong></p>
 
       <div class="info-box">
         <h4>💡 The Chemistry</h4>
-        <p>At 80 °C, water can dissolve ~77 g of MKP per 100 g. At room temperature (~20 °C), it can only hold ~23 g. By dissolving 40 g in 100 mL of hot water, then cooling, you force ~17 g to crystallize out. That mass becomes hundreds of tiny seed crystals coating the bottom and sides of your jar.</p>
+        <p>At 75–80 °C, 50 mL of water can dissolve about 60 g of MAP. At room temperature it holds only about 19 g. You will dissolve <strong>30 g</strong> — comfortably within the hot limit, far above the cold one. As the jar cools, roughly 10 g has nowhere to go but out of solution, and it comes out as dozens of little crystals. By Tuesday you will have a crop to choose from.</p>
       </div>
 
       <ol class="step-list">
-        <li>Put on safety goggles. Label your mason jar with your name, section, and the date using masking tape.</li>
-        <li>Using the digital scale, weigh out <strong>40 g</strong> of MKP powder. Record the exact mass in your data table.</li>
-        <li>Measure <strong>100 mL</strong> of water in your beaker. Heat on a hot plate (or use pre-heated water from the instructor) until the temperature reaches <strong>80 °C ± 5 °C</strong>. Record the temperature.</li>
-        <li>Slowly add the 40 g of MKP to the hot water while stirring continuously with a glass rod. Stir for <strong>at least 2 minutes</strong> until all powder is completely dissolved. The solution should be <strong>perfectly clear</strong> — no visible grains. If any powder remains, continue heating gently and stirring.</li>
-        <li>Carefully pour the clear hot solution into your labeled mason jar.</li>
-        <li><strong>Do not stir</strong> once poured. Allow the solution to cool undisturbed.</li>
-        <li>Cover the jar loosely with a coffee filter secured with a rubber band (keeps out dust, allows slow evaporation).</li>
-        <li>Place the jar in your assigned shelf location. <strong>Do not move it</strong> until Week 2.</li>
-        <li>In your observation log, sketch the solution and record: initial mass of MKP, volume of water, dissolution temperature, and the time you set it to cool.</li>
+        <li>Put on goggles. Label your 8 oz jar with your name and section on masking tape. Put the tape near the top so it does not sit in the water bath later.</li>
+        <li>Place your jar on the scale, tare it, and weigh <strong>30 g</strong> of MAP directly into the jar. Record the exact mass.</li>
+        <li>Measure <strong>50 mL</strong> of near-boiling water from the kettle in a graduated cylinder and pour it into the jar, over the powder. The water will be about 75 °C once it is in the jar.</li>
+        <li>Stir with a glass rod for <strong>1–2 minutes</strong> until the solution is <strong>perfectly clear</strong> — no grains, no haze. (The solution gets noticeably colder as MAP dissolves — dissolving MAP absorbs heat. That is real thermodynamics you can feel through the glass.) If a few grains refuse to dissolve, add 5 mL more hot water and keep stirring.</li>
+        <li>Take the rod out. <strong>From this moment, do not stir, swirl, tap, or move the jar.</strong> Every disturbance makes extra crystals nucleate.</li>
+        <li>Lay a coffee filter over the mouth of the jar and screw the metal ring down over it (no flat lid). Dust stays out; water vapor gets out slowly.</li>
+        <li>Carry the jar carefully to your assigned shelf spot. It stays there, untouched, until Tuesday 11/24.</li>
+        <li>In your observation log, record mass of MAP, volume of water, approximate temperature, and the time. Sketch what you see (it should look like plain water).</li>
       </ol>
 
       <div class="quick-ref">
-        <h4>📋 Week 1 Quick Reference</h4>
+        <h4>📋 Session 1 Quick Reference</h4>
         <table>
-          <tr><th>MKP mass</th><td>40 g (weigh precisely)</td></tr>
-          <tr><th>Water volume</th><td>100 mL</td></tr>
-          <tr><th>Dissolution temp</th><td>80 °C ± 5 °C</td></tr>
-          <tr><th>Stir time</th><td>≥ 2 min until perfectly clear</td></tr>
-          <tr><th>Cooling</th><td>Undisturbed, loosely covered, on shelf</td></tr>
-          <tr><th>Expected result</th><td>Seed crystals visible in 24–72 hours</td></tr>
+          <tr><th>MAP mass</th><td>30 g — weighed directly into the jar</td></tr>
+          <tr><th>Water</th><td>50 mL from the kettle (≈ 75 °C in the jar)</td></tr>
+          <tr><th>Stir</th><td>1–2 min until perfectly clear</td></tr>
+          <tr><th>Cover</th><td>Coffee filter + metal ring, no flat lid</td></tr>
+          <tr><th>Then</th><td>Shelf. Hands off until 11/24.</td></tr>
+          <tr><th>Expect</th><td>Seed crystals visible within 1–3 days</td></tr>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- WEEK 2 -->
+  <!-- SESSION 2 -->
   <div class="week-block week-2">
     <div class="week-header" onclick="toggleWeek(this)">
-      <span>Week 2 — Seed Crystal Selection &amp; Growth Solution Setup</span>
+      <span>Session 2 — Tue 11/24 — Pick Your Seed, Pick Your Color, Hang It</span>
       <span class="chevron">▶</span>
     </div>
     <div class="week-body">
-      <p><strong>Goal:</strong> Choose the best seed crystal from Week 1's crop. Prepare a fresh, mildly supersaturated growing solution. Suspend the seed in the new solution to begin controlled growth.</p>
+      <p><strong>Goal:</strong> Choose one seed from your crop, rebuild your solution into a <em>mildly</em> supersaturated growing solution in the color you want, and suspend the seed in it. This is the session that decides what your crystal becomes. <strong>Time: ~45 minutes, most of it waiting for the solution to cool.</strong></p>
+
+      <div class="custom-box">
+        <h4>🎨 Make It Yours — decisions you make today</h4>
+        <ul>
+          <li><strong>Color.</strong> Any food color, or none (a water-clear "diamond"). Blue and purple dyes are taken up more weakly than red, green, and yellow, so expect pastel blues. The crystal will always be paler than the solution.</li>
+          <li><strong>Shape.</strong> A long, slender seed tends to grow into a long crystal; a short, chunky seed into a chunkier one. Choose the proportions you want to end with.</li>
+          <li><strong>Display.</strong> Decide now whether you want to leave a long tail of fishing line to hang it as an <strong>ornament</strong> (tie a 15 cm loop at the stick end) or keep it in the jar on a bed of your leftover seed crystals.</li>
+        </ul>
+      </div>
 
       <ol class="step-list">
-        <li>Observe your jar. You should see a mass of small crystals on the bottom and possibly the sides. Record your observations and sketch what you see.</li>
-        <li>Carefully pour the remaining liquid (the "mother liquor") into a separate container and set it aside — <strong>do not discard it</strong>. It will go back in after you add the seed.</li>
-        <li><strong>Select your seed crystal.</strong> Examine the crop and choose the single best specimen:
+        <li>Look at your jar before touching it. Describe and sketch the crop: how many crystals, how big, clear or cloudy, where they formed.</li>
+        <li>Unscrew the ring, remove the filter. <strong>Pour the clear liquid (the "mother liquor") into a beaker and keep it</strong> — it is already saturated with MAP and you will reuse it. Pour slowly so the crystals stay in the jar.</li>
+        <li>Tip the crystals onto a paper towel. <strong>Choose your seed:</strong>
           <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
-            <li>Look for a crystal that is <strong>clear</strong> (not cloudy or milky)</li>
-            <li>Look for <strong>well-defined faces and edges</strong> (symmetrical pencil or obelisk shape)</li>
-            <li>Choose one that is approximately <strong>3–5 mm</strong> in its longest dimension</li>
-            <li>Avoid crystals that are fused together in clusters</li>
+            <li><strong>Clear</strong>, not milky or cracked</li>
+            <li><strong>Sharp faces and edges</strong> — a recognizable four-sided prism</li>
+            <li>About <strong>4–8 mm</strong> long — big enough to handle, small enough to have been grown slowly</li>
+            <li>A <strong>single</strong> crystal, not a fused cluster</li>
+            <li>The shape you want (see Make It Yours)</li>
           </ul>
+          Keep the second-best one as a spare. Save the rest of the crop in a labeled cup if you want a display bed at the end.
         </li>
-        <li>Tie or loop a piece of monofilament fishing line around your seed crystal. If it is too small to tie, use a tiny dab of clear nail polish to glue the line to the crystal and let it dry for 5 minutes.</li>
-        <li>Tie the other end of the line to the center of a popsicle stick (or pencil). Adjust the length so that when the stick rests across the top of your jar, the crystal hangs in the <strong>center of the solution</strong> — not touching the bottom or sides.</li>
-        <li><strong>Prepare the growing solution:</strong> Weigh <strong>30 g</strong> of fresh MKP. Heat <strong>100 mL</strong> of water to <strong>50 °C</strong>. Dissolve the MKP completely (all powder gone, clear solution).</li>
-        <li>Let the growing solution cool to approximately <strong>30 °C</strong> (warm to the touch, not hot). This is critical — if it is too hot it will dissolve your seed crystal.</li>
-        <li>Pour the cooled growing solution into your empty jar. Gently lower your seed crystal in. Rest the popsicle stick across the rim. The crystal should hang fully submerged and freely in the middle of the solution.</li>
-        <li>Cover loosely with the coffee filter. Return to your shelf location. Record seed crystal dimensions (length × width × height in mm) and mass if possible.</li>
+        <li>Attach a 25 cm piece of fishing line to the seed. Easiest: lay the seed on the line, put a <em>tiny</em> dot of clear nail polish where line meets crystal, and let it set 5 minutes while you make the solution. If your seed is big enough, you can instead loop the line twice around its waist and knot it.</li>
+        <li>Tie the free end to the middle of a popsicle stick. Set the length so that with the stick resting across the jar mouth, the seed hangs <strong>about 1 cm above the bottom</strong> and clear of the walls. (Your solution will be about 4 cm deep.) If you want an ornament loop, tie it now at the stick end.</li>
+        <li><strong>Make the growing solution:</strong> Into the beaker holding your mother liquor, add <strong>70 mL</strong> of hot kettle water and <strong>35 g</strong> of fresh MAP. Stir until perfectly clear. The mix will be around 55–60 °C — hot enough to dissolve everything.</li>
+        <li><strong>Add your color now:</strong> 3–5 drops of food coloring, stir once. (More drops does not mean a darker crystal — the crystal takes up only a fraction of the dye.)</li>
+        <li><strong>Cool it to room temperature — this is the step people rush and regret.</strong> Set the beaker in the basin of cool tap water and wait, checking with a thermometer. You need <strong>26 °C or below</strong>. Why: at 30 °C this solution is still <em>under</em>saturated and will eat your seed; at 24 °C it is gently supersaturated and will feed it. Do not put the beaker in ice — a shock-cooled solution throws out a snowstorm of tiny crystals instead.</li>
+        <li><strong>Seed-grain test:</strong> drop one of your tiniest leftover crystals into the beaker and watch it for one minute. If it shrinks or vanishes, the solution is still too warm — keep cooling and test again. If it survives (or grows a little), you are ready.</li>
+        <li>Rinse and dry your jar. Pour the cooled growing solution in. Lower your seed on its line and rest the stick across the rim. The seed should hang free, fully submerged, not touching anything.</li>
+        <li>Filter + ring on top. Back to your shelf spot, same place, same orientation. Record seed dimensions (L × W × H in mm) and mass if you could weigh it, color used, and the solution temperature when you added the seed.</li>
       </ol>
 
       <div class="clinical-box">
         <h4>🏥 Clinical Connection — Seeding &amp; Kidney Stones</h4>
         <ul>
-          <li>In the kidney, a tiny crystal fragment or a cellular debris particle can serve as a <strong>nucleation site</strong> — exactly like your seed crystal. Once a small crystal exists, the supersaturated urine deposits more solute onto it, making it larger.</li>
-          <li>Clinical interventions like increased hydration and citrate supplementation work by <strong>reducing urinary supersaturation</strong> — the same concept you are exploiting by using a milder solution in Week 2 compared to Week 1.</li>
+          <li>In the kidney, a tiny crystal fragment or a bit of cellular debris can serve as a <strong>nucleation site</strong> — exactly like your seed. Once any crystal exists, supersaturated urine would rather build on it than start fresh.</li>
+          <li>Hydration and citrate therapy work by <strong>lowering urinary supersaturation</strong> — the same lever you pulled when you made today's solution milder than Session 1's.</li>
         </ul>
       </div>
 
       <div class="quick-ref">
-        <h4>📋 Week 2 Quick Reference</h4>
+        <h4>📋 Session 2 Quick Reference</h4>
         <table>
-          <tr><th>Seed crystal size</th><td>~3–5 mm, clear, well-formed single crystal</td></tr>
-          <tr><th>Growing-solution MKP</th><td>30 g in 100 mL water</td></tr>
-          <tr><th>Dissolution temp</th><td>50 °C</td></tr>
-          <tr><th>Cool to before adding seed</th><td>~30 °C (warm, not hot)</td></tr>
-          <tr><th>Suspension</th><td>Fishing line → popsicle-stick bridge, crystal centered</td></tr>
+          <tr><th>Seed</th><td>4–8 mm, clear, sharp-edged, single</td></tr>
+          <tr><th>Growing solution</th><td>Your mother liquor + 70 mL hot water + 35 g MAP (≈ 45 g per 100 mL total)</td></tr>
+          <tr><th>Color</th><td>3–5 drops, added while hot</td></tr>
+          <tr><th>Cool to</th><td><strong>≤ 26 °C</strong> in a cool-water bath, then seed-grain test</td></tr>
+          <tr><th>Hang</th><td>~1 cm above bottom, clear of walls, stick across rim</td></tr>
+          <tr><th>Then</th><td>Shelf. Hands off for 16 days.</td></tr>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- WEEK 3 -->
+  <!-- SESSION 3 -->
   <div class="week-block week-3">
     <div class="week-header" onclick="toggleWeek(this)">
-      <span>Week 3 — First Growth Check &amp; Refeed</span>
+      <span>Session 3 — Thu 12/10 — Measure, Clean, Refeed (and Optional Second Color)</span>
       <span class="chevron">▶</span>
     </div>
     <div class="week-body">
-      <p><strong>Goal:</strong> Measure crystal growth, remove parasitic crystals, and refresh the supersaturation by adding a refeed solution. This is the most important maintenance step for continued growth over the final two weeks.</p>
+      <p><strong>Goal:</strong> After 16 days your crystal has used up most of the excess MAP in its solution and growth has slowed. Today you measure it, clear away the competition, and top up the supersaturation for the final five days. <strong>Time: ~30 minutes.</strong></p>
+
+      <div class="custom-box">
+        <h4>🎨 Make It Yours — today's option</h4>
+        <ul>
+          <li><strong>Two-tone band.</strong> Put a <em>different</em> color in today's refeed and the last five days of growth form an outer layer in the new color around your original core — a visible record that the crystal grew from the outside in. Same color = a uniform crystal. No color = a clear outer shell.</li>
+        </ul>
+      </div>
 
       <ol class="step-list">
-        <li>Observe your crystal through the glass without disturbing it. Note visible growth, changes in shape, or cloudiness in the solution.</li>
-        <li>Gently lift the popsicle stick to raise the crystal just above the solution surface. <strong>Work quickly</strong> — the wet crystal surface can dissolve slightly if left exposed too long (&gt; 30 seconds).</li>
-        <li>Measure the crystal dimensions (L × W × H) in millimeters with your ruler. Record in your data table.</li>
-        <li>Place the crystal on a clean paper towel. Loosely cover it with plastic wrap to protect it.</li>
-        <li><strong>Check for parasitic crystals:</strong> Look for small unwanted crystals growing on the fishing line, on the popsicle stick, or on the bottom and sides of the jar. Carefully remove them — they steal dissolved MKP from your growing crystal. Scrape them off with a clean spoon or fingertip.</li>
-        <li><strong>Prepare the refeed:</strong> In a separate beaker, dissolve <strong>10 g</strong> of fresh MKP in <strong>30 mL</strong> of water heated to <strong>50 °C</strong>. Stir until clear.</li>
-        <li>Let the refeed solution cool to <strong>~30 °C</strong>.</li>
-        <li>Carefully pour the cooled refeed into your growing jar. Stir gently to mix.</li>
-        <li>Re-suspend your crystal in the refreshed solution. Cover. Return to shelf.</li>
-        <li>Record the amount of MKP added, the new total volume, and all observations.</li>
+        <li>Look before you touch. Is the crystal visibly bigger? Is the solution clear? Are there crystals on the bottom, the walls, the line, or a crust at the waterline? Note everything.</li>
+        <li>Lift the stick to raise the crystal just out of the solution. <strong>Work quickly</strong> — keep it out of the air no more than 2 minutes in total. Measure L × W × H in mm. If you can weigh it on the line, do.</li>
+        <li>Set the crystal (still on its line) on a clean paper towel and lay a second towel loosely over it.</li>
+        <li>Pour the solution out of the jar into a beaker and keep it. Scrape every stray crystal off the jar bottom and walls and rinse the jar. Pick any tiny crystals off the line and the stick with your fingernail. Those "parasites" were eating the MAP your crystal needed.</li>
+        <li><strong>Make the refeed:</strong> In a small beaker, dissolve <strong>12 g</strong> MAP in <strong>25 mL</strong> hot kettle water. Stir until clear. Add your second color now if you want one (2–3 drops).</li>
+        <li>Cool the refeed in the water basin to <strong>≤ 26 °C</strong> (a small volume cools in about 5 minutes). Pour it into the beaker with your old solution and stir gently.</li>
+        <li><strong>Seed-grain test</strong> again if you have a spare tiny crystal; otherwise check the thermometer reads ≤ 26 °C.</li>
+        <li>Pour the combined solution back into the clean jar, re-hang your crystal in the center, filter + ring on, back to the shelf.</li>
+        <li>Record measurements, MAP added, color, and observations.</li>
       </ol>
 
       <div class="info-box">
-        <h4>💡 What If My Crystal Dissolved?</h4>
-        <p>This means your Week-2 growing solution was <em>unsaturated</em> at room temperature — it could hold more MKP than was present, so it pulled MKP off your crystal. Fix today by making your refeed a little stronger: use <strong>15 g</strong> MKP in 30 mL water instead of 10 g, cool to 30 °C, and add. Select a replacement seed from any parasitic crystals that formed on the bottom.</p>
+        <h4>💡 If something went wrong over the break</h4>
+        <p><strong>Seed dissolved or fell off the line:</strong> the bottom of your jar almost certainly has new crystals. Pick the best one, glue it to a fresh line, and continue — five days is enough for a small but real crystal. <strong>Crystal is there but a cluster grew on top of it:</strong> leave it; a "crystal cluster" is a perfectly good final piece — just refeed and keep going. <strong>Big crust at the waterline:</strong> evaporation ran ahead of growth; scrape it off, it is just MAP.</p>
       </div>
 
       <div class="quick-ref">
-        <h4>📋 Refeed Quick Reference (Use for Week 3 and Week 4)</h4>
+        <h4>📋 Session 3 Quick Reference</h4>
         <table>
-          <tr><th>Refeed MKP</th><td>10 g in 30 mL water</td></tr>
-          <tr><th>Dissolution temp</th><td>50 °C</td></tr>
-          <tr><th>Cool to before adding</th><td>~30 °C</td></tr>
-          <tr><th>Parasitic crystal removal</th><td>Every refeed — clean walls and line</td></tr>
-          <tr><th>Crystal out of solution</th><td>&lt; 2 minutes — work quickly</td></tr>
+          <tr><th>Measure</th><td>L × W × H (mm) and mass if possible — crystal out of liquid &lt; 2 min</td></tr>
+          <tr><th>Clean</th><td>Every stray crystal off jar, line, and stick</td></tr>
+          <tr><th>Refeed</th><td>12 g MAP in 25 mL hot water, cooled to ≤ 26 °C, added to old solution</td></tr>
+          <tr><th>Second color</th><td>Optional, 2–3 drops in the refeed</td></tr>
+          <tr><th>Then</th><td>Shelf. 5 days to harvest.</td></tr>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- WEEK 4 -->
+  <!-- HARVEST -->
   <div class="week-block week-4">
     <div class="week-header" onclick="toggleWeek(this)">
-      <span>Week 4 — Habit Analysis, Second Refeed &amp; (Optional) Color Band</span>
+      <span>Harvest — Tue 12/15 — Right After the Final Exam</span>
       <span class="chevron">▶</span>
     </div>
     <div class="week-body">
-      <p><strong>Goal:</strong> Measure growth, analyze the crystal's shape (habit), refeed one more time to drive the final week of growth, and optionally add food coloring to create a visible growth band inside the crystal.</p>
+      <p><strong>Goal:</strong> Lift your crystal out for good, dry and seal it, record final numbers, and take it home. <strong>Time: ~10–15 minutes.</strong></p>
 
       <ol class="step-list">
-        <li>Measure and record crystal dimensions and mass (same protocol as Week 3).</li>
-        <li><strong>Examine the crystal habit.</strong> MKP crystals are tetragonal — an ideal crystal has four equivalent prismatic faces along the long axis and a pointed pyramidal cap on each end. Sketch your crystal and label any faces you can identify.</li>
-        <li>Note any <strong>inclusions</strong> (bubbles, cloudiness, or trapped solution inside the crystal). These form when growth is too rapid or the crystal was disturbed during growth.</li>
-        <li>Remove the crystal from the solution and place it on a clean paper towel. Cover loosely with plastic wrap.</li>
-        <li>Check for and remove parasitic crystals on the line, popsicle stick, and jar surfaces.</li>
-        <li><strong>Prepare the second refeed:</strong> Dissolve <strong>10 g</strong> of fresh MKP in <strong>30 mL</strong> of water at <strong>50 °C</strong>. Cool to <strong>~30 °C</strong>.</li>
-        <li><strong>Color band experiment (optional):</strong> If you have food coloring on hand, add <strong>2–3 drops</strong> (any color) to the refeed and stir to distribute evenly. The crystal will incorporate the dye into its new growth layers, creating a visible colored band inside the otherwise clear crystal — direct evidence that the crystal grows layer by layer from the outside.</li>
-        <li>Pour the refeed into the jar. Re-suspend your crystal. Cover. Return to shelf.</li>
-        <li>Record all measurements, the color used (if any), and observations.</li>
-      </ol>
-
-      <div class="clinical-box">
-        <h4>🏥 Clinical Connection — Growth Zones</h4>
-        <ul>
-          <li>The colored band in your crystal is analogous to <strong>growth lines in kidney stones</strong>. When urologists section a kidney stone, they can see concentric growth rings that record changes in urine composition over time — periods of dehydration, dietary changes, or medication adjustments.</li>
-          <li>In pharmacology, growth zones in drug crystals can trap different amounts of impurity, affecting drug purity and dissolution rate.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- WEEK 5 -->
-  <div class="week-block week-5">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span>Week 5 — Final Measurement, Harvest &amp; Data Analysis</span>
-      <span class="chevron">▶</span>
-    </div>
-    <div class="week-body">
-      <p><strong>Goal:</strong> Take final measurements, remove and preserve your crystal, analyze your growth data, and share your result with the class.</p>
-
-      <ol class="step-list">
-        <li>Measure final crystal dimensions (L × W × H) in millimeters.</li>
-        <li>Carefully lift the crystal from the solution. Pat gently with a clean, dry paper towel. <strong>Do not rub</strong> — you may scratch the crystal faces.</li>
-        <li>Weigh the dry crystal on the digital scale. Record the final mass.</li>
-        <li>Carefully cut the fishing line, leaving a small tag if desired.</li>
-        <li><strong>Preservation:</strong> MKP crystals are stable at room temperature but slightly hygroscopic. If your lab is humid, apply a thin, even coat of clear nail polish or clear acrylic spray and let dry — this protects the crystal from absorbing moisture and keeps its surfaces glossy.</li>
-        <li>Dispose of the remaining solution by pouring down the drain with running water.</li>
-        <li><strong>Calculate total mass gained:</strong> Final crystal mass − Week 2 seed crystal mass = mass deposited from solution. Enter in the Growth Rate calculator on the Data tab.</li>
-        <li><strong>Calculate average growth rate:</strong> Divide total mass gained by the number of days in solution. Express as mg/day or g/week. The calculator does this for you.</li>
-        <li><strong>Class comparison:</strong> Record your final crystal mass and longest dimension on the class data board. Look for patterns:
-          <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
-            <li>Which shelf locations produced the largest crystals? (Temperature gradients in the room)</li>
-            <li>Did students with a better-formed seed in Week 2 end with a better-formed final crystal?</li>
-            <li>Did colored crystals grow at different rates than uncolored ones?</li>
-          </ul>
-        </li>
-        <li>Complete the reflection questions on the Data tab and submit your final report.</li>
+        <li>Lift the stick and let the crystal drip for 10 seconds over the jar.</li>
+        <li>Lay it on a paper towel and <strong>pat</strong> dry — never rub. Wet MAP faces scratch easily.</li>
+        <li>Measure final L × W × H (mm). Weigh it (cut the line first, or weigh with the line and subtract nothing — the line is negligible). Record both in your data table.</li>
+        <li>Photograph it against a dark background near a window.</li>
+        <li><strong>Seal (recommended):</strong> once fully dry, paint a thin coat of clear nail polish over all faces and let it dry 10 minutes. MAP slowly picks up moisture from humid air; a sealed crystal keeps its glassy surfaces for years.</li>
+        <li>Finish it your way: cut the line short for a display piece, or leave the loop for an ornament. If you kept your spare crystals, rinse the jar, dry it, add the crystals as a bed, set your crystal on top, lid on — the jar is the gift box.</li>
+        <li>Pour the leftover solution down the drain with running water.</li>
+        <li>On the Data tab, run the growth-rate calculator and generate your <strong>Crystal Card</strong> — print it or screenshot it to go with your crystal.</li>
       </ol>
 
       <div class="info-box">
         <h4>💡 What a Good Result Looks Like</h4>
-        <p>After 3 weeks of growth (from Week 2 seeding to Week 5 harvest), a well-tended MKP crystal typically reaches <strong>1.5–3 cm</strong> in its longest dimension and weighs 2–6 g. Crystals that stay clear with sharp faces are more impressive than large but cloudy ones — quality beats size.</p>
+        <p>After 21 days of growth with one refeed, a well-tended MAP crystal in this setup typically reaches <strong>1.5–3 cm</strong> in its longest dimension and 2–6 g. Clear faces and sharp edges beat raw size — a 2 cm glass-clear prism is a better crystal than a 3 cm cloudy one.</p>
       </div>
     </div>
   </div>
 
   <!-- ── TROUBLESHOOTING FLOWCHART ── -->
-  <div class="section-banner banner-green">Troubleshooting Flowchart</div>
+  <div class="section-banner banner-green">Troubleshooting Flowchart (use at Session 3)</div>
   <div class="flowchart">
-    <div class="flow-box flow-start">Is your crystal growing?</div>
+    <div class="flow-box flow-start">Is your crystal bigger than when you hung it?</div>
     <div class="flow-arrow">▼</div>
-    <div class="flow-box flow-decision">Check: Is the solution clear (no crystals on jar walls)?</div>
+    <div class="flow-box flow-decision">Are there stray crystals on the bottom, walls, or line?</div>
     <div class="flow-arrow">▼</div>
     <div class="flow-branch">
       <div style="text-align:center;">
-        <div class="flow-branch-label">YES — clear</div>
+        <div class="flow-branch-label">No — solution clean</div>
         <div class="flow-arrow">▼</div>
-        <div class="flow-box flow-process" style="font-size:0.82rem;">Solution may be unsaturated. Add 8 g MKP dissolved in 20 mL warm water (50 °C). Cool to 30 °C before adding.</div>
+        <div class="flow-box flow-process" style="font-size:0.82rem;">Good. Do the normal 12 g refeed. If growth was weak, the solution may have been barely supersaturated — use 15 g instead.</div>
       </div>
       <div style="text-align:center;">
-        <div class="flow-branch-label">NO — rogue crystals</div>
+        <div class="flow-branch-label">Yes — parasites</div>
         <div class="flow-arrow">▼</div>
-        <div class="flow-box flow-process" style="font-size:0.82rem;">Remove parasitic crystals. They compete with your seed. Clean jar walls and line with a clean finger or spoon.</div>
+        <div class="flow-box flow-process" style="font-size:0.82rem;">Remove every one of them. They were competing for the same MAP. Then do the normal refeed.</div>
       </div>
     </div>
     <div class="flow-arrow" style="margin-top:0.5rem;">▼</div>
-    <div class="flow-box flow-decision">Is the crystal getting SMALLER?</div>
+    <div class="flow-box flow-decision">Is the crystal SMALLER, rounded, or gone?</div>
     <div class="flow-arrow">▼</div>
-    <div class="flow-box flow-process" style="font-size:0.85rem;">Solution is undersaturated — it's dissolving your crystal. Add 12 g MKP in 25 mL warm water immediately. Cool to 30 °C before combining.</div>
+    <div class="flow-box flow-process" style="font-size:0.85rem;">The solution was undersaturated (added too warm, or the room warmed up). Pick the best new crystal from the jar bottom, re-hang it, and refeed with 15 g in 25 mL.</div>
     <div class="flow-arrow">▼</div>
-    <div class="flow-box flow-decision">Crystal is cloudy or cracked?</div>
+    <div class="flow-box flow-decision">Cloudy, cracked, or a cluster instead of one crystal?</div>
     <div class="flow-arrow">▼</div>
-    <div class="flow-box flow-process" style="font-size:0.85rem;">Growth was too fast or crystal experienced temperature shock. Keep jar away from direct sunlight, AC vents, or heaters. Ensure the cover is on.</div>
+    <div class="flow-box flow-process" style="font-size:0.85rem;">Growth ran too fast or the jar was shocked by temperature. Refeed normally; keep it away from vents and windows. A cluster is still a keeper.</div>
     <div class="flow-arrow">▼</div>
     <div class="flow-box flow-end">When in doubt — ask your instructor!</div>
   </div>
@@ -861,7 +957,7 @@ body {
 
 
 <!-- ═══════════════════════════════════════════════ -->
-<!-- TAB 3 — DATA & ANALYSIS (Purple)                -->
+<!-- TAB 3 — DATA & YOUR CRYSTAL (Purple)            -->
 <!-- ═══════════════════════════════════════════════ -->
 <section id="tab-data" class="tab-panel" role="tabpanel">
 
@@ -880,24 +976,49 @@ body {
     <div class="form-row">
       <div>
         <label for="shelfLocation">Shelf / Bench Location</label>
-        <input type="text" id="shelfLocation" data-save="shelfLocation" placeholder="e.g., Shelf 3, Position B">
+        <input type="text" id="shelfLocation" data-save="shelfLocation" placeholder="e.g., Cabinet 2, Shelf B, Position 7">
       </div>
       <div>
-        <label for="startDate">Project Start Date</label>
-        <input type="date" id="startDate" data-save="startDate">
+        <label for="startDate">Seeding Date (Session 2)</label>
+        <input type="date" id="startDate" data-save="startDate" value="2026-11-24">
       </div>
     </div>
     <div class="save-indicator" id="saveStatus">Auto-saved ✓</div>
   </div>
 
-  <div class="section-banner banner-purple">Weekly Growth Data Table</div>
-  <p>Record your crystal measurements each week. All dimensions in millimeters (mm); mass in grams (g).</p>
+  <div class="section-banner banner-purple">Your Customization Choices</div>
+  <div class="obs-form">
+    <div class="form-row">
+      <div>
+        <label for="colorMain">Main color (Session 2)</label>
+        <input type="text" id="colorMain" data-save="colorMain" placeholder="e.g., Green, 4 drops — or 'none'">
+      </div>
+      <div>
+        <label for="colorBand">Second color / band (Session 3)</label>
+        <input type="text" id="colorBand" data-save="colorBand" placeholder="e.g., Blue, 2 drops — or 'same' / 'none'">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="seedShape">Seed shape chosen</label>
+        <input type="text" id="seedShape" data-save="seedShape" placeholder="e.g., long needle / short prism">
+      </div>
+      <div>
+        <label for="displayPlan">Display plan</label>
+        <input type="text" id="displayPlan" data-save="displayPlan" placeholder="ornament loop / in-jar on crystal bed / stand-alone">
+      </div>
+    </div>
+    <div class="save-indicator">Auto-saved ✓</div>
+  </div>
+
+  <div class="section-banner banner-purple">Growth Data Table</div>
+  <p>Record your crystal measurements at each session. Dimensions in millimeters (mm); mass in grams (g).</p>
 
   <div style="overflow-x: auto;">
   <table class="data-table" id="growthTable">
     <thead>
       <tr>
-        <th>Week</th>
+        <th>Session</th>
         <th>Date</th>
         <th>Length (mm)</th>
         <th>Width (mm)</th>
@@ -908,36 +1029,34 @@ body {
       </tr>
     </thead>
     <tbody>
-      <tr><td>1</td><td><input type="text" data-save="w1date" placeholder="MM/DD"></td><td><input type="number" data-save="w1l" step="0.1"></td><td><input type="number" data-save="w1w" step="0.1"></td><td><input type="number" data-save="w1h" step="0.1"></td><td><input type="number" data-save="w1m" step="0.01"></td><td><input type="number" data-save="w1t" step="0.1"></td><td><input type="text" data-save="w1a" placeholder="Seed solution prepared"></td></tr>
-      <tr><td>2</td><td><input type="text" data-save="w2date" placeholder="MM/DD"></td><td><input type="number" data-save="w2l" step="0.1"></td><td><input type="number" data-save="w2w" step="0.1"></td><td><input type="number" data-save="w2h" step="0.1"></td><td><input type="number" data-save="w2m" step="0.01"></td><td><input type="number" data-save="w2t" step="0.1"></td><td><input type="text" data-save="w2a" placeholder="Seed selected + growing solution"></td></tr>
-      <tr><td>3</td><td><input type="text" data-save="w3date" placeholder="MM/DD"></td><td><input type="number" data-save="w3l" step="0.1"></td><td><input type="number" data-save="w3w" step="0.1"></td><td><input type="number" data-save="w3h" step="0.1"></td><td><input type="number" data-save="w3m" step="0.01"></td><td><input type="number" data-save="w3t" step="0.1"></td><td><input type="text" data-save="w3a" placeholder="Check + refeed #1"></td></tr>
-      <tr><td>4</td><td><input type="text" data-save="w4date" placeholder="MM/DD"></td><td><input type="number" data-save="w4l" step="0.1"></td><td><input type="number" data-save="w4w" step="0.1"></td><td><input type="number" data-save="w4h" step="0.1"></td><td><input type="number" data-save="w4m" step="0.01"></td><td><input type="number" data-save="w4t" step="0.1"></td><td><input type="text" data-save="w4a" placeholder="Habit + refeed #2 (± color)"></td></tr>
-      <tr><td>5</td><td><input type="text" data-save="w5date" placeholder="MM/DD"></td><td><input type="number" data-save="w5l" step="0.1"></td><td><input type="number" data-save="w5w" step="0.1"></td><td><input type="number" data-save="w5h" step="0.1"></td><td><input type="number" data-save="w5m" step="0.01"></td><td><input type="number" data-save="w5t" step="0.1"></td><td><input type="text" data-save="w5a" placeholder="Harvest + final report"></td></tr>
+      <tr><td>1</td><td><input type="text" data-save="w1date" value="11/19"></td><td><input type="number" data-save="w1l" step="0.1" placeholder="—"></td><td><input type="number" data-save="w1w" step="0.1" placeholder="—"></td><td><input type="number" data-save="w1h" step="0.1" placeholder="—"></td><td><input type="number" data-save="w1m" step="0.01" placeholder="30 g MAP"></td><td><input type="number" data-save="w1t" step="0.1"></td><td><input type="text" data-save="w1a" placeholder="Solution made, set to cool"></td></tr>
+      <tr><td>2</td><td><input type="text" data-save="w2date" value="11/24"></td><td><input type="number" data-save="w2l" step="0.1"></td><td><input type="number" data-save="w2w" step="0.1"></td><td><input type="number" data-save="w2h" step="0.1"></td><td><input type="number" data-save="w2m" step="0.01"></td><td><input type="number" data-save="w2t" step="0.1"></td><td><input type="text" data-save="w2a" placeholder="Seed hung, color added"></td></tr>
+      <tr><td>3</td><td><input type="text" data-save="w3date" value="12/10"></td><td><input type="number" data-save="w3l" step="0.1"></td><td><input type="number" data-save="w3w" step="0.1"></td><td><input type="number" data-save="w3h" step="0.1"></td><td><input type="number" data-save="w3m" step="0.01"></td><td><input type="number" data-save="w3t" step="0.1"></td><td><input type="text" data-save="w3a" placeholder="Cleaned + refeed (± 2nd color)"></td></tr>
+      <tr><td>Harvest</td><td><input type="text" data-save="w4date" value="12/15"></td><td><input type="number" data-save="w4l" step="0.1"></td><td><input type="number" data-save="w4w" step="0.1"></td><td><input type="number" data-save="w4h" step="0.1"></td><td><input type="number" data-save="w4m" step="0.01"></td><td><input type="number" data-save="w4t" step="0.1"></td><td><input type="text" data-save="w4a" placeholder="Harvested, dried, sealed"></td></tr>
     </tbody>
   </table>
   </div>
   <div class="save-indicator" id="tableStatus">Auto-saved ✓</div>
 
-  <div class="section-banner banner-purple">Weekly Observation Log</div>
-  <p>Select the week and record your detailed observations. Each entry auto-saves to your browser.</p>
+  <div class="section-banner banner-purple">Observation Log</div>
+  <p>Select the session and record your detailed observations. Each entry auto-saves to your browser.</p>
 
   <div class="obs-form">
-    <label for="obsWeek">Select Week</label>
+    <label for="obsWeek">Select Session</label>
     <select id="obsWeek" onchange="loadObsWeek()">
-      <option value="1">Week 1</option>
-      <option value="2">Week 2</option>
-      <option value="3">Week 3</option>
-      <option value="4">Week 4</option>
-      <option value="5">Week 5</option>
+      <option value="1">Session 1 — 11/19</option>
+      <option value="2">Session 2 — 11/24</option>
+      <option value="3">Session 3 — 12/10</option>
+      <option value="4">Harvest — 12/15</option>
     </select>
 
     <label for="obsAppearance">Crystal Appearance (color, clarity, shape, surface texture)</label>
     <textarea id="obsAppearance" data-save-prefix="obs" placeholder="Describe what you see..."></textarea>
 
-    <label for="obsSolution">Solution Condition (clarity, color, parasitic crystals present?)</label>
-    <textarea id="obsSolution" data-save-prefix="obs" placeholder="Is the solution clear or cloudy? Any rogue crystals?"></textarea>
+    <label for="obsSolution">Solution Condition (clarity, color, stray crystals present?)</label>
+    <textarea id="obsSolution" data-save-prefix="obs" placeholder="Is the solution clear or cloudy? Any crystals on the walls, bottom, or line?"></textarea>
 
-    <label for="obsChanges">Changes Since Last Week</label>
+    <label for="obsChanges">Changes Since Last Session</label>
     <textarea id="obsChanges" data-save-prefix="obs" placeholder="What grew? What changed? Any problems?"></textarea>
 
     <label for="obsSketch">Sketch Description (describe your sketch or note where the photo is)</label>
@@ -950,26 +1069,41 @@ body {
   <div class="obs-form">
     <div class="form-row">
       <div>
-        <label for="calcSeedMass">Initial Seed Crystal Mass (g)</label>
-        <input type="number" id="calcSeedMass" data-save="calcSeedMass" step="0.01" placeholder="e.g., 0.15">
+        <label for="calcSeedMass">Seed Crystal Mass at Session 2 (g)</label>
+        <input type="number" id="calcSeedMass" data-save="calcSeedMass" step="0.01" placeholder="e.g., 0.10 (estimate if you could not weigh it)">
       </div>
       <div>
-        <label for="calcFinalMass">Final Crystal Mass (g)</label>
-        <input type="number" id="calcFinalMass" data-save="calcFinalMass" step="0.01" placeholder="e.g., 4.20">
+        <label for="calcFinalMass">Final Crystal Mass at Harvest (g)</label>
+        <input type="number" id="calcFinalMass" data-save="calcFinalMass" step="0.01" placeholder="e.g., 3.40">
       </div>
     </div>
     <div class="form-row">
       <div>
-        <label for="calcDays">Total Days in Growth Solution</label>
-        <input type="number" id="calcDays" data-save="calcDays" placeholder="e.g., 21">
+        <label for="calcDays">Days in Growing Solution (11/24 → 12/15)</label>
+        <input type="number" id="calcDays" data-save="calcDays" value="21">
       </div>
       <div>
-        <label for="calcTotalMKP">Total MKP Used (g) — growing solution + all refeeds</label>
-        <input type="number" id="calcTotalMKP" data-save="calcTotalMKP" step="0.1" placeholder="e.g., 50">
+        <label for="calcTotalMAP">MAP Added After Seeding (g) — Session 2 + Session 3</label>
+        <input type="number" id="calcTotalMAP" data-save="calcTotalMAP" step="0.1" value="47">
       </div>
     </div>
-    <button onclick="calcGrowthRate()" style="margin-top:1rem; padding:0.6rem 1.5rem; background:var(--purple-accent); color:white; border:none; border-radius:6px; font-family:var(--font-sans); font-weight:700; font-size:0.95rem; cursor:pointer;">Calculate Growth Rate</button>
+    <button class="btn-purple no-print" onclick="calcGrowthRate()">Calculate Growth Rate</button>
     <div id="calcResults" style="margin-top:1rem; padding:1rem; background:var(--purple-light); border-radius:8px; display:none;">
+    </div>
+  </div>
+
+  <div class="section-banner banner-purple">Your Crystal Card</div>
+  <div class="obs-form">
+    <p style="font-size:0.9rem;">Fill in your name, color, and the Harvest row of the data table, then generate a card to print or screenshot and keep with your crystal.</p>
+    <button class="btn-purple no-print" onclick="buildCard()">Generate Crystal Card</button>
+    <button class="btn-purple no-print" style="background:var(--gray-600); margin-left:0.5rem;" onclick="printCard()">Print Card Only</button>
+    <div class="crystal-card" id="crystalCard">
+      <h3>✦ Grown by hand, one layer at a time ✦</h3>
+      <div class="cc-name" id="ccName">—</div>
+      <div class="cc-row" id="ccColor">—</div>
+      <div class="cc-row" id="ccSize">—</div>
+      <div class="cc-row" id="ccDates">Seeded Nov 24, 2026 · Harvested Dec 15, 2026 · 21 days</div>
+      <div class="cc-formula">Monoammonium phosphate · NH₄H₂PO₄ · tetragonal<br>CHM-130 Fundamentals of Chemistry · Arizona College of Nursing</div>
     </div>
   </div>
 
@@ -981,10 +1115,10 @@ body {
     <label for="reflect2">2. Name two clinical interventions for preventing kidney stones. For each, identify which step of the crystallization process it disrupts (supersaturation, nucleation, or growth).</label>
     <textarea id="reflect2" data-save="reflect2" style="min-height:100px;"></textarea>
 
-    <label for="reflect3">3. Your crystal's growth rate changed between Week 3 and Week 4 (before the second refeed). Explain the change using the concept of supersaturation.</label>
+    <label for="reflect3">3. Session 1 and Session 2 both used supersaturated solutions, but Session 1 gave you dozens of tiny crystals and Session 2 was meant to grow one large one. Explain the difference using the concept of degree of supersaturation.</label>
     <textarea id="reflect3" data-save="reflect3" style="min-height:100px;"></textarea>
 
-    <label for="reflect4">4. If two students started with the same seed crystal and same solution, but one stored their jar near an air-conditioning vent and the other near a sunny window, predict how their crystals would differ and why.</label>
+    <label for="reflect4">4. Why did we insist the growing solution be at or below 26 °C before the seed went in, when 30 °C would have felt only slightly warm? Use the solubility table in your answer.</label>
     <textarea id="reflect4" data-save="reflect4" style="min-height:100px;"></textarea>
 
     <label for="reflect5">5. If you could repeat this experiment with one change, what would you change and what result would you expect?</label>
@@ -998,7 +1132,7 @@ body {
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <footer class="lab-footer">
-  <p>Crystal Growing Semester Project — CHM-130 · Fundamentals of Chemistry</p>
+  <p>Crystal Growing Project — CHM-130 · Fundamentals of Chemistry</p>
   <p>Tehrani 2028</p>
 </footer>
 
@@ -1017,11 +1151,10 @@ function switchTab(tabId, btn, color) {
   btn.setAttribute('aria-selected','true');
 }
 
-// ── WEEK ACCORDION ──
+// ── SESSION ACCORDION ──
 function toggleWeek(header) {
   const body = header.nextElementSibling;
   const isOpen = body.classList.contains('show');
-  // Close all
   document.querySelectorAll('.week-body').forEach(b => b.classList.remove('show'));
   document.querySelectorAll('.week-header').forEach(h => h.classList.remove('expanded'));
   if (!isOpen) {
@@ -1031,27 +1164,28 @@ function toggleWeek(header) {
 }
 
 // ── AUTO-SAVE (localStorage) ──
-const STORAGE_KEY = 'chm130_crystal_lab_';
+const STORAGE_KEY = 'chm130_crystal_lab_v3_';
 
 function saveField(key, value) {
   try { localStorage.setItem(STORAGE_KEY + key, value); } catch(e) {}
 }
 
 function loadField(key) {
-  try { return localStorage.getItem(STORAGE_KEY + key) || ''; } catch(e) { return ''; }
+  try { return localStorage.getItem(STORAGE_KEY + key); } catch(e) { return null; }
 }
 
-// Auto-save all [data-save] inputs
+// Auto-save all [data-save] inputs (keep any HTML default value if nothing is stored yet)
 document.querySelectorAll('[data-save]').forEach(el => {
   const key = el.getAttribute('data-save');
-  el.value = loadField(key);
+  const stored = loadField(key);
+  if (stored !== null) el.value = stored;
   el.addEventListener('input', function() {
     saveField(key, this.value);
     showSaved(this);
   });
 });
 
-// Observation log (week-specific)
+// Observation log (session-specific)
 function getObsKey(fieldId, week) {
   return 'obs_w' + week + '_' + fieldId;
 }
@@ -1060,24 +1194,22 @@ function loadObsWeek() {
   const week = document.getElementById('obsWeek').value;
   ['obsAppearance','obsSolution','obsChanges','obsSketch'].forEach(id => {
     const el = document.getElementById(id);
-    el.value = loadField(getObsKey(id, week));
+    el.value = loadField(getObsKey(id, week)) || '';
   });
 }
 
-// Save observation fields on input
 ['obsAppearance','obsSolution','obsChanges','obsSketch'].forEach(id => {
   const el = document.getElementById(id);
   el.addEventListener('input', function() {
     const week = document.getElementById('obsWeek').value;
     saveField(getObsKey(id, week), this.value);
     const indicator = document.getElementById('obsStatus');
-    indicator.textContent = 'Auto-saved ✓ (Week ' + week + ')';
+    indicator.textContent = 'Auto-saved ✓ (Session ' + week + ')';
     indicator.style.opacity = 1;
     setTimeout(() => { indicator.style.opacity = 0.6; }, 1500);
   });
 });
 
-// Load week 1 observations on page load
 loadObsWeek();
 
 function showSaved(el) {
@@ -1096,29 +1228,61 @@ function calcGrowthRate() {
   const seedMass = parseFloat(document.getElementById('calcSeedMass').value);
   const finalMass = parseFloat(document.getElementById('calcFinalMass').value);
   const days = parseInt(document.getElementById('calcDays').value);
-  const totalMKP = parseFloat(document.getElementById('calcTotalMKP').value);
+  const totalMAP = parseFloat(document.getElementById('calcTotalMAP').value);
+  const out = document.getElementById('calcResults');
 
   if (isNaN(seedMass) || isNaN(finalMass) || isNaN(days) || days === 0) {
-    document.getElementById('calcResults').innerHTML = '<p style="color:var(--warning-red);">Please fill in Seed Mass, Final Mass, and Days to calculate.</p>';
-    document.getElementById('calcResults').style.display = 'block';
+    out.innerHTML = '<p style="color:var(--warning-red);">Please fill in Seed Mass, Final Mass, and Days to calculate.</p>';
+    out.style.display = 'block';
     return;
   }
 
   const massGained = finalMass - seedMass;
   const ratePerDay = massGained / days;
   const ratePerWeek = ratePerDay * 7;
-  const efficiency = !isNaN(totalMKP) && totalMKP > 0 ? ((massGained / totalMKP) * 100).toFixed(1) : 'N/A';
+  const efficiency = !isNaN(totalMAP) && totalMAP > 0 ? ((massGained / totalMAP) * 100).toFixed(1) : 'N/A';
 
-  document.getElementById('calcResults').innerHTML = `
+  out.innerHTML = `
     <p><strong>Mass gained:</strong> ${massGained.toFixed(2)} g</p>
-    <p><strong>Growth rate:</strong> ${(ratePerDay * 1000).toFixed(1)} mg/day = ${ratePerWeek.toFixed(2)} g/week</p>
-    <p><strong>Crystal yield:</strong> ${efficiency}% of total MKP used ended up in the crystal</p>
-    <p style="font-size:0.85rem; color:var(--gray-600); margin-top:0.5rem;">Note: Yield below 20% is typical — most MKP remains dissolved in the final solution or was lost to parasitic crystals and refeeding.</p>
+    <p><strong>Average growth rate:</strong> ${(ratePerDay * 1000).toFixed(0)} mg/day = ${ratePerWeek.toFixed(2)} g/week</p>
+    <p><strong>Crystal yield:</strong> ${efficiency}% of the MAP added after seeding ended up in your crystal</p>
+    <p style="font-size:0.85rem; color:var(--gray-600); margin-top:0.5rem;">A yield under 15% is normal — most MAP has to stay dissolved to keep the solution saturated, and some went to stray crystals.</p>
   `;
-  document.getElementById('calcResults').style.display = 'block';
+  out.style.display = 'block';
 }
 
-// ── Open Week 1 by default ──
+// ── CRYSTAL CARD ──
+function buildCard() {
+  const name = document.getElementById('studentName').value.trim() || 'Your Name';
+  const colorMain = document.getElementById('colorMain').value.trim();
+  const colorBand = document.getElementById('colorBand').value.trim();
+  const l = document.querySelector('[data-save="w4l"]').value;
+  const w = document.querySelector('[data-save="w4w"]').value;
+  const h = document.querySelector('[data-save="w4h"]').value;
+  const m = document.querySelector('[data-save="w4m"]').value;
+
+  let colorText = colorMain ? 'Color: ' + colorMain : 'Color: clear';
+  if (colorBand && !/^(same|none|-|—)?$/i.test(colorBand)) colorText += ' · outer band: ' + colorBand;
+
+  let sizeText = '';
+  if (l || w || h) sizeText += (l || '?') + ' × ' + (w || '?') + ' × ' + (h || '?') + ' mm';
+  if (m) sizeText += (sizeText ? ' · ' : '') + parseFloat(m).toFixed(2) + ' g';
+  if (!sizeText) sizeText = 'Final size: fill in the Harvest row';
+
+  document.getElementById('ccName').textContent = name;
+  document.getElementById('ccColor').textContent = colorText;
+  document.getElementById('ccSize').textContent = sizeText;
+  document.getElementById('crystalCard').classList.add('show');
+}
+
+function printCard() {
+  buildCard();
+  document.body.classList.add('print-card-only');
+  window.print();
+  setTimeout(() => document.body.classList.remove('print-card-only'), 500);
+}
+
+// ── Open Session 1 by default ──
 document.querySelector('.week-1 .week-header').click();
 </script>
 
