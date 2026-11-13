@@ -42,3 +42,7 @@
 <!-- Significant technical decisions with rationale. Why X was chosen over Y. -->
 
 - [2026-08-06] Week 6 patho guide was organized into 4 content tabs by body system (Vitals & Endocrine / Diabetes / Neurologic / Renal & Urinary) rather than following the lecture-notes PDF order. The PDF interleaves systems (nephrotic syndrome appears first, then endocrine, then neuro, then the rest of renal); grouping by system lets related conditions sit side by side for comparison. Added explicit "do not confuse" callouts where the source material invites collision — Cushing syndrome vs. Cushing's triad, and diabetes insipidus vs. diabetes mellitus.
+
+- (2026-11-12) User style rule: never use em dashes ("—") in Tehrani Labs documents; use commas, colons, or hyphens instead.
+- (2026-11-12) CHM-130 runs two lab cohorts (Thursday and Friday sections); Tuesday events are shared. Write schedules as "Thu X or Fri Y".
+- (2026-11-12) Lab solutions use distilled water only, no tap water; no electric kettle, hot water comes from the instructor's heating station.
