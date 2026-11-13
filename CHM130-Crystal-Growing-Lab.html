@@ -516,25 +516,6 @@ body {
 .sol-table tr:nth-child(even) td { background: var(--blue-light); }
 .sol-highlight td { background: #abebc6 !important; font-weight: 700; }
 
-/* ── CRYSTAL CARD (printable) ── */
-.crystal-card {
-  display: none;
-  margin: 1rem auto;
-  max-width: 420px;
-  border: 3px double var(--purple);
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  background: var(--white);
-  text-align: center;
-  font-family: var(--font-serif);
-  page-break-inside: avoid;
-}
-.crystal-card.show { display: block; }
-.crystal-card h3 { font-size: 1.15rem; color: var(--purple); margin-bottom: 0.25rem; }
-.crystal-card .cc-name { font-size: 1.3rem; font-weight: 900; margin: 0.4rem 0; }
-.crystal-card .cc-row { font-family: var(--font-sans); font-size: 0.9rem; margin: 0.15rem 0; }
-.crystal-card .cc-formula { font-family: var(--font-sans); font-size: 0.85rem; color: var(--gray-600); margin-top: 0.6rem; }
-
 /* ── PRINT CSS ── */
 @media print {
   body { background: white; max-width: 100%; padding: 0; font-size: 11pt; }
@@ -544,11 +525,7 @@ body {
   .week-body { display: block !important; }
   .lab-header { border-radius: 0; padding: 1.5rem; }
   .obs-form input, .obs-form textarea, .obs-form select { border: 1px solid #999; }
-  .crystal-card.show { display: block; }
 }
-body.print-card-only .tab-panel, body.print-card-only .lab-header, body.print-card-only .tab-nav, body.print-card-only .lab-footer { display: none !important; }
-body.print-card-only #tab-data { display: block !important; }
-body.print-card-only #tab-data > *:not(#crystalCard) { display: none !important; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
@@ -592,7 +569,6 @@ body.print-card-only #tab-data > *:not(#crystalCard) { display: none !important;
 <nav class="tab-nav" role="tablist">
   <button class="tab-btn active-blue" role="tab" onclick="switchTab('overview', this, 'blue')" aria-selected="true">Overview &amp; Theory</button>
   <button class="tab-btn" role="tab" onclick="switchTab('procedures', this, 'green')">Procedures</button>
-  <button class="tab-btn" role="tab" onclick="switchTab('data', this, 'purple')">Data &amp; Your Crystal</button>
 </nav>
 
 <!-- ═══════════════════════════════════════════════ -->
@@ -772,7 +748,7 @@ body.print-card-only #tab-data > *:not(#crystalCard) { display: none !important;
         <li>Take the rod out. <strong>From this moment, do not stir, swirl, tap, or move the jar.</strong> Every disturbance makes extra crystals nucleate.</li>
         <li>Lay a coffee filter over the mouth of the jar and screw the metal ring down over it (no flat lid). Dust stays out; water vapor gets out slowly.</li>
         <li>Carry the jar carefully to your assigned shelf spot. It stays there, untouched, until Tuesday 11/24.</li>
-        <li>In your observation log, record mass of MAP, volume of water, approximate temperature, and the time. Sketch what you see (it should look like plain water).</li>
+        <li>In your lab notebook, record mass of MAP, volume of water, approximate temperature, and the time. Sketch what you see (it should look like plain water).</li>
       </ol>
 
       <div class="quick-ref">
@@ -914,12 +890,12 @@ body.print-card-only #tab-data > *:not(#crystalCard) { display: none !important;
       <ol class="step-list">
         <li>Lift the stick and let the crystal drip for 10 seconds over the jar.</li>
         <li>Lay it on a paper towel and <strong>pat</strong> dry — never rub, and never rinse it in water: water dissolves the polished faces instantly and leaves them frosted.</li>
-        <li>Measure final L × W × H (mm). Weigh it (cut the line first, or weigh with the line and subtract nothing — the line is negligible). Record both in your data table.</li>
+        <li>Measure final L × W × H (mm). Weigh it (cut the line first, or weigh with the line and subtract nothing — the line is negligible). Record both in your lab notebook.</li>
         <li>Photograph it against a dark background near a window. Then hold it in direct sunlight — a clear MAP prism refracts the beam and throws small rainbows, which makes for the best photo of all.</li>
         <li><strong>Seal (optional):</strong> MAP is anhydrous — unlike alum or copper sulfate it will not dehydrate and turn white in dry air, so sealing is not required. A thin coat of clear nail polish protects against humid air and fingerprints but can dull the sparkle slightly. Best of both: display it inside its closed mason jar (airtight beats any coating) and skip the polish — or polish it if it will sit out in the open or be handled a lot.</li>
         <li>Finish it your way: cut the line short for a display piece, or leave the loop for an ornament. If you kept your spare crystals, rinse the jar, dry it, add the crystals as a bed, set your crystal on top, lid on — the jar is the gift box.</li>
         <li>Pour the leftover solution down the drain with running water.</li>
-        <li>On the Data tab, run the growth-rate calculator and generate your <strong>Crystal Card</strong> — print it or screenshot it to go with your crystal.</li>
+        <li>In your lab notebook, compute your crystal’s growth: final mass − seed mass = mass gained, and mass gained ÷ 21 days = average growth rate in g/day. Write both on the gift tag if you make one.</li>
       </ol>
 
       <div class="info-box">
@@ -958,180 +934,6 @@ body.print-card-only #tab-data > *:not(#crystalCard) { display: none !important;
     <div class="flow-box flow-process" style="font-size:0.85rem;">Growth ran too fast or the jar was shocked by temperature. Refeed normally; keep it away from vents and windows. A cluster is still a keeper.</div>
     <div class="flow-arrow">▼</div>
     <div class="flow-box flow-end">When in doubt — ask your instructor!</div>
-  </div>
-
-</section>
-
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- TAB 3 — DATA & YOUR CRYSTAL (Purple)            -->
-<!-- ═══════════════════════════════════════════════ -->
-<section id="tab-data" class="tab-panel" role="tabpanel">
-
-  <div class="section-banner banner-purple">Student Information</div>
-  <div class="obs-form" id="studentInfoForm">
-    <div class="form-row">
-      <div>
-        <label for="studentName">Student Name</label>
-        <input type="text" id="studentName" data-save="studentName" placeholder="First Last">
-      </div>
-      <div>
-        <label for="section">Section</label>
-        <input type="text" id="section" data-save="section" placeholder="e.g., CHM-130-01">
-      </div>
-    </div>
-    <div class="form-row">
-      <div>
-        <label for="shelfLocation">Shelf / Bench Location</label>
-        <input type="text" id="shelfLocation" data-save="shelfLocation" placeholder="e.g., Cabinet 2, Shelf B, Position 7">
-      </div>
-      <div>
-        <label for="startDate">Seeding Date (Session 2)</label>
-        <input type="date" id="startDate" data-save="startDate" value="2026-11-24">
-      </div>
-    </div>
-    <div class="save-indicator" id="saveStatus">Auto-saved ✓</div>
-  </div>
-
-  <div class="section-banner banner-purple">Your Customization Choices</div>
-  <div class="obs-form">
-    <div class="form-row">
-      <div>
-        <label for="colorMain">Main color (Session 2)</label>
-        <input type="text" id="colorMain" data-save="colorMain" placeholder="e.g., Green, 4 drops — or 'none'">
-      </div>
-      <div>
-        <label for="colorBand">Second color / band (Session 3)</label>
-        <input type="text" id="colorBand" data-save="colorBand" placeholder="e.g., Blue, 2 drops — or 'same' / 'none'">
-      </div>
-    </div>
-    <div class="form-row">
-      <div>
-        <label for="seedShape">Seed shape chosen</label>
-        <input type="text" id="seedShape" data-save="seedShape" placeholder="e.g., long needle / short prism">
-      </div>
-      <div>
-        <label for="displayPlan">Display plan</label>
-        <input type="text" id="displayPlan" data-save="displayPlan" placeholder="ornament loop / in-jar on crystal bed / stand-alone">
-      </div>
-    </div>
-    <div class="save-indicator">Auto-saved ✓</div>
-  </div>
-
-  <div class="section-banner banner-purple">Growth Data Table</div>
-  <p>Record your crystal measurements at each session. Dimensions in millimeters (mm); mass in grams (g).</p>
-
-  <div style="overflow-x: auto;">
-  <table class="data-table" id="growthTable">
-    <thead>
-      <tr>
-        <th>Session</th>
-        <th>Date</th>
-        <th>Length (mm)</th>
-        <th>Width (mm)</th>
-        <th>Height (mm)</th>
-        <th>Mass (g)</th>
-        <th>Solution Temp (°C)</th>
-        <th>Action Taken</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>1</td><td><input type="text" data-save="w1date" value="11/19"></td><td><input type="number" data-save="w1l" step="0.1" placeholder="—"></td><td><input type="number" data-save="w1w" step="0.1" placeholder="—"></td><td><input type="number" data-save="w1h" step="0.1" placeholder="—"></td><td><input type="number" data-save="w1m" step="0.01" placeholder="—"></td><td><input type="number" data-save="w1t" step="0.1"></td><td><input type="text" data-save="w1a" placeholder="Solution made, set to cool"></td></tr>
-      <tr><td>2</td><td><input type="text" data-save="w2date" value="11/24"></td><td><input type="number" data-save="w2l" step="0.1"></td><td><input type="number" data-save="w2w" step="0.1"></td><td><input type="number" data-save="w2h" step="0.1"></td><td><input type="number" data-save="w2m" step="0.01"></td><td><input type="number" data-save="w2t" step="0.1"></td><td><input type="text" data-save="w2a" placeholder="Seed hung, color added"></td></tr>
-      <tr><td>3</td><td><input type="text" data-save="w3date" value="12/10"></td><td><input type="number" data-save="w3l" step="0.1"></td><td><input type="number" data-save="w3w" step="0.1"></td><td><input type="number" data-save="w3h" step="0.1"></td><td><input type="number" data-save="w3m" step="0.01"></td><td><input type="number" data-save="w3t" step="0.1"></td><td><input type="text" data-save="w3a" placeholder="Cleaned + refeed (± 2nd color)"></td></tr>
-      <tr><td>Harvest</td><td><input type="text" data-save="w4date" value="12/15"></td><td><input type="number" data-save="w4l" step="0.1"></td><td><input type="number" data-save="w4w" step="0.1"></td><td><input type="number" data-save="w4h" step="0.1"></td><td><input type="number" data-save="w4m" step="0.01"></td><td><input type="number" data-save="w4t" step="0.1"></td><td><input type="text" data-save="w4a" placeholder="Harvested, dried, sealed"></td></tr>
-    </tbody>
-  </table>
-  </div>
-  <div class="save-indicator" id="tableStatus">Auto-saved ✓</div>
-
-  <div class="section-banner banner-purple">Observation Log</div>
-  <p>Select the session and record your detailed observations. Each entry auto-saves to your browser.</p>
-
-  <div class="obs-form">
-    <label for="obsWeek">Select Session</label>
-    <select id="obsWeek" onchange="loadObsWeek()">
-      <option value="1">Session 1 — 11/19</option>
-      <option value="2">Session 2 — 11/24</option>
-      <option value="3">Session 3 — 12/10</option>
-      <option value="4">Harvest — 12/15</option>
-    </select>
-
-    <label for="obsAppearance">Crystal Appearance (color, clarity, shape, surface texture)</label>
-    <textarea id="obsAppearance" data-save-prefix="obs" placeholder="Describe what you see..."></textarea>
-
-    <label for="obsSolution">Solution Condition (clarity, color, stray crystals present?)</label>
-    <textarea id="obsSolution" data-save-prefix="obs" placeholder="Is the solution clear or cloudy? Any crystals on the walls, bottom, or line?"></textarea>
-
-    <label for="obsChanges">Changes Since Last Session</label>
-    <textarea id="obsChanges" data-save-prefix="obs" placeholder="What grew? What changed? Any problems?"></textarea>
-
-    <label for="obsSketch">Sketch Description (describe your sketch or note where the photo is)</label>
-    <textarea id="obsSketch" data-save-prefix="obs" placeholder="Describe your crystal drawing or photo reference..."></textarea>
-
-    <div class="save-indicator" id="obsStatus">Auto-saved ✓</div>
-  </div>
-
-  <div class="section-banner banner-purple">Growth Rate Calculations</div>
-  <div class="obs-form">
-    <div class="form-row">
-      <div>
-        <label for="calcSeedMass">Seed Crystal Mass at Session 2 (g)</label>
-        <input type="number" id="calcSeedMass" data-save="calcSeedMass" step="0.01" placeholder="e.g., 0.10 (estimate if you could not weigh it)">
-      </div>
-      <div>
-        <label for="calcFinalMass">Final Crystal Mass at Harvest (g)</label>
-        <input type="number" id="calcFinalMass" data-save="calcFinalMass" step="0.01" placeholder="e.g., 3.40">
-      </div>
-    </div>
-    <div class="form-row">
-      <div>
-        <label for="calcDays">Days in Growing Solution (11/24 → 12/15)</label>
-        <input type="number" id="calcDays" data-save="calcDays" value="21">
-      </div>
-      <div>
-        <label for="calcTotalMAP">MAP Added After Seeding (g) — Session 2 + Session 3</label>
-        <input type="number" id="calcTotalMAP" data-save="calcTotalMAP" step="0.1" value="47">
-      </div>
-    </div>
-    <button class="btn-purple no-print" onclick="calcGrowthRate()">Calculate Growth Rate</button>
-    <div id="calcResults" style="margin-top:1rem; padding:1rem; background:var(--purple-light); border-radius:8px; display:none;">
-    </div>
-  </div>
-
-  <div class="section-banner banner-purple">Your Crystal Card</div>
-  <div class="obs-form">
-    <p style="font-size:0.9rem;">Fill in your name, color, and the Harvest row of the data table, then generate a card to print or screenshot and keep with your crystal.</p>
-    <button class="btn-purple no-print" onclick="buildCard()">Generate Crystal Card</button>
-    <button class="btn-purple no-print" style="background:var(--gray-600); margin-left:0.5rem;" onclick="printCard()">Print Card Only</button>
-    <div class="crystal-card" id="crystalCard">
-      <h3>✦ Grown by hand, one layer at a time ✦</h3>
-      <div class="cc-name" id="ccName">—</div>
-      <div class="cc-row" id="ccColor">—</div>
-      <div class="cc-row" id="ccSize">—</div>
-      <div class="cc-row" id="ccDates">Seeded Nov 24, 2026 · Harvested Dec 15, 2026 · 21 days</div>
-      <div class="cc-formula">Monoammonium phosphate · NH₄H₂PO₄ · tetragonal<br>CHM-130 Fundamentals of Chemistry · Arizona College of Nursing</div>
-    </div>
-  </div>
-
-  <div class="section-banner banner-purple">Reflection Questions</div>
-  <div class="obs-form">
-    <label for="reflect1">1. How does the mechanism of crystal growth in this lab mirror the formation of kidney stones in a patient? Identify at least two parallels.</label>
-    <textarea id="reflect1" data-save="reflect1" style="min-height:100px;"></textarea>
-
-    <label for="reflect2">2. Name two clinical interventions for preventing kidney stones. For each, identify which step of the crystallization process it disrupts (supersaturation, nucleation, or growth).</label>
-    <textarea id="reflect2" data-save="reflect2" style="min-height:100px;"></textarea>
-
-    <label for="reflect3">3. Session 1 and Session 2 both used supersaturated solutions, but Session 1 gave you dozens of tiny crystals and Session 2 was meant to grow one large one. Explain the difference using the concept of degree of supersaturation.</label>
-    <textarea id="reflect3" data-save="reflect3" style="min-height:100px;"></textarea>
-
-    <label for="reflect4">4. Why did we insist the growing solution be at or below 26 °C before the seed went in, when 30 °C would have felt only slightly warm? Use the solubility table in your answer.</label>
-    <textarea id="reflect4" data-save="reflect4" style="min-height:100px;"></textarea>
-
-    <label for="reflect5">5. If you could repeat this experiment with one change, what would you change and what result would you expect?</label>
-    <textarea id="reflect5" data-save="reflect5" style="min-height:100px;"></textarea>
-
-    <div class="save-indicator" id="reflectStatus">Auto-saved ✓</div>
   </div>
 
 </section>
@@ -1192,33 +994,6 @@ document.querySelectorAll('[data-save]').forEach(el => {
   });
 });
 
-// Observation log (session-specific)
-function getObsKey(fieldId, week) {
-  return 'obs_w' + week + '_' + fieldId;
-}
-
-function loadObsWeek() {
-  const week = document.getElementById('obsWeek').value;
-  ['obsAppearance','obsSolution','obsChanges','obsSketch'].forEach(id => {
-    const el = document.getElementById(id);
-    el.value = loadField(getObsKey(id, week)) || '';
-  });
-}
-
-['obsAppearance','obsSolution','obsChanges','obsSketch'].forEach(id => {
-  const el = document.getElementById(id);
-  el.addEventListener('input', function() {
-    const week = document.getElementById('obsWeek').value;
-    saveField(getObsKey(id, week), this.value);
-    const indicator = document.getElementById('obsStatus');
-    indicator.textContent = 'Auto-saved ✓ (Session ' + week + ')';
-    indicator.style.opacity = 1;
-    setTimeout(() => { indicator.style.opacity = 0.6; }, 1500);
-  });
-});
-
-loadObsWeek();
-
 function showSaved(el) {
   const form = el.closest('.obs-form') || el.closest('.data-table');
   if (!form) return;
@@ -1228,65 +1003,6 @@ function showSaved(el) {
     indicator.style.opacity = 1;
     setTimeout(() => { indicator.style.opacity = 0.6; }, 1500);
   }
-}
-
-// ── GROWTH RATE CALCULATOR ──
-function calcGrowthRate() {
-  const seedMass = parseFloat(document.getElementById('calcSeedMass').value);
-  const finalMass = parseFloat(document.getElementById('calcFinalMass').value);
-  const days = parseInt(document.getElementById('calcDays').value);
-  const totalMAP = parseFloat(document.getElementById('calcTotalMAP').value);
-  const out = document.getElementById('calcResults');
-
-  if (isNaN(seedMass) || isNaN(finalMass) || isNaN(days) || days === 0) {
-    out.innerHTML = '<p style="color:var(--warning-red);">Please fill in Seed Mass, Final Mass, and Days to calculate.</p>';
-    out.style.display = 'block';
-    return;
-  }
-
-  const massGained = finalMass - seedMass;
-  const ratePerDay = massGained / days;
-  const ratePerWeek = ratePerDay * 7;
-  const efficiency = !isNaN(totalMAP) && totalMAP > 0 ? ((massGained / totalMAP) * 100).toFixed(1) : 'N/A';
-
-  out.innerHTML = `
-    <p><strong>Mass gained:</strong> ${massGained.toFixed(2)} g</p>
-    <p><strong>Average growth rate:</strong> ${(ratePerDay * 1000).toFixed(0)} mg/day = ${ratePerWeek.toFixed(2)} g/week</p>
-    <p><strong>Crystal yield:</strong> ${efficiency}% of the MAP added after seeding ended up in your crystal</p>
-    <p style="font-size:0.85rem; color:var(--gray-600); margin-top:0.5rem;">A yield under 15% is normal — most MAP has to stay dissolved to keep the solution saturated, and some went to stray crystals.</p>
-  `;
-  out.style.display = 'block';
-}
-
-// ── CRYSTAL CARD ──
-function buildCard() {
-  const name = document.getElementById('studentName').value.trim() || 'Your Name';
-  const colorMain = document.getElementById('colorMain').value.trim();
-  const colorBand = document.getElementById('colorBand').value.trim();
-  const l = document.querySelector('[data-save="w4l"]').value;
-  const w = document.querySelector('[data-save="w4w"]').value;
-  const h = document.querySelector('[data-save="w4h"]').value;
-  const m = document.querySelector('[data-save="w4m"]').value;
-
-  let colorText = colorMain ? 'Color: ' + colorMain : 'Color: clear';
-  if (colorBand && !/^(same|none|-|—)?$/i.test(colorBand)) colorText += ' · outer band: ' + colorBand;
-
-  let sizeText = '';
-  if (l || w || h) sizeText += (l || '?') + ' × ' + (w || '?') + ' × ' + (h || '?') + ' mm';
-  if (m) sizeText += (sizeText ? ' · ' : '') + parseFloat(m).toFixed(2) + ' g';
-  if (!sizeText) sizeText = 'Final size: fill in the Harvest row';
-
-  document.getElementById('ccName').textContent = name;
-  document.getElementById('ccColor').textContent = colorText;
-  document.getElementById('ccSize').textContent = sizeText;
-  document.getElementById('crystalCard').classList.add('show');
-}
-
-function printCard() {
-  buildCard();
-  document.body.classList.add('print-card-only');
-  window.print();
-  setTimeout(() => document.body.classList.remove('print-card-only'), 500);
 }
 
 // ── Open Session 1 by default ──
