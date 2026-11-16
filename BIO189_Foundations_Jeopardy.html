@@ -48,7 +48,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 
 /* ---------- Header ---------- */
 .top {
-  max-width: 1200px; margin: 0 auto 14px;
+  max-width: 1280px; margin: 0 auto 14px;
   display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
 }
 .wordmark { font-weight: 800; font-size: 0.95rem; color: var(--ink); }
@@ -112,7 +112,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 
 /* ---------- Scoreboard ---------- */
 .scoreboard {
-  max-width: 1200px; margin: 0 auto 14px;
+  max-width: 1280px; margin: 0 auto 14px;
   display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;
 }
 .team-card {
@@ -126,7 +126,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
   letter-spacing: 1px; padding: 2px 8px; border-radius: 99px;
 }
 .team-name {
-  font-weight: 700; font-size: 0.82rem; color: var(--ink-soft); background: none; border: none;
+  font-weight: 700; font-size: 0.82rem; background: none; border: none;
   width: 100%; text-align: center; color: var(--ink-soft);
 }
 .team-name:focus { color: var(--ink); outline: 2px solid var(--sky); border-radius: 4px; }
@@ -140,28 +140,32 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 .adjust button:hover { background: var(--panel-edge); color: #fff; }
 
 /* ---------- Board ---------- */
-.board-wrap { max-width: 1200px; margin: 0 auto; }
+.board-wrap { max-width: 1280px; margin: 0 auto; }
+.round-tag {
+  text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--sky); margin-bottom: 8px;
+}
 .board {
   background: var(--board-bg); border-radius: 12px; padding: clamp(6px, 1.5vw, 14px);
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(4px, 1vw, 10px);
+  display: grid; gap: clamp(4px, 0.9vw, 10px);
   box-shadow: 0 16px 50px rgba(0,0,0,0.55), inset 0 0 0 1px #121a66;
 }
 .cat-cell {
   background: linear-gradient(180deg, var(--cell) 0%, var(--cell-deep) 100%);
   border-radius: 6px; color: #fff; text-transform: uppercase;
-  font-family: 'Anton', sans-serif; letter-spacing: 0.05em;
-  font-size: clamp(0.52rem, 1.6vw, 1.05rem); line-height: 1.25;
+  font-family: 'Anton', sans-serif; letter-spacing: 0.04em;
+  font-size: clamp(0.48rem, 1.4vw, 1rem); line-height: 1.25;
   display: flex; align-items: center; justify-content: center; text-align: center;
-  padding: clamp(6px, 1.2vw, 14px) 4px; min-height: clamp(48px, 7vw, 84px);
-  text-shadow: 0 2px 2px rgba(0,0,0,0.6);
+  padding: clamp(6px, 1.2vw, 14px) 3px; min-height: clamp(48px, 7vw, 84px);
+  text-shadow: 0 2px 2px rgba(0,0,0,0.6); overflow-wrap: break-word; min-width: 0;
 }
 .clue-cell {
   background: linear-gradient(180deg, var(--cell) 0%, var(--cell-deep) 100%);
   border-radius: 6px; color: var(--gold);
-  font-family: 'Anton', sans-serif; font-size: clamp(1rem, 3.4vw, 2.1rem);
-  padding: clamp(10px, 2.4vw, 26px) 4px;
+  font-family: 'Anton', sans-serif; font-size: clamp(0.85rem, 3vw, 2rem);
+  padding: clamp(10px, 2.2vw, 24px) 2px;
   text-shadow: 0 2px 2px rgba(0,0,0,0.6);
-  transition: transform 0.18s, filter 0.18s;
+  transition: transform 0.18s, filter 0.18s; min-width: 0;
 }
 .clue-cell:hover:not(:disabled) { transform: scale(1.04); filter: brightness(1.18); }
 .clue-cell:disabled { background: var(--cell-dim); color: transparent; text-shadow: none; cursor: default; }
@@ -198,15 +202,16 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 .timer-fill.low { background: var(--bad); }
 .timer-num { text-align: right; font-size: 0.8rem; font-weight: 700; color: var(--ink-soft); min-height: 1.1em; font-variant-numeric: tabular-nums; }
 .clue-text {
-  font-size: clamp(1.25rem, 3.4vw, 2rem); font-weight: 700; line-height: 1.45;
-  text-align: center; padding: clamp(16px, 4vw, 40px) clamp(8px, 3vw, 28px);
+  font-size: clamp(1.2rem, 3.2vw, 1.9rem); font-weight: 700; line-height: 1.45;
+  text-align: center; padding: clamp(16px, 4vw, 38px) clamp(8px, 3vw, 28px);
   text-wrap: balance; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 .answer-text {
   background: rgba(0,0,0,0.3); border: 2px solid var(--gold); border-radius: 12px;
-  font-size: clamp(1.1rem, 2.8vw, 1.6rem); font-weight: 800; color: var(--gold);
-  text-align: center; padding: 16px 20px; margin: 4px auto 14px; max-width: 640px; text-wrap: balance;
+  text-align: center; padding: 16px 20px; margin: 4px auto 14px; max-width: 680px;
 }
+.answer-text .a-main { font-size: clamp(1.05rem, 2.6vw, 1.5rem); font-weight: 800; color: var(--gold); text-wrap: balance; }
+.answer-text .a-note { font-size: clamp(0.85rem, 2vw, 1rem); font-weight: 600; color: var(--ink); margin-top: 8px; line-height: 1.5; }
 .dd-banner {
   font-family: 'Anton', sans-serif; text-align: center; color: var(--dd);
   font-size: clamp(1.6rem, 5vw, 2.8rem); letter-spacing: 0.1em; text-transform: uppercase;
@@ -236,7 +241,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 }
 .wager-row { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
 .wager-row input[type="number"] {
-  width: 120px; background: rgba(0,0,0,0.35); border: 2px solid var(--gold); color: var(--gold);
+  width: 130px; background: rgba(0,0,0,0.35); border: 2px solid var(--gold); color: var(--gold);
   font-family: 'Anton', sans-serif; font-size: 1.3rem; text-align: center; border-radius: 8px; padding: 8px;
 }
 .wager-chip { background: var(--cell-dim); color: var(--ink-soft); border: 1px solid var(--panel-edge); border-radius: 99px; padding: 6px 12px; font-size: 0.78rem; font-weight: 700; }
@@ -272,7 +277,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 60; }
 
 /* ---------- Footer ---------- */
-.site-footer { max-width: 1200px; margin: 26px auto 4px; text-align: center; font-size: 0.78rem; color: var(--ink-soft); }
+.site-footer { max-width: 1280px; margin: 26px auto 4px; text-align: center; font-size: 0.78rem; color: var(--ink-soft); }
 .site-footer a { color: var(--sky); font-weight: 700; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 
@@ -300,7 +305,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 <!-- Setup -->
 <section id="setupScreen" class="setup-card">
   <h1>Foundations Jeopardy</h1>
-  <p class="setup-sub">Levels of organization, cells and domains, chemistry, macromolecules, and the scientific method. Pick your teams and play.</p>
+  <p class="setup-sub">Two full rounds plus Final Jeopardy: levels of organization, cells and domains, chemistry, macromolecules, metabolism, enzymes, membranes, organelles, and experimental design. Pick your teams and play.</p>
   <div class="setup-row">
     <span class="setup-label" id="teamCountLabel">Teams</span>
     <div class="opt-group" role="group" aria-labelledby="teamCountLabel" id="teamCountGroup"></div>
@@ -314,7 +319,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
     <div class="opt-group" role="group" aria-labelledby="timerLabel" id="timerGroup"></div>
   </div>
   <div class="setup-row">
-    <span class="setup-label" id="ddLabel">Daily Doubles (hidden at random)</span>
+    <span class="setup-label" id="ddLabel">Daily Doubles</span>
     <div class="opt-group" role="group" aria-labelledby="ddLabel" id="ddGroup"></div>
   </div>
   <button class="start-btn" id="startBtn">Start Game</button>
@@ -325,8 +330,10 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 <main id="gameScreen" hidden>
   <div class="scoreboard" id="scoreboard"></div>
   <div class="board-wrap">
+    <div class="round-tag" id="roundTag"></div>
     <div class="board" id="board" role="grid" aria-label="Jeopardy board"></div>
     <div class="board-controls">
+      <button class="big-btn btn-ghost" id="skipRoundBtn">Skip to Double Jeopardy</button>
       <button class="big-btn btn-final" id="finalBtn">Final Jeopardy</button>
       <button class="big-btn btn-ghost" id="endBtn">End Game &amp; Show Standings</button>
     </div>
@@ -356,7 +363,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
       <div class="timer-track" id="timerTrack"><div class="timer-fill" id="timerFill"></div></div>
       <div class="timer-num" id="timerNum"></div>
       <div class="clue-text" id="clueText"></div>
-      <div class="answer-text" id="answerText" hidden></div>
+      <div class="answer-text" id="answerText" hidden><div class="a-main" id="answerMain"></div><div class="a-note" id="answerNote" hidden></div></div>
       <div class="clue-actions" id="preReveal">
         <button class="reveal-btn" id="revealBtn">Show Response</button>
       </div>
@@ -368,6 +375,15 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Round interstitial -->
+<div class="overlay" id="roundOverlay" hidden>
+  <div class="clue-panel" role="dialog" aria-modal="true" aria-labelledby="roundBannerTitle">
+    <div class="dd-banner" id="roundBannerTitle" style="color: var(--gold);">Double Jeopardy!</div>
+    <p class="panel-sub" id="roundBannerSub">Clue values are doubled, from 200 to 1000, and more Daily Doubles are hiding on the board.</p>
+    <div class="clue-actions"><button class="reveal-btn" id="roundGoBtn">Bring Up the Board</button></div>
   </div>
 </div>
 
@@ -386,7 +402,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
       <div class="timer-track"><div class="timer-fill" id="finalTimerFill"></div></div>
       <div class="timer-num" id="finalTimerNum"></div>
       <div class="clue-text" id="finalClueText"></div>
-      <div class="answer-text" id="finalAnswerText" hidden></div>
+      <div class="answer-text" id="finalAnswerText" hidden><div class="a-main" id="finalAnswerMain"></div></div>
       <div class="clue-actions" id="finalPreReveal"><button class="reveal-btn" id="finalRevealBtn">Show Response</button></div>
       <div id="finalJudging" hidden>
         <p class="panel-sub">Mark each team: correct adds the wager, wrong subtracts it.</p>
@@ -417,32 +433,33 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--sky); outli
 
 <script>
 'use strict';
-/* ============ Data ============ */
-const CATEGORIES = [
+/* ============ Data: two rounds plus Final ============ */
+const ROUNDS = [
+{ label: 'Round One', values: [100, 200, 300, 400, 500], ddCount: 1, cats: [
   { name: 'Levels of Organization', clues: [
-    { q: 'Smallest unit of life capable of surviving and reproducing on its own.', a: 'What is a cell?' },
+    { q: 'Smallest unit of life capable of surviving and reproducing on its own.', a: 'What is a cell?', n: 'Cell theory: the cell is the basic unit of life, all organisms are made of one or more cells, and all cells come from preexisting cells.' },
     { q: 'All populations of all species living and interacting within a given area.', a: 'What is a community?' },
     { q: 'A group of individuals of the same species living in a given geographic area.', a: 'What is a population?' },
     { q: 'The fundamental building block of all matter, both living and nonliving.', a: 'What is an atom?' },
     { q: 'The most inclusive level of biological organization, encompassing all regions of Earth that hold life.', a: 'What is the biosphere?' }
   ]},
   { name: 'Cells & Domains', clues: [
-    { q: 'These organisms, including Bacteria and Archaea, are always single-celled and lack a membrane-bound nucleus.', a: 'What are prokaryotes?' },
+    { q: 'These organisms, including Bacteria and Archaea, are always single-celled and lack a membrane-bound nucleus.', a: 'What are prokaryotes?', n: 'Bacteria often live in communities that share a slime layer excreted by their capsules, called a biofilm.' },
     { q: 'This domain includes protists, fungi, plants, and animals.', a: 'What is Eukarya?' },
-    { q: 'This jelly-like fluid mixture of water, sugars, ions, and proteins is shared by both prokaryotic and eukaryotic cells.', a: 'What is cytosol?' },
-    { q: 'True or False: Prokaryotes hold their DNA within a nucleus.', a: 'What is False? Prokaryotic DNA sits in the cytoplasm, not in a nucleus.' },
+    { q: 'This jelly-like fluid mixture of water, sugars, ions, and proteins is shared by both prokaryotic and eukaryotic cells.', a: 'What is cytosol?', n: 'All cells, prokaryotic or eukaryotic, share three features: cytosol, DNA, and a plasma membrane.' },
+    { q: 'True or False: Prokaryotes hold their DNA within a nucleus.', a: 'What is False?', n: 'Prokaryotic DNA sits in the cytoplasm. In eukaryotes the nucleus houses and protects the DNA; controlling the ribosomes is not one of its jobs.' },
     { q: 'These two eukaryotic kingdoms contain multicellular organisms with a membrane-bound nucleus.', a: 'What are Fungi and Plants?' }
   ]},
   { name: 'Chemistry & Homeostasis', clues: [
     { q: 'The process by which an organism senses and responds to change to maintain a stable internal environment.', a: 'What is homeostasis?' },
-    { q: 'An aqueous solution with a pH less than 7, such as gastric acid.', a: 'What is an acid?' },
+    { q: 'An aqueous solution with a pH less than 7, such as gastric acid.', a: 'What is an acid?', n: 'On a pH scale, 4 is acidic; 7 is neutral; 7.8 and 12 are basic.' },
     { q: 'This versatile element covalently bonds with up to four other atoms to form organic backbones.', a: 'What is carbon?' },
     { q: 'This system, utilizing bicarbonate, helps maintain the pH of human blood around 7.4 and resists changes in pH.', a: 'What is a buffer system?' },
-    { q: 'If the concentration of hydrogen ions (H+) in the blood increases, the pH value moves toward this number.', a: 'What is 1? The pH drops toward the acidic end of the scale (acidosis).' }
+    { q: 'If the concentration of hydrogen ions (H+) in the blood increases, the pH value moves toward this number.', a: 'What is 1?', n: 'The pH drops toward the acidic end of the scale (acidosis).' }
   ]},
   { name: 'Macromolecules', clues: [
     { q: 'These macromolecules yield the highest caloric value per gram (about 9 kcal/g).', a: 'What are lipids?' },
-    { q: 'Glucose is an example of this type of monomer, also known as a simple sugar.', a: 'What is a monosaccharide?' },
+    { q: 'Glucose is an example of this type of monomer, also known as a simple sugar.', a: 'What is a monosaccharide?', n: 'Glycogen, starch, and cellulose are complex carbohydrates; glucose is not.' },
     { q: 'The monomers of proteins; they contain both an amino group and a carboxyl group.', a: 'What are amino acids?' },
     { q: 'This tough, structural polysaccharide is the main component of plant cell walls and is indigestible to humans.', a: 'What is cellulose?' },
     { q: 'These small organic molecules act as enzyme helpers, chemical messengers, and the monomer subunits of DNA and RNA.', a: 'What are nucleotides?' }
@@ -452,31 +469,84 @@ const CATEGORIES = [
     { q: 'The baseline comparison group in an experiment that is NOT exposed to the treatment being tested.', a: 'What is the control group?' },
     { q: 'A design flaw caused by an experimental sample size that is too small.', a: 'What is sampling error?' },
     { q: 'Energy flows through the biosphere in a one-way movement, while these cycle continuously between producers and consumers.', a: 'What are nutrients?' },
-    { q: 'A broad, comprehensive explanation that has not been disproven after many years of rigorous testing, such as Evolution or Cell Theory.', a: 'What is a scientific theory?' }
+    { q: 'A broad, comprehensive explanation that has not been disproven after many years of rigorous testing, such as Evolution or Cell Theory.', a: 'What is a scientific theory?', n: 'Pseudoscience, by contrast, may invoke supernatural phenomena and ignores evidence inconsistent with its claims.' }
   ]}
-];
-const VALUES = [100, 200, 300, 400, 500];
+]},
+{ label: 'Double Jeopardy', values: [200, 400, 600, 800, 1000], ddCount: 2, cats: [
+  { name: 'Energy & Respiration', clues: [
+    { q: 'The "currency in the cell energy economy," it powers work by transferring a phosphate group to other molecules.', a: 'What is ATP?', n: 'Energy itself is defined as the capacity to do work.' },
+    { q: 'From a single molecule of glucose, glycolysis forms two molecules of this three-carbon compound and a net gain of 2 ATP.', a: 'What is pyruvate?', n: 'In any reaction, reactants become products: in C6H12O6 + 6O2 to 6CO2 + 6H2O + ATP, the CO2 is a product.' },
+    { q: 'In the citric acid (Krebs) cycle, this two-carbon molecule is converted into NADH, FADH2, CO2, and ATP.', a: 'What is acetyl-CoA?' },
+    { q: 'In oxidative phosphorylation, this molecule is the final electron acceptor, used to make water at the end of the electron transport chain.', a: 'What is oxygen (O2)?', n: 'In total, aerobic respiration yields about 36 to 38 ATP per molecule of glucose.' },
+    { q: 'Without oxygen, human muscle cells use the NADH formed in glycolysis to convert pyruvate into this molecule; alcoholic fermentation ends in ethanol instead.', a: 'What is lactate?', n: 'Reactions that occur in the absence of oxygen are anaerobic.' }
+  ]},
+  { name: 'Enzymes', clues: [
+    { q: 'Usually, enzymes belong to this class of macromolecule.', a: 'What are proteins?' },
+    { q: 'What an enzyme does to one specific chemical reaction, all without being changed or used up itself.', a: 'What is speed it up (catalyze it)?', n: 'Enzymes catalyze specific reactions; they are neither the reactants nor the products, and they do not require inhibitors to function.' },
+    { q: 'The location on an enzyme where it binds its specific reactant, the substrate.', a: 'What is the active site?' },
+    { q: 'Temperature, pH, and substrate concentration all directly affect the rate of enzyme activity; this atmospheric factor does not.', a: 'What is atmospheric pressure?' },
+    { q: 'The metabolic regulatory mechanism in which the product of a reaction slows or stops the pathway that produces it.', a: 'What is feedback inhibition?' }
+  ]},
+  { name: 'Membranes & Transport', clues: [
+    { q: 'The function of the cell membrane: doing this with the contents of the cell.', a: 'What is controlling what enters and exits?', n: 'Material exchange is most efficient when a cell’s surface area is greater than its volume, which is why cells stay small.' },
+    { q: 'The passive diffusion of water across a semipermeable membrane.', a: 'What is osmosis?', n: 'Osmosis, passive transport, and facilitated diffusion need no ATP.' },
+    { q: 'This type of transport mechanism uses ATP to move materials, for example the sodium-potassium pump.', a: 'What is active transport?' },
+    { q: 'Phospholipids form a bilayer because their heads are this, water-loving, while their fatty acid tails are hydrophobic.', a: 'What is hydrophilic?', n: 'Hydrophilic substances dissolve easily in water.' },
+    { q: 'A red blood cell containing 2% salt is placed in a 1% salt solution; this is what happens to the cell.', a: 'What is it expands and possibly bursts?', n: 'Water follows salt: it moves into the saltier cell by osmosis.' }
+  ]},
+  { name: 'Organelles', clues: [
+    { q: 'In both plant and animal cells, this organelle is responsible for ATP production by aerobic respiration.', a: 'What are mitochondria?' },
+    { q: 'Protein synthesis is the job of these structures, which also stud the rough endoplasmic reticulum.', a: 'What are ribosomes?', n: 'That is why the rough ER’s function is protein synthesis via its attached ribosomes.' },
+    { q: 'Proteins made in the rough ER travel to this organelle to be modified, sorted, and packaged.', a: 'What is the Golgi apparatus?', n: 'Together, the ER, Golgi, and vesicles form the endomembrane system: building, modifying, and transporting proteins and lipids throughout the cell.' },
+    { q: 'Like bristles on a broom sweeping a floor, these hair-like structures move materials across the surface of the cell.', a: 'What are cilia?' },
+    { q: 'Found in plant cells but never in animal cells, this organelle carries out photosynthesis.', a: 'What is the chloroplast?' }
+  ]},
+  { name: 'Macromolecules, Part 2', clues: [
+    { q: 'Simple sugars, amino acids, nucleotides, and fatty acids are all examples of these building blocks.', a: 'What are monomers?' },
+    { q: 'The bonds that link amino acids together.', a: 'What are peptide bonds?' },
+    { q: 'When blood sugar begins to drop, this storage polysaccharide in muscle cells is broken down into glucose monomers.', a: 'What is glycogen?' },
+    { q: 'In this type of reaction, a covalent bond forms between two monomers.', a: 'What is a condensation reaction?' },
+    { q: 'All of these are true of this type of fat: only single bonds, solid at room temperature, and found in dairy, animal fat, and coconut oil.', a: 'What are saturated fats?' }
+  ]},
+  { name: 'Classifying Life', clues: [
+    { q: 'This science is the study of life.', a: 'What is biology?' },
+    { q: 'True or False: all living things are multicellular.', a: 'What is False?', n: 'Living things do all require energy and nutrients, homeostasis, and DNA, which is crucial for genetic replication during reproduction.' },
+    { q: 'Many cells make up these, which in turn make up organs.', a: 'What are tissues?' },
+    { q: 'In Homo sapiens, the word Homo represents this rank in the taxonomic organization.', a: 'What is the genus?', n: 'Homo sapiens belongs to domain Eukarya, the broadest category.' },
+    { q: 'Today, the best method for determining species: comparing these biochemical traits.', a: 'What are DNA sequences?' }
+  ]}
+]}];
 const FINAL = {
   cat: 'Levels of Organization',
   q: 'Arrange these five levels from least inclusive to most inclusive: community, cell, biosphere, population, organism.',
   a: 'What is cell, organism, population, community, biosphere?'
 };
-const SAVE_KEY = 'bio189-foundations-jeopardy-v1';
+const SAVE_KEY = 'bio189-foundations-jeopardy-v2';
 
 /* ============ State ============ */
 let state = null;
 
-function freshState(teamNames, timerSecs, ddCount) {
-  const cells = [];
-  for (let c = 0; c < 5; c++) for (let r = 2; r < 5; r++) cells.push(c + '-' + r); // rows 300+
+function cellId(round, c, r) { return round + '-' + c + '-' + r; }
+function freshState(teamNames, timerSecs, ddOn) {
   const dd = [];
-  while (dd.length < ddCount && cells.length) {
-    const pick = cells.splice(Math.floor(Math.random() * cells.length), 1)[0];
-    if (!dd.some(id => id.split('-')[0] === pick.split('-')[0])) dd.push(pick); // one per category
+  if (ddOn) {
+    ROUNDS.forEach((round, ri) => {
+      const cells = [];
+      for (let c = 0; c < round.cats.length; c++) for (let r = 2; r < 5; r++) cells.push([c, r]);
+      let placed = 0;
+      const usedCats = new Set();
+      while (placed < round.ddCount && cells.length) {
+        const [c, r] = cells.splice(Math.floor(Math.random() * cells.length), 1)[0];
+        if (usedCats.has(c)) continue;
+        usedCats.add(c);
+        dd.push(cellId(ri, c, r));
+        placed++;
+      }
+    });
   }
   return {
-    teams: teamNames.map(n => ({ name: n, score: 0 })),
-    used: [], dd, timerSecs,
+    teams: teamNames.map(nm => ({ name: nm, score: 0 })),
+    round: 0, used: [], dd, timerSecs,
     finalDone: false, started: true
   };
 }
@@ -489,7 +559,7 @@ function loadSaved() {
     const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return null;
     const s = JSON.parse(raw);
-    if (s && Array.isArray(s.teams) && Array.isArray(s.used)) return s;
+    if (s && Array.isArray(s.teams) && Array.isArray(s.used) && typeof s.round === 'number') return s;
   } catch (e) { /* ignore */ }
   return null;
 }
@@ -524,7 +594,7 @@ function play(kind) {
 
 /* ============ Setup screen ============ */
 const $ = id => document.getElementById(id);
-let setupTeams = 3, setupTimer = 30, setupDD = 2;
+let setupTeams = 3, setupTimer = 30, setupDD = true;
 const DEFAULT_NAMES = ['Team Mitochondria', 'Team Ribosome', 'Team Nucleus', 'Team Lysosome', 'Team Golgi', 'Team Vacuole'];
 
 function optGroup(el, options, current, onPick) {
@@ -540,7 +610,7 @@ function optGroup(el, options, current, onPick) {
 function renderSetup() {
   optGroup($('teamCountGroup'), [1,2,3,4,5,6].map(n => [String(n), n]), setupTeams, v => { setupTeams = v; renderSetup(); });
   optGroup($('timerGroup'), [['Off', 0], ['15s', 15], ['30s', 30], ['60s', 60]], setupTimer, v => { setupTimer = v; renderSetup(); });
-  optGroup($('ddGroup'), [['None', 0], ['1', 1], ['2', 2]], setupDD, v => { setupDD = v; renderSetup(); });
+  optGroup($('ddGroup'), [['Off', false], ['Classic: 1 + 2', true]], setupDD, v => { setupDD = v; renderSetup(); });
   const grid = $('nameGrid');
   const existing = Array.from(grid.querySelectorAll('input')).map(i => i.value);
   grid.innerHTML = '';
@@ -599,38 +669,44 @@ function renderScoreboard() {
     sb.appendChild(card);
   });
 }
+function roundData() { return ROUNDS[state.round]; }
 function renderBoard() {
+  const round = roundData();
   const board = $('board');
   board.innerHTML = '';
-  CATEGORIES.forEach(cat => {
+  board.style.gridTemplateColumns = 'repeat(' + round.cats.length + ', 1fr)';
+  $('roundTag').textContent = round.label + ': ' + round.values[0] + ' to ' + round.values[4];
+  round.cats.forEach(cat => {
     const c = document.createElement('div');
     c.className = 'cat-cell'; c.setAttribute('role', 'columnheader');
     c.textContent = cat.name;
     board.appendChild(c);
   });
   for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 5; c++) {
-      const id = c + '-' + r;
+    for (let c = 0; c < round.cats.length; c++) {
+      const id = cellId(state.round, c, r);
       const btn = document.createElement('button');
       btn.className = 'clue-cell';
-      btn.textContent = VALUES[r];
-      btn.setAttribute('aria-label', CATEGORIES[c].name + ' for ' + VALUES[r]);
+      btn.textContent = round.values[r];
+      btn.setAttribute('aria-label', round.cats[c].name + ' for ' + round.values[r]);
       if (state.used.includes(id)) btn.disabled = true;
-      btn.addEventListener('click', () => openClue(c, r, btn));
+      btn.addEventListener('click', () => openClue(c, r));
       board.appendChild(btn);
     }
   }
+  $('skipRoundBtn').hidden = state.round !== 0;
 }
 
 /* ============ Clue flow ============ */
 let current = null; // { c, r, value, isDD, ddTeam, lockedTeams: [] }
 let timerInt = null;
 
-function openClue(c, r, btn) {
-  if (state.used.includes(c + '-' + r)) return;
+function openClue(c, r) {
+  const id = cellId(state.round, c, r);
+  if (state.used.includes(id)) return;
   play('pick');
-  const isDD = state.dd.includes(c + '-' + r);
-  current = { c, r, value: VALUES[r], isDD, ddTeam: null, lockedTeams: [] };
+  const isDD = state.dd.includes(id);
+  current = { c, r, value: roundData().values[r], isDD, ddTeam: null, lockedTeams: [] };
   $('clueOverlay').hidden = false;
   $('clueMain').hidden = true;
   $('ddIntro').hidden = true;
@@ -661,13 +737,14 @@ function openClue(c, r, btn) {
   }
 }
 function ddMax() {
+  const topValue = roundData().values[4];
   const t = current.ddTeam == null ? null : state.teams[current.ddTeam];
-  return Math.max(500, t ? t.score : 0);
+  return Math.max(topValue, t ? t.score : 0);
 }
 function updateDDMax() {
   const max = ddMax();
   $('ddWager').max = max;
-  $('ddWager').value = Math.min(Number($('ddWager').value) || 500, max);
+  $('ddWager').value = Math.min(Number($('ddWager').value) || roundData().values[4], max);
   $('ddMaxNote').textContent = current.ddTeam == null
     ? 'Pick a team to set the wager limit.'
     : 'Wager 5 to ' + max + '. A true Daily Double bets it all.';
@@ -683,9 +760,9 @@ $('ddGo').addEventListener('click', () => {
 });
 function startClueProper() {
   $('clueMain').hidden = false;
-  $('clueCat').textContent = CATEGORIES[current.c].name;
+  $('clueCat').textContent = roundData().cats[current.c].name;
   $('clueValue').textContent = (current.isDD ? 'Daily Double: ' : '') + current.value;
-  $('clueText').textContent = CATEGORIES[current.c].clues[current.r].q;
+  $('clueText').textContent = roundData().cats[current.c].clues[current.r].q;
   startTimer(state.timerSecs, $('timerFill'), $('timerNum'), $('timerTrack'));
 }
 function startTimer(secs, fill, num, track) {
@@ -710,8 +787,10 @@ function stopTimer() { if (timerInt) { clearInterval(timerInt); timerInt = null;
 function revealAnswer() {
   if (!current || $('preReveal').hidden) return;
   stopTimer();
-  const clue = CATEGORIES[current.c].clues[current.r];
-  $('answerText').textContent = clue.a;
+  const clue = roundData().cats[current.c].clues[current.r];
+  $('answerMain').textContent = clue.a;
+  $('answerNote').textContent = clue.n || '';
+  $('answerNote').hidden = !clue.n;
   $('answerText').hidden = false;
   $('preReveal').hidden = true;
   $('judging').hidden = false;
@@ -759,20 +838,42 @@ function judge(teamIdx, correct) {
     else { renderScoreboard(); save(); renderJudgeGrid(); }
   }
 }
+function roundCellCount() { return roundData().cats.length * 5; }
+function roundUsedCount() {
+  const prefix = state.round + '-';
+  return state.used.filter(id => id.startsWith(prefix)).length;
+}
 function finishClue() {
-  state.used.push(current.c + '-' + current.r);
+  state.used.push(cellId(state.round, current.c, current.r));
   save();
   closeClue();
   renderScoreboard();
   renderBoard();
-  if (state.used.length === 25 && !state.finalDone) {
-    setTimeout(() => openFinal(), 450);
+  if (roundUsedCount() === roundCellCount()) {
+    if (state.round === 0) {
+      setTimeout(() => { $('roundOverlay').hidden = false; play('dd'); }, 450);
+    } else if (!state.finalDone) {
+      setTimeout(() => openFinal(), 450);
+    }
   }
 }
 $('revealBtn').addEventListener('click', revealAnswer);
 $('noAnswerBtn').addEventListener('click', () => { finishClue(); });
 function closeClue() { stopTimer(); $('clueOverlay').hidden = true; current = null; }
 $('clueOverlay').addEventListener('click', e => { if (e.target === $('clueOverlay')) closeClue(); });
+
+/* ============ Round advance ============ */
+function goToDoubleJeopardy() {
+  $('roundOverlay').hidden = true;
+  if (state.round === 0) {
+    state.round = 1;
+    save();
+    renderBoard();
+  }
+}
+$('roundGoBtn').addEventListener('click', goToDoubleJeopardy);
+$('skipRoundBtn').addEventListener('click', () => { $('roundOverlay').hidden = false; play('dd'); });
+$('roundOverlay').addEventListener('click', e => { if (e.target === $('roundOverlay')) goToDoubleJeopardy(); });
 
 /* ============ Final Jeopardy ============ */
 function finalMax(score) { return score > 500 ? score : 500; }
@@ -816,7 +917,7 @@ $('finalClueBtn').addEventListener('click', () => {
 });
 $('finalRevealBtn').addEventListener('click', () => {
   stopTimer();
-  $('finalAnswerText').textContent = FINAL.a;
+  $('finalAnswerMain').textContent = FINAL.a;
   $('finalAnswerText').hidden = false;
   $('finalPreReveal').hidden = true;
   $('finalJudging').hidden = false;
@@ -925,7 +1026,7 @@ function resetAll() {
   clearSaved();
   state = null;
   stopTimer(); stopConfetti();
-  ['clueOverlay', 'finalOverlay', 'winnerOverlay'].forEach(id => { $(id).hidden = true; });
+  ['clueOverlay', 'roundOverlay', 'finalOverlay', 'winnerOverlay'].forEach(id => { $(id).hidden = true; });
   $('gameScreen').hidden = true;
   $('setupScreen').hidden = false;
   $('resumeNote').hidden = true;
@@ -954,6 +1055,7 @@ $('muteBtn').addEventListener('click', () => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (!$('clueOverlay').hidden) closeClue();
+    else if (!$('roundOverlay').hidden) goToDoubleJeopardy();
     else if (!$('finalOverlay').hidden) { stopTimer(); $('finalOverlay').hidden = true; }
     else if (!$('winnerOverlay').hidden) { $('winnerOverlay').hidden = true; stopConfetti(); }
   }
