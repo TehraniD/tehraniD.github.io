@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIO189 Midterm Jeopardy Review 2026</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a2a; color: #fff; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #ffd700; text-shadow: 2px 2px 4px #000; }
+  .intro { max-width: 900px; margin: 0 auto 20px; background: #1a1a4a; padding: 15px; border-radius: 10px; border: 2px solid #ffd700; }
+  .board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; max-width: 1400px; margin: 0 auto; }
+  .category { background: #1e3a8a; color: #ffd700; font-weight: bold; text-align: center; padding: 15px 5px; border-radius: 5px; font-size: 0.85em; display: flex; align-items: center; justify-content: center; min-height: 60px; }
+  .clue { background: #1e40af; color: #ffd700; font-size: 1.4em; font-weight: bold; text-align: center; padding: 30px 5px; border-radius: 5px; cursor: pointer; transition: all 0.2s; min-height: 80px; display: flex; align-items: center; justify-content: center; }
+  .clue:hover { background: #3b82f6; transform: scale(1.05); }
+  .clue.used { background: #334155; color: #64748b; cursor: default; transform: none; }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; align-items: center; justify-content: center; }
+  .modal-content { background: #1e3a8a; padding: 40px; border-radius: 15px; max-width: 700px; text-align: center; border: 4px solid #ffd700; }
+  .clue-text { font-size: 1.8em; margin-bottom: 30px; line-height: 1.4; }
+  .answer { font-size: 1.4em; color: #4ade80; margin: 20px 0; display: none; }
+  button { background: #ffd700; color: #0a0a2a; border: none; padding: 12px 30px; font-size: 1.1em; font-weight: bold; border-radius: 8px; cursor: pointer; margin: 10px; }
+  button:hover { background: #fbbf24; }
+  .score { text-align: center; font-size: 1.5em; color: #ffd700; margin: 15px 0; }
+</style>
+</head>
+<body>
+<h1>BIO189 Midterm Jeopardy Review 2026</h1>
+<div class="intro">
+  <p><strong>Colleagues,</strong> we've all spent years diving into the intricacies of introductory biology—from membrane transport that keeps cells alive to the metabolic pathways that power them. To make reviewing this midterm material more engaging, I've put together 50 Jeopardy-style clues based on the key concepts from the correct answers. I've grouped them into 10 categories, each with 5 clues of increasing complexity, to mimic a board. Remember, in Jeopardy, you get the "answer" as a clue, and your response starts with "What is" or "Who is," etc. I kept them witty to lighten the load—biology's serious enough without us being stuffy about it. Click any value to reveal the clue!</p>
+</div>
+<div class="score">Score: <span id="score">0</span></div>
+<div class="board" id="board"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="clue-text" id="clueText"></div>
+    <div class="answer" id="answerText"></div>
+    <button onclick="showAnswer()">Show Answer</button>
+    <button onclick="closeModal(true)">Correct (+points)</button>
+    <button onclick="closeModal(false)">Incorrect</button>
+  </div>
+</div>
+
+<script>
+const categories = [
+  "Membrane Transport",
+  "Cellular Respiration",
+  "Enzymes & Regulation",
+  "Cell Structures",
+  "Macromolecules",
+  "Scientific Method",
+  "Taxonomy & Classification",
+  "Levels of Organization",
+  "Chemistry of Life",
+  "Life Characteristics"
+];
+
+const clues = [
+  // Membrane Transport
+  [
+    {v:100, c:"This transport mechanism is the only one that directly burns ATP to move molecules against their concentration gradient.", a:"What is active transport?"},
+    {v:200, c:"The spontaneous movement of water molecules across a semipermeable membrane—nature’s way of balancing the books.", a:"What is osmosis?"},
+    {v:300, c:"Place a 2% salt red blood cell into a 1% salt solution and this is what happens to the cell (hint: it’s not shrinking).", a:"What is the cell expands and possibly bursts?"},
+    {v:400, c:"These amphipathic molecules spontaneously form a bilayer because their tails hate water while their heads love it.", a:"What are phospholipids?"},
+    {v:500, c:"Of the options listed on the exam, this is the classic example of passive transport that involves water.", a:"What is osmosis?"}
+  ],
+  // Cellular Respiration
+  [
+    {v:100, c:"From one glucose you get two of these 3-carbon molecules and a net gain of two ATP at the end of this cytoplasmic pathway.", a:"What is 2 pyruvate and net 2 ATP (glycolysis)?"},
+    {v:200, c:"This cycle takes Acetyl-CoA and produces NADH, FADH2, CO2, and a bit of ATP.", a:"What is the citric acid cycle (Krebs cycle)?"},
+    {v:300, c:"The approximate total ATP yield from one glucose fully oxidized aerobically—classic textbook range.", a:"What is ~36-38 ATP?"},
+    {v:400, c:"The final electron acceptor in oxidative phosphorylation—without it the chain backs up.", a:"What is O2 (oxygen)?"},
+    {v:500, c:"This is the stage where oxygen is actually used to form water.", a:"What is at the end of the electron transport chain?"}
+  ],
+  // Enzymes & Regulation
+  [
+    {v:100, c:"When the product of a pathway binds and slows or stops the pathway that made it—classic metabolic self-control.", a:"What is feedback inhibition?"},
+    {v:200, c:"True statement about these biological catalysts: they accelerate specific reactions.", a:"What is enzymes catalyze specific reactions?"},
+    {v:300, c:"The specific pocket where the enzyme meets and binds its substrate.", a:"What is the active site?"},
+    {v:400, c:"Their job description: speed up a particular reaction without being permanently changed by it.", a:"What is the function of an enzyme?"},
+    {v:500, c:"Most of the time, these catalysts are made of this type of macromolecule.", a:"What are proteins?"}
+  ],
+  // Cell Structures
+  [
+    {v:100, c:"The organelle responsible for ATP production by aerobic respiration in both plant and animal cells.", a:"What is the mitochondrion?"},
+    {v:200, c:"Proteins made on ribosomes of the rough ER are next shipped to this organelle for modification and packaging.", a:"What is the Golgi apparatus (body)?"},
+    {v:300, c:"These tiny machines are the site of protein synthesis—found free or bound.", a:"What are ribosomes?"},
+    {v:400, c:"This organelle’s job is to modify, sort, and package proteins and lipids.", a:"What is the Golgi apparatus?"},
+    {v:500, c:"Found only in plant cells, this organelle runs the light-powered process that builds sugars.", a:"What are chloroplasts (photosynthesis)?"}
+  ],
+  // Macromolecules
+  [
+    {v:100, c:"Per gram, this class of macromolecule packs the highest caloric value.", a:"What are lipids?"},
+    {v:200, c:"The covalent bond that links amino acids into polypeptide chains.", a:"What is a peptide bond?"},
+    {v:300, c:"Amino acids contain this acidic functional group that helps them form peptide bonds.", a:"What is a carboxyl group?"},
+    {v:400, c:"Simple sugars, amino acids, nucleotides, and fatty acids are all examples of these building blocks.", a:"What are monomers?"},
+    {v:500, c:"This polysaccharide is the main structural component of plant cell walls and is indigestible for most animals.", a:"What is cellulose?"}
+  ],
+  // Scientific Method
+  [
+    {v:100, c:"A study with only 10 total participants has this statistical problem that weakens its conclusions.", a:"What is sampling error?"},
+    {v:200, c:"In the cigarette-smoke rat lung experiment, the smoke itself is this type of variable.", a:"What is the independent variable?"},
+    {v:300, c:"In the potato-diet rat study, Group B (mixed grain only) serves as this.", a:"What is the control group?"},
+    {v:400, c:"This non-scientific approach may involve supernatural or mysterious phenomena.", a:"What is pseudoscience?"},
+    {v:500, c:"According to the textbook, energy is defined as this.", a:"What is the capacity to do work?"}
+  ],
+  // Taxonomy & Classification
+  [
+    {v:100, c:"The ecological level that includes all the different species living together in a given area.", a:"What is a community?"},
+    {v:200, c:"Today’s best method for determining species relies on comparing these molecular sequences.", a:"What are DNA sequences (biochemical traits)?"},
+    {v:300, c:"Homo sapiens belongs in this domain—the broadest taxonomic category for us.", a:"What is Eukarya?"},
+    {v:400, c:"In the name Homo sapiens, the word Homo represents this taxonomic rank.", a:"What is the genus?"},
+    {v:500, c:"These two groups both include multicellular organisms that possess a nucleus.", a:"What are Fungi and Plants?"}
+  ],
+  // Levels of Organization
+  [
+    {v:100, c:"Many of these come together to form tissues—the accurate description of hierarchical organization.", a:"What are cells?"},
+    {v:200, c:"Analyzing the age of all humans living in South Tempe examines this level of organization.", a:"What is a population?"},
+    {v:300, c:"The smallest unit of life according to cell theory.", a:"What is the cell?"},
+    {v:400, c:"This scientific discipline is simply “the study of life.”", a:"What is biology?"},
+    {v:500, c:"For efficient material exchange, a cell is best off when its surface area is greater than this.", a:"What is its volume?"}
+  ],
+  // Chemistry of Life
+  [
+    {v:100, c:"If hydrogen ion concentration in blood rises, the pH value moves in this direction.", a:"What is toward 1 (more acidic)?"},
+    {v:200, c:"These molecules help a system resist changes in pH and maintain stability.", a:"What is a buffer?"},
+    {v:300, c:"Of the listed values, this one indicates an acidic solution.", a:"What is 4?"},
+    {v:400, c:"Carbon’s bonding capacity—it can covalently bond with up to this many other atoms.", a:"What is four?"},
+    {v:500, c:"Substances that dissolve easily in water are described by this term.", a:"What is hydrophilic?"}
+  ],
+  // Life Characteristics
+  [
+    {v:100, c:"Bacteria form this slimy community structure by secreting a shared capsule layer.", a:"What is a biofilm?"},
+    {v:200, c:"Reactions that occur in the absence of oxygen are called this.", a:"What is anaerobic?"},
+    {v:300, c:"Every cell on Earth—prokaryotic or eukaryotic—shares these three features: cytosol, DNA, and this outer boundary.", a:"What is a plasma membrane?"},
+    {v:400, c:"This statement is NOT true of all living things: they are all multicellular.", a:"What is “all living things are multicellular”?"},
+    {v:500, c:"The process of maintaining a stable internal environment (e.g., sweating to cool the body).", a:"What is homeostasis?"}
+  ]
+];
+
+let score = 0;
+const board = document.getElementById('board');
+
+// Render categories
+categories.forEach(cat => {
+  const div = document.createElement('div');
+  div.className = 'category';
+  div.textContent = cat;
+  board.appendChild(div);
+});
+
+// Render clues
+for (let row = 0; row < 5; row++) {
+  for (let col = 0; col < 10; col++) {
+    const clue = clues[col][row];
+    const div = document.createElement('div');
+    div.className = 'clue';
+    div.textContent = '$' + clue.v;
+    div.dataset.col = col;
+    div.dataset.row = row;
+    div.onclick = () => openClue(col, row, div);
+    board.appendChild(div);
+  }
+}
+
+let currentClue = null;
+let currentEl = null;
+
+function openClue(col, row, el) {
+  if (el.classList.contains('used')) return;
+  currentClue = clues[col][row];
+  currentEl = el;
+  document.getElementById('clueText').textContent = currentClue.c;
+  document.getElementById('answerText').textContent = currentClue.a;
+  document.getElementById('answerText').style.display = 'none';
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function showAnswer() {
+  document.getElementById('answerText').style.display = 'block';
+}
+
+function closeModal(correct) {
+  document.getElementById('modal').style.display = 'none';
+  if (currentEl) {
+    currentEl.classList.add('used');
+    currentEl.textContent = '';
+  }
+  if (correct && currentClue) {
+    score += currentClue.v;
+    document.getElementById('score').textContent = score;
+  }
+  currentClue = null;
+  currentEl = null;
+}
+</script>
+</body>
+</html>
