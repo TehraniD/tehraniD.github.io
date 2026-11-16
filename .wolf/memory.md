@@ -31,3 +31,4 @@
 | 21:10 | Linked Crystal Growing Project from index.html CHM 130 card (was never linked) | index.html | pushed to main | ~1k |
 | 21:15 | Removed entire Data & Analysis tab per instructor (forms, data table, obs log, calculator, crystal card + their JS/CSS); references now point to lab notebook; harvest step computes growth rate by hand | CHM130-Crystal-Growing-Lab.html, .wolf/anatomy.md | pushed to main | ~5k |
 | 21:20 | Dual-section schedule (Thu 11/19 or Fri 11/20, Thu 12/10 or Fri 12/11; Tuesdays shared, 21-day window identical), removed ALL em dashes per instructor style, removed electric kettle (instructor heating station), distilled water only for all solutions | CHM130-Crystal-Growing-Lab.html | pushed to main | ~6k |
+| 22:14 | Built BIO189_Foundations_Jeopardy.html from 25 instructor clues; Playwright-tested full game flow; linked from index.html | BIO189_Foundations_Jeopardy.html, index.html | success | ~45k |

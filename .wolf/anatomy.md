@@ -24,6 +24,7 @@
 - `CHM152L_Lab6_Virtual_Lab_v5.html` — Lab Mystery: The Case of the Unknown Acid | CHM 152L Lab 6 (~20537 tok)
 - `CHM152L_Lab6_Virtual_Lab_v6.html` — Lab Mystery: The Case of the Unknown Acid | CHM 152L Lab 6 (~21057 tok)
 - `CHM152L_Lab7_Interactive_Guide.html` — CHM 152L Lab 7 — Buffer Solutions | Tehrani Labs (~11779 tok)
+- `BIO189_Foundations_Jeopardy.html` — BIO 189 Foundations Jeopardy: 25-clue board (levels of organization, cells & domains, chemistry & homeostasis, macromolecules, science & ecology) plus Final Jeopardy; setup screen (1-6 teams, timer, DD count), true-wager Daily Doubles, steal flow, WebAudio sounds with mute, localStorage autosave/resume, confetti winner screen (~9000 tok)
 - `BIO189_Module3_Study_Guide.html` — BIO 189 Module 3: Energy & Metabolism Part I interactive study guide; 6 sections (A-F) covering all 25 objectives from Chapters 4 & 6 (thermodynamics, enzyme structure/function/activity, membrane transport, osmosis, tonicity, feedback inhibition, ATP, glycolysis, aerobic respiration, fermentation, oxidative phosphorylation); clinical nursing connections, mnemonics, dark/light theme (~18000 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `CNAME` (~5 tok)
