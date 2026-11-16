@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIO189 Midterm Conceptual Jeopardy 2026</title>
+<style>
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0c1220; color: #e8eef7; margin: 0; padding: 16px; }
+  h1 { text-align: center; color: #f5d76e; letter-spacing: 1px; }
+  .sub { text-align: center; color: #9ab; font-size: 0.95em; margin-bottom: 12px; }
+  .board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-width: 1100px; margin: 0 auto; }
+  .cat { background: #1a2744; color: #f5d76e; font-weight: 600; text-align: center; padding: 12px 4px; border-radius: 4px; font-size: 0.78em; min-height: 52px; display: flex; align-items: center; justify-content: center; }
+  .clue { background: #243b6a; color: #f5d76e; font-weight: 700; text-align: center; padding: 22px 4px; border-radius: 4px; cursor: pointer; font-size: 1.25em; }
+  .clue:hover { background: #2f4d8a; }
+  .clue.used { background: #1e293b; color: #475569; cursor: default; }
+  .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 50; align-items: center; justify-content: center; }
+  .modal-box { background: #1a2744; padding: 28px; border-radius: 12px; max-width: 640px; border: 3px solid #f5d76e; text-align: center; }
+  .clue-text { font-size: 1.35em; line-height: 1.45; margin-bottom: 18px; }
+  .answer { color: #86efac; font-size: 1.15em; margin: 14px 0; display: none; }
+  button { background: #f5d76e; color: #0c1220; border: 0; padding: 10px 22px; font-weight: 700; border-radius: 6px; margin: 6px; cursor: pointer; }
+  .score { text-align: center; color: #f5d76e; font-size: 1.2em; margin: 8px 0; }
+</style>
+</head>
+<body>
+<h1>BIO189 Midterm — Conceptual Review</h1>
+<p class="sub">Clues probe the learning objective behind each keyed answer. Responses begin with “What is…”</p>
+<div class="score">Score: <span id="score">0</span></div>
+<div class="board" id="board"></div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="clue-text" id="clueText"></div>
+    <div class="answer" id="answerText"></div>
+    <button onclick="showAnswer()">Reveal</button>
+    <button onclick="closeModal(true)">Correct</button>
+    <button onclick="closeModal(false)">Miss</button>
+  </div>
+</div>
+
+<script>
+const cats = [
+  "Membrane Movement",
+  "Cellular Energy Harvest",
+  "Catalysis & Regulation",
+  "Cellular Architecture",
+  "Molecular Architecture",
+  "Inquiry Design",
+  "Naming Life",
+  "Biological Hierarchy",
+  "Chemical Foundations",
+  "Shared Features of Life"
+];
+
+const clues = [
+  // Membrane Movement
+  [
+    {v:200, c:"A membrane protein that moves ions uphill must couple that work to the hydrolysis of this molecule.", a:"What is ATP?"},
+    {v:400, c:"Water crosses a selectively permeable membrane down its own concentration gradient by this process alone.", a:"What is osmosis?"},
+    {v:600, c:"A cell whose cytosol is hypertonic to the surrounding solution will experience a net influx of water.", a:"What is hypotonic extracellular fluid (relative to the cell)?"},
+    {v:800, c:"These amphipathic lipids spontaneously assemble into a bilayer because their nonpolar tails exclude water while their polar heads remain in contact with it.", a:"What are phospholipids?"},
+    {v:1000, c:"Movement of water across a membrane that requires no direct energy input is classified as this type of transport.", a:"What is passive transport?"}
+  ],
+  // Cellular Energy Harvest
+  [
+    {v:200, c:"The cytosolic pathway that converts one glucose into two three-carbon molecules while netting two ATP.", a:"What is glycolysis?"},
+    {v:400, c:"The cyclic pathway that oxidizes the two-carbon unit from acetyl-CoA and yields reduced electron carriers plus CO₂.", a:"What is the citric acid (Krebs) cycle?"},
+    {v:600, c:"Complete aerobic oxidation of one glucose typically yields this approximate number of ATP.", a:"What is 36–38?"},
+    {v:800, c:"The terminal acceptor that keeps the electron-transport chain running and is reduced to water.", a:"What is molecular oxygen?"},
+    {v:1000, c:"In the absence of oxygen, human cells regenerate NAD⁺ by reducing pyruvate to this three-carbon acid.", a:"What is lactate?"}
+  ],
+  // Catalysis & Regulation
+  [
+    {v:200, c:"A pathway’s own end product binds an early enzyme and reduces flux through the entire pathway.", a:"What is feedback inhibition?"},
+    {v:400, c:"These catalysts accelerate only reactions whose substrates fit a particular binding pocket.", a:"What are enzymes (specificity)?"},
+    {v:600, c:"The region of an enzyme that binds substrate and positions it for reaction.", a:"What is the active site?"},
+    {v:800, c:"A biological catalyst that emerges from the reaction chemically unchanged.", a:"What is an enzyme?"},
+    {v:1000, c:"The great majority of cellular catalysts are polymers of this monomer class.", a:"What are amino acids (proteins)?"}
+  ],
+  // Cellular Architecture
+  [
+    {v:200, c:"The organelle that houses the machinery of oxidative phosphorylation in eukaryotic cells.", a:"What is the mitochondrion?"},
+    {v:400, c:"Proteins destined for secretion or the plasma membrane leave the rough ER and next enter this sorting organelle.", a:"What is the Golgi apparatus?"},
+    {v:600, c:"The macromolecular machines that polymerize amino acids into polypeptides.", a:"What are ribosomes?"},
+    {v:800, c:"This organelle modifies, sorts, and packages proteins and lipids for delivery.", a:"What is the Golgi apparatus?"},
+    {v:1000, c:"Plant cells alone contain this organelle that converts light energy into chemical energy.", a:"What is the chloroplast?"}
+  ],
+  // Molecular Architecture
+  [
+    {v:200, c:"Per gram, this class of macromolecule stores the greatest amount of chemical energy.", a:"What are lipids (fats)?"},
+    {v:400, c:"The covalent linkage formed between the carboxyl group of one amino acid and the amino group of the next.", a:"What is a peptide bond?"},
+    {v:600, c:"The acidic functional group present on every amino acid that participates in peptide-bond formation.", a:"What is the carboxyl group?"},
+    {v:800, c:"Simple sugars, amino acids, nucleotides, and fatty acids are all examples of these repeating units.", a:"What are monomers?"},
+    {v:1000, c:"The β-1,4-linked glucose polymer that forms the primary structural component of plant cell walls.", a:"What is cellulose?"}
+  ],
+  // Inquiry Design
+  [
+    {v:200, c:"An experiment with only ten total subjects is vulnerable to this statistical problem that undermines generalizability.", a:"What is sampling error?"},
+    {v:400, c:"In a study testing the effect of cigarette smoke on lung histology, the smoke itself is this type of variable.", a:"What is the independent variable?"},
+    {v:600, c:"The group that receives the standard diet while the experimental group receives the modified diet.", a:"What is the control group?"},
+    {v:800, c:"Claims that invoke untestable supernatural mechanisms fall under this category rather than science.", a:"What is pseudoscience?"},
+    {v:1000, c:"The textbook definition of energy is the capacity to perform this.", a:"What is work?"}
+  ],
+  // Naming Life
+  [
+    {v:200, c:"All the populations of different species that interact in a defined area constitute this ecological level.", a:"What is a community?"},
+    {v:400, c:"Modern species delimitation relies primarily on comparing these molecular sequences.", a:"What are DNA sequences?"},
+    {v:600, c:"Humans are placed in this domain because their cells contain membrane-bound nuclei.", a:"What is Eukarya?"},
+    {v:800, c:"In the binomial Homo sapiens, the first word designates this taxonomic rank.", a:"What is the genus?"},
+    {v:1000, c:"Both of these kingdoms contain multicellular organisms whose cells possess nuclei.", a:"What are Fungi and Plantae?"}
+  ],
+  // Biological Hierarchy
+  [
+    {v:200, c:"Tissues are formed by the organized aggregation of these fundamental units.", a:"What are cells?"},
+    {v:400, c:"Recording the age distribution of every human living in one city examines this level of biological organization.", a:"What is a population?"},
+    {v:600, c:"According to cell theory, this is the smallest unit that can be considered alive.", a:"What is the cell?"},
+    {v:800, c:"The scientific discipline whose subject is living systems in all their forms.", a:"What is biology?"},
+    {v:1000, c:"Exchange of materials is most efficient when a cell’s surface area is large relative to this.", a:"What is its volume?"}
+  ],
+  // Chemical Foundations
+  [
+    {v:200, c:"An increase in free hydrogen-ion concentration shifts pH in this numerical direction.", a:"What is downward (toward 1)?"},
+    {v:400, c:"A system that resists large swings in pH when acid or base is added is said to contain this.", a:"What is a buffer?"},
+    {v:600, c:"Among the values 4, 7, 7.8, and 12, only this one describes an acidic solution.", a:"What is 4?"},
+    {v:800, c:"A carbon atom can form stable covalent bonds with as many as this many other atoms.", a:"What is four?"},
+    {v:1000, c:"Molecules that interact favorably with water and therefore dissolve readily are termed this.", a:"What is hydrophilic?"}
+  ],
+  // Shared Features of Life
+  [
+    {v:200, c:"Bacteria that live embedded in a shared extracellular polysaccharide matrix form this community structure.", a:"What is a biofilm?"},
+    {v:400, c:"Metabolic pathways that operate without molecular oxygen are classified as this.", a:"What is anaerobic?"},
+    {v:600, c:"Every cell, regardless of domain, possesses cytosol, genetic material, and this selective boundary.", a:"What is a plasma membrane?"},
+    {v:800, c:"This statement is not a universal feature of life: every organism is composed of many cells.", a:"What is “all living things are multicellular”?"},
+    {v:1000, c:"The regulated maintenance of a relatively constant internal environment is called this.", a:"What is homeostasis?"}
+  ]
+];
+
+let score = 0;
+const board = document.getElementById('board');
+
+cats.forEach(c => {
+  const d = document.createElement('div');
+  d.className = 'cat';
+  d.textContent = c;
+  board.appendChild(d);
+});
+
+for (let r = 0; r < 5; r++) {
+  for (let c = 0; c < 5; c++) {
+    const clue = clues[c][r];
+    const d = document.createElement('div');
+    d.className = 'clue';
+    d.textContent = clue.v;
+    d.onclick = () => open(c, r, d);
+    board.appendChild(d);
+  }
+}
+
+let cur = null, el = null;
+function open(c, r, elem) {
+  if (elem.classList.contains('used')) return;
+  cur = clues[c][r];
+  el = elem;
+  document.getElementById('clueText').textContent = cur.c;
+  document.getElementById('answerText').textContent = cur.a;
+  document.getElementById('answerText').style.display = 'none';
+  document.getElementById('modal').style.display = 'flex';
+}
+function showAnswer() { document.getElementById('answerText').style.display = 'block'; }
+function closeModal(ok) {
+  document.getElementById('modal').style.display = 'none';
+  if (el) { el.classList.add('used'); el.textContent = ''; }
+  if (ok && cur) { score += cur.v; document.getElementById('score').textContent = score; }
+  cur = el = null;
+}
+</script>
+</body>
+</html>
