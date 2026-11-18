@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Copilot CLI + OpenWolf Cheat Sheet</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+      margin: 40px;
+      color: #111827;
+    }
+    h1, h2, h3 { color: #111827; }
+    h1 { font-size: 28px; margin-bottom: 8px; }
+    h2 { font-size: 20px; margin-top: 28px; border-bottom: 1px solid #d1d5db; padding-bottom: 6px; }
+    h3 { font-size: 16px; margin-top: 18px; }
+    p, li { font-size: 12px; }
+    code, pre {
+      font-family: Menlo, Consolas, monospace;
+      background: #f3f4f6;
+    }
+    code { padding: 1px 4px; border-radius: 4px; }
+    pre {
+      padding: 10px 12px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      border: 1px solid #e5e7eb;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    th, td {
+      border: 1px solid #d1d5db;
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f9fafb; }
+    .lead {
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Copilot CLI + OpenWolf Cheat Sheet</h1>
+  <p class="lead">
+    Use this repo like an AI teaching-workbench: start inside the repo, let the CLI load the repo instructions,
+    then ask for concrete outputs like study guides, quizzes, HTML learning pages, redesigns, or fixes.
+  </p>
+
+  <h2>1. Fast start</h2>
+  <pre>cd /Users/mazdaktehrani/Downloads/tehraniD.github.io
+source /Users/mazdaktehrani/Downloads/.venv/bin/activate
+copilot
+/init</pre>
+  <p><strong>What /init does:</strong> initializes repo-aware instructions so the agent respects files like <code>CLAUDE.md</code> and <code>.wolf/OPENWOLF.md</code>.</p>
+
+  <h2>2. Best commands to remember</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What it does</th>
+        <th>When to use it</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>/init</code></td><td>Load repo instructions</td><td>First time in a repo</td></tr>
+      <tr><td><code>/help</code></td><td>Show commands</td><td>When you forget syntax</td></tr>
+      <tr><td><code>/model</code></td><td>Switch model</td><td>When you want faster vs stronger reasoning</td></tr>
+      <tr><td><code>/plan</code></td><td>Make a plan before editing</td><td>Bigger tasks</td></tr>
+      <tr><td><code>/diff</code></td><td>Review current changes</td><td>Before keeping edits</td></tr>
+      <tr><td><code>/review</code></td><td>Run code review agent</td><td>Catch real bugs</td></tr>
+      <tr><td><code>/tasks</code></td><td>Manage background tasks</td><td>If agents or shell jobs are running</td></tr>
+      <tr><td><code>/skills</code></td><td>Show available skills</td><td>Use project-specific helpers</td></tr>
+      <tr><td><code>/agent</code></td><td>Choose subagents</td><td>Delegate specialized work</td></tr>
+      <tr><td><code>/mcp</code></td><td>Manage MCP tools and servers</td><td>Extend capabilities</td></tr>
+      <tr><td><code>/context</code></td><td>Show context usage</td><td>If the session gets large</td></tr>
+      <tr><td><code>/compact</code></td><td>Compress history</td><td>Save context window</td></tr>
+      <tr><td><code>/undo</code> or <code>/rewind</code></td><td>Revert the last turn's changes</td><td>If a change went wrong</td></tr>
+      <tr><td><code>/share</code></td><td>Export a session or report</td><td>Save work</td></tr>
+      <tr><td><code>/new</code></td><td>Start a fresh conversation</td><td>When you want a clean slate</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. OpenWolf repo rules in this project</h2>
+  <p>This repo is wired for OpenWolf. The important local files are:</p>
+  <ul>
+    <li><code>.wolf/OPENWOLF.md</code> — operating rules</li>
+    <li><code>.wolf/anatomy.md</code> — file map; check this before reading lots of files</li>
+    <li><code>.wolf/cerebrum.md</code> — learned project conventions and preferences</li>
+    <li><code>.wolf/memory.md</code> — running memory and log</li>
+    <li><code>.wolf/buglog.json</code> — recurring bug record</li>
+  </ul>
+
+  <p><strong>OpenWolf commands:</strong></p>
+  <pre>~/.local/bin/openwolf status
+~/.local/bin/openwolf scan
+~/.local/bin/openwolf daemon logs
+~/.local/bin/openwolf dashboard
+~/.local/bin/openwolf daemon restart
+~/.local/bin/openwolf cron --help</pre>
+
+  <p><strong>Special OpenWolf feature:</strong></p>
+  <pre>openwolf designqc</pre>
+  <p>Use it when you want screenshots and UI/design feedback.</p>
+
+  <h2>4. What you can ask the CLI to do well here</h2>
+  <p>This repo is mostly HTML educational content, so the best requests are:</p>
+  <ol>
+    <li><strong>Create teaching material</strong> — study guides, cheat sheets, review sheets, and interactive learning pages.</li>
+    <li><strong>Revise existing pages</strong> — simplify wording, improve layout, or modernize the design.</li>
+    <li><strong>Generate assessments</strong> — NCLEX-style questions, quizzes, SATA sets, and rationales.</li>
+    <li><strong>Improve design</strong> — evaluate pages, capture screenshots, and refine visual hierarchy.</li>
+    <li><strong>Refactor or fix content</strong> — repair links, standardize layouts, and clean duplicated pages.</li>
+  </ol>
+
+  <h2>5. Prompt templates that work best</h2>
+
+  <h3>Make content</h3>
+  <pre>Create a concise cheat sheet on [topic] for beginner nursing students.
+Use simple explanations first, then clinical terms.
+Include: key definitions, must-know signs/symptoms, nursing priorities, and memory tricks.
+Output as markdown.</pre>
+
+  <h3>Make HTML</h3>
+  <pre>Create a clean standalone HTML page for [topic].
+Use modern styling, responsive layout, callout boxes, and quiz cards.
+Audience: beginner nursing/pre-med students.</pre>
+
+  <h3>Edit an existing page</h3>
+  <pre>Improve /Users/mazdaktehrani/Downloads/tehraniD.github.io/[file].html.
+Keep the content accurate, but simplify the wording and improve the visual hierarchy.</pre>
+
+  <h3>Make questions</h3>
+  <pre>Create 10 NCLEX-style questions on [topic].
+Mix standard MCQ and SATA.
+Explain why each wrong answer is wrong.</pre>
+
+  <h3>Review or fix</h3>
+  <pre>Review this repo for broken links, duplicated pages, and inconsistent navigation.
+Make the fixes directly.</pre>
+
+  <h2>6. Best workflow</h2>
+  <ol>
+    <li>Start in the repo.</li>
+    <li>Run <code>/init</code>.</li>
+    <li>Ask for a specific deliverable.</li>
+    <li>Use <code>/diff</code> to inspect changes.</li>
+    <li>Use <code>/undo</code> if needed.</li>
+    <li>Use <code>/share</code> if you want an exported report.</li>
+  </ol>
+
+  <h2>7. Good examples for your use case</h2>
+  <ul>
+    <li>Make me a pharmacology side-effects cheat sheet.</li>
+    <li>Turn this lab guide into a student-friendly interactive HTML page.</li>
+    <li>Create a faculty quick-reference sheet from this lesson.</li>
+    <li>Compare schizophrenia vs schizoaffective disorder in a table.</li>
+    <li>Generate a study guide plus a 10-question quiz from <code>HCR240_Final_Exam_Study_Guide.html</code>.</li>
+  </ul>
+
+  <h2>8. One-line summary</h2>
+  <p>
+    Use <code>/init</code>, then ask for a concrete artifact: cheat sheet, study guide, quiz,
+    HTML page, redesign, or repo cleanup; use OpenWolf for project memory, file mapping, and design QC.
+  </p>
+</body>
+</html>

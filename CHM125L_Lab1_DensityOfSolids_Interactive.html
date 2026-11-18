@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Interactive CHM 125L Lab 1 worksheet: enter your density measurements and volume, density, metal identity, and percent error calculate themselves." />
+<title>CHM 125L – Lab 1: Density of Solids (Interactive)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+  :root{
+    --bg:#EFEDE9;
+    --surface:#FFFFFF;
+    --surface-2:#F7F5F2;
+    --ink:#16130F;
+    --ink-2:#565049;
+    --ink-3:#8A8279;
+    --rule:#DED8D0;
+    --rule-2:#B6AEA4;
+    --accent:#C55A11;
+    --accent-ink:#8E3416;
+    --accent-soft:#FBE4D5;
+    --teal:#2E5F73;
+    --teal-soft:#E4EEF2;
+    --green:#4E8B3A;
+    --green-soft:#EDF6E8;
+    --amber:#B67A16;
+    --amber-soft:#FBF1DE;
+    --red:#A63A2A;
+    --red-soft:#F8E9E5;
+    --calc-bg:#EEF3F5;
+    --calc-ink:#1E4757;
+    --shadow:0 1px 3px rgba(0,0,0,.09), 0 6px 18px rgba(0,0,0,.05);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#16140F;
+      --surface:#211E19;
+      --surface-2:#282420;
+      --ink:#F2EEE7;
+      --ink-2:#B8B0A5;
+      --ink-3:#8A8279;
+      --rule:#38332C;
+      --rule-2:#4E473E;
+      --accent:#E2802F;
+      --accent-ink:#F0A96A;
+      --accent-soft:#3A2415;
+      --teal:#7FB6CC;
+      --teal-soft:#1B2E36;
+      --green:#8CC46F;
+      --green-soft:#1E2C18;
+      --amber:#DCA84A;
+      --amber-soft:#332813;
+      --red:#E08573;
+      --red-soft:#361D18;
+      --calc-bg:#1B2E36;
+      --calc-ink:#AFD6E5;
+      --shadow:0 1px 3px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#16140F;
+    --surface:#211E19;
+    --surface-2:#282420;
+    --ink:#F2EEE7;
+    --ink-2:#B8B0A5;
+    --ink-3:#8A8279;
+    --rule:#38332C;
+    --rule-2:#4E473E;
+    --accent:#E2802F;
+    --accent-ink:#F0A96A;
+    --accent-soft:#3A2415;
+    --teal:#7FB6CC;
+    --teal-soft:#1B2E36;
+    --green:#8CC46F;
+    --green-soft:#1E2C18;
+    --amber:#DCA84A;
+    --amber-soft:#332813;
+    --red:#E08573;
+    --red-soft:#361D18;
+    --calc-bg:#1B2E36;
+    --calc-ink:#AFD6E5;
+    --shadow:0 1px 3px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.3);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Source Serif 4",Georgia,serif;
+    font-size:16px;
+    line-height:1.55;
+    margin:0;
+    padding:0 16px 80px;
+  }
+  .wrap{max-width:860px;margin:0 auto;}
+  h1,h2,h3,h4,.ui,button,input,select,label,th{font-family:"Source Sans 3",system-ui,sans-serif;}
+  .mono,.val{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+
+  /* ---------- masthead ---------- */
+  header.top{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-top:4px solid var(--accent);
+    box-shadow:var(--shadow);
+    padding:22px 26px;
+    margin:22px 0 18px;
+  }
+  .eyebrow{
+    font-family:"Source Sans 3",sans-serif;
+    font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent-ink);
+  }
+  header.top h1{font-size:29px;line-height:1.1;margin:6px 0 6px;text-wrap:balance;}
+  header.top p{margin:0;color:var(--ink-2);font-size:15px;}
+  .idrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+  .idrow label{font-size:12px;color:var(--ink-2);display:block;margin-bottom:3px;font-weight:600;}
+  .idrow > div{flex:1 1 150px;}
+
+  input[type=text],input[type=number],textarea,select{
+    width:100%;background:var(--surface-2);color:var(--ink);
+    border:1px solid var(--rule-2);border-radius:0;
+    padding:7px 9px;font-size:15px;font-family:"Source Sans 3",sans-serif;
+  }
+  input[type=number]{font-family:"IBM Plex Mono",monospace;text-align:center;}
+  textarea{font-family:"Source Serif 4",Georgia,serif;line-height:1.6;resize:vertical;min-height:96px;}
+  input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{
+    outline:2px solid var(--accent);outline-offset:1px;
+  }
+  input::placeholder,textarea::placeholder{color:var(--ink-3);}
+
+  /* ---------- progress ---------- */
+  .progress{
+    position:sticky;top:0;z-index:20;
+    background:var(--surface);border:1px solid var(--rule);
+    box-shadow:var(--shadow);
+    padding:9px 16px;margin-bottom:20px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .bar{flex:1 1 160px;height:7px;background:var(--rule);overflow:hidden;min-width:120px;}
+  .bar span{display:block;height:100%;width:0;background:var(--green);transition:width .3s ease;}
+  .progress .pct{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;}
+  .progress .saved{font-size:12px;color:var(--ink-3);font-family:"Source Sans 3",sans-serif;}
+  .btnrow{display:flex;gap:8px;flex-wrap:wrap;}
+  button{
+    background:var(--surface-2);color:var(--ink);
+    border:1px solid var(--rule-2);padding:6px 13px;
+    font-size:13px;font-weight:600;cursor:pointer;
+  }
+  button:hover{background:var(--accent-soft);border-color:var(--accent);}
+  button.primary{background:var(--teal);color:#fff;border-color:var(--teal);}
+  button.primary:hover{filter:brightness(1.12);background:var(--teal);}
+
+  /* ---------- sections ---------- */
+  section{
+    background:var(--surface);border:1px solid var(--rule);
+    box-shadow:var(--shadow);padding:0 0 24px;margin-bottom:22px;
+  }
+  .sec-head{
+    background:var(--accent-soft);border-bottom:1px solid var(--accent);
+    padding:9px 22px;
+    display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;
+  }
+  .sec-head .n{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
+    color:var(--accent-ink);
+  }
+  .sec-head h2{font-size:17px;margin:0;color:var(--accent-ink);}
+  .sec-body{padding:18px 22px 0;}
+  .sec-body > :first-child{margin-top:0;}
+
+  h3{font-size:15px;margin:22px 0 8px;}
+  p{margin:11px 0;}
+  ul,ol{margin:10px 0;padding-left:22px;}
+  li{margin-bottom:6px;}
+
+  .part-tag{
+    display:inline-block;font-family:"Source Sans 3",sans-serif;
+    font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:#fff;background:var(--teal);padding:2px 9px;margin:22px 0 4px;
+  }
+
+  /* ---------- inline blank ---------- */
+  .blank{
+    display:inline-block;width:auto;min-width:112px;max-width:180px;
+    padding:2px 7px;font-size:15px;text-align:center;
+    background:var(--surface-2);border:0;border-bottom:2px solid var(--rule-2);
+    font-family:"Source Sans 3",sans-serif;color:var(--ink);
+  }
+  .blank.ok{border-bottom-color:var(--green);background:var(--green-soft);}
+  .blank.no{border-bottom-color:var(--amber);background:var(--amber-soft);}
+  .hint{
+    font-size:13px;color:var(--ink-2);font-family:"Source Sans 3",sans-serif;
+    margin-left:6px;font-style:italic;
+  }
+
+  /* ---------- formula ---------- */
+  .formula{
+    background:var(--teal);color:#fff;padding:9px 16px;
+    display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:15px;
+    margin:6px 0;
+  }
+
+  /* ---------- tables ---------- */
+  .tbl-wrap{overflow-x:auto;margin:12px 0 6px;}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px;}
+  th,td{border:1px solid var(--rule-2);padding:0;text-align:center;}
+  thead th{
+    background:var(--green-soft);color:var(--ink);
+    font-size:12px;font-weight:700;padding:7px 6px;line-height:1.25;
+  }
+  th.rowlab,td.rowlab{
+    text-align:left;padding:7px 10px;font-weight:600;font-size:13px;
+    background:var(--surface-2);white-space:nowrap;
+    font-family:"Source Sans 3",sans-serif;
+  }
+  td input[type=number]{border:0;background:transparent;padding:9px 4px;font-size:14px;}
+  td input[type=number]:focus{background:var(--accent-soft);}
+  td.calc{
+    background:var(--calc-bg);color:var(--calc-ink);
+    font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;padding:9px 6px;
+  }
+  td.calc.empty{color:var(--ink-3);font-weight:400;}
+  .tbl-note{font-size:13px;color:var(--ink-2);margin:4px 0 0;font-style:italic;}
+
+  /* ---------- verdict chips ---------- */
+  .chip{
+    display:inline-block;font-family:"Source Sans 3",sans-serif;
+    font-size:11px;font-weight:700;padding:1px 7px;letter-spacing:.03em;
+  }
+  .chip.good{background:var(--green-soft);color:var(--green);border:1px solid var(--green);}
+  .chip.mid{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber);}
+  .chip.bad{background:var(--red-soft);color:var(--red);border:1px solid var(--red);}
+
+  /* ---------- callouts ---------- */
+  .callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:11px 15px;margin:16px 0;}
+  .callout .lbl{
+    font-family:"Source Sans 3",sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--accent-ink);
+    display:block;margin-bottom:3px;
+  }
+  .callout p:last-child{margin-bottom:0;}
+  .callout p:first-of-type{margin-top:0;}
+
+  /* ---------- error amplifier ---------- */
+  .amp{border:1px solid var(--teal);background:var(--teal-soft);padding:16px 18px;margin:18px 0;}
+  .amp h4{margin:0 0 4px;font-size:15px;color:var(--teal);}
+  .amp .lead{font-size:14px;color:var(--ink-2);margin:0 0 14px;}
+  .amp input[type=range]{width:100%;accent-color:var(--accent);margin:6px 0;}
+  .amp .readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(122px,1fr));gap:1px;background:var(--rule-2);border:1px solid var(--rule-2);}
+  .amp .cell{background:var(--surface);padding:9px 11px;}
+  .amp .cell .k{
+    font-family:"Source Sans 3",sans-serif;font-size:10.5px;font-weight:700;
+    letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);display:block;
+  }
+  .amp .cell .v{font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:600;}
+  .amp .cell.hero .v{color:var(--accent-ink);}
+  .amp .verdict{
+    margin-top:12px;padding:9px 12px;background:var(--surface);
+    border-left:3px solid var(--accent);font-size:14px;
+  }
+  .amp .verdict b{font-family:"IBM Plex Mono",monospace;}
+
+  /* ---------- reference ---------- */
+  details{border:1px solid var(--rule-2);margin:14px 0;background:var(--surface-2);}
+  summary{
+    padding:9px 14px;cursor:pointer;font-weight:600;font-size:14px;
+    font-family:"Source Sans 3",sans-serif;
+  }
+  details[open] summary{border-bottom:1px solid var(--rule-2);}
+  .details-body{padding:12px 14px;}
+  table.ref{min-width:0;}
+  table.ref td,table.ref th{padding:6px 10px;text-align:left;}
+  table.ref td.n{text-align:right;font-family:"IBM Plex Mono",monospace;}
+
+  /* ---------- questions ---------- */
+  .q{border-top:1px solid var(--rule);padding:18px 0 4px;}
+  .q:first-of-type{border-top:none;}
+  .qhead{display:flex;gap:11px;align-items:baseline;}
+  .qhead .qn{
+    font-family:"IBM Plex Mono",monospace;font-weight:600;
+    color:var(--accent-ink);font-size:15px;flex:none;
+  }
+  .qhead h4{margin:0 0 3px;font-size:15px;}
+  .qbody{font-size:15px;color:var(--ink);}
+  .qbody ul{margin:8px 0;}
+  .tag-kind{
+    font-family:"Source Sans 3",sans-serif;font-size:10px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid var(--rule-2);color:var(--ink-3);padding:1px 6px;margin-left:7px;
+    vertical-align:2px;white-space:nowrap;
+  }
+  .tag-kind.cl{border-color:var(--teal);color:var(--teal);}
+
+  /* ---------- takeaways ---------- */
+  .takeaway{border:1px solid var(--green);background:var(--green-soft);padding:2px 0 0;margin:4px 0 18px;}
+  .takeaway ul{list-style:none;padding:0;margin:0;}
+  .takeaway li{
+    display:grid;grid-template-columns:26px 1fr;gap:9px;
+    padding:11px 16px;margin:0;border-top:1px solid rgba(78,139,58,.28);
+    font-size:15px;
+  }
+  .takeaway li:first-child{border-top:none;}
+  .takeaway li .ck{color:var(--green);font-weight:700;font-size:17px;line-height:1.3;}
+  .takeaway li b{display:block;}
+  .takeaway li span.bridge{
+    display:block;font-size:13px;color:var(--ink-2);font-style:italic;margin-top:2px;
+  }
+  .submit-note{
+    border-left:4px solid var(--teal);background:var(--teal-soft);
+    padding:12px 16px;margin:18px 0 0;
+  }
+  .submit-note .lbl{
+    font-family:"Source Sans 3",sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--teal);
+    display:block;margin-bottom:4px;
+  }
+  .submit-note ol{margin:6px 0 0;padding-left:20px;}
+  .submit-note li{font-size:14px;margin-bottom:5px;}
+  .wordcount{
+    font-size:12px;color:var(--ink-3);text-align:right;
+    font-family:"Source Sans 3",sans-serif;margin-top:3px;
+  }
+
+  footer.end{
+    background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow);
+    padding:18px 22px;text-align:center;
+  }
+  footer.end p{margin:0 0 12px;color:var(--ink-2);font-size:14px;}
+
+  @media (max-width:620px){
+    header.top{padding:18px;}
+    header.top h1{font-size:23px;}
+    .sec-body{padding:15px 15px 0;}
+    .sec-head{padding:8px 15px;}
+  }
+
+  @media print{
+    body{background:#fff;padding:0;}
+    .progress,.btnrow,footer.end,.amp input[type=range]{display:none;}
+    section,header.top{box-shadow:none;border:1px solid #999;page-break-inside:avoid;}
+    details{page-break-inside:avoid;}
+    details:not([open]) .details-body{display:block;}
+    textarea{min-height:0;height:auto;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">CHM125L · Interactive Lab</div>
+    <h1>Lab 1: Density of Solids</h1>
+    <p>Enter your measurements and the calculations run themselves — volume, density, metal identity,
+    and percent error. Your work saves in this browser as you type.</p>
+    <div class="idrow">
+      <div><label for="f-name">Name</label><input type="text" id="f-name" data-save="name" autocomplete="name"></div>
+      <div><label for="f-partner">Partner</label><input type="text" id="f-partner" data-save="partner"></div>
+      <div><label for="f-section">Section</label><input type="text" id="f-section" data-save="section"></div>
+      <div><label for="f-date">Date</label><input type="text" id="f-date" data-save="date" placeholder="MM/DD/YYYY"></div>
+    </div>
+  </header>
+
+  <div class="progress">
+    <span class="pct" id="pct">0%</span>
+    <span class="bar"><span id="bar"></span></span>
+    <span class="saved" id="saved">Not saved yet</span>
+    <span class="btnrow">
+      <button type="button" id="btn-export">Download my work</button>
+      <button type="button" id="btn-print">Print</button>
+      <button type="button" id="btn-clear">Clear</button>
+    </span>
+  </div>
+
+  <!-- ============ BACKGROUND ============ -->
+  <section>
+    <div class="sec-head"><span class="n">01</span><h2>Background</h2></div>
+    <div class="sec-body">
+      <p><b>Density</b> is the amount of mass packed into a given volume. It is an
+        <input class="blank" data-check="intensive" aria-label="type of property" placeholder="type here">
+        property — it does <i>not</i> depend on how much of the substance you have.
+        <span class="hint">A paperclip and a block of aluminum share one.</span></p>
+
+      <div class="formula">d = m / V &nbsp;(g/cm³)</div>
+
+      <p>Metals reach high densities because their atoms sit in closely packed <b>crystalline</b>
+      arrangements. Polymers and wood stay light because they contain wide intermolecular spacing and
+      internal <input class="blank" data-check="voids" aria-label="internal spaces" placeholder="type here">.</p>
+
+      <p>You will measure volume two ways. For a cube, geometry gives it directly: <b>V = s³</b>. For an
+      irregular object, <b>Archimedes' Principle</b> says the fluid displaced equals the
+      <input class="blank" data-check="volume" aria-label="what is displaced" placeholder="type here">
+      of the submerged object.</p>
+
+      <p>Because 1 mL =
+        <input class="blank" data-check="1" style="min-width:64px" aria-label="cubic centimeters" placeholder="?">
+        cm³, a volume read from a graduated cylinder goes straight into g/cm³ with no conversion.</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 1 ============ -->
+  <section>
+    <div class="sec-head"><span class="n">02</span><h2>Part 1 — Geometric Method</h2></div>
+    <div class="sec-body">
+      <ol>
+        <li>Obtain a metal cube. Measure <b>one side (s)</b> in centimeters with a metric ruler.</li>
+        <li>Repeat for <b>three different sides</b> — the cube is not perfect, and averaging is your
+          defense against that.</li>
+        <li>Zero the balance, then record the mass <b>to every digit shown</b>.</li>
+        <li>Repeat for <b>at least four cubes</b>.</li>
+      </ol>
+
+      <div class="tbl-wrap">
+        <table id="t1">
+          <thead>
+            <tr>
+              <th class="rowlab">Cube</th>
+              <th>Side 1<br>(cm)</th><th>Side 2<br>(cm)</th><th>Side 3<br>(cm)</th>
+              <th>Avg Side<br>(cm)</th><th>Volume<br>(cm³)</th><th>Mass<br>(g)</th>
+              <th>Density<br>(g/cm³)</th><th>Likely<br>Identity</th><th>% Error</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="tbl-note">Shaded cells calculate themselves. Identity is the nearest match in the
+      reference table.</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 2 ============ -->
+  <section>
+    <div class="sec-head"><span class="n">03</span><h2>Part 2 — Displacement Method</h2></div>
+    <div class="sec-body">
+      <ol>
+        <li><b>Dry the object completely</b>, zero the balance, and record its mass.</li>
+        <li>Add enough water that the object will submerge fully — <b>30–60 mL is typical</b>. Read the
+          initial volume at the <b>bottom of the meniscus</b>, at eye level.</li>
+        <li>Lower the object in, confirm it is fully under, and <b>tap gently to release trapped air
+          bubbles</b>. Read the final volume.</li>
+      </ol>
+
+      <div class="callout">
+        <span class="lbl">Important</span>
+        <p>Aim for a <b>5–10 mL rise</b>. Below that, the cylinder's own uncertainty swamps your
+        measurement. If the object will not submerge, remove it, adjust the water level, record a new
+        initial volume, and start over.</p>
+      </div>
+
+      <p><b>Method comparison.</b> In the second row, re-measure <i>one of the cubes from Part 1</i> by
+      displacement so you can compare the two methods head to head.</p>
+
+      <div class="tbl-wrap">
+        <table id="t2">
+          <thead>
+            <tr>
+              <th class="rowlab">Sample</th>
+              <th>Mass<br>(g)</th><th>V initial<br>(mL)</th><th>V final<br>(mL)</th>
+              <th>V object<br>(mL)</th><th>Density<br>(g/cm³)</th>
+              <th>Likely<br>Identity</th><th>% Error</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="compare-out"></div>
+
+      <details>
+        <summary>Reference — densities of selected metals</summary>
+        <div class="details-body">
+          <table class="ref">
+            <thead><tr><th>Sample</th><th>Formula</th><th class="n">Density (g/cm³)</th></tr></thead>
+            <tbody>
+              <tr><td>Aluminum</td><td>Al</td><td class="n">2.70</td></tr>
+              <tr><td>Zinc</td><td>Zn</td><td class="n">7.13</td></tr>
+              <tr><td>Tin (white)</td><td>Sn</td><td class="n">7.29</td></tr>
+              <tr><td>Iron</td><td>Fe</td><td class="n">7.86</td></tr>
+              <tr><td>Lead</td><td>Pb</td><td class="n">11.30</td></tr>
+            </tbody>
+          </table>
+          <p class="tbl-note">Zinc and tin sit 0.16 g/cm³ apart — closer than this equipment can
+          resolve. If your value lands between them, saying so is the correct answer.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ ERROR AMPLIFIER ============ -->
+  <section>
+    <div class="sec-head"><span class="n">04</span><h2>The Error Amplifier</h2></div>
+    <div class="sec-body">
+      <p>One ruler slip does not stay one ruler slip. Drag the slider and watch what cubing does to it.</p>
+
+      <div class="amp">
+        <h4>A cube whose true side is 2.00 cm</h4>
+        <p class="lead">True volume: 8.00 cm³. Move the measured side length and compare the two errors.</p>
+        <label for="amp-slider" class="ui" style="font-size:13px;font-weight:600;">
+          Measured side length: <span class="mono" id="amp-s">2.05</span> cm
+        </label>
+        <input type="range" id="amp-slider" min="1.80" max="2.20" step="0.01" value="2.05">
+        <div class="readout">
+          <div class="cell"><span class="k">Your volume</span><span class="v mono" id="amp-v">8.62</span></div>
+          <div class="cell"><span class="k">Length error</span><span class="v mono" id="amp-el">2.5%</span></div>
+          <div class="cell hero"><span class="k">Volume error</span><span class="v mono" id="amp-ev">7.7%</span></div>
+          <div class="cell hero"><span class="k">Amplified by</span><span class="v mono" id="amp-x">3.1×</span></div>
+        </div>
+        <div class="verdict" id="amp-verdict"></div>
+      </div>
+
+      <div class="callout">
+        <span class="lbl">The rule</span>
+        <p>Raise a measurement to the power <i>n</i> and you multiply its percent error by roughly
+        <i>n</i>. For V = s³ that means <b>ΔV/V ≈ 3(Δs/s)</b> — cubing triples it, squaring doubles it.
+        This is the reason you measure three sides and average them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUESTIONS ============ -->
+  <section>
+    <div class="sec-head"><span class="n">05</span><h2>Questions for Discussion</h2></div>
+    <div class="sec-body" id="qs"></div>
+  </section>
+
+  <!-- ============ TAKEAWAYS ============ -->
+  <section>
+    <div class="sec-head"><span class="n">06</span><h2>What You Take Out of Today</h2></div>
+    <div class="sec-body">
+      <p>Four ideas from this bench session. Each one shows up again in lecture — that connection is
+      the point.</p>
+
+      <div class="takeaway">
+        <ul>
+          <li><span class="ck">✓</span><div>
+            <b>Density identifies a substance; mass and volume cannot.</b>
+            <span class="bridge">Lecture link: intensive vs. extensive properties. Density, melting
+            point, and boiling point are intensive — they fingerprint a material no matter how much
+            of it you hold.</span>
+          </div></li>
+          <li><span class="ck">✓</span><div>
+            <b>There is more than one way to measure volume, and the shape decides which.</b>
+            <span class="bridge">Lecture link: d = m/V is one equation, but V comes from geometry for
+            regular solids and from displacement for everything else.</span>
+          </div></li>
+          <li><span class="ck">✓</span><div>
+            <b>Errors do not stay the size you made them.</b>
+            <span class="bridge">Lecture link: significant figures exist because measurements carry
+            uncertainty — and squaring or cubing a measurement multiplies that uncertainty.</span>
+          </div></li>
+          <li><span class="ck">✓</span><div>
+            <b>Percent error tells you how close you got; precision tells you how repeatable you were.</b>
+            <span class="bridge">Lecture link: accuracy vs. precision. Three tight measurements that
+            are all wrong are precise but not accurate.</span>
+          </div></li>
+        </ul>
+      </div>
+
+      <h3>Conclusion</h3>
+      <p>This experiment demonstrated that density is an
+        <input class="blank" data-check="intensive" aria-label="type of property" placeholder="type here">
+        property, which is why a small piece of aluminum and a large piece of aluminum share the
+        <input class="blank" data-check="same" style="min-width:88px" aria-label="relationship" placeholder="type here">
+        density.</p>
+      <label for="f-conc" class="ui" style="font-size:13px;font-weight:600;color:var(--ink-2);">
+        In two or three sentences: which metal were you most confident identifying, and what made you
+        confident?</label>
+      <textarea id="f-conc" data-save="conclusion" data-counts="1"></textarea>
+      <div class="wordcount" data-for="f-conc">0 words</div>
+
+      <div class="submit-note">
+        <span class="lbl">Turning this in</span>
+        <ol>
+          <li><b>During lab:</b> fill in every measurement. The calculated columns fill themselves —
+            check that each cube got an identity and a percent error before you leave.</li>
+          <li><b>During the week:</b> answer the five discussion questions and the conclusion at home.
+            Your work stays saved in this browser on this device.</li>
+          <li><b>Next lab session:</b> press <b>Download my work</b> and submit the file.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <footer class="end">
+    <p>Your work saves automatically on this device. Finish the questions during the week, then
+    download and submit at the next lab session.</p>
+    <span class="btnrow" style="justify-content:center;">
+      <button type="button" class="primary" id="btn-export2">Download my work</button>
+      <button type="button" id="btn-print2">Print</button>
+    </span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var METALS = [
+    {name:"Aluminum", sym:"Al", d:2.70},
+    {name:"Zinc",     sym:"Zn", d:7.13},
+    {name:"Tin",      sym:"Sn", d:7.29},
+    {name:"Iron",     sym:"Fe", d:7.86},
+    {name:"Lead",     sym:"Pb", d:11.30}
+  ];
+
+  var QUESTIONS = [
+    {id:"q1", title:"Which method should you trust?", kind:"Mechanism",
+     body:"Look at the two percent errors for the cube you measured <i>both</i> ways. State which method landed closer to the accepted value, and explain why — refer to your own numbers, not to general theory."},
+    {id:"q2", title:"The bubble", kind:"Error",
+     body:"A student lowers the object into the cylinder but forgets to tap out a clinging air bubble.",
+     bullets:["Does the recorded V<sub>final</sub> come out too high or too low?",
+              "Does the calculated density come out too high or too low? Defend it using d = m/V — name which variable moved, and in which direction."]},
+    {id:"q3", title:"Why three sides?", kind:"Prediction",
+     body:"You saw in the Error Amplifier that a 2.5% error in one side length becomes about a 7.7% error in volume. Explain in one or two sentences <b>why cubing multiplies the error</b>, and why that makes averaging three sides worth the extra minute."},
+    {id:"q4", title:"Density as a fingerprint", kind:"Core concept",
+     body:"You identified unknown metals from density alone. Mass could not have done that, and neither could volume.",
+     bullets:["Explain why density can identify a substance when mass cannot. Use the terms <b>intensive</b> and <b>extensive</b>.",
+              "Metals came out far denser than plastic or wood. Give one atomic-level reason why."]},
+    {id:"q5", title:"Density at the bedside", clinical:true, kind:"Clinical",
+     body:"A nurse measures <b>urine specific gravity</b> — the density of urine compared to water (normal 1.005–1.030). A dehydrated patient reads <b>1.032</b>. After IV fluids, the same patient reads <b>1.004</b>.",
+     bullets:["Using d = m/V, explain what happened to the water volume in each case.",
+              "What would a high specific gravity tell you about that patient's hydration?"]}
+  ];
+
+  var T1_ROWS = ["Cube A","Cube B","Cube C","Cube D"];
+  var KEY = "chm125l-lab1-v1";
+  var state = {};
+  var saveTimer = null;
+
+  /* ---------------- storage ---------------- */
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw) state = JSON.parse(raw) || {};
+    }catch(e){ state = {}; }
+  }
+  function persist(){
+    try{
+      localStorage.setItem(KEY, JSON.stringify(state));
+      var d = new Date();
+      var hh = String(d.getHours()).padStart(2,"0");
+      var mm = String(d.getMinutes()).padStart(2,"0");
+      setText("saved","Saved "+hh+":"+mm);
+    }catch(e){
+      setText("saved","Saving unavailable in this browser");
+    }
+  }
+  function queueSave(){
+    if(saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(persist, 400);
+  }
+  function setText(id,t){ var el=document.getElementById(id); if(el) el.textContent=t; }
+
+  /* ---------------- helpers ---------------- */
+  function num(v){
+    if(v===null||v===undefined||v==="") return NaN;
+    var n = parseFloat(v);
+    return isFinite(n) ? n : NaN;
+  }
+  function sig3(n){
+    if(!isFinite(n)) return "—";
+    if(n===0) return "0";
+    if(Math.abs(n)>=1000) return n.toFixed(0);
+    return n.toPrecision(3);   // keeps trailing zeros: 8.00, 2.70
+  }
+  function nearestMetal(d){
+    if(!isFinite(d)||d<=0) return null;
+    var best=null, bestGap=Infinity;
+    for(var i=0;i<METALS.length;i++){
+      var gap = Math.abs(METALS[i].d - d);
+      if(gap<bestGap){ bestGap=gap; best=METALS[i]; }
+    }
+    return best;
+  }
+  function ambiguousZnSn(d){ return d>=7.00 && d<=7.42; }
+  function pctError(exp,acc){
+    if(!isFinite(exp)||!isFinite(acc)||acc===0) return NaN;
+    return Math.abs(exp-acc)/acc*100;
+  }
+  function errChip(p){
+    if(!isFinite(p)) return "";
+    var cls = p<5 ? "good" : (p<15 ? "mid" : "bad");
+    var word = p<5 ? "good" : (p<15 ? "check" : "recheck");
+    return '<span class="chip '+cls+'">'+word+'</span>';
+  }
+  function esc(s){
+    return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  /* ---------------- build tables ---------------- */
+  function buildT1(){
+    var tb = document.querySelector("#t1 tbody");
+    var html = "";
+    for(var i=0;i<T1_ROWS.length;i++){
+      var r = "t1-"+i;
+      html += '<tr data-row="'+r+'">'
+        + '<td class="rowlab">'+T1_ROWS[i]+'</td>'
+        + cellIn(r,"s1")+cellIn(r,"s2")+cellIn(r,"s3")
+        + '<td class="calc empty" data-out="avg">—</td>'
+        + '<td class="calc empty" data-out="vol">—</td>'
+        + cellIn(r,"m")
+        + '<td class="calc empty" data-out="den">—</td>'
+        + '<td class="calc empty" data-out="id">—</td>'
+        + '<td class="calc empty" data-out="err">—</td>'
+        + '</tr>';
+    }
+    tb.innerHTML = html;
+  }
+  function buildT2(){
+    var tb = document.querySelector("#t2 tbody");
+    var rows = [
+      {r:"t2-0", label:"Irregular Object"},
+      {r:"t2-1", label:'Cube <input type="text" class="blank" style="min-width:52px;max-width:60px;padding:1px 4px;font-size:13px" data-save="t2label" aria-label="which cube"> (Part 1)'}
+    ];
+    var html = "";
+    for(var i=0;i<rows.length;i++){
+      var r = rows[i].r;
+      html += '<tr data-row="'+r+'">'
+        + '<td class="rowlab">'+rows[i].label+'</td>'
+        + cellIn(r,"m")+cellIn(r,"vi")+cellIn(r,"vf")
+        + '<td class="calc empty" data-out="vobj">—</td>'
+        + '<td class="calc empty" data-out="den">—</td>'
+        + '<td class="calc empty" data-out="id">—</td>'
+        + '<td class="calc empty" data-out="err">—</td>'
+        + '</tr>';
+    }
+    tb.innerHTML = html;
+  }
+  function cellIn(row,field){
+    var k = row+"-"+field;
+    var v = state[k]!=null ? esc(state[k]) : "";
+    return '<td><input type="number" step="any" min="0" inputmode="decimal" '
+      + 'data-save="'+k+'" value="'+v+'" aria-label="'+field+'"></td>';
+  }
+
+  /* ---------------- build questions ---------------- */
+  function buildQs(){
+    var host = document.getElementById("qs");
+    var html = "";
+    for(var i=0;i<QUESTIONS.length;i++){
+      var q = QUESTIONS[i];
+      var bl = "";
+      if(q.bullets){
+        bl = "<ul>";
+        for(var j=0;j<q.bullets.length;j++) bl += "<li>"+q.bullets[j]+"</li>";
+        bl += "</ul>";
+      }
+      var kind = q.kind ? '<span class="tag-kind'+(q.clinical?' cl':'')+'">'+q.kind+'</span>' : '';
+      html += '<div class="q">'
+        + '<div class="qhead"><span class="qn">'+(i+1)+'</span><div>'
+        + '<h4>'+q.title+kind+'</h4>'
+        + '<div class="qbody">'+q.body+bl+'</div></div></div>'
+        + '<textarea id="'+q.id+'" data-save="'+q.id+'" data-counts="1" '
+        + 'aria-label="Answer to question '+(i+1)+'"></textarea>'
+        + '<div class="wordcount" data-for="'+q.id+'">0 words</div>'
+        + '</div>';
+    }
+    host.innerHTML = html;
+  }
+
+  /* ---------------- compute ---------------- */
+  function recalcRow(tr){
+    var row = tr.getAttribute("data-row");
+    var g = function(f){ return num(state[row+"-"+f]); };
+    var den = NaN, out;
+
+    if(row.indexOf("t1-")===0){
+      var s1=g("s1"), s2=g("s2"), s3=g("s3"), m=g("m");
+      var haveSides = isFinite(s1)&&isFinite(s2)&&isFinite(s3);
+      var avg = haveSides ? (s1+s2+s3)/3 : NaN;
+      var vol = isFinite(avg) ? Math.pow(avg,3) : NaN;
+      den = (isFinite(m)&&isFinite(vol)&&vol>0) ? m/vol : NaN;
+      setCell(tr,"avg", isFinite(avg)?avg.toFixed(3):"—");
+      setCell(tr,"vol", isFinite(vol)?sig3(vol):"—");
+    } else {
+      var mm=g("m"), vi=g("vi"), vf=g("vf");
+      var vobj = (isFinite(vi)&&isFinite(vf)) ? vf-vi : NaN;
+      den = (isFinite(mm)&&isFinite(vobj)&&vobj>0) ? mm/vobj : NaN;
+      var vtxt = isFinite(vobj) ? vobj.toFixed(1) : "—";
+      if(isFinite(vobj) && vobj<=0) vtxt = "check";
+      setCell(tr,"vobj", vtxt);
+    }
+
+    setCell(tr,"den", isFinite(den)?sig3(den):"—");
+
+    var metal = nearestMetal(den);
+    if(metal){
+      var label = metal.sym;
+      if(ambiguousZnSn(den)) label = "Zn or Sn?";
+      setCell(tr,"id", label);
+      var pe = pctError(den, metal.d);
+      out = isFinite(pe) ? pe.toFixed(1)+"% "+errChip(pe) : "—";
+      setCellHTML(tr,"err", out);
+    } else {
+      setCell(tr,"id","—");
+      setCell(tr,"err","—");
+    }
+    return den;
+  }
+  function setCell(tr,key,txt){
+    var td = tr.querySelector('[data-out="'+key+'"]');
+    if(!td) return;
+    td.textContent = txt;
+    td.classList.toggle("empty", txt==="—");
+  }
+  function setCellHTML(tr,key,html){
+    var td = tr.querySelector('[data-out="'+key+'"]');
+    if(!td) return;
+    td.innerHTML = html;
+    td.classList.toggle("empty", html==="—");
+  }
+
+  function recalcAll(){
+    var rows = document.querySelectorAll("tr[data-row]");
+    var dens = {};
+    for(var i=0;i<rows.length;i++){
+      dens[rows[i].getAttribute("data-row")] = recalcRow(rows[i]);
+    }
+    compareMethods(dens);
+    updateProgress();
+  }
+
+  function compareMethods(dens){
+    var host = document.getElementById("compare-out");
+    var dDisp = dens["t2-1"];
+    var label = (state["t2label"]||"").trim().toUpperCase();
+    var idx = ["A","B","C","D"].indexOf(label);
+    if(!isFinite(dDisp) || idx<0){ host.innerHTML=""; return; }
+    var dGeo = dens["t1-"+idx];
+    if(!isFinite(dGeo)){ host.innerHTML=""; return; }
+
+    var mGeo = nearestMetal(dGeo), mDisp = nearestMetal(dDisp);
+    var eGeo = pctError(dGeo, mGeo.d), eDisp = pctError(dDisp, mDisp.d);
+    var winner = eGeo <= eDisp ? "geometric" : "displacement";
+    var gap = Math.abs(eGeo-eDisp);
+
+    host.innerHTML =
+      '<div class="callout" style="border-left-color:var(--teal);background:var(--teal-soft)">'
+      + '<span class="lbl" style="color:var(--teal)">Method comparison — Cube '+esc(label)+'</span>'
+      + '<p>Geometric gave <b class="mono">'+sig3(dGeo)+' g/cm³</b> ('+eGeo.toFixed(1)+'% error). '
+      + 'Displacement gave <b class="mono">'+sig3(dDisp)+' g/cm³</b> ('+eDisp.toFixed(1)+'% error).</p>'
+      + '<p>Your <b>'+winner+'</b> measurement landed closer'
+      + (gap<1.0 ? ' — but only by '+gap.toFixed(1)+' percentage points, which is close enough that you should not claim one method is generally better. Say so in Question 1.'
+                 : ' by '+gap.toFixed(1)+' percentage points.')
+      + '</p></div>';
+  }
+
+  /* ---------------- blanks ---------------- */
+  function checkBlank(el){
+    var want = (el.getAttribute("data-check")||"").toLowerCase();
+    var got = (el.value||"").trim().toLowerCase();
+    el.classList.remove("ok","no");
+    if(!got) return;
+    if(got===want || (want==="1" && (got==="1"||got==="one"))
+       || (want==="voids" && (got==="void"||got==="voids"||got==="air"))
+       || (want==="volume" && got==="volume")
+       || (want==="intensive" && got==="intensive")
+       || (want==="same" && got==="same")){
+      el.classList.add("ok");
+    } else {
+      el.classList.add("no");
+    }
+  }
+
+  /* ---------------- progress ---------------- */
+  function updateProgress(){
+    var fields = document.querySelectorAll("[data-save]");
+    var total = fields.length, done = 0;
+    for(var i=0;i<fields.length;i++){
+      if((fields[i].value||"").trim()!=="") done++;
+    }
+    var pct = total ? Math.round(done/total*100) : 0;
+    setText("pct", pct+"%");
+    var bar = document.getElementById("bar");
+    if(bar) bar.style.width = pct+"%";
+  }
+
+  function updateCount(el){
+    var box = document.querySelector('.wordcount[data-for="'+el.id+'"]');
+    if(!box) return;
+    var w = (el.value||"").trim();
+    var n = w ? w.split(/\s+/).length : 0;
+    box.textContent = n+" word"+(n===1?"":"s");
+  }
+
+  /* ---------------- error amplifier ---------------- */
+  function amp(){
+    var sl = document.getElementById("amp-slider");
+    if(!sl) return;
+    var s = parseFloat(sl.value);
+    var trueS = 2.00, trueV = 8.00;
+    var v = Math.pow(s,3);
+    var eL = Math.abs(s-trueS)/trueS*100;
+    var eV = Math.abs(v-trueV)/trueV*100;
+    var x = eL>0.001 ? eV/eL : 0;
+
+    setText("amp-s", s.toFixed(2));
+    setText("amp-v", v.toFixed(2));
+    setText("amp-el", eL.toFixed(1)+"%");
+    setText("amp-ev", eV.toFixed(1)+"%");
+    setText("amp-x", eL>0.001 ? x.toFixed(1)+"×" : "—");
+
+    var vd = document.getElementById("amp-verdict");
+    if(eL<0.05){
+      vd.innerHTML = "Perfect measurement — no error to amplify. Drag the slider off 2.00 cm.";
+    } else {
+      vd.innerHTML = "A <b>"+eL.toFixed(1)+"%</b> slip on one ruler reading became a <b>"
+        + eV.toFixed(1)+"%</b> error in volume — and volume sits in the denominator of d = m/V, "
+        + "so that error lands squarely on your density.";
+    }
+  }
+
+  /* ---------------- export ---------------- */
+  function buildReport(){
+    var L = [];
+    L.push("CHM125L — LAB 1: DENSITY OF SOLIDS");
+    L.push("=".repeat(52));
+    L.push("Name:    "+(state.name||""));
+    L.push("Partner: "+(state.partner||""));
+    L.push("Section: "+(state.section||"")+"    Date: "+(state.date||""));
+    L.push("");
+    L.push("PART 1 — GEOMETRIC METHOD");
+    L.push("-".repeat(52));
+    var rows = document.querySelectorAll('#t1 tbody tr');
+    for(var i=0;i<rows.length;i++){
+      var tds = rows[i].querySelectorAll("td");
+      var vals = [];
+      for(var j=0;j<tds.length;j++){
+        var inp = tds[j].querySelector("input");
+        vals.push(inp ? (inp.value||"—") : tds[j].textContent.trim());
+      }
+      L.push(vals.join(" | "));
+    }
+    L.push("");
+    L.push("PART 2 — DISPLACEMENT METHOD");
+    L.push("-".repeat(52));
+    var rows2 = document.querySelectorAll('#t2 tbody tr');
+    for(var k=0;k<rows2.length;k++){
+      var tds2 = rows2[k].querySelectorAll("td");
+      var vals2 = [];
+      for(var m=0;m<tds2.length;m++){
+        var inp2 = tds2[m].querySelector('input[type="number"]');
+        var txt = tds2[m].querySelector('input[type="text"]');
+        if(inp2) vals2.push(inp2.value||"—");
+        else if(txt) vals2.push("Cube "+(txt.value||"__")+" (Part 1)");
+        else vals2.push(tds2[m].textContent.trim());
+      }
+      L.push(vals2.join(" | "));
+    }
+    L.push("");
+    L.push("QUESTIONS FOR DISCUSSION");
+    L.push("=".repeat(52));
+    for(var q=0;q<QUESTIONS.length;q++){
+      L.push("");
+      L.push((q+1)+". "+QUESTIONS[q].title);
+      L.push((state[QUESTIONS[q].id]||"[no answer]"));
+    }
+    L.push("");
+    L.push("CONCLUSION");
+    L.push("-".repeat(52));
+    L.push(state.conclusion||"[no answer]");
+    L.push("");
+    L.push("Exported "+new Date().toLocaleString());
+    return L.join("\n");
+  }
+
+  var downloads = null;
+  async function initDownloads(){
+    try{
+      if(window.claude && typeof window.claude.use === "function"){
+        downloads = await window.claude.use("downloads");
+      }
+    }catch(e){ downloads = null; }
+  }
+
+  async function doExport(){
+    var text = buildReport();
+    var who = (state.name||"student").replace(/[^A-Za-z0-9]+/g,"-").toLowerCase();
+    var fname = "lab1-density-"+who+".txt";
+    if(downloads){
+      try{
+        await downloads.save({filename:fname, data:text});
+        return;
+      }catch(e){ /* viewer declined or unavailable — fall through */ }
+    }
+    // Fallback: open a printable window the student can save as PDF.
+    var w = window.open("", "_blank");
+    if(w){
+      w.document.write("<pre style='font:13px/1.5 ui-monospace,monospace;white-space:pre-wrap;padding:24px'>"
+        + esc(text) + "</pre>");
+      w.document.close();
+    } else {
+      alert("Your browser blocked the download. Use Print instead and save as PDF.");
+    }
+  }
+
+  /* ---------------- wiring ---------------- */
+  function restore(){
+    var fields = document.querySelectorAll("[data-save]");
+    for(var i=0;i<fields.length;i++){
+      var k = fields[i].getAttribute("data-save");
+      if(state[k]!=null) fields[i].value = state[k];
+      if(fields[i].hasAttribute("data-counts")) updateCount(fields[i]);
+    }
+    var blanks = document.querySelectorAll("[data-check]");
+    for(var j=0;j<blanks.length;j++){
+      var bk = "blank-"+j;
+      blanks[j].setAttribute("data-bk", bk);
+      if(state[bk]!=null){ blanks[j].value = state[bk]; checkBlank(blanks[j]); }
+    }
+  }
+
+  document.addEventListener("input", function(ev){
+    var el = ev.target;
+    if(el.hasAttribute && el.hasAttribute("data-save")){
+      state[el.getAttribute("data-save")] = el.value;
+      if(el.hasAttribute("data-counts")) updateCount(el);
+      var tr = el.closest ? el.closest("tr[data-row]") : null;
+      if(tr || el.getAttribute("data-save")==="t2label") recalcAll();
+      else updateProgress();
+      queueSave();
+    }
+    if(el.hasAttribute && el.hasAttribute("data-check")){
+      checkBlank(el);
+      state[el.getAttribute("data-bk")] = el.value;
+      queueSave();
+    }
+    if(el.id==="amp-slider") amp();
+  });
+
+  document.addEventListener("click", function(ev){
+    var id = ev.target && ev.target.id;
+    if(id==="btn-print"||id==="btn-print2") window.print();
+    if(id==="btn-export"||id==="btn-export2") doExport();
+    if(id==="btn-clear"){
+      if(confirm("Clear every answer on this page? This cannot be undone.")){
+        state = {};
+        try{ localStorage.removeItem(KEY); }catch(e){}
+        var f = document.querySelectorAll("[data-save],[data-check]");
+        for(var i=0;i<f.length;i++){ f[i].value=""; f[i].classList.remove("ok","no"); }
+        var wc = document.querySelectorAll(".wordcount");
+        for(var j=0;j<wc.length;j++) wc[j].textContent = "0 words";
+        recalcAll();
+        setText("saved","Cleared");
+      }
+    }
+  });
+
+  /* ---------------- boot ---------------- */
+  load();
+  buildT1();
+  buildT2();
+  buildQs();
+  restore();
+  recalcAll();
+  amp();
+  initDownloads();
+})();
+</script>
+</body>
+</html>

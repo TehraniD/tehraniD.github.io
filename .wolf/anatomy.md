@@ -33,6 +33,9 @@
 - `HCR240_Final_Exam_Study_Guide.html` — HCR-240 Final Exam Study Guide (~5888 tok)
 - `HCR240_Final_Exam_Study_Guide.md` — HCR-240 Final Exam Study Guide (~1173 tok)
 - `HCR240_Midterm_Study_Guide.html` — HCR-240 midterm organized study guide (Modules 1-3); 10 sections with quick-nav table of contents: cellular adaptation, genetics, infection & inflammation, immune & hypersensitivity, coronary disease, heart failure, hematologic, respiratory, cancers & lymphomas, vascular & dysrhythmias; self-contained, no external deps; published from the instructor's local copy (PathophysiologyMidterm_OrganizedStudyGuide.html) 2026-11-18; linked from index.html (~15000 tok)
+- `NCLEX_Management_of_Care_Workbook.html` — NCLEX-RN Management of Care complete activity-statement workbook; 79 activity statements across 16 subcategories, 79 practice items with rationales, decision flowcharts, 30 quick reference cards; served via the nclex-management-of-care/ redirect; linked from index.html (~70000 tok)
+- `CHM125L_Lab1_DensityOfSolids_Interactive.html` — CHM 125L Lab 1 density of solids; geometric vs displacement method, error-amplification section, discussion questions; uses Google Fonts; linked from index.html (~11000 tok)
+- `Copilot_CLI_OpenWolf_Cheat_Sheet.docx` — Word export of the Copilot CLI + OpenWolf cheat sheet (~binary)
 - `index.html` — HCR-240 Pathophysiology Resources (~3330 tok)
 - `PathoMidtermJeopardy.html` — PATHO JEOPARDY: HCR 240 Midterm Review; 30 clues across 6 categories (heart & vessels, blood & clotting, infection & inflammation, respiratory, cells & wounds, immune & genetic), self-scored with streak/accuracy; moved here from patho/ because that path is shadowed by the TehraniD/patho project site; linked from index.html (~10000 tok)
 - `Lab_Kinetics_Environment.html` — Kinetics Lab — Interactive Environment (~10743 tok)
@@ -197,3 +200,7 @@
 
 - `index.html` — Redirecting to ATI Comprehensive Predictor Part 2 (~195 tok)
 - `AP2_Midterm_Interactive_Guide.html` — AP2 Midterm study guide: blood, cardio, lymph/immune, quiz (~20k tok)
+
+## nclex-management-of-care/
+
+- `index.html` — Redirecting to NCLEX-RN Management of Care Workbook (~200 tok)
