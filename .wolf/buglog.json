@@ -37,6 +37,26 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-08-23T23:58:00"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-11-18T13:20:00",
+      "error_message": "tehranilabs.org/patho/PathoMidtermJeopardy.html returned HTTP 404 even though the file was committed on main since 2026-05-06 (commit c95fb02). Same 404 on tehranid.github.io.",
+      "file": "PathoMidtermJeopardy.html",
+      "root_cause": "A separate repository, TehraniD/patho, is published as a GitHub Pages PROJECT site. A project site named 'patho' is served at <user-pages-domain>/patho/, so it shadows the patho/ directory inside this user-pages repo completely. Every file under patho/ here is unreachable. patho/PathoRetroGame.html appeared to work only because a copy of it also exists in the TehraniD/patho repo.",
+      "fix": "git mv patho/PathoMidtermJeopardy.html to the repo root so it is served at /PathoMidtermJeopardy.html, and added a resource card in index.html linking it (it had no inbound link either). Added a warning banner to the patho/ section of .wolf/anatomy.md.",
+      "tags": [
+        "github-pages",
+        "routing",
+        "404",
+        "project-site",
+        "path-shadowing",
+        "patho",
+        "deployment"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-11-18T13:20:00"
     }
   ]
 }

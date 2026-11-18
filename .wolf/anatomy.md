@@ -33,6 +33,7 @@
 - `HCR240_Final_Exam_Study_Guide.html` — HCR-240 Final Exam Study Guide (~5888 tok)
 - `HCR240_Final_Exam_Study_Guide.md` — HCR-240 Final Exam Study Guide (~1173 tok)
 - `index.html` — HCR-240 Pathophysiology Resources (~3330 tok)
+- `PathoMidtermJeopardy.html` — PATHO JEOPARDY: HCR 240 Midterm Review; 30 clues across 6 categories (heart & vessels, blood & clotting, infection & inflammation, respiratory, cells & wounds, immune & genetic), self-scored with streak/accuracy; moved here from patho/ because that path is shadowed by the TehraniD/patho project site; linked from index.html (~10000 tok)
 - `Lab_Kinetics_Environment.html` — Kinetics Lab — Interactive Environment (~10743 tok)
 - `Lab2_FreezingPointDepression_Version1_KEY.html` — Lab 2: Freezing Point Depression - Version 1 (KEY) (~6107 tok)
 - `Lab2_FreezingPointDepression_Version1_KEY.md` — Lab 2: Freezing Point Depression — INSTRUCTOR KEY (~3531 tok)
@@ -181,6 +182,9 @@
 - `Lab4_AcidsBasesBuffers_Interactive_Guide.html` — Lab 4: Acids, Bases & Buffers — Interactive Learning Guide (~21952 tok)
 
 ## patho/
+
+> NOT SERVED. tehranilabs.org/patho/ is served by the separate TehraniD/patho project-site repo,
+> which shadows this folder entirely. Files here are unreachable. Put patho content in the repo root.
 
 - `PathoRetroGame.html` — PATHO QUEST - Hospital Shift Simulator (~22642 tok)
 
