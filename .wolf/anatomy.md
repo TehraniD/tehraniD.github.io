@@ -32,6 +32,7 @@
 - `Course_Evaluation_Flyer_Template_4up.html` — Course Evaluation Index Card | Tehrani Labs (~3895 tok)
 - `HCR240_Final_Exam_Study_Guide.html` — HCR-240 Final Exam Study Guide (~5888 tok)
 - `HCR240_Final_Exam_Study_Guide.md` — HCR-240 Final Exam Study Guide (~1173 tok)
+- `HCR240_Midterm_Study_Guide.html` — HCR-240 midterm organized study guide (Modules 1-3); 10 sections with quick-nav table of contents: cellular adaptation, genetics, infection & inflammation, immune & hypersensitivity, coronary disease, heart failure, hematologic, respiratory, cancers & lymphomas, vascular & dysrhythmias; self-contained, no external deps; published from the instructor's local copy (PathophysiologyMidterm_OrganizedStudyGuide.html) 2026-11-18; linked from index.html (~15000 tok)
 - `index.html` — HCR-240 Pathophysiology Resources (~3330 tok)
 - `PathoMidtermJeopardy.html` — PATHO JEOPARDY: HCR 240 Midterm Review; 30 clues across 6 categories (heart & vessels, blood & clotting, infection & inflammation, respiratory, cells & wounds, immune & genetic), self-scored with streak/accuracy; moved here from patho/ because that path is shadowed by the TehraniD/patho project site; linked from index.html (~10000 tok)
 - `Lab_Kinetics_Environment.html` — Kinetics Lab — Interactive Environment (~10743 tok)
