@@ -8,6 +8,8 @@
 
 <!-- How the user likes things done. Code style, tools, patterns, communication. -->
 
+- **NEVER publish exam keys or exam-length question banks.** HCR-240 patho exams are typically 75 questions and chemistry exams 50. Before publishing or linking ANY quiz, bank, Jeopardy board, QTI package or study guide, count its items and check for embedded answer keys. A 75-item patho set or a 50-item chem set, with or without keys, is treated as exam material and does not go on the public site. Weekly and lab quizzes (14 to 28 items) have been acceptable. When in doubt, keep it off the web and hand the instructor the file instead: reviewing with students in class is fine, posting is not.
+
 - **Teach the concrete rule, not the abstract one.** For unit conversion the user rejected "flip the factor so the unwanted unit cancels diagonally" as confusing, and supplied a textbook diagram instead: *the unit you are converting TO goes on top, the unit you are converting FROM goes on the bottom.* Lead with that phrasing. Generally: prefer a rule a student can execute over a description of why it works.
 - **Mnemonics must match the source document.** A "King Henry" prefix mnemonic was replaced because it teaches hecto/deka, which are not in the CHM125 prefix table. Build memory devices from the prefixes/values the course actually lists (CHM125 uses M, k, d, c, m, mc, n).
 - **Use the course document's own constants**, not more precise textbook ones — CHM125 Workshop 1 specifies 454 g = 1.00 lb, 29.5 mL = 1.00 fl oz, 2.54 cm = 1.00 in. Using 453.6 produces answers that disagree with the instructor's key.

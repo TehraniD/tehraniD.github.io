@@ -57,6 +57,28 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-11-18T13:20:00"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-11-18T13:50:00",
+      "error_message": "Instructor: 'make sure you do not post any of the exams key midterm or final that are typically 75 questions for patho and 50 for chem. that will get me in trouble.' A 75-question HCR-240 midterm bank with full answer keys was publicly reachable at tehranilabs.org/patho/, and a homepage card had just been added pointing at it.",
+      "file": "patho repo index.html (TehraniD/patho), index.html",
+      "root_cause": "The /patho/ landing page held all 75 midterm items with 76 answer keys and 76 rationales. It had been public but unlinked for months, so nobody noticed; adding a homepage resource card made it discoverable. Exam-length content (75 items for patho, 50 for chem) was never checked against exam format before publishing or linking.",
+      "fix": "Removed index.html from the TehraniD/patho repo so /patho/ returns 404, removed its homepage card, and also withdrew HCR240_Midterm_Study_Guide.html (22 of its 71 vignettes are verbatim from the same pool, though it carries no answer keys) pending instructor review. Local safe copies kept; both remain in git history. Verified no chem package on the site exceeds 28 items.",
+      "tags": [
+        "academic-integrity",
+        "exam-security",
+        "answer-key",
+        "publishing",
+        "patho",
+        "hcr-240",
+        "must-check-before-publishing"
+      ],
+      "related_bugs": [
+        "bug-003"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-18T13:50:00"
     }
   ]
 }
