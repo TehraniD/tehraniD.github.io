@@ -204,3 +204,4 @@
 ## nclex-management-of-care/
 
 - `index.html` — Redirecting to NCLEX-RN Management of Care Workbook (~200 tok)
+- `BIO189-Modules-4-5-Jeopardy.html` — BIO 189 Modules 4 & 5 Jeopardy; single 5x5 board ($100-$500) + Final Jeopardy, on DNA structure/scientists, DNA vs RNA, chromosomes/karyotypes, replication-transcription-translation, splicing/mutations; two FIXED Daily Doubles (Cat4 $400 primer step, Cat5 $300 exons); clones BIO189-Module-3 engine but single-round; linked from index.html (~9000 tok)
