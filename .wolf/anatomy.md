@@ -25,6 +25,7 @@
 - `CHM152L_Lab6_Virtual_Lab_v6.html` — Lab Mystery: The Case of the Unknown Acid | CHM 152L Lab 6 (~21057 tok)
 - `CHM152L_Lab7_Interactive_Guide.html` — CHM 152L Lab 7 — Buffer Solutions | Tehrani Labs (~11779 tok)
 - `BIO189_Module3_Study_Guide.html` — BIO 189 Module 3: Energy & Metabolism Part I interactive study guide; 6 sections (A-F) covering all 25 objectives from Chapters 4 & 6 (thermodynamics, enzyme structure/function/activity, membrane transport, osmosis, tonicity, feedback inhibition, ATP, glycolysis, aerobic respiration, fermentation, oxidative phosphorylation); clinical nursing connections, mnemonics, dark/light theme (~18000 tok)
+- `BIO189_Modules4-5_Study_Guide.html` — BIO 189 Modules 4 & 5 print-style study guide (DNA history/structure, DNA vs RNA, chromosomes & karyotypes, replication, transcription, splicing, translation, mutations); 10 practice questions + 25-clue Jeopardy board with BOTH answer keys deliberately removed (keys reviewed in class); embedded fonts (~2.6 MB), no JS, screen-only responsive CSS added, print layout unchanged (9 letter pages)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `CNAME` (~5 tok)
 - `Copilot_CLI_OpenWolf_Cheat_Sheet.html` — Copilot CLI + OpenWolf Cheat Sheet (~1971 tok)
