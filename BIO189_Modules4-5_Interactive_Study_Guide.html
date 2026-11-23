@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BIO 189 Modules 4 &amp; 5 Interactive Study Guide: DNA, Chromosomes &amp; Gene Expression</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+:root{
+  --bg:#f7f8fa; --card:#ffffff; --fg:#1d2430; --muted:#5b6575; --line:#dfe3ea;
+  --blue:#1f5fa8; --blue-l:#e8f0fb; --green:#2e7d4f; --green-l:#e7f5ec; --purple:#6a3fa0; --purple-l:#f1eafa;
+  --yellow:#fff6d6; --yellow-b:#f2b705; --red:#b3261e; --red-l:#fdecea;
+  --A:#f2c57c; --T:#ef9c9c; --G:#93c47d; --C:#8fb4d9; --U:#c39bd3;
+  --accent:var(--blue); --accent-l:var(--blue-l);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;font-size:17px;line-height:1.6}
+h1,h2,h3{font-family:'Merriweather',Georgia,serif;line-height:1.25;color:#14213d}
+h1{font-size:1.9rem;margin:.2rem 0 .3rem;font-weight:900}
+h2{font-size:1.4rem;margin:2rem 0 .6rem;padding-bottom:.35rem;border-bottom:3px solid var(--accent)}
+h3{font-size:1.08rem;margin:1.4rem 0 .4rem}
+p{margin:.5rem 0}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+header.hero{background:linear-gradient(135deg,#14213d 0%,#1f5fa8 55%,#2e7d4f 100%);color:#fff;padding:30px 0 24px}
+header.hero h1{color:#fff}
+.hero .kicker{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;opacity:.85}
+.hero p{opacity:.95;max-width:680px}
+/* tabs */
+nav.tabs{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 6px rgba(0,0,0,.04)}
+nav.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:0;scrollbar-width:thin}
+nav.tabs button{flex:0 0 auto;border:0;background:none;font:inherit;font-weight:700;font-size:.92rem;padding:9px 13px 10px;border-radius:9px 9px 0 0;cursor:pointer;color:var(--muted);border-bottom:4px solid transparent}
+nav.tabs button[data-c="blue"]{--c:var(--blue);--cl:var(--blue-l)}
+nav.tabs button[data-c="green"]{--c:var(--green);--cl:var(--green-l)}
+nav.tabs button[data-c="purple"]{--c:var(--purple);--cl:var(--purple-l)}
+nav.tabs button:hover{color:var(--c);background:var(--cl)}
+nav.tabs button.active{color:var(--c);background:var(--cl);border-bottom-color:var(--c)}
+section.panel{display:none;padding:6px 0 40px}
+section.panel.active{display:block}
+section.panel.blue{--accent:var(--blue);--accent-l:var(--blue-l)}
+section.panel.green{--accent:var(--green);--accent-l:var(--green-l)}
+section.panel.purple{--accent:var(--purple);--accent-l:var(--purple-l)}
+.badge{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--accent);border-radius:999px;padding:3px 11px;margin-top:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+.wow{background:var(--accent-l);border-left:5px solid var(--accent);border-radius:0 12px 12px 0;padding:12px 16px;margin:14px 0}
+.wow b.t{display:block;color:var(--accent);font-family:'Merriweather',serif;margin-bottom:2px}
+.clinical{background:var(--yellow);border:1px solid #f3dc8a;border-left:6px solid var(--yellow-b);border-radius:0 12px 12px 0;padding:12px 16px;margin:16px 0}
+.clinical b.t{display:block;color:#8a5a00;margin-bottom:2px}
+.trap{background:var(--red-l);border-left:6px solid var(--red);border-radius:0 12px 12px 0;padding:12px 16px;margin:14px 0}
+.trap b.t{display:block;color:var(--red);margin-bottom:2px}
+.mnemonic{font-family:'Merriweather',serif;font-style:italic;color:var(--accent);font-weight:700}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.95rem;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-l);color:#14213d;font-family:'Merriweather',serif;font-size:.88rem}
+.tscroll{overflow-x:auto}
+ul.tight{margin:.4rem 0;padding-left:1.25rem}
+ul.tight li{margin:.25rem 0}
+/* flow */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0}
+.fbox{background:#fff;border:2.5px solid var(--accent);border-radius:12px;padding:8px 14px;font-weight:700;text-align:center;min-width:92px}
+.fbox small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+.farr{font-size:1.4rem;color:var(--accent);font-weight:900;text-align:center;line-height:1}
+.farr small{display:block;font-size:.7rem;font-weight:600;color:var(--muted)}
+.fbox.hl{background:var(--accent);color:#fff}
+.fbox.hl small{color:#e8eefc}
+/* base chips */
+.chip{display:inline-block;min-width:28px;text-align:center;padding:2px 7px;margin:1px;border-radius:6px;font-weight:700;font-family:'Merriweather',serif;font-size:.95rem}
+.A{background:var(--A)}.T{background:var(--T)}.G{background:var(--G)}.C{background:var(--C)}.U{background:var(--U)}
+.seq{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;letter-spacing:.04em}
+.end{color:var(--accent);font-weight:800;font-size:.85rem;padding:0 4px}
+/* diagram grid */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}
+@media (max-width:680px){.two{grid-template-columns:1fr}}
+svg{max-width:100%;height:auto}
+/* decision flowchart */
+.dec{display:grid;gap:8px;margin:10px 0}
+.dq{background:#fff;border:2px solid var(--accent);border-radius:10px;padding:8px 12px;font-weight:700}
+.dbr{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dy,.dn{border-radius:10px;padding:8px 12px;font-size:.95rem}
+.dy{background:var(--green-l);border:1px solid #b9dcc6}
+.dn{background:#f3f4f6;border:1px solid var(--line)}
+/* quick ref */
+.qr{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.qr .card{margin:0;border-top:5px solid var(--accent)}
+.qr .card.b{--accent:var(--blue)} .qr .card.g{--accent:var(--green)} .qr .card.p{--accent:var(--purple)}
+.qr h3{margin-top:0;font-size:1rem}
+/* tools */
+.tool{background:#fff;border:2px dashed var(--accent);border-radius:14px;padding:14px 16px;margin:16px 0}
+.tool h3{margin-top:0}
+.tool label{font-weight:600}
+input[type=number],input[type=text],select,textarea{font:inherit;padding:7px 10px;border:1.5px solid #c7ced9;border-radius:8px;background:#fff}
+input[type=text]{width:100%;max-width:340px;text-transform:uppercase;font-family:ui-monospace,Menlo,Consolas,monospace}
+button.btn{font:inherit;font-weight:700;border:0;background:var(--accent);color:#fff;border-radius:9px;padding:8px 14px;cursor:pointer;margin:4px 6px 4px 0}
+button.btn.ghost{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+.out{margin-top:10px;font-weight:600}
+.ok{color:var(--green)} .bad{color:var(--red)}
+.bars{display:flex;height:34px;border-radius:8px;overflow:hidden;margin-top:8px;border:1px solid var(--line)}
+.bars div{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;transition:width .35s}
+/* self check */
+details.q{background:#fff;border:1px solid var(--line);border-radius:12px;margin:10px 0;padding:0}
+details.q summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary:before{content:"\25B8";color:var(--accent);display:inline-block;width:1.1em;font-weight:900}
+details.q[open] summary:before{content:"\25BE"}
+details.q .ans{padding:0 16px 14px 34px;border-top:1px dashed var(--line);padding-top:10px}
+textarea{width:100%;min-height:130px;resize:vertical}
+.saved{font-size:.85rem;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--muted);text-align:center;font-size:.9rem;background:#fff}
+@media (max-width:600px){body{font-size:16px}h1{font-size:1.5rem}.dbr{grid-template-columns:1fr}}
+@media print{
+  nav.tabs,.noprint,button.btn,.tool{display:none!important}
+  section.panel{display:block!important;break-before:page}
+  section.panel:first-of-type{break-before:auto}
+  header.hero{background:none;color:#000;padding:0}
+  header.hero h1{color:#000}
+  body{background:#fff;font-size:11pt}
+  .card,.clinical,.wow,.trap,table,.flow,.qr .card{break-inside:avoid}
+  details.q .ans{display:none}
+  details.q summary:before{content:""}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">BIO 189 · Fundamentals of Biology · Modules 4 &amp; 5</div>
+    <h1>DNA, Chromosomes &amp; Gene Expression</h1>
+    <p>Every cell in your body is carrying the same instruction manual, written in a four-letter alphabet, folded small enough to fit in a nucleus a few thousandths of a millimeter wide. This guide shows how that manual is built, packed, copied, read, and sometimes misprinted.</p>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Study guide sections">
+  <div class="wrap" role="tablist">
+    <button role="tab" data-c="purple" data-t="big" class="active">Big Picture</button>
+    <button role="tab" data-c="blue" data-t="dna">M4 · DNA &amp; Bases</button>
+    <button role="tab" data-c="blue" data-t="chrom">M4 · Chromosomes</button>
+    <button role="tab" data-c="blue" data-t="rep">M4 · Replication</button>
+    <button role="tab" data-c="green" data-t="expr">M5 · Gene Expression</button>
+    <button role="tab" data-c="green" data-t="mut">M5 · Mutations</button>
+    <button role="tab" data-c="purple" data-t="ref">Quick Reference</button>
+    <button role="tab" data-c="purple" data-t="check">Self-Check</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ===================== BIG PICTURE ===================== -->
+<section class="panel purple active" id="big">
+  <span class="badge">Start here</span>
+  <h2>The whole story in one hospital</h2>
+  <p>Picture your cell as a busy hospital. <b>DNA</b> is the <b>master medical chart</b>, locked in the Nurse's Station (the <b>nucleus</b>). It never leaves that room. When the floor needs a medication (a <b>protein</b>), the cell copies just the needed instructions onto a disposable sticky note (<b>mRNA</b>) and sends that note out to the floor (the <b>ribosome</b>), where the order is filled.</p>
+
+  <div class="flow" aria-label="Gene expression flow">
+    <div class="fbox">DNA<small>master chart, in nucleus</small></div>
+    <div class="farr">&rarr;<small>transcription<br>RNA polymerase</small></div>
+    <div class="fbox">mRNA<small>sticky note</small></div>
+    <div class="farr">&rarr;<small>translation<br>ribosome + tRNA</small></div>
+    <div class="fbox hl">Protein<small>the "medication"</small></div>
+  </div>
+
+  <div class="wow"><b class="t">Why bother with a copy?</b>The master chart is precious. If the original were sent onto the floor, every trip would risk damage to the only complete record. A disposable copy can be made, used, and thrown away, and the original stays safe. Cells figured out good document control long before hospitals did.</div>
+
+  <h3>How the two modules fit together</h3>
+  <div class="tscroll"><table>
+    <tr><th>Module 4: the chart itself</th><th>Module 5: using the chart</th></tr>
+    <tr><td>Who discovered DNA's role and shape</td><td>What a gene is and what gene expression means</td></tr>
+    <tr><td>Nucleotides and base pairing (A&ndash;T, G&ndash;C)</td><td>Transcription: DNA &rarr; mRNA</td></tr>
+    <tr><td>DNA vs. RNA</td><td>RNA splicing: introns out, exons stay</td></tr>
+    <tr><td>Chromosomes, histones, karyotypes</td><td>Translation: mRNA &rarr; protein</td></tr>
+    <tr><td>DNA replication (S phase, semiconservative)</td><td>Mutations: permanent typos in the chart</td></tr>
+  </table></div>
+
+  <div class="card noprint">
+    <h3 style="margin-top:0">My notes and muddiest point</h3>
+    <p class="saved">Saves automatically in this browser.</p>
+    <textarea id="notes" placeholder="What still feels fuzzy? Write it here, then test yourself on the Self-Check tab."></textarea>
+    <div class="saved" id="notesStatus"></div>
+  </div>
+</section>
+
+<!-- ===================== DNA & BASES ===================== -->
+<section class="panel blue" id="dna">
+  <span class="badge">Module 4</span>
+  <h2>1. The DNA Hall of Fame</h2>
+  <div class="tscroll"><table>
+    <tr><th>Scientist(s)</th><th>What they showed</th><th>Memory hook</th></tr>
+    <tr><td><b>Hershey &amp; Chase</b></td><td>Bacteriophages (viruses that infect bacteria) inject <b>DNA</b>, not protein, into bacteria. DNA is the genetic material.</td><td class="mnemonic">Hershey's chocolate syrup gets injected into a donut.</td></tr>
+    <tr><td><b>Rosalind Franklin</b></td><td>Used <b>X-ray crystallography</b> to capture an image of DNA's structure.</td><td class="mnemonic">Franklin took the Foto.</td></tr>
+    <tr><td><b>Watson &amp; Crick</b></td><td>Built the 3D <b>double helix</b> model of DNA.</td><td class="mnemonic">Watson &amp; Crick built the Winding staircase.</td></tr>
+  </table></div>
+  <div class="trap"><b class="t">Classic mix-up</b>Watson &amp; Crick answered <i>what DNA looks like</i>. Hershey &amp; Chase answered <i>whether DNA is the genetic material</i>. Structure question? Watson &amp; Crick. "DNA, not protein" question? Hershey &amp; Chase.</div>
+
+  <h2>2. Nucleotides: the letters of the code</h2>
+  <div class="two">
+    <div>
+      <svg viewBox="0 0 330 150" role="img" aria-label="Nucleotide: phosphate group, pentose sugar, nitrogenous base">
+        <circle cx="45" cy="55" r="26" fill="#eef2f7" stroke="#1f5fa8" stroke-width="3"/>
+        <line x1="71" y1="60" x2="112" y2="72" stroke="#8a94a6" stroke-width="3"/>
+        <polygon points="150,40 186,64 173,104 127,104 114,64" fill="#eef2f7" stroke="#1f5fa8" stroke-width="3"/>
+        <line x1="186" y1="74" x2="222" y2="70" stroke="#8a94a6" stroke-width="3"/>
+        <rect x="222" y="50" width="90" height="40" rx="9" fill="#93c47d" stroke="#2e7d4f" stroke-width="3"/>
+        <text x="45" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#1d2430">PHOSPHATE</text>
+        <text x="150" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#1d2430">PENTOSE SUGAR</text>
+        <text x="267" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d4f">NITROGENOUS BASE</text>
+      </svg>
+    </div>
+    <div>
+      <p>DNA is a polymer, and its monomer is the <b>nucleotide</b>. Every nucleotide has exactly <b>three components</b>:</p>
+      <ul class="tight">
+        <li>a <b>phosphate group</b></li>
+        <li>a <b>pentose sugar</b> (a 5-carbon sugar)</li>
+        <li>a <b>nitrogenous base</b>: <span class="chip A">A</span><span class="chip T">T</span><span class="chip G">G</span><span class="chip C">C</span></li>
+      </ul>
+      <p>The phosphate and sugar are identical in every DNA nucleotide. <b>Only the base changes.</b></p>
+    </div>
+  </div>
+  <div class="wow"><b class="t">Here is the astonishing part</b>You, a mushroom, and a blue whale all write your DNA with the <b>same four bases</b>. Nothing about the letters themselves is special to humans. Every difference between species, and between you and your siblings, comes from the <b>sequence (order) of the nucleotides</b>. Same alphabet, different sentences.</div>
+
+  <h2>3. Base pairing &amp; Chargaff's rules</h2>
+  <p>The two strands of the double helix zip together down the middle with <b>hydrogen bonds</b> between complementary bases, and only two pairings are allowed:</p>
+  <p style="font-size:1.1rem"><span class="chip A">A</span> &harr; <span class="chip T">T</span> &nbsp; <span class="mnemonic">Apples in the Tree</span><br><span class="chip G">G</span> &harr; <span class="chip C">C</span> &nbsp; <span class="mnemonic">Cars in the Garage</span></p>
+  <p>Because every A has a T partner, <b>%A = %T</b>. Because every G has a C partner, <b>%G = %C</b>. That one idea solves every Chargaff math problem.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">Worked example</h3>
+    <p>A DNA sample is <b>22% adenine</b>. What percent is cytosine?</p>
+    <ol class="tight">
+      <li>A = T, so T = 22%. A + T = <b>44%</b>.</li>
+      <li>What is left is G + C: 100% &minus; 44% = <b>56%</b>.</li>
+      <li>G = C, so split it: 56% &divide; 2 = <b>28% cytosine</b>.</li>
+    </ol>
+  </div>
+
+  <div class="tool noprint">
+    <h3>Chargaff calculator: check your own practice problems</h3>
+    <p>Pick the base you know, type its percentage, and see all four.</p>
+    <label>Known base:
+      <select id="cgBase"><option>A</option><option>T</option><option>G</option><option>C</option></select>
+    </label>
+    &nbsp;<label>Percent: <input type="number" id="cgPct" min="0" max="50" step="0.5" value="22" style="width:90px"></label>
+    <button class="btn" id="cgGo">Calculate</button>
+    <div class="out" id="cgOut"></div>
+    <div class="bars" id="cgBars" aria-hidden="true"></div>
+  </div>
+
+  <h2>4. DNA vs. RNA</h2>
+  <div class="tscroll"><table>
+    <tr><th>Feature</th><th>DNA</th><th>RNA</th></tr>
+    <tr><td><b>Structure</b></td><td>Double helix (two strands)</td><td>Single-stranded (most RNA)</td></tr>
+    <tr><td><b>Base pairing</b></td><td>A&ndash;T and G&ndash;C</td><td>A&ndash;U and G&ndash;C</td></tr>
+    <tr><td><b>Unique base</b></td><td>Thymine (T)</td><td>Uracil (U) instead of thymine</td></tr>
+  </table></div>
+  <p class="mnemonic">U stands where T stood.</p>
+
+  <h3>Decision flowchart: DNA or RNA?</h3>
+  <div class="dec">
+    <div class="dq">1. Does the sequence contain U (uracil)?</div>
+    <div class="dbr"><div class="dy"><b>Yes &rarr; RNA.</b> Uracil never appears in DNA.</div><div class="dn"><b>No &rarr;</b> go to question 2.</div></div>
+    <div class="dq">2. Does it contain T (thymine)?</div>
+    <div class="dbr"><div class="dy"><b>Yes &rarr; DNA.</b> Thymine is DNA's unique base.</div><div class="dn"><b>No T and no U &rarr;</b> you cannot tell from the bases alone (A, G and C are in both).</div></div>
+  </div>
+</section>
+
+<!-- ===================== CHROMOSOMES ===================== -->
+<section class="panel blue" id="chrom">
+  <span class="badge">Module 4</span>
+  <h2>5. Chromosomes: packing the chart</h2>
+  <p>The DNA in one of your cells, stretched out, is far longer than the cell itself. The cell solves this the way you would store a very long thread: it winds it onto <b>spools</b>.</p>
+  <div class="two">
+    <div style="text-align:center">
+      <svg viewBox="0 0 220 210" role="img" aria-label="Replicated chromosome: two sister chromatids joined at the centromere">
+        <path d="M70 15 C92 70 92 70 110 105 C92 140 92 140 70 195" fill="none" stroke="#1f5fa8" stroke-width="22" stroke-linecap="round"/>
+        <path d="M150 15 C128 70 128 70 110 105 C128 140 128 140 150 195" fill="none" stroke="#5b8fd1" stroke-width="22" stroke-linecap="round"/>
+        <ellipse cx="110" cy="105" rx="17" ry="11" fill="#93c47d" stroke="#2e7d4f" stroke-width="3"/>
+        <text x="110" y="208" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d4f">centromere (the waist)</text>
+        <text x="40" y="12" font-size="11" fill="#1d2430">chromatid</text>
+        <text x="140" y="12" font-size="11" fill="#1d2430">chromatid</text>
+      </svg>
+    </div>
+    <div>
+      <ul class="tight">
+        <li><b>Chromosome:</b> a complex of <b>DNA and associated proteins</b> carrying part or all of the cell's genetic information.</li>
+        <li><b>Histones:</b> the protein spools that eukaryotic DNA wraps around.</li>
+        <li><b>Sister chromatids:</b> two identical copies of one replicated chromosome, held together at the <b>centromere</b>.</li>
+        <li><b>Homologous chromosomes:</b> a matching pair, one from mom and one from dad, with the same length, shape, and genes.</li>
+        <li><b>Autosomes:</b> the non-sex chromosomes, the same in males and females.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="trap"><b class="t">Sisters vs. homologs</b><b>Sister chromatids</b> are identical copies made during replication and stuck together at one centromere. <b>Homologous chromosomes</b> are two separate chromosomes, one from each parent; they carry the same genes but are not identical copies.</div>
+
+  <h3>Counting chromosomes</h3>
+  <div class="flow">
+    <div class="fbox">Haploid<small>1 set = 23</small></div>
+    <div class="farr">&times; 2</div>
+    <div class="fbox hl">Diploid<small>2 sets = 46</small></div>
+  </div>
+  <p>Most humans have <b>46 chromosomes</b> in a diploid body cell. A diploid cell has two sets, so it holds <b>2 times</b> the chromosome number of a haploid cell.</p>
+
+  <h2>6. Karyotypes: reading the lineup</h2>
+  <p>A <b>karyotype</b> is an organized image of an individual's complete set of chromosomes, lined up in numbered pairs. Two quick checks do most of the work:</p>
+  <div class="dec">
+    <div class="dq">Check 1: Count the total.</div>
+    <div class="dbr"><div class="dy"><b>46</b> &rarr; typical count.</div><div class="dn"><b>Not 46</b> &rarr; a chromosome is missing or extra. Find the pair that does not have exactly two.</div></div>
+    <div class="dq">Check 2: Look at pair #23.</div>
+    <div class="dbr"><div class="dy"><b>XX</b> &rarr; female.</div><div class="dn"><b>XY</b> &rarr; male.</div></div>
+  </div>
+  <div class="clinical"><b class="t">&#9877; Clinical connection: Down syndrome</b>Three copies of chromosome 21 (trisomy 21) gives a total of <b>47</b> chromosomes and causes Down syndrome. A karyotype is one of the tests used to confirm the diagnosis, which is why the "count the total" check matters.</div>
+</section>
+
+<!-- ===================== REPLICATION ===================== -->
+<section class="panel blue" id="rep">
+  <span class="badge">Module 4</span>
+  <h2>7. DNA replication: copying the chart before shift change</h2>
+  <p><b>When:</b> during the <b>S (Synthesis) phase</b> of the cell cycle, before the cell divides. Each daughter cell needs its own complete chart.</p>
+  <p><b>The model:</b> replication is <b>semiconservative</b>. Each new double helix keeps <b>one old (original) strand</b> and gets <b>one newly made strand</b>.</p>
+  <div class="flow">
+    <div class="fbox">Original helix<small>old + old</small></div>
+    <div class="farr">&rarr;<small>replicate</small></div>
+    <div class="fbox hl">Copy 1<small>old + new</small></div>
+    <div class="fbox hl">Copy 2<small>old + new</small></div>
+  </div>
+  <div class="wow"><b class="t">Why "semi" makes so much sense</b>Base pairing means each strand already contains the information for its partner. Peel the two strands apart and each one is a perfect template: an A on the old strand demands a T on the new one, every time. The cell does not need a separate blueprint for the copy; the old strand <i>is</i> the blueprint.</div>
+
+  <h3>The step order</h3>
+  <div class="flow">
+    <div class="fbox">1. Unwind<small>enzymes separate the two strands</small></div>
+    <div class="farr">&rarr;</div>
+    <div class="fbox">2. Prime<small>primers base-pair with the single strands</small></div>
+    <div class="farr">&rarr;</div>
+    <div class="fbox hl">3. Build<small>DNA polymerase adds complementary nucleotides</small></div>
+  </div>
+  <ul class="tight">
+    <li><b>Primer:</b> a short, single strand of DNA or RNA that base-pairs with the template and creates an attachment point.</li>
+    <li><b>DNA polymerase:</b> attaches to the primer and adds complementary nucleotides to build the new strand.</li>
+  </ul>
+  <div class="trap"><b class="t">Troubleshooting card: "polymerase goes first"</b>DNA polymerase is the most famous enzyme in the story, so it is tempting to put it first or second. It cannot start a new strand on bare template. <b>No primer, no polymerase.</b> Unwind &rarr; prime &rarr; build.</div>
+  <div class="clinical"><b class="t">&#9877; Clinical connection: why chemo causes hair loss</b>Many chemotherapy drugs work by interfering with DNA replication, which hits rapidly dividing cells hardest. Cancer cells divide rapidly, but so do hair follicles, the lining of the GI tract, and bone marrow. That is why patients on these drugs commonly have hair loss, mouth sores, nausea, and low blood counts.</div>
+</section>
+
+<!-- ===================== GENE EXPRESSION ===================== -->
+<section class="panel green" id="expr">
+  <span class="badge">Module 5</span>
+  <h2>1. Gene expression basics</h2>
+  <ul class="tight">
+    <li><b>Gene:</b> a unit of information encoded in the sequence of nucleotide bases in DNA.</li>
+    <li><b>Gene expression:</b> the multistep process of converting a gene's information into a functional RNA or protein product.</li>
+  </ul>
+  <div class="flow">
+    <div class="fbox">DNA</div>
+    <div class="farr">&rarr;<small>1. transcription</small></div>
+    <div class="fbox">pre-mRNA</div>
+    <div class="farr">&rarr;<small>2. splicing</small></div>
+    <div class="fbox">mature mRNA</div>
+    <div class="farr">&rarr;<small>3. translation</small></div>
+    <div class="fbox hl">Protein</div>
+  </div>
+
+  <h2>2. Step 1: Transcription (DNA &rarr; mRNA)</h2>
+  <p><b>The enzyme:</b> <b>RNA polymerase</b> builds the mRNA strand in eukaryotes. (Making RNA? RNA polymerase. Copying DNA? DNA polymerase.)</p>
+  <h3>How to transcribe, every time</h3>
+  <ol class="tight">
+    <li>Pair each template base with its RNA partner: <span class="chip A">A</span>&rarr;<span class="chip U">U</span> &nbsp; <span class="chip T">T</span>&rarr;<span class="chip A">A</span> &nbsp; <span class="chip G">G</span>&rarr;<span class="chip C">C</span> &nbsp; <span class="chip C">C</span>&rarr;<span class="chip G">G</span></li>
+    <li>Flip the ends: a template read <b>3&prime; &rarr; 5&prime;</b> gives mRNA written <b>5&prime; &rarr; 3&prime;</b> (antiparallel).</li>
+    <li>Final check: <b>there is no T anywhere in the mRNA.</b></li>
+  </ol>
+  <div class="card">
+    <p class="seq"><span class="end">DNA template 3&prime;</span> <span class="chip T">T</span><span class="chip G">G</span><span class="chip A">A</span><span class="chip C">C</span><span class="chip A">A</span><span class="chip A">A</span><span class="chip G">G</span><span class="chip C">C</span><span class="chip T">T</span> <span class="end">5&prime;</span></p>
+    <p class="seq"><span class="end">mRNA product 5&prime;</span> <span class="chip A">A</span><span class="chip C">C</span><span class="chip U">U</span><span class="chip G">G</span><span class="chip U">U</span><span class="chip U">U</span><span class="chip C">C</span><span class="chip G">G</span><span class="chip A">A</span> <span class="end">3&prime;</span></p>
+  </div>
+
+  <div class="tool noprint">
+    <h3>Transcription trainer</h3>
+    <p>Transcribe the template strand into mRNA (type the bases only, 5&prime; to 3&prime;; spaces are fine).</p>
+    <p class="seq" id="trTemplate" style="font-size:1.15rem"></p>
+    <input type="text" id="trInput" placeholder="e.g. ACU GUU CGA" autocomplete="off" aria-label="Your mRNA answer">
+    <div>
+      <button class="btn" id="trCheck">Check</button>
+      <button class="btn ghost" id="trNew">New strand</button>
+      <button class="btn ghost" id="trShow">Show answer</button>
+    </div>
+    <div class="out" id="trOut"></div>
+    <div class="saved" id="trScore"></div>
+  </div>
+
+  <h2>3. Step 2: RNA splicing (editing the rough draft)</h2>
+  <p>Before eukaryotic mRNA leaves the nucleus, it gets edited like a movie reel. The non-coding parts are cut out and the coding parts are joined together.</p>
+  <svg viewBox="0 0 620 90" role="img" aria-label="Pre-mRNA with exons kept and introns removed">
+    <rect x="5" y="20" width="130" height="34" rx="7" fill="#93c47d" stroke="#2e7d4f" stroke-width="2.5"/>
+    <rect x="135" y="20" width="100" height="34" fill="#f3f4f6" stroke="#9aa3b2" stroke-width="2" stroke-dasharray="6 4"/>
+    <rect x="235" y="20" width="130" height="34" rx="7" fill="#93c47d" stroke="#2e7d4f" stroke-width="2.5"/>
+    <rect x="365" y="20" width="100" height="34" fill="#f3f4f6" stroke="#9aa3b2" stroke-width="2" stroke-dasharray="6 4"/>
+    <rect x="465" y="20" width="130" height="34" rx="7" fill="#93c47d" stroke="#2e7d4f" stroke-width="2.5"/>
+    <text x="70" y="42" text-anchor="middle" font-size="14" font-weight="700" fill="#14213d">EXON</text>
+    <text x="185" y="42" text-anchor="middle" font-size="13" fill="#b3261e">intron &#10007;</text>
+    <text x="300" y="42" text-anchor="middle" font-size="14" font-weight="700" fill="#14213d">EXON</text>
+    <text x="415" y="42" text-anchor="middle" font-size="13" fill="#b3261e">intron &#10007;</text>
+    <text x="530" y="42" text-anchor="middle" font-size="14" font-weight="700" fill="#14213d">EXON</text>
+    <text x="300" y="80" text-anchor="middle" font-size="13" fill="#2e7d4f" font-weight="700">exons stay and are joined; introns are cut out</text>
+  </svg>
+  <ul class="tight">
+    <li><b>Introns:</b> non-coding sections spliced (cut) out before translation.</li>
+    <li><b>Exons:</b> coding sections that stay in the final mature mRNA and code for the amino acid sequence.</li>
+  </ul>
+  <p class="mnemonic">EXons are EXpressed. INtrons are INtervening.</p>
+  <div class="trap"><b class="t">The name trap</b>"Ex" sounds like "excised" (cut out), and that pulls students the wrong way. Exons are <b>not</b> excised. They are <b>expressed</b>: they leave the nucleus and become protein.</div>
+
+  <h2>4. Step 3: Translation (mRNA &rarr; protein)</h2>
+  <p>On the ribosome, the mRNA is read <b>three bases at a time</b>. Each three-base word is a <b>codon</b>, and each codon calls for one amino acid.</p>
+  <ul class="tight">
+    <li><b>Codon:</b> three nucleotides on the <b>mRNA</b> that specify an amino acid.</li>
+    <li><b>Anticodon:</b> the complementary three nucleotides on the <b>tRNA</b> that match the codon.</li>
+    <li><b>tRNA (transfer RNA):</b> the delivery truck. It carries one amino acid to the ribosome.</li>
+  </ul>
+  <div class="flow">
+    <div class="fbox">tRNA arrives<small>carrying 1 amino acid</small></div>
+    <div class="farr">&rarr;</div>
+    <div class="fbox">Anticodon matches codon<small>3 bases to 3 bases</small></div>
+    <div class="farr">&rarr;</div>
+    <div class="fbox">Amino acid added<small>tRNA leaves</small></div>
+    <div class="farr">&#8635;</div>
+    <div class="fbox hl">Chain grows<small>link by link</small></div>
+  </div>
+  <div class="wow"><b class="t">Codon or anticodon? Follow the "anti"</b>The <b>codon</b> is the original message on the mRNA. The <b>anti</b>codon is the matching reply carried by the tRNA. If a question says "anticodon," the answer involves tRNA.</div>
+</section>
+
+<!-- ===================== MUTATIONS ===================== -->
+<section class="panel green" id="mut">
+  <span class="badge">Module 5</span>
+  <h2>5. Mutations: typos in the master chart</h2>
+  <p><b>Definition:</b> a mutation is a <b>permanent</b> change in the DNA sequence of a chromosome. Permanent means it is not temporary or intermittent: it stays in the sequence unless it is repaired, and it can be copied and passed on.</p>
+  <div class="tscroll"><table>
+    <tr><th>Mutation type</th><th>What happens</th><th>Example</th></tr>
+    <tr><td><b>Base-pair substitution</b></td><td>One base is swapped for another</td><td>Sickle cell: mRNA codon GAG becomes GUG (A swapped for U)</td></tr>
+    <tr><td><b>Insertion</b></td><td>One or more nucleotides are added</td><td>An extra base is pushed into the sequence</td></tr>
+    <tr><td><b>Deletion</b></td><td>One or more nucleotides are removed</td><td>Cystic fibrosis; a form of thalassemia (beta-globin gene)</td></tr>
+  </table></div>
+  <p class="mnemonic">Insertion adds; deletion deletes; substitution swaps.</p>
+
+  <h3>UV light damage</h3>
+  <p>Ultraviolet (UV) light causes <b>nucleotide dimers</b> (thymine dimers): neighboring bases on the same strand get stuck together, which puts a <b>physical kink</b> in the double helix.</p>
+
+  <h3>Why location matters: exon vs. intron</h3>
+  <div class="dec">
+    <div class="dq">Is the mutation inside an exon?</div>
+    <div class="dbr"><div class="dy"><b>Yes &rarr;</b> exons stay in the mature mRNA, so the change can alter the <b>amino acid sequence</b> of the protein.</div><div class="dn"><b>In an intron &rarr;</b> introns are spliced out before translation, so the change is less likely to reach the protein.</div></div>
+  </div>
+
+  <div class="clinical"><b class="t">&#9877; Clinical connection: one letter, one disease</b><b>Sickle cell anemia</b> comes from a single base-pair substitution in the beta-globin gene. One swapped base changes one amino acid in hemoglobin, and red blood cells can deform into a sickle shape, block small vessels, and cause pain crises.<br><b>Cystic fibrosis</b> is caused by a deletion. It produces thick, sticky mucus that affects the lungs and digestive system.</div>
+  <div class="clinical"><b class="t">&#9877; Clinical connection: sunscreen teaching</b>UV-induced dimers are one reason sun exposure raises skin cancer risk. When you teach patients about sunscreen, protective clothing, and avoiding tanning beds, you are really teaching them to protect their DNA.</div>
+</section>
+
+<!-- ===================== QUICK REFERENCE ===================== -->
+<section class="panel purple" id="ref">
+  <span class="badge">Review</span>
+  <h2>Quick reference cards</h2>
+  <div class="qr">
+    <div class="card b"><h3>Hall of Fame</h3>
+      <b>Hershey &amp; Chase:</b> DNA, not protein, is injected (phages)<br>
+      <b>Franklin:</b> X-ray crystallography image<br>
+      <b>Watson &amp; Crick:</b> double helix model</div>
+    <div class="card b"><h3>Nucleotide</h3>
+      Phosphate + pentose sugar + nitrogenous base.<br>Only the <b>base</b> varies. Species differ by <b>sequence</b>.</div>
+    <div class="card b"><h3>Pairing &amp; Chargaff</h3>
+      A&ndash;T, G&ndash;C (DNA). A&ndash;U, G&ndash;C (RNA).<br>%A = %T and %G = %C. Hydrogen bonds hold the pairs.</div>
+    <div class="card b"><h3>Chromosomes</h3>
+      DNA + proteins, wound on <b>histones</b>. Sister chromatids joined at the <b>centromere</b>. 46 = diploid; 23 = haploid.</div>
+    <div class="card b"><h3>Karyotype checks</h3>
+      1) Count to 46. 2) Pair 23: XX female, XY male.<br>Trisomy 21 = 47 = Down syndrome.</div>
+    <div class="card b"><h3>Replication</h3>
+      S phase. Semiconservative (old + new).<br>Unwind &rarr; primer &rarr; DNA polymerase builds.</div>
+    <div class="card g"><h3>Transcription</h3>
+      DNA &rarr; mRNA by <b>RNA polymerase</b>.<br>A&rarr;U, T&rarr;A, G&rarr;C, C&rarr;G. 3&prime;&rarr;5&prime; template gives 5&prime;&rarr;3&prime; mRNA.</div>
+    <div class="card g"><h3>Splicing</h3>
+      Introns cut out. Exons stay and code for protein.<br>EXons are EXpressed.</div>
+    <div class="card g"><h3>Translation</h3>
+      mRNA &rarr; protein at the ribosome.<br>Codon (mRNA, 3 bases) matches anticodon (tRNA). tRNA delivers amino acids.</div>
+    <div class="card g"><h3>Mutations</h3>
+      Permanent sequence change. Substitution (sickle cell), insertion, deletion (cystic fibrosis). UV &rarr; nucleotide dimers.</div>
+    <div class="card p"><h3>Enzyme sorter</h3>
+      <b>DNA polymerase:</b> copies DNA (replication).<br><b>RNA polymerase:</b> makes mRNA (transcription).</div>
+    <div class="card p"><h3>Which RNA?</h3>
+      <b>mRNA:</b> the sticky-note message (codons).<br><b>tRNA:</b> the delivery truck (anticodon + amino acid).</div>
+  </div>
+</section>
+
+<!-- ===================== SELF-CHECK ===================== -->
+<section class="panel purple" id="check">
+  <span class="badge">Review</span>
+  <h2>Self-check: commit to an answer, then open it</h2>
+  <p>Say your answer out loud or write it down <i>before</i> you click. Retrieval is what makes it stick.</p>
+
+  <details class="q"><summary>1. A DNA sample is 26% adenine. Give the percentage of all four bases.</summary>
+    <div class="ans">A = 26%, T = 26% (A = T). That is 52%, leaving 48% for G + C, so G = 24% and C = 24%. Check: 26 + 26 + 24 + 24 = 100.</div></details>
+  <details class="q"><summary>2. Transcribe the DNA template strand 3&prime; TTACGG 5&prime;.</summary>
+    <div class="ans">5&prime; AAUGCC 3&prime;. T&rarr;A, T&rarr;A, A&rarr;U, C&rarr;G, G&rarr;C, G&rarr;C, with the ends flipped. No T in the answer.</div></details>
+  <details class="q"><summary>3. A sequence reads 5&prime; GCAUUA 3&prime;. DNA or RNA? How do you know?</summary>
+    <div class="ans">RNA, because it contains uracil (U). Uracil never appears in DNA.</div></details>
+  <details class="q"><summary>4. A classmate says, "Watson and Crick proved DNA is the genetic material." Correct the statement.</summary>
+    <div class="ans">Watson and Crick built the double helix <i>model</i>. Hershey and Chase used bacteriophages to show that DNA, not protein, is the genetic material injected into bacteria.</div></details>
+  <details class="q"><summary>5. A karyotype shows 47 chromosomes, three copies of chromosome 21, and XY at pair 23. What is the biological sex, and what condition is shown?</summary>
+    <div class="ans">Male (XY). Trisomy 21, Down syndrome (46 + 1 extra = 47).</div></details>
+  <details class="q"><summary>6. A classmate puts DNA polymerase as the first step of replication. What is wrong?</summary>
+    <div class="ans">Polymerase cannot start on bare template. The order is: enzymes unwind and separate the strands, primers base-pair with the single strands, and only then does DNA polymerase attach to the primer and add complementary nucleotides.</div></details>
+  <details class="q"><summary>7. Explain "semiconservative" in one sentence, and say when replication happens.</summary>
+    <div class="ans">Each new double helix contains one original strand and one newly made strand. It happens during S (synthesis) phase.</div></details>
+  <details class="q"><summary>8. Two mutations are the same size: one in an intron, one in an exon. Which is more likely to change the protein, and why?</summary>
+    <div class="ans">The exon mutation. Exons stay in the mature mRNA and code for the amino acid sequence, while introns are spliced out before translation.</div></details>
+  <details class="q"><summary>9. Which molecule carries the codon and which carries the anticodon? What does the tRNA deliver?</summary>
+    <div class="ans">The codon is on the mRNA; the anticodon is on the tRNA. The tRNA delivers one amino acid to the ribosome.</div></details>
+  <details class="q"><summary>10. Using the hospital analogy, why does the cell send mRNA to the ribosome instead of the DNA itself?</summary>
+    <div class="ans">DNA is the master chart and stays protected in the nucleus. mRNA is a disposable copy of just the needed instructions, so the original is never put at risk on "the floor" (the ribosome).</div></details>
+  <details class="q"><summary>11. Name the damage UV light causes in DNA and explain why the word "permanent" matters for mutations.</summary>
+    <div class="ans">Nucleotide (thymine) dimers, which kink the helix. A mutation is a permanent change in the sequence: unless it is repaired, it stays and can be copied during S phase and passed on to daughter cells.</div></details>
+  <details class="q"><summary>12. Which enzyme makes mRNA, and which copies DNA?</summary>
+    <div class="ans">RNA polymerase makes mRNA (transcription). DNA polymerase copies DNA (replication).</div></details>
+</section>
+
+</main>
+
+<footer>BIO 189 · Modules 4 &amp; 5 · Interactive Study Guide<br>Tehrani 2028</footer>
+
+<script>
+(function(){
+  // ---- tabs ----
+  var tabs=document.querySelectorAll('nav.tabs button');
+  function show(id,push){
+    tabs.forEach(function(b){b.classList.toggle('active',b.dataset.t===id);b.setAttribute('aria-selected',b.dataset.t===id)});
+    document.querySelectorAll('section.panel').forEach(function(s){s.classList.toggle('active',s.id===id)});
+    if(push){try{history.replaceState(null,'','#'+id)}catch(e){}}
+    window.scrollTo({top:document.querySelector('nav.tabs').offsetTop,behavior:'smooth'});
+  }
+  tabs.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.t,true)})});
+  var h=(location.hash||'').slice(1); if(h&&document.getElementById(h)) show(h,false);
+
+  // ---- notes autosave ----
+  var KEY='bio189_m45_notes', ta=document.getElementById('notes'), st=document.getElementById('notesStatus');
+  try{ta.value=localStorage.getItem(KEY)||''}catch(e){}
+  var tmr; ta.addEventListener('input',function(){clearTimeout(tmr);tmr=setTimeout(function(){
+    try{localStorage.setItem(KEY,ta.value);st.textContent='Saved.'}catch(e){st.textContent='Could not save in this browser.'}
+  },400)});
+
+  // ---- Chargaff calculator ----
+  var COL={A:'var(--A)',T:'var(--T)',G:'var(--G)',C:'var(--C)'};
+  function calc(){
+    var b=document.getElementById('cgBase').value, p=parseFloat(document.getElementById('cgPct').value), out=document.getElementById('cgOut'), bars=document.getElementById('cgBars');
+    if(isNaN(p)||p<0||p>50){out.innerHTML='<span class="bad">Enter a value from 0 to 50. (No single base can be over 50%, because its partner must match it.)</span>';bars.innerHTML='';return}
+    var pair={A:'T',T:'A',G:'C',C:'G'}[b], other=(b==='A'||b==='T')?['G','C']:['A','T'], rest=(100-2*p)/2, v={};
+    v[b]=p;v[pair]=p;v[other[0]]=rest;v[other[1]]=rest;
+    var f=function(x){return (Math.round(x*10)/10)+'%'};
+    out.innerHTML='A = '+f(v.A)+' &nbsp; T = '+f(v.T)+' &nbsp; G = '+f(v.G)+' &nbsp; C = '+f(v.C)+'<br><span style="font-weight:400">'+b+' = '+pair+' = '+f(p)+', so '+b+' + '+pair+' = '+f(2*p)+'. The rest, '+f(100-2*p)+', splits evenly between '+other[0]+' and '+other[1]+'.</span>';
+    bars.innerHTML=['A','T','G','C'].map(function(k){return '<div style="width:'+v[k]+'%;background:'+COL[k]+'">'+(v[k]>=6?k:'')+'</div>'}).join('');
+  }
+  document.getElementById('cgGo').addEventListener('click',calc); calc();
+
+  // ---- transcription trainer ----
+  var MAP={A:'U',T:'A',G:'C',C:'G'}, cur='', right=0, tries=0;
+  function newStrand(){
+    var n=9, s=''; for(var i=0;i<n;i++) s+='ATGC'[Math.floor(Math.random()*4)];
+    cur=s;
+    document.getElementById('trTemplate').innerHTML='<span class="end">3&prime;</span> '+s.replace(/(...)/g,'$1 ').trim()+' <span class="end">5&prime;</span>';
+    document.getElementById('trInput').value=''; document.getElementById('trOut').textContent='';
+  }
+  function answer(){return cur.split('').map(function(c){return MAP[c]}).join('')}
+  document.getElementById('trNew').addEventListener('click',newStrand);
+  document.getElementById('trShow').addEventListener('click',function(){
+    document.getElementById('trOut').innerHTML='Answer: 5&prime; '+answer().replace(/(...)/g,'$1 ').trim()+' 3&prime;';
+  });
+  function check(){
+    var g=document.getElementById('trInput').value.toUpperCase().replace(/[^ACGTU]/g,''), a=answer(), o=document.getElementById('trOut');
+    tries++;
+    if(g===a){right++;o.innerHTML='<span class="ok">&#10003; Correct! 5&prime; '+a.replace(/(...)/g,'$1 ').trim()+' 3&prime;</span>'}
+    else if(g.indexOf('T')>-1){o.innerHTML='<span class="bad">&#10007; There is a T in your answer. RNA has no thymine: every A on the template pairs with U.</span>'}
+    else if(g.length!==a.length){o.innerHTML='<span class="bad">&#10007; Your answer has '+g.length+' bases; the template has '+a.length+'. One base in, one base out.</span>'}
+    else{var i=0;while(g[i]===a[i])i++;o.innerHTML='<span class="bad">&#10007; First mismatch at base '+(i+1)+': template '+cur[i]+' pairs with '+a[i]+'.</span>'}
+    document.getElementById('trScore').textContent='Score this session: '+right+' / '+tries;
+  }
+  document.getElementById('trCheck').addEventListener('click',check);
+  document.getElementById('trInput').addEventListener('keydown',function(e){if(e.key==='Enter')check()});
+  newStrand();
+})();
+</script>
+</body>
+</html>

@@ -26,6 +26,8 @@
 - `CHM152L_Lab7_Interactive_Guide.html` — CHM 152L Lab 7 — Buffer Solutions | Tehrani Labs (~11779 tok)
 - `BIO189_Module3_Study_Guide.html` — BIO 189 Module 3: Energy & Metabolism Part I interactive study guide; 6 sections (A-F) covering all 25 objectives from Chapters 4 & 6 (thermodynamics, enzyme structure/function/activity, membrane transport, osmosis, tonicity, feedback inhibition, ATP, glycolysis, aerobic respiration, fermentation, oxidative phosphorylation); clinical nursing connections, mnemonics, dark/light theme (~18000 tok)
 - `BIO189_Modules4-5_Study_Guide.html` — BIO 189 Modules 4 & 5 print-style study guide (DNA history/structure, DNA vs RNA, chromosomes & karyotypes, replication, transcription, splicing, translation, mutations); 10 practice questions + 25-clue Jeopardy board with BOTH answer keys deliberately removed (keys reviewed in class); embedded fonts (~2.6 MB), no JS, screen-only responsive CSS added, print layout unchanged (9 letter pages)
+- `BIO189_Modules4-5_Interactive_Study_Guide.html` — BIO 189 Modules 4 & 5 interactive guide: 8 tabs (Big Picture, DNA & Bases, Chromosomes, Replication, Gene Expression, Mutations, Quick Reference, Self-Check), Chargaff calculator, transcription trainer, 12 reveal self-check items, localStorage notes, clinical boxes, print CSS; no em dashes (~9000 tok)
+- `BIO189-Modules-4-5-Jeopardy.html` — BIO 189 Modules 4 & 5 Jeopardy on the Module 3 engine: 2 rounds x 25 original clues + Final (UV dimer / exon / S phase); clues newly written, not reused from the PDF board (~10000 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
 - `CNAME` (~5 tok)
 - `Copilot_CLI_OpenWolf_Cheat_Sheet.html` — Copilot CLI + OpenWolf Cheat Sheet (~1971 tok)
