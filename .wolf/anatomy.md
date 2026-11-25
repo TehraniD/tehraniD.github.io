@@ -33,6 +33,7 @@
 - `Copilot_CLI_OpenWolf_Cheat_Sheet.html` — Copilot CLI + OpenWolf Cheat Sheet (~1971 tok)
 - `Copilot_CLI_OpenWolf_Cheat_Sheet.docx` — Word export of the Copilot CLI + OpenWolf cheat sheet (~binary)
 - `Course_Evaluation_Flyer_Template_4up.html` — Course Evaluation Index Card | Tehrani Labs (~3895 tok)
+- `Patho_Modules4-5_Class_Review.html` — HCR-240 Class Review interactive quiz: Modules 4 (MSK, 13 Qs) & 5 (Digestive, 12 Qs), 25 Qs total, SATA support, per-option feedback, live score dashboard (~TBD tok)
 - `HCR240_Final_Exam_Study_Guide.html` — HCR-240 Final Exam Study Guide (~5888 tok)
 - `HCR240_Final_Exam_Study_Guide.md` — HCR-240 Final Exam Study Guide (~1173 tok)
 - `HCR240_Midterm_Study_Guide.html` — HCR-240 midterm organized study guide (Modules 1-3); 10 sections with quick-nav table of contents: cellular adaptation, genetics, infection & inflammation, immune & hypersensitivity, coronary disease, heart failure, hematologic, respiratory, cancers & lymphomas, vascular & dysrhythmias; self-contained, no external deps; published from the instructor's local copy (PathophysiologyMidterm_OrganizedStudyGuide.html) 2026-11-18; linked from index.html (~15000 tok)
