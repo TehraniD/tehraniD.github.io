@@ -17,6 +17,7 @@
 - `CHM125_Factor_Labeling_Reference.pdf` — One-page printable Workshop 1 reference: conversion factors, prefix table, 4 triangles, decimal trick (binary)
 - `College_Math_Skills_Interactive_Guide.html` — College Math Skills interactive gym: units, dosage, percents (~12k tok)
 - `CHM130-Crystal-Growing-Lab.html` — CHM-130 Crystal Growing Project: MAP crystals in 8 oz mason jars, 3 sessions + harvest (11/19, 11/24, 12/10, 12/15/2026), customizable color/shape, instructor prep card; two tabs (Overview, Procedures) — data/analysis tab removed per instructor (~11000 tok)
+- `CHM-Cyanotype-Leaf-Prints-Lab.html` — Cyanotype leaf prints, 4-session multi-day chemistry project (UV lamp indoors): Fe(III) citrate photoreduction, Prussian blue, Na2CO3 bleach + tea toning; stock calculator, test-strip timer, auto-save data, 8 analysis Qs (no key), troubleshooting; course not assigned (~10500 tok)
 - `CHM130_Week1_Interactive_Guide.html` — CHM-130 Week 1 — The Molecule Manifesto (~18677 tok)
 - `CHM130_Week2_Interactive_Guide.html` — CHM-130 Week 2 Interactive Study Guide | Pro: Tehrani (~20228 tok)
 - `CHM130_Weeks4_5_Interactive_Guide.html` — CHM-130 Weeks 4 &amp; 5 Interactive Study Guide | Prof. Tehrani (~14524 tok)

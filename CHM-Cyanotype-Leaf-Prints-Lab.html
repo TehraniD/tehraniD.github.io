@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyanotype Leaf Prints Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: high-energy teaching lab, wonder first, then precise chemistry
+   IDEA: a cyanotype print itself — Prussian blue ground, white leaf silhouettes
+   PICTURE: SVG leaf print hero + reaction pathway flowchart
+   COLOUR and TYPE: Tehrani system — blue/green/purple tabs, yellow clinical boxes; Merriweather + Source Sans Pro
+   LAYOUT: tabbed sessions, auto-save data, quick reference, print CSS */
+:root{color-scheme:light;--blue:#1f5fa8;--blue-d:#123d6e;--blue-l:#e8f0fa;--green:#2e7d4f;--green-d:#1c5535;--green-l:#e7f4ec;
+--purple:#6a3d9a;--purple-d:#4a2670;--purple-l:#f1eaf8;--yellow:#fff6cc;--yellow-b:#e0b400;--red:#b3261e;--red-l:#fdecea;
+--pb:#1b3f8b;--ink:#1d2430;--gray:#5c6675;--line:#d6dce4;--bg:#f6f8fb}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.6 'Source Sans Pro',system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:'Merriweather',Georgia,serif;line-height:1.2;margin:0 0 .5em}
+header{background:linear-gradient(135deg,#0f2a63,var(--pb) 60%,#2a5cb8);color:#fff;padding:clamp(24px,4vw,48px) max(5vw,16px)}
+.hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center;max-width:1180px;margin:0 auto}
+header h1{font-size:clamp(28px,4.2vw,44px);font-weight:900;text-wrap:balance}
+header p{margin:.4em 0;opacity:.92;max-width:60ch}
+.meta{font-size:.9rem;opacity:.8}
+.hero svg{width:100%;height:auto;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+nav.tabs{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;padding:8px max(3vw,10px);justify-content:center}
+.tab{font:600 15px 'Source Sans Pro',sans-serif;border:2px solid transparent;border-radius:8px;padding:9px 13px;min-height:44px;cursor:pointer;background:#f2f4f7;color:var(--ink)}
+.tab.b{border-color:var(--blue-l)}.tab.g{border-color:var(--green-l)}.tab.p{border-color:var(--purple-l)}
+.tab.b.active{background:var(--blue);color:#fff}.tab.g.active{background:var(--green);color:#fff}.tab.p.active{background:var(--purple);color:#fff}
+.tab:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #ffb300;outline-offset:2px}
+main{max-width:1080px;margin:0 auto;padding:24px max(4vw,14px) 40px}
+.panel{display:none}.panel.active{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.panel.active{animation:none}}
+h2.b{color:var(--blue-d)}h2.g{color:var(--green-d)}h2.p{color:var(--purple-d)}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+.clin{background:var(--yellow);border:1px solid var(--yellow-b);border-left:6px solid var(--yellow-b);border-radius:10px;padding:14px 18px;margin:16px 0}
+.clin h4{margin:0 0 .3em;color:#6b5300}
+.safe{background:var(--red-l);border-left:6px solid var(--red);border-radius:10px;padding:14px 18px;margin:16px 0}
+.safe h4{color:var(--red);margin:0 0 .3em}
+.tip{background:var(--blue-l);border-left:6px solid var(--blue);border-radius:10px;padding:12px 18px;margin:14px 0}
+.rxn{background:#f4f8fd;border:1px dashed var(--blue);border-radius:8px;padding:12px;margin:12px 0;font-family:'Merriweather',serif;text-align:center;font-size:1.02rem;overflow-x:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+.qref{background:#fff;border:2px solid var(--purple-l);border-top:5px solid var(--purple);border-radius:10px;padding:14px 16px}
+.qref h4{color:var(--purple-d);font-size:1rem}
+.qref ul{margin:0;padding-left:1.1em}
+table{width:100%;border-collapse:collapse;margin:10px 0;background:#fff}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#eef2f7;font-weight:700}
+td input,td select{width:100%}
+input,textarea,select{font:16px 'Source Sans Pro',sans-serif;border:1px solid #b8c2cf;border-radius:6px;padding:8px 10px;background:#fff;color:var(--ink)}
+textarea{width:100%;min-height:90px}
+label{font-weight:600}
+button.act{font:700 15px 'Source Sans Pro',sans-serif;background:var(--green);color:#fff;border:0;border-radius:8px;padding:10px 16px;min-height:44px;cursor:pointer}
+button.act.alt{background:var(--blue)}button.act.warn{background:#7a8491}
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;counter-reset:s}
+.sess{background:#fff;border:1px solid var(--line);border-top:5px solid var(--green);border-radius:10px;padding:14px}
+.sess b{display:block;font-family:'Merriweather',serif;color:var(--green-d)}
+.sess .when{font-size:.88rem;color:var(--gray)}
+ol.steps{padding-left:1.3em}ol.steps li{margin:.5em 0}
+.why{display:block;font-style:italic;color:var(--gray);font-size:.95rem}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:14px 0}
+.fstep{flex:1 1 150px;background:#fff;border:2px solid var(--blue);border-radius:10px;padding:10px;text-align:center;font-size:.95rem}
+.fstep.y{border-color:#c9a500;background:#fffbe6}.fstep.bl{border-color:var(--pb);background:#e6ecf8}
+.arrow{align-self:center;font-weight:900;color:var(--blue);font-size:1.3rem}
+.dec{background:#fff;border:2px solid var(--purple);border-radius:10px;padding:12px 14px;margin:10px 0}
+.dec b{color:var(--purple-d)}
+details{background:#fff;border:1px solid var(--line);border-left:5px solid var(--purple);border-radius:8px;margin:8px 0}
+summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--purple-d);min-height:44px}
+details>div{padding:0 16px 14px}
+.timer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center}
+.clock{font:900 clamp(40px,8vw,72px) 'Merriweather',serif;color:var(--pb);text-align:center;font-variant-numeric:tabular-nums}
+.strip{display:flex;height:70px;border-radius:8px;overflow:hidden;border:2px solid #333;margin:10px 0}
+.strip div{flex:1;display:flex;align-items:flex-end;justify-content:center;font-size:12px;font-weight:700;color:#fff;padding-bottom:4px;transition:background .4s}
+.out{font:900 1.4rem 'Merriweather',serif;color:var(--green-d)}
+.save-note{font-size:.85rem;color:var(--gray);font-style:italic}
+footer{text-align:center;padding:26px 16px;color:var(--gray);border-top:1px solid var(--line);background:#fff;font-size:.92rem}
+.scroll{overflow-x:auto}
+@media(max-width:700px){nav.tabs{position:static}.tab{font-size:14px;padding:8px 10px}.hero{grid-template-columns:1fr}.timer{grid-template-columns:1fr}.arrow{transform:rotate(90deg);width:100%;text-align:center}}
+@media(max-width:600px){table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8.5em}.stack td::before{content:attr(data-l);float:inline-start;width:8em;margin-inline-start:-8.5em;font-weight:700;color:var(--gray)}.stack td:empty{display:none}}
+@media print{nav.tabs,button,.timer{display:none!important}.panel{display:block!important;page-break-after:always}details>div{display:block}header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.clin,.safe{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+
+<header>
+<div class="hero">
+  <div>
+    <h1>Painting with Light: Cyanotype Leaf Prints</h1>
+    <p>Two iron salts, a sheet of paper, a leaf and a UV lamp. Light reaches in, hands an electron to an iron atom, and a 180-year-old blue appears exactly where the leaf wasn't.</p>
+    <p class="meta">Multi-session chemistry project · 4 sessions over 1–2 weeks · Indoor UV-lamp exposure · Arizona College of Nursing</p>
+  </div>
+  <svg viewBox="0 0 400 280" role="img" aria-label="Illustration of a finished cyanotype: white fern and maple leaf silhouettes on Prussian blue paper">
+    <defs>
+      <radialGradient id="pbg" cx="40%" cy="35%" r="80%"><stop offset="0" stop-color="#2d5bb5"/><stop offset=".6" stop-color="#1b3f8b"/><stop offset="1" stop-color="#0d2459"/></radialGradient>
+      <g id="leaflet"><path d="M0 0 C6 -6 16 -6 22 0 C16 6 6 6 0 0Z"/></g>
+    </defs>
+    <rect width="400" height="280" fill="url(#pbg)"/>
+    <g fill="#f4f7ff" opacity=".95">
+      <path d="M95 250 L120 40" stroke="#f4f7ff" stroke-width="3"/>
+      <use href="#leaflet" transform="translate(118 55) rotate(-30)"/><use href="#leaflet" transform="translate(118 55) rotate(-150) scale(1 -1)"/>
+      <use href="#leaflet" transform="translate(114 85) rotate(-25) scale(1.2)"/><use href="#leaflet" transform="translate(114 85) rotate(-155) scale(1.2 -1.2)"/>
+      <use href="#leaflet" transform="translate(110 118) rotate(-20) scale(1.4)"/><use href="#leaflet" transform="translate(110 118) rotate(-160) scale(1.4 -1.4)"/>
+      <use href="#leaflet" transform="translate(106 152) rotate(-18) scale(1.55)"/><use href="#leaflet" transform="translate(106 152) rotate(-162) scale(1.55 -1.55)"/>
+      <use href="#leaflet" transform="translate(102 188) rotate(-15) scale(1.6)"/><use href="#leaflet" transform="translate(102 188) rotate(-165) scale(1.6 -1.6)"/>
+      <use href="#leaflet" transform="translate(98 222) rotate(-12) scale(1.5)"/><use href="#leaflet" transform="translate(98 222) rotate(-168) scale(1.5 -1.5)"/>
+      <path d="M270 60 L282 95 L318 78 L300 110 L340 120 L302 138 L318 172 L282 158 L270 195 L258 158 L222 172 L238 138 L200 120 L240 110 L222 78 L258 95Z"/>
+      <path d="M270 195 L272 250" stroke="#f4f7ff" stroke-width="4"/>
+    </g>
+    <g stroke="#1b3f8b" stroke-width="1.2" opacity=".55" fill="none">
+      <path d="M270 195 L270 85 M270 150 L235 120 M270 150 L305 120 M270 130 L240 90 M270 130 L300 90"/>
+    </g>
+    <text x="388" y="270" text-anchor="end" font-family="Source Sans Pro" font-size="11" fill="#c9d6f2">Fe₄[Fe(CN)₆]₃ · Prussian blue</text>
+  </svg>
+</div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab b active" data-p="overview">Overview</button>
+  <button class="tab b" data-p="chem">The Chemistry</button>
+  <button class="tab b" data-p="safety">Safety &amp; Waste</button>
+  <button class="tab g" data-p="s1">Session 1: Prep &amp; Coat</button>
+  <button class="tab g" data-p="s2">Session 2: Test Strip</button>
+  <button class="tab g" data-p="s3">Session 3: Leaf Prints</button>
+  <button class="tab g" data-p="s4">Session 4: Tone &amp; Show</button>
+  <button class="tab p" data-p="data">Data</button>
+  <button class="tab p" data-p="analysis">Analysis</button>
+  <button class="tab p" data-p="ref">Quick Ref &amp; Troubleshooting</button>
+</nav>
+
+<main>
+
+<!-- OVERVIEW -->
+<section class="panel active" id="overview">
+  <h2 class="b">Why would a chemist make art with leaves?</h2>
+  <div class="card">
+    <p>Here's the thing that should make you a little giddy: the paper you coat today barely reacts to dim indoor light, but it wakes up under ultraviolet. Every photon of UV that lands on it can push an electron onto an iron(III) ion and turn it into iron(II). That tiny change, one electron, is the difference between a yellow-green stain that washes down the sink and an insoluble blue pigment that stays put for a century.</p>
+    <p>A leaf on the paper is a shadow mask. Where the leaf blocks the light, nothing happens, so the chemistry rinses away and the paper stays white. Where light gets through, Prussian blue forms. A thin leaf lets a little light through its blade but less through its veins, so you can get a <em>map of the leaf's plumbing</em> printed by redox chemistry.</p>
+    <p>Sir John Herschel invented this process in 1842. Anna Atkins used it in 1843 to make what is often called the first book illustrated with photographs, full of algae printed exactly the way you're about to print leaves. Engineers later used it to copy building plans, which is where the word <strong>blueprint</strong> comes from.</p>
+  </div>
+
+  <h3>Learning objectives</h3>
+  <div class="card"><ol>
+    <li>Explain photoreduction: how light energy drives the reduction Fe³⁺ → Fe²⁺, and identify the oxidizing and reducing agents.</li>
+    <li>Write the net ionic equation for Prussian blue formation and explain why its insolubility makes the image permanent.</li>
+    <li>Prepare stock solutions from a mass/volume (% w/v) recipe and scale them to a class size.</li>
+    <li>Design and run a controlled exposure-time experiment (test strip) and choose an optimal exposure from evidence.</li>
+    <li>Test one variable of your choice (leaf type, development method or toning) with a control.</li>
+    <li>Connect iron redox chemistry, light-driven reactions and Prussian blue to clinical practice.</li>
+  </ol></div>
+
+  <h3>The project at a glance</h3>
+  <div class="timeline">
+    <div class="sess"><b>Session 1</b><span class="when">Prep &amp; coat · ~75 min</span><p>Press leaves, make Solutions A and B, coat paper in dim light, dry in the dark box.</p></div>
+    <div class="sess"><b>Session 2</b><span class="when">Test strip · ~60 min</span><p>Expose one strip in timed steps under the UV lamp, rinse it and choose your exposure time.</p></div>
+    <div class="sess"><b>Session 3</b><span class="when">Leaf prints · ~75 min</span><p>Make your final prints, run your variable experiment and compare water vs. peroxide development.</p></div>
+    <div class="sess"><b>Session 4</b><span class="when">Tone &amp; show · ~75 min</span><p>Bleach and tea-tone a print, finish the analysis and hold a gallery walk.</p></div>
+  </div>
+  <p class="tip"><strong>Between sessions:</strong> leaves press for at least 2 days, coated paper dries overnight in the dark box, and finished prints keep darkening in air for about 24 hours. Plan your sessions with those waits in mind.</p>
+
+  <div class="clin"><h4>Clinical connection: the same blue saves lives</h4>
+    <p>Prussian blue isn't only an art pigment. Taken by mouth (brand name <strong>Radiogardase</strong>), it is an FDA-approved antidote for <strong>thallium</strong> poisoning and internal contamination with <strong>radioactive cesium</strong>. Its crystal lattice traps those ions in the gut so they leave in the stool instead of being reabsorbed. Patients are told their stool may turn blue, which you will understand much better after this lab.</p></div>
+</section>
+
+<!-- CHEMISTRY -->
+<section class="panel" id="chem">
+  <h2 class="b">The chemistry: one electron, one blue</h2>
+
+  <h3>The two solutions</h3>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Solution</th><th>Compound</th><th>Recipe</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td>Ferric ammonium citrate, <strong>green</strong> form (iron(III) bound to citrate)</td><td>25 g in water to 100 mL (25% w/v)</td><td>The light-sensitive part. Citrate gives up the electron, and Fe³⁺ takes it.</td></tr>
+      <tr><td>B</td><td>Potassium ferricyanide, K₃[Fe(CN)₆]<br>(329.24 g/mol)</td><td>10 g in water to 100 mL (10% w/v, ≈ 0.30 M)</td><td>Partner that captures Fe²⁺ as Prussian blue.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Ferric ammonium citrate has no single formula. It is a mixture of iron(III)–citrate–ammonium complexes, which is why the recipe is given in grams and not in moles.</p>
+
+  <h3>Step 1: Light drives a reduction (photoreduction)</h3>
+  <div class="rxn">Fe³⁺–citrate &nbsp;+&nbsp; <em>hν</em> (UV-A) &nbsp;→&nbsp; Fe²⁺ &nbsp;+&nbsp; oxidized citrate &nbsp;+&nbsp; CO₂</div>
+  <p>The UV photon is absorbed by the iron–citrate complex. An electron moves from the citrate ligand onto the iron (a <em>ligand-to-metal charge transfer</em>). Iron is <strong>reduced</strong> (gains an electron). Citrate is <strong>oxidized</strong> and loses a carboxyl group as CO₂. Citrate is the reducing agent, but it can only act once light provides the energy. That's why the paper is stable in the dark.</p>
+
+  <h3>Step 2: Fe²⁺ meets ferricyanide, and the blue precipitates</h3>
+  <div class="rxn">Fe²⁺(aq) &nbsp;+&nbsp; K⁺(aq) &nbsp;+&nbsp; [Fe(CN)₆]³⁻(aq) &nbsp;→&nbsp; KFe[Fe(CN)₆](s)</div>
+  <div class="rxn">overall insoluble form: &nbsp; Fe₄[Fe(CN)₆]₃ &nbsp;(iron(III) hexacyanoferrate(II), 859.2 g/mol)</div>
+  <p>Inside Prussian blue, iron sits in <strong>two oxidation states at once</strong>, Fe(II) and Fe(III), linked by cyanide bridges. Light absorbed by an electron hopping between those two kinds of iron (an <em>intervalence charge transfer</em>) removes orange-red wavelengths, so what reaches your eye is an intense blue.</p>
+
+  <h3>Step 3: Why water "develops" the print</h3>
+  <div class="flow">
+    <div class="fstep y"><strong>Unexposed areas</strong><br>Fe³⁺–citrate + ferricyanide: water-soluble, yellow-green</div>
+    <div class="arrow">→</div>
+    <div class="fstep"><strong>Rinse in water</strong><br>soluble salts dissolve away</div>
+    <div class="arrow">→</div>
+    <div class="fstep"><strong>Result</strong><br>white paper under the leaf</div>
+  </div>
+  <div class="flow">
+    <div class="fstep bl"><strong>Exposed areas</strong><br>Prussian blue: insoluble</div>
+    <div class="arrow">→</div>
+    <div class="fstep"><strong>Rinse in water</strong><br>pigment stays locked in the paper fibers</div>
+    <div class="arrow">→</div>
+    <div class="fstep bl"><strong>Result</strong><br>deep blue background</div>
+  </div>
+  <p>A dilute <strong>hydrogen peroxide</strong> dip speeds up the last oxidation and gives the final deep blue in seconds instead of the ~24 hours it takes in air. It is optional, and Session 3 compares the two.</p>
+
+  <h3>Step 4 (Session 4): Bleaching and toning</h3>
+  <div class="rxn">Fe₄[Fe(CN)₆]₃(s) &nbsp;+&nbsp; 12 OH⁻ &nbsp;→&nbsp; 4 Fe(OH)₃(s) &nbsp;+&nbsp; 3 [Fe(CN)₆]⁴⁻</div>
+  <p>Prussian blue is unstable in base, so a washing-soda (Na₂CO₃) bath fades the blue to a faint yellow iron(III) hydroxide image. Then <strong>tannins</strong> from black tea bind that iron(III), forming dark iron–tannate complexes. That is the same chemistry as medieval iron-gall ink. The image returns in browns, sepia or purple-black.</p>
+
+  <div class="clin"><h4>Clinical connection: the pathologist's Prussian blue</h4>
+    <p>Hospital labs use <strong>Perls' Prussian blue stain</strong>, which reacts potassium <em>ferro</em>cyanide with ferric iron in tissue. It turns stored iron (hemosiderin) bright blue in bone marrow, liver and lung samples. It is used to assess iron stores and iron overload, for example in hemochromatosis or in patients who have had many transfusions. It's your reaction running in reverse roles: the iron is in the tissue, and the cyanide complex is in the stain.</p></div>
+  <div class="clin"><h4>Clinical connection: Fe²⁺ vs. Fe³⁺ at the bedside</h4>
+    <p>Oral iron supplements such as ferrous sulfate supply <strong>Fe²⁺</strong>, because the gut absorbs ferrous iron far better than ferric iron. That is one reason vitamin C (a reducing agent) is often suggested with iron. It helps keep iron in the reduced Fe²⁺ form. Your citrate does the same job on the paper, powered by UV.</p></div>
+</section>
+
+<!-- SAFETY -->
+<section class="panel" id="safety">
+  <h2 class="b">Safety &amp; waste</h2>
+  <div class="safe"><h4>Never acidify or heat potassium ferricyanide</h4>
+    <p>Ferricyanide has low toxicity because its cyanide is locked tightly to iron. Strong acids or high heat can release <strong>hydrogen cyanide gas</strong>. Keep Solution B, the mixed sensitizer and all rinse water away from acids, and don't heat them. No vinegar or acid rinses in this lab.</p></div>
+  <div class="safe"><h4>UV lamp</h4>
+    <p>UV-A can damage the eyes. Wear UV-blocking goggles, never look into the lamp, and switch it on only after the frame is in place under it. Keep skin out of the beam during exposures.</p></div>
+  <div class="grid">
+    <div class="qref"><h4>PPE</h4><ul><li>Goggles (UV-rated at the lamp)</li><li>Nitrile gloves when coating and rinsing</li><li>Lab coat or apron, since the solutions stain skin and clothes</li></ul></div>
+    <div class="qref"><h4>Hazards</h4><ul><li>Ferric ammonium citrate: eye and skin irritant</li><li>K₃[Fe(CN)₆]: irritant; releases HCN with acid or heat</li><li>Na₂CO₃: eye irritant</li><li>3% H₂O₂: eye irritant</li></ul></div>
+    <div class="qref"><h4>Waste</h4><ul><li>Collect leftover <em>concentrated</em> sensitizer in the labeled waste container</li><li>Dispose of rinse water according to your institution's chemical waste policy</li><li>Gloves and paper towels with sensitizer go in the solid waste</li></ul></div>
+  </div>
+</section>
+
+<!-- SESSION 1 -->
+<section class="panel" id="s1">
+  <h2 class="g">Session 1: Press, mix, coat (in the dark)</h2>
+
+  <h3>Before Session 1 (2+ days ahead): Press your leaves</h3>
+  <ol class="steps">
+    <li>Collect 4–6 leaves of different kinds: at least one thin or translucent leaf (fern, maple, ginkgo, Japanese maple) and one thick or waxy leaf (holly, magnolia).
+      <span class="why">Why: thickness and translucency are your built-in variable for Session 3.</span></li>
+    <li>Press them flat between paper towels inside a heavy book for at least 2 days.
+      <span class="why">Why: a flat leaf makes full contact with the paper. Any gap lets light sneak under the edges and blurs them.</span></li>
+  </ol>
+
+  <h3>Class stock calculator</h3>
+  <div class="card">
+    <div class="grid">
+      <label>Students <input id="c_n" type="number" min="1" value="30"></label>
+      <label>Sheets per student <input id="c_s" type="number" min="1" value="4"></label>
+      <label>mL mixed sensitizer per sheet <input id="c_v" type="number" min="0.5" step="0.5" value="2"></label>
+    </div>
+    <p id="c_out" class="out" aria-live="polite"></p>
+    <p class="save-note">Assumes 5×7 in sheets plus 20% for spills and test strips. Mixed sensitizer is half A and half B.</p>
+  </div>
+
+  <h3>Procedure</h3>
+  <ol class="steps">
+    <li><strong>Solution A:</strong> dissolve 25 g green ferric ammonium citrate in about 70 mL distilled water, then dilute to 100 mL. Store it in a labeled amber bottle.
+      <span class="why">Why amber: the stock is light-sensitive too. It can grow mold within a few weeks, so make it fresh for the project.</span></li>
+    <li><strong>Solution B:</strong> dissolve 10 g potassium ferricyanide in about 70 mL distilled water, then dilute to 100 mL. Store it in a labeled amber bottle.</li>
+    <li><strong>Dim the room.</strong> Close the blinds and use only normal indoor lighting, away from windows. No UV lamp on anywhere in the room.</li>
+    <li><strong>Mix the sensitizer:</strong> combine equal volumes of A and B in a small beaker, enough for this session only.
+      <span class="why">Why: the mixed sensitizer starts to degrade within hours. The separate stocks last much longer.</span></li>
+    <li>Label the back of each sheet of watercolor paper in pencil: name, date, sheet number.</li>
+    <li><strong>Coat:</strong> brush on a thin, even layer with a foam brush, first left–right and then top–bottom. Coat 4 full sheets plus 1 strip about 2 × 8 in for the test strip.
+      <span class="why">Why thin: puddles stay sticky, dry blotchy and wash out unevenly.</span></li>
+    <li><strong>Dry in the dark box</strong> (a closed cabinet, drawer or cardboard box) overnight. The coating should look an even yellow-green.</li>
+    <li>Wash the brushes and beakers with plenty of water. Close the stock bottles and store them in the dark.</li>
+  </ol>
+  <div class="dec"><b>Decision point:</b> Does the dry coating look streaky or blotchy? → Recoat a new sheet more thinly. Is any sheet already blue before exposure? → It was exposed to light, so discard it and check your dark box for leaks.</div>
+  <div class="clin"><h4>Clinical connection: medications that ban sunlight</h4>
+    <p>Your paper must be protected from light, and so must some patients and drugs. <strong>Drug-induced photosensitivity</strong> (doxycycline, sulfonamides, amiodarone, some thiazides) can make normal UV exposure cause severe sunburn. Light-sensitive IV drugs such as nitroprusside are given with protective covers on the bag and tubing for the same reason your stock bottles are amber.</p></div>
+</section>
+
+<!-- SESSION 2 -->
+<section class="panel" id="s2">
+  <h2 class="g">Session 2: The test strip (finding your exposure time)</h2>
+  <p>Every UV lamp, distance and batch of paper is different. Instead of guessing, run a controlled experiment: one strip, several exposure times, one rinse. Then let the strip tell you the answer.</p>
+  <ol class="steps">
+    <li>Fix your lamp at a measured distance (record it, e.g. 15 cm) and keep it the same for every exposure in this project.</li>
+    <li>Place the test strip coated side up on cardboard. Lay one leaf across its full length, then cover with a clean glass or acrylic sheet.</li>
+    <li>Cover the whole strip with an opaque card. Turn the lamp on and start the timer below.</li>
+    <li>At each beep step, slide the card back to <strong>uncover</strong> the next section. The first section uncovered gets the longest exposure.</li>
+    <li>Rinse the strip in a tray of cool water for about 5 minutes, changing the water until it runs clear. Let it dry.</li>
+    <li>Choose the shortest time that gives a deep, saturated blue background <em>and</em> a crisp white leaf. Record it in the Data tab.</li>
+  </ol>
+
+  <div class="card timer">
+    <div>
+      <div class="clock" id="t_clock">00:00</div>
+      <div class="strip" id="t_strip" aria-hidden="true"></div>
+      <p id="t_msg" aria-live="polite" style="text-align:center;font-weight:700">Set your steps and press Start.</p>
+    </div>
+    <div>
+      <label>Sections on the strip <input id="t_n" type="number" min="2" max="10" value="6"></label><br><br>
+      <label>Minutes per step <input id="t_m" type="number" min="0.5" step="0.5" value="2"></label><br><br>
+      <button class="act" id="t_go">Start</button>
+      <button class="act warn" id="t_reset">Reset</button>
+      <p class="save-note">With 6 sections × 2 min, the sections get 12, 10, 8, 6, 4 and 2 min of exposure.</p>
+    </div>
+  </div>
+  <div class="tip"><strong>Reading a strip:</strong> a section that is pale or chalky blue after rinsing was underexposed. When blue starts to creep under the leaf edges, that section was overexposed. Unrinsed, a well-exposed area looks grey-blue to bronze. The color you see before rinsing is not the final color.</div>
+</section>
+
+<!-- SESSION 3 -->
+<section class="panel" id="s3">
+  <h2 class="g">Session 3: Leaf prints and your variable</h2>
+  <h3>Pick one variable to test</h3>
+  <div class="grid">
+    <div class="qref"><h4>Option A: Leaf structure</h4><p>Print a thin leaf and a thick leaf side by side at the same exposure. Which one shows veins, and why?</p></div>
+    <div class="qref"><h4>Option B: Development</h4><p>Make two identical prints. Rinse one in water only, and give the other a water rinse plus a peroxide dip. Compare them right away and after 24 h.</p></div>
+    <div class="qref"><h4>Option C: Exposure</h4><p>Print the same leaf at 0.5×, 1× and 2× your chosen exposure. How does detail inside the leaf change?</p></div>
+  </div>
+  <h3>Procedure</h3>
+  <ol class="steps">
+    <li>Arrange your leaves on a coated sheet, coated side up. Press them flat under the glass or acrylic sheet.
+      <span class="why">Why: firm contact gives sharp edges.</span></li>
+    <li>Expose under the lamp at your Session 2 time, at the same distance.</li>
+    <li>Remove the leaves (they may be slightly stained, so don't eat them, and discard them in the solid waste). Rinse the print in cool water for about 5 minutes until the water runs clear.</li>
+    <li><strong>Optional peroxide dip:</strong> about 15 mL of 3% H₂O₂ per 1 L of water, 20–30 seconds, then a final water rinse. Watch the blue deepen instantly.</li>
+    <li>Dry the prints flat on paper towels, image side up. Photograph each print right away and again after 24 h for your Data tab.</li>
+  </ol>
+  <div class="dec"><b>Decision point:</b> Blue under the leaf edges? → Contact was poor or the exposure too long. Press harder, or shorten the time. Whole print pale after rinsing? → Underexposed, or the coating was too thin. Lengthen the time.</div>
+  <div class="clin"><h4>Clinical connection: light as a treatment</h4>
+    <p>Neonatal jaundice is treated with <strong>phototherapy</strong>. Blue light (about 460–490 nm) changes bilirubin in the baby's skin into water-soluble isomers that can be excreted without needing the liver to conjugate them. As in your print, a photon reshapes a molecule, and that change determines whether it dissolves and washes away.</p></div>
+</section>
+
+<!-- SESSION 4 -->
+<section class="panel" id="s4">
+  <h2 class="g">Session 4: Bleach, tone and gallery walk</h2>
+  <p>Now you'll take a finished print apart chemically and rebuild it in a different color. Use your least favorite print or a spare.</p>
+  <ol class="steps">
+    <li><strong>Tea bath:</strong> steep 4–6 black tea bags in 500 mL of hot water for 10 minutes, then let it cool to room temperature.</li>
+    <li><strong>Bleach:</strong> dissolve about 10 g of sodium carbonate (washing soda) in 1 L of water. Immerse the print and watch until the blue fades to a pale yellow (usually 1–5 minutes). Pull it out sooner if you want split blue/brown tones.
+      <span class="why">Why: OH⁻ from carbonate breaks Prussian blue down to Fe(OH)₃ (the equation is in the Chemistry tab).</span></li>
+    <li>Rinse the print in water for 2 minutes.</li>
+    <li><strong>Tone:</strong> soak the print in the cooled tea for 30 minutes to several hours. Check it every 15 minutes. Longer soaks give darker browns and purple-blacks.</li>
+    <li>Rinse and dry flat. Note that the paper itself also picks up a tea tint.</li>
+    <li><strong>Gallery walk:</strong> display your best print, your test strip and your toned print with a 3-sentence caption: what variable you tested, what you saw, and the chemistry that explains it.</li>
+  </ol>
+  <div class="clin"><h4>Clinical connection: tannins bind iron in you too</h4>
+    <p>The tannins that grab iron(III) in your toning bath also bind dietary iron in the gut. Tea and coffee taken <em>with meals</em> can reduce non-heme iron absorption. That's why patients on iron supplements are often advised to separate their doses from tea and coffee.</p></div>
+</section>
+
+<!-- DATA -->
+<section class="panel" id="data">
+  <h2 class="p">Data (auto-saves on this device)</h2>
+  <p class="save-note" id="savestate">Your entries save automatically in this browser.</p>
+  <h3>Setup</h3>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Item</th><th>Your entry</th></tr></thead>
+    <tbody>
+      <tr><td>Name / group</td><td><input data-k="name"></td></tr>
+      <tr><td>Lamp type and wavelength (nm)</td><td><input data-k="lamp" placeholder="e.g. 365 nm LED panel"></td></tr>
+      <tr><td>Lamp-to-paper distance (cm)</td><td><input data-k="dist" type="number"></td></tr>
+      <tr><td>Paper type</td><td><input data-k="paper"></td></tr>
+      <tr><td>Coating appearance when dry</td><td><input data-k="coat"></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Session 2: Test strip</h3>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Section</th><th>Exposure (min)</th><th>Background blue (1 = pale, 5 = deep)</th><th>Leaf edge (sharp / soft / fogged)</th></tr></thead>
+    <tbody id="strip_rows"></tbody>
+  </table></div>
+  <label>Chosen exposure time and reason<textarea data-k="chosen"></textarea></label>
+
+  <h3>Session 3: Prints and variable</h3>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Print</th><th>Leaf / condition</th><th>Exposure (min)</th><th>Development</th><th>Observation right away</th><th>Observation at 24 h</th></tr></thead>
+    <tbody id="print_rows"></tbody>
+  </table></div>
+  <label>Variable tested, control, and result<textarea data-k="variable"></textarea></label>
+
+  <h3>Session 4: Toning</h3>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Step</th><th>Time</th><th>Color observed</th></tr></thead>
+    <tbody>
+      <tr><td>Before bleach</td><td><input data-k="t0t"></td><td><input data-k="t0c"></td></tr>
+      <tr><td>After Na₂CO₃ bleach</td><td><input data-k="t1t"></td><td><input data-k="t1c"></td></tr>
+      <tr><td>After tea toning</td><td><input data-k="t2t"></td><td><input data-k="t2c"></td></tr>
+    </tbody>
+  </table></div>
+  <button class="act warn" id="clear">Clear all my entries</button>
+</section>
+
+<!-- ANALYSIS -->
+<section class="panel" id="analysis">
+  <h2 class="p">Analysis questions</h2>
+  <div id="qs"></div>
+</section>
+
+<!-- QUICK REF -->
+<section class="panel" id="ref">
+  <h2 class="p">Quick reference</h2>
+  <div class="grid">
+    <div class="qref"><h4>Recipe card</h4><ul><li>A: 25 g green ferric ammonium citrate → 100 mL</li><li>B: 10 g K₃[Fe(CN)₆] → 100 mL</li><li>Mix A + B 1 : 1 right before coating</li><li>About 2 mL mixed per 5×7 sheet</li></ul></div>
+    <div class="qref"><h4>Light rules</h4><ul><li>Coat and dry in dim indoor light</li><li>Dry in the dark box overnight</li><li>Expose only under the UV lamp</li><li>Keep the same lamp distance all project long</li></ul></div>
+    <div class="qref"><h4>Color guide</h4><ul><li>Yellow-green: unexposed coating</li><li>Grey-blue/bronze: exposed, not rinsed</li><li>Bright blue: rinsed</li><li>Deep Prussian blue: after peroxide or 24 h</li><li>Brown/purple-black: tea-toned</li></ul></div>
+    <div class="qref"><h4>Key equations</h4><ul><li>Fe³⁺ + e⁻ → Fe²⁺ (driven by UV, citrate gives the e⁻)</li><li>Fe²⁺ + K⁺ + [Fe(CN)₆]³⁻ → KFe[Fe(CN)₆](s)</li><li>Base: Prussian blue + OH⁻ → Fe(OH)₃</li></ul></div>
+  </div>
+
+  <h2 class="p" style="margin-top:24px">Troubleshooting</h2>
+  <div id="ts"></div>
+</section>
+</main>
+
+<footer>Cyanotype Leaf Prints · Multi-session chemistry project · Tehrani 2028</footer>
+
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const KEY='tehrani-cyanotype-v1';
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(store));$('#savestate').textContent='Saved '+new Date().toLocaleTimeString()}catch(e){$('#savestate').textContent='Auto-save unavailable in this browser; print or screenshot your data.'}};
+
+// tabs
+const show=id=>{$$('.tab').forEach(t=>t.classList.toggle('active',t.dataset.p===id));$$('.panel').forEach(p=>p.classList.toggle('active',p.id===id));try{store._tab=id;persist()}catch(e){}};
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{show(t.dataset.p);window.scrollTo({top:$('nav').offsetTop,behavior:'smooth'})}));
+
+// calculator
+const calc=()=>{const n=+$('#c_n').value||0,s=+$('#c_s').value||0,v=+$('#c_v').value||0;
+  const mixed=n*s*v*1.2,each=mixed/2;
+  $('#c_out').textContent=`Mixed sensitizer ≈ ${mixed.toFixed(0)} mL → make ${Math.ceil(each/50)*50} mL each of A and B (${(Math.ceil(each/50)*50*0.25).toFixed(1)} g ferric ammonium citrate; ${(Math.ceil(each/50)*50*0.10).toFixed(1)} g K₃[Fe(CN)₆])`;};
+['#c_n','#c_s','#c_v'].forEach(s=>$(s).addEventListener('input',calc));calc();
+
+// data rows
+$('#strip_rows').innerHTML=[1,2,3,4,5,6].map(i=>`<tr><td>${i}</td><td><input data-k="st${i}t" type="number" step="0.5"></td><td><select data-k="st${i}b"><option></option>${[1,2,3,4,5].map(x=>`<option>${x}</option>`).join('')}</select></td><td><select data-k="st${i}e"><option></option><option>sharp</option><option>soft</option><option>fogged</option></select></td></tr>`).join('');
+$('#print_rows').innerHTML=[1,2,3,4].map(i=>`<tr><td>${i}</td><td><input data-k="p${i}l"></td><td><input data-k="p${i}t" type="number" step="0.5"></td><td><select data-k="p${i}d"><option></option><option>water only</option><option>water + H₂O₂</option></select></td><td><input data-k="p${i}o1"></td><td><input data-k="p${i}o2"></td></tr>`).join('');
+
+// questions
+const Q=[
+ ['Identify the species oxidized and the species reduced in the photoreduction step. Why can\'t this redox reaction happen in the dark box?','pre'],
+ ['Write the net ionic equation for Prussian blue formation. Which property of the product makes the image permanent after rinsing?','pre'],
+ ['Using your test-strip data, explain how you chose your exposure time. What evidence would tell you a section was overexposed?','post'],
+ ['Explain your Session 3 variable result in terms of how much UV reached the paper. Name your control.','post'],
+ ['Why did the print keep darkening for about 24 hours, and how does H₂O₂ shortcut that process?','post'],
+ ['Write the balanced equation for bleaching Prussian blue in base. Why must no acid ever be used to "brighten" a cyanotype?','post'],
+ ['Clinical: A patient exposed to radioactive cesium is given Prussian blue by mouth. Explain why the patient\'s stool may turn blue and how the drug lowers the radiation dose to the body.','clin'],
+ ['Clinical: A patient taking ferrous sulfate drinks tea with every meal and stays anemic. Use this lab\'s chemistry to explain one likely reason and what you would teach the patient.','clin']
+];
+$('#qs').innerHTML=Q.map((q,i)=>`<div class="card"><label for="q${i}">${i+1}. ${q[1]==='clin'?'<span style="background:#fff6cc;padding:0 4px">Clinical</span> ':''}${q[0]}</label><textarea id="q${i}" data-k="q${i}"></textarea></div>`).join('');
+
+// troubleshooting
+const T=[
+ ['Whole print washes out pale','Underexposed, the coating was too thin, or the sensitizer was mixed too long ago. Lengthen the exposure, coat a bit heavier, and mix fresh A + B.'],
+ ['Blue haze under the leaf','The leaf lifted, or the exposure was too long. Use glass or acrylic to press it flat, and shorten the time by one test-strip step.'],
+ ['Paper already blue before exposure','Light leaked in during drying, or the coating was done near a window. Check the dark box, and coat away from daylight.'],
+ ['Blotchy or streaky blue','Uneven coating or puddles. Brush thin layers in two directions and let them dry flat.'],
+ ['Yellow stain remains after rinsing','Rinse longer in fresh water. Some alkaline (buffered) papers hold onto residue and also fade cyanotypes over time, so try 100% cotton watercolor paper.'],
+ ['Print fades over weeks','It was stored in contact with alkaline materials (some papers, detergents, baking soda) or in strong sun. Display it out of direct sunlight. Cyanotypes often partly recover in the dark.'],
+ ['Toning gave no color change','The bleach step was too short, or the tea was too weak. Bleach until the blue is clearly faded, and use more tea bags or a longer soak.']
+];
+$('#ts').innerHTML=T.map(t=>`<details><summary>${t[0]}</summary><div><p>${t[1]}</p></div></details>`).join('');
+
+// autosave bind
+$$('[data-k]').forEach(el=>{const k=el.dataset.k;if(store[k]!=null)el.value=store[k];el.addEventListener('input',()=>{store[k]=el.value;persist()})});
+$('#clear').addEventListener('click',()=>{if(!$('#clear').dataset.sure){$('#clear').dataset.sure=1;$('#clear').textContent='Tap again to confirm';return}
+  const tab=store._tab;store={_tab:tab};persist();$$('[data-k]').forEach(el=>el.value='');$('#clear').textContent='Cleared';delete $('#clear').dataset.sure});
+if(store._tab&&document.getElementById(store._tab))show(store._tab);
+
+// timer
+let iv=null,elapsed=0;
+const paint=()=>{const n=Math.max(2,Math.min(10,+$('#t_n').value||6)),step=(+$('#t_m').value||2)*60,total=n*step;
+  const m=Math.floor(elapsed/60),s=elapsed%60;$('#t_clock').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const uncovered=Math.min(n,Math.floor(elapsed/step)+(iv||elapsed?1:0));
+  $('#t_strip').innerHTML=Array.from({length:n},(_,i)=>{const exp=Math.max(0,elapsed-i*step);const f=Math.min(1,exp/total);const on=i<uncovered;
+    return `<div style="background:${on?`rgb(${Math.round(214-190*f)},${Math.round(220-170*f)},${Math.round(150-10*f)})`:'#555'}">${on?((n-i)*step/60)+' min':'covered'}</div>`}).join('');
+  if(elapsed>=total&&iv){clearInterval(iv);iv=null;$('#t_go').textContent='Start';$('#t_msg').textContent='Done: lamp OFF, then rinse the strip.';}
+  else if(iv){const next=Math.floor(elapsed/step)+1;$('#t_msg').textContent=next<n?`Section ${next} uncovered. Uncover section ${next+1} at ${String(Math.floor(next*step/60)).padStart(2,'0')}:${String(next*step%60).padStart(2,'0')}`:`All sections uncovered. Lamp off at ${Math.floor(total/60)}:${String(total%60).padStart(2,'0')}`;}
+};
+$('#t_go').addEventListener('click',()=>{if(iv){clearInterval(iv);iv=null;$('#t_go').textContent='Resume';$('#t_msg').textContent='Paused. Cover the strip or switch the lamp off.';return}
+  $('#t_go').textContent='Pause';iv=setInterval(()=>{elapsed++;paint()},1000);paint();});
+$('#t_reset').addEventListener('click',()=>{clearInterval(iv);iv=null;elapsed=0;$('#t_go').textContent='Start';$('#t_msg').textContent='Set your steps and press Start.';paint()});
+['#t_n','#t_m'].forEach(s=>$(s).addEventListener('input',paint));paint();
+}
+</script>
+</body>
+</html>
