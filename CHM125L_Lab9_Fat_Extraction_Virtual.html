@@ -657,7 +657,6 @@ body { margin: 0; }
 .check-msg.bad { color: var(--danger); }
 input.ok { border-color: var(--success) !important; background: var(--success-light); }
 input.bad { border-color: var(--danger) !important; background: var(--danger-light); }
-.blank { display: inline-block; width: 140px; padding: 3px 8px; font-size: 15px; font-family: inherit; border: none; border-bottom: 2px solid var(--accent); background: var(--accent-light); color: var(--fg); border-radius: 4px 4px 0 0; }
 .data-table input { width: 100%; min-width: 90px; padding: 6px 8px; font-size: 14px; font-family: 'IBM Plex Mono', monospace; }
 .data-table td.given { color: var(--fg); font-weight: 500; }
 .table1 th, .table1 td { text-align: center; }
@@ -772,14 +771,18 @@ input.bad { border-color: var(--danger) !important; background: var(--danger-lig
     <!-- PRE-LAB -->
     <section class="section" id="prelab">
       <h1>Pre-Lab Knowledge Check</h1>
-      <p class="subtitle">Fill in the blanks from the background, then check your understanding</p>
+      <p class="subtitle">Answer the short-answer questions, then check your understanding</p>
 
       <div class="card">
-        <h3 style="margin-top:0">Fill in the Blanks</h3>
-        <p>1. Fats are organic compounds made of long hydrocarbon chains, so they are <input class="blank" id="blank1" type="text" autocomplete="off">.</p>
-        <p>2. Hexane (C<sub>6</sub>H<sub>14</sub>) is also nonpolar. Because "like dissolves <input class="blank" id="blank2" type="text" autocomplete="off">," fat dissolves easily in hexane.</p>
-        <button class="btn btn-primary" onclick="checkBlanks()">Check Answers</button>
-        <span class="check-msg" id="blankMsg" style="margin-left:10px"></span>
+        <h3 style="margin-top:0">Question 1</h3>
+        <p>Are fats polar or nonpolar? Explain your answer using the structure of fat molecules.</p>
+        <textarea id="prelab1"></textarea>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Question 2</h3>
+        <p>Hexane (C<sub>6</sub>H<sub>14</sub>) is used as the solvent in this lab. What solubility rule explains why fat dissolves easily in hexane? Explain.</p>
+        <textarea id="prelab2"></textarea>
       </div>
 
       <div class="card">
@@ -1487,8 +1490,7 @@ const procSteps = [
     instruction: 'Set the beaker on a hot plate on <strong>Medium</strong>. Heat until all the liquid is gone and only a thin, oily film of fat is left.',
     action: 'Turn the hot plate to Medium',
     media: () => photo(IMG.fatFilm, 'After evaporation: only a thin yellow film of fat is left on the bottom of the 250 mL beaker'),
-    timer: true,
-    safety: 'Hot plate only, in the fume hood. No open flames: hexane vapor can ignite.'
+    timer: true
   },
   {
     title: 'Cool and Weigh',
@@ -1522,7 +1524,7 @@ const mcQuestions = [
       'No. The film left behind is the oily fat.'] }
 ];
 
-const SAVE_IDS = ['studentName','labSection','labDate','blank1','blank2','servingSize','fatPerServing','reportedPct',
+const SAVE_IDS = ['studentName','labSection','labDate','prelab1','prelab2','servingSize','fatPerServing','reportedPct',
   'calcFat','calcPct','calcErr','work1','work2','work3','conclusion','disc1work','disc1total','disc2'];
 
 /* ---------- helpers ---------- */
@@ -1726,15 +1728,6 @@ function startTimer() {
 }
 
 /* ---------- pre-lab ---------- */
-function checkBlanks() {
-  const a = $('blank1').value.trim().toLowerCase();
-  const b = $('blank2').value.trim().toLowerCase().replace(/[^a-z]/g, '');
-  const ok1 = /^non-?polar$/.test(a);
-  const ok2 = b === 'like';
-  mark('blank1', ok1); mark('blank2', ok2);
-  setMsg($('blankMsg'), ok1 && ok2, ok1 && ok2 ? 'Both correct &#10003;' : `${(ok1 ? 1 : 0) + (ok2 ? 1 : 0)} of 2 correct. Check the Background section.`);
-}
-
 function renderMC() {
   mcQuestions.forEach(q => {
     $(q.id).innerHTML = q.options.map((o, i) =>
@@ -1860,7 +1853,8 @@ function missingItems() {
   const m = [];
   if (!$('studentName').value.trim()) m.push('Your name (Welcome)');
   if (!$('labSection').value) m.push('Your section (Welcome)');
-  if (!$('blank1').value.trim() || !$('blank2').value.trim()) m.push('Pre-lab fill-in-the-blanks');
+  if (!$('prelab1').value.trim()) m.push('Pre-lab Question 1');
+  if (!$('prelab2').value.trim()) m.push('Pre-lab Question 2');
   const notDone = procSteps.filter((s, i) => !(state.steps[i] && state.steps[i].done)).length;
   if (notDone) m.push(`${notDone} procedure step(s) not performed`);
   if (num('recBeaker') === null || num('recChips') === null || num('recFull') === null) m.push('Balance readings in the procedure');
@@ -1961,9 +1955,13 @@ function generatePDF() {
   addText('Extract the fat from a weighed sample of potato chips using hexane, calculate the percent fat in the chips from my own measurements, and compare it with the % fat stated on the nutrition label using percent error.', 10, 'normal');
   y += 4;
 
-  addText('BACKGROUND (FILL IN THE BLANKS)', 14, 'bold', TEAL);
-  addText(`Fats are organic compounds made of long hydrocarbon chains, so they are: ${answer($('blank1').value, '____')}`, 10, 'normal');
-  addText(`Because "like dissolves ${answer($('blank2').value, '____')}," fat dissolves easily in hexane.`, 10, 'normal');
+  addText('PRE-LAB QUESTIONS', 14, 'bold', TEAL);
+  addText('Pre-lab Q1: Are fats polar or nonpolar? Explain your answer using the structure of fat molecules.', 10, 'bold');
+  blankAnswer($('prelab1').value);
+  y += 2;
+  addText('Pre-lab Q2: Hexane (C6H14) is used as the solvent in this lab. What solubility rule explains why fat dissolves easily in hexane? Explain.', 10, 'bold');
+  blankAnswer($('prelab2').value);
+  y += 2;
   mcQuestions.forEach((q, qi) => {
     const sel = state.mc[q.id];
     const qText = qi === 0 ? 'Why is hexane evaporated on a hot plate (Medium) instead of a flame?' : 'What is left in the beaker after the hexane evaporates?';
